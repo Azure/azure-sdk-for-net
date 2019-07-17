@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
 {
     internal class KeyVaultClient
     {
+        // Configurable MSI retry timeout for internal MsiAccessTokenProvider
+        private readonly int _msiRetryTimeoutInSeconds;
+
         // These members allow for unit testing
         private readonly HttpClient _httpClient;
         private NonInteractiveAzureServiceTokenProviderBase _tokenProvider;
@@ -45,13 +48,18 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal Principal PrincipalUsed { get; private set; }
 
-        public KeyVaultClient(HttpClient httpClient = null, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null)
+        internal KeyVaultClient(int msiRetryTimeoutInSeconds = 0, HttpClient httpClient = null, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null)
         {
+            _msiRetryTimeoutInSeconds = msiRetryTimeoutInSeconds;
             _httpClient = httpClient ?? new HttpClient();
             _tokenProvider = tokenProvider;
         }
 
-        public async Task<X509Certificate2> GetCertificateAsync(string secretIdentifier, CancellationToken cancellationToken = default(CancellationToken))
+        internal KeyVaultClient(HttpClient httpClient, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null) : this(0, httpClient, tokenProvider)
+        {
+        }
+
+        internal async Task<X509Certificate2> GetCertificateAsync(string secretIdentifier, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -179,7 +187,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 string azureAdInstance = UriHelper.GetAzureAdInstanceByAuthority(authority);
                 tokenProviders = new List<NonInteractiveAzureServiceTokenProviderBase>
                 {
-                    new MsiAccessTokenProvider(),
+                    new MsiAccessTokenProvider(_msiRetryTimeoutInSeconds),
                     new VisualStudioAccessTokenProvider(new ProcessManager()),
                     new AzureCliAccessTokenProvider(new ProcessManager()),
 #if FullNetFx

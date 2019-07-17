@@ -320,7 +320,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                if (isDiagnosticSourceEnabled)
+                if (isDiagnosticSourceEnabled && !(exception is ServiceBusTimeoutException))
                 {
                     this.diagnosticSource.ReportException(exception);
                 }

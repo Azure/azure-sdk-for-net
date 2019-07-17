@@ -25,13 +25,12 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public int? KeySize { get; set; }
 
-        /// <summary> 
+        /// <summary>
         /// Determines whether or not a hardware key (HSM) is used for creation.
         /// </summary>
         ///
         /// <value><c>true</c> to use a hardware key; <c>false</c> to use a software key</value>
         public bool Hsm { get; private set; }
-
 
         /// <summary>
         /// Initializes a new instance of the RsaKeyCreateOptions class.
@@ -39,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         /// <param name="hsm">Whether to import as a hardware key (HSM) or software key.</param>
         /// <param name="keySize">Key size in bits.</param>
-        public RsaKeyCreateOptions(string name, bool hsm, int? keySize = null) 
+        public RsaKeyCreateOptions(string name, bool hsm, int? keySize = null)
         {
             Name = name;
             Hsm = hsm;

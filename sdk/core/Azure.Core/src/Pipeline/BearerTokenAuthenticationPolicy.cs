@@ -5,15 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
-namespace Azure.Core.Pipeline.Policies
+namespace Azure.Core.Pipeline
 {
     public class BearerTokenAuthenticationPolicy: HttpPipelinePolicy
     {
         private readonly TokenCredential _credential;
 
         private readonly string[] _scopes;
-        
+
         private string _headerValue;
 
         private DateTimeOffset _refreshOn;

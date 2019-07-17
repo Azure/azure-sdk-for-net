@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190503.1" />
     <PackageReference Update="Azure.Core" Version="1.0.0-preview.6" />
     <PackageReference Update="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Update="FsCheck.Xunit" Version="2.14.0" />
@@ -31,7 +30,6 @@
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.1, 2.0.0)" />
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
     <PackageReference Update="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7" />
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Update="Microsoft.Build" Version="15.5.180" />
@@ -81,7 +79,6 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="[5.4.0, 6.0.0)" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.Linq" Version="4.3.0" />
-    <PackageReference Update="System.Memory" Version="4.5.2" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
@@ -95,12 +92,20 @@
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
-    <PackageReference Update="System.Text.Json" Version="4.6.0-preview6.19259.10" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
+  </ItemGroup>
+  <!-- Track 2 specific versions -->
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190716.1" />
+    <PackageReference Update="System.Memory" Version="4.5.3" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19303.8" />
+    <PackageReference Update="System.Text.Json" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Update="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview6.19303.8" />
   </ItemGroup>
 </Project>

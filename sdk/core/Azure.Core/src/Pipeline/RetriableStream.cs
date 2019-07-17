@@ -8,9 +8,8 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 
-namespace Azure.Core
+namespace Azure.Core.Pipeline
 {
     public static class RetriableStream
     {
