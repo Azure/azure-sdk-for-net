@@ -64,7 +64,7 @@ namespace TrackOne
                         csb.Endpoint,
                         Entity = csb.EntityPath,
                         PartitionKey = partitionKey,
-                        EventDatas = eventDatas
+                        EventDatas = eventDatas.Select(TransformEvent)
                     });
             }
             else
@@ -90,7 +90,7 @@ namespace TrackOne
                     csb.Endpoint,
                     Entity = csb.EntityPath,
                     PartitionKey = partitionKey,
-                    EventDatas = eventDatas,
+                    EventDatas = eventDatas.Select(TransformEvent),
                     Exception = ex
                 });
         }
@@ -108,7 +108,7 @@ namespace TrackOne
                     csb.Endpoint,
                     Entity = csb.EntityPath,
                     PartitionKey = partitionKey,
-                    EventDatas = eventDatas,
+                    EventDatas = eventDatas.Select(TransformEvent),
                     sendTask?.Status
                 });
         }
@@ -201,7 +201,7 @@ namespace TrackOne
                     Entity = csb.EntityPath,
                     PartitionKey = partitionKey,
                     ConsumerGroup = consumerGroup,
-                    EventDatas = events,
+                    EventDatas = events.Select(TransformEvent),
                     receiveTask?.Status
                 });
         }
@@ -262,5 +262,11 @@ namespace TrackOne
         }
 
         #endregion Diagnostic Context Injection
+
+        private static Azure.Messaging.EventHubs.EventData TransformEvent(EventData eventData) =>
+            new Azure.Messaging.EventHubs.EventData(eventData.Body.ToArray())
+            {
+                Properties = eventData.Properties
+            };
     }
 }

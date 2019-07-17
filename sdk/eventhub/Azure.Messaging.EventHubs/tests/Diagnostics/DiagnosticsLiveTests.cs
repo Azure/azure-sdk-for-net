@@ -374,7 +374,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Send.Start"));
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
 
-            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<TrackOne.EventData>>(payload, "EventDatas");
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
             Assert.That(eventDatas.Count, Is.EqualTo(eventCount));
 
             Assert.That(activity, Is.Not.Null);
@@ -408,7 +408,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(activity.Parent, Is.EqualTo(parentActivity));
             }
 
-            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<TrackOne.EventData>>(payload, "EventDatas");
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
             Assert.That(eventDatas, Is.Not.Null);
         }
 
@@ -424,7 +424,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(activity, Is.EqualTo(sendActivity));
             }
 
-            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<TrackOne.EventData>>(payload, "EventDatas");
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
             Assert.That(eventDatas, Is.Not.Null);
         }
 
