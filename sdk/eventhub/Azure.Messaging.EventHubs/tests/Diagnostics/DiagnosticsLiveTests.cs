@@ -59,6 +59,14 @@ namespace Azure.Messaging.EventHubs.Tests
             PropertyInfo p = t.GetRuntimeProperty(propertyName);
             object propertyValue = p.GetValue(obj);
 
+            // If a null string property was found, return it.  This is necessary for testing
+            // the PartitionKey property when no Partition Key or Partition Id was set.
+
+            if (typeof(T) == typeof(string) && propertyValue == null)
+            {
+                return (T)propertyValue;
+            }
+
             Assert.That(propertyValue, Is.Not.Null);
             Assert.That(propertyValue, Is.AssignableTo<T>());
 
@@ -71,9 +79,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task SendFiresEvents(bool usePartitionId)
+        [TestCase(null, false)]
+        [TestCase(null, true)]
+        [TestCase("AmIaGoodPartitionKey", false)]
+        public async Task SendFiresEvents(string partitionKey, bool usePartitionId)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -82,15 +91,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 {
                     string partitionId = null;
-                    string partitionKey = null;
 
                     if (usePartitionId)
                     {
                         partitionId = (await client.GetPartitionIdsAsync()).First();
-                    }
-                    else
-                    {
-                        partitionKey = "AmIaGoodPartitionKey";
                     }
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionId }))
@@ -208,9 +212,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task SendFiresExceptionEvents(bool usePartitionId)
+        [TestCase(null, false)]
+        [TestCase(null, true)]
+        [TestCase("AmIaGoodPartitionKey", false)]
+        public async Task SendFiresExceptionEvents(string partitionKey, bool usePartitionId)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -219,15 +224,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 {
                     string partitionId = null;
-                    string partitionKey = null;
 
                     if (usePartitionId)
                     {
                         partitionId = (await client.GetPartitionIdsAsync()).First();
-                    }
-                    else
-                    {
-                        partitionKey = "AmIaGoodPartitionKey";
                     }
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionId }))
@@ -255,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             // Check diagnostics information.
 
                             Assert.That(eventQueue.TryDequeue(out var exception), Is.True);
-                            AssertSendException(exception.eventName, exception.payload, exception.activity, null, partitionKey ?? partitionId, connectionString);
+                            AssertSendException(exception.eventName, exception.payload, exception.activity, parentActivity, partitionKey ?? partitionId, connectionString);
 
                             Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
                             AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, null, partitionKey ?? partitionId, connectionString, isFaulted: true);
@@ -288,10 +288,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var eventQueue = CreateEventQueue();
                     var partition = (await client.GetPartitionIdsAsync()).First();
+                    var consumerGroup = EventHubConsumer.DefaultConsumerGroupName;
+                    EventPosition position = EventPosition.Latest;
 
                     using (var listener = CreateEventListener(eventQueue))
                     using (var subscription = SubscribeToEvents(listener))
-                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer(consumerGroup, partition, position))
                     {
                         var payloadString = "Easter Egg";
                         var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
@@ -354,10 +356,10 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
 
                         Assert.That(eventQueue.TryDequeue(out var receiveStart), Is.True);
-                        AssertReceiveStart(receiveStart.eventName, receiveStart.payload, receiveStart.activity, partition, connectionString);
+                        AssertReceiveStart(receiveStart.eventName, receiveStart.payload, receiveStart.activity, parentActivity, consumerGroup, position, partition, connectionString);
 
                         Assert.That(eventQueue.TryDequeue(out var receiveStop), Is.True);
-                        AssertReceiveStop(receiveStop.eventName, receiveStop.payload, receiveStop.activity, receiveStart.activity, partition, connectionString, relatedId: sendStop.activity.Id);
+                        AssertReceiveStop(receiveStop.eventName, receiveStop.payload, receiveStop.activity, receiveStart.activity, consumerGroup, partition, connectionString, relatedId: sendStop.activity.Id);
 
                         // There should be no more events to dequeue.
 
@@ -385,16 +387,15 @@ namespace Azure.Messaging.EventHubs.Tests
             // Check Activity and its tags.
 
             Assert.That(activity, Is.Not.Null);
-            Assert.That(activity.Parent, Is.EqualTo(parentActivity));
+
+            if (parentActivity != null)
+            {
+                Assert.That(activity.Parent, Is.EqualTo(parentActivity));
+            }
 
             AssertTagMatches(activity, "peer.hostname", connectionStringProperties.Endpoint.Host);
             AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubPath);
-
-            if (partitionKey != null)
-            {
-                AssertTagMatches(activity, "eh.partition_key", partitionKey);
-            }
-
+            AssertTagMatches(activity, "eh.partition_key", partitionKey);
             AssertTagMatches(activity, "eh.event_count", eventCount.ToString());
             AssertTagExists(activity, "eh.client_id");
         }
@@ -449,7 +450,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-        private static void AssertReceiveStart(string name, object payload, Activity activity, string partitionKey, string connectionString)
+        private static void AssertReceiveStart(string name, object payload, Activity activity, Activity parentActivity, string consumerGroup, EventPosition position, string partitionKey, string connectionString)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
@@ -465,21 +466,22 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(activity, Is.Not.Null);
 
-            AssertTagMatches(activity, "peer.hostname", connectionStringProperties.Endpoint.Host);
-            AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubPath);
-
-            if (partitionKey != null)
+            if (parentActivity != null)
             {
-                AssertTagMatches(activity, "eh.partition_key", partitionKey);
+                Assert.That(activity.Parent, Is.EqualTo(parentActivity));
             }
 
-            AssertTagExists(activity, "eh.event_count");
+            AssertTagMatches(activity, "peer.hostname", connectionStringProperties.Endpoint.Host);
+            AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubPath);
+            AssertTagMatches(activity, "eh.partition_key", partitionKey);
+            AssertTagMatches(activity, "eh.consumer_group", consumerGroup);
+            AssertTagMatches(activity, "eh.start_offset", position.Offset);
+            AssertTagMatches(activity, "eh.start_sequence_number", position.SequenceNumber?.ToString());
+            AssertTagMatches(activity, "eh.start_date_time", position.EnqueuedTime?.UtcDateTime.ToString());
             AssertTagExists(activity, "eh.client_id");
-            AssertTagExists(activity, "eh.consumer_group");
-            AssertTagExists(activity, "eh.start_offset");
         }
 
-        private static void AssertReceiveStop(string name, object payload, Activity activity, Activity receiveActivity, string partitionKey, string connectionString, bool isFaulted = false, string relatedId = null)
+        private static void AssertReceiveStop(string name, object payload, Activity activity, Activity receiveActivity, string consumerGroup, string partitionKey, string connectionString, int eventCount = 1, bool isFaulted = false, string relatedId = null)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
@@ -490,6 +492,12 @@ namespace Azure.Messaging.EventHubs.Tests
             // Check payload.
 
             AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringProperties);
+
+            var payloadConsumerGroup = GetPropertyValueFromAnonymousTypeInstance<string>(payload, "ConsumerGroup");
+            Assert.That(payloadConsumerGroup, Is.EqualTo(consumerGroup));
+
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
+            Assert.That(eventDatas.Count, Is.EqualTo(eventCount));
 
             // Check Activity and its tags.
 
@@ -506,6 +514,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(relatedToTag.Value, Is.Not.Null);
                 Assert.That(relatedToTag.Value.Contains(relatedId), Is.True);
             }
+
+            AssertTagMatches(activity, "eh.event_count", eventCount.ToString());
         }
 
         private static void AssertTagExists(Activity activity, string tagName)
