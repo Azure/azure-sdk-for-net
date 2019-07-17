@@ -258,7 +258,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             AssertSendException(exception.eventName, exception.payload, exception.activity, null, partitionKey ?? partitionId, connectionString);
 
                             Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
-                            AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, null, partitionKey ?? partitionId, connectionString);
+                            AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, null, partitionKey ?? partitionId, connectionString, isFaulted: true);
 
                             Assert.That(sendStop.activity, Is.EqualTo(exception.activity));
 
