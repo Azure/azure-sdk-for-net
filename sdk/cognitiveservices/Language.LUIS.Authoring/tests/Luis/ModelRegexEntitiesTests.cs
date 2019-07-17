@@ -9,7 +9,7 @@
     {
         private const string versionId = "0.1";
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetRegexEntities()
         {
             UseClientFor(async client =>
@@ -22,7 +22,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void CreateRegexEntity()
         {
             UseClientFor(async client =>
@@ -34,7 +34,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetRegexEntity()
         {
             UseClientFor(async client =>
@@ -49,7 +49,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateRegexEntity()
         {
             UseClientFor(async client =>
@@ -71,7 +71,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteRegexEntity()
         {
             UseClientFor(async client =>
