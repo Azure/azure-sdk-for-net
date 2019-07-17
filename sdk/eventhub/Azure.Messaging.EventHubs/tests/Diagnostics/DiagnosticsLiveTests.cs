@@ -371,11 +371,18 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
+            // Check name.
+
             Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Send.Start"));
+
+            // Check payload.
+
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
 
             var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
             Assert.That(eventDatas.Count, Is.EqualTo(eventCount));
+
+            // Check Activity and its tags.
 
             Assert.That(activity, Is.Not.Null);
             Assert.That(activity.Parent, Is.EqualTo(parentActivity));
@@ -396,10 +403,20 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
+            // Check name.
+
             Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Send.Exception"));
+
+            // Check payload.
+
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
 
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
+            Assert.That(eventDatas, Is.Not.Null);
+
             GetPropertyValueFromAnonymousTypeInstance<Exception>(payload, "Exception");
+
+            // Check Activity.
 
             Assert.That(activity, Is.Not.Null);
 
@@ -407,33 +424,44 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 Assert.That(activity.Parent, Is.EqualTo(parentActivity));
             }
-
-            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
-            Assert.That(eventDatas, Is.Not.Null);
         }
 
         private static void AssertSendStop(string name, object payload, Activity activity, Activity sendActivity, string partitionKey, string connectionString, bool isFaulted = false)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
+            // Check name.
+
             Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Send.Stop"));
-            AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringProperties); ;
+
+            // Check payload.
+
+            AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringProperties);
+
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
+            Assert.That(eventDatas, Is.Not.Null);
+
+            // Check Activity.
 
             if (sendActivity != null)
             {
                 Assert.That(activity, Is.EqualTo(sendActivity));
             }
-
-            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
-            Assert.That(eventDatas, Is.Not.Null);
         }
 
         private static void AssertReceiveStart(string name, object payload, Activity activity, string partitionKey, string connectionString)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
+            // Check name.
+
             Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Receive.Start"));
+
+            // Check payload.
+
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
+
+            // Check Activity and its tags.
 
             Assert.That(activity, Is.Not.Null);
 
@@ -455,8 +483,15 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
+            // Check name.
+
             Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Receive.Stop"));
+
+            // Check payload.
+
             AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringProperties);
+
+            // Check Activity and its tags.
 
             if (receiveActivity != null)
             {
@@ -499,7 +534,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
         private static void AssertCommonStopPayloadProperties(object eventPayload, string partitionKey, bool isFaulted, ConnectionStringProperties connectionStringProperties)
         {
+            var expectedStatus = isFaulted ? TaskStatus.Faulted : TaskStatus.RanToCompletion;
+
             AssertCommonPayloadProperties(eventPayload, partitionKey, connectionStringProperties);
+
+            var status = GetPropertyValueFromAnonymousTypeInstance<TaskStatus>(eventPayload, "Status");
+            Assert.That(status, Is.EqualTo(expectedStatus));
         }
     }
 }
