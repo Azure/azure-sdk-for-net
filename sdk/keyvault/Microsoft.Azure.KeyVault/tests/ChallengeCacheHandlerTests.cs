@@ -148,7 +148,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
         public static string CreateMockUrl(int pathCount = 0)
         {
-            return CreateMockUrl("https://" + Guid.NewGuid().ToString().Replace('-', '.'), pathCount);
+            return CreateMockUrl("https://" + Guid.NewGuid().ToString("N"), pathCount);
         }
 
         public static string CreateMockUrl(string baseUrl, int pathCount = 0)
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
             for (int i = 0; i < pathCount; i++)
             {
-                buff.Append("/").Append(Guid.NewGuid().ToString().Replace("-", ""));
+                buff.Append("/").Append(Guid.NewGuid().ToString("N"));
             }
 
             return buff.ToString();
