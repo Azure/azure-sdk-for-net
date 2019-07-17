@@ -19,7 +19,7 @@ namespace Azure.Storage.Test.Shared
             : base(async, mode ?? GetModeFromEnvironment())
         {
             this.Sanitizer = new StorageRecordedTestSanitizer();
-            this.Matcher = new RecordMatcher(this.Sanitizer);
+            this.Matcher = new StorageRecordMatcher(this.Sanitizer);
         }
 
         /// <summary>
