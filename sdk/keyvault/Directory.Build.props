@@ -4,7 +4,7 @@
     <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Republishing to publish symbols
+      Fix for issue https://github.com/Azure/azure-sdk-for-net/issues/5702
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
