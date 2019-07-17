@@ -320,6 +320,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The value supplied must be greater than or equal to {0}..
+        /// </summary>
+        internal static string ValueMustBeAtLeast
+        {
+            get
+            {
+                return ResourceManager.GetString("ValueMustBeAtLeast", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential..
         /// </summary>
         internal static string UnsupportedCredential
@@ -360,6 +371,28 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Serialization operation failed due to unsupported type {0}..
+        /// </summary>
+        internal static string FailedToSerializeUnsupportedType
+        {
+            get
+            {
+                return ResourceManager.GetString("FailedToSerializeUnsupportedType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The requested transport event type, '{0}', is not supported by the active transport client..
+        /// </summary>
+        internal static string UnsupportedTransportEventType
+        {
+            get
+            {
+                return ResourceManager.GetString("UnsupportedTransportEventType", resourceCulture);
             }
         }
     }

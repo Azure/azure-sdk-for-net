@@ -101,7 +101,7 @@ await using (EventHubProducer producer = client.CreateProducer())
 
 ### Consume events from an Event Hub
 
-In order to consume events, you'll need to create an `EventHubConsumer` for a specific partition and consumer group combination.  When an Event Hub is created, it starts with a default consumer group that can be used to get started.  A consumer also needs to specify where in the event stream to begin receiving events; in our example, we will focus on reading new events as they are published.
+In order to consume events, you'll need to create an `EventHubConsumer` for a specific partition and consumer group combination.  When an Event Hub is created, it starts with a default consumer group that can be used to get started.  A consumer also needs to specify where in the event stream to begin receiving events; in our example, we will focus on reading all published events in a partition.
 
 ```csharp
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -111,7 +111,7 @@ await using (var client = new EventHubClient(connectionString, eventHubName))
 {
     string firstPartition = (await client.GetPartitionIdsAsync()).First();
     string consumerGroup = EventHubConsumer.DefaultConsumerGroup;
-    EventPosition startingPosition = EventPosition.Latest;
+    EventPosition startingPosition = EventPosition.Earliest;
     
     await using (EventHubConsumer consumer = client.CreateConsumer(consumerGroup, firstPartition, startingPosition))
     {

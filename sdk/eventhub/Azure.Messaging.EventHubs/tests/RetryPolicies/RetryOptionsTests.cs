@@ -65,6 +65,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(-1)]
         [TestCase(-10)]
+        [TestCase(0)]
         [TestCase(-9999)]
         [TestCase(301)]
         [TestCase(306)]

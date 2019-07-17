@@ -26,6 +26,12 @@ namespace TrackOne
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
             int count = ValidateEvents(eventDatas);
+
+            if (count == 0)
+            {
+                return;
+            }
+
             var activePartitionRouting = String.IsNullOrEmpty(partitionKey) ?
                 this.PartitionId :
                 partitionKey;
@@ -58,20 +64,20 @@ namespace TrackOne
 
         internal static int ValidateEvents(IEnumerable<EventData> eventDatas)
         {
-            int count;
-
-            if (eventDatas == null || (count = eventDatas.Count()) == 0)
+            if (eventDatas == null)
             {
                 throw Fx.Exception.Argument(nameof(eventDatas), Resources.EventDataListIsNullOrEmpty);
             }
 
-            return count;
+            return eventDatas.Count();
         }
 
         async Task<EventData> ProcessEvent(EventData eventData)
         {
             if (this.RegisteredPlugins == null || this.RegisteredPlugins.Count == 0)
+            {
                 return eventData;
+            }
 
             var processedEvent = eventData;
             foreach (var plugin in this.RegisteredPlugins.Values)
@@ -114,5 +120,7 @@ namespace TrackOne
         }
 
         internal long MaxMessageSize { get; set; }
+
+        internal virtual ValueTask EnsureLinkAsync() => new ValueTask();
     }
 }

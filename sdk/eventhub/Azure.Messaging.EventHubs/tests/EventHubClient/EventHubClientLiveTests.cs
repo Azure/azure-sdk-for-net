@@ -296,7 +296,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 var clientOptions = new EventHubClientOptions
                 {
                     Proxy = new WebProxy("http://1.2.3.4:9999"),
-                    TransportType = TransportType.AmqpWebSockets
+                    TransportType = TransportType.AmqpWebSockets,
+                    RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(2) }
                 };
 
                 await using (var client = new EventHubClient(connectionString))
@@ -304,9 +305,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    Assert.That(async () => await invalidProxyClient.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>());
-                    Assert.That(async () => await invalidProxyClient.GetPropertiesAsync(), Throws.InstanceOf<WebSocketException>());
-                    Assert.That(async () => await invalidProxyClient.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>());
+                    Assert.That(async () => await invalidProxyClient.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                    Assert.That(async () => await invalidProxyClient.GetPropertiesAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                    Assert.That(async () => await invalidProxyClient.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                 }
             }
         }

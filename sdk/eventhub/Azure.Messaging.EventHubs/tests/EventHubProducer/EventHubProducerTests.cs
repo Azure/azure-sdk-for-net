@@ -234,14 +234,42 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void SendRequiresTheBatch()
+        {
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.SendAsync(default(EventDataBatch)), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        /// </summary>
+        ///
+        [Test]
         public void SendAllowsAPartitionHashKey()
         {
-            var batchingOptions = new SendOptions { PartitionKey = "testKey" };
+            var sendOptions = new SendOptions { PartitionKey = "testKey" };
             var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
-            Assert.That(async () => await producer.SendAsync(events, batchingOptions), Throws.Nothing);
+            Assert.That(async () => await producer.SendAsync(events, sendOptions), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public void SendAllowsAPartitionHashKeyWithABatch()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "testKey" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
         }
 
         /// <summary>
@@ -251,12 +279,27 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SendForASpecificPartitionDoesNotAllowAPartitionHashKey()
         {
-            var batchingOptions = new SendOptions { PartitionKey = "testKey" };
+            var sendOptions = new SendOptions { PartitionKey = "testKey" };
             var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
 
-            Assert.That(async () => await producer.SendAsync(events, batchingOptions), Throws.InvalidOperationException);
+            Assert.That(async () => await producer.SendAsync(events, sendOptions), Throws.InvalidOperationException);
+        }
+
+        /// <summary>
+        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public void SendForASpecificPartitionDoesNotAllowAPartitionHashKeyWithABatch()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "testKey" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.SendAsync(batch), Throws.InvalidOperationException);
         }
 
         /// <summary>
@@ -296,6 +339,90 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(calledWithEvents, Is.SameAs(events), "The events should be the same instance.");
             Assert.That(calledWithOptions, Is.SameAs(options), "The options should be the same instance");
+        }
+
+        /// <summary>
+        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public async Task SendInvokesTheTransportProducerWithABatch()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "testKey" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            await producer.SendAsync(batch);
+            Assert.That(transportProducer.SendBatchCalledWith, Is.SameAs(batch), "The batch should be the same instance.");
+        }
+
+        /// <summary>
+        ///   Verifies finctionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public void CreateBatchForASpecificPartitionDoesNotAllowAPartitionHashKey()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "testKey" };
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.CreateBatchAsync(batchOptions), Throws.InvalidOperationException);
+        }
+
+        /// <summary>
+        ///   Verifies finctionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchInvokesTheTransportProducer()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            await producer.CreateBatchAsync(batchOptions);
+
+            Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.Null, "The batch creation should have passed options.");
+            Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.SameAs(batchOptions), "The options should have been cloned.");
+            Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(batchOptions.PartitionKey), "The partition key should match.");
+            Assert.That(transportProducer.CreateBatchCalledWith.MaximumizeInBytes, Is.EqualTo(batchOptions.MaximumizeInBytes), "The maximum size should match.");
+        }
+
+        /// <summary>
+        ///   Verifies finctionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchDefaultsBatchOptions()
+        {
+            var expectedOptions = new BatchOptions();
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            await producer.CreateBatchAsync();
+
+            Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.Null, "The batch creation should have passed options.");
+            Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.SameAs(expectedOptions), "The options should have been cloned.");
+            Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(expectedOptions.PartitionKey), "The partition key should match.");
+            Assert.That(transportProducer.CreateBatchCalledWith.MaximumizeInBytes, Is.EqualTo(expectedOptions.MaximumizeInBytes), "The maximum size should match.");
+        }
+
+        /// <summary>
+        ///   Verifies finctionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchSetsTheSendOptionsForTheEventBatch()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var eventBatch = await producer.CreateBatchAsync(batchOptions);
+
+            Assert.That(eventBatch.SendOptions, Is.SameAs(transportProducer.CreateBatchCalledWith), "The batch options should have used for the send options.");
+            ;
         }
 
         /// <summary>
@@ -339,12 +466,20 @@ namespace Azure.Messaging.EventHubs.Tests
             public bool WasCloseCalled = false;
             public EventHubRetryPolicy UpdateRetryPolicyCalledWith;
             public (IEnumerable<EventData>, SendOptions) SendCalledWith;
+            public EventDataBatch SendBatchCalledWith;
+            public BatchOptions CreateBatchCalledWith;
 
             public override Task SendAsync(IEnumerable<EventData> events,
-                                           SendOptions batchOptions,
+                                           SendOptions sendOptions,
                                            CancellationToken cancellationToken)
             {
-                SendCalledWith = (events, batchOptions);
+                SendCalledWith = (events, sendOptions);
+                return Task.CompletedTask;
+            }
+            public override Task SendAsync(EventDataBatch batch,
+                                           CancellationToken cancellationToken)
+            {
+                SendBatchCalledWith = batch;
                 return Task.CompletedTask;
             }
 
@@ -353,11 +488,34 @@ namespace Azure.Messaging.EventHubs.Tests
                 UpdateRetryPolicyCalledWith = newRetryPolicy;
             }
 
+            public override Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+                                                                       CancellationToken cancellationToken)
+            {
+                CreateBatchCalledWith = options;
+                return Task.FromResult((TransportEventBatch)new MockTransportBatch());
+            }
+
             public override Task CloseAsync(CancellationToken cancellationToken)
             {
                 WasCloseCalled = true;
                 return Task.CompletedTask;
             }
+        }
+
+        /// <summary>
+        ///   Serves as a non-functional transport event batch for satisfying the
+        ///   non-null constraints of the <see cref="EventDataBatch" /> created by
+        ///   the producer being tested.
+        /// </summary>
+        ///
+        private class MockTransportBatch : TransportEventBatch
+        {
+            public override long MaximumSizeInBytes { get; }
+            public override long SizeInBytes { get; }
+            public override int Count { get; }
+            public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
+            public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
+            public override void Dispose() => throw new NotImplementedException();
         }
     }
 }
