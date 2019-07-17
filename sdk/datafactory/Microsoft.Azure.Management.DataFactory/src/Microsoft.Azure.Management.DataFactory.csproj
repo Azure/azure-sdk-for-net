@@ -9,16 +9,7 @@
     <AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes><![CDATA[
-- Added support for the follwoing new datasets in ADF - ParquetDataset, DelimitedTextDataset, SapTableResourceDataset
-- ParquetDataset will support follwoing locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
-- Added support for parameterization to a number of properties
-- The table name is not required anymore for AzureSqlTable, AzureSqlDWTable, SqlServerTable
-- Added a new property dataProxyProperties to Integration Runtime
-- Added new SapTable Linked Services type 
-- Added types for Read and Write Connector settings in activities - AzureBlobStorageReadSettings, AzureBlobFSReadSettings, AzureDataLakeStoreReadSettings, AmazonS3ReadSettings, FileServerReadSettings, FtpReadSettings, SftpReadSettings, HttpReadSettings, HdfsReadSettings,
-AzureBlobStorageWriteSettings, AzureBlobFSWriteSettings, AzureDataLakeStoreWriteSettings, FileServerWriteSettings, FormatReadSettings, DelimitedTextReadSettings, FormatWriteSettings, DelimitedTextWriteSettings
-- Added new Copy sources - SapTableSource, SqlServerSource, AzureSqlSource
-- Added new Copy sinks - ParquetSink, SqlServerSink, AzureSqlSink
+- Added CopyTranslator.cs and TabularTranslator.cs to Extensions folder.
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

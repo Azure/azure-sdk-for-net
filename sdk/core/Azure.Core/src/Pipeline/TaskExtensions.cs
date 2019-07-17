@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Pipeline.Policies
+namespace Azure.Core.Pipeline
 {
     internal static class TaskExtensions
     {

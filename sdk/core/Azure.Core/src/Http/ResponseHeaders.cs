@@ -5,9 +5,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Core.Pipeline;
 
-namespace Azure
+namespace Azure.Core.Http
 {
     public readonly struct ResponseHeaders: IEnumerable<HttpHeader>
     {

@@ -9,7 +9,7 @@ using System.Text;
 namespace Azure.Storage.Sas
 {
     /// <summary>
-    /// <see cref="ContainerSasPermissions"/> supports reading and writing 
+    /// <see cref="ContainerSasPermissions"/> supports reading and writing
     /// permissions string for a containers's access policy.  Use <see cref="ToString"/>
     /// to generate a permissions string you can provide to
     /// <see cref="BlobSasBuilder.Permissions"/>.
@@ -70,7 +70,7 @@ namespace Azure.Storage.Sas
         /// <returns>The parsed <see cref="ContainerSasPermissions"/>.</returns>
         public static ContainerSasPermissions Parse(string s)
         {
-            var p = new ContainerSasPermissions(); 
+            var p = new ContainerSasPermissions();
             foreach (var c in s)
             {
                 switch (c)

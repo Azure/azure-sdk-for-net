@@ -58,7 +58,7 @@ namespace Azure.Storage.Sas
         /// <returns>The parsed <see cref="FileSasPermissions"/>.</returns>
         public static FileSasPermissions Parse(string s)
         {
-            var p = new FileSasPermissions(); 
+            var p = new FileSasPermissions();
             foreach (var c in s)
             {
                 switch (c)

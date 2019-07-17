@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Pipeline.Policies
+namespace Azure.Core.Pipeline
 {
     internal class RequestActivityPolicy : HttpPipelinePolicy
     {
