@@ -6,7 +6,7 @@
     <PropertyGroup>
         <Description>Microsoft Azure Attestation Library</Description>
         <AssemblyName>Microsoft.Azure.Management.Attestation</AssemblyName>
-        <Version>0.9.5-preview</Version>
+        <Version>0.9.6-preview</Version>
         <PackageId>Microsoft.Azure.Management.Attestation</PackageId>
         <PackageTags>Management.Attestation;Attestation;recommendations;</PackageTags>
         <PackageReleaseNotes>

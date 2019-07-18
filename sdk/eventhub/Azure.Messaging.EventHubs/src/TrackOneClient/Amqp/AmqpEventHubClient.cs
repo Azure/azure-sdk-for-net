@@ -6,8 +6,8 @@ namespace TrackOne.Amqp
     using System;
     using System.Net;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Amqp.Sasl;
     using Microsoft.Azure.Amqp;
+    using Microsoft.Azure.Amqp.Sasl;
     using Microsoft.Azure.Amqp.Transport;
     using TrackOne.Amqp.Management;
 

@@ -331,7 +331,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature) { }
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey, Microsoft.Azure.ServiceBus.TransportType transportType) { }
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, Microsoft.Azure.ServiceBus.TransportType transportType) { }
-        public string Authentication { get; set; }
+        public Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder.AuthenticationType Authentication { get; set; }
         public string Endpoint { get; set; }
         public string EntityPath { get; set; }
         public System.TimeSpan OperationTimeout { get; set; }
@@ -342,9 +342,10 @@ namespace Microsoft.Azure.ServiceBus
         public string GetEntityConnectionString() { }
         public string GetNamespaceConnectionString() { }
         public override string ToString() { }
-        public class static AuthenticationType
+        public enum AuthenticationType
         {
-            public const string ManagedIdentity = "Managed Identity";
+            Other = 0,
+            ManagedIdentity = 1,
         }
     }
     public class ServiceBusException : System.Exception
@@ -592,6 +593,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public override Microsoft.Azure.ServiceBus.ServiceBusConnection ServiceBusConnection { get; }
         public string TransferDestinationPath { get; }
+        public string ViaEntityPath { get; }
         public System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber) { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
         public override void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin) { }
@@ -864,7 +866,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 {
     public class AzureActiveDirectoryTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
     {
-        public const string CommonAuthority = "https://login.microsoftonline.com/common";
         public AzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authenticationCallback, string authority, object state) { }
         public event Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback AuthCallback;
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
@@ -900,7 +901,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     public abstract class TokenProvider : Microsoft.Azure.ServiceBus.Primitives.ITokenProvider
     {
         protected TokenProvider() { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority = "https://login.microsoftonline.com/common", object state = null) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority, object state = null) { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateManagedIdentityTokenProvider() { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature) { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey) { }

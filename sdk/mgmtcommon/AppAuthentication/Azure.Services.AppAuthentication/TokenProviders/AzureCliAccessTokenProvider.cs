@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     PrincipalUsed.TenantId = token.TenantId;
                 }
 
-                return AppAuthenticationResult.Create(tokenResponse, TokenResponse.DateFormat.DateTimeString);
+                return AppAuthenticationResult.Create(tokenResponse);
             }
             catch (Exception exp)
             {

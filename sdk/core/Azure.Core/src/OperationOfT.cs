@@ -57,7 +57,7 @@ namespace Azure
         public abstract bool HasValue { get; }
 
         /// <summary>
-        /// Polling interval used by WaitCompletionAsync method. 
+        /// Polling interval used by WaitCompletionAsync method.
         /// </summary>
         /// <remarks>
         /// The interval can change based on information returned from the server.

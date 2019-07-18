@@ -3,34 +3,35 @@
 // license information.
 
 using System;
+using Azure.Core.Http;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// A block blob's <see cref="BlockList"/> returned from 
+    /// A block blob's <see cref="BlockList"/> returned from
     /// <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient.GetBlockListAsync"/>.
     /// </summary>
     public partial class BlockList
     {
         /// <summary>
-        /// Gets the date and time the container was last modified.  Any 
-        /// operation that modifies the blob, including an update of the 
-        /// blob's metadata or properties, changes the last-modified time of 
+        /// Gets the date and time the container was last modified.  Any
+        /// operation that modifies the blob, including an update of the
+        /// blob's metadata or properties, changes the last-modified time of
         /// the blob.
         /// </summary>
         public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// The <see cref="ETag"/> contains a value that you can use to
-        /// perform operations conditionally. If the request version is 
+        /// The <see cref="Core.Http.ETag"/> contains a value that you can use to
+        /// perform operations conditionally. If the request version is
         /// 2011-08-18 or newer, the  ETag value will be in quotes.
         /// </summary>
         public ETag ETag { get; internal set; }
 
         /// <summary>
         /// The media type of the body of the response. For the
-        /// <see cref=" Specialized.BlockBlobClient.GetBlockListAsync"/> 
+        /// <see cref=" Specialized.BlockBlobClient.GetBlockListAsync"/>
         /// operation this is 'application/xml'.
         /// </summary>
         public string ContentType { get; internal set; }

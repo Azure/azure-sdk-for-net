@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal const string RetryFailure = "Failed after 5 retries.";
 
+        internal const string NonRetryableError = "Received a non-retryable error.";
+
         /// <summary>
         /// Creates an instance of AzureServiceTokenProviderException. 
         /// </summary>

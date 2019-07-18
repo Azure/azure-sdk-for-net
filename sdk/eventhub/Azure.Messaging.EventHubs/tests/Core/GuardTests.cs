@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class GuardTests
     {
         /// <summary>
@@ -41,6 +41,30 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { TimeSpan.FromHours(1) };
             yield return new object[] { TimeSpan.FromDays(0.3) };
             yield return new object[] { TimeSpan.FromTicks(1) };
+        }
+
+        /// <summary>
+        ///   Provides the invalid test cases for the <see cref="Guard.ArgumentInRange" /> tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ArgumentInRangeForTimeSpanInvalidCases()
+        {
+            yield return new object[] { TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(-2), TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(11), TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(10) };
+        }
+
+        /// <summary>
+        ///   Provides the valid test cases for the <see cref="Guard.ArgumentInRange" /> tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ArgumentInRangeForTimeSpanValidCases()
+        {
+            yield return new object[] { TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(0), TimeSpan.FromSeconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(9), TimeSpan.FromMilliseconds(0), TimeSpan.FromSeconds(10) };
+            yield return new object[] { TimeSpan.FromHours(1), TimeSpan.FromHours(0), TimeSpan.FromHours(10) };
         }
 
         /// <summary>
@@ -198,6 +222,32 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ArgumentInRangeAllowsValidValues(int value,
                                                      int minValue,
                                                      int maxValue)
+        {
+            Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentInRange" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(ArgumentInRangeForTimeSpanInvalidCases))]
+        public void ArgumentInRangeForTimeSpanEnforcesInvariants(TimeSpan value,
+                                                                 TimeSpan minValue,
+                                                                 TimeSpan maxValue)
+        {
+            Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentInRange" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(ArgumentInRangeForTimeSpanValidCases))]
+        public void ArgumentInRangeForTimeSpanAllowsValidValues(TimeSpan value,
+                                                                TimeSpan minValue,
+                                                                TimeSpan maxValue)
         {
             Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.Nothing);
         }

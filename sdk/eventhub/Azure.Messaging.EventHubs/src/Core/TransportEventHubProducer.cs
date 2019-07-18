@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,14 @@ namespace Azure.Messaging.EventHubs.Core
     ///
     internal abstract class TransportEventHubProducer
     {
+        /// <summary>
+        ///   Updates the active retry policy for the client.
+        /// </summary>
+        ///
+        /// <param name="newRetryPolicy">The retry policy to set as active.</param>
+        ///
+        public abstract void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy);
+
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.

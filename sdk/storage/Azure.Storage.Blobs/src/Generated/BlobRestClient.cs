@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -838,7 +838,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -962,7 +962,7 @@ namespace Azure.Storage.Blobs
                         // Get response headers
                         string _header;
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -971,7 +971,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1267,7 +1267,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1403,7 +1403,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1566,7 +1566,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1711,7 +1711,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1858,7 +1858,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2001,7 +2001,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2144,7 +2144,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2313,7 +2313,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2655,8 +2655,8 @@ namespace Azure.Storage.Blobs
                 bool? rangeGetContentHash = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -2712,8 +2712,8 @@ namespace Azure.Storage.Blobs
                 bool? rangeGetContentHash = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -2773,7 +2773,7 @@ namespace Azure.Storage.Blobs
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -2794,7 +2794,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -2910,7 +2910,7 @@ namespace Azure.Storage.Blobs
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -2931,7 +2931,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -3085,8 +3085,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -3136,8 +3136,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -3194,7 +3194,7 @@ namespace Azure.Storage.Blobs
                             _value.CreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -3259,7 +3259,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -3381,8 +3381,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.DeleteSnapshotsOption? deleteSnapshots = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -3435,8 +3435,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.DeleteSnapshotsOption? deleteSnapshots = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -3627,8 +3627,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string blobContentDisposition = default,
                 string requestId = default,
                 bool async = true,
@@ -3693,8 +3693,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string blobContentDisposition = default,
                 string requestId = default)
             {
@@ -3761,7 +3761,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -3829,8 +3829,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -3880,8 +3880,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -3937,7 +3937,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4005,8 +4005,8 @@ namespace Azure.Storage.Blobs
                 string proposedLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4056,8 +4056,8 @@ namespace Azure.Storage.Blobs
                 string proposedLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -4109,7 +4109,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4163,8 +4163,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4211,8 +4211,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -4267,7 +4267,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4317,8 +4317,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4365,8 +4365,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -4421,7 +4421,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4477,8 +4477,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4528,8 +4528,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -4589,7 +4589,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4643,8 +4643,8 @@ namespace Azure.Storage.Blobs
                 int? breakPeriod = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4691,8 +4691,8 @@ namespace Azure.Storage.Blobs
                 int? breakPeriod = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -4743,7 +4743,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4810,8 +4810,8 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
@@ -4861,8 +4861,8 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default)
             {
@@ -4923,7 +4923,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -4980,12 +4980,12 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
@@ -5046,12 +5046,12 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default)
             {
@@ -5116,7 +5116,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5181,12 +5181,12 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
@@ -5247,12 +5247,12 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default)
             {
@@ -5318,7 +5318,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5638,8 +5638,8 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
@@ -5716,8 +5716,8 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default)
             {
@@ -5793,7 +5793,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -5865,8 +5865,8 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -5934,8 +5934,8 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -5999,7 +5999,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -6067,8 +6067,8 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -6130,8 +6130,8 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -6187,7 +6187,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -6265,12 +6265,12 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -6349,12 +6349,12 @@ namespace Azure.Storage.Blobs
                 long? ifSequenceNumberEqualTo = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -6429,7 +6429,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -6505,8 +6505,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -6559,8 +6559,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -6618,7 +6618,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-content-length", out _header))
                         {
@@ -6688,8 +6688,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -6745,8 +6745,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -6805,7 +6805,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-content-length", out _header))
                         {
@@ -6871,8 +6871,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -6922,8 +6922,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -6974,7 +6974,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -7031,8 +7031,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
@@ -7085,8 +7085,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default)
             {
@@ -7139,7 +7139,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -7193,8 +7193,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -7241,8 +7241,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -7296,7 +7296,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -7378,8 +7378,8 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -7450,8 +7450,8 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -7524,7 +7524,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -7592,8 +7592,8 @@ namespace Azure.Storage.Blobs
                 long? appendPosition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -7655,8 +7655,8 @@ namespace Azure.Storage.Blobs
                 long? appendPosition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -7717,7 +7717,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -7799,12 +7799,12 @@ namespace Azure.Storage.Blobs
                 long? appendPosition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -7877,12 +7877,12 @@ namespace Azure.Storage.Blobs
                 long? appendPosition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -7946,7 +7946,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -8052,8 +8052,8 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -8127,8 +8127,8 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -8208,7 +8208,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -8431,8 +8431,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -8494,8 +8494,8 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
-                Azure.ETag? sourceIfMatch = default,
-                Azure.ETag? sourceIfNoneMatch = default,
+                Azure.Core.Http.ETag? sourceIfMatch = default,
+                Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -8634,8 +8634,8 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
@@ -8706,8 +8706,8 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
+                Azure.Core.Http.ETag? ifMatch = default,
+                Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default)
             {
                 // Validation
@@ -8790,7 +8790,7 @@ namespace Azure.Storage.Blobs
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -8941,7 +8941,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-Type", out _header))
                         {
@@ -10883,7 +10883,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// ETag
         /// </summary>
-        public Azure.ETag? ETag { get; internal set; }
+        public Azure.Core.Http.ETag? ETag { get; internal set; }
 
         /// <summary>
         /// Size in bytes
@@ -11045,7 +11045,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
-                _value.ETag = new Azure.ETag(_child.Value);
+                _value.ETag = new Azure.Core.Http.ETag(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Content-Length", ""));
             if (_child != null)
@@ -11200,7 +11200,7 @@ namespace Azure.Storage.Blobs.Models
         public static BlobItemProperties BlobItemProperties(
             string copyId = default,
             System.DateTimeOffset? creationTime = default,
-            Azure.ETag? eTag = default,
+            Azure.Core.Http.ETag? eTag = default,
             long? contentLength = default,
             string contentType = default,
             string contentEncoding = default,
@@ -11924,7 +11924,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// ETag
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// LeaseStatus
@@ -11967,7 +11967,7 @@ namespace Azure.Storage.Blobs.Models
             System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.ContainerProperties _value = new Azure.Storage.Blobs.Models.ContainerProperties();
             _value.LastModified = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("Last-Modified", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.ETag = new Azure.ETag(element.Element(System.Xml.Linq.XName.Get("Etag", "")).Value);
+            _value.ETag = new Azure.Core.Http.ETag(element.Element(System.Xml.Linq.XName.Get("Etag", "")).Value);
             _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
@@ -12015,7 +12015,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static ContainerProperties ContainerProperties(
             System.DateTimeOffset lastModified,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
@@ -13402,7 +13402,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13419,7 +13419,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new ContainerInfo instance for mocking.
         /// </summary>
         public static ContainerInfo ContainerInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
             var _model = new ContainerInfo();
@@ -13447,7 +13447,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13526,7 +13526,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13557,7 +13557,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static ContainerAccessPolicy ContainerAccessPolicy(
             Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> signedIdentifiers)
         {
@@ -13583,7 +13583,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13605,7 +13605,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new Lease instance for mocking.
         /// </summary>
         public static Lease Lease(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             string leaseId)
         {
@@ -13630,7 +13630,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -13712,7 +13712,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
@@ -13945,7 +13945,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// If the blob has an Hash hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
@@ -14040,7 +14040,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             string destinationSnapshot,
             string contentType,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             byte[] contentHash,
             System.Collections.Generic.IEnumerable<string> contentEncoding,
             string contentDisposition,
@@ -14115,7 +14115,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14144,7 +14144,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContentInfo instance for mocking.
         /// </summary>
         public static BlobContentInfo BlobContentInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             long blobSequenceNumber)
@@ -14171,7 +14171,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14212,7 +14212,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14253,7 +14253,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14270,7 +14270,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobInfo instance for mocking.
         /// </summary>
         public static BlobInfo BlobInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
             var _model = new BlobInfo();
@@ -14298,7 +14298,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14316,7 +14316,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobSnapshotInfo BlobSnapshotInfo(
             string snapshot,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
             var _model = new BlobSnapshotInfo();
@@ -14340,7 +14340,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14367,7 +14367,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobCopyInfo instance for mocking.
         /// </summary>
         public static BlobCopyInfo BlobCopyInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             string copyId,
             Azure.Storage.Blobs.Models.CopyStatus copyStatus)
@@ -14434,7 +14434,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// The media type of the body of the response. For Get Block List this is 'application/xml'
@@ -14488,7 +14488,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14517,7 +14517,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new PageInfo instance for mocking.
         /// </summary>
         public static PageInfo PageInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             long blobSequenceNumber)
@@ -14549,7 +14549,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// The size of the blob in bytes.
@@ -14580,7 +14580,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static PageRangesInfo PageRangesInfo(
             System.DateTimeOffset lastModified,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             long blobContentLength,
             Azure.Storage.Blobs.Models.PageList body)
         {
@@ -14606,7 +14606,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14628,7 +14628,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new PageBlobInfo instance for mocking.
         /// </summary>
         public static PageBlobInfo PageBlobInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             long blobSequenceNumber)
         {
@@ -14653,7 +14653,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -14692,7 +14692,7 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobAppendInfo instance for mocking.
         /// </summary>
         public static BlobAppendInfo BlobAppendInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             string blobAppendOffset,

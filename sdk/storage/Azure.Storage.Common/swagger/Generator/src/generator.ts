@@ -521,7 +521,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
                     const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
                     w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
-                    w.line(`foreach (Azure.Core.Pipeline.HttpHeader ${pairName} in ${responseName}.Headers)`);
+                    w.line(`foreach (Azure.Core.Http.HttpHeader ${pairName} in ${responseName}.Headers)`);
                     w.scope(`{`, `}`, () => {
                         w.line(`if (${pairName}.Name.StartsWith("${prefix}", System.StringComparison.InvariantCulture))`);
                         w.scope(`{`, `}`, () => {

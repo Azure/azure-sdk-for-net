@@ -15,10 +15,12 @@ namespace Azure.Core.Pipeline
         private readonly ResponseClassifier _responseClassifier;
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, ClientDiagnostics clientDiagnostics = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _responseClassifier = responseClassifier ?? new ResponseClassifier();
+
+            Diagnostics = clientDiagnostics ?? new ClientDiagnostics(true);
 
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
@@ -31,6 +33,8 @@ namespace Azure.Core.Pipeline
 
         public Request CreateRequest()
             => _transport.CreateRequest();
+
+        public ClientDiagnostics Diagnostics { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)

@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var producerOptions = new EventHubProducerOptions { Retry = new ExponentialRetry(TimeSpan.FromSeconds(0.25), TimeSpan.FromSeconds(45), 5) };
+                var producerOptions = new EventHubProducerOptions { RetryOptions = new RetryOptions { MaximumRetries = 5 } };
 
                 await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { TransportType = transportType }))
                 await using (var producer = client.CreateProducer(producerOptions))
@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) }}))
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event.
@@ -333,7 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) }}))
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event.

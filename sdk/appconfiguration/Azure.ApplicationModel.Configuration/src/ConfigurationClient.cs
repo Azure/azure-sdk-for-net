@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -21,7 +20,6 @@ namespace Azure.ApplicationModel.Configuration
     {
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
-
 
         /// <summary>
         /// Protected constructor to allow mocking
@@ -67,7 +65,8 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
             return await AddAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
@@ -80,7 +79,8 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Add(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
             return Add(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
@@ -91,8 +91,12 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateAddRequest(setting))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Add");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateAddRequest(setting);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -104,6 +108,11 @@ namespace Azure.ApplicationModel.Configuration
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -113,8 +122,13 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateAddRequest(setting))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Add");
+            scope.AddAttribute("key", setting?.Key);
+            scope.Start();
+
+            try
             {
+                using Request request = CreateAddRequest(setting);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -125,6 +139,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw response.CreateRequestFailedException();
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -160,7 +179,8 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
             return await SetAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
@@ -173,7 +193,8 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Set(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
             return Set(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
@@ -184,8 +205,13 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateSetRequest(setting))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            scope.AddAttribute("key", setting?.Key);
+            scope.Start();
+
+            try
             {
+                using Request request = CreateSetRequest(setting);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -198,6 +224,11 @@ namespace Azure.ApplicationModel.Configuration
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -207,9 +238,15 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateSetRequest(setting))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            scope.AddAttribute("key", setting?.Key);
+            scope.Start();
+
+            try
             {
-                var response = _pipeline.SendRequest(request, cancellationToken);
+                using Request request = CreateSetRequest(setting);
+
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
                 {
@@ -220,6 +257,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw response.CreateRequestFailedException();
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -261,7 +303,6 @@ namespace Azure.ApplicationModel.Configuration
             return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
-
         /// <summary>
         /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
         /// </summary>
@@ -283,8 +324,13 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateUpdateRequest(setting))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Update");
+            scope.AddAttribute("key", setting?.Key);
+            scope.Start();
+
+            try
             {
+                using Request request = CreateUpdateRequest(setting);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -295,6 +341,11 @@ namespace Azure.ApplicationModel.Configuration
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -304,8 +355,13 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateUpdateRequest(setting))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Update");
+            scope.AddAttribute("key", setting?.Key);
+            scope.Start();
+
+            try
             {
+                using Request request = CreateUpdateRequest(setting);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -315,6 +371,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw response.CreateRequestFailedException();
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -357,8 +418,13 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateDeleteRequest(key, label, etag))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Delete");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
             {
+                using Request request = CreateDeleteRequest(key, label, etag);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -369,6 +435,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw response.CreateRequestFailedException();
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -383,8 +454,13 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response Delete(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateDeleteRequest(key, label, etag))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
             {
+                using Request request = CreateDeleteRequest(key, label, etag);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -395,6 +471,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw response.CreateRequestFailedException();
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -424,8 +505,13 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateGetRequest(key, label, acceptDateTime))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Get");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
             {
+                using Request request = CreateGetRequest(key, label, acceptDateTime);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -435,6 +521,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -447,6 +538,10 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Get(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
         {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Get");
+            scope.AddAttribute(nameof(key), key);
+            scope.Start();
+
             using (Request request = CreateGetRequest(key, label, acceptDateTime))
             {
                 Response response = _pipeline.SendRequest(request, cancellationToken);
@@ -529,8 +624,12 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<PageResponse<ConfigurationSetting>> GetSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateBatchRequest(selector, pageLink))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.GetSettingsPage");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateBatchRequest(selector, pageLink);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -543,6 +642,11 @@ namespace Azure.ApplicationModel.Configuration
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -553,8 +657,12 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private PageResponse<ConfigurationSetting> GetSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateBatchRequest(selector, pageLink))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.GetSettingsPage");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateBatchRequest(selector, pageLink);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -566,6 +674,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw response.CreateRequestFailedException();
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -593,8 +706,12 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<PageResponse<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateGetRevisionsRequest(selector, pageLink))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateGetRevisionsRequest(selector, pageLink);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
                 switch (response.Status)
                 {
@@ -605,6 +722,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -617,8 +739,12 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private PageResponse<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateGetRevisionsRequest(selector, pageLink))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateGetRevisionsRequest(selector, pageLink);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
                 switch (response.Status)
                 {
@@ -629,6 +755,11 @@ namespace Azure.ApplicationModel.Configuration
                     default:
                         throw response.CreateRequestFailedException();
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 

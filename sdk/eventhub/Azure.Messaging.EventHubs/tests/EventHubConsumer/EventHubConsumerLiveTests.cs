@@ -427,7 +427,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     new EventData(new byte[1000000])
                 };
 
-                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) }}))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
