@@ -30,7 +30,6 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   long as they are being listened to, making it possible for other
     ///   tests to interfere with these. For this reason, these tests are
     ///   marked as non-parallelizable.
-    ///
     /// </remarks>
     ///
     [TestFixture]
@@ -669,13 +668,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var endpoint = GetPropertyValueFromAnonymousTypeInstance<Uri>(eventPayload, "Endpoint");
             var entityPath = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "Entity");
-            var pRouting = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "ActivePartitionRouting");
+            var partitionRouting = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "ActivePartitionRouting");
 
             var expectedEndpointStart = "amqps://" + connectionStringProperties.Endpoint.Host;
 
             Assert.That(endpoint.AbsoluteUri.StartsWith(expectedEndpointStart), Is.True);
             Assert.That(entityPath, Is.EqualTo(connectionStringProperties.EventHubPath));
-            Assert.That(pRouting, Is.EqualTo(activePartitionRouting));
+            Assert.That(partitionRouting, Is.EqualTo(activePartitionRouting));
         }
 
         /// <summary>
