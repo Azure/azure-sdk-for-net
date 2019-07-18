@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
             /// Name of the attestation service instance
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
             /// Name of the attestation service instance
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
             /// Name of the attestation service
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
             /// Name of the attestation service
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
             /// Name of the attestation service
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
             /// Name of the attestation service
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<AttestationProvider> ListByResourceGroup(this IAttestationProvidersOperations operations, string resourceGroupName)
             {
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
