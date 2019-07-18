@@ -25,7 +25,8 @@ namespace Azure.Core.Testing
             "Date",
             "x-ms-date",
             "x-ms-client-request-id",
-            "User-Agent"
+            "User-Agent",
+            "Request-Id"
         };
 
         public HashSet<string> ExcludeResponseHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -176,7 +177,7 @@ namespace Azure.Core.Testing
                         difference++;
                     }
                 }
-                else
+                else if (!ExcludeHeaders.Contains(header.Key))
                 {
                     difference++;
                 }

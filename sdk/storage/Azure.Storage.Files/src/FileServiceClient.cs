@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -412,6 +413,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: "Azure.Storage.Files.FileServiceClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -533,6 +535,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         properties: properties,
                         async: async,
+                        operationName: "Azure.Storage.Files.FileServiceClient.SetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -578,6 +581,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<ShareClient> CreateShare(
             string shareName,
             IDictionary<string, string> metadata = default,
@@ -617,6 +621,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
             IDictionary<string, string> metadata = default,
@@ -652,6 +657,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response DeleteShare(
             string shareName,
             CancellationToken cancellationToken = default) =>
@@ -679,6 +685,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
             CancellationToken cancellationToken = default) =>

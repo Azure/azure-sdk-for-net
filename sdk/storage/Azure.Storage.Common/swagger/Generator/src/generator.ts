@@ -85,7 +85,7 @@ function generateService(w: IndentWriter, model: IServiceModel): void {
         //             w.scope(() => {
         //                 const headerAccess = responseType.type === `void` ? ``: `.Raw`;
         //                 w.write(`=> response${headerAccess}.Headers.TryGetValue("${header.name}", out string header) ?`);
-        //                 w.scope(() => {
+        //                 w.scope(() => {  
         //                     w.line(`${types.convertFromString('header', header.model, service)} :`)
         //                     w.line(`default;`);
         //                 });
@@ -130,6 +130,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const pairName = `_headerPair`;
     let responseName = "_response";
     const resultName = "_result";
+    const scopeName = "_scope";
+    const operationName = "operationName";
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
 
@@ -154,6 +156,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
+    w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);        
@@ -169,36 +172,58 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`bool async = true`);
         }
         if (separateParams()) {  w.line(`,`); }
+        w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
+        if (separateParams()) {  w.line(`,`); }
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.write(`using (Azure.Core.Http.Request ${requestName} = ${methodName}_CreateRequest(`);
-        w.scope(() => {
-            const separateParams = IndentWriter.createFenceposter();
-            for (const arg of operation.request.arguments) {
-                if (separateParams()) { w.line(`,`); }
-                w.write(`${naming.parameter(arg.clientName)}`);
-            }
-            w.write(`))`);
-        });
+        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${pipelineName}.Diagnostics.CreateScope(${operationName});`)
+        w.line(`try`);
         w.scope('{', '}', () => {
-            w.write(`Azure.Response ${responseName} = `);
-            const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false)`;
-            if (sync) {
-                w.write('async ?');
-                w.scope(() => {
-                    w.line(`// Send the request asynchronously if we're being called via an async path`);
-                    w.line(`${asyncCall} :`);
-                    w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
-                    w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
-                    w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
-                });
-            } else {
-                w.line(`${asyncCall};`);
+            for (const arg of operation.request.arguments) {
+                if (arg.trace)
+                {
+                    w.line(`${scopeName}.AddAttribute("${naming.parameter(arg.name)}", ${naming.parameter(arg.clientName)});`);
+                }
             }
-            w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
-            w.line(`return ${methodName}_CreateResponse(${responseName});`);
+            w.line(`${scopeName}.Start();`);
+            w.write(`using (Azure.Core.Http.Request ${requestName} = ${methodName}_CreateRequest(`);
+            w.scope(() => {
+                const separateParams = IndentWriter.createFenceposter();
+                for (const arg of operation.request.arguments) {
+                    if (separateParams()) { w.line(`,`); }
+                    w.write(`${naming.parameter(arg.clientName)}`);
+                }
+                w.write(`))`);
+            });
+            w.scope('{', '}', () => {
+                w.write(`Azure.Response ${responseName} = `);
+                const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false)`;
+                if (sync) {
+                    w.write('async ?');
+                    w.scope(() => {
+                        w.line(`// Send the request asynchronously if we're being called via an async path`);
+                        w.line(`${asyncCall} :`);
+                        w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
+                        w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
+                        w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
+                    });
+                } else {
+                    w.line(`${asyncCall};`);
+                }
+                w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
+                w.line(`return ${methodName}_CreateResponse(${responseName});`);
+            });
+        });
+        w.line(`catch (System.Exception ex)`);
+        w.scope('{', '}', () => {
+            w.line(`${scopeName}.Failed(ex);`);
+            w.line(`throw;`);
+        });
+        w.line(`finally`);
+        w.scope('{', '}', () => {
+            w.line(`${scopeName}.Dispose();`);
         });
     });
     w.line();

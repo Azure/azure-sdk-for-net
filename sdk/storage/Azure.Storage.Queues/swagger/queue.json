@@ -1594,7 +1594,8 @@
       "type": "string",
       "format": "url",
       "in": "path",
-      "x-ms-skip-url-encoding": true
+      "x-ms-skip-url-encoding": true,
+      "x-ms-trace": true
     },
     "ApiVersionParameter": {
       "name": "x-ms-version",

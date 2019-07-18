@@ -3306,7 +3306,8 @@
       "required": true,
       "type": "string",
       "format": "url",
-      "x-ms-skip-url-encoding": true
+      "x-ms-skip-url-encoding": true,
+      "x-ms-trace": true
     },
     "ShareAcl": {
       "name": "shareAcl",

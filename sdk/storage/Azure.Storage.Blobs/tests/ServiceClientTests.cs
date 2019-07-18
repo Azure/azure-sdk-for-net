@@ -117,7 +117,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(items.Single(c => c.Value.Name == containerName));
             }
         }
-        
+
         [Test]
         public async Task ListContainersSegmentAsync_Metadata()
         {

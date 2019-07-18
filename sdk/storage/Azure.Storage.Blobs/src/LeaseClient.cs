@@ -274,6 +274,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: httpAccessConditions?.IfMatch,
                             ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Acquire",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -439,6 +440,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: httpAccessConditions?.IfMatch,
                             ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Renew",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -605,6 +607,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 ifMatch: httpAccessConditions?.IfMatch,
                                 ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                                 async: async,
+                                operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Release",
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         return new Response<ReleasedObjectInfo>(
@@ -784,6 +787,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: httpAccessConditions?.IfMatch,
                             ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Change",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -803,6 +807,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                             ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Change",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1009,6 +1014,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: httpAccessConditions?.IfMatch,
                             ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Break",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false))
                             .ToLease();

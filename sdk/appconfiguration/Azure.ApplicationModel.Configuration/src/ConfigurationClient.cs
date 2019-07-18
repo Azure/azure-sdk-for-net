@@ -91,7 +91,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Add");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Add");
             scope.Start();
 
             try
@@ -122,7 +122,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Add");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Add");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -205,7 +205,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -238,7 +238,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Set");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -324,7 +324,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Update");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Update");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -355,7 +355,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Update");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Update");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -418,7 +418,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Delete");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
             scope.Start();
 
@@ -454,7 +454,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response Delete(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Delete");
             scope.AddAttribute("key", key);
             scope.Start();
 
@@ -505,7 +505,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Get");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Get");
             scope.AddAttribute("key", key);
             scope.Start();
 
@@ -538,21 +538,29 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Get(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Get");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.Get");
             scope.AddAttribute(nameof(key), key);
             scope.Start();
 
-            using (Request request = CreateGetRequest(key, label, acceptDateTime))
+            try
             {
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                switch (response.Status)
+                using (Request request = CreateGetRequest(key, label, acceptDateTime))
                 {
-                    case 200:
-                        return CreateResponse(response);
-                    default:
-                        throw response.CreateRequestFailedException();
+                    Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                    switch (response.Status)
+                    {
+                        case 200:
+                            return CreateResponse(response);
+                        default:
+                            throw response.CreateRequestFailedException();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -624,7 +632,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<PageResponse<ConfigurationSetting>> GetSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.GetSettingsPage");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.GetSettingsPage");
             scope.Start();
 
             try
@@ -657,7 +665,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private PageResponse<ConfigurationSetting> GetSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.GetSettingsPage");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.GetSettingsPage");
             scope.Start();
 
             try
@@ -706,7 +714,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<PageResponse<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.GetRevisionsPage");
             scope.Start();
 
             try
@@ -739,7 +747,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private PageResponse<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("ConfigurationClient.Set");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.ApplicationModel.Configuration.ConfigurationClient.GetRevisionsPage");
             scope.Start();
 
             try

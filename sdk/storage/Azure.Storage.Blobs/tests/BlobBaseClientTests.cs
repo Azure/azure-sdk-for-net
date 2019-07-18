@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var response = await blob.DownloadAsync();
-                
+
                 // Assert
                 Assert.AreEqual(data.Length, response.Value.ContentLength);
                 var actual = new MemoryStream();
@@ -212,7 +212,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var response = await blob.DownloadAsync(
-                    range: new HttpRange(offset, count), 
+                    range: new HttpRange(offset, count),
                     rangeGetContentHash: true);
 
                 // Assert
@@ -1851,7 +1851,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var response = await blob.SetTierAsync(
-                    accessTier: AccessTier.Cool, 
+                    accessTier: AccessTier.Cool,
                     leaseAccessConditions: new LeaseAccessConditions
                     {
                         LeaseId = leaseId

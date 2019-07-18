@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -339,6 +340,7 @@ namespace Azure.Storage.Files
                         metadata: metadata,
                         quota: quotaInBytes,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.Create",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -454,6 +456,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -577,6 +580,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.Delete",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -700,6 +704,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -811,6 +816,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         quota: quotaInBytes,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.SetQuota",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -929,6 +935,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.SetMetadata",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1035,6 +1042,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.GetAccessPolicy",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1159,6 +1167,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         permissions: permissions,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.SetAccessPolicy",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1259,6 +1268,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.GetStatistics",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1300,6 +1310,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<DirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1334,6 +1345,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1365,6 +1377,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response DeleteDirectory(
             string directoryName,
             CancellationToken cancellationToken = default) =>
@@ -1389,6 +1402,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDirectoryAsync(
             string directoryName,
             CancellationToken cancellationToken = default) =>

@@ -1228,6 +1228,7 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         async: async,
+                        operationName: "Azure.Storage.Files.FileClient.SetHttpHeaders",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

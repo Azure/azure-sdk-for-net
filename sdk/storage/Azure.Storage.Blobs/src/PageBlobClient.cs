@@ -425,6 +425,7 @@ namespace Azure.Storage.Blobs.Specialized
                         blobContentLength: size,
                         blobSequenceNumber: sequenceNumber,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.Create",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -659,6 +660,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                                     async: async,
+                                    operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.UploadPages",
                                     cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
@@ -825,6 +827,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.ClearPages",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -992,6 +995,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.GetPageRanges",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1193,6 +1197,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.GetPageRangesDiff",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1351,6 +1356,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.Resize",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1557,6 +1563,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.UpdateSequenceNumber",
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1974,6 +1981,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.StartCopyIncremental",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2241,6 +2249,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceAccessConditions?.HttpAccessConditions?.IfMatch,
                         sourceIfNoneMatch: sourceAccessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.UploadPagesFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
