@@ -821,6 +821,7 @@ namespace Azure.Storage.Queues
                         this.Pipeline,
                         this.MessagesUri,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.ClearMessages",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

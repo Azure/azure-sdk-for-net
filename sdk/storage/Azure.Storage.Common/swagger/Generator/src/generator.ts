@@ -184,7 +184,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             for (const arg of operation.request.arguments) {
                 if (arg.trace)
                 {
-                    w.line(`${scopeName}.AddAttribute("${naming.parameter(arg.clientName)}", ${naming.parameter(arg.clientName)});`);
+                    w.line(`${scopeName}.AddAttribute("${naming.parameter(arg.name)}", ${naming.parameter(arg.clientName)});`);
                 }
             }
             w.line(`${scopeName}.Start();`);

@@ -42,7 +42,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
                         pipeline,
@@ -167,7 +167,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
                         pipeline,
@@ -296,7 +296,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = ListSharesSegmentAsync_CreateRequest(
                         pipeline,
@@ -444,7 +444,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                         pipeline,
@@ -589,7 +589,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
                         pipeline,
@@ -739,7 +739,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
                         pipeline,
@@ -859,7 +859,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = CreateSnapshotAsync_CreateRequest(
                         pipeline,
@@ -1005,7 +1005,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = SetQuotaAsync_CreateRequest(
                         pipeline,
@@ -1142,7 +1142,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
                         pipeline,
@@ -1282,7 +1282,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
                         pipeline,
@@ -1409,7 +1409,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
                         pipeline,
@@ -1557,7 +1557,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
                         pipeline,
@@ -1688,7 +1688,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                         pipeline,
@@ -1829,7 +1829,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
                         pipeline,
@@ -1975,7 +1975,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
                         pipeline,
@@ -2087,7 +2087,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
                         pipeline,
@@ -2235,7 +2235,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = ListFilesAndDirectoriesSegmentAsync_CreateRequest(
                         pipeline,
@@ -2380,7 +2380,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = ListHandlesAsync_CreateRequest(
                         pipeline,
@@ -2528,7 +2528,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = ForceCloseHandlesAsync_CreateRequest(
                         pipeline,
@@ -2706,7 +2706,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                         pipeline,
@@ -2891,7 +2891,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = DownloadAsync_CreateRequest(
                         pipeline,
@@ -3236,7 +3236,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
                         pipeline,
@@ -3443,7 +3443,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
                         pipeline,
@@ -3566,7 +3566,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
                         pipeline,
@@ -3740,7 +3740,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
                         pipeline,
@@ -3893,7 +3893,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = UploadRangeAsync_CreateRequest(
                         pipeline,
@@ -4061,7 +4061,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = GetRangeListAsync_CreateRequest(
                         pipeline,
@@ -4213,7 +4213,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = StartCopyAsync_CreateRequest(
                         pipeline,
@@ -4369,7 +4369,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = AbortCopyAsync_CreateRequest(
                         pipeline,
@@ -4494,7 +4494,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = ListHandlesAsync_CreateRequest(
                         pipeline,
@@ -4632,7 +4632,7 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
-                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
                     using (Azure.Core.Http.Request _request = ForceCloseHandlesAsync_CreateRequest(
                         pipeline,

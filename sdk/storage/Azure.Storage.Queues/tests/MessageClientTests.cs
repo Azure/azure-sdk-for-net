@@ -17,7 +17,6 @@ namespace Azure.Storage.Queues.Test
         public MessageClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
-            TestDiagnostics = false;
         }
 
         [Test]
