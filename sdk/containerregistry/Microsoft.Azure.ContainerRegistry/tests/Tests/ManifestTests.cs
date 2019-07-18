@@ -17,7 +17,7 @@ namespace ContainerRegistry.Tests
         {
             ImageName = ACRTestUtil.ProdRepository,
             Registry = ACRTestUtil.ManagedTestRegistryFullName,
-            Manifest = new AcrManifestAttributesBase()
+            ManifestAttributes = new AcrManifestAttributesBase()
             {
                 Architecture = "amd64",
                 CreatedTime = "2018-09-28T23:37:51.9987277Z",
@@ -36,7 +36,7 @@ namespace ContainerRegistry.Tests
             }
         };
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]        
+        [Fact]        
         public async Task GetAcrManifestAttributesMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesMR)))
@@ -47,11 +47,11 @@ namespace ContainerRegistry.Tests
 
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, repositoryAttributes.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, repositoryAttributes.Registry);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Manifest, repositoryAttributes.Manifest);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, repositoryAttributes.ManifestAttributes);
             }            
         }
         
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
+        [Fact]
         public async Task GetAcrManifestAttributesCRReturnsNull()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesCRReturnsNull)))
@@ -64,7 +64,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
+        [Fact]
         public async Task GetAcrManifestsMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestsMR)))
@@ -74,12 +74,12 @@ namespace ContainerRegistry.Tests
 
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, manifests.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, manifests.Registry);
-                Assert.Equal(1, manifests.Manifests.Count);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Manifest, manifests.Manifests[0]);
+                Assert.Equal(1, manifests.ManifestsAttributes.Count);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, manifests.ManifestsAttributes[0]);
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
+        [Fact]
         public async Task GetAcrManifestsCRThrowException()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestsCRThrowException)))
@@ -89,7 +89,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
+        [Fact]
         public async Task GetManifestMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestMR)))
@@ -103,10 +103,8 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(tag, manifest.Tag);
                 Assert.Equal("amd64", manifest.Architecture);
                 Assert.Equal(10, manifest.FsLayers.Count);
-                Assert.Equal(10, manifest.ImageHistories.Count);
                 Assert.Equal(1, manifest.Signatures.Count);
                 var signature = manifest.Signatures[0];
-                Assert.NotEqual(string.Empty, signature.ProtectedHeader);
                 Assert.NotEqual(string.Empty, signature.Signature);
                 Assert.Equal("P-256", signature.Header.Jwk.Crv);
                 Assert.NotEqual(string.Empty, signature.Header.Jwk.Kid);
@@ -116,7 +114,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
+        [Fact]
         public async Task GetManifestCR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestCR)))
@@ -130,10 +128,10 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(tag, manifest.Tag);
                 Assert.Equal("amd64", manifest.Architecture);
                 Assert.Equal(10, manifest.FsLayers.Count);
-                Assert.Equal(10, manifest.ImageHistories.Count);
+                Assert.Equal(10, manifest.FsLayers.Count);
                 Assert.Equal(1, manifest.Signatures.Count);
                 var signature = manifest.Signatures[0];
-                Assert.NotEqual(string.Empty, signature.ProtectedHeader);
+                Assert.NotEqual(string.Empty, signature.ProtectedProperty);
                 Assert.NotEqual(string.Empty, signature.Signature);
                 Assert.Equal("P-256", signature.Header.Jwk.Crv);
                 Assert.NotEqual(string.Empty, signature.Header.Jwk.Kid);
@@ -143,7 +141,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
+        [Fact]
         public async Task UpdateAcrManifestAttributesMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrManifestAttributesMR)))
@@ -153,14 +151,14 @@ namespace ContainerRegistry.Tests
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 await client.UpdateAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, digest, updateAttributes);
                 var updatedManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, digest);
-                Assert.False(updatedManifest.Manifest.ChangeableAttributes.WriteEnabled);
+                Assert.False(updatedManifest.ManifestAttributes.ChangeableAttributes.WriteEnabled);
 
                 updateAttributes.WriteEnabled = true;
                 await client.UpdateAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, digest, updateAttributes);
                 updatedManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, digest);
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, updatedManifest.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, updatedManifest.Registry);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Manifest, updatedManifest.Manifest);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, updatedManifest.ManifestAttributes);
             }
         }
 
