@@ -27,9 +27,9 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   incur costs for the associated Azure subscription.
     ///
     ///   Every send or receive call will trigger diagnostics events as
-    ///   long as they are being listened to. Therefore, other tests may
-    ///   interfere with these. For this reason, these tests are marked
-    ///   as non-parallelizable.
+    ///   long as they are being listened to, making it possible for other
+    ///   tests to interfere with these. For this reason, these tests are
+    ///   marked as non-parallelizable.
     ///
     /// </remarks>
     ///
