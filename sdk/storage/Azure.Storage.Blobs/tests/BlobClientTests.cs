@@ -26,6 +26,7 @@ namespace Azure.Storage.Blobs.Test
         public BlobClientTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
+            TestDiagnostics = false;
         }
 
         [Test]

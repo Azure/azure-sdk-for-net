@@ -85,7 +85,7 @@ function generateService(w: IndentWriter, model: IServiceModel): void {
         //             w.scope(() => {
         //                 const headerAccess = responseType.type === `void` ? ``: `.Raw`;
         //                 w.write(`=> response${headerAccess}.Headers.TryGetValue("${header.name}", out string header) ?`);
-        //                 w.scope(() => {
+        //                 w.scope(() => {  
         //                     w.line(`${types.convertFromString('header', header.model, service)} :`)
         //                     w.line(`default;`);
         //                 });
@@ -131,6 +131,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     let responseName = "_response";
     const resultName = "_result";
     const scopeName = "_scope";
+    const operationName = "operationName";
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
 
@@ -155,6 +156,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
+    w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);        
@@ -170,11 +172,13 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`bool async = true`);
         }
         if (separateParams()) {  w.line(`,`); }
+        w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
+        if (separateParams()) {  w.line(`,`); }
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${pipelineName}.Diagnostics.CreateScope("${naming.type(service.name)}.${operation.name}");`)
+        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${pipelineName}.Diagnostics.CreateScope(${operationName});`)
         w.line(`try`);
         w.scope('{', '}', () => {
             for (const arg of operation.request.arguments) {

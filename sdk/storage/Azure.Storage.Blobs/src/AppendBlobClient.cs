@@ -359,6 +359,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.Create",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -574,6 +575,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                                     async: async,
+                                    operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.AppendBlock",
                                     cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
@@ -824,6 +826,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceAccessConditions?.HttpAccessConditions?.IfMatch,
                         sourceIfNoneMatch: sourceAccessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.AppendBlockFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

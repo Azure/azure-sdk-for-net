@@ -952,6 +952,7 @@ namespace Azure.Storage.Queues
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
+                            operationName: "Azure.Storage.Queues.QueueClient.EnqueueMessage",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -1072,6 +1073,7 @@ namespace Azure.Storage.Queues
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.DequeueMessages",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1171,6 +1173,7 @@ namespace Azure.Storage.Queues
                         this.MessagesUri,
                         numberOfMessages: maxMessages,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.PeekMessages",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1284,6 +1287,7 @@ namespace Azure.Storage.Queues
                         uri,
                         popReceipt: popReceipt,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.DeleteMessage",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1426,6 +1430,7 @@ namespace Azure.Storage.Queues
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.UpdateMessage",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

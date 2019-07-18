@@ -491,11 +491,12 @@ namespace Azure.Storage.Blobs.Specialized
                                 ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
                                 ifNoneMatch: blobAccessConditions?.HttpAccessConditions?.IfNoneMatch,
                                 async: async,
+                                operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.Upload",
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         },
                         new ReliabilityConfiguration(reset: () => content.Seek(0, SeekOrigin.Begin)))
-                        .ConfigureAwait(false); ;
+                        .ConfigureAwait(false);
 
                 }
                 catch (Exception ex)
@@ -732,6 +733,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     transactionalContentHash: transactionalContentHash,
                                     leaseId: leaseAccessConditions?.LeaseId,
                                     async: async,
+                                    operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.StageBlock",
                                     cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
@@ -1001,6 +1003,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceAccessConditions?.IfMatch,
                         sourceIfNoneMatch: sourceAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.StageBlockFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1226,6 +1229,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: blobAccessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.CommitBlockList",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1408,6 +1412,7 @@ namespace Azure.Storage.Blobs.Specialized
                         snapshot: snapshot,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.GetBlockList",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false))
                         .ToBlockList();

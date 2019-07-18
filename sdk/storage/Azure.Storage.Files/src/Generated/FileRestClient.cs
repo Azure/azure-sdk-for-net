@@ -27,6 +27,7 @@ namespace Azure.Storage.Files
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
@@ -35,9 +36,10 @@ namespace Azure.Storage.Files
                 Azure.Storage.Files.Models.FileServiceProperties properties,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.SetProperties");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -151,6 +153,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage service properties.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FileServiceProperties>> GetPropertiesAsync(
@@ -158,9 +161,10 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.GetProperties");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -274,6 +278,7 @@ namespace Azure.Storage.Files
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of shares.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.SharesSegment>> ListSharesSegmentAsync(
@@ -285,9 +290,10 @@ namespace Azure.Storage.Files
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.ListSharesIncludeType> include = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ServiceClient.ListSharesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.ListSharesSegment");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -422,6 +428,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> CreateAsync(
@@ -431,9 +438,10 @@ namespace Azure.Storage.Files
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 int? quota = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.Create");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -566,6 +574,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareProperties>> GetPropertiesAsync(
@@ -574,9 +583,10 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.GetProperties");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -713,6 +723,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="deleteSnapshots">Specifies the option include to delete the base share and all of its snapshots.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
@@ -722,9 +733,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 Azure.Storage.Files.Models.DeleteSnapshotsOptionType? deleteSnapshots = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.Delete");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -832,6 +844,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareSnapshotInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>> CreateSnapshotAsync(
@@ -840,9 +853,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.CreateSnapshot");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -976,6 +990,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetQuotaAsync(
@@ -984,9 +999,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 int? quota = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.SetQuota",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.SetQuota");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -1111,6 +1127,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetMetadataAsync(
@@ -1119,9 +1136,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.SetMetadata");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -1250,6 +1268,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A collection of signed identifiers.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>> GetAccessPolicyAsync(
@@ -1257,9 +1276,10 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.GetAccessPolicy");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -1374,6 +1394,7 @@ namespace Azure.Storage.Files
             /// <param name="permissions">The ACL for the share.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetAccessPolicyAsync(
@@ -1382,9 +1403,10 @@ namespace Azure.Storage.Files
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.SetAccessPolicy");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -1521,6 +1543,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Stats for the share.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareStatistics>> GetStatisticsAsync(
@@ -1528,9 +1551,10 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.GetStatistics");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -1649,6 +1673,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> CreateAsync(
@@ -1657,9 +1682,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.Create");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -1788,6 +1814,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryProperties>> GetPropertiesAsync(
@@ -1796,9 +1823,10 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.GetProperties");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -1933,6 +1961,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
@@ -1940,9 +1969,10 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.Delete");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -2042,6 +2072,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> SetMetadataAsync(
@@ -2050,9 +2081,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.SetMetadata");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -2185,6 +2217,7 @@ namespace Azure.Storage.Files
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of directories and files.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
@@ -2196,9 +2229,10 @@ namespace Azure.Storage.Files
                 int? maxresults = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.ListFilesAndDirectoriesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.ListFilesAndDirectoriesSegment");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -2328,6 +2362,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
@@ -2339,9 +2374,10 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 bool? recursive = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.ListHandles");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -2474,6 +2510,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
@@ -2485,9 +2522,10 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 bool? recursive = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.ForceCloseHandles");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -2646,6 +2684,7 @@ namespace Azure.Storage.Files
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> CreateAsync(
@@ -2661,9 +2700,10 @@ namespace Azure.Storage.Files
                 string fileContentDisposition = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.Create");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -2835,6 +2875,7 @@ namespace Azure.Storage.Files
             /// <param name="range">Return file data only from the specified byte range.</param>
             /// <param name="rangeGetContentHash">When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.FlattenedStorageFileProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>> DownloadAsync(
@@ -2844,9 +2885,10 @@ namespace Azure.Storage.Files
                 string range = default,
                 bool? rangeGetContentHash = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.Download");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -3179,6 +3221,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileProperties>> GetPropertiesAsync(
@@ -3187,9 +3230,10 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.GetProperties");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -3385,6 +3429,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
@@ -3392,9 +3437,10 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.Delete");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -3499,6 +3545,7 @@ namespace Azure.Storage.Files
             /// <param name="fileContentHash">Sets the file's MD5 hash.</param>
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetPropertiesAsync(
@@ -3513,9 +3560,10 @@ namespace Azure.Storage.Files
                 byte[] fileContentHash = default,
                 string fileContentDisposition = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.SetProperties");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -3677,6 +3725,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetMetadataAsync(
@@ -3685,9 +3734,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.SetMetadata");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -3824,6 +3874,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileUploadInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>> UploadRangeAsync(
@@ -3836,9 +3887,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 byte[] contentHash = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.UploadRange",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.UploadRange");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -3993,6 +4045,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileRangeInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>> GetRangeListAsync(
@@ -4002,9 +4055,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 string range = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.GetRangeList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.GetRangeList");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -4143,6 +4197,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>> StartCopyAsync(
@@ -4152,9 +4207,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.StartCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.StartCopy");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -4298,6 +4354,7 @@ namespace Azure.Storage.Files
             /// <param name="copyId">The copy identifier provided in the x-ms-copy-id header of the original Copy File operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> AbortCopyAsync(
@@ -4306,9 +4363,10 @@ namespace Azure.Storage.Files
                 string copyId,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.AbortCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.AbortCopy");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -4419,6 +4477,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
@@ -4429,9 +4488,10 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 string sharesnapshot = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.ListHandles");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);
@@ -4555,6 +4615,7 @@ namespace Azure.Storage.Files
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
@@ -4565,9 +4626,10 @@ namespace Azure.Storage.Files
                 string marker = default,
                 string sharesnapshot = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("FileRestClient.ForceCloseHandles");
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
                 try
                 {
                     _scope.AddAttribute("resourceUri", resourceUri);

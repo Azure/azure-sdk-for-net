@@ -23,5 +23,6 @@
     (and shared via InternalsVisibleTo with the other libraries)
     -->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ConvenienceMethodAttribute.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>
