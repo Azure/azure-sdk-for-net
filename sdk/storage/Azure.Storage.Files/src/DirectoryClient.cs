@@ -1168,7 +1168,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<DirectoryClient> CreateSubdirectory(
             string subdirectoryName,
             Metadata metadata = default,
@@ -1201,7 +1201,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<DirectoryClient>> CreateSubdirectoryAsync(
             string subdirectoryName,
             Metadata metadata = default,
@@ -1231,7 +1231,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response DeleteSubdirectory(
             string subdirectoryName,
             CancellationToken cancellationToken = default) =>
@@ -1254,7 +1254,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSubdirectoryAsync(
             string subdirectoryName,
             CancellationToken cancellationToken = default) =>
@@ -1294,7 +1294,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<FileClient> CreateFile(
             string fileName,
             long maxSize,
@@ -1337,7 +1337,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<FileClient>> CreateFileAsync(
             string fileName,
             long maxSize,
@@ -1370,7 +1370,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response DeleteFile(
             string fileName,
             CancellationToken cancellationToken = default) =>
@@ -1394,7 +1394,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileAsync(
             string fileName,
             CancellationToken cancellationToken = default) =>

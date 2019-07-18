@@ -9,7 +9,7 @@ namespace Azure.Core
     /// Marks methods that call methods on other client and don't need their diagnostics verified
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    internal class ConvenienceMethodAttribute : Attribute
+    internal class ForwardsClientCallsAttribute : Attribute
     {
     }
 }

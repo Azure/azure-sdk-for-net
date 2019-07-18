@@ -25,7 +25,8 @@ namespace Azure.Core.Testing
                 invocation.Proceed();
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ConvenienceMethodAttribute");
-                if (invocation.Method.ReturnType.Name.Contains("AsyncCollection"))
+                if (invocation.Method.ReturnType.Name.Contains("AsyncCollection") ||
+                    invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
                 {
                     return;
                 }

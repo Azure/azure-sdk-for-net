@@ -188,7 +188,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(Stream content) =>
             this.Upload(content, CancellationToken.None);
 
@@ -215,7 +215,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(Stream content) =>
             await this.UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
 
@@ -247,7 +247,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             CancellationToken cancellationToken) =>
@@ -284,7 +284,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             CancellationToken cancellationToken) =>
@@ -337,7 +337,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders? blobHttpHeaders = default,
@@ -398,7 +398,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders? blobHttpHeaders = default,

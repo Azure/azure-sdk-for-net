@@ -1310,7 +1310,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<DirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1345,7 +1345,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1377,7 +1377,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response DeleteDirectory(
             string directoryName,
             CancellationToken cancellationToken = default) =>
@@ -1402,7 +1402,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDirectoryAsync(
             string directoryName,
             CancellationToken cancellationToken = default) =>

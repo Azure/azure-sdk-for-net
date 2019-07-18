@@ -972,7 +972,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<BlobContainerClient> CreateBlobContainer(
             string containerName,
             PublicAccessType? publicAccessType = default,
@@ -1022,7 +1022,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContainerClient>> CreateBlobContainerAsync(
             string containerName,
             PublicAccessType? publicAccessType = default,
@@ -1061,7 +1061,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response DeleteBlobContainer(
             string containerName,
             ContainerAccessConditions? accessConditions = default,
@@ -1096,7 +1096,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobContainerAsync(
             string containerName,
             ContainerAccessConditions? accessConditions = default,

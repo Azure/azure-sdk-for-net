@@ -590,7 +590,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A newly created <see cref="Response{QueueClient}"/>.
         /// </returns>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<QueueClient> CreateQueue(
             string queueName,
             IDictionary<string, string> metadata = default,
@@ -618,7 +618,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A newly created <see cref="Response{QueueClient}"/>.
         /// </returns>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<QueueClient>> CreateQueueAsync(
             string queueName,
             IDictionary<string, string> metadata = default,
@@ -645,7 +645,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response DeleteQueue(
             string queueName,
             CancellationToken cancellationToken = default) =>
@@ -665,7 +665,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteQueueAsync(
             string queueName,
             CancellationToken cancellationToken = default) =>

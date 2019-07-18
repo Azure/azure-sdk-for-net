@@ -1509,7 +1509,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> UploadBlob(
             string blobName,
             Stream content,
@@ -1548,7 +1548,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
             string blobName,
             Stream content,
@@ -1591,7 +1591,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual Response DeleteBlob(
             string blobName,
             DeleteSnapshotsOption? deleteOptions = default,
@@ -1633,7 +1633,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ConvenienceMethod]
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobAsync(
             string blobName,
             DeleteSnapshotsOption? deleteOptions = default,
