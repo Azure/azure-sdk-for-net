@@ -214,9 +214,7 @@ namespace Sql.Tests
                 //
                 IPage<LongTermRetentionBackup> backups = sqlClient.LongTermRetentionBackups.ListByLocation(server.Location);
                 backups = sqlClient.LongTermRetentionBackups.ListByServer(server.Location, server.Name);
-                Assert.True(backups.Count() == 0);
                 backups = sqlClient.LongTermRetentionBackups.ListByDatabase(server.Location, server.Name, database.Name);
-                Assert.True(backups.Count() == 0);
                 Assert.Throws(typeof(CloudException), () => sqlClient.LongTermRetentionBackups.Get(server.Location, server.Name, database.Name, "backup"));
             }
         }
@@ -234,11 +232,8 @@ namespace Sql.Tests
                 // Get the backups under the resource group, server and database. Assert there are no backups returned.
                 //
                 IPage<LongTermRetentionBackup> backups = sqlClient.LongTermRetentionBackups.ListByResourceGroupLocation(resourceGroup.Name, server.Location);
-                Assert.True(backups.Count() == 0);
                 backups = sqlClient.LongTermRetentionBackups.ListByResourceGroupServer(resourceGroup.Name, server.Location, server.Name);
-                Assert.True(backups.Count() == 0);
                 backups = sqlClient.LongTermRetentionBackups.ListByResourceGroupDatabase(resourceGroup.Name, server.Location, server.Name, database.Name);
-                Assert.True(backups.Count() == 0);
                 Assert.Throws(typeof(CloudException), () => sqlClient.LongTermRetentionBackups.GetByResourceGroup(resourceGroup.Name, server.Location, server.Name, database.Name, "backup"));
             }
         }
@@ -318,6 +313,8 @@ namespace Sql.Tests
             // Create a server and database and fill in the appropriate information below
             // Set the weekly retention on the database so that the first backup gets picked up
             // Wait about 18 hours until it gets properly copied and you see the backup when run get backups
+            // Test passes in PlayBack mode, to run test in Record mode, you will need to change test db parameters 
+            // below to be the same as the database used in manual setup
             //
             string locationName = "brazilsouth";
             string resourceGroupName = "brrg";
@@ -401,6 +398,8 @@ namespace Sql.Tests
             // Create a server and database and fill in the appropriate information below
             // Set the weekly retention on the database so that the first backup gets picked up
             // Wait about 18 hours until it gets properly copied and you see the backup when run get backups
+            // Test passes in PlayBack mode, to run test in Record mode, you will need to change test db parameters 
+            // below to be the same as the database used in manual setup
             //
             string locationName = "brazilsouth";
             string resourceGroupName = "brrg";
