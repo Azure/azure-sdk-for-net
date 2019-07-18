@@ -25,6 +25,12 @@ namespace Azure.Messaging.EventHubs.Tests
     /// <remarks>
     ///   These tests have a depenency on live Azure services and may
     ///   incur costs for the associated Azure subscription.
+    ///
+    ///   Every send or receive call will trigger diagnostics events as
+    ///   long as they are being listened to. Therefore, other tests may
+    ///   interfere with these. For this reason, these tests are marked
+    ///   as non-parallelizable.
+    ///
     /// </remarks>
     ///
     [TestFixture]
@@ -36,12 +42,40 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>
         private const int ReceiveRetryLimit = 10;
 
+        /// <summary>
+        ///   Provides a new empty queue to store diagnostics events.
+        /// </summary>
+        ///
+        /// <returns>An empty <see cref="ConcurrentQueue{T}" /> to store diagnostics events.</returns>
+        ///
         private static ConcurrentQueue<(string eventName, object payload, Activity activity)> CreateEventQueue() =>
             new ConcurrentQueue<(string eventName, object payload, Activity activity)>();
 
+        /// <summary>
+        ///   Subscribes an <see cref="IObserver{T}" /> to <see cref="DiagnosticListener.AllListeners" /> so it
+        ///   can locate the Azure.Messaging.EventHubs <see cref="DiagnosticListener" />.
+        /// </summary>
+        ///
+        /// <param name="listener">The <see cref="IObserver{T}" /> that will subscribe to the Azure.Messaging.EventHubs <see cref="DiagnosticListener" />.</param>
+        ///
+        /// <returns>An <see cref="IDisposable" /> subscription. The subscription can be cancelled by disposing of it.</returns>
+        ///
         private static IDisposable SubscribeToEvents(IObserver<DiagnosticListener> listener) =>
             DiagnosticListener.AllListeners.Subscribe(listener);
 
+        /// <summary>
+        ///   Provides a new <see cref="FakeDiagnosticListener" /> that populates a given <see cref="ConcurrentQueue{T}" /> with
+        ///   event information once enabled.
+        /// </summary>
+        ///
+        /// <param name="eventQueue">The event queue to be populated.</param>
+        ///
+        /// <returns>A <see cref="FakeDiagnosticListener" /> that will populate the given event queue once enabled.</returns>
+        ///
+        /// <remarks>
+        ///   <see cref="SubscribeToEvents" /> must be called before listening to events.
+        /// </remarks>
+        ///
         private static FakeDiagnosticListener CreateEventListener(ConcurrentQueue<(string eventName, object payload, Activity activity)> eventQueue) =>
             new FakeDiagnosticListener(kvp =>
             {
@@ -53,6 +87,20 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventQueue?.Enqueue((kvp.Key, kvp.Value, Activity.Current));
             });
 
+        /// <summary>
+        ///   Extracts a property from a payload object given its type and name.
+        /// </summary>
+        ///
+        /// <param name="obj">The payload object containing the property.</param>
+        /// <param name="propertyName">The name of the property.</param>
+        ///
+        /// <returns>The typed property extracted from the given payload object.</returns>
+        ///
+        /// <remarks>
+        ///   If a non-string type property value is found to be <c>null</c>, an assertion
+        ///   error is expected.
+        /// </remarks>
+        ///
         private static T GetPropertyValueFromAnonymousTypeInstance<T>(object obj, string propertyName)
         {
             Type t = obj.GetType();
@@ -110,7 +158,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             // Enable Send .Start & .Stop events.
 
-                            listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Exception"));
+                            listener.Enable(name => name.Contains("Send") && !name.EndsWith(".Exception"));
 
                             // Assert that the properties we want to inject are not already included.
 
@@ -244,7 +292,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             // Enable Send .Exception & .Stop events.
 
-                            listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Start"));
+                            listener.Enable(name => name.Contains("Send") && !name.EndsWith(".Start"));
 
                             // Try sending a large message. A SizeLimitException is expected.
 
@@ -308,7 +356,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Enable Send & Receive .Start & .Stop events.
 
-                        listener.Enable((name, queueName, arg) => !name.EndsWith(".Exception"));
+                        listener.Enable(name => !name.EndsWith(".Exception"));
 
                         // Assert that the properties we want to inject are not already included.
 
@@ -371,6 +419,18 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Asserts that the information received from a Send .Start event is accurate.
+        /// </summary>
+        ///
+        /// <param name="name">The event name received from the event.</param>
+        /// <param name="payload">The payload object received from the event.</param>
+        /// <param name="activity">The activity received from the event.</param>
+        /// <param name="parentActivity">The current <see cref="Activity" /> just before receiving. If <c>null</c>, the corresponding assertion will be skipped.</param>
+        /// <param name="activePartitionRouting">The expected partition routing method in use. It may be <c>null</c>, a Partition Key or a Partition Id.</param>
+        /// <param name="connectionString">The client's connection string.</param>
+        /// <param name="eventCount">The expected number of events.</param>
+        ///
         private static void AssertSendStart(string name, object payload, Activity activity, Activity parentActivity, string activePartitionRouting, string connectionString, int eventCount = 1)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
@@ -402,6 +462,17 @@ namespace Azure.Messaging.EventHubs.Tests
             AssertTagExists(activity, "eh.client_id");
         }
 
+        /// <summary>
+        ///   Asserts that the information received from a Send .Exception event is accurate.
+        /// </summary>
+        ///
+        /// <param name="name">The event name received from the event.</param>
+        /// <param name="payload">The payload object received from the event.</param>
+        /// <param name="activity">The activity received from the event.</param>
+        /// <param name="parentActivity">The current <see cref="Activity" /> just before receiving. If <c>null</c>, the corresponding assertion will be skipped.</param>
+        /// <param name="activePartitionRouting">The expected partition routing method in use. It may be <c>null</c>, a Partition Key or a Partition Id.</param>
+        /// <param name="connectionString">The client's connection string.</param>
+        ///
         private void AssertSendException(string name, object payload, Activity activity, Activity parentActivity, string activePartitionRouting, string connectionString)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
@@ -429,6 +500,18 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Asserts that the information received from a Send .Stop event is accurate.
+        /// </summary>
+        ///
+        /// <param name="name">The event name received from the event.</param>
+        /// <param name="payload">The payload object received from the event.</param>
+        /// <param name="activity">The activity received from the event.</param>
+        /// <param name="sendActivity">The activity received from the associated Send.Start event. If <c>null</c>, the corresponding assertion will be skipped.</param>
+        /// <param name="activePartitionRouting">The expected partition routing method in use. It may be <c>null</c>, a Partition Key or a Partition Id.</param>
+        /// <param name="connectionString">The client's connection string.</param>
+        /// <param name="isFaulted"><c>true</c> if the expected <see cref="TaskStatus" /> is <see cref="TaskStatus.Faulted" />; <c>false</c> if it is <see cref="TaskStatus.RanToCompletion" />.</param>
+        ///
         private static void AssertSendStop(string name, object payload, Activity activity, Activity sendActivity, string activePartitionRouting, string connectionString, bool isFaulted = false)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
@@ -452,6 +535,19 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Asserts that the information received from a Receive .Start event is accurate.
+        /// </summary>
+        ///
+        /// <param name="name">The event name received from the event.</param>
+        /// <param name="payload">The payload object received from the event.</param>
+        /// <param name="activity">The activity received from the event.</param>
+        /// <param name="parentActivity">The current <see cref="Activity" /> just before receiving. If <c>null</c>, the corresponding assertion will be skipped.</param>
+        /// <param name="consumerGroup">The consumer group of the receiving consumer.</param>
+        /// <param name="position">The <see cref="EventPosition" /> used when creating the receiving consumer.</param>
+        /// <param name="activePartitionRouting">The expected partition routing method in use. It may be <c>null</c>, a Partition Key or a Partition Id.</param>
+        /// <param name="connectionString">The client's connection string.</param>
+        ///
         private static void AssertReceiveStart(string name, object payload, Activity activity, Activity parentActivity, string consumerGroup, EventPosition position, string activePartitionRouting, string connectionString)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
@@ -483,6 +579,21 @@ namespace Azure.Messaging.EventHubs.Tests
             AssertTagExists(activity, "eh.client_id");
         }
 
+        /// <summary>
+        ///   Asserts that the information received from a Receive .Stop event is accurate.
+        /// </summary>
+        ///
+        /// <param name="name">The event name received from the event.</param>
+        /// <param name="payload">The payload object received from the event.</param>
+        /// <param name="activity">The activity received from the event.</param>
+        /// <param name="receiveActivity">The activity received from the associated Receive.Start event. If <c>null</c>, the corresponding assertion will be skipped.</param>
+        /// <param name="consumerGroup">The consumer group of the receiving consumer.</param>
+        /// <param name="activePartitionRouting">The expected partition routing method in use. It may be <c>null</c>, a Partition Key or a Partition Id.</param>
+        /// <param name="connectionString">The client's connection string.</param>
+        /// <param name="eventCount">The expected number of events.</param>
+        /// <param name="isFaulted"><c>true</c> if the expected <see cref="TaskStatus" /> is <see cref="TaskStatus.Faulted" />; <c>false</c> if it is <see cref="TaskStatus.RanToCompletion" />.</param>
+        /// <param name="relatedId">The id of the related send activity. If <c>null</c> or empty, the corresponding assertion will be skipped.</param>
+        ///
         private static void AssertReceiveStop(string name, object payload, Activity activity, Activity receiveActivity, string consumerGroup, string activePartitionRouting, string connectionString, int eventCount = 1, bool isFaulted = false, string relatedId = null)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
@@ -520,17 +631,40 @@ namespace Azure.Messaging.EventHubs.Tests
             AssertTagMatches(activity, "eh.event_count", eventCount.ToString());
         }
 
+        /// <summary>
+        ///   Asserts that an activity contains a specified tag.
+        /// </summary>
+        ///
+        /// <param name="activity">The activity containing the tag to be checked.</param>
+        /// <param name="tagName">The name of the tag.</param>
+        ///
         private static void AssertTagExists(Activity activity, string tagName)
         {
             Assert.That(activity.Tags.Select(t => t.Key).Contains(tagName), Is.True);
         }
 
+        /// <summary>
+        ///   Asserts that an activity contains a specified tag and it matches a specified value.
+        /// </summary>
+        ///
+        /// <param name="activity">The activity containing the tag to be checked.</param>
+        /// <param name="tagName">The name of the tag.</param>
+        /// <param name="tagValue">The expected value of the tag.</param>
+        ///
         private static void AssertTagMatches(Activity activity, string tagName, string tagValue)
         {
             Assert.That(activity.Tags.Select(t => t.Key).Contains(tagName), Is.True);
             Assert.That(activity.Tags.Single(t => t.Key == tagName).Value, Is.EqualTo(tagValue));
         }
 
+        /// <summary>
+        ///   Asserts that the common payload properties of Send & Receive .Start & .Exception events contain the expected values.
+        /// </summary>
+        ///
+        /// <param name="eventPayload">The payload object received from the event.</param>
+        /// <param name="activePartitionRouting">The expected partition routing method in use. It may be <c>null</c>, a Partition Key or a Partition Id.</param>
+        /// <param name="connectionStringProperties">The client's connection string properties.</param>
+        ///
         private static void AssertCommonPayloadProperties(object eventPayload, string activePartitionRouting, ConnectionStringProperties connectionStringProperties)
         {
             var endpoint = GetPropertyValueFromAnonymousTypeInstance<Uri>(eventPayload, "Endpoint");
@@ -544,6 +678,15 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(pRouting, Is.EqualTo(activePartitionRouting));
         }
 
+        /// <summary>
+        ///   Asserts that the common payload properties of Send & Receive .Stop events contain the expected values.
+        /// </summary>
+        ///
+        /// <param name="eventPayload">The payload object received from the event.</param>
+        /// <param name="activePartitionRouting">The expected partition routing method in use. It may be <c>null</c>, a Partition Key or a Partition Id.</param>
+        /// <param name="isFaulted"><c>true</c> if the expected <see cref="TaskStatus" /> is <see cref="TaskStatus.Faulted" />; <c>false</c> if it is <see cref="TaskStatus.RanToCompletion" />.</param>
+        /// <param name="connectionStringProperties">The client's connection string properties.</param>
+        ///
         private static void AssertCommonStopPayloadProperties(object eventPayload, string activePartitionRouting, bool isFaulted, ConnectionStringProperties connectionStringProperties)
         {
             var expectedStatus = isFaulted ? TaskStatus.Faulted : TaskStatus.RanToCompletion;
