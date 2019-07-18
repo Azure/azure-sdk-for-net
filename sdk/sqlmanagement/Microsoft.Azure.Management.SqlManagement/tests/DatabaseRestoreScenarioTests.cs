@@ -309,12 +309,13 @@ namespace Sql.Tests
         [Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestLongTermRetentionV2Crud()
         {
-            // MANUAL INSTRUCTIONS
-            // Create a server and database and fill in the appropriate information below
-            // Set the weekly retention on the database so that the first backup gets picked up
-            // Wait about 18 hours until it gets properly copied and you see the backup when run get backups
-            // Test passes in PlayBack mode, to run test in Record mode, you will need to change test db parameters 
-            // below to be the same as the database used in manual setup
+            // MANUAL TEST INSTRUCTIONS
+            // PlayBack Mode: 
+            //     Remove skip flag
+            // Record Mode:
+            //     Create a server and database and fill in the appropriate information below
+            //     Set the weekly retention on the database so that the first backup gets picked up
+            //     Wait about 18 hours until it gets properly copied and you see the backup when run get backups
             //
             string locationName = "brazilsouth";
             string resourceGroupName = "brrg";
@@ -325,17 +326,6 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 Database database = sqlClient.Databases.Get(resourceGroupName, serverName, databaseName);
-
-                // Set the retention policy to two weeks for the weekly retention policy
-                //
-                Microsoft.Azure.Management.Sql.Models.BackupLongTermRetentionPolicy parameters = new Microsoft.Azure.Management.Sql.Models.BackupLongTermRetentionPolicy(weeklyRetention: "P2W");
-                var policyResult = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters).Result;
-                Assert.Equal(System.Net.HttpStatusCode.OK, policyResult.Response.StatusCode);
-
-                // Get the policy and verify the weekly policy is two weeks
-                //
-                Microsoft.Azure.Management.Sql.Models.BackupLongTermRetentionPolicy policy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroupName, serverName, databaseName);
-                Assert.Equal(parameters.WeeklyRetention, policy.WeeklyRetention);
 
                 // Get the backups under the location, server, and database. Assert there is at least one backup for each call.
                 //
@@ -364,42 +354,20 @@ namespace Sql.Tests
 
                 // Delete the backup.
                 //
-                var deleteResult = sqlClient.LongTermRetentionBackups.BeginDeleteWithHttpMessagesAsync(locationName, serverName, databaseName, backup.Name).Result;
-                sqlClient.GetPutOrPatchOperationResultAsync(deleteResult, new Dictionary<string, List<string>>(), CancellationToken.None).Wait();
-
-                // Verify the backup is gone.
-                //
-                try
-                {
-                    sqlClient.LongTermRetentionBackups.Get(locationName, serverName, databaseName, backup.Name);
-                }
-                catch (CloudException e)
-                {
-                    Assert.Contains(string.Format("'{0}' was not found.", backup.Name), e.Message);
-                }
-
-                // Set the retention policy back to one week for the weekly retention policy
-                //
-                parameters = new Microsoft.Azure.Management.Sql.Models.BackupLongTermRetentionPolicy(weeklyRetention: "P1W");
-                policyResult = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters).Result;
-                Assert.Equal(System.Net.HttpStatusCode.OK, policyResult.Response.StatusCode);
-
-                // Get the policy and verify the weekly policy is two weeks
-                //
-                policy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroupName, serverName, databaseName);
-                Assert.Equal(parameters.WeeklyRetention, policy.WeeklyRetention);
+                sqlClient.LongTermRetentionBackups.DeleteWithHttpMessagesAsync(locationName, serverName, databaseName, backup.Name);
             }
         }
 
         [Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestLongTermRetentionV2ResourceGroupBasedCrud()
         {
-            // MANUAL INSTRUCTIONS
-            // Create a server and database and fill in the appropriate information below
-            // Set the weekly retention on the database so that the first backup gets picked up
-            // Wait about 18 hours until it gets properly copied and you see the backup when run get backups
-            // Test passes in PlayBack mode, to run test in Record mode, you will need to change test db parameters 
-            // below to be the same as the database used in manual setup
+            // MANUAL TEST INSTRUCTIONS
+            // PlayBack Mode: 
+            //     Remove skip flag
+            // Record Mode:
+            //     Create a server and database and fill in the appropriate information below
+            //     Set the weekly retention on the database so that the first backup gets picked up
+            //     Wait about 18 hours until it gets properly copied and you see the backup when run get backups
             //
             string locationName = "brazilsouth";
             string resourceGroupName = "brrg";
@@ -410,17 +378,6 @@ namespace Sql.Tests
             {
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 Database database = sqlClient.Databases.Get(resourceGroupName, serverName, databaseName);
-
-                // Set the retention policy to two weeks for the weekly retention policy
-                //
-                Microsoft.Azure.Management.Sql.Models.BackupLongTermRetentionPolicy parameters = new Microsoft.Azure.Management.Sql.Models.BackupLongTermRetentionPolicy(weeklyRetention: "P2W");
-                var policyResult = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters).Result;
-                Assert.Equal(System.Net.HttpStatusCode.OK, policyResult.Response.StatusCode);
-
-                // Get the policy and verify the weekly policy is two weeks
-                //
-                Microsoft.Azure.Management.Sql.Models.BackupLongTermRetentionPolicy policy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroupName, serverName, databaseName);
-                Assert.Equal(parameters.WeeklyRetention, policy.WeeklyRetention);
 
                 // Get the backups under the location, server, and database. Assert there is at least one backup for each call.
                 //
@@ -449,24 +406,7 @@ namespace Sql.Tests
 
                 // Delete the backup.
                 //
-                var deleteResult = sqlClient.LongTermRetentionBackups.DeleteByResourceGroupWithHttpMessagesAsync(resourceGroupName, locationName, serverName, databaseName, backup.Name).Result;
-                Assert.Equal(System.Net.HttpStatusCode.OK, deleteResult.Response.StatusCode);
-
-                // Verify the backup is gone.
-                //
-                backups = sqlClient.LongTermRetentionBackups.ListByResourceGroupDatabase(resourceGroupName, locationName, serverName, databaseName);
-                Assert.True(backups.Count() == 0);
-
-                // Set the retention policy back to one week for the weekly retention policy
-                //
-                parameters = new Microsoft.Azure.Management.Sql.Models.BackupLongTermRetentionPolicy(weeklyRetention: "P1W");
-                policyResult = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters).Result;
-                Assert.Equal(System.Net.HttpStatusCode.OK, policyResult.Response.StatusCode);
-
-                // Get the policy and verify the weekly policy is one week
-                //
-                policy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroupName, serverName, databaseName);
-                Assert.Equal(parameters.WeeklyRetention, policy.WeeklyRetention);
+                sqlClient.LongTermRetentionBackups.DeleteByResourceGroupWithHttpMessagesAsync(resourceGroupName, locationName, serverName, databaseName, backup.Name);
             }
         }
 
