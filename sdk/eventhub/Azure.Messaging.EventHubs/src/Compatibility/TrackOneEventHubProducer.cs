@@ -20,6 +20,9 @@ namespace Azure.Messaging.EventHubs.Compatibility
     ///
     internal sealed class TrackOneEventHubProducer : TransportEventHubProducer
     {
+        /// <summary>The active retry policy for the producer.</summary>
+        private EventHubRetryPolicy _retryPolicy;
+
         /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
         private Lazy<TrackOne.EventDataSender> _trackOneSender;
 
@@ -34,6 +37,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// </summary>
         ///
         /// <param name="trackOneSenderFactory">A delegate that can be used for creation of the <see cref="TrackOne.EventDataSender" /> to which operations are delegated to.</param>
+        /// <param name="retryPolicy">The retry policy to use when creating the <see cref="TrackOne.EventDataSender" />.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -44,10 +48,30 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   caller.
         /// </remarks>
         ///
-        public TrackOneEventHubProducer(Func<TrackOne.EventDataSender> trackOneSenderFactory)
+        public TrackOneEventHubProducer(Func<EventHubRetryPolicy, TrackOne.EventDataSender> trackOneSenderFactory,
+                                        EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(trackOneSenderFactory), trackOneSenderFactory);
-            _trackOneSender = new Lazy<TrackOne.EventDataSender>(trackOneSenderFactory, LazyThreadSafetyMode.PublicationOnly);
+            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
+
+            _retryPolicy = retryPolicy;
+            _trackOneSender = new Lazy<TrackOne.EventDataSender>(() => trackOneSenderFactory(_retryPolicy), LazyThreadSafetyMode.PublicationOnly);
+        }
+
+        /// <summary>
+        ///   Updates the active retry policy for the client.
+        /// </summary>
+        ///
+        /// <param name="newRetryPolicy">The retry policy to set as active.</param>
+        ///
+        public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy)
+        {
+            _retryPolicy = newRetryPolicy;
+
+            if (_trackOneSender.IsValueCreated)
+            {
+                TrackOneSender.RetryPolicy = new TrackOneRetryPolicy(newRetryPolicy);
+            }
         }
 
         /// <summary>
@@ -71,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             try
             {
-                await TrackOneSender.SendAsync(events.Select(TransformEvent), sendOptions?.PartitionKey);
+                await TrackOneSender.SendAsync(events.Select(TransformEvent), sendOptions?.PartitionKey).ConfigureAwait(false);
             }
             catch (TrackOne.EventHubsException ex)
             {

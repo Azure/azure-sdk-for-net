@@ -69,9 +69,9 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
         /// </summary>
-        internal static string MessageSizeExceeded 
+        internal static string MessageSizeExceeded
         {
-            get 
+            get
             {
                 return ResourceManager.GetString("MessageSizeExceeded", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The reqested resource, &apos;{0}&apos;, does not match the resource of the shared access signature, &apos;{1}&apos;.   A token cannot be issued..
+        ///   Looks up a localized string similar to The requested resource, &apos;{0}&apos;, does not match the resource of the shared access signature, &apos;{1}&apos;. A token cannot be issued..
         /// </summary>
         internal static string ResourceMustMatchSharedAccessSignature
         {
@@ -254,13 +254,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A retry must be set for the options; if no retry is desired, please set the value to Retry.NoRetry.
+        ///   Looks up a localized string similar to Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly..
         /// </summary>
-        internal static string RetryMustBeSet
+        internal static string RetryOptionsMustBeSet
         {
             get
             {
-                return ResourceManager.GetString("RetryMustBeSet", resourceCulture);
+                return ResourceManager.GetString("RetryOptionsMustBeSet", resourceCulture);
             }
         }
 
@@ -349,6 +349,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("CannotParseIntegerType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The requested retry mode, '{0}' is not known; a retry delay canot be determined..
+        /// </summary>
+        internal static string UnknownRetryMode
+        {
+            get
+            {
+                return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
             }
         }
     }

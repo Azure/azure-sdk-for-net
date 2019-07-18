@@ -36,14 +36,10 @@
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.6.1" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
     <PackageReference Update="Microsoft.CodeAnalysis" Version="2.3.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.2.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="1.0.2" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="1.0.2" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
-    <PackageReference Update="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.1.0" />
@@ -104,6 +100,10 @@
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190716.1" />
     <PackageReference Update="System.Memory" Version="4.5.3" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19303.8" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
     <PackageReference Update="System.Text.Json" Version="4.6.0-preview6.19303.8" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview6.19303.8" />
     <PackageReference Update="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview6.19303.8" />

@@ -28,6 +28,9 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
         public const string DefaultConsumerGroupName = "$Default";
 
+        /// <summary>The policy to use for determining retry behavior for when an operation fails.</summary>
+        private EventHubRetryPolicy _retryPolicy;
+
         /// <summary>
         ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
         ///   only from this partition.
@@ -69,6 +72,27 @@ namespace Azure.Messaging.EventHubs
         public string Identifier => Options?.Identifier;
 
         /// <summary>
+        ///   The policy to use for determining retry behavior for when an operation fails.
+        /// </summary>
+        ///
+        public EventHubRetryPolicy RetryPolicy
+        {
+            get => _retryPolicy;
+
+            set
+            {
+                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                _retryPolicy = value;
+
+                // Applying a custom retry policy invalidates the retry options specified.
+                // Clear them to ensure the custom policy is propagated as the default.
+
+                Options.RetryOptions = null;
+                InnerConsumer.UpdateRetryPolicy(value);
+            }
+        }
+
+        /// <summary>
         ///   The set of consumer options used for creation of this consumer.
         /// </summary>
         ///
@@ -90,6 +114,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="consumerOptions">The set of options to use for this consumer.</param>
+        /// <param name="retryPolicy">The policy to apply when making retry decisions for failed operations.</param>
         ///
         /// <remarks>
         ///   If the starting event position is not specified in the <paramref name="consumerOptions"/>, the consumer will
@@ -106,7 +131,8 @@ namespace Azure.Messaging.EventHubs
                                    string consumerGroup,
                                    string partitionId,
                                    EventPosition eventPosition,
-                                   EventHubConsumerOptions consumerOptions)
+                                   EventHubConsumerOptions consumerOptions,
+                                   EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(transportConsumer), transportConsumer);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
@@ -114,6 +140,7 @@ namespace Azure.Messaging.EventHubs
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
             Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
             Guard.ArgumentNotNull(nameof(consumerOptions), consumerOptions);
+            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
 
             PartitionId = partitionId;
             StartingPosition = eventPosition;
@@ -121,6 +148,8 @@ namespace Azure.Messaging.EventHubs
             ConsumerGroup = consumerGroup;
             Options = consumerOptions;
             InnerConsumer = transportConsumer;
+
+            _retryPolicy = retryPolicy;
         }
 
         /// <summary>

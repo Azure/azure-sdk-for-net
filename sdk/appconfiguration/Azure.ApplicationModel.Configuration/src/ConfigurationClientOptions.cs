@@ -20,6 +20,9 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         public enum ServiceVersion
         {
+            /// <summary>
+            /// Uses the latest service version
+            /// </summary>
             Default = 0
         }
 
@@ -35,7 +38,7 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
-        /// making requests. 
+        /// making requests.
         /// </param>
         public ConfigurationClientOptions(ServiceVersion version = ServiceVersion.Default)
         {

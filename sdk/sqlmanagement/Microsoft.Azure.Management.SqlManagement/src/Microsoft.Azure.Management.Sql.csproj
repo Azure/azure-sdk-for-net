@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Added support for resource group based LTR APIs.
+- Added support for failover databases and elastic pools.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

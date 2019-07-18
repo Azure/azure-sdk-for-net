@@ -140,7 +140,28 @@ namespace Azure.Messaging.EventHubs.Core
         {
             if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
             {
-                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, argumentName, minimumValue, maximumValue));
+                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
+            }
+        }
+
+        /// <summary>
+        ///   Ensures that an argument's value is within a specified range, inclusive.
+        ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        /// <param name="minimumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
+        /// <param name="maximumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be less than or equal to this value.</param>
+        ///
+        public static void ArgumentInRange(string argumentName,
+                                           TimeSpan argumentValue,
+                                           TimeSpan minimumValue,
+                                           TimeSpan maximumValue)
+        {
+            if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
+            {
+                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
             }
         }
     }
