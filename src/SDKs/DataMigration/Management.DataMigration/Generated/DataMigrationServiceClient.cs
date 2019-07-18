@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.DataMigration
         public virtual ITasksOperations Tasks { get; private set; }
 
         /// <summary>
+        /// Gets the IServiceTasksOperations.
+        /// </summary>
+        public virtual IServiceTasksOperations ServiceTasks { get; private set; }
+
+        /// <summary>
         /// Gets the IProjectsOperations.
         /// </summary>
         public virtual IProjectsOperations Projects { get; private set; }
@@ -353,6 +358,7 @@ namespace Microsoft.Azure.Management.DataMigration
             ResourceSkus = new ResourceSkusOperations(this);
             Services = new ServicesOperations(this);
             Tasks = new TasksOperations(this);
+            ServiceTasks = new ServiceTasksOperations(this);
             Projects = new ProjectsOperations(this);
             Usages = new UsagesOperations(this);
             Operations = new Operations(this);
@@ -390,8 +396,12 @@ namespace Microsoft.Azure.Management.DataMigration
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CommandProperties>("commandType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CommandProperties>("commandType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSsisTaskOutput>("resultType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSsisTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConnectionInfo>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ConnectionInfo>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateOracleAzureDbPostgreSqlSyncTaskOutput>("resultType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateOracleAzureDbPostgreSqlSyncTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput>("resultType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateMySqlAzureDbForMySqlSyncTaskOutput>("resultType"));
