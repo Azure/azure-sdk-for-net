@@ -2,6 +2,9 @@
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <ExcludeFromTest>false</ExcludeFromTest>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TestCommon\ClientRuntime.Test.Common.csproj" />
