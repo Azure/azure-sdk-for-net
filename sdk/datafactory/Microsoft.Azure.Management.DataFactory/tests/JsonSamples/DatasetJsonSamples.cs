@@ -1032,5 +1032,22 @@ namespace DataFactory.Tests.JsonSamples
     }
   }
 }";
+
+        [JsonSample]
+        public const string TeradataDataset = @"
+{
+  ""name"": ""TeradataDataset"",
+  ""properties"": {
+    ""type"": ""TeradataTable"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""TeradataOdbcLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""database"": ""AdventureWorksDW2012"",
+      ""table"": ""DimAccount""
+    }
+  }
+}";
     }
 }
