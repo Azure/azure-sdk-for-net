@@ -2,7 +2,15 @@
 
 ## Current version
 ###  Feature Additions
-    - Added CopyTranslator.cs and TabularTranslator.cs to Extensions folder.
+
+## Version 4.1.0
+###  Feature Additions
+### Breaking Changes
+- Fixed missing types CopyTranslator and TabularTranslator.
+- Added support in Copy for MicrosoftAccessTable, InformixTable, SalesforceServiceCloudObject, AzureSqlMITable, DynamicsCrmEntity, CommonDataServiceForAppsEntity, TeradataTable, Binary, which inhcludes their Dataset, Linked Service, CopySource, and CopySink types
+- Added TeradataTable CopySource support
+- Added logLocation property to ExecuteSSISPackageActivity
+- Added SSIS File system support by expanding SSISPackageLocation to support SSISDB and File location types
 
 ## Version 4.0.0
 ###  Feature Additions
@@ -12,7 +20,7 @@
 - Added support for parameterization to a number of properties
 - The table name is not required anymore for AzureSqlTable, AzureSqlDWTable, SqlServerTable
 - Added a new property dataProxyProperties to Integration Runtime
-- Added new SapTable Linked Services type 
+- Added new SapTable Linked Services type
 - Added types for Read and Write Connector settings in activities - AzureBlobStorageReadSettings, AzureBlobFSReadSettings, AzureDataLakeStoreReadSettings, AmazonS3ReadSettings, FileServerReadSettings, FtpReadSettings, SftpReadSettings, HttpReadSettings, HdfsReadSettings,
 AzureBlobStorageWriteSettings, AzureBlobFSWriteSettings, AzureDataLakeStoreWriteSettings, FileServerWriteSettings, FormatReadSettings, DelimitedTextReadSettings, FormatWriteSettings, DelimitedTextWriteSettings
 - Added new Copy sources - SapTableSource, SqlServerSource, AzureSqlSource

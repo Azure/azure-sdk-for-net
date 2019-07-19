@@ -18,23 +18,26 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Linked service for Teradata data source.
+    /// Informix linked service.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Teradata")]
+    [Newtonsoft.Json.JsonObject("Informix")]
     [Rest.Serialization.JsonTransformation]
-    public partial class TeradataLinkedService : LinkedService
+    public partial class InformixLinkedService : LinkedService
     {
         /// <summary>
-        /// Initializes a new instance of the TeradataLinkedService class.
+        /// Initializes a new instance of the InformixLinkedService class.
         /// </summary>
-        public TeradataLinkedService()
+        public InformixLinkedService()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TeradataLinkedService class.
+        /// Initializes a new instance of the InformixLinkedService class.
         /// </summary>
+        /// <param name="connectionString">The non-access credential portion of
+        /// the connection string as well as an optional encrypted credential.
+        /// Type: string, SecureString or AzureKeyVaultSecretReference.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -42,26 +45,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
-        /// <param name="connectionString">Teradata ODBC connection string.
-        /// Type: string, SecureString or AzureKeyVaultSecretReference.</param>
-        /// <param name="server">Server name for connection. Type: string (or
-        /// Expression with resultType string).</param>
-        /// <param name="authenticationType">AuthenticationType to be used for
-        /// connection. Possible values include: 'Basic', 'Windows'</param>
-        /// <param name="username">Username for authentication. Type: string
-        /// (or Expression with resultType string).</param>
-        /// <param name="password">Password for authentication.</param>
+        /// <param name="authenticationType">Type of authentication used to
+        /// connect to the Informix as ODBC data store. Possible values are:
+        /// Anonymous and Basic. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="credential">The access credential portion of the
+        /// connection string specified in driver-specific property-value
+        /// format.</param>
+        /// <param name="userName">User name for Basic authentication. Type:
+        /// string (or Expression with resultType string).</param>
+        /// <param name="password">Password for Basic authentication.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public TeradataLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object server = default(object), string authenticationType = default(string), object username = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public InformixLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object authenticationType = default(object), SecretBase credential = default(SecretBase), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
-            Server = server;
             AuthenticationType = authenticationType;
-            Username = username;
+            Credential = credential;
+            UserName = userName;
             Password = password;
             EncryptedCredential = encryptedCredential;
             CustomInit();
@@ -73,35 +77,37 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets teradata ODBC connection string. Type: string,
+        /// Gets or sets the non-access credential portion of the connection
+        /// string as well as an optional encrypted credential. Type: string,
         /// SecureString or AzureKeyVaultSecretReference.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
         public object ConnectionString { get; set; }
 
         /// <summary>
-        /// Gets or sets server name for connection. Type: string (or
-        /// Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.server")]
-        public object Server { get; set; }
-
-        /// <summary>
-        /// Gets or sets authenticationType to be used for connection. Possible
-        /// values include: 'Basic', 'Windows'
+        /// Gets or sets type of authentication used to connect to the Informix
+        /// as ODBC data store. Possible values are: Anonymous and Basic. Type:
+        /// string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.authenticationType")]
-        public string AuthenticationType { get; set; }
+        public object AuthenticationType { get; set; }
 
         /// <summary>
-        /// Gets or sets username for authentication. Type: string (or
+        /// Gets or sets the access credential portion of the connection string
+        /// specified in driver-specific property-value format.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public SecretBase Credential { get; set; }
+
+        /// <summary>
+        /// Gets or sets user name for Basic authentication. Type: string (or
         /// Expression with resultType string).
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.username")]
-        public object Username { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.userName")]
+        public object UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets password for authentication.
+        /// Gets or sets password for Basic authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
         public SecretBase Password { get; set; }
@@ -123,6 +129,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
+            if (ConnectionString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
+            }
         }
     }
 }
