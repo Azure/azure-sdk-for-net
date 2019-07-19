@@ -24,7 +24,7 @@ namespace Azure.Core.Testing
                 TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
                 invocation.Proceed();
 
-                bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ConvenienceMethodAttribute");
+                bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
                 if (invocation.Method.ReturnType.Name.Contains("AsyncCollection") ||
                     invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
                 {

@@ -116,7 +116,7 @@ namespace Azure.Storage.Queues
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueServiceProperties.ToXml(properties, "StorageServiceProperties", "");
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
@@ -1305,7 +1305,7 @@ namespace Azure.Storage.Queues
                         _body.Add(Azure.Storage.Queues.Models.SignedIdentifier.ToXml(_child));
                     }
                 }
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
@@ -1712,7 +1712,7 @@ namespace Azure.Storage.Queues
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueMessage.ToXml(message, "QueueMessage", "");
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
@@ -2017,7 +2017,7 @@ namespace Azure.Storage.Queues
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueMessage.ToXml(message, "QueueMessage", "");
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));

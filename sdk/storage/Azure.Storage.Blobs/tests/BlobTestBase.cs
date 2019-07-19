@@ -81,23 +81,23 @@ namespace Azure.Storage.Test.Shared
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultTargetTenant);
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigDefault);
 
         public BlobServiceClient GetServiceClient_SecondaryAccount_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultSecondaryTargetTenant);
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigSecondary);
 
         public BlobServiceClient GetServiceClient_PreviewAccount_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultTargetPreviewBlobTenant);
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPreviewBlob);
 
         public BlobServiceClient GetServiceClient_OauthAccount() =>
-            this.GetServiceClientFromOauthConfig(TestConfigurations.DefaultTargetOAuthTenant);
+            this.GetServiceClientFromOauthConfig(this.TestConfigOAuth);
 
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
@@ -106,7 +106,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsContainer(containerName: containerName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsContainer(containerName: containerName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceIdentitySas_Container(
@@ -115,7 +115,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsContainer(containerName: containerName, userDelegationKey, TestConfigurations.DefaultTargetOAuthTenant.AccountName)}"),
+                    new Uri($"{this.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsContainer(containerName: containerName, userDelegationKey, this.TestConfigOAuth.AccountName)}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Blob(
@@ -125,7 +125,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsBlob(containerName: containerName, blobName: blobName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsBlob(containerName: containerName, blobName: blobName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceIdentitySas_Blob(
@@ -135,7 +135,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: TestConfigurations.DefaultTargetOAuthTenant.AccountName)}"),
+                    new Uri($"{this.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: this.TestConfigOAuth.AccountName)}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Snapshot(
@@ -146,7 +146,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public IDisposable GetNewContainer(
@@ -167,8 +167,8 @@ namespace Azure.Storage.Test.Shared
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
-                    TestConfigurations.DefaultTargetTenant.AccountName,
-                    TestConfigurations.DefaultTargetTenant.AccountKey);
+                    this.TestConfigDefault.AccountName,
+                    this.TestConfigDefault.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
             => new AccountSasBuilder

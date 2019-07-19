@@ -29,7 +29,22 @@ namespace Azure.Core.Testing
             "Request-Id"
         };
 
-        public HashSet<string> ExcludeResponseHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        // Headers that don't indicate meaningful changes between updated recordings
+        public HashSet<string> VolatileHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Date",
+            "x-ms-date",
+            "x-ms-client-request-id",
+            "User-Agent",
+            "Request-Id",
+            "If-Match",
+            "If-None-Match",
+            "If-Modified-Since",
+            "If-Unmodified-Since"
+        };
+
+        // Headers that don't indicate meaningful changes between updated recordings
+        public HashSet<string> VolatileResponseHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "Date",
             "ETag",
@@ -59,7 +74,8 @@ namespace Azure.Core.Testing
             foreach (RecordEntry entry in entries)
             {
                 int score = 0;
-                if (entry.RequestUri != uri)
+
+                if (!AreUrisSame(entry.RequestUri, uri))
                 {
                     score++;
                 }
@@ -69,7 +85,7 @@ namespace Azure.Core.Testing
                     score++;
                 }
 
-                score += CompareHeaderDictionaries(headers, entry.RequestHeaders);
+                score += CompareHeaderDictionaries(headers, entry.RequestHeaders, ExcludeHeaders);
 
                 if (score == 0)
                 {
@@ -83,14 +99,31 @@ namespace Azure.Core.Testing
                 }
             }
 
-
             throw new InvalidOperationException(GenerateException(request.Method, uri, headers, bestScoreEntry));
         }
 
-        public virtual bool IsEquivalentResponse(RecordEntry entry, RecordEntry otherEntry)
+        public virtual bool IsEquivalentRecord(RecordEntry entry, RecordEntry otherEntry) =>
+            IsEquivalentRequest(entry, otherEntry) &&
+            IsEquivalentResponse(entry, otherEntry);
+
+        protected virtual bool IsEquivalentRequest(RecordEntry entry, RecordEntry otherEntry) =>
+            entry.RequestMethod == otherEntry.RequestMethod &&
+            IsEquivalentUri(entry.RequestUri, otherEntry.RequestUri) &&
+            CompareHeaderDictionaries(entry.RequestHeaders, otherEntry.RequestHeaders, VolatileHeaders) == 0;
+
+        private static bool AreUrisSame(string entryUri, string otherEntryUri) =>
+            // Some versions of .NET behave differently when calling new Uri("...")
+            // so we'll normalize the recordings (which may have been against
+            // a different .NET version) to be safe
+            new Uri(entryUri).ToString() == new Uri(otherEntryUri).ToString();
+
+        protected virtual bool IsEquivalentUri(string entryUri, string otherEntryUri) =>
+            AreUrisSame(entryUri, otherEntryUri);
+
+        protected virtual bool IsEquivalentResponse(RecordEntry entry, RecordEntry otherEntry)
         {
-            IEnumerable<KeyValuePair<string, string[]>> entryHeaders = entry.ResponseHeaders.Where(h => !ExcludeResponseHeaders.Contains(h.Key));
-            IEnumerable<KeyValuePair<string, string[]>> otherEntryHeaders = otherEntry.ResponseHeaders.Where(h => !ExcludeResponseHeaders.Contains(h.Key));
+            IEnumerable<KeyValuePair<string, string[]>> entryHeaders = entry.ResponseHeaders.Where(h => !VolatileResponseHeaders.Contains(h.Key));
+            IEnumerable<KeyValuePair<string, string[]>> otherEntryHeaders = otherEntry.ResponseHeaders.Where(h => !VolatileResponseHeaders.Contains(h.Key));
 
             return
                 entry.StatusCode == otherEntry.StatusCode &&
@@ -162,7 +195,7 @@ namespace Azure.Core.Testing
             return string.Join(",", values);
         }
 
-        private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders)
+        private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders, HashSet<string> ignoredHeaders)
         {
             int difference = 0;
             var remaining = new SortedDictionary<string, string[]>(entryHeaders, entryHeaders.Comparer);
@@ -171,13 +204,13 @@ namespace Azure.Core.Testing
                 if (remaining.TryGetValue(header.Key, out string[] values))
                 {
                     remaining.Remove(header.Key);
-                    if (!ExcludeHeaders.Contains(header.Key) &&
+                    if (!ignoredHeaders.Contains(header.Key) &&
                         !values.SequenceEqual(header.Value))
                     {
                         difference++;
                     }
                 }
-                else if (!ExcludeHeaders.Contains(header.Key))
+                else if (!ignoredHeaders.Contains(header.Key))
                 {
                     difference++;
                 }

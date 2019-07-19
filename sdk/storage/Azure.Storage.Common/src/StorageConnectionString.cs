@@ -1328,7 +1328,7 @@ namespace Azure.Storage.Common
                     StorageConnectionString.AccountNameSettingString,
                     sharedKeyCredentials.AccountName,
                     StorageConnectionString.AccountKeySettingString,
-                    exportSecrets ? sharedKeyCredentials.ExportBase64EncodedKey() : "[key hidden]");
+                    exportSecrets ? sharedKeyCredentials.ExportBase64EncodedKey() : "Sanitized");
             } else if (credentials is SharedAccessSignatureCredentials sasCredentials)
             {
                 return String.Format(CultureInfo.InvariantCulture, "{0}={1}", StorageConnectionString.SharedAccessSignatureSettingString, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");

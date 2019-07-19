@@ -1,55 +1,46 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-093661fa-b449-68c9-8333-fbed8f14b0fa?restype=share\u0026comp=acl",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-a15c3800-1615-2408-e396-e1600f43b80d?restype=share\u0026comp=acl",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "301",
-        "Content-Type": "application/xml",
+        "Content-Length": "249",
+        "Content-Type": "application\u002fxml",
+        "Request-Id": "|4a869cf2-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-Storage.Files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "e0c515a507884bd2cf20e73d8cd2ccc5",
-        "x-ms-date": "Sun, 30 Jun 2019 17:34:39 GMT",
+        "x-ms-client-request-id": "b7feb13835ad839e1b60ae165108dbe5",
+        "x-ms-date": "Fri, 19 Jul 2019 22:32:15 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
-      "RequestBody": [
-        "\u003cSignedIdentifiers\u003e\r\n",
-        "  \u003cSignedIdentifier\u003e\r\n",
-        "    \u003cId\u003etcgqdocbtrqskwxfyyyq\u003c/Id\u003e\r\n",
-        "    \u003cAccessPolicy\u003e\r\n",
-        "      \u003cStart\u003e2019-06-30T16:34:39.4615315Z\u003c/Start\u003e\r\n",
-        "      \u003cExpiry\u003e2019-06-30T18:34:39.4615315Z\u003c/Expiry\u003e\r\n",
-        "      \u003cPermission\u003erw\u003c/Permission\u003e\r\n",
-        "    \u003c/AccessPolicy\u003e\r\n",
-        "  \u003c/SignedIdentifier\u003e\r\n",
-        "\u003c/SignedIdentifiers\u003e"
-      ],
+      "RequestBody": "\u003cSignedIdentifiers\u003e\u003cSignedIdentifier\u003e\u003cId\u003estmmwvithegvxouorgdf\u003c\u002fId\u003e\u003cAccessPolicy\u003e\u003cStart\u003e2019-07-19T21:32:15.1201530Z\u003c\u002fStart\u003e\u003cExpiry\u003e2019-07-19T23:32:15.1201530Z\u003c\u002fExpiry\u003e\u003cPermission\u003erw\u003c\u002fPermission\u003e\u003c\u002fAccessPolicy\u003e\u003c\u002fSignedIdentifier\u003e\u003c\u002fSignedIdentifiers\u003e",
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "217",
-        "Content-Type": "application/xml",
-        "Date": "Sun, 30 Jun 2019 17:34:41 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:32:14 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "b9809e59-301a-0083-476a-2f536c000000",
+        "x-ms-request-id": "39f8d867-e01a-005b-6481-3e7435000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eShareNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified share does not exist.\n",
-        "RequestId:b9809e59-301a-0083-476a-2f536c000000\n",
-        "Time:2019-06-30T17:34:42.4221520Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eShareNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified share does not exist.\n",
+        "RequestId:39f8d867-e01a-005b-6481-3e7435000000\n",
+        "Time:2019-07-19T22:32:15.0996734Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-06-30T10:34:39.4615315-07:00",
-    "RandomSeed": "850145110"
+    "DateTimeOffsetNow": "2019-07-19T15:32:15.1201530-07:00",
+    "RandomSeed": "2046388445",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }
