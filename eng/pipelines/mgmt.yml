@@ -15,6 +15,4 @@ variables:
 jobs:
 - template: templates/jobs/archetype-sdk-mgmt.yml
   parameters:
-    Scope: Network
-    Commit: 'https://github.com/Azure/azure-sdk-for-net/commit/d9b4c736bfb7a32043238d015cbaefbdc47d9376'
-    ShouldPublish: true
+    Scope: $(Scope)
