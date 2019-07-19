@@ -308,6 +308,17 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
         }
 
+        [Test]
+        public void SupportsSettingVersion()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")).WithVersion(TestClientOptions.ServiceVersion.B));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClient client = provider.GetService<TestClient>();
+            Assert.AreEqual(TestClientOptions.ServiceVersion.B, client.Options.Version);
+        }
+
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {
             return new ConfigurationBuilder().AddInMemoryCollection(items).Build();
