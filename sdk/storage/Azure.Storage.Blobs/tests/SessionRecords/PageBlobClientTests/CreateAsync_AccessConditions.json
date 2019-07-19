@@ -1,17 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-4d812448-46c0-d3f1-ff84-69e547535ad8?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-4d812448-46c0-d3f1-ff84-69e547535ad8?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329640-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "9c07392b5f2b8be4ba82a78a0033852f",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -19,33 +20,34 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A2834DE\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C98704DC8BB\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ab3-e01e-0029-2544-3c737a000000",
+        "x-ms-request-id": "feb68e05-501e-0061-5e81-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-4d812448-46c0-d3f1-ff84-69e547535ad8/test-blob-88db46c3-632e-32d5-c6d0-008a5d175e31",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-4d812448-46c0-d3f1-ff84-69e547535ad8\u002ftest-blob-88db46c3-632e-32d5-c6d0-008a5d175e31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Request-Id": "|83329641-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-sequence-number": "0",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "fbf2f1d5af4fe82d40f5923e9f67d2cb",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -53,33 +55,34 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A2A8AB9\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C98704F90D6\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ab7-e01e-0029-2844-3c737a000000",
+        "x-ms-request-id": "feb68e0f-501e-0061-6781-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-4d812448-46c0-d3f1-ff84-69e547535ad8/test-blob-88db46c3-632e-32d5-c6d0-008a5d175e31",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-4d812448-46c0-d3f1-ff84-69e547535ad8\u002ftest-blob-88db46c3-632e-32d5-c6d0-008a5d175e31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Request-Id": "|83329642-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "012139fed277c7aa63d4d55b5f592ea2",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -87,30 +90,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A2CD539\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C987052298B\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ac1-e01e-0029-3044-3c737a000000",
+        "x-ms-request-id": "feb68e14-501e-0061-6c81-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-4d812448-46c0-d3f1-ff84-69e547535ad8?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-4d812448-46c0-d3f1-ff84-69e547535ad8?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329643-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "0fb47623894113df18f34739d097935f",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -118,28 +122,29 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ac5-e01e-0029-3344-3c737a000000",
+        "x-ms-request-id": "feb68e17-501e-0061-6f81-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-238b34fd-5df5-03b9-462a-977bdad188e6?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-238b34fd-5df5-03b9-462a-977bdad188e6?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329644-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "281af0c6c3b2748a590ee8848a70f7cc",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -147,33 +152,34 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A32225F\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C987056F2C2\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ad0-e01e-0029-3b44-3c737a000000",
+        "x-ms-request-id": "feb68e21-501e-0061-7981-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-238b34fd-5df5-03b9-462a-977bdad188e6/test-blob-2a5d7540-0acd-c5ac-bcb1-c816f2633846",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-238b34fd-5df5-03b9-462a-977bdad188e6\u002ftest-blob-2a5d7540-0acd-c5ac-bcb1-c816f2633846",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Request-Id": "|83329645-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-sequence-number": "0",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "e072606a6b7c3aadaa16c9e7753578d6",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -181,34 +187,35 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A349F52\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C987058BACF\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ad6-e01e-0029-3f44-3c737a000000",
+        "x-ms-request-id": "feb68e33-501e-0061-0981-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-238b34fd-5df5-03b9-462a-977bdad188e6/test-blob-2a5d7540-0acd-c5ac-bcb1-c816f2633846",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-238b34fd-5df5-03b9-462a-977bdad188e6\u002ftest-blob-2a5d7540-0acd-c5ac-bcb1-c816f2633846",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "If-Modified-Since": "Tue, 16 Jul 2019 02:08:04 GMT",
+        "If-Modified-Since": "Thu, 18 Jul 2019 22:28:35 GMT",
+        "Request-Id": "|83329646-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "643bca325e74bc1943556b01fa7382f6",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -216,30 +223,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A36E9D2\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C98705B2C61\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ad8-e01e-0029-4144-3c737a000000",
+        "x-ms-request-id": "feb68e41-501e-0061-1681-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-238b34fd-5df5-03b9-462a-977bdad188e6?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-238b34fd-5df5-03b9-462a-977bdad188e6?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329647-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "2919a1d617fed550c8237fb640c54f87",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -247,28 +255,29 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ae0-e01e-0029-4944-3c737a000000",
+        "x-ms-request-id": "feb68e60-501e-0061-3181-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-27e3f238-d328-0bd2-47b6-9c26ffac3f37?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-27e3f238-d328-0bd2-47b6-9c26ffac3f37?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329648-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "d411d3944f1b1bd87a669c50de627b7d",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -276,33 +285,34 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A3B4C60\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C9870643C78\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577ae3-e01e-0029-4c44-3c737a000000",
+        "x-ms-request-id": "feb68e65-501e-0061-3681-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-27e3f238-d328-0bd2-47b6-9c26ffac3f37/test-blob-08c8e405-5a8f-02cd-ce0e-e2477a2ad51c",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-27e3f238-d328-0bd2-47b6-9c26ffac3f37\u002ftest-blob-08c8e405-5a8f-02cd-ce0e-e2477a2ad51c",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Request-Id": "|83329649-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-sequence-number": "0",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "6c2248e47ab4e96b19c8adc237822de5",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -310,34 +320,35 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A3E1785\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C9870662B87\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577aec-e01e-0029-5244-3c737a000000",
+        "x-ms-request-id": "feb68e6d-501e-0061-3d81-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-27e3f238-d328-0bd2-47b6-9c26ffac3f37/test-blob-08c8e405-5a8f-02cd-ce0e-e2477a2ad51c",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-27e3f238-d328-0bd2-47b6-9c26ffac3f37\u002ftest-blob-08c8e405-5a8f-02cd-ce0e-e2477a2ad51c",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "If-Unmodified-Since": "Thu, 18 Jul 2019 02:08:04 GMT",
+        "If-Unmodified-Since": "Sat, 20 Jul 2019 22:28:35 GMT",
+        "Request-Id": "|8332964a-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "1b201f3a36e339a7060e060d6d90a04f",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -345,30 +356,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A406205\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C98706BD237\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577af9-e01e-0029-5a44-3c737a000000",
+        "x-ms-request-id": "feb68e86-501e-0061-5281-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-27e3f238-d328-0bd2-47b6-9c26ffac3f37?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-27e3f238-d328-0bd2-47b6-9c26ffac3f37?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|8332964b-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "966b7f910e3f8bc879dfeec7ad0bca4b",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -376,28 +388,29 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b01-e01e-0029-6144-3c737a000000",
+        "x-ms-request-id": "feb68e8f-501e-0061-5b81-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|8332964c-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "b7315d2796172ca55795a20347e08cfa",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -405,33 +418,34 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A44EBA5\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C9870735B5F\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b0d-e01e-0029-6c44-3c737a000000",
+        "x-ms-request-id": "feb68e9b-501e-0061-6581-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89/test-blob-702cbb44-4683-d646-47bd-f557a722171b",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89\u002ftest-blob-702cbb44-4683-d646-47bd-f557a722171b",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Request-Id": "|8332964d-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-sequence-number": "0",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "4f9f656313da4a3457e00374183566c0",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -439,30 +453,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A478FBD\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C9870757178\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b18-e01e-0029-7644-3c737a000000",
+        "x-ms-request-id": "feb68e9f-501e-0061-6881-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89/test-blob-702cbb44-4683-d646-47bd-f557a722171b",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89\u002ftest-blob-702cbb44-4683-d646-47bd-f557a722171b",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|8332964e-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "b8616c5b0b31e106175a7059a14e8434",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -471,22 +486,22 @@
       "ResponseHeaders": {
         "Accept-Ranges": "bytes",
         "Content-Length": "1024",
-        "Content-Type": "application/octet-stream",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A478FBD\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Content-Type": "application\u002foctet-stream",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C9870757178\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-access-tier": "Hot",
         "x-ms-access-tier-inferred": "true",
         "x-ms-blob-sequence-number": "0",
         "x-ms-blob-type": "PageBlob",
-        "x-ms-creation-time": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-creation-time": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
-        "x-ms-request-id": "ff577b23-e01e-0029-8044-3c737a000000",
+        "x-ms-request-id": "feb68ea7-501e-0061-6f81-3e6e4d000000",
         "x-ms-server-encrypted": "true",
         "x-ms-tag-count": "0",
         "x-ms-version": "2018-11-09"
@@ -494,20 +509,21 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89/test-blob-702cbb44-4683-d646-47bd-f557a722171b",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89\u002ftest-blob-702cbb44-4683-d646-47bd-f557a722171b",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "If-Match": "\u00220x8D70A5B9A478FBD\u0022",
+        "If-Match": "\u00220x8D70C9870757178\u0022",
+        "Request-Id": "|8332964f-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "e2a0867d3d40312087e219a242d1be12",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -515,30 +531,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A4C72EC\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C987079B83B\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b30-e01e-0029-0d44-3c737a000000",
+        "x-ms-request-id": "feb68ead-501e-0061-7481-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5a0dfce1-ba09-ae38-a0e8-66a5735d7c89?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329650-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "3bfb34565fc057e95ebe3780a2daa808",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -546,28 +563,29 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b3e-e01e-0029-1a44-3c737a000000",
+        "x-ms-request-id": "feb68eb5-501e-0061-7b81-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-91f6cf5c-8494-1e7f-4b30-314ef2649f45?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-91f6cf5c-8494-1e7f-4b30-314ef2649f45?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329651-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "6d025e9b48521e739d49838105a08eac",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -575,33 +593,34 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A50873B\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C98707EA8CD\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b48-e01e-0029-2344-3c737a000000",
+        "x-ms-request-id": "feb68ebe-501e-0061-0381-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-91f6cf5c-8494-1e7f-4b30-314ef2649f45/test-blob-7245103a-2dda-d27d-b4dd-ef902e9a65fa",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-91f6cf5c-8494-1e7f-4b30-314ef2649f45\u002ftest-blob-7245103a-2dda-d27d-b4dd-ef902e9a65fa",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Request-Id": "|83329652-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-sequence-number": "0",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "43e4f21f3bd713b65bd8f44b00fd18ab",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -609,34 +628,35 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A52B601\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C98708097B2\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b53-e01e-0029-2c44-3c737a000000",
+        "x-ms-request-id": "feb68ec2-501e-0061-0581-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-91f6cf5c-8494-1e7f-4b30-314ef2649f45/test-blob-7245103a-2dda-d27d-b4dd-ef902e9a65fa",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-91f6cf5c-8494-1e7f-4b30-314ef2649f45\u002ftest-blob-7245103a-2dda-d27d-b4dd-ef902e9a65fa",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "If-None-Match": "\u0022garbage\u0022",
+        "Request-Id": "|83329653-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "e11484a22c1e6e6ae030b87458e3ef02",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -644,30 +664,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A550081\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C987082E22F\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b5a-e01e-0029-3144-3c737a000000",
+        "x-ms-request-id": "feb68ecb-501e-0061-0c81-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-91f6cf5c-8494-1e7f-4b30-314ef2649f45?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-91f6cf5c-8494-1e7f-4b30-314ef2649f45?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329654-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "136289e34abbffd55a3117013932d2b6",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -675,28 +696,29 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b5d-e01e-0029-3444-3c737a000000",
+        "x-ms-request-id": "feb68ed3-501e-0061-1381-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-aaee44c4-8386-f3db-8775-63a78241bb78?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-aaee44c4-8386-f3db-8775-63a78241bb78?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329655-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "7667f1e9049b57efae1587ec156835ae",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -704,33 +726,34 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A593BEB\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C987087D2D3\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b63-e01e-0029-3a44-3c737a000000",
+        "x-ms-request-id": "feb68edd-501e-0061-1d81-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-aaee44c4-8386-f3db-8775-63a78241bb78/test-blob-14af015d-45f5-607b-ad6f-8c46e72e7c18",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-aaee44c4-8386-f3db-8775-63a78241bb78\u002ftest-blob-14af015d-45f5-607b-ad6f-8c46e72e7c18",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Request-Id": "|83329656-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-sequence-number": "0",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "47189e765bcbc01b5496fb71fcefde1e",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -738,30 +761,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A5B91D2\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C9870899A8D\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b69-e01e-0029-3f44-3c737a000000",
+        "x-ms-request-id": "feb68eea-501e-0061-2781-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-aaee44c4-8386-f3db-8775-63a78241bb78/test-blob-14af015d-45f5-607b-ad6f-8c46e72e7c18?comp=lease",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-aaee44c4-8386-f3db-8775-63a78241bb78\u002ftest-blob-14af015d-45f5-607b-ad6f-8c46e72e7c18?comp=lease",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329657-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "76756e98ed4f02e2e6efbf5e4a0a64be",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-lease-action": "acquire",
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "8049b440-a691-a383-7506-c82c78a96f80",
@@ -772,33 +796,34 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A5B91D2\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C9870899A8D\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-lease-id": "8049b440-a691-a383-7506-c82c78a96f80",
-        "x-ms-request-id": "ff577b70-e01e-0029-4344-3c737a000000",
+        "x-ms-request-id": "feb68ef0-501e-0061-2d81-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-aaee44c4-8386-f3db-8775-63a78241bb78/test-blob-14af015d-45f5-607b-ad6f-8c46e72e7c18",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-aaee44c4-8386-f3db-8775-63a78241bb78\u002ftest-blob-14af015d-45f5-607b-ad6f-8c46e72e7c18",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Request-Id": "|83329658-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-content-length": "1024",
         "x-ms-blob-type": "PageBlob",
         "x-ms-client-request-id": "32056d91fce5d0871b75d1c492ee47ab",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-lease-id": "8049b440-a691-a383-7506-c82c78a96f80",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
@@ -807,30 +832,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
-        "ETag": "\u00220x8D70A5B9A62BF85\u0022",
-        "Last-Modified": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
+        "ETag": "\u00220x8D70C98708E56A1\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:28:35 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b7a-e01e-0029-4a44-3c737a000000",
+        "x-ms-request-id": "feb68ef1-501e-0061-2e81-3e6e4d000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-aaee44c4-8386-f3db-8775-63a78241bb78?restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-aaee44c4-8386-f3db-8775-63a78241bb78?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329659-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.0.0-dev.20190716.1\u002bf831919283b482c09bb15e8c0d930e73d941e30e",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "8dd87a26677952ced24699a1e724586a",
-        "x-ms-date": "Wed, 17 Jul 2019 02:08:04 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -838,20 +864,20 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 17 Jul 2019 02:08:03 GMT",
+        "Date": "Fri, 19 Jul 2019 22:28:34 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "ff577b7e-e01e-0029-4e44-3c737a000000",
+        "x-ms-request-id": "feb68ef9-501e-0061-3481-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-07-16T19:08:04.0875235-07:00",
+    "DateTimeOffsetNow": "2019-07-19T15:28:35.5144722-07:00",
     "RandomSeed": "2027372484",
-    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp://storageteglazatesting.blob.core.windows.net\nhttp://storageteglazatesting.file.core.windows.net\nhttp://storageteglazatesting.queue.core.windows.net\nhttp://storageteglazatesting.table.core.windows.net\n\n\n\n\nhttp://storageteglazatesting-secondary.blob.core.windows.net\n\nhttp://storageteglazatesting-secondary.queue.core.windows.net\nhttp://storageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://storageteglazatesting.blob.core.windows.net/;QueueEndpoint=http://storageteglazatesting.queue.core.windows.net/;TableEndpoint=http://storageteglazatesting.table.core.windows.net/;FileEndpoint=http://storageteglazatesting.file.core.windows.net/;BlobSecondaryEndpoint=http://storageteglazatesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://storageteglazatesting-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://storageteglazatesting-secondary.table.core.windows.net/;AccountName=storageteglazatesting;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

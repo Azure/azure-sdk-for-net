@@ -385,7 +385,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`System.Xml.Linq.XElement ${bodyName} = null;`);
                 }
                 
-                w.line(`string ${textName} = ${bodyName}.ToString();`);
+                w.line(`string ${textName} = ${bodyName}.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);`);
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/xml");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
                 w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);

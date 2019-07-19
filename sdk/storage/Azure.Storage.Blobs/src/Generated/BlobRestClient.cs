@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Blobs.Models.BlobServiceProperties.ToXml(blobServiceProperties, "StorageServiceProperties", "");
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Blobs.Models.KeyInfo.ToXml(keyInfo, "KeyInfo", "");
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
@@ -1742,7 +1742,7 @@ namespace Azure.Storage.Blobs
                         _body.Add(Azure.Storage.Blobs.Models.SignedIdentifier.ToXml(_child));
                     }
                 }
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
@@ -9629,7 +9629,7 @@ namespace Azure.Storage.Blobs
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Blobs.Models.BlockLookupList.ToXml(blocks, "BlockList", "");
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
