@@ -63,7 +63,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 try
                 {
                     await this.cleanupTaskCompletionSource.Task.ConfigureAwait(false);
-                    this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                     await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
@@ -71,14 +70,21 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     return;
                 }
 
+                var isEmpty = true;
                 var utcNow = DateTime.UtcNow;
                 foreach (var kvp in this.dictionary)
                 {
+                    isEmpty = false;
                     var expiration = kvp.Value;
                     if (utcNow > expiration)
                     {
                         this.dictionaryAsCollection.Remove(kvp);
                     }
+                }
+
+                if (isEmpty)
+                {
+                    this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 }
             }
         }
