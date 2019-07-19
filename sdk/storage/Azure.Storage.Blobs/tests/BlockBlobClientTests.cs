@@ -208,12 +208,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.StageBlockAsync(this.ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
 
-                    var attempts = 0;
-                    while (attempts++ < 7 && progressList.Last().BytesTransferred < data.LongLength)
-                    {
-                        // wait to allow lingering progress events to execute
-                        await this.Delay(500, 100).ConfigureAwait(false);
-                    }
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     // Changing from Assert.AreEqual because these don't always update fast enough
                     Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
@@ -1164,15 +1159,10 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.UploadAsync(stream, null, metadata, null, progressHandler: progressHandler);
 
-                    var attempts = 0;
-                    while (attempts++ < 7 && progressList.Last().BytesTransferred < data.LongLength)
-                    {
-                        // wait to allow lingering progress events to execute
-                        await this.Delay(500, 100).ConfigureAwait(false);
-                    }
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     // Changing from Assert.AreEqual because these don't always update fast enough
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressList.LastOrDefault().BytesTransferred, "Final progress has unexpected value");
                 }
 
                 // Assert

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
+using Azure.Storage.Common;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -240,6 +242,30 @@ namespace Azure.Storage.Test.Shared
             {
                 await Task.Delay(playbackDelayMilliseconds.Value);
             }
+        }
+
+        /// <summary>
+        /// Wait for the progress notifications to complete.
+        /// </summary>
+        /// <param name="progressList">
+        /// The list of progress notifications being updated by the Progress handler.
+        /// </param>
+        /// <param name="totalSize">The total size we should eventually see.</param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        protected async Task WaitForProgressAsync(List<StorageProgress> progressList, long totalSize)
+        {
+            for (var attempts = 0; attempts < 10; attempts++)
+            {
+                if (progressList.LastOrDefault()?.BytesTransferred >= totalSize)
+                {
+                    return;
+                }
+
+                // Wait for lingering progress events
+                await this.Delay(500, 100).ConfigureAwait(false);
+            }
+
+            Assert.Fail("Progress notifications never completed!");
         }
     }
 }

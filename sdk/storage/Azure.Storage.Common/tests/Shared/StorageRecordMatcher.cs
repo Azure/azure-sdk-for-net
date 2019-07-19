@@ -89,22 +89,22 @@ namespace Azure.Storage.Test.Shared
             : base(sanitizer)
         {
             // Storage specific request headers to ignore
-            this.ExcludeHeaders.Add("x-ms-source-if-match");
-            this.ExcludeHeaders.Add("x-ms-source-if-none-match");
-            this.ExcludeHeaders.Add("x-ms-source-if-modified-since");
-            this.ExcludeHeaders.Add("x-ms-source-if-unmodified-since");
-            this.ExcludeHeaders.Add("x-ms-copy-source");
+            this.VolatileHeaders.Add("x-ms-source-if-match");
+            this.VolatileHeaders.Add("x-ms-source-if-none-match");
+            this.VolatileHeaders.Add("x-ms-source-if-modified-since");
+            this.VolatileHeaders.Add("x-ms-source-if-unmodified-since");
+            this.VolatileHeaders.Add("x-ms-copy-source");
 
             // Storage specific response headers to ignore
-            this.ExcludeResponseHeaders.Add("Server");
-            this.ExcludeResponseHeaders.Add("x-ms-snapshot");
-            this.ExcludeResponseHeaders.Add("x-ms-copy-id");
-            this.ExcludeResponseHeaders.Add("x-ms-creation-time");
-            this.ExcludeResponseHeaders.Add("x-ms-copy-completion-time");
-            this.ExcludeResponseHeaders.Add("x-ms-copy-destination-snapshot");
-            this.ExcludeResponseHeaders.Add("x-ms-copy-source");
-            this.ExcludeResponseHeaders.Add("Set-Cookie");
-            this.ExcludeResponseHeaders.Add("Referrer-Policy");
+            this.VolatileResponseHeaders.Add("Server");
+            this.VolatileResponseHeaders.Add("x-ms-snapshot");
+            this.VolatileResponseHeaders.Add("x-ms-copy-id");
+            this.VolatileResponseHeaders.Add("x-ms-creation-time");
+            this.VolatileResponseHeaders.Add("x-ms-copy-completion-time");
+            this.VolatileResponseHeaders.Add("x-ms-copy-destination-snapshot");
+            this.VolatileResponseHeaders.Add("x-ms-copy-source");
+            this.VolatileResponseHeaders.Add("Set-Cookie");
+            this.VolatileResponseHeaders.Add("Referrer-Policy");
         }
 
         /// <summary>

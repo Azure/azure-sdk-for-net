@@ -670,13 +670,9 @@ namespace Azure.Storage.Files.Test
                     result.GetRawResponse().Headers.TryGetValue("x-ms-version", out var version);
                     Assert.IsNotNull(version);
 
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
-
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-
-                    var lastProgress = progressList.Last();
-
-                    Assert.AreEqual(data.LongLength, lastProgress.BytesTransferred, "Final progress has unexpected value");
+                    Assert.AreEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
                 }
 
                 // Assert
