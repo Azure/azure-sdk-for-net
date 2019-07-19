@@ -17,7 +17,6 @@ namespace Azure.Core.Extensions.Tests
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("connectionstring", "CS"));
 
-            var factory = new ClientFactory();
             var clientOptions = new TestClientOptions();
             var client = (TestClient)ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null);
 
@@ -30,12 +29,65 @@ namespace Azure.Core.Extensions.Tests
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "http://localhost"));
 
-            var factory = new ClientFactory();
             var clientOptions = new TestClientOptions();
             var client = (TestClient)ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null);
 
             Assert.AreEqual("http://localhost/", client.Uri.ToString());
             Assert.AreSame(clientOptions, client.Options);
+        }
+
+        [Test]
+        public void ConvertsCompositeObjectsConstructorParameters()
+        {
+            IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("composite:c", "http://localhost"));
+
+            var clientOptions = new TestClientOptions();
+            var client = (TestClient)ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null);
+
+            Assert.AreEqual("http://localhost/", client.Composite.C.ToString());
+            Assert.AreSame(clientOptions, client.Options);
+        }
+
+        [Test]
+        public void ConvertsCompositeObjectsConstructorParameters2()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("composite:a", "a"),
+                new KeyValuePair<string, string>("composite:b", "b"));
+
+            var clientOptions = new TestClientOptions();
+            var client = (TestClient)ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null);
+
+            Assert.AreEqual("a", client.Composite.A);
+            Assert.AreEqual("b", client.Composite.B);
+            Assert.AreSame(clientOptions, client.Options);
+        }
+
+        [Test]
+        public void UsesLongestConstructor()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("composite:c", "http://localhost"),
+                new KeyValuePair<string, string>("uri", "http://otherhost")
+                );
+
+            var clientOptions = new TestClientOptions();
+            var client = (TestClient)ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null);
+
+            Assert.AreEqual("http://localhost/", client.Composite.C.ToString());
+            Assert.AreEqual("http://otherhost/", client.Uri.ToString());
+            Assert.AreSame(clientOptions, client.Options);
+        }
+
+        [Test]
+        public void ThrowsWhenUnableToReadCompositeObject()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("composite:non-existent", "_"));
+
+            var clientOptions = new TestClientOptions();
+            var exception = Assert.Throws<InvalidOperationException>(() => ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null));
+            Assert.AreEqual("Unable to convert section 'composite' to parameter type 'Azure.Core.Extensions.Tests.TestClient+CompositeObject', unable to find matching constructor.", exception.Message);
         }
 
         [Test]

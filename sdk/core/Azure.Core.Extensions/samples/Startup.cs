@@ -5,6 +5,8 @@ using System;
 using Azure.Core.Pipeline;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Azure.Storage;
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -48,11 +50,14 @@ namespace Azure.Core.Extensions.Samples
 
                 // Advanced configure global defaults
                 builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(HttpPipelinePosition.PerCall, provider.GetService<DependencyInjectionEnabledPolicy>()));
+
+                builder.AddBlobServiceClient(Configuration.GetSection("Storage"))
+                        .WithVersion(BlobClientOptions.ServiceVersion.V2018_11_09);
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SecretClient secretClient)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SecretClient secretClient, BlobServiceClient blobServiceClient)
         {
             if (env.IsDevelopment())
             {
@@ -61,9 +66,10 @@ namespace Azure.Core.Extensions.Samples
 
             app.Run(async context => {
                 context.Response.ContentType = "text";
-                foreach (var secret in secretClient.GetSecrets())
+
+                await foreach (var response in blobServiceClient.GetBlobContainerClient("myblobcontainer").GetBlobsAsync())
                 {
-                    await context.Response.WriteAsync(secret.Value.Name + Environment.NewLine);
+                    await context.Response.WriteAsync(response.Value.Name + Environment.NewLine);
                 }
             });
         }

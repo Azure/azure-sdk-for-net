@@ -47,6 +47,10 @@ namespace Azure.Core.Extensions
 
         public static IAzureClientBuilder<TClient, TOptions> WithVersion<TClient, TOptions, TVersion>(this IAzureClientBuilder<TClient, TOptions> builder, TVersion version) where TOptions : class
         {
+            if (typeof(TVersion).DeclaringType != typeof(TOptions))
+            {
+                throw new ArgumentException($"Version should be of type {typeof(TOptions)}.ServiceVersion");
+            }
             builder.ToBuilder().Registration.Version = version;
             return builder;
         }

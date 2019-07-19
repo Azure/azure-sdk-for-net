@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" IsImplicitlyDefined="true" />
     <ProjectReference Include="..\..\..\keyvault\Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj" />
+    <ProjectReference Include="..\..\..\storage\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="..\src\Azure.Core.Extensions.csproj" />
   </ItemGroup>
 </Project>
