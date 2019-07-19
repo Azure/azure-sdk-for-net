@@ -45,6 +45,12 @@ namespace Azure.Core.Extensions
             return builder;
         }
 
+        public static IAzureClientBuilder<TClient, TOptions> WithVersion<TClient, TOptions, TVersion>(this IAzureClientBuilder<TClient, TOptions> builder, TVersion version) where TOptions : class
+        {
+            builder.ToBuilder().Registration.Version = version;
+            return builder;
+        }
+
         private static AzureClientBuilder<TClient, TOptions> ToBuilder<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder) where TOptions : class
         {
             return (AzureClientBuilder<TClient, TOptions>)builder;
