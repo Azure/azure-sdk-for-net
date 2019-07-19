@@ -70,7 +70,10 @@ namespace Microsoft.Rest
                             // used if retries continue to fail.
                             // NOTE: If the content is not read and this message is returned later, an IO Exception will end up
                             //       happening indicating that request has been aborted.
-                            await response.Content?.ReadAsStringAsync();
+                            if (response.Content != null)
+                            {
+                                await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            }
 
                             var oldResponse = previousResponseMessage;
                             previousResponseMessage = response;
@@ -93,7 +96,7 @@ namespace Microsoft.Rest
                             var retryAfter = int.Parse(retryValue, CultureInfo.InvariantCulture);
 
                             // wait for that duration
-                            await Task.Delay(TimeSpan.FromSeconds(retryAfter), cancellationToken);
+                            await Task.Delay(TimeSpan.FromSeconds(retryAfter), cancellationToken).ConfigureAwait(false);
 
                             // and try again
                             continue;

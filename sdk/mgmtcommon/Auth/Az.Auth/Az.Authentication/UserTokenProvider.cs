@@ -80,7 +80,7 @@ namespace Microsoft.Rest.Azure.Authentication
             string clientId,
             Func<DeviceCodeResult, bool> deviceCodeHandler)
         {
-            return await LoginByDeviceCodeAsync(clientId, CommonTenantId, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared, deviceCodeHandler);
+            return await LoginByDeviceCodeAsync(clientId, CommonTenantId, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared, deviceCodeHandler).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Microsoft.Rest.Azure.Authentication
             string domain,
             Func<DeviceCodeResult, bool> deviceCodeHandler)
         {
-            return await LoginByDeviceCodeAsync(clientId, domain, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared, deviceCodeHandler);
+            return await LoginByDeviceCodeAsync(clientId, domain, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared, deviceCodeHandler).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Microsoft.Rest.Azure.Authentication
             TokenCache cache,
             Func<DeviceCodeResult, bool> deviceCodeHandler)
         {
-            return await LoginByDeviceCodeAsync(clientId, domain, ActiveDirectoryServiceSettings.Azure, cache, deviceCodeHandler);
+            return await LoginByDeviceCodeAsync(clientId, domain, ActiveDirectoryServiceSettings.Azure, cache, deviceCodeHandler).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Microsoft.Rest.Azure.Authentication
             ActiveDirectoryServiceSettings serviceSettings,
             Func<DeviceCodeResult, bool> deviceCodeHandler)
         {
-            return await LoginByDeviceCodeAsync(clientId, domain, serviceSettings, TokenCache.DefaultShared, deviceCodeHandler);
+            return await LoginByDeviceCodeAsync(clientId, domain, serviceSettings, TokenCache.DefaultShared, deviceCodeHandler).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> CreateCredentialsFromCache(string clientId, string domain,
             string username)
         {
-            return await CreateCredentialsFromCache(clientId, domain, username, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared);
+            return await CreateCredentialsFromCache(clientId, domain, username, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> CreateCredentialsFromCache(string clientId, string domain,
             string username, TokenCache cache)
         {
-            return await CreateCredentialsFromCache(clientId, domain, username, ActiveDirectoryServiceSettings.Azure, cache);
+            return await CreateCredentialsFromCache(clientId, domain, username, ActiveDirectoryServiceSettings.Azure, cache).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> CreateCredentialsFromCache(string clientId, string domain,
             string username, ActiveDirectoryServiceSettings serviceSettings)
         {
-            return await CreateCredentialsFromCache(clientId, domain, username, serviceSettings, TokenCache.DefaultShared);
+            return await CreateCredentialsFromCache(clientId, domain, username, serviceSettings, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         /// <summary>

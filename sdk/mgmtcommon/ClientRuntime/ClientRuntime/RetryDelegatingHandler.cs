@@ -110,7 +110,10 @@ namespace Microsoft.Rest
                             // response will be used if retries continue to fail.
                             // NOTE: If the content is not read and this message is returned later, an IO Exception will end up
                             //       happening indicating that the stream has been aborted.
-                            await responseMessage.Content?.ReadAsStringAsync();
+                            if (responseMessage.Content != null)
+                            {
+                                await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            }
 
                             var oldResponse = lastErrorResponseMessage;
                             lastErrorResponseMessage = responseMessage;

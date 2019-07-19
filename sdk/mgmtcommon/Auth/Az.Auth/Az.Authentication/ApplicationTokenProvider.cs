@@ -147,7 +147,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, string secret)
         {
-            return await LoginSilentAsync(domain, clientId, secret, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, clientId, secret, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, string secret, TokenCache cache)
         {
-            return await LoginSilentAsync(domain, clientId, secret, ActiveDirectoryServiceSettings.Azure, cache);
+            return await LoginSilentAsync(domain, clientId, secret, ActiveDirectoryServiceSettings.Azure, cache).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, string secret,
             ActiveDirectoryServiceSettings settings)
         {
-            return await LoginSilentAsync(domain, clientId, secret, settings, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, clientId, secret, settings, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
 
@@ -198,7 +198,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, string secret,
            ActiveDirectoryServiceSettings settings, TokenCache cache)
         {
-            return await LoginSilentAsync(domain, new ClientCredential(clientId, secret), settings, cache);
+            return await LoginSilentAsync(domain, new ClientCredential(clientId, secret), settings, cache).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, ClientCredential credential,
             ActiveDirectoryServiceSettings settings)
         {
-            return await LoginSilentAsync(domain, credential, settings, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, credential, settings, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Microsoft.Rest.Azure.Authentication
             ActiveDirectoryServiceSettings settings, TokenCache cache)
         {
             return await LoginSilentAsync(domain, credential.ClientId, new MemoryApplicationAuthenticationProvider(credential),
-               settings, cache);
+               settings, cache).ConfigureAwait(false);
         }
 
 
@@ -245,7 +245,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, ClientCredential credential)
         {
-            return await LoginSilentAsync(domain, credential, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, credential, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
 
@@ -261,7 +261,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, ClientCredential credential, TokenCache cache)
         {
-            return await LoginSilentAsync(domain, credential, ActiveDirectoryServiceSettings.Azure, cache);
+            return await LoginSilentAsync(domain, credential, ActiveDirectoryServiceSettings.Azure, cache).ConfigureAwait(false);
         }
         #endregion
 
@@ -282,7 +282,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, string certificateFilePath, bool IsCertificateRollOverEnabled)
         {
-            return await LoginSilentAsync(domain, clientId, certificateFilePath, certificatePassword: string.Empty, IsCertificateRollOverEnabled: IsCertificateRollOverEnabled);
+            return await LoginSilentAsync(domain, clientId, certificateFilePath, certificatePassword: string.Empty, IsCertificateRollOverEnabled: IsCertificateRollOverEnabled).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Microsoft.Rest.Azure.Authentication
             
             CertificateAuthenticationProvider certAuthProvider = new CertificateAuthenticationProvider(certAssertion, IsCertificateRollOverEnabled);
 
-            return await LoginSilentAsync(domain, clientId, certAuthProvider);
+            return await LoginSilentAsync(domain, clientId, certAuthProvider).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, byte[] certificate, bool IsCertificateRollOverEnabled)
         {
-            return await LoginSilentAsync(domain, clientId, certificate, certificatePassword: string.Empty, IsCertificateRollOverEnabled: IsCertificateRollOverEnabled);
+            return await LoginSilentAsync(domain, clientId, certificate, certificatePassword: string.Empty, IsCertificateRollOverEnabled: IsCertificateRollOverEnabled).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Microsoft.Rest.Azure.Authentication
             }
             
             CertificateAuthenticationProvider certAuthProvider = new CertificateAuthenticationProvider(certAssertion, IsCertificateRollOverEnabled);
-            return await LoginSilentAsync(domain, clientId, certAuthProvider);
+            return await LoginSilentAsync(domain, clientId, certAuthProvider).ConfigureAwait(false);
         }
 
 #endif
@@ -380,7 +380,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, byte[] certificate, string password)
         {
-            return await LoginSilentAsync(domain, clientId, certificate, password, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, clientId, certificate, password, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, byte[] certificate, string password, TokenCache cache)
         {
-            return await LoginSilentAsync(domain, clientId, certificate, password, ActiveDirectoryServiceSettings.Azure, cache);
+            return await LoginSilentAsync(domain, clientId, certificate, password, ActiveDirectoryServiceSettings.Azure, cache).ConfigureAwait(false);
         }
 
 
@@ -416,7 +416,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, byte[] certificate, string password,
             ActiveDirectoryServiceSettings settings)
         {
-            return await LoginSilentAsync(domain, clientId, certificate, password, settings, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, clientId, certificate, password, settings, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -435,12 +435,12 @@ namespace Microsoft.Rest.Azure.Authentication
             ActiveDirectoryServiceSettings settings, TokenCache cache)
         {
 #if !net452
-            return await LoginSilentAsync(domain, new ClientAssertionCertificate(clientId, certificate, password), 
-                settings, cache);
+            return await LoginSilentAsync(domain, new ClientAssertionCertificate(clientId, certificate, password),
+                settings, cache).ConfigureAwait(false);
 #else
             return await LoginSilentAsync(domain, new ClientAssertionCertificate(clientId,
                 new System.Security.Cryptography.X509Certificates.X509Certificate2(certificate)),
-                settings, cache);
+                settings, cache).ConfigureAwait(false);
 #endif
         }
 
@@ -458,7 +458,7 @@ namespace Microsoft.Rest.Azure.Authentication
              ActiveDirectoryServiceSettings settings, TokenCache cache)
         {
             return await LoginSilentAsync(domain, certificate.ClientId,
-                new CertificateAuthenticationProvider((clientId) => Task.FromResult(certificate)), settings, cache);
+                new CertificateAuthenticationProvider((clientId) => Task.FromResult(certificate)), settings, cache).ConfigureAwait(false);
         }
 
 
@@ -473,7 +473,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentWithCertificateAsync(string domain, ClientAssertionCertificate certificate)
         {
-            return await LoginSilentAsync(domain, certificate, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, certificate, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared).ConfigureAwait(false);
         }
        
 
@@ -489,7 +489,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentWithCertificateAsync(string domain, ClientAssertionCertificate certificate, TokenCache cache)
         {
-            return await LoginSilentAsync(domain, certificate, ActiveDirectoryServiceSettings.Azure, cache);
+            return await LoginSilentAsync(domain, certificate, ActiveDirectoryServiceSettings.Azure, cache).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentWithCertificateAsync(string domain, ClientAssertionCertificate certificate, ActiveDirectoryServiceSettings settings)
         {
-            return await LoginSilentAsync(domain, certificate, settings, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, certificate, settings, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         #endregion
@@ -523,7 +523,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId,
             IApplicationAuthenticationProvider authenticationProvider)
         {
-            return await LoginSilentAsync(domain, clientId, authenticationProvider, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, clientId, authenticationProvider, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -540,7 +540,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId,
             IApplicationAuthenticationProvider authenticationProvider, TokenCache cache)
         {
-            return await LoginSilentAsync(domain, clientId, authenticationProvider, ActiveDirectoryServiceSettings.Azure, cache);
+            return await LoginSilentAsync(domain, clientId, authenticationProvider, ActiveDirectoryServiceSettings.Azure, cache).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -556,7 +556,7 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId,
             IApplicationAuthenticationProvider authenticationProvider, ActiveDirectoryServiceSettings settings)
         {
-            return await LoginSilentAsync(domain, clientId, authenticationProvider, settings, TokenCache.DefaultShared);
+            return await LoginSilentAsync(domain, clientId, authenticationProvider, settings, TokenCache.DefaultShared).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -575,7 +575,7 @@ namespace Microsoft.Rest.Azure.Authentication
         {
             var audience = settings.TokenAudience.OriginalString;
             var context = GetAuthenticationContext(domain, settings, cache);
-            var authResult = await authenticationProvider.AuthenticateAsync(clientId, audience, context);
+            var authResult = await authenticationProvider.AuthenticateAsync(clientId, audience, context).ConfigureAwait(false);
             return new TokenCredentials(
                 new ApplicationTokenProvider(context, audience, clientId, authenticationProvider, authResult),
                 authResult.TenantId,
@@ -598,7 +598,7 @@ namespace Microsoft.Rest.Azure.Authentication
         {
             var audience = settings.TokenAudience.OriginalString;
             var context = GetAuthenticationContext(domain, settings, cache);
-            var authResult = await authenticationProvider.AuthenticateAsync(clientId, audience, context);
+            var authResult = await authenticationProvider.AuthenticateAsync(clientId, audience, context).ConfigureAwait(false);
             return new TokenCredentials(
                 new ApplicationTokenProvider(context, audience, clientId,authenticationProvider, authResult, expiration),
                 authResult.TenantId,
