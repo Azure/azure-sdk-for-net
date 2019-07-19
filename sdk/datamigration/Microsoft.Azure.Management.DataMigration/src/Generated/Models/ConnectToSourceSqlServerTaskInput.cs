@@ -40,19 +40,25 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'MigrationFromSqlServerToAzureDB',
         /// 'MigrationFromSqlServerToAzureMI',
         /// 'MigrationFromMySQLToAzureDBForMySQL'</param>
+        /// <param name="collectDatabases">Flag for whether to collect
+        /// databases from source server.</param>
         /// <param name="collectLogins">Flag for whether to collect logins from
         /// source server.</param>
         /// <param name="collectAgentJobs">Flag for whether to collect agent
         /// jobs from source server.</param>
         /// <param name="collectTdeCertificateInfo">Flag for whether to collect
         /// TDE Certificate names from source server.</param>
-        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup = default(ServerLevelPermissionsGroup?), bool? collectLogins = default(bool?), bool? collectAgentJobs = default(bool?), bool? collectTdeCertificateInfo = default(bool?))
+        /// <param name="validateSsisCatalogOnly">Flag for whether to validate
+        /// SSIS catalog is reachable on the source server.</param>
+        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup = default(ServerLevelPermissionsGroup?), bool? collectDatabases = default(bool?), bool? collectLogins = default(bool?), bool? collectAgentJobs = default(bool?), bool? collectTdeCertificateInfo = default(bool?), bool? validateSsisCatalogOnly = default(bool?))
         {
             SourceConnectionInfo = sourceConnectionInfo;
             CheckPermissionsGroup = checkPermissionsGroup;
+            CollectDatabases = collectDatabases;
             CollectLogins = collectLogins;
             CollectAgentJobs = collectAgentJobs;
             CollectTdeCertificateInfo = collectTdeCertificateInfo;
+            ValidateSsisCatalogOnly = validateSsisCatalogOnly;
             CustomInit();
         }
 
@@ -77,6 +83,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
 
         /// <summary>
+        /// Gets or sets flag for whether to collect databases from source
+        /// server.
+        /// </summary>
+        [JsonProperty(PropertyName = "collectDatabases")]
+        public bool? CollectDatabases { get; set; }
+
+        /// <summary>
         /// Gets or sets flag for whether to collect logins from source server.
         /// </summary>
         [JsonProperty(PropertyName = "collectLogins")]
@@ -95,6 +108,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "collectTdeCertificateInfo")]
         public bool? CollectTdeCertificateInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether to validate SSIS catalog is reachable
+        /// on the source server.
+        /// </summary>
+        [JsonProperty(PropertyName = "validateSsisCatalogOnly")]
+        public bool? ValidateSsisCatalogOnly { get; set; }
 
         /// <summary>
         /// Validate the object.
