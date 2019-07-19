@@ -396,6 +396,8 @@ namespace Microsoft.Azure.Management.DataMigration
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CommandProperties>("commandType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CommandProperties>("commandType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSsisTaskOutput>("resultType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSsisTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConnectionInfo>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ConnectionInfo>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateOracleAzureDbPostgreSqlSyncTaskOutput>("resultType"));
