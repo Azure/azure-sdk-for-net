@@ -531,6 +531,28 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string TeradataOdbcLinkedService = @"
+{
+    name: ""Test-Teradata-linkedService"",
+    properties:
+    {
+        type: ""Teradata"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: ""fakedConnectionString"",
+            username: ""microsoft"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string HDInsightBYOCLinkedService = @"
 {
     name: ""Test-BYOC-HDInsight-linkedService"",
