@@ -1007,5 +1007,30 @@ namespace DataFactory.Tests.JsonSamples
     }
   }
 }";
+
+        [JsonSample]
+        public const string BinaryDataset = @"
+{
+  ""name"": ""BinaryDataset"",
+  ""properties"": {
+    ""type"": ""Binary"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""data.parquet""
+      },
+      ""compression"": {
+        ""type"": ""Deflate"",
+        ""level"": ""Fastest""
+      }
+    }
+  }
+}";
     }
 }
