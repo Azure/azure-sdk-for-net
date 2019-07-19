@@ -57,7 +57,7 @@ namespace Microsoft.Rest.Azure.Authentication.Internal
             if (_credentials.ContainsKey(clientId))
             {
                 var creds = _credentials[clientId];
-                return await context.AcquireTokenAsync(audience, creds);
+                return await context.AcquireTokenAsync(audience, creds).ConfigureAwait(false);
             }
 
             throw new AuthenticationException("Matching credentials for client id '{0}' could not be found.");
