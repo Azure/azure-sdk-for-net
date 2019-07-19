@@ -13,8 +13,10 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     {
         readonly ConcurrentDictionary<TKey, DateTime> dictionary;
         readonly ICollection<KeyValuePair<TKey, DateTime>> dictionaryAsCollection;
-        CancellationTokenSource tokenSource = new CancellationTokenSource(); // doesn't need to be disposed because it doesn't own a timer
+        readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
         volatile TaskCompletionSource<bool> cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        volatile int closeSignaled;
+        bool closed;
         static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
 
         public ConcurrentExpiringSet()
@@ -26,23 +28,32 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public void AddOrUpdate(TKey key, DateTime expiration)
         {
+            this.ThrowIfClosed();
+
             this.dictionary[key] = expiration;
             this.cleanupTaskCompletionSource.TrySetResult(true);
         }
 
         public bool Contains(TKey key)
         {
+            this.ThrowIfClosed();
+
             return this.dictionary.TryGetValue(key, out var expiration) && expiration > DateTime.UtcNow;
         }
 
-        public void Clear()
+        public void Close()
         {
+            if (Interlocked.Exchange(ref this.closeSignaled, 1) != 0)
+            {
+                return;
+            }
+
+            this.closed = true;
+
             this.tokenSource.Cancel();
-            this.dictionary.Clear();
             this.cleanupTaskCompletionSource.TrySetCanceled();
-            this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            this.tokenSource = new CancellationTokenSource();
-            _ = CollectExpiredEntriesAsync(tokenSource.Token);
+            this.dictionary.Clear();
+            this.tokenSource.Dispose();
         }
 
         async Task CollectExpiredEntriesAsync(CancellationToken token)
@@ -68,6 +79,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                         this.dictionaryAsCollection.Remove(kvp);
                     }
                 }
+            }
+        }
+
+        void ThrowIfClosed()
+        {
+            if (closed)
+            {
+                throw new ObjectDisposedException($"ConcurrentExpiringSet has already been closed. Please create a new set instead.");
             }
         }
     }
