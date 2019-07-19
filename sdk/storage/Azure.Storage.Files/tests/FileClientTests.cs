@@ -555,7 +555,7 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 var downloadResponse = await fileFaulty.DownloadAsync(range: new HttpRange(offset, data.LongLength));
                 var actual = new MemoryStream();
-                await downloadResponse.Value.Content.CopyToAsync(actual);
+                await downloadResponse.Value.Content.CopyToAsync(actual, 128 * Constants.KB);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
