@@ -49,7 +49,7 @@ namespace Microsoft.Rest.Azure.Authentication.Internal
         /// Authenticate using the credentials stored for the given client id
         /// </summary>
         /// <param name="clientId">The Application ID for this service principal</param>
-        /// <param name="audience">The intended audicne for authentication</param>
+        /// <param name="audience">The intended audience for authentication</param>
         /// <param name="context">The AD AuthenticationContext to use</param>
         /// <returns></returns>
         public async Task<AuthenticationResult> AuthenticateAsync(string clientId, string audience, AuthenticationContext context)
