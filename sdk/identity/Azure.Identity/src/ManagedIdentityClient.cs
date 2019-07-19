@@ -38,6 +38,10 @@ namespace Azure.Identity
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
 
+        protected ManagedIdentityClient()
+        {
+        }
+
         public ManagedIdentityClient(IdentityClientOptions options = null)
         {
             _options = options ?? new IdentityClientOptions();
@@ -66,13 +70,24 @@ namespace Azure.Identity
                 return default;
             }
 
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
+            scope.Start();
+
             try
             {
-                return await SendAuthRequestAsync(msiType, scopes, clientId, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    return await SendAuthRequestAsync(msiType, scopes, clientId, cancellationToken).ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex)
+                {
+                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                }
             }
-            catch (RequestFailedException ex)
+            catch (Exception e)
             {
-                throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -86,13 +101,24 @@ namespace Azure.Identity
                 return default;
             }
 
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
+            scope.Start();
+
             try
             {
-                return SendAuthRequest(msiType, scopes, clientId, cancellationToken);
+                try
+                {
+                    return SendAuthRequest(msiType, scopes, clientId, cancellationToken);
+                }
+                catch(RequestFailedException ex)
+                {
+                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                }
             }
-            catch(RequestFailedException ex)
+            catch (Exception e)
             {
-                throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                scope.Failed(e);
+                throw;
             }
         }
 
