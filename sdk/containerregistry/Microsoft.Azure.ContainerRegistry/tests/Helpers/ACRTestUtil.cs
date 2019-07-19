@@ -12,6 +12,8 @@ namespace ContainerRegistry.Tests
     using Microsoft.Rest;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Azure.ContainerRegistry;
+    using System.Threading;
+
 
     public static class ACRTestUtil
     {
@@ -33,9 +35,12 @@ namespace ContainerRegistry.Tests
             var registryManagementClient = context.GetServiceClient<ContainerRegistryManagementClient>(handlers: CreateNewRecordedDelegatingHandler());
             var registry = await registryManagementClient.Registries.GetAsync(_testResourceGroup, registryName);
             var registryCredentials = await registryManagementClient.Registries.ListCredentialsAsync(_testResourceGroup, registryName);
-            var credential = new BasicAuthenticationCredentials() { UserName= registryCredentials.Username, Password = registryCredentials.Passwords[0].Value };
-            var acrClient = context.GetServiceClientWithCredentials<AzureContainerRegistryClient>(credential, handlers: CreateNewRecordedDelegatingHandler());
-            acrClient.BaseUri = new Uri($"https://{registry.LoginServer}");
+            string username = registryCredentials.Username;
+            string password = registryCredentials.Passwords[0].Value;
+            AcrClientCredentials credential = new AcrClientCredentials(AcrClientCredentials.LoginMode.Basic, registry.LoginServer, username, password);
+            var acrClient = context.GetServiceClientWithCredentials<AzureContainerRegistryClient>(credential, CreateNewRecordedDelegatingHandler());
+            //var acrClient = new AzureContainerRegistryClient(credential)
+            acrClient.LoginUri = "https://" + registry.LoginServer;
 
             return acrClient;
         }

@@ -336,38 +336,6 @@ namespace Microsoft.Azure.ContainerRegistry
 
         #endregion
 
-        //@DEPRECATED
-        private void getFromInside()
-        {
-
-            // For Bearer modes
-
-            // Step 1: get challenge response from /v2/ API. THe response Www-Authenticate header is token server URL.
-            string challegeUrl = (LoginUrl.StartsWith("https://") ? "" : "https://") + LoginUrl + (LoginUrl.EndsWith("/") ? "" : "/") + "v2/";
-            HttpClient runtimeClient = new HttpClient();
-            HttpResponseMessage response = null;
-            string tokenServerUrl = "";
-            try
-            {
-                response = runtimeClient.GetAsync(challegeUrl, RequestCancellationToken).GetAwaiter().GetResult();
-                tokenServerUrl = parseHeader(response.Headers.GetValues("Www-Authenticate").FirstOrDefault())["Bearer realm"];
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("v2 call throws exception {0}", e.Message);
-            }
-
-            if (!String.IsNullOrEmpty(tokenServerUrl))
-            {
-                //AcrRefresh.token = noCredentialClient.GetAcrRefreshTokenAsync("access_token", this.LoginUrl, Tenant, null, AadAccess.token).GetAwaiter().GetResult().RefreshToken;
-
-            }
-            else
-            {
-                throw new Exception("Could not find Authentication endpoint for this registry");
-            }
-        }
-
     }
 }
 
