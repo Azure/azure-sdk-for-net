@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             {
                 try
                 {
-                    await cleanupTaskCompletionSource.Task.ConfigureAwait(false);
+                    await this.cleanupTaskCompletionSource.Task.ConfigureAwait(false);
                     this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                     await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
                 }
