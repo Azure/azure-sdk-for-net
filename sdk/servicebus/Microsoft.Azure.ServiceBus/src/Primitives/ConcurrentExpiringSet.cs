@@ -71,10 +71,11 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     return;
                 }
 
+                var utcNow = DateTime.UtcNow;
                 foreach (var kvp in this.dictionary)
                 {
                     var expiration = kvp.Value;
-                    if (DateTime.UtcNow > expiration)
+                    if (utcNow > expiration)
                     {
                         this.dictionaryAsCollection.Remove(kvp);
                     }
