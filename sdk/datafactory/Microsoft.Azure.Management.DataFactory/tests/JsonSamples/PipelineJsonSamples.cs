@@ -1884,7 +1884,7 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
-        public const string ForeachPipeline= @"
+        public const string ForeachPipeline = @"
 {
   ""name"": ""MyForeachPipeline"",
   ""properties"": {
@@ -4169,6 +4169,213 @@ namespace DataFactory.Tests.JsonSamples
             ""type"": ""DatasetReference""
           }
         ],
+      }
+    ]
+  }
+}";
+        [JsonSample]
+        public const string CopyActivity_SqlMI_SqlMI = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""SqlMISource"",
+            ""sqlReaderQuery"": ""select * from my_table""
+          },
+          ""sink"": {
+            ""type"": ""SqlMISink"",
+            ""sqlWriterTableType"": ""MarketingType"",
+            ""sqlWriterStoredProcedureName"": ""spOverwriteMarketing"",
+            ""storedProcedureParameters"": {
+              ""category"": {
+                ""value"": ""ProductA""
+              }
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}";
+        [JsonSample]
+        public const string CopyActivity_SalesforceServiceCloud_SalesforceServiceCloud = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""SalesforceServiceCloudSource"",
+            ""query"": ""select * from my_table"",
+            ""readBehavior"": ""QueryAll""
+          },
+          ""sink"": {
+            ""type"": ""SalesforceServiceCloudSink"",
+            ""writeBehavior"": ""Upsert""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}";
+        [JsonSample]
+        public const string CopyActivity_DynamicsCrm_DynamicsCrm = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DynamicsCrmSource"",
+            ""query"": ""FetchXML""
+          },
+          ""sink"": {
+            ""type"": ""DynamicsCrmSink"",
+            ""writeBehavior"": ""Upsert"",
+            ""writeBatchSize"": 5000,
+            ""ignoreNullValues"": true
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}";
+        [JsonSample]
+        public const string CopyActivity_CommonDataServiceForApps_CommonDataServiceForApps = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""CommonDataServiceForAppsSource"",
+            ""query"": ""FetchXML""
+          },
+          ""sink"": {
+            ""type"": ""CommonDataServiceForAppsSink"",
+            ""writeBehavior"": ""Upsert"",
+            ""writeBatchSize"": 5000,
+            ""ignoreNullValues"": true
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}";
+        [JsonSample]
+        public const string CopyActivity_Informix_Informix = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""InformixSource"",
+            ""query"": ""fake_query""
+          },
+          ""sink"": {
+            ""type"": ""InformixSink""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}";
+        [JsonSample]
+        public const string CopyActivity_MicrosoftAccess_MicrosoftAccess = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MicrosoftAccessSource"",
+            ""query"": ""fake_query""
+          },
+          ""sink"": {
+            ""type"": ""MicrosoftAccessSink""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
       }
     ]
   }
