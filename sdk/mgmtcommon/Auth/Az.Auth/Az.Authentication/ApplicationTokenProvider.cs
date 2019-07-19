@@ -14,7 +14,7 @@ namespace Microsoft.Rest.Azure.Authentication
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Provides tokens for Azure Active Directory applications. 
+    /// Provides tokens for Azure Active Directory applications.
     /// </summary>
     public class ApplicationTokenProvider : ITokenProvider
     {
@@ -32,9 +32,9 @@ namespace Microsoft.Rest.Azure.Authentication
 
         #region Constructor
         /// <summary>
-        /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience 
+        /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience
         /// and credential.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="context">The authentication context to use when retrieving tokens.</param>
@@ -57,9 +57,9 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience 
+        /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience
         /// and certificate.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="context">The authentication context to use when retrieving tokens.</param>
@@ -78,15 +78,15 @@ namespace Microsoft.Rest.Azure.Authentication
                 throw new ArgumentNullException("authenticationResult");
             }
 
-            Initialize(context, tokenAudience, certificate.ClientId, 
+            Initialize(context, tokenAudience, certificate.ClientId,
                 new CertificateAuthenticationProvider((clientId) => Task.FromResult(certificate)),
                 authenticationResult, authenticationResult.ExpiresOn);
         }
 
         /// <summary>
-        /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience 
+        /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience
         /// and credential store.
-         /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+         /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
        /// </summary>
         /// <param name="context">The authentication context to use when retrieving tokens.</param>
@@ -106,9 +106,9 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience 
+        /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience
         /// and credential store.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="context">The authentication context to use when retrieving tokens.</param>
@@ -127,7 +127,7 @@ namespace Microsoft.Rest.Azure.Authentication
         {
             _authData = new Dictionary<string, string>();
 
-            
+
         }
 
         #endregion
@@ -136,9 +136,9 @@ namespace Microsoft.Rest.Azure.Authentication
 
         #region ClientId/Secret
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials. Uses the default token cache and the default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials. Uses the default token cache and the default
         /// service settings (authority, token audience) for log in to azure resource manager during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -151,9 +151,9 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials. Uses the default service settings 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials. Uses the default service settings
         /// (authority, token audience) for log in to azure resource manager during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -167,9 +167,9 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials. 
-        /// Uses the default token cache during authentication. 
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/"> Active Directory Quickstart for .Net</see> 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials.
+        /// Uses the default token cache during authentication.
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/"> Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -186,7 +186,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -203,7 +203,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a client credential. Uses the default token cache for authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -218,7 +218,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a client credential.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -235,9 +235,9 @@ namespace Microsoft.Rest.Azure.Authentication
 
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a client credential. Uses the default token cache and the default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a client credential. Uses the default token cache and the default
         /// service settings for azure resource manager (authority, token audience) during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -250,9 +250,9 @@ namespace Microsoft.Rest.Azure.Authentication
 
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a client credential. Uses the default service settings 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a client credential. Uses the default service settings
         /// for azure resource manager (authority, token audience) during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -270,9 +270,9 @@ namespace Microsoft.Rest.Azure.Authentication
 #if !net452
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default
         /// service settings (authority, token audience) for log in to azure resource manager during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -286,9 +286,9 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default
         /// service settings (authority, token audience) for log in to azure resource manager during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -312,18 +312,18 @@ namespace Microsoft.Rest.Azure.Authentication
             {
                 certAssertion = new ClientAssertionCertificate(clientId, certificateFilePath, certificatePassword);
             }
-            
+
             CertificateAuthenticationProvider certAuthProvider = new CertificateAuthenticationProvider(certAssertion, IsCertificateRollOverEnabled);
 
             return await LoginSilentAsync(domain, clientId, certAuthProvider).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default
         /// service settings (authority, token audience) for log in to azure resource manager during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
-        /// </summary>        
+        /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
         /// <param name="clientId">The active directory clientId for the application.</param>
         /// <param name="certificate">The certificate associated with Active Directory application.</param>
@@ -335,9 +335,9 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default
         /// service settings (authority, token audience) for log in to azure resource manager during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -360,7 +360,7 @@ namespace Microsoft.Rest.Azure.Authentication
             {
                 certAssertion = new ClientAssertionCertificate(clientId, certificate, certificatePassword);
             }
-            
+
             CertificateAuthenticationProvider certAuthProvider = new CertificateAuthenticationProvider(certAssertion, IsCertificateRollOverEnabled);
             return await LoginSilentAsync(domain, clientId, certAuthProvider).ConfigureAwait(false);
         }
@@ -368,9 +368,9 @@ namespace Microsoft.Rest.Azure.Authentication
 #endif
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default
         /// service settings (authority, token audience) for log in to azure resource manager during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -384,9 +384,9 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default service settings 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default service settings
         /// (authority, token audience) for log in to azure resource manager during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -402,9 +402,9 @@ namespace Microsoft.Rest.Azure.Authentication
 
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. 
-        /// Uses the default token cache during authentication. 
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/"> Active Directory Quickstart for .Net</see> 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials.
+        /// Uses the default token cache during authentication.
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/"> Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -421,7 +421,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credential.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -446,7 +446,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a certificate credential.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -463,9 +463,9 @@ namespace Microsoft.Rest.Azure.Authentication
 
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a certificate credential. Uses the default token cache and the default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a certificate credential. Uses the default token cache and the default
         /// service settings for azure resource manager (authority, token audience) during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -475,12 +475,12 @@ namespace Microsoft.Rest.Azure.Authentication
         {
             return await LoginSilentAsync(domain, certificate, ActiveDirectoryServiceSettings.Azure, TokenCache.DefaultShared).ConfigureAwait(false);
         }
-       
+
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a certificate credential. Uses the default service settings 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a certificate credential. Uses the default service settings
         /// for azure resource manager (authority, token audience) during authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -494,7 +494,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a certificate credential. Uses the default token cache for authentication.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -511,9 +511,9 @@ namespace Microsoft.Rest.Azure.Authentication
         #region AuthProvider
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application. Uses the default token cache and default 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application. Uses the default token cache and default
         /// service settings (authority and token audience) for authenticating with azure resource manager.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -527,9 +527,9 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Creates ServiceClientCredentials for authenticating requests as an active directory application. Uses the default service settings 
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application. Uses the default service settings
         /// (authority and token audience) for authenticating with azure resource manager.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -545,7 +545,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application. Uses the default shared token cache.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -561,7 +561,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see>
         /// for detailed instructions on creating an Azure Active Directory application.
         /// </summary>
         /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
@@ -610,7 +610,7 @@ namespace Microsoft.Rest.Azure.Authentication
         #endregion static
 
         /// <summary>
-        /// Gets an access token from the token cache or from AD authentication endpoint. 
+        /// Gets an access token from the token cache or from AD authentication endpoint.
         /// Attempts to refresh the access token if it has expired.
         /// </summary>
         public virtual async Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync(CancellationToken cancellationToken)

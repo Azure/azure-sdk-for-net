@@ -16,9 +16,9 @@ namespace Microsoft.Rest.Azure.Authentication
     /// Provides tokens for Azure Active Directory Microsoft Id and Organization Id users.
     /// </summary>
     public partial class UserTokenProvider : ITokenProvider
-    {   
+    {
         /// <summary>
-        /// Uri parameters used in the credential prompt.  Allows recalling previous 
+        /// Uri parameters used in the credential prompt.  Allows recalling previous
         /// logins in the login dialog.
         /// </summary>
         private string _tokenAudience;
@@ -33,7 +33,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
 
         /// <summary>
-        /// Create a token provider which can provide user tokens in the given context.  The user must have previously authenticated in the given context. 
+        /// Create a token provider which can provide user tokens in the given context.  The user must have previously authenticated in the given context.
         /// Tokens are retrieved from the token cache.
         /// </summary>
         /// <param name="context">The active directory authentication context to use for retrieving tokens.</param>
@@ -68,7 +68,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
 
         #region .NET 461
-        // please remove this preprocessor #if whenever ADAL will go public with the new library 
+        // please remove this preprocessor #if whenever ADAL will go public with the new library
 #if !net452
         /// <summary>
         /// Log in to azure active directory using device code authentication.
@@ -142,10 +142,10 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <param name="deviceCodeHandler">User provided callback to display device code request. if returns false no token will be acquired.</param>
         /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the given credentials.</returns>
         public static async Task<ServiceClientCredentials> LoginByDeviceCodeAsync(
-            string clientId, 
-            string domain, 
-            ActiveDirectoryServiceSettings serviceSettings, 
-            TokenCache cache, 
+            string clientId,
+            string domain,
+            ActiveDirectoryServiceSettings serviceSettings,
+            TokenCache cache,
             Func<DeviceCodeResult, bool> deviceCodeHandler)
         {
             if(deviceCodeHandler == null)
@@ -192,13 +192,13 @@ namespace Microsoft.Rest.Azure.Authentication
         #endregion .NET 46
 
         /// <summary>
-        /// Create service client credentials using information cached from a previous login to azure resource manager using the default token cache. 
+        /// Create service client credentials using information cached from a previous login to azure resource manager using the default token cache.
         /// Parameters are used to match existing tokens.
         /// </summary>
         /// <param name="clientId">The clientId to match when retrieving authentication tokens.</param>
         /// <param name="domain">The active directory domain or tenant id to match when retrieving authentication tokens.</param>
         /// <param name="username">The account username to match when retrieving authentication tokens.</param>
-        /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the retrieved credentials. If no 
+        /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the retrieved credentials. If no
         /// credentials can be retrieved, an authentication exception is thrown.</returns>
         public static async Task<ServiceClientCredentials> CreateCredentialsFromCache(string clientId, string domain,
             string username)
@@ -207,14 +207,14 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Create service client credentials using information cached from a previous login to azure resource manager. Parameters are used to match 
+        /// Create service client credentials using information cached from a previous login to azure resource manager. Parameters are used to match
         /// existing tokens.
         /// </summary>
         /// <param name="clientId">The clientId to match when retrieving authentication tokens.</param>
         /// <param name="domain">The active directory domain or tenant id to match when retrieving authentication tokens.</param>
         /// <param name="username">The account username to match when retrieving authentication tokens.</param>
         /// <param name="cache">The token cache to target when retrieving tokens.</param>
-        /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the retrieved credentials. If no 
+        /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the retrieved credentials. If no
         /// credentials can be retrieved, an authentication exception is thrown.</returns>
         public static async Task<ServiceClientCredentials> CreateCredentialsFromCache(string clientId, string domain,
             string username, TokenCache cache)
@@ -223,14 +223,14 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Create service client credentials using information cached from a previous login in the default token cache. Parameters are used to match 
+        /// Create service client credentials using information cached from a previous login in the default token cache. Parameters are used to match
         /// existing tokens.
         /// </summary>
         /// <param name="clientId">The clientId to match when retrieving authentication tokens.</param>
         /// <param name="domain">The active directory domain or tenant id to match when retrieving authentication tokens.</param>
         /// <param name="username">The account username to match when retrieving authentication tokens.</param>
         /// <param name="serviceSettings">The active directory service settings, including token authority and audience to match when retrieving tokens.</param>
-        /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the retrieved credentials. If no 
+        /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the retrieved credentials. If no
         /// credentials can be retrieved, an authentication exception is thrown.</returns>
         public static async Task<ServiceClientCredentials> CreateCredentialsFromCache(string clientId, string domain,
             string username, ActiveDirectoryServiceSettings serviceSettings)
@@ -246,9 +246,9 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <param name="username">The account username to match when retrieving authentication tokens.</param>
         /// <param name="serviceSettings">The active directory service settings, including token authority and audience to match when retrieving tokens.</param>
         /// <param name="cache">The token cache to target when retrieving tokens.</param>
-        /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the retrieved credentials. If no 
+        /// <returns>A ServiceClientCredentials object that can be used to authenticate http requests using the retrieved credentials. If no
         /// credentials can be retrieved, an authentication exception is thrown.</returns>
-        public static async Task<ServiceClientCredentials> CreateCredentialsFromCache(string clientId, string domain, string username, 
+        public static async Task<ServiceClientCredentials> CreateCredentialsFromCache(string clientId, string domain, string username,
             ActiveDirectoryServiceSettings serviceSettings, TokenCache cache)
         {
             var userId = new UserIdentifier(username, UserIdentifierType.RequiredDisplayableId);
@@ -270,7 +270,7 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         /// <summary>
-        /// Gets an access token from the token cache or from AD authentication endpoint.  Will attempt to 
+        /// Gets an access token from the token cache or from AD authentication endpoint.  Will attempt to
         /// refresh the access token if it has expired.
         /// </summary>
         public virtual async Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync(CancellationToken cancellationToken)

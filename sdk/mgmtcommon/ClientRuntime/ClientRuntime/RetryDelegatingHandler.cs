@@ -22,7 +22,7 @@ namespace Microsoft.Rest
         private readonly TimeSpan DefaultMinBackoff = new TimeSpan(0, 0, 1);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. 
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// Sets default retry policy base on Exponential Backoff.
         /// </summary>
         public RetryDelegatingHandler() : base()
@@ -31,7 +31,7 @@ namespace Microsoft.Rest
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. Sets 
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. Sets
         /// the default retry policy base on Exponential Backoff.
         /// </summary>
         /// <param name="innerHandler">Inner http handler.</param>
@@ -41,7 +41,7 @@ namespace Microsoft.Rest
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. Sets 
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. Sets
         /// the default retry policy base on Exponential Backoff.
         /// </summary>
         /// <param name="innerHandler">Inner http handler.</param>
@@ -52,7 +52,7 @@ namespace Microsoft.Rest
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. 
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class.
         /// </summary>
         /// <param name="retryPolicy">Retry policy to use.</param>
         /// <param name="innerHandler">Inner http handler.</param>
@@ -89,7 +89,7 @@ namespace Microsoft.Rest
         /// </summary>
         /// <param name="request">The HTTP request message to send to the server.</param>
         /// <param name="cancellationToken">A cancellation token to cancel operation.</param>
-        /// <returns>Returns System.Threading.Tasks.Task&lt;TResult&gt;. The 
+        /// <returns>Returns System.Threading.Tasks.Task&lt;TResult&gt;. The
         /// task object representing the asynchronous operation.</returns>
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
