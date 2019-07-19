@@ -7,7 +7,7 @@
 ###  Feature Additions
 ### Breaking Changes
 - Fixed missing types CopyTranslator and TabularTranslator.
-- Added support in Copy for AzureSqlMITable, DynamicsCrmEntity, CommonDataServiceForAppsEntity, TeradataTable, Binary, which inhcludes their Dataset, Linked Service, CopySource, and CopySink types
+- Added support in Copy for MicrosoftAccessTable, InformixTable, SalesforceServiceCloudObject, AzureSqlMITable, DynamicsCrmEntity, CommonDataServiceForAppsEntity, TeradataTable, Binary, which inhcludes their Dataset, Linked Service, CopySource, and CopySink types
 - Added TeradataTable CopySource support
 - Added logLocation property to ExecuteSSISPackageActivity
 - Added SSIS File system support by expanding SSISPackageLocation to support SSISDB and File location types
