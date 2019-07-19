@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         readonly ICollection<KeyValuePair<TKey, DateTime>> dictionaryAsCollection;
         readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
         volatile TaskCompletionSource<bool> cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-        volatile int closeSignaled;
+        int closeSignaled;
         bool closed;
         static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
 
