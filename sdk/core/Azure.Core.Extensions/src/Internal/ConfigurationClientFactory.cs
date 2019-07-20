@@ -212,7 +212,7 @@ namespace Azure.Core.Extensions
 
         internal static bool TryCreateObject(Type type, IConfigurationSection configuration, out object value)
         {
-            if (configuration == null)
+            if (!configuration.GetChildren().Any())
             {
                 value = null;
                 return false;
