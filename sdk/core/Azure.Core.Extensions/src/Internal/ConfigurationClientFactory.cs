@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -11,12 +12,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Core.Extensions
 {
-    internal class ClientFactory
+    internal static class ClientFactory
     {
         public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
         {
             List<object> arguments = new List<object>();
-            foreach (var constructor in clientType.GetConstructors())
+            foreach (var constructor in clientType.GetConstructors().OrderByDescending(c => c.GetParameters().Length))
             {
                 if (!IsApplicableConstructor(constructor, optionsType))
                 {
@@ -39,14 +40,13 @@ namespace Azure.Core.Extensions
                         break;
                     }
 
-                    var value = configuration[parameter.Name];
-                    if (value == null)
+                    if (!TryConvertArgument(configuration, parameter.Name, parameter.ParameterType, out object argument))
                     {
                         match = false;
                         break;
                     }
 
-                    arguments.Add(ConvertArgument(value, parameter));
+                    arguments.Add(argument);
                 }
 
                 if (!match)
@@ -167,6 +167,7 @@ namespace Azure.Core.Extensions
 
             return builder.ToString();
         }
+
         private static bool IsApplicableConstructor(ConstructorInfo constructorInfo, Type optionsType)
         {
             var parameters = constructorInfo.GetParameters();
@@ -176,19 +177,75 @@ namespace Azure.Core.Extensions
                    IsOptionsParameter(parameters[parameters.Length - 1], optionsType);
         }
 
-        private static object ConvertArgument(string value, ParameterInfo parameter)
+        private static bool TryConvertArgument(IConfiguration configuration, string parameterName, Type parameterType, out object value)
         {
-            if (parameter.ParameterType == typeof(string))
+            if (parameterType == typeof(string))
             {
-                return value;
+                return TryConvertFromString(configuration, parameterName, s => s, out value);
             }
 
-            if (parameter.ParameterType == typeof(Uri))
+            if (parameterType == typeof(Uri))
             {
-                return new Uri(value);
+                return TryConvertFromString(configuration, parameterName, s => new Uri(s), out value);
             }
 
-            throw new InvalidOperationException($"Unable to convert value '{value}' to parameter type {parameter.ParameterType.FullName}");
+            if (configuration[parameterName] != null)
+            {
+                throw new InvalidOperationException($"Unable to convert value '{configuration[parameterName]}' to parameter type {parameterType.FullName}");
+            }
+
+            return TryCreateObject(parameterType, configuration.GetSection(parameterName), out value);
         }
+
+        private static bool TryConvertFromString(IConfiguration configuration, string parameterName, Func<string, object> func, out object value)
+        {
+            string stringValue = configuration[parameterName];
+            if (stringValue == null)
+            {
+                value = null;
+                return false;
+            }
+
+            value = func(stringValue);
+            return true;
+        }
+
+        internal static bool TryCreateObject(Type type, IConfigurationSection configuration, out object value)
+        {
+            if (!configuration.GetChildren().Any())
+            {
+                value = null;
+                return false;
+            }
+
+            List<object> arguments = new List<object>();
+            foreach (var constructor in type.GetConstructors().OrderByDescending(c => c.GetParameters().Length))
+            {
+                arguments.Clear();
+
+                bool match = true;
+                foreach (var parameter in constructor.GetParameters())
+                {
+                    if (!TryConvertArgument(configuration, parameter.Name, parameter.ParameterType, out object argument))
+                    {
+                        match = false;
+                        break;
+                    }
+
+                    arguments.Add(argument);
+                }
+
+                if (!match)
+                {
+                    continue;
+                }
+
+                value = constructor.Invoke(arguments.ToArray());
+                return true;
+            }
+
+            throw new InvalidOperationException($"Unable to convert section '{configuration.Path}' to parameter type '{type}', unable to find matching constructor.");
+        }
+
     }
 }
