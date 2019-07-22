@@ -13,7 +13,7 @@ namespace PrivateDns.Tests.ScenarioTests
     using FluentAssertions;
     using Microsoft.Azure.Management.PrivateDns;
     using Microsoft.Azure.Management.PrivateDns.Models;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Rest.Azure;
     using PrivateDns.Tests.Extensions;
     using Xunit;

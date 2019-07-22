@@ -13,7 +13,7 @@ using System.Linq;
 using System.Net;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest;
 using System.Threading;
 using Microsoft.Azure.Graph.RBAC.Models;

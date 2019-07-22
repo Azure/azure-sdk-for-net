@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.3.2" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
   
   <ItemGroup>

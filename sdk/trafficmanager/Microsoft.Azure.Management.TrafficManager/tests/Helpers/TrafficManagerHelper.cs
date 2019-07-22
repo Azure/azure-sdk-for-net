@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
 {
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.TrafficManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 

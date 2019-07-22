@@ -12,8 +12,6 @@
     <PackageReference Include="Microsoft.Azure.Management.OperationalInsights" Version="0.18.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.Redis" Version="3.1.1-preview" />
     <PackageReference Include="Microsoft.Azure.Management.Compute" Version="15.0.0" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="6.5.0-preview" />
     
     <!--<PackageReference Include="Microsoft.Azure.Management.Network" Version="10.0.0-preview" />-->    
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Network.csproj" />

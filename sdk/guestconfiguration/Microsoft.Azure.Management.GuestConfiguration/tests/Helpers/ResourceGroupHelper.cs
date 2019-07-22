@@ -7,7 +7,7 @@ namespace GuestConfiguration.Tests.Helpers
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Management.GuestConfiguration;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     public static class ResourceGroupHelper

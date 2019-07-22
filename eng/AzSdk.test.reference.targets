@@ -7,7 +7,7 @@
 
     <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" />
-    <PackageReference Include="Microsoft.Azure.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
 
     <!-- This is needed for discovering tests in test explorer -->
     <PackageReference Include="System.Runtime.InteropServices" />

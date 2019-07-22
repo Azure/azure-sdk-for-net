@@ -4,7 +4,7 @@
 using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.ContainerInstance;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 

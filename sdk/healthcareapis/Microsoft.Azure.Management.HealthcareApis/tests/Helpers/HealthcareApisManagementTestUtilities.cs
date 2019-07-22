@@ -9,8 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Xunit;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace HealthcareApis.Tests.Helpers
 {

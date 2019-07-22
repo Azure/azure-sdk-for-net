@@ -9,8 +9,8 @@ namespace Networks.Tests
     using System.Security.Cryptography.X509Certificates;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Test;
     using Networks.Tests.Helpers;
     using ResourceGroups.Tests;

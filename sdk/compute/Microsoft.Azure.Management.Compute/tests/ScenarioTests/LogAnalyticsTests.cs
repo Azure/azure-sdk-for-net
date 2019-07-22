@@ -74,7 +74,7 @@ namespace Compute.Tests
             {
                 StorageAccount storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
                 var accountKeyResult = m_SrpClient.StorageAccounts.ListKeysWithHttpMessagesAsync(rg1Name, storageAccountName).Result;
-                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials(storageAccountName, accountKeyResult.Body.Key1), useHttps: true);
+                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials(storageAccountName, accountKeyResult.Body.Keys.ElementAt(0).Value), useHttps: true);
 
                 var blobClient = storageAccount.CreateCloudBlobClient();
                 CloudBlobContainer container = blobClient.GetContainerReference("sascontainer");

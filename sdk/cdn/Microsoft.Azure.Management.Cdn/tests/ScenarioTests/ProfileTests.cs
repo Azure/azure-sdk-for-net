@@ -4,13 +4,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Cdn;
 using Microsoft.Azure.Management.Cdn.Models;
 using Cdn.Tests.Helpers;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Sku = Microsoft.Azure.Management.Cdn.Models.Sku;
 
 namespace Cdn.Tests.ScenarioTests
 {

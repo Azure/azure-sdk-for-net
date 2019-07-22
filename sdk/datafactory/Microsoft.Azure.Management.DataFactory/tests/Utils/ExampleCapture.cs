@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Rm = Microsoft.Azure.Management.Resources;
+using Rm = Microsoft.Azure.Management.ResourceManager;
 
 namespace DataFactory.Tests.Utils
 {

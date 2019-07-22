@@ -19,7 +19,6 @@
     <ExcludeFromTest>true</ExcludeFromTest>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview,2.0.0)" />
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Batch.csproj" />
   </ItemGroup>
 

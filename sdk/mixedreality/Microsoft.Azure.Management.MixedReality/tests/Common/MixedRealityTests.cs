@@ -3,7 +3,7 @@
 
 using System.Diagnostics;
 using Microsoft.Azure.Management.MixedReality;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace MixedReality.Tests

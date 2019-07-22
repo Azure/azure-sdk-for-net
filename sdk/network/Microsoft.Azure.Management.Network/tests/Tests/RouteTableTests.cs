@@ -8,8 +8,8 @@ namespace Network.Tests.Tests
     using System.Net;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Test;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Networks.Tests.Helpers;

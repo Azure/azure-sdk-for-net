@@ -1,13 +1,14 @@
 ﻿using DataBox.Tests.Helpers;
 using Microsoft.Azure.Management.DataBox;
 using Microsoft.Azure.Management.DataBox.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
+using Sku = Microsoft.Azure.Management.DataBox.Models.Sku;
 
 namespace DataBox.Tests.Tests
 {

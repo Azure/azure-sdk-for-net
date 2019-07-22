@@ -4,7 +4,7 @@
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
@@ -57,7 +57,7 @@ namespace Authorization.Tests
                 var resourceClient = GetResourceManagementClient(context);
                 var authzClient = GetAuthorizationManagementClient(context);
 
-                resourceClient.ResourceGroups.CreateOrUpdate(groupName, new Microsoft.Azure.Management.Resources.Models.ResourceGroup
+                resourceClient.ResourceGroups.CreateOrUpdate(groupName, new Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup
                     { Location = RESOURCE_TEST_LOCATION });
                 var resourcePermissions = authzClient.Permissions
                     .ListForResourceGroupWithHttpMessagesAsync(groupName)
@@ -107,7 +107,7 @@ namespace Authorization.Tests
                 var location = RESOURCE_TEST_LOCATION;
 
                 client.ResourceGroups.CreateOrUpdate(groupName, 
-                    new Microsoft.Azure.Management.Resources.Models.ResourceGroup { Location = location });
+                    new Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup { Location = location });
 
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName,
                         "Microsoft.Authorization",
@@ -115,7 +115,7 @@ namespace Authorization.Tests
                         "roleAssignments",
                         resourceName,
                         "2017-09-01",
-                    new Microsoft.Azure.Management.Resources.Models.GenericResource()
+                    new Microsoft.Azure.Management.ResourceManager.Models.GenericResource()
                     {
                         Location = location,
                         Properties = JObject.Parse("{'roleDefinitionId':'/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7','principalId':'f8d526a0-54eb-4941-ae69-ebf4a334d0f0'}")

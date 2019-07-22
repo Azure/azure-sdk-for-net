@@ -6,7 +6,7 @@ using Xunit.Sdk;
 using Microsoft.Azure.Management.DataBox;
 using System.Reflection;
 using DataBox.Tests.Helpers;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using System.Threading;
 using Microsoft.Azure.Management.DataBox.Models;
 using System.Collections.Generic;

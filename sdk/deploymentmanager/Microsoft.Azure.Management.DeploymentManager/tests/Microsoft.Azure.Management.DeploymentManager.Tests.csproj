@@ -19,7 +19,6 @@
   </ItemGroup>
   
   <ItemGroup>       
-    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="4.2.0-preview" />
     <PackageReference Include="WindowsAzure.Storage" Version="8.7.0" />
     <PackageReference Include="Microsoft.Azure.Management.Authorization" Version="2.11.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ManagedServiceIdentity" Version="0.10.0-preview" />

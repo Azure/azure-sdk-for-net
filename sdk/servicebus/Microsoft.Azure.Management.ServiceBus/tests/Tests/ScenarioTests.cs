@@ -5,7 +5,7 @@
 namespace ServiceBus.Tests.ScenarioTests
 {
     using System.Net;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;

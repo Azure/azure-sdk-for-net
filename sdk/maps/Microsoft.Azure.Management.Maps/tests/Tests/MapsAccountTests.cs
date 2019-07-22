@@ -4,7 +4,7 @@
 using Maps.Tests.Helpers;
 using Microsoft.Azure.Management.Maps;
 using Microsoft.Azure.Management.Maps.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 using System;

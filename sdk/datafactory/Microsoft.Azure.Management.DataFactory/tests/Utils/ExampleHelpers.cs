@@ -5,7 +5,7 @@
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.DataFactory.Models;
-using Rm = Microsoft.Azure.Management.Resources; // Collides with Microsoft.Rest.Serialization on SafeJsonConvert
+using Rm = Microsoft.Azure.Management.ResourceManager; // Collides with Microsoft.Rest.Serialization on SafeJsonConvert
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Rest;

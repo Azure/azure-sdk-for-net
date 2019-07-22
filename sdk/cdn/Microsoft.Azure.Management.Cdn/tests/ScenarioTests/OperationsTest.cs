@@ -3,7 +3,7 @@
 
 using System.Linq;
 using System.Net;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Cdn;
 using Cdn.Tests.Helpers;
 using Xunit;

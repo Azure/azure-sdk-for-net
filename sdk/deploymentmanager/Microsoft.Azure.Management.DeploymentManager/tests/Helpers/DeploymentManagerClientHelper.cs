@@ -7,9 +7,10 @@ namespace Management.DeploymentManager.Tests
     using System.Linq;
     using Microsoft.Azure.Management.Authorization;
     using Microsoft.Azure.Management.ManagedServiceIdentity;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Management.Storage;
+    using Microsoft.Azure.Management.Storage.Models;
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.WindowsAzure.Storage;
@@ -147,7 +148,11 @@ namespace Management.DeploymentManager.Tests
                 var parameters = new Microsoft.Azure.Management.Storage.Models.StorageAccountCreateParameters()
                 {
                     Location = this.GetProviderLocation("Microsoft.Storage", "storageAccounts"),
-                    AccountType = Microsoft.Azure.Management.Storage.Models.AccountType.StandardLRS
+                    Kind = Kind.Storage,
+                    Sku = new Microsoft.Azure.Management.Storage.Models.Sku
+                    {
+                        Name = SkuName.StandardGRS
+                    }
                 };
 
                 var storageAccount = this.storageManagementClient.StorageAccounts.Create(
@@ -171,7 +176,7 @@ namespace Management.DeploymentManager.Tests
                 var storageAccount = new CloudStorageAccount(
                     new StorageCredentials(
                         storageAccountName, 
-                        accountKeyResult.Body.Key1), 
+                        accountKeyResult.Body.Keys.ElementAt(0).Value), 
                     useHttps: true);
 
                 var blobClient = storageAccount.CreateCloudBlobClient();
@@ -196,7 +201,7 @@ namespace Management.DeploymentManager.Tests
                 var storageAccount = new CloudStorageAccount(
                     new StorageCredentials(
                         storageAccountName, 
-                        accountKeyResult.Body.Key1), 
+                        accountKeyResult.Body.Keys.ElementAt(0).Value), 
                     useHttps: true);
 
                 var blobClient = storageAccount.CreateCloudBlobClient();

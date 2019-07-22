@@ -5,7 +5,7 @@
 namespace NotificationHubs.Tests.ScenarioTests
 {
     using Microsoft.Azure.Management.NotificationHubs;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using System.Net;

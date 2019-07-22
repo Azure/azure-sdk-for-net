@@ -14,8 +14,8 @@ namespace PrivateDns.Tests.ScenarioTests
     using FluentAssertions;
     using Microsoft.Azure.Management.PrivateDns;
     using Microsoft.Azure.Management.PrivateDns.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using PrivateDns.Tests.Extensions;
     using PrivateDns.Tests.Helpers;

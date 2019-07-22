@@ -4,7 +4,7 @@
 using Consumption.Tests.Helpers;
 using Microsoft.Azure.Management.Consumption;
 using Microsoft.Azure.Management.Consumption.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.Azure.OData;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;

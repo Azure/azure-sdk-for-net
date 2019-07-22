@@ -9,7 +9,7 @@ namespace PrivateDns.Tests.Extensions
     using System;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
 
     internal static class NetworkManagementClientExtensions
     {

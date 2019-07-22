@@ -6,7 +6,7 @@ namespace Management.DeploymentManager.Tests
     using Microsoft.Azure.Management.Authorization;
     using Microsoft.Azure.Management.DeploymentManager;
     using Microsoft.Azure.Management.ManagedServiceIdentity;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.Storage;
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

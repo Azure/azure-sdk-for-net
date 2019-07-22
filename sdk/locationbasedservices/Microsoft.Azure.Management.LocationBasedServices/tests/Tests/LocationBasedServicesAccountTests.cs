@@ -4,7 +4,7 @@
 using LocationBasedServices.Tests.Helpers;
 using Microsoft.Azure.Management.LocationBasedServices;
 using Microsoft.Azure.Management.LocationBasedServices.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ResourceGroups.Tests;
 using System;

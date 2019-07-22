@@ -12,8 +12,8 @@ using MachineLearning.Tests.Helpers;
 using Microsoft.Azure.Management.MachineLearning.WebServices;
 using Microsoft.Azure.Management.MachineLearning.WebServices.Models;
 using Microsoft.Azure.Management.MachineLearning.WebServices.Util;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.Azure;
@@ -385,12 +385,16 @@ namespace MachineLearning.Tests.ScenarioTests
                     storageManagementClient = context.GetServiceClient<StorageManagementClient>();
                     var accountParameters = new StorageAccountCreateParameters
                     {
-                        AccountType = AccountType.StandardLRS,
-                        Location = WebServiceTests.DefaultLocation
+                        Location = WebServiceTests.DefaultLocation,
+                        Kind = Kind.Storage,
+                        Sku = new Microsoft.Azure.Management.Storage.Models.Sku
+                        {
+                            Name = SkuName.StandardGRS
+                        }
                     };
                     storageManagementClient.StorageAccounts.Create(resourceGroupName, storageAccountName, accountParameters);
-                    StorageAccountKeys accountKeys = storageManagementClient.StorageAccounts.ListKeys(resourceGroupName, storageAccountName);
-                    var storageAccountInfo = new StorageAccount(storageAccountName, accountKeys.Key1);
+                    var accountKeys = storageManagementClient.StorageAccounts.ListKeys(resourceGroupName, storageAccountName).Keys;
+                    var storageAccountInfo = new StorageAccount(storageAccountName, accountKeys.ElementAt(0).Value);
 
                     // Create an AML commitment plan resource to associate with the services
                     cpRpApiVersion = ResourceProvidersHelper.GetRPApiVersion(resourcesClient, WebServiceTests.MLResourceProviderNamespace, WebServiceTests.CPResourceType);

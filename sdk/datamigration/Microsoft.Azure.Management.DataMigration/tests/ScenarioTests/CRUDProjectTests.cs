@@ -5,7 +5,7 @@ using System.Net;
 using DataMigration.Tests.Helpers;
 using Microsoft.Azure.Management.DataMigration;
 using Microsoft.Azure.Management.DataMigration.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 

@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.PowerBIDedicated.csproj" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
 
   <ItemGroup>

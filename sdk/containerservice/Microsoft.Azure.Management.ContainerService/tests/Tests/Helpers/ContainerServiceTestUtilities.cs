@@ -5,9 +5,9 @@ using System;
 using System.Linq;
 using ContainerService.Tests;
 using Microsoft.Azure.Management.ContainerService.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 

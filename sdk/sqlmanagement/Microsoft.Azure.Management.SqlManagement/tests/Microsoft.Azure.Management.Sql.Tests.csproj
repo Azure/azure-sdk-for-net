@@ -14,8 +14,6 @@
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="14.0.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.RecoveryServices" Version="4.2.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.RecoveryServices.Backup" Version="1.2.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="6.5.0-preview" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />

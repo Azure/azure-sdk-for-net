@@ -4,7 +4,7 @@ using Microsoft.Azure.Management.IotHub;
 using Microsoft.Azure.Management.IotHub.Models;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 

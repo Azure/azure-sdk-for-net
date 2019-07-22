@@ -1,5 +1,5 @@
-﻿using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+﻿using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.SignalR;
 using Microsoft.Azure.Management.SignalR.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

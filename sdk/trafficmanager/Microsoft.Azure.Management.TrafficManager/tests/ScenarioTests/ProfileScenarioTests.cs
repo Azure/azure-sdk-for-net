@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
     using System.Collections.Generic;
     using System.Linq;
     using global::TrafficManager.Tests.Helpers;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Management.TrafficManager.Models;
     using Microsoft.Azure.Management.TrafficManager.Testing.Helpers;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

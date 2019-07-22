@@ -3,7 +3,7 @@
 
 using System.Net;
 using Microsoft.Azure.Management.EventGrid;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using EventGrid.Tests.TestHelper;
 

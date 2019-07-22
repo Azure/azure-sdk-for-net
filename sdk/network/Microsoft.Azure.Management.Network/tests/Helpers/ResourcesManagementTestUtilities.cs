@@ -5,8 +5,8 @@ using ResourceGroups.Tests;
 
 namespace Microsoft.Azure.Test
 {
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Linq;

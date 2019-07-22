@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.EventHub" Version="1.2.0" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ServiceBus" Version="0.2.0-preview" />
   </ItemGroup>
 

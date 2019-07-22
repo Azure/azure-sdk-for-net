@@ -4,7 +4,7 @@
 using ManagementPartner.Tests.Helpers;
 using Microsoft.Azure.Management.ManagementPartner;
 using Microsoft.Azure.Management.ManagementPartner.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.IO;

@@ -3,8 +3,8 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace MachineLearning.Tests.Helpers
 {

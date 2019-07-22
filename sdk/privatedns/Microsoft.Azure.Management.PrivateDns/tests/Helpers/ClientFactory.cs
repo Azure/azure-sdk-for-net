@@ -8,7 +8,7 @@ namespace PrivateDns.Tests.Helpers
 {
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.PrivateDns;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     public static class ClientFactory

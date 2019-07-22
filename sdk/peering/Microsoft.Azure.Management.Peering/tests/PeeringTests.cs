@@ -19,8 +19,8 @@ namespace Peering.Tests
     using System.Threading;
     using Microsoft.Azure.Management.Peering;
     using Microsoft.Azure.Management.Peering.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Azure.Test.HttpRecorder.ProcessRecordings;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

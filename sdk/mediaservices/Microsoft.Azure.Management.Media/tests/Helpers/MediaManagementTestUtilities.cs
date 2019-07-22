@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Management.Media;
@@ -11,6 +11,7 @@ using System;
 using System.Net.Http;
 using System.Collections.Generic;
 using System.Linq;
+using Sku = Microsoft.Azure.Management.Storage.Models.Sku;
 
 namespace Media.Tests.Helpers
 {

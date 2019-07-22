@@ -4,10 +4,11 @@
 using System.Collections.Generic;
 using Microsoft.Azure.Management.ContainerInstance;
 using Microsoft.Azure.Management.ContainerInstance.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using ResourceIdentityType = Microsoft.Azure.Management.ContainerInstance.Models.ResourceIdentityType;
 
 namespace ContainerInstance.Tests
 {

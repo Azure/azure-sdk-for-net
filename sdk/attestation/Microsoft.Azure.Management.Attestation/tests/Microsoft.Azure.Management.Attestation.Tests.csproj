@@ -10,8 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Attestation.csproj" />
-
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.9.1-preview" />
   </ItemGroup>
 
   <ItemGroup>

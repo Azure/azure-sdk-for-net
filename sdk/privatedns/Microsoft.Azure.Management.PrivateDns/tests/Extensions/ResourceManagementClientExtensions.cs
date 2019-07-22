@@ -8,8 +8,8 @@ namespace PrivateDns.Tests.Extensions
 {
     using System;
     using System.Linq;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
 
     internal static class ResourceManagementClientExtensions
     {

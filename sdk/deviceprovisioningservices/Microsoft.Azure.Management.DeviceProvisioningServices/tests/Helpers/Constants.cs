@@ -19,7 +19,7 @@
                 + "UAT4yJGWL+7l4/qfmqblb96n";
 
             public const string Name = "DPStestCert";
-            public const string Subject = "CN=Azure IoT Root CA";
+            public const string Subject = "Azure IoT Root CA";
             public const string Thumbprint = "9F0983E8F2DB2DB3582997FEF331247D872DEE32";
         }
 

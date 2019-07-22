@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using DeviceProvisioningServices.Tests.Helpers;
 

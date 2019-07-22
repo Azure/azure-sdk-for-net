@@ -8,8 +8,8 @@ namespace EventHub.Tests.TestHelper
     using System.Linq;
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.EventHub.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json;
     using System.Security.Cryptography;

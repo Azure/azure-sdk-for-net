@@ -7,7 +7,7 @@ namespace ServiceFabric.Tests.Tests
     using Xunit;
     using Microsoft.Azure.Management.ServiceFabric;
     using System.Linq;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.ServiceFabric.Models;
     using System;

@@ -16,7 +16,7 @@
 namespace Relay.Tests.ScenarioTests
 {
     using System.Net;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.Relay;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Relay.Tests.TestHelper;

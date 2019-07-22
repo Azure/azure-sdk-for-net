@@ -3,8 +3,8 @@
 
 namespace ServiceFabric.Tests.Tests
 {
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Management.ServiceFabric;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -50,7 +50,7 @@ namespace ServiceFabric.Tests.Tests
             query.SetFilter(
                 f => f.ResourceType == "Microsoft.ServiceFabric/clusters");
 
-            return resouceClient.ResourceGroups.ListResources(rg.Name, query);
+            return resouceClient.Resources.ListByResourceGroup(rg.Name, query);
         }
 
         protected Cluster CreateCluster(

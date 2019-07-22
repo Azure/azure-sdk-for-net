@@ -166,7 +166,11 @@ namespace Compute.Tests
                 var stoInput = new StorageAccountCreateParameters
                 {
                     Location = m_location,
-                    AccountType = AccountType.StandardGRS
+                    Sku = new Microsoft.Azure.Management.Storage.Models.Sku
+                    {
+                        Name = SkuName.StandardGRS
+                    },
+                    Kind = Kind.Storage
                 };
 
                 StorageAccount storageAccountOutput = m_SrpClient.StorageAccounts.Create(rgName,

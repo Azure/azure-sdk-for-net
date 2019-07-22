@@ -10,7 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.KeyVault.csproj" />
 
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.1.3-preview" />
     <PackageReference Include="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
   </ItemGroup>
   

@@ -6,9 +6,9 @@ namespace TrafficManager.Tests.Helpers
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using System.Linq;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 

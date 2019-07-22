@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.OperationalInsights;
 using ResourceGroups.Tests;
@@ -88,58 +88,6 @@ namespace Networks.Tests.Helpers
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
             var provider = client.Providers.Get(providerName);
-            foreach (var resource in provider.ResourceTypes)
-            {
-                if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
-                {
-                    return resource.Locations.FirstOrDefault(supportedLocations.Contains);
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Get default resource location for a given resource type.
-        /// Once all tests are moved away from depreciated version of Resource Manager, this method should be removed
-        /// and "using Microsoft.Azure.Management.Resources" should be changed to "using Microsoft.Azure.Management.ResourceManager"
-        /// </summary>
-        /// <param name="client">The resource management client</param>
-        /// <param name="resourceType">The type of resource to create</param>
-        /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static string GetResourceLocation(Microsoft.Azure.Management.ResourceManager.ResourceManagementClient client, string resourceType, Network.Tests.Helpers.FeaturesInfo.Type feature = Network.Tests.Helpers.FeaturesInfo.Type.Default)
-        {
-            HashSet<string> supportedLocations = null;
-
-            switch (feature)
-            {
-                case Network.Tests.Helpers.FeaturesInfo.Type.Default:
-                    {
-                        supportedLocations = Network.Tests.Helpers.FeaturesInfo.defaultLocations;
-                        break;
-                    }
-
-                case Network.Tests.Helpers.FeaturesInfo.Type.All:
-                    {
-                        supportedLocations = Network.Tests.Helpers.FeaturesInfo.allFeaturesSupportedLocations;
-                        break;
-                    }
-
-                case Network.Tests.Helpers.FeaturesInfo.Type.Ipv6:
-                    {
-                        supportedLocations = Network.Tests.Helpers.FeaturesInfo.ipv6SupportedLocations;
-                        break;
-                    }
-
-                case Network.Tests.Helpers.FeaturesInfo.Type.MultiCA:
-                    {
-                        supportedLocations = Network.Tests.Helpers.FeaturesInfo.defaultLocations;
-                        break;
-                    }
-            }
-            string[] parts = resourceType.Split('/');
-            string providerName = parts[0];
-            var provider = Microsoft.Azure.Management.ResourceManager.ProvidersOperationsExtensions.Get(client.Providers, providerName);
             foreach (var resource in provider.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))

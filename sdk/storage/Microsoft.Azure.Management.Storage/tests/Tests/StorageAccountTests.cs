@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using ResourceGroups.Tests;
@@ -861,8 +861,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var ops = resourcesClient.ResourceProviderOperationDetails.List("Microsoft.Storage", "2015-06-15");
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var ops = storageMgmtClient.Operations.List();
 
                 Assert.True(ops.Count() > 1);
             }

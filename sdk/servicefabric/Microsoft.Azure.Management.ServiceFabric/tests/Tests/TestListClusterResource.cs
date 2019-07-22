@@ -7,7 +7,7 @@ namespace ServiceFabric.Tests.Tests
     using Xunit;
     using Microsoft.Azure.Management.ServiceFabric;
     using System.Linq;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
 
     public class TestListClusterResource : ServiceFabricTestBase
     {

@@ -6,7 +6,7 @@ using System.Net;
 using PostgreSQL.Tests.Helpers;
 using Microsoft.Azure.Management.PostgreSQL;
 using Microsoft.Azure.Management.PostgreSQL.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 

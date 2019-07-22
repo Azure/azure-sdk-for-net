@@ -10,8 +10,8 @@ namespace Management.Blueprint.Tests
     using System.Text;
     using Microsoft.Azure.Management.Blueprint;
     using Microsoft.Azure.Management.Blueprint.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json;

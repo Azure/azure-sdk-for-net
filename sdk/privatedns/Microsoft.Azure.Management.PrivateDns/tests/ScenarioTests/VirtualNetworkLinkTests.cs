@@ -15,7 +15,7 @@ namespace PrivateDns.Tests.ScenarioTests
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.PrivateDns;
     using Microsoft.Azure.Management.PrivateDns.Models;
-    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Rest.Azure;
     using PrivateDns.Tests.Extensions;
     using PrivateDns.Tests.Helpers;
