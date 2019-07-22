@@ -21,7 +21,7 @@ namespace Azure.Identity
 {
     internal class AadIdentityClient
     {
-        private static Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient());
+        private static Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient(null));
 
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
