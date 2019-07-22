@@ -99,7 +99,9 @@ namespace Azure.Core.Extensions.Tests
             var exception = Assert.Throws<InvalidOperationException>(() => ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null));
             Assert.AreEqual("Unable to find matching constructor. Define one of the follow sets of configuration parameters:" + Environment.NewLine +
                 "1. connectionString" + Environment.NewLine +
-                "2. uri" + Environment.NewLine,
+                "2. uri" + Environment.NewLine +
+                "3. uri, composite" + Environment.NewLine +
+                "4. composite" + Environment.NewLine,
                 exception.Message);
         }
 
