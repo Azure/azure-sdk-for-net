@@ -43,10 +43,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrasesAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                KeyPhraseBatchResult result = await client.KeyPhrasesAsync(
-                    "I love my team mates");
+                KeyPhraseResult result = await client.KeyPhrasesAsync("I love my team mates");
 
-                Assert.Equal("team mates", result.Documents[0].KeyPhrases[0]);
+                Assert.Equal("team mates", result.KeyPhrases[0]);
             }
         }
 
@@ -80,10 +79,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrases");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                KeyPhraseBatchResult result = client.KeyPhrases(
-                    "I love my team mates");
+                KeyPhraseResult result = client.KeyPhrases("I love my team mates");
 
-                Assert.Equal("team mates", result.Documents[0].KeyPhrases[0]);
+                Assert.Equal("team mates", result.KeyPhrases[0]);
             }
         }
 
