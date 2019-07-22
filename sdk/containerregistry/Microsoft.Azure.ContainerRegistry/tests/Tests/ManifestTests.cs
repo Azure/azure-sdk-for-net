@@ -7,6 +7,7 @@ namespace ContainerRegistry.Tests
     using Microsoft.Azure.ContainerRegistry;
     using Microsoft.Azure.ContainerRegistry.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
@@ -57,10 +58,15 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesCRReturnsNull)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                var manifestAttributes = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository,
+                AcrManifestAttributes manifestAttributes = null;
+                try {
+                    manifestAttributes = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository,
                     "sha256:eabe547f78d4c18c708dd97ec3166cf7464cc651f1cbb67e70d407405b7ad7b6");
-
+                } catch (Exception e) {
+                    Assert.Equal("Operation returned an invalid status code 'NotFound'", e.Message);
+                }
                 Assert.Null(manifestAttributes);
+
             }
         }
 

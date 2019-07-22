@@ -176,7 +176,7 @@
         ]
       },
       "ResponseBody": "",
-      "StatusCode": 204
+      "StatusCode": 200
     },
     {
       "RequestUri": "/acr/v1/prod%2Fbash/_tags/latest",
@@ -232,7 +232,7 @@
         ]
       },
       "ResponseBody": "",
-      "StatusCode": 204
+      "StatusCode": 200
     },
     {
       "RequestUri": "/acr/v1/prod%2Fbash/_tags/latest",

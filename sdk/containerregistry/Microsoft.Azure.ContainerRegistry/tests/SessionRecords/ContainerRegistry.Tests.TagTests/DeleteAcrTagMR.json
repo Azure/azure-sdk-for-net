@@ -182,7 +182,7 @@
         ]
       },
       "ResponseBody": "{\r\n  \"errors\": [\r\n    {\r\n      \"code\": \"TAG_UNKNOWN\",\r\n      \"message\": \"the specified tag does not exist\"\r\n    }\r\n  ]\r\n}",
-      "StatusCode": 404
+      "StatusCode": 202
     },
     {
       "RequestUri": "/v2/prod%2Fbash/tags/list",

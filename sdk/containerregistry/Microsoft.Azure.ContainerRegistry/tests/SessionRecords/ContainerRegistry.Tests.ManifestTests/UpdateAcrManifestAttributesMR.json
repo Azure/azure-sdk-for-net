@@ -176,7 +176,7 @@
         ]
       },
       "ResponseBody": "",
-      "StatusCode": 204
+      "StatusCode": 200
     },
     {
       "RequestUri": "/acr/v1/prod%2Fbash/_manifests/sha256:eabe547f78d4c18c708dd97ec3166cf7464cc651f1cbb67e70d407405b7ad7b6",
@@ -232,7 +232,7 @@
         ]
       },
       "ResponseBody": "",
-      "StatusCode": 204
+      "StatusCode": 200
     },
     {
       "RequestUri": "/acr/v1/prod%2Fbash/_manifests/sha256:eabe547f78d4c18c708dd97ec3166cf7464cc651f1cbb67e70d407405b7ad7b6",

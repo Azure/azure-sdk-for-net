@@ -45,6 +45,12 @@ namespace ContainerRegistry.Tests
             return acrClient;
         }
 
+        public static ContainerRegistryManagementClient GetACRManagementClient(MockContext context, string registryName)
+        {
+            var registryManagementClient = context.GetServiceClient<ContainerRegistryManagementClient>(handlers: CreateNewRecordedDelegatingHandler());
+            return registryManagementClient;
+        }
+
         private static RecordedDelegatingHandler CreateNewRecordedDelegatingHandler()
         {
             return new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
