@@ -20,6 +20,7 @@
 ###########
 # Eng Sys
 ###########
-/eng/   @weshaggard @chidozieononiwu @mitchdenny @danieljurek
+/eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
+/eng/mgmt/      @erich-wang
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny
