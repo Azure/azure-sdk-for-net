@@ -4,6 +4,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -703,6 +704,16 @@ namespace Azure.Security.KeyVault.Keys
             if (keyImportOptions == default) throw new ArgumentNullException(nameof(keyImportOptions));
 
             return await SendRequestAsync(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name).ConfigureAwait(false);
+        }
+
+        public virtual async Task<CryptographyClient> GetCryptographyClientAysnc(string keyName, CancellationToken cancellationToken = default)
+        {
+
+        }
+
+        public virtual CryptographyClient GetCryptographyClient(string keyName, CancellationToken cancellationToken = default)
+        {
+
         }
     }
 }
