@@ -1455,6 +1455,37 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        public void MergeDocumentWithoutExistingKeyThrowsIndexingException()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var documents = new[]
+                {
+                    new Hotel()
+                    {
+                        HotelId = "1",
+                        ParkingIncluded = false,
+                        Rating = int.MinValue,
+                        Tags = new string[0],
+                        Address = new HotelAddress(),
+                        Rooms = new[]
+                        {
+                            new HotelRoom()
+                            {
+                                BaseRate = double.MinValue
+                            }
+                        }
+                    },
+                };
+
+                var batch = IndexBatch.Merge(documents);
+                Assert.Throws<IndexBatchException>(() => client.Documents.Index(batch));
+            });
+        }
+
         private void TestCanIndexAndRetrieveWithCustomConverter<TBook, TAuthor>(Action<SearchIndexClient> customizeSettings = null)
             where TBook : CustomBookBase<TAuthor>, new()
             where TAuthor : CustomAuthor, new()
