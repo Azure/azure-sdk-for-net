@@ -33,9 +33,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   TODO.
         /// </summary>
         ///
-        internal EventProcessorHostOptions(EventPosition initialEventPosition,
-                                           long maxBatchSize,
-                                           TimeSpan maxWaitTime)
+        public EventProcessorHostOptions(EventPosition initialEventPosition,
+                                         long maxBatchSize,
+                                         TimeSpan maxWaitTime)
         {
             InitialEventPosition = initialEventPosition;
             MaxBatchSize = maxBatchSize;
