@@ -15,7 +15,7 @@
 # /sdk/eventhub/
 # /sdk/keyvault/
 # /sdk/identity/
-# /sdk/storage/
+/sdk/storage/ @kfarmer-msft @seanmcc-msft @tg-msft
 
 ###########
 # Eng Sys
