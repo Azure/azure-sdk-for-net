@@ -146,14 +146,13 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
+                return SendRequest(RequestMethod.Post, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name, "/create");
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-
-            return SendRequest(RequestMethod.Post, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name, "/create");
         }
 
         /// <summary>
@@ -272,7 +271,6 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-
                 return SendRequest(RequestMethod.Patch, parameters, () => new Key(key.Name), cancellationToken, KeysPath, key.Name, "/", key.Version);
             }
             catch (Exception e)
