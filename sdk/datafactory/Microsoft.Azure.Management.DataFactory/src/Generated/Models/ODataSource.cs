@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Netezza source.
+    /// A copy activity source for OData source.
     /// </summary>
-    public partial class NetezzaSource : CopySource
+    public partial class ODataSource : CopySource
     {
         /// <summary>
-        /// Initializes a new instance of the NetezzaSource class.
+        /// Initializes a new instance of the ODataSource class.
         /// </summary>
-        public NetezzaSource()
+        public ODataSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetezzaSource class.
+        /// Initializes a new instance of the ODataSource class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -41,19 +41,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="query">A query to retrieve data from source. Type:
+        /// <param name="query">OData query. For example, "$top=1". Type:
         /// string (or Expression with resultType string).</param>
-        /// <param name="partitionOption">The partition mechanism that will be
-        /// used for Netezza read in parallel. Possible values include: 'None',
-        /// 'DataSlice', 'DynamicRange'</param>
-        /// <param name="partitionSettings">The settings that will be leveraged
-        /// for Netezza source partitioning.</param>
-        public NetezzaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), string partitionOption = default(string), NetezzaPartitionSettings partitionSettings = default(NetezzaPartitionSettings))
+        public ODataSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Query = query;
-            PartitionOption = partitionOption;
-            PartitionSettings = partitionSettings;
             CustomInit();
         }
 
@@ -63,26 +56,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a query to retrieve data from source. Type: string (or
+        /// Gets or sets oData query. For example, "$top=1". Type: string (or
         /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public object Query { get; set; }
-
-        /// <summary>
-        /// Gets or sets the partition mechanism that will be used for Netezza
-        /// read in parallel. Possible values include: 'None', 'DataSlice',
-        /// 'DynamicRange'
-        /// </summary>
-        [JsonProperty(PropertyName = "partitionOption")]
-        public string PartitionOption { get; set; }
-
-        /// <summary>
-        /// Gets or sets the settings that will be leveraged for Netezza source
-        /// partitioning.
-        /// </summary>
-        [JsonProperty(PropertyName = "partitionSettings")]
-        public NetezzaPartitionSettings PartitionSettings { get; set; }
 
     }
 }

@@ -1157,5 +1157,122 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
+
+        [JsonSample]
+        public const string AzurePostgreSqlTable = @"
+{
+    name: ""AzurePostgreSqlTable"",
+    properties:
+    {
+        type: ""AzurePostgreSqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string MySqlTable = @"
+{
+    name: ""MySqlTable"",
+    properties:
+    {
+        type: ""MySqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzurePostgreSqlTableAndSchema = @"
+        {
+            name: ""AzurePostgreSqlTable"",
+            properties:
+            {
+                type: ""AzurePostgreSqlTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                },
+                typeProperties:
+                {            
+                    table: ""$EncryptedString$MyEncryptedTableName"",
+                    schema: ""$EncryptedString$MyEncryptedSchemaName""
+                }
+            }
+        }
+        ";
+
+        [JsonSample]
+        public const string OdbcTable = @"
+        {
+            name: ""OdbcTable"",
+            properties:
+            {
+                type: ""OdbcTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                },
+                typeProperties:
+                {            
+                    tableName: ""$EncryptedString$MyEncryptedTableName""
+                }
+            }
+        }
+        ";
+
+        [JsonSample]
+        public const string AzureDataExplorerTable = @"
+        {
+            name: ""AzureDataExplorerTable"",
+            properties:
+            {
+                type: ""AzureDataExplorerTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                }
+            }
+        }
+        ";
+
+        [JsonSample]
+        public const string AzureDataExplorerWithTablePropertyTable = @"
+        {
+            name: ""AzureDataExplorerTable"",
+            properties:
+            {
+                type: ""AzureDataExplorerTable"",
+                typeProperties:
+                {
+                    table: ""myTable""
+                },
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                }                
+            }
+        }
+        ";
     }
 }
