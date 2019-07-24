@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -37,10 +36,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="targetRegions">The target regions where the Image
         /// Version is going to be replicated to. This property is
         /// updatable.</param>
-        public GalleryArtifactPublishingProfileBase(GalleryArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>))
+        public GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions = default(IList<TargetRegion>))
         {
             TargetRegions = targetRegions;
-            Source = source;
             CustomInit();
         }
 
@@ -56,37 +54,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "targetRegions")]
         public IList<TargetRegion> TargetRegions { get; set; }
 
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "source")]
-        public GalleryArtifactSource Source { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Source == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Source");
-            }
-            if (TargetRegions != null)
-            {
-                foreach (var element in TargetRegions)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (Source != null)
-            {
-                Source.Validate();
-            }
-        }
     }
 }

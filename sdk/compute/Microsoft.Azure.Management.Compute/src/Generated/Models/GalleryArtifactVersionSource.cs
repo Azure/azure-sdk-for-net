@@ -15,23 +15,26 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The managed artifact.
+    /// The gallery artifact version source.
     /// </summary>
-    public partial class ManagedArtifact
+    public partial class GalleryArtifactVersionSource
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedArtifact class.
+        /// Initializes a new instance of the GalleryArtifactVersionSource
+        /// class.
         /// </summary>
-        public ManagedArtifact()
+        public GalleryArtifactVersionSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagedArtifact class.
+        /// Initializes a new instance of the GalleryArtifactVersionSource
+        /// class.
         /// </summary>
-        /// <param name="id">The managed artifact id.</param>
-        public ManagedArtifact(string id)
+        /// <param name="id">The id of the gallery artifact version source. Can
+        /// specify a disk uri, snapshot uri, or user image.</param>
+        public GalleryArtifactVersionSource(string id)
         {
             Id = id;
             CustomInit();
@@ -43,7 +46,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the managed artifact id.
+        /// Gets or sets the id of the gallery artifact version source. Can
+        /// specify a disk uri, snapshot uri, or user image.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
