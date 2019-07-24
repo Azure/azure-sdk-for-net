@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs
         public static EventPosition Latest => FromOffset(EndOfStreamOffset, false);
 
         /// <summary>
-        ///   The offset of the eventidentified by this position.
+        ///   The offset of the event identified by this position.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>

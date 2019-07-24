@@ -7,12 +7,12 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   TODO.
     /// </summary>
     ///
-    public interface IEventProcessorFactory
+    public interface IPartitionProcessorFactory
     {
         /// <summary>
         ///   TODO. (partitionContext?)
         /// </summary>
         ///
-        public IEventProcessor CreateEventProcessor(PartitionContext context);
+        public IPartitionProcessor CreateEventProcessor(PartitionContext context);
     }
 }

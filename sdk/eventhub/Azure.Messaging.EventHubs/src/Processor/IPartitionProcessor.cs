@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   TODO. (Disposable?)
     /// </summary>
     ///
-    public interface IEventProcessor
+    public interface IPartitionProcessor
     {
         /// <summary>
         ///   TODO. (optional?)
