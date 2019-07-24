@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         public async Task<string> GetAccessTokenAsync(string resource, string tenantId)
         {
-            return await GetAccessTokenAsync(resource, tenantId, default(CancellationToken));
+            return await GetAccessTokenAsync(resource, tenantId, default(CancellationToken)).ConfigureAwait(false);
         }
 
         /// <summary>
