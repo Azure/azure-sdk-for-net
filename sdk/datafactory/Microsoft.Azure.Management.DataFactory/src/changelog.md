@@ -6,7 +6,7 @@
 ## Version 4.1.1
 ###  Feature Additions
 - Add PostgreSql Sink
-- Add Partition settings for Oracle, SapTable
+- Add Partition settings for Oracle, SapTable, Netezza
 - Add dedicated source and dataset for several relational sources including ODBC, MySql
 ### Breaking Changes
 - Update PostgreSql Dataset to use a dedicated AzurePostgreSqlTableDatasetTypeProperties
