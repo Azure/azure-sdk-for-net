@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventProcessorHost(EventHubClient eventHubClient,
                                   string consumerGroupName,
                                   IEventProcessorFactory eventProcessorFactory,
-                                  CheckpointManager checkpointManager,
+                                  IPartitionManager partitionManager,
                                   EventProcessorHostOptions options)
         {
             Client = eventHubClient;
