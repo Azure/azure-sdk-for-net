@@ -1157,5 +1157,87 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
+
+        [JsonSample]
+        public const string AzurePostgreSqlTable = @"
+{
+    name: ""AzurePostgreSqlTable"",
+    properties:
+    {
+        type: ""AzurePostgreSqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string MySqlTable = @"
+{
+    name: ""MySqlTable"",
+    properties:
+    {
+        type: ""MySqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzurePostgreSqlTableAndSchema = @"
+        {
+            name: ""AzurePostgreSqlTable"",
+            properties:
+            {
+                type: ""AzurePostgreSqlTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                },
+                typeProperties:
+                {            
+                    table: ""$EncryptedString$MyEncryptedTableName"",
+                    schema: ""$EncryptedString$MyEncryptedSchemaName""
+                }
+            }
+        }
+        ";
+
+        [JsonSample]
+        public const string OdbcTable = @"
+        {
+            name: ""OdbcTable"",
+            properties:
+            {
+                type: ""OdbcTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                },
+                typeProperties:
+                {            
+                    tableName: ""$EncryptedString$MyEncryptedTableName""
+                }
+            }
+        }
+        ";
+
     }
 }

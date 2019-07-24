@@ -4380,5 +4380,402 @@ namespace DataFactory.Tests.JsonSamples
     ]
   }
 }";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySapTableWithPartitionToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SAP Table to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SapTableSource"",
+                        rowCount: 3,
+                        partitionOption: ""PartitionOnCalendarDate"",
+                        partitionSettings: 
+                        {
+                             ""partitionColumnName"": ""fakeColumn"",
+                             ""partitionUpperBound"": ""20190405"",
+                             ""partitionLowerBound"": ""20170809"",
+                             ""maxPartitionsNumber"": 3
+                        }
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSapTable"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string Db2SourcePipeline = @"
+{
+    name: ""DataPipeline_Db2Sample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""Db2ToBlobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""Db2Source"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string AzurePostgreSqlSourcePipeline = @"
+{
+    name: ""DataPipeline_PostgreSqlSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""Db2ToPostgreSqlCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""Db2Source"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""AzurePostgreSqlSink"",
+                        preCopyScript: ""fake script""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string OraclePartitionSourcePipeline = @"
+{
+    name: ""DataPipeline_OraclePartitionSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""OraclePartitionSourceToBlobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""OracleSource"",
+                        partitionOption: ""DynamicRange""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample(version: "Copy")]
+        public const string NetezzaPartitionSourcePipeline = @"
+{
+    name: ""DataPipeline_NetezzaPartitionSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""NetezzaPartitionSourceToBlobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""NetezzaSource"",
+                        partitionOption: ""DataSlice""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample(version: "Copy")]
+        public const string ODataSourcePipeline = @"
+{
+    name: ""DataPipeline_ODataSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""ODataToPostgreSqlCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""ODataSource"",
+                        query: ""$top=1""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string SybaseSourcePipeline = @"
+{
+    name: ""DataPipeline_SybaseSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""SybaseToBlobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""SybaseSource"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string MySqlSourcePipeline = @"
+{
+    name: ""DataPipeline_MySqlSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""MySqlToBlobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""MySqlSource"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string OdbcSourcePipeline = @"
+{
+    name: ""DataPipeline_OdbcSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""OdbcToBlobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""MySqlSource"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string AmazonRedshiftSourcePipeline = @"
+{
+    name: ""DataPipeline_OdbcSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""AmazonRedshiftToBlobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""AmazonRedshiftSource"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
     }
 }
