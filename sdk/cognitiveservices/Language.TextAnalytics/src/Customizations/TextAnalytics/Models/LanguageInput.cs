@@ -7,7 +7,6 @@
 namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
 {
     using Newtonsoft.Json;
-    using System.Linq;
 
     public partial class LanguageInput
     {

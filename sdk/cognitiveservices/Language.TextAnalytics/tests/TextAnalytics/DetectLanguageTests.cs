@@ -41,12 +41,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguageAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                LanguageBatchResult result = await client.DetectLanguageAsync(
+                LanguageResult result = await client.DetectLanguageAsync(
                     "I love my team mates");
 
-                Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);
-                Assert.Equal("en", result.Documents[0].DetectedLanguages[0].Iso6391Name);
-                Assert.True(result.Documents[0].DetectedLanguages[0].Score > 0.7);
+                Assert.Equal("English", result.DetectedLanguages[0].Name);
+                Assert.Equal("en", result.DetectedLanguages[0].Iso6391Name);
+                Assert.True(result.DetectedLanguages[0].Score > 0.7);
                 context.Stop();
             }
         }
@@ -79,12 +79,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguage");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                LanguageBatchResult result = client.DetectLanguage(
+                LanguageResult result = client.DetectLanguage(
                     "I love my team mates");
 
-                Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);
-                Assert.Equal("en", result.Documents[0].DetectedLanguages[0].Iso6391Name);
-                Assert.True(result.Documents[0].DetectedLanguages[0].Score > 0.7);
+                Assert.Equal("English", result.DetectedLanguages[0].Name);
+                Assert.Equal("en", result.DetectedLanguages[0].Iso6391Name);
+                Assert.True(result.DetectedLanguages[0].Score > 0.7);
                 context.Stop();
             }
         }
