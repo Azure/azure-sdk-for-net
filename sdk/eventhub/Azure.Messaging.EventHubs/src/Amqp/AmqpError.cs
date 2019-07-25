@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>Indicates that the producer requesting an operation is not allowed to publish events to the requested resource.</summary>
         public static readonly AmqpSymbol PublisherRevokedError = AmqpConstants.Vendor + ":publisher-revoked";
 
-        /// <summary>Indicates that an operation was cancelled by the Event Hubs service.</summary>
+        /// <summary>Indicates that an operation was canceled by the Event Hubs service.</summary>
         public static readonly AmqpSymbol OperationCancelledError = AmqpConstants.Vendor + ":operation-cancelled";
 
         /// <summary>Indicates that the requested resource cannot be created because it already exists.</summary>

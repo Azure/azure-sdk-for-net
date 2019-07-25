@@ -207,4 +207,10 @@
   <data name="UnsupportedTransportEventType" xml:space="preserve">
     <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
   </data>
+  <data name="FailedToCreateEventSubscription" xml:space="preserve">
+    <value>Could not create a subscription for events for Event Hub: '{0}', partition: '{1}', consumer group: '{2}'.</value>
+  </data>
+  <data name="UnrecoverableException" xml:space="preserve">
+    <value>An unrecoverable exception was encountered that left the environment in a bad state.</value>
+  </data>
 </root>

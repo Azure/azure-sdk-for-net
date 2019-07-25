@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   Calculates the amount of time to allow the curent attempt for an operation to
+        ///   Calculates the amount of time to allow the current attempt for an operation to
         ///   complete before considering it to be timed out.
         /// </summary>
         ///
@@ -137,7 +137,6 @@ namespace Azure.Messaging.EventHubs.Core
                     return ex.IsTransient;
 
                 case TimeoutException _:
-                case OperationCanceledException _:
                 case SocketException _:
                     return true;
 

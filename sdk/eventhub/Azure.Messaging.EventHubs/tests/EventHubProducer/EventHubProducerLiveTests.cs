@@ -266,10 +266,31 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Actual limit is 1046520 for a single event.
                     var singleEvent = new EventData(new byte[100000]);
-                    var eventBatch = new[] { new EventData(new byte[100000]) };
 
                     Assert.That(async () => await producer.SendAsync(singleEvent), Throws.Nothing);
-                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendSingleLargeEventInASet()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) } }))
+                await using (var producer = client.CreateProducer())
+                {
+                    // Actual limit is 1046520 for a single event.
+                    var eventSet = new[] { new EventData(new byte[100000]) };
+
+                    Assert.That(async () => await producer.SendAsync(eventSet), Throws.Nothing);
                 }
             }
         }

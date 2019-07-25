@@ -395,5 +395,27 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("UnsupportedTransportEventType", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Could not create a subscription for events for Event Hub: '{0}', partition: '{1}'..
+        /// </summary>
+        internal static string FailedToCreateEventSubscription
+        {
+            get
+            {
+                return ResourceManager.GetString("FailedToCreateEventSubscription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to An unrecoverable exception was encountered that left the environment in a bad state..
+        /// </summary>
+        internal static string UnrecoverableException
+        {
+            get
+            {
+                return ResourceManager.GetString("UnrecoverableException", resourceCulture);
+            }
+        }
     }
 }
