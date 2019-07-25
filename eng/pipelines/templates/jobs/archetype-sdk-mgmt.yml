@@ -5,9 +5,9 @@ jobs:
       vmImage: windows-2019
     steps:
       - task: DotNetCoreInstaller@0
-        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
-         version: '$(DotNetCoreSDKVersion)'
+          version: "$(DotNetCoreSDKVersion)"
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - script: "dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
         displayName: "Build & Package"
@@ -18,19 +18,19 @@ jobs:
       - task: PublishBuildArtifacts@1
         condition: succeededOrFailed()
         inputs:
-            pathtoPublish: $(msBuildLogDir)
-            artifactName: MsBuildLogs
+          pathtoPublish: $(msBuildLogDir)
+          artifactName: MsBuildLogs
       - task: PublishPipelineArtifact@0
         condition: succeededOrFailed()
         inputs:
           artifactName: packages
           targetPath: $(Build.ArtifactStagingDirectory)
-      - powershell: |
+      - pwsh: |
           $releaseTag = "FOR_SIGNING"
           if ("$(ShouldPublish)" -eq "true") { $releaseTag = "FOR_PUBLISHING" }
           echo "Tagging build with $releaseTag"
           echo "##vso[build.addbuildtag]$releaseTag"
-        displayName: 'Tagging the build'
+        displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
 
   - job: Test
@@ -51,9 +51,9 @@ jobs:
       vmImage: "$(OSVmImage)"
     steps:
       - task: DotNetCoreInstaller@0
-        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
-          version: '$(DotNetCoreSDKVersion)'
+          version: "$(DotNetCoreSDKVersion)"
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"
