@@ -403,7 +403,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(message.DataBody, Is.Not.Null, "The batch envelope should a body.");
 
             var messageData = message.DataBody.ToList();
-            Assert.That(messageData.Count, Is.EqualTo(1), "The batch envelopeshould a single data body.");
+            Assert.That(messageData.Count, Is.EqualTo(1), "The batch envelope should a single data body.");
             Assert.That(messageData[0].Value, Is.EqualTo(eventData.Body.ToArray()), "The batch envelope data should match the event body.");
 
             Assert.That(message.ApplicationProperties.Map.TryGetValue(nameof(property), out object propertyValue), Is.True, "The application property should exist in the batch.");
@@ -608,7 +608,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(batchEnvelope.DataBody, Is.Not.Null, "The batch envelope should a body.");
 
             var messageData = batchEnvelope.DataBody.ToList();
-            Assert.That(messageData.Count, Is.EqualTo(1), "The batch envelopeshould a single data body.");
+            Assert.That(messageData.Count, Is.EqualTo(1), "The batch envelope should a single data body.");
             Assert.That(messageData[0].Value, Is.EqualTo(eventData.Body.ToArray()), "The batch envelope data should match the event body.");
 
             Assert.That(batchEnvelope.ApplicationProperties.Map.TryGetValue(nameof(property), out object propertyValue), Is.True, "The application property should exist in the batch.");

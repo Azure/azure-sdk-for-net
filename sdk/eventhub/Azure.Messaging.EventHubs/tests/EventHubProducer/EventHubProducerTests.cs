@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -155,7 +155,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -168,7 +168,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -186,7 +186,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -217,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -230,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -243,7 +243,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -258,7 +258,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -273,7 +273,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -288,7 +288,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -303,7 +303,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -322,7 +322,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -342,7 +342,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -358,7 +358,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
         /// </summary>
         ///
         [Test]
@@ -372,7 +372,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
         /// </summary>
         ///
         [Test]
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
         /// </summary>
         ///
         [Test]
@@ -410,7 +410,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
         /// </summary>
         ///
         [Test]

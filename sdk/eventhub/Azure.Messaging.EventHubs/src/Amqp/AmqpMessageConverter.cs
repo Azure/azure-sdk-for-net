@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                           string partitionKey = null)
         {
             Guard.ArgumentNotNull(nameof(source), source);
-            return BuildAmqpMessageFromEvent(source, true, partitionKey);
+            return BuildAmqpMessageFromEvent(source, partitionKey);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                          string partitionKey = null)
         {
             Guard.ArgumentNotNull(nameof(source), source);
-            return BuildAmqpBatchFromEvents(source, true, partitionKey);
+            return BuildAmqpBatchFromEvents(source, partitionKey);
         }
 
         /// <summary>
@@ -77,16 +77,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         /// <param name="source">The set of events to use as the body of the batch message.</param>
-        /// <param name="copyCustomProperties"><c>true</c> if the custom properties of the event should be propagated to the message; otherwise, <c>false</c>.</param>
         /// <param name="partitionKey">The partition key to annotate the AMQP message with; if no partition key is specified, the annotation will not be made.</param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source events.</returns>
         ///
         private static AmqpMessage BuildAmqpBatchFromEvents(IEnumerable<EventData> source,
-                                                            bool copyCustomProperties,
                                                             string partitionKey) =>
             BuildAmqpBatchFromMessages(
-                source.Select(eventData => BuildAmqpMessageFromEvent(eventData, copyCustomProperties, partitionKey)),
+                source.Select(eventData => BuildAmqpMessageFromEvent(eventData, partitionKey)),
                 partitionKey);
 
         /// <summary>
@@ -136,19 +134,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         /// <param name="source">The event to use as the source of the message.</param>
-        /// <param name="copyCustomProperties"><c>true</c> if the custom properties of the event should be propagated to the message; otherwise, <c>false</c>.</param>
         /// <param name="partitionKey">The partition key to annotate the AMQP message with; if no partition key is specified, the annotation will not be made.</param>
         ///
         /// <returns>The <see cref="AmqpMessage" /> constructed from the source event.</returns>
         ///
         private static AmqpMessage BuildAmqpMessageFromEvent(EventData source,
-                                                             bool copyCustomProperties,
                                                              string partitionKey)
         {
-            var body = new ArraySegment<byte>((source.Body.IsEmpty) ? new byte[0] : source.Body.ToArray());
+            var body = new ArraySegment<byte>((source.Body.IsEmpty) ? Array.Empty<byte>() : source.Body.ToArray());
             var message = AmqpMessage.Create(new Data { Value = body });
 
-            if ((copyCustomProperties) && (source.Properties?.Count > 0))
+            if (source.Properties?.Count > 0)
             {
                 message.ApplicationProperties = message.ApplicationProperties ?? new ApplicationProperties();
 

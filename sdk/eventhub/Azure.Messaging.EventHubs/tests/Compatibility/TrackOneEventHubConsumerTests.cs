@@ -239,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   by accessing its private field.
         /// </summary>
         ///
-        /// <param name="policy">The ploicy to retrieve the source policy from.</param>
+        /// <param name="policy">The policy to retrieve the source policy from.</param>
         ///
         /// <returns>The retry policy</returns>
         ///

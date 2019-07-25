@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var batch = new EventDataBatch(mockBatch, new SendOptions());
 
             batch.AsEnumerable<String>();
-            Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(String)), "The enumerable should delegated the requestd type parameter.");
+            Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(String)), "The enumerable should delegated the requested type parameter.");
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   using its private accessor.
         /// </summary>
         ///
-        /// <param name="batch">The batch to retrive the inner transport batch from.</param>
+        /// <param name="batch">The batch to retrieve the inner transport batch from.</param>
         ///
         /// <returns>The inner transport batch.</returns>
         ///

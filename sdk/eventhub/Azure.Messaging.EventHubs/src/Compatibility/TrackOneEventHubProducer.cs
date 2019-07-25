@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                              CancellationToken cancellationToken)
         {
             static TrackOne.EventData TransformMessage(AmqpMessage message) =>
-                new TrackOne.EventData(new byte[0])
+                new TrackOne.EventData(Array.Empty<byte>())
                 {
                     AmqpMessage = message
                 };

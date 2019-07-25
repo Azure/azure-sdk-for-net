@@ -120,8 +120,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorDoesNotRequireEventHubInConnectionStringWhenPassedSeparate()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.Nothing, "The constructor without options should not require the conection string event hub");
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.Nothing, "The constructor with options should not require the conection string event hub");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.Nothing, "The constructor without options should not require the connection string event hub");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.Nothing, "The constructor with options should not require the connection string event hub");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorWithExpandedArgumentsValidatesOptions()
         {
             var invalidOptions = new EventHubClientOptions { TransportType = TransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
-            Assert.That(() => new EventHubClient("host", "path", Mock.Of<TokenCredential>(), invalidOptions), Throws.ArgumentException, "The cexpanded argument onstructor should validate client options");
+            Assert.That(() => new EventHubClient("host", "path", Mock.Of<TokenCredential>(), invalidOptions), Throws.ArgumentException, "The expanded argument constructor should validate client options");
         }
 
         /// <summary>
