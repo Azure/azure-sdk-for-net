@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// Secret identifier.
         /// </summary>
         public Uri Id => _identifier.Id;
-        
+
         /// <summary>
         /// Vault base URL.
         /// </summary>
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Secrets
         public bool? Managed { get; private set; }
 
         /// <summary>
-        /// If this is a secret backing a KV certificate, then this field specifies 
+        /// If this is a secret backing a KV certificate, then this field specifies
         /// the corresponding key backing the KV certificate.
         /// </summary>
         public string KeyId { get; private set; }

@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using Azure.Core.Http;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Optionally limit requests to resources that have remained
-        /// unmodified 
+        /// unmodified
         /// </summary>
         public DateTimeOffset? IfUnmodifiedSince { get; set; }
 
@@ -87,7 +88,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>
         /// A string representation of the HttpAccessConditions.
         /// </returns>
-        public override string ToString() 
+        public override string ToString()
             => $"[{nameof(HttpAccessConditions)}:{nameof(this.IfModifiedSince)}={this.IfModifiedSince};{nameof(this.IfUnmodifiedSince)}={this.IfUnmodifiedSince};{nameof(this.IfMatch)}={this.IfMatch};{nameof(this.IfNoneMatch)}={this.IfNoneMatch}]";
     }
 
@@ -156,7 +157,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>
         /// A string representation of the ContainerAccessConditions.
         /// </returns>
-        public override string ToString() 
+        public override string ToString()
             => $"[{nameof(ContainerAccessConditions)}:{nameof(this.HttpAccessConditions)}={this.HttpAccessConditions};{nameof(this.LeaseAccessConditions)}={this.LeaseAccessConditions}]";
     }
 
@@ -218,13 +219,13 @@ namespace Azure.Storage.Blobs.Models
             ;
 
         /// <summary>
-        /// Converts the value of the current BlobAccessConditions object to 
+        /// Converts the value of the current BlobAccessConditions object to
         /// its equivalent string representation.
         /// </summary>
         /// <returns>
         /// A string representation of the BlobAccessConditions.
         /// </returns>
-        public override string ToString() 
+        public override string ToString()
             => $"[{nameof(BlobAccessConditions)}:{nameof(this.HttpAccessConditions)}={this.HttpAccessConditions};{nameof(this.LeaseAccessConditions)}={this.LeaseAccessConditions}]";
     }
 
@@ -279,13 +280,13 @@ namespace Azure.Storage.Blobs.Models
             => this.LeaseId == other.LeaseId;
 
         /// <summary>
-        /// Converts the value of the current HttpAccessConditions object to 
+        /// Converts the value of the current HttpAccessConditions object to
         /// its equivalent string representation.
         /// </summary>
         /// <returns>
         /// A string representation of the HttpAccessConditions.
         /// </returns>
-        public override string ToString() 
+        public override string ToString()
             => $"[{nameof(LeaseAccessConditions)}:{nameof(this.LeaseId)}={this.LeaseId}]";
     }
 
@@ -303,7 +304,7 @@ namespace Azure.Storage.Blobs.Models
         /// Specifies blob lease access conditions.
         /// </summary>
         public LeaseAccessConditions? LeaseAccessConditions { get; set; }
-        
+
         /// <summary>
         /// IfAppendPositionEqual ensures that the AppendBlock operation
         /// succeeds only if the append position is equal to a value.
@@ -365,13 +366,13 @@ namespace Azure.Storage.Blobs.Models
             ;
 
         /// <summary>
-        /// Converts the value of the current AppendBlobAccessConditions 
+        /// Converts the value of the current AppendBlobAccessConditions
         /// object to its equivalent string representation.
         /// </summary>
         /// <returns>
         /// A string representation of the AppendBlobAccessConditions.
         /// </returns>
-        public override string ToString() 
+        public override string ToString()
             => $"[{nameof(AppendBlobAccessConditions)}:{nameof(this.HttpAccessConditions)}={this.HttpAccessConditions};{nameof(this.LeaseAccessConditions)}={this.LeaseAccessConditions};{nameof(this.IfAppendPositionEqual)}={this.IfAppendPositionEqual};{nameof(this.IfMaxSizeLessThanOrEqual)}={this.IfMaxSizeLessThanOrEqual}]";
     }
 
@@ -459,7 +460,7 @@ namespace Azure.Storage.Blobs.Models
             ;
 
         /// <summary>
-        /// Converts the value of the current PageBlobAccessConditions object 
+        /// Converts the value of the current PageBlobAccessConditions object
         /// to its equivalent string representation.
         /// </summary>
         /// <returns>

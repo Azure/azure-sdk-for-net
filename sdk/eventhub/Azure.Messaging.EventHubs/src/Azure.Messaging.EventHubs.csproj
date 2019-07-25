@@ -39,7 +39,6 @@
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.IdentityModel" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
@@ -68,8 +67,6 @@
     </EmbeddedResource>
 
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" PrivateAssets="All" VersionOverride="[3.14.2, 4.0.0)" />
-    <PackageReference Include="System.Net.Http" PrivateAssets="All" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" PrivateAssets="All" />
   </ItemGroup>
   <!-- END TRACK ONE DEPENDENCIES -->

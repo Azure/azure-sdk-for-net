@@ -20,6 +20,7 @@ namespace Azure.Security.KeyVault.Test
 
         public SecretClientLiveTests(bool isAsync) : base(isAsync)
         {
+            TestDiagnostics = false;
         }
 
         [Test]
@@ -136,7 +137,7 @@ namespace Azure.Security.KeyVault.Test
 
             SecretBase setSecret = await Client.SetAsync(secretName, "value");
             RegisterForCleanup(setSecret);
-            
+
             Secret secret = await Client.GetAsync(secretName);
 
             AssertSecretsEqual(setSecret, secret);
@@ -161,7 +162,7 @@ namespace Azure.Security.KeyVault.Test
         public async Task GetSecretVersionsNonExisting()
         {
             List<Response<SecretBase>> allSecrets = await Client.GetSecretVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-            
+
             Assert.AreEqual(0, allSecrets.Count);
         }
 
@@ -230,6 +231,8 @@ namespace Azure.Security.KeyVault.Test
             DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
 
             AssertSecretsEqual(secret, deletedSecret);
+            Assert.NotNull(deletedSecret.DeletedDate);
+            Assert.NotNull(deletedSecret.ScheduledPurgeDate);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetAsync(secretName));
         }

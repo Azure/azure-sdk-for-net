@@ -45,13 +45,12 @@ namespace Azure.Messaging.EventHubs
         public long? OwnerLevel { get; set; }
 
         /// <summary>
-        ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue
-        ///   is encountered while receiving.
+        ///   The set of options to use for determining whether a failed operation should be retried and,
+        ///   if so, the amount of time to wait between retry attempts.  If not specified, the retry policy from
+        ///   the associcated <see cref="EventHubClient" /> will be used.
         /// </summary>
         ///
-        /// <value>If not specified, the retry policy configured on the associated <see cref="EventHubClient" /> will be used.</value>
-        ///
-        public Retry Retry { get; set; }
+        public RetryOptions RetryOptions { get; set; }
 
         /// <summary>
         ///   The default amount of time to wait for the requested amount of messages when receiving; if this
@@ -113,7 +112,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -151,8 +150,7 @@ namespace Azure.Messaging.EventHubs
             new EventHubConsumerOptions
             {
                 OwnerLevel = this.OwnerLevel,
-                Retry = this.Retry?.Clone(),
-
+                RetryOptions = this.RetryOptions?.Clone(),
                 _identifier = this._identifier,
                 _prefetchCount = this._prefetchCount,
                 _maximumReceiveWaitTime = this._maximumReceiveWaitTime

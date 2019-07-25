@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -21,7 +20,7 @@ namespace Azure.Security.KeyVault.Secrets
     public class SecretClient
     {
         private readonly Uri _vaultUri;
-        private const string ApiVersion = "7.0";
+        private readonly string ApiVersion;
         private readonly HttpPipeline _pipeline;
 
         private const string SecretsPath = "/secrets/";
@@ -56,6 +55,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(credential));
             options = options ?? new SecretClientOptions();
+            this.ApiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
                     bufferResponse: true,

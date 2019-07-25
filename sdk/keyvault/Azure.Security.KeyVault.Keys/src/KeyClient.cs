@@ -4,7 +4,6 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -51,6 +50,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(credential));
             options = options ?? new KeyClientOptions();
+            this.ApiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
                     bufferResponse: true,

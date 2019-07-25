@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {
@@ -40,9 +39,11 @@ namespace Azure.Core.Pipeline
                 policies.Add(BufferResponsePolicy.Shared);
             }
 
+            policies.Add(new RequestActivityPolicy());
+
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier);
+            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, new ClientDiagnostics(options.Diagnostics.IsLoggingEnabled));
         }
 
         // internal for testing

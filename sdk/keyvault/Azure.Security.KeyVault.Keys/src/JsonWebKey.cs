@@ -237,7 +237,6 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (N != null)
             {
-                
                 json.WriteString(NPropertyNameBytes, Base64Url.Encode(N));
             }
             if (E != null)

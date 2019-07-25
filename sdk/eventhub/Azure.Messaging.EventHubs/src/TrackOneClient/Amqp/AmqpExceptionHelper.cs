@@ -59,7 +59,7 @@ namespace TrackOne.Amqp
         public static Exception ToMessagingContract(Error error, bool connectionError = false)
         {
             return error == null ?
-                new EventHubsException(true, "Unknown error.") 
+                new EventHubsException(true, "Unknown error.")
                 : ToMessagingContract(error.Condition.Value, error.Description, connectionError);
         }
 

@@ -9,12 +9,14 @@ namespace Azure.Core.Extensions.Tests
     {
         public Uri Uri { get; }
         public string ConnectionString { get; }
+        public CompositeObject Composite { get; }
         public TestClientOptions Options { get; }
 
         public TestClient(string connectionString)
         {
             ConnectionString = connectionString;
         }
+
         public TestClient(string connectionString, TestClientOptions options)
         {
             if (connectionString == "throw")
@@ -30,6 +32,42 @@ namespace Azure.Core.Extensions.Tests
         {
             Uri = uri;
             Options = options;
+        }
+
+        public TestClient(Uri uri, CompositeObject composite, TestClientOptions options)
+        {
+            Uri = uri;
+            Composite = composite;
+            Options = options;
+        }
+
+        public TestClient(CompositeObject composite, TestClientOptions options)
+        {
+            Composite = composite;
+            Options = options;
+        }
+
+        public class CompositeObject
+        {
+            public string A { get; }
+            public string B { get; }
+            public Uri C { get; }
+
+            public CompositeObject(string a)
+            {
+                A = a;
+            }
+
+            public CompositeObject(string a, string b)
+            {
+                A = a;
+                B = b;
+            }
+
+            public CompositeObject(Uri c)
+            {
+                C = c;
+            }
         }
     }
 }

@@ -55,10 +55,10 @@ $Env:AZURE_TENANT_ID="tenant-ID"
 
 * Grant the above mentioned application authorization to perform key operations on the key vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list set
+    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create
     ```
     > --key-permissions:
-    > Accepted values: backup, delete, get, list, purge, recover, restore, set
+    > Accepted values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
 
 * Use the above mentioned Key Vault name to retrieve details of your Vault which also contains your Key Vault URL:
     ```PowerShell
@@ -148,7 +148,7 @@ Key key = client.CreateKey("key-name", KeyType.EllipticCurve);
 // You can specify additional application-specific metadata in the form of tags.
 key.Tags["foo"] = "updated tag";
 
-KeyBase updatedKey = client.UpdateKey(key);
+KeyBase updatedKey = client.UpdateKey(key, key.KeyMaterial.KeyOps);
 
 Console.WriteLine(updatedKey.Name);
 Console.WriteLine(updatedKey.Version);

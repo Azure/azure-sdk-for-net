@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -23,20 +24,20 @@ namespace Azure.Storage.Files
         /// The share's primary <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _uri;
-        
+
         /// <summary>
         /// Gets the share's primary <see cref="Uri"/> endpoint.
         /// </summary>
         public virtual Uri Uri => this._uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
-        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
         protected virtual HttpPipeline Pipeline => this._pipeline;
@@ -58,7 +59,7 @@ namespace Azure.Storage.Files
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="shareName">
@@ -77,7 +78,7 @@ namespace Azure.Storage.Files
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="shareName">
@@ -179,7 +180,7 @@ namespace Azure.Storage.Files
         /// Initializes a new instance of the <see cref="ShareClient"/>
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
         /// </summary>
         /// <remarks>
@@ -222,7 +223,7 @@ namespace Azure.Storage.Files
         /// The <see cref="Create"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
         /// </summary>
         /// <param name="metadata">
@@ -258,7 +259,7 @@ namespace Azure.Storage.Files
         /// The <see cref="CreateAsync"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
         /// </summary>
         /// <param name="metadata">
@@ -294,7 +295,7 @@ namespace Azure.Storage.Files
         /// The <see cref="CreateInternal"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
         /// </summary>
         /// <param name="metadata">
@@ -339,6 +340,7 @@ namespace Azure.Storage.Files
                         metadata: metadata,
                         quota: quotaInBytes,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.Create",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -358,7 +360,7 @@ namespace Azure.Storage.Files
         #region CreateSnapshot
         /// <summary>
         /// Creates a read-only snapshot of a share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
         /// </summary>
         /// <param name="metadata">
@@ -387,7 +389,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Creates a read-only snapshot of a share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
         /// </summary>
         /// <param name="metadata">
@@ -416,7 +418,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Creates a read-only snapshot of a share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
         /// </summary>
         /// <param name="metadata">
@@ -454,6 +456,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -474,7 +477,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
-        /// 
+        ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
@@ -505,7 +508,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
-        /// 
+        ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
@@ -536,7 +539,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
-        /// 
+        ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
@@ -577,6 +580,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.Delete",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -598,7 +602,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetProperties"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
         /// <param name="shareSnapshot">
@@ -629,7 +633,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetPropertiesAsync"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
         /// <param name="shareSnapshot">
@@ -660,7 +664,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetPropertiesInternal"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-properties"/>.
         /// </summary>
         /// <param name="shareSnapshot">
@@ -700,6 +704,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -811,6 +816,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         quota: quotaInBytes,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.SetQuota",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -829,9 +835,9 @@ namespace Azure.Storage.Files
 
         #region SetMetadata
         /// <summary>
-        /// The <see cref="SetMetadata"/> operation sets user-defined 
+        /// The <see cref="SetMetadata"/> operation sets user-defined
         /// metadata for the specified share as one or more name-value pairs.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-metadata"/>.
         /// </summary>
         /// <param name="metadata">
@@ -859,9 +865,9 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync"/> operation sets user-defined 
+        /// The <see cref="SetMetadataAsync"/> operation sets user-defined
         /// metadata for the specified share as one or more name-value pairs.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-metadata"/>.
         /// </summary>
         /// <param name="metadata">
@@ -889,9 +895,9 @@ namespace Azure.Storage.Files
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetMetadataInternal"/> operation sets user-defined 
+        /// The <see cref="SetMetadataInternal"/> operation sets user-defined
         /// metadata for the specified share as one or more name-value pairs.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-metadata"/>.
         /// </summary>
         /// <param name="metadata">
@@ -929,6 +935,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.SetMetadata",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -950,7 +957,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetAccessPolicy"/> operation gets the
         /// permissions for this share. The permissions indicate whether
         /// share data may be accessed publicly.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-share-acl"/>.
         /// </summary>
         /// <param name="cancellationToken">
@@ -976,7 +983,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetAccessPolicyAsync"/> operation gets the
         /// permissions for this share. The permissions indicate whether
         /// share data may be accessed publicly.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-share-acl"/>.
         /// </summary>
         /// <param name="cancellationToken">
@@ -1002,7 +1009,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetAccessPolicyInternal"/> operation gets the
         /// permissions for this share. The permissions indicate whether
         /// share data may be accessed publicly.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-share-acl"/>.
         /// </summary>
         /// <param name="async">
@@ -1035,6 +1042,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.GetAccessPolicy",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1056,7 +1064,7 @@ namespace Azure.Storage.Files
         /// The <see cref="SetAccessPolicy"/> operation sets the
         /// permissions for the specified share. The permissions indicate
         /// whether share data may be accessed publicly.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-acl"/>.
         /// </summary>
         /// <param name="permissions">
@@ -1088,7 +1096,7 @@ namespace Azure.Storage.Files
         /// The <see cref="SetAccessPolicyAsync"/> operation sets the
         /// permissions for the specified share. The permissions indicate
         /// whether share data may be accessed publicly.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-acl"/>.
         /// </summary>
         /// <param name="permissions">
@@ -1120,7 +1128,7 @@ namespace Azure.Storage.Files
         /// The <see cref="SetAccessPolicyInternal"/> operation sets the
         /// permissions for the specified share. The permissions indicate
         /// whether share data may be accessed publicly.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-share-acl"/>.
         /// </summary>
         /// <param name="permissions">
@@ -1159,6 +1167,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         permissions: permissions,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.SetAccessPolicy",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1178,7 +1187,7 @@ namespace Azure.Storage.Files
         #region GetStatistics
         /// <summary>
         /// Retrieves statistics related to the share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-stats"/>.
         /// </summary>
         /// <param name="cancellationToken">
@@ -1202,7 +1211,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Retrieves statistics related to the share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-stats"/>.
         /// </summary>
         /// <param name="cancellationToken">
@@ -1226,7 +1235,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Retrieves statistics related to the share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-stats"/>.
         /// </summary>
         /// <param name="async">
@@ -1259,6 +1268,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.GetStatistics",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1279,7 +1289,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="CreateDirectory"/> operation creates a new
         /// directory in this share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
         /// </summary>
         /// <param name="directoryName">T
@@ -1300,6 +1310,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<DirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1313,7 +1324,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="CreateDirectoryAsync"/> operation creates a new
         /// directory in this share.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
         /// </summary>
         /// <param name="directoryName">T
@@ -1334,6 +1345,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1349,7 +1361,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="DeleteDirectory"/> operation removes the specified empty
         /// directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
         /// </summary>
         /// <param name="directoryName">T
@@ -1365,6 +1377,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response DeleteDirectory(
             string directoryName,
             CancellationToken cancellationToken = default) =>
@@ -1373,7 +1386,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="DeleteDirectoryAsync"/> operation removes the specified empty
         /// directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
         /// </summary>
         /// <param name="directoryName">T
@@ -1389,6 +1402,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDirectoryAsync(
             string directoryName,
             CancellationToken cancellationToken = default) =>

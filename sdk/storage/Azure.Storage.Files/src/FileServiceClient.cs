@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -24,14 +25,14 @@ namespace Azure.Storage.Files
         /// The file service's primary <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _uri;
-        
+
         /// <summary>
         /// Gets the file service's primary <see cref="Uri"/> endpoint.
         /// </summary>
         public virtual Uri Uri => this._uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
         private readonly HttpPipeline _pipeline;
@@ -59,7 +60,7 @@ namespace Azure.Storage.Files
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         public FileServiceClient(string connectionString)
@@ -75,7 +76,7 @@ namespace Azure.Storage.Files
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="options">
@@ -185,7 +186,7 @@ namespace Azure.Storage.Files
         /// of the shares in the storage account.  Enumerating the shares may
         /// make multiple requests to the service while fetching all the
         /// values.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
         /// </summary>
         /// <param name="options">
@@ -214,7 +215,7 @@ namespace Azure.Storage.Files
         /// of the shares in the storage account.  Enumerating the shares may
         /// make multiple requests to the service while fetching all the
         /// values.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
         /// </summary>
         /// <param name="options">
@@ -246,7 +247,7 @@ namespace Azure.Storage.Files
         /// and the <see cref="SharesSegment.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetSharesAsync"/>
         /// to continue enumerating the shares segment by segment.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
         /// </summary>
         /// <param name="marker">
@@ -327,7 +328,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetProperties"/> operation gets the properties
         /// of a storage account’s file service, including properties for
         /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-file-service-properties" />.
         /// </summary>
         /// <param name="cancellationToken">
@@ -353,7 +354,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetPropertiesAsync"/> operation gets the properties
         /// of a storage account’s file service, including properties for
         /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-file-service-properties" />.
         /// </summary>
         /// <param name="cancellationToken">
@@ -379,7 +380,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetPropertiesInternal"/> operation gets the properties
         /// of a storage account’s file service, including properties for
         /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-file-service-properties" />.
         /// </summary>
         /// <param name="async">
@@ -412,6 +413,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: "Azure.Storage.Files.FileServiceClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -436,7 +438,7 @@ namespace Azure.Storage.Files
         /// and soft delete settings.  You can also use this operation to set
         /// the default request version for all incoming requests to the File
         /// service that do not have a version specified.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-file-service-properties"/>.
         /// </summary>
         /// <param name="properties">The file service properties.</param>
@@ -467,7 +469,7 @@ namespace Azure.Storage.Files
         /// and soft delete settings.  You can also use this operation to set
         /// the default request version for all incoming requests to the File
         /// service that do not have a version specified.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-file-service-properties"/>.
         /// </summary>
         /// <param name="properties">The file service properties.</param>
@@ -498,7 +500,7 @@ namespace Azure.Storage.Files
         /// and soft delete settings.  You can also use this operation to set
         /// the default request version for all incoming requests to the File
         /// service that do not have a version specified.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-file-service-properties"/>.
         /// </summary>
         /// <param name="properties">The file service properties.</param>
@@ -533,6 +535,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         properties: properties,
                         async: async,
+                        operationName: "Azure.Storage.Files.FileServiceClient.SetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -554,7 +557,7 @@ namespace Azure.Storage.Files
         /// The <see cref="CreateShare"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
         /// </summary>
         /// <param name="shareName">
@@ -578,6 +581,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<ShareClient> CreateShare(
             string shareName,
             IDictionary<string, string> metadata = default,
@@ -593,7 +597,7 @@ namespace Azure.Storage.Files
         /// The <see cref="CreateShareAsync"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
         /// </summary>
         /// <param name="shareName">
@@ -617,6 +621,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
             IDictionary<string, string> metadata = default,
@@ -633,7 +638,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
-        /// 
+        ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
@@ -652,6 +657,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response DeleteShare(
             string shareName,
             CancellationToken cancellationToken = default) =>
@@ -660,7 +666,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
-        /// 
+        ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
@@ -679,6 +685,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
             CancellationToken cancellationToken = default) =>

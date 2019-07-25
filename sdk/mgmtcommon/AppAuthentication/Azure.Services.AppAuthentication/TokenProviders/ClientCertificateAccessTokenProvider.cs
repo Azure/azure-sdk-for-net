@@ -54,8 +54,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="authenticationContext"></param>
         /// <param name="tenantId"></param>
         internal ClientCertificateAzureServiceTokenProvider(string clientId,
-            string certificateIdentifier, CertificateIdentifierType certificateIdentifierType,
-            string storeLocation, string azureAdInstance, string tenantId = null,
+            string certificateIdentifier, CertificateIdentifierType certificateIdentifierType, string storeLocation,
+            string azureAdInstance, string tenantId = default(string), int msiRetryTimeoutInSeconds = 0,
             IAuthenticationContext authenticationContext = null, KeyVaultClient keyVaultClient = null)
         {
             if (string.IsNullOrWhiteSpace(clientId))
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _azureAdInstance = azureAdInstance;
             _tenantId = tenantId;
             _authenticationContext = authenticationContext ?? new AdalAuthenticationContext();
-            _keyVaultClient = keyVaultClient ?? new KeyVaultClient();
+            _keyVaultClient = keyVaultClient ?? new KeyVaultClient(msiRetryTimeoutInSeconds);
 
             _certificateIdentifier = certificateIdentifier;
 

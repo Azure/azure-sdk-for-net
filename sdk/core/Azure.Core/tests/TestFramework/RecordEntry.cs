@@ -102,6 +102,11 @@ namespace Azure.Core.Testing
                 }
             }
 
+            if (property.Type == JsonValueType.Array)
+            {
+                return Array.Empty<byte>();
+            }
+
             return Convert.FromBase64String(property.GetString());
         }
 
@@ -150,9 +155,14 @@ namespace Azure.Core.Testing
 
         private void SerializeBody(Utf8JsonWriter jsonWriter, string name, byte[] requestBody, IDictionary<string, string[]> headers)
         {
-            if (requestBody == null || requestBody.Length == 0)
+            if (requestBody == null)
             {
                 jsonWriter.WriteNull(name);
+            }
+            else if (requestBody.Length == 0)
+            {
+                jsonWriter.WriteStartArray(name);
+                jsonWriter.WriteEndArray();
             }
             else if (IsTextContentType(headers, out Encoding encoding))
             {
@@ -263,6 +273,7 @@ namespace Azure.Core.Testing
             RequestUri = sanitizer.SanitizeUri(RequestUri);
             if (RequestBody != null)
             {
+                int contentLength = RequestBody.Length;
                 TryGetContentType(RequestHeaders, out string contentType);
                 if (IsTextContentType(RequestHeaders, out Encoding encoding))
                 {
@@ -272,12 +283,14 @@ namespace Azure.Core.Testing
                 {
                     RequestBody = sanitizer.SanitizeBody(contentType, RequestBody);
                 }
+                UpdateSanitizedContentLength(RequestHeaders, contentLength, RequestBody?.Length ?? 0);
             }
 
             sanitizer.SanitizeHeaders(RequestHeaders);
 
             if (ResponseBody != null)
             {
+                int contentLength = ResponseBody.Length;
                 TryGetContentType(ResponseHeaders, out string contentType);
                 if (IsTextContentType(ResponseHeaders, out Encoding encoding))
                 {
@@ -287,9 +300,32 @@ namespace Azure.Core.Testing
                 {
                     ResponseBody = sanitizer.SanitizeBody(contentType, ResponseBody);
                 }
+                UpdateSanitizedContentLength(ResponseHeaders, contentLength, ResponseBody?.Length ?? 0);
             }
 
             sanitizer.SanitizeHeaders(ResponseHeaders);
+        }
+
+        /// <summary>
+        /// Optionally update the Content-Length header if we've sanitized it
+        /// and the new value is a different length from the original
+        /// Content-Length header.  We don't add a Content-Length header if it
+        /// wasn't already present.
+        /// </summary>
+        /// <param name="headers">The Request or Response headers</param>
+        /// <param name="originalLength">THe original Content-Length</param>
+        /// <param name="sanitizedLength">The sanitized Content-Length</param>
+        private static void UpdateSanitizedContentLength(IDictionary<string, string[]> headers, int originalLength, int sanitizedLength)
+        {
+            // Note: If the RequestBody/ResponseBody was set to null by our
+            // sanitizer, we'll pass 0 as the sanitizedLength and use that as
+            // our new Content-Length.  That's fine for all current scenarios
+            // (i.e., we never do that), but it's possible we may want to
+            // remove the Content-Length header in the future.
+            if (originalLength != sanitizedLength && headers.ContainsKey("Content-Length"))
+            {
+                headers["Content-Length"] = new string[] { sanitizedLength.ToString() };
+            }
         }
     }
 }
