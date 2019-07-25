@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a Firewall Policy tags.
+            /// Updates a Firewall Policy Tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a Firewall Policy tags.
+            /// Updates a Firewall Policy Tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a Firewall Policy tags.
+            /// Updates a Firewall Policy Tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a Firewall Policy tags.
+            /// Updates a Firewall Policy Tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -11,9 +11,7 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added VpnSiteLink and VpnSiteLinkConnection operations
-            - Added UpdateTags operation for AzureFirewall
-            - Update operations for PrivateEndpoint and PrivateLinkService
+            - Added Firewall Policy Operations
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

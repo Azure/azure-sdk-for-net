@@ -39,16 +39,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="ruleGroups">list of references to
+        /// <param name="ruleGroups">List of references to
         /// FirewallPolicyRuleGroups</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
         /// <param name="basePolicy">The parent firewall policy from which
         /// rules are inherited.</param>
-        /// <param name="firewalls">list of references to Azure Firewalls that
+        /// <param name="firewalls">List of references to Azure Firewalls that
         /// this Firewall Policy is associated with</param>
-        /// <param name="childPolicies">list of references to child Firewall
+        /// <param name="childPolicies">List of references to Child Firewall
         /// Policies</param>
         /// <param name="threatIntelMode">The operation mode for Threat
         /// Intelligence. Possible values include: 'Alert', 'Deny',
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> Firewalls { get; private set; }
 
         /// <summary>
-        /// Gets list of references to child Firewall Policies
+        /// Gets list of references to Child Firewall Policies
         /// </summary>
         [JsonProperty(PropertyName = "properties.childPolicies")]
         public IList<SubResource> ChildPolicies { get; private set; }

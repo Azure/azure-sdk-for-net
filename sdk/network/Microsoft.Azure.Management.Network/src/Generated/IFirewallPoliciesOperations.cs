@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<FirewallPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a Firewall Policy tags.
+        /// Updates a Firewall Policy Tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the Firewall Policy.
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a Firewall Policy tags.
+        /// Updates a Firewall Policy Tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the Firewall Policy.
