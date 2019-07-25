@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   TODO.
     /// </summary>
     ///
-    public sealed class PartitionContext
+    public class PartitionContext
     {
         /// <summary>
         ///   TODO.
@@ -22,10 +22,10 @@ namespace Azure.Messaging.EventHubs.Processor
         public string EventHubName { get; }
 
         /// <summary>
-        ///   TODO. (ConsumerGroup?)
+        ///   TODO.
         /// </summary>
         ///
-        public string ConsumerGroupName { get; }
+        public string ConsumerGroup { get; }
 
         /// <summary>
         ///   TODO.
@@ -33,11 +33,11 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         internal PartitionContext(string partitionId,
                                   string eventHubName,
-                                  string consumerGroupName)
+                                  string consumerGroup)
         {
             PartitionId = partitionId;
             EventHubName = eventHubName;
-            ConsumerGroupName = consumerGroupName;
+            ConsumerGroup = consumerGroup;
         }
     }
 }

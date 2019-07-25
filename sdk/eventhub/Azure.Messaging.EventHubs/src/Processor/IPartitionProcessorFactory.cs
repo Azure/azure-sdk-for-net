@@ -10,9 +10,10 @@ namespace Azure.Messaging.EventHubs.Processor
     public interface IPartitionProcessorFactory
     {
         /// <summary>
-        ///   TODO. (partitionContext?)
+        ///   TODO.
         /// </summary>
         ///
-        public IPartitionProcessor CreateEventProcessor(PartitionContext context); // TODO: checkpoint manager
+        public IPartitionProcessor CreateEventProcessor(PartitionContext partitionContext,
+                                                        CheckpointManager checkpointManager);
     }
 }

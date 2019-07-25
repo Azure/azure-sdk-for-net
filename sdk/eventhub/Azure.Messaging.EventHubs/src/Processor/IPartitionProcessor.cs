@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO. (Disposable?)
+    ///   TODO.
     /// </summary>
     ///
     public interface IPartitionProcessor
@@ -19,16 +19,16 @@ namespace Azure.Messaging.EventHubs.Processor
         public Task Initialize();
 
         /// <summary>
-        ///   TODO. (optional?)
+        ///   TODO. (optional?) (CheckpointManager?)
         /// </summary>
         ///
-        public Task Dispose(string reason); // TODO: CheckpointManager
+        public Task Close(string reason);
 
         /// <summary>
-        ///   TODO.
+        ///   TODO. CheckpointManager?
         /// </summary>
         ///
-        public Task ProcessEvents(EventData[] events); // TODO: CheckpointManager
+        public Task ProcessEvents(EventData[] events);
 
         /// <summary>
         ///   TODO. (Exception or Error?)
