@@ -4,7 +4,7 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO. (constructor)
+    ///   TODO.
     /// </summary>
     ///
     public class PartitionOwnership
@@ -13,19 +13,13 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   TODO.
         /// </summary>
         ///
-        public string PartitionId { get; }
-
-        /// <summary>
-        ///   TODO. (EventHubPath?)
-        /// </summary>
-        ///
         public string EventHubName { get; }
 
         /// <summary>
-        ///   TODO. (ConsumerGroup?)
+        ///   TODO.
         /// </summary>
         ///
-        public string ConsumerGroupName { get; }
+        public string ConsumerGroup { get; }
 
         /// <summary>
         ///   TODO.
@@ -35,6 +29,12 @@ namespace Azure.Messaging.EventHubs.Processor
 
         /// <summary>
         ///   TODO.
+        /// </summary>
+        ///
+        public string PartitionId { get; }
+
+        /// <summary>
+        ///   TODO. (validate value)
         /// </summary>
         ///
         public long OwnerLevel { get; }
@@ -62,5 +62,30 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         public string ETag { get; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        public PartitionOwnership(string eventHubName,
+                                  string consumerGroup,
+                                  string instanceId,
+                                  string partitionId,
+                                  long ownerLevel,
+                                  long? offset = null,
+                                  long? sequenceNumber = null,
+                                  long? lastModifiedTime = null,
+                                  string eTag = null)
+        {
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            InstanceId = instanceId;
+            PartitionId = partitionId;
+            OwnerLevel = ownerLevel;
+            Offset = offset;
+            SequenceNumber = sequenceNumber;
+            LastModifiedTime = lastModifiedTime;
+            ETag = eTag;
+        }
     }
 }

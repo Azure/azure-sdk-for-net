@@ -13,6 +13,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   TODO. (partitionContext?)
         /// </summary>
         ///
-        public IPartitionProcessor CreateEventProcessor(PartitionContext context);
+        public IPartitionProcessor CreateEventProcessor(PartitionContext context); // TODO: checkpoint manager
     }
 }

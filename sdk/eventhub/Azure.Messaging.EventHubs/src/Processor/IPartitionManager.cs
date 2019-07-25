@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         public Task<PartitionOwnership[]> ListOwnerships(string eventHubName,
-                                                         string consumerGroupName);
+                                                         string consumerGroup);
 
         /// <summary>
         ///   TODO.

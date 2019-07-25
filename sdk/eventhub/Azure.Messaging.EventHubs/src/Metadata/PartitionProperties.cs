@@ -77,12 +77,12 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         ///
         internal PartitionProperties(string path,
-                                      string partitionId,
-                                      long beginningSequenceNumber,
-                                      long lastSequenceNumber,
-                                      long lastOffset,
-                                      DateTimeOffset lastEnqueuedTime,
-                                      bool isEmpty)
+                                     string partitionId,
+                                     long beginningSequenceNumber,
+                                     long lastSequenceNumber,
+                                     long lastOffset,
+                                     DateTimeOffset lastEnqueuedTime,
+                                     bool isEmpty)
         {
             EventHubPath = path;
             Id = partitionId;

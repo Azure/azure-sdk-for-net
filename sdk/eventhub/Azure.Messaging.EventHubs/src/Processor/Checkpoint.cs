@@ -4,7 +4,7 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO. (create constructor?)
+    ///   TODO.
     /// </summary>
     ///
     public class Checkpoint
@@ -13,25 +13,25 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   TODO.
         /// </summary>
         ///
-        public string PartitionId { get; }
-
-        /// <summary>
-        ///   TODO. (EventHubPath?)
-        /// </summary>
-        ///
         public string EventHubName { get; }
 
         /// <summary>
-        ///   TODO. (ConsumerGroup?)
+        ///   TODO.
         /// </summary>
         ///
-        public string ConsumerGroupName { get; }
+        public string ConsumerGroup { get; }
 
         /// <summary>
         ///   TODO.
         /// </summary>
         ///
         public string InstanceId { get; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        public string PartitionId { get; }
 
         /// <summary>
         ///   TODO.
@@ -44,5 +44,24 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         public long SequenceNumber { get; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        public Checkpoint(string eventHubName,
+                          string consumerGroup,
+                          string instanceId,
+                          string partitionId,
+                          long offset,
+                          long sequenceNumber)
+        {
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            InstanceId = instanceId;
+            PartitionId = partitionId;
+            Offset = offset;
+            SequenceNumber = sequenceNumber;
+        }
     }
 }
