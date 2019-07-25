@@ -15,6 +15,7 @@
 # /sdk/eventhub/
 # /sdk/keyvault/
 # /sdk/identity/
+/sdk/batch/ @xingwu1 @matthchr @bgklein
 /sdk/storage/ @kfarmer-msft @seanmcc-msft @tg-msft
 
 ###########
