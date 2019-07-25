@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     /// <remarks>
-    ///   These tests have a depenency on live Azure services and may
+    ///   These tests have a dependency on live Azure services and may
     ///   incur costs for the associated Azure subscription.
     /// </remarks>
     ///
@@ -217,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var eventData in events)
                     {
-                        Assert.That(() => batch.TryAdd(eventData), Is.True, "An event was rejected by the batch; all eveny should be accepted.");
+                        Assert.That(() => batch.TryAdd(eventData), Is.True, "An event was rejected by the batch; all events should be accepted.");
                     }
 
                     Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
@@ -240,7 +240,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 await using (var producer = client.CreateProducer())
                 {
-                    var singleEvent = new EventData(new byte[0]);
+                    var singleEvent = new EventData(Array.Empty<byte>());
                     var eventSet = new[] { new EventData(new byte[0]) };
 
                     Assert.That(async () => await producer.SendAsync(singleEvent), Throws.Nothing);
@@ -343,9 +343,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var events = new[]
                     {
-                        new EventData(new byte[0]),
-                        new EventData(new byte[0]),
-                        new EventData(new byte[0])
+                        new EventData(Array.Empty<byte>()),
+                        new EventData(Array.Empty<byte>()),
+                        new EventData(Array.Empty<byte>())
                     };
 
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);

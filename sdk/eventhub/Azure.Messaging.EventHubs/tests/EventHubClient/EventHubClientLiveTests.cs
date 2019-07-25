@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     /// <remarks>
-    ///   These tests have a depenency on live Azure services and may
+    ///   These tests have a dependency on live Azure services and may
     ///   incur costs for the associated Azure subscription.
     /// </remarks>
     ///
@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
                     Assert.That(partitionProperties.EventHubPath, Is.EqualTo(connectionProperties.EventHubPath).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(Int64)), "The beginning sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(Int64)), "The last sequance number should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(Int64)), "The last sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(Int64)), "The last offset should have been populated.");
                 }
             }

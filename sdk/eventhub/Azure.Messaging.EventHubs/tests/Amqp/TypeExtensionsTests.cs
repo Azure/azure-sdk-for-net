@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 // Uri exists in a different assembly for .NET core then the full framework.  Rather than
-                // using a more robust approch to reference the type, take the simple approach and cheat.
+                // using a more robust approach to reference the type, take the simple approach and cheat.
 
                 if (name == AmqpProperty.Type.Uri.ToString())
                 {
@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Veriies functionality of the <see cref="TypeExtensions.ToAmqpPropertyType" />
+        ///   Verifies functionality of the <see cref="TypeExtensions.ToAmqpPropertyType" />
         ///   method.
         /// </summary>
         ///
@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Veriies functionality of the <see cref="TypeExtensions.ToAmqpPropertyType" />
+        ///   Verifies functionality of the <see cref="TypeExtensions.ToAmqpPropertyType" />
         ///   method.
         /// </summary>
         ///
