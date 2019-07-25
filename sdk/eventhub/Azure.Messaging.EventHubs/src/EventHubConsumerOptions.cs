@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   The set of options to use for determining whether a failed operation should be retried and,
         ///   if so, the amount of time to wait between retry attempts.  If not specified, the retry policy from
-        ///   the associcated <see cref="EventHubClient" /> will be used.
+        ///   the associated <see cref="EventHubClient" /> will be used.
         /// </summary>
         ///
         public RetryOptions RetryOptions { get; set; }
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs
         ///     An optional text-based identifier label to assign to a consumer.
         /// </summary>
         ///
-        /// <value>The identifier is used for informational purposes only.  If not specified, the reaciever will have no assigned identifier label.</value>
+        /// <value>The identifier is used for informational purposes only.  If not specified, the receiver will have no assigned identifier label.</value>
         ///
         public string Identifier
         {
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The prefetch count used by the consumer to control the number of events this consumer will actively receive
+        ///   The count used by the consumer to control the number of events this consumer will actively receive
         ///   and queue locally without regard to whether a receive operation is currently active.
         /// </summary>
         ///

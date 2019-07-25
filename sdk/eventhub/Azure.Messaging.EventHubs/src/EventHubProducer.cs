@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs
         public string PartitionId { get; }
 
         /// <summary>
-        ///   The path of the specific Event Hub that the client is connected to, relative
+        ///   The path of the specific Event Hub that the producer is connected to, relative
         ///   to the Event Hubs namespace that contains it.
         /// </summary>
         ///

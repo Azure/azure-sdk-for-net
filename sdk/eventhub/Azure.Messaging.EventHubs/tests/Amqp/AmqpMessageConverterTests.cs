@@ -535,7 +535,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(null)]
         [TestCase("")]
         [TestCase("a-key-that-is-for-partitions")]
-        public void CCreateBatchFromMessagesWithOneMessagePopulatesEnvelopeProperties(string partitionKey)
+        public void CreateBatchFromMessagesWithOneMessagePopulatesEnvelopeProperties(string partitionKey)
         {
             var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 });
             var converter = new AmqpMessageConverter();
