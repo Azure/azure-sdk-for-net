@@ -3,6 +3,7 @@
 
 namespace Azure.Security.KeyVault.Cryptography.Base
 {
+    using Azure.Security.KeyVault.Cryptography.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -43,7 +44,6 @@ namespace Azure.Security.KeyVault.Cryptography.Base
             // Secondly, rather than throwing at a later stage for non supported algorithm.
             // OR
             // Have a way to validate other than NullCheck on the type of algorithms we support
-
             if (string.IsNullOrWhiteSpace(algorithmName))
                 throw new ArgumentNullException(nameof(algorithmName));
 
@@ -56,14 +56,18 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmType"></param>
         protected Algorithm(AlgorithmInfo algorithmType)
         {
-
+            Check.NotNull(algorithmType, nameof(algorithmType));
         }
         #endregion
 
         #region Public Functions
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public AlgorithmInfo GetAlgorithmType()
         {
-
+            return null;
         }
         #endregion
 

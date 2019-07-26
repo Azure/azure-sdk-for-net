@@ -3,6 +3,7 @@
 
 namespace Azure.Security.KeyVault.Cryptography.Base
 {
+    using Azure.Security.KeyVault.Cryptography.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,7 +15,6 @@ namespace Azure.Security.KeyVault.Cryptography.Base
     /// </summary>
     public class AlgorithmInfo
     {
-
         #region const
         /// <summary>
         /// 
@@ -48,13 +48,11 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// </summary>
         protected string AlgorithmName { get; set; }
 
-
         #region private properties
         /// <summary>
         /// 
         /// </summary>
         Dictionary<int, string> AlgorithmMap { get; set; }
-
 
         #endregion
 
@@ -65,10 +63,41 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="algorithmId"></param>
-        /// <param name="algorithmName"></param>
-        protected AlgorithmInfo(int algorithmId, string algorithmName)
+        protected AlgorithmInfo()
         {
+            AlgorithmMap = new Dictionary<int, string>()
+            {
+                { Aes128CbcHmacSha256, "Aes128CbcHmacSha256" },
+                { Ecdsa, "Ecdsa" }
+            };
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="algorithmId"></param>
+        protected AlgorithmInfo(int algorithmId) : this()
+        {
+            if(IsAlgorithmSupported(algorithmId))
+            {
+                AlgorithmId = algorithmId;
+                AlgorithmName = AlgorithmMap[algorithmId];
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="algorithmName"></param>
+        protected AlgorithmInfo(string algorithmName)
+        {
+            Check.NotNull(algorithmName, nameof(algorithmName));
+
+            if(IsAlgorithmSupported(algorithmName))
+            {
+
+            }
 
         }
         #endregion
@@ -78,7 +107,15 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         #endregion
 
         #region private functions
+        bool IsAlgorithmSupported(int algorithmId)
+        {
+            return AlgorithmMap.ContainsKey(algorithmId);
+        }
 
+        bool IsAlgorithmSupported(string algorithmName)
+        {
+            return AlgorithmMap.ContainsValue(algorithmName);
+        }
         #endregion
 
     }
