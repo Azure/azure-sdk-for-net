@@ -2228,5 +2228,24 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureDataExplorerLinkedService = @"
+{
+    ""name"": ""AzureDataExplorerLinkedService"",
+    ""properties"": {
+        ""type"": ""AzureDataExplorer"",
+        ""typeProperties"": {
+            ""endpoint"": ""https://fakecluster.eastus2.kusto.windows.net"",
+            ""servicePrincipalId"": ""fakeSPID"",
+            ""servicePrincipalKey"": {
+                ""value"": ""fakeSPKey"",
+                ""type"": ""SecureString""
+            },
+            ""database"": ""MyDatabase"",
+            ""tenant"": ""fakeTenant""
+        }
+    }
+}";
     }
 }

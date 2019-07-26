@@ -18,25 +18,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure PostgreSQL dataset.
+    /// The ODBC table dataset.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzurePostgreSqlTable")]
+    [Newtonsoft.Json.JsonObject("OdbcTable")]
     [Rest.Serialization.JsonTransformation]
-    public partial class AzurePostgreSqlTableDataset : Dataset
+    public partial class OdbcTableDataset : Dataset
     {
         /// <summary>
-        /// Initializes a new instance of the AzurePostgreSqlTableDataset
-        /// class.
+        /// Initializes a new instance of the OdbcTableDataset class.
         /// </summary>
-        public AzurePostgreSqlTableDataset()
+        public OdbcTableDataset()
         {
             LinkedServiceName = new LinkedServiceReference();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzurePostgreSqlTableDataset
-        /// class.
+        /// Initializes a new instance of the OdbcTableDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -53,21 +51,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        /// <param name="tableName">The table name of the Azure PostgreSQL
-        /// database which includes both schema and table. Type: string (or
+        /// <param name="tableName">The ODBC table name. Type: string (or
         /// Expression with resultType string).</param>
-        /// <param name="table">The table name of the Azure PostgreSQL
-        /// database. Type: string (or Expression with resultType
-        /// string).</param>
-        /// <param name="azurePostgreSqlTableDatasetSchema">The schema name of
-        /// the Azure PostgreSQL database. Type: string (or Expression with
-        /// resultType string).</param>
-        public AzurePostgreSqlTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object), object table = default(object), object azurePostgreSqlTableDatasetSchema = default(object))
+        public OdbcTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             TableName = tableName;
-            Table = table;
-            AzurePostgreSqlTableDatasetSchema = azurePostgreSqlTableDatasetSchema;
             CustomInit();
         }
 
@@ -77,26 +66,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the table name of the Azure PostgreSQL database which
-        /// includes both schema and table. Type: string (or Expression with
+        /// Gets or sets the ODBC table name. Type: string (or Expression with
         /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.tableName")]
         public object TableName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the table name of the Azure PostgreSQL database. Type:
-        /// string (or Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.table")]
-        public object Table { get; set; }
-
-        /// <summary>
-        /// Gets or sets the schema name of the Azure PostgreSQL database.
-        /// Type: string (or Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.schema")]
-        public object AzurePostgreSqlTableDatasetSchema { get; set; }
 
         /// <summary>
         /// Validate the object.

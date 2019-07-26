@@ -3,6 +3,14 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.1.1
+###  Feature Additions
+- Add PostgreSql Sink
+- Add Partition settings for Oracle, SapTable
+- Add dedicated source and dataset for several relational sources including ODBC, MySql
+- Add Azure Data Explorer Command activity, which allows users executing Kusto Control Commands
+- Update PostgreSql Dataset to use a dedicated AzurePostgreSqlTableDatasetTypeProperties
+
 ## Version 4.1.0
 ###  Feature Additions
 ### Breaking Changes
