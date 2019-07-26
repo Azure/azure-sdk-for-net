@@ -9,7 +9,6 @@
 - Add Partition settings for Oracle, SapTable
 - Add dedicated source and dataset for several relational sources including ODBC, MySql
 - Add Azure Data Explorer Command activity, which allows users executing Kusto Control Commands
-### Breaking Changes
 - Update PostgreSql Dataset to use a dedicated AzurePostgreSqlTableDatasetTypeProperties
 
 ## Version 4.1.0
