@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -13,13 +15,13 @@ namespace Azure.Messaging.EventHubs.Processor
     public interface IPartitionProcessor
     {
         /// <summary>
-        ///   TODO. (optional?)
+        ///   TODO.
         /// </summary>
         ///
         public Task Initialize();
 
         /// <summary>
-        ///   TODO. (optional?) (CheckpointManager?)
+        ///   TODO. (CheckpointManager?)
         /// </summary>
         ///
         public Task Close(string reason);
@@ -28,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   TODO. CheckpointManager?
         /// </summary>
         ///
-        public Task ProcessEvents(EventData[] events);
+        public Task ProcessEvents(IEnumerable<EventData> events);
 
         /// <summary>
         ///   TODO. (Exception or Error?)

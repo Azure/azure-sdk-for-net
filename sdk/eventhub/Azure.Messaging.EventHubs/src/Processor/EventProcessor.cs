@@ -2,13 +2,17 @@
 // Licensed under the MIT License.
 
 // TODO: check if used
+using Azure.Messaging.EventHubs.Core;
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO. (private => internal members?)
+    ///   TODO.
     /// </summary>
     ///
     public class EventProcessor
@@ -41,7 +45,37 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   TODO.
         /// </summary>
         ///
+        private IPartitionManager PartitionManager { get; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
         private EventProcessorOptions Options { get; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        private CancellationTokenSource TokenSource { get; set; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        private EventHubConsumer Consumer { get; set; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        private IPartitionProcessor PartitionProcessor { get; set; }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        private Task RunningTask { get; set; }
 
         /// <summary>
         ///   TODO.
@@ -64,60 +98,80 @@ namespace Azure.Messaging.EventHubs.Processor
                               IPartitionManager partitionManager,
                               EventProcessorOptions options)
         {
+            Guard.ArgumentNotNull(nameof(eventHubClient), eventHubClient);
+            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
+            Guard.ArgumentNotNull(nameof(partitionProcessorFactory), partitionProcessorFactory);
+            Guard.ArgumentNotNull(nameof(partitionManager), partitionManager);
+
             Client = eventHubClient;
             ConsumerGroup = consumerGroup;
             PartitionProcessorFactory = partitionProcessorFactory;
+            PartitionManager = partitionManager;
             Options = options?.Clone() ?? new EventProcessorOptions();
 
-            // TODO
-            Name = "I am unique";
+            Name = "event-processor-" + Guid.NewGuid().ToString();
         }
 
         /// <summary>
-        ///   TODO. (make it async)
+        ///   TODO.
         /// </summary>
         ///
-        public void Start()
+        public async Task Start()
         {
-            throw new NotImplementedException();
+            var partitionId = (await Client.GetPartitionIdsAsync()).First();
+            var partitionContext = new PartitionContext(partitionId, Client.EventHubPath, ConsumerGroup);
+            var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
+
+            TokenSource = new CancellationTokenSource();
+            Consumer = Client.CreateConsumer(ConsumerGroup, partitionId, Options?.InitialEventPosition ?? EventPosition.Earliest);
+            PartitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+
+            await PartitionProcessor.Initialize().ConfigureAwait(false);
+
+            RunningTask = Run(TokenSource.Token);
         }
 
         /// <summary>
-        ///   TODO. (make it async)
+        ///   TODO.
         /// </summary>
         ///
-        public void Stop()
+        public async Task Stop()
         {
-            throw new NotImplementedException();
+            TokenSource.Cancel();
+
+            await RunningTask.ConfigureAwait(false);
+            await Consumer.CloseAsync();
+            await PartitionProcessor.Close("Stop requested.").ConfigureAwait(false);
+
+            TokenSource = null;
+            RunningTask = null;
+            Consumer = null;
+            PartitionProcessor = null;
         }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   TODO.
         /// </summary>
         ///
-        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
-        ///
-        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
-        ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        private async Task Run(CancellationToken token)
+        {
+            var maximumMessageCount = Options?.MaximumMessageCount ?? 10;
 
-        /// <summary>
-        ///   Returns a hash code for this instance.
-        /// </summary>
-        ///
-        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
-        ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+            while (!token.IsCancellationRequested)
+            {
+                try
+                {
+                    // TODO: Pass the cancellation token?
+                    var receivedEvents = await Consumer.ReceiveAsync(maximumMessageCount, Options?.MaximumReceiveWaitTime);
 
-        /// <summary>
-        ///   Converts the instance to string representation.
-        /// </summary>
-        ///
-        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-        ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+                    // TODO: Should we await it?
+                    await PartitionProcessor.ProcessEvents(receivedEvents).ConfigureAwait(false);
+                }
+                catch(Exception exception)
+                {
+                    await PartitionProcessor.ProcessError(exception);
+                }
+            }
+        }
     }
 }

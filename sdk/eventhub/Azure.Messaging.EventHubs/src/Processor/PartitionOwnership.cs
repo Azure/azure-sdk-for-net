@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public long? LastModifiedTime { get; }
 
         /// <summary>
-        ///   TODO. (nullable?)
+        ///   TODO.
         /// </summary>
         ///
         public string ETag { get; }
