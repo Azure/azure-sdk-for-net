@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.Messaging.EventHubs.Processor
 {

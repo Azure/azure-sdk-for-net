@@ -3,8 +3,8 @@
 
 // TODO: check if used
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Errors;
 using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -114,16 +114,21 @@ namespace Azure.Messaging.EventHubs.Processor
 
         /// <summary>
         ///   TODO.
+        ///   What to do in case of exception? T1 logs it and sets processor to null.
+        ///   T1 logs it and does some retries on Consumer failure. If it still fails, report it to Processor.
         /// </summary>
         ///
         public async Task Start()
         {
+            TokenSource = new CancellationTokenSource();
+
             var partitionId = (await Client.GetPartitionIdsAsync()).First();
+
+            Consumer = Client.CreateConsumer(ConsumerGroup, partitionId, Options?.InitialEventPosition ?? EventPosition.Earliest);
+
             var partitionContext = new PartitionContext(partitionId, Client.EventHubPath, ConsumerGroup);
             var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
-            TokenSource = new CancellationTokenSource();
-            Consumer = Client.CreateConsumer(ConsumerGroup, partitionId, Options?.InitialEventPosition ?? EventPosition.Earliest);
             PartitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
             await PartitionProcessor.Initialize().ConfigureAwait(false);
@@ -137,16 +142,24 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public async Task Stop()
         {
+            // TODO: check if running before stopping it
+
             TokenSource.Cancel();
 
-            await RunningTask.ConfigureAwait(false);
+            // TODO: create lock with Run (on Processor and Consumer)
+
+            // TODO: in case of error, T1 logs it.
+
             await Consumer.CloseAsync();
+            Consumer = null;
+
             await PartitionProcessor.Close("Stop requested.").ConfigureAwait(false);
+            PartitionProcessor = null;
+
+            // TODO: await running task?
+            RunningTask = null;
 
             TokenSource = null;
-            RunningTask = null;
-            Consumer = null;
-            PartitionProcessor = null;
         }
 
         /// <summary>
@@ -164,12 +177,23 @@ namespace Azure.Messaging.EventHubs.Processor
                     // TODO: Pass the cancellation token?
                     var receivedEvents = await Consumer.ReceiveAsync(maximumMessageCount, Options?.MaximumReceiveWaitTime);
 
-                    // TODO: Should we await it?
+                    // TODO: should we lock it with close?
                     await PartitionProcessor.ProcessEvents(receivedEvents).ConfigureAwait(false);
                 }
-                catch(Exception exception)
+                catch (Exception exception)
                 {
-                    await PartitionProcessor.ProcessError(exception);
+                    try
+                    {
+                        await PartitionProcessor.ProcessError(exception).ConfigureAwait(false);
+                    }
+                    catch { }
+
+                    if (exception is ConsumerDisconnectedException)
+                    {
+                        // TODO: should we use a cancellation token?
+                        // TODO: should we call stop?
+                        break;
+                    }
                 }
             }
         }
