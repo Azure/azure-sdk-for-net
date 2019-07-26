@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Azure.Security.KeyVault.Cryptography.Base
+namespace Azure.Security.KeyVault.Cryptography
 {
     using Azure.Security.KeyVault.Cryptography.Utilities;
     using System;
@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
     /// <summary>
     /// Base class for all Algorithms used in the Key Vault .NET SDK
     /// </summary>
-    public class Algorithm
+    public abstract class Algorithm
     {
         #region const
         //const string ARG_ALGORITHM_NAME = "algorithName";
@@ -31,6 +31,10 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Algorithm() { }
         /// <summary>
         /// Constructor for Type of Algorithm that needs to be instantiated
         /// 

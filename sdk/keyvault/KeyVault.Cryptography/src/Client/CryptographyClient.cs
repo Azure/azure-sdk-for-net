@@ -28,6 +28,8 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// </summary>
         CryptographyClientOptions Options { get; }
 
+        CryptographyOperation Operation { get; }
+
         /// <summary>
         /// KeyVault Uri
         /// </summary>

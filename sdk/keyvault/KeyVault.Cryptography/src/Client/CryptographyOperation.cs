@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Azure.Security.KeyVault.Cryptography.Base
+namespace Azure.Security.KeyVault.Cryptography.Client
 {
     using System;
     using System.Collections.Generic;
@@ -12,8 +12,16 @@ namespace Azure.Security.KeyVault.Cryptography.Base
     /// <summary>
     /// 
     /// </summary>
-    public class KvAlgorithmResolver
+    public abstract class CryptographyOperation
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Encrypt() { }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Decrypt() { }
     }
 }

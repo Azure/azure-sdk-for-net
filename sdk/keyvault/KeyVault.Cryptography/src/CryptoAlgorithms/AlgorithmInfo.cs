@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Azure.Security.KeyVault.Cryptography.Base
+namespace Azure.Security.KeyVault.Cryptography
 {
     using Azure.Security.KeyVault.Cryptography.Utilities;
     using System;
@@ -76,28 +76,17 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="algorithmId"></param>
-        //protected AlgorithmInfo(int algorithmId) : this()
-        //{
-        //    if(IsAlgorithmSupported(algorithmId))
-        //    {
-        //        AlgorithmId = algorithmId;
-        //        AlgorithmName = AlgorithmMap[algorithmId];
-        //    }
-        //}
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="algorithmName"></param>
         protected AlgorithmInfo(string algorithmName) : this()
         {
             Check.NotNull(algorithmName, nameof(algorithmName));
 
+            //Nullable<KeyValuePair<string, 
+
             if(IsAlgorithmSupported(algorithmName))
             {
                 AlgorithmName = algorithmName;
-                AlgorithmId = AlgorithmMap.Where<>
+                //AlgorithmId = AlgorithmMap.Where<>
             }
 
         }
@@ -121,23 +110,41 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         Nullable<KeyValuePair<string, int>> GetAlgorithmMap(string algorithmName)
         {
             Check.NotNull(algorithmName, nameof(algorithmName));
-            //Nullable<KeyValuePair<string, int>> kv = null;
-
-            KeyValuePair<string, int> kv = AlgorithmMap.FirstOrDefault<KeyValuePair<string, int>>((item) => item.Key.Equals(algorithmName, StringComparison.OrdinalIgnoreCase));
-
-
+            Nullable<KeyValuePair<string, int>> kv = AlgorithmMap.FirstOrDefault<KeyValuePair<string, int>>((item) => item.Key.Equals(algorithmName, StringComparison.OrdinalIgnoreCase));
+            return kv;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="algorithmId"></param>
+        /// <returns></returns>
         KeyValuePair<string, int> GetAlgorithmMap(int algorithmId)
         {
-
-        }
-
-        T GetAlgorithmMapKey<T,U>(U algorithmMapValue)
-        {
-
+            return default(KeyValuePair<string,int>);
         }
         #endregion
 
     }
+
+
+
+
+    #region Symmteric
+    /// <summary>
+    /// 
+    /// </summary>
+    interface ISymmetricType
+    {
+        int DES { get; private set; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AlgorithmType
+    {
+
+    }
+    #endregion
 }
