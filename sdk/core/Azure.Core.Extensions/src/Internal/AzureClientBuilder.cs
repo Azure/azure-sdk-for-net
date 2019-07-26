@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.Core.Extensions
 {
-    internal sealed class AzureClientBuilder<TClient, TOptions>: IAzureClientBuilderWithCredential<TClient, TOptions> where TOptions : class
+    internal sealed class AzureClientBuilder<TClient, TOptions>: IAzureClientBuilder<TClient, TOptions> where TOptions : class
     {
         public ClientRegistration<TClient, TOptions> Registration { get; }
         public IServiceCollection ServiceCollection { get; }
