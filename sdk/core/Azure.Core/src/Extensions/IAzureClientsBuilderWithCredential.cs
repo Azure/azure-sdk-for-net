@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Extensions
 {
-    public interface IAzureClientsBuilderWithCredential
+    public interface IAzureClientFactoryBuilderWithCredential
     {
-        IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory) where TOptions : ClientOptions;
+        IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory) where TOptions: class;
     }
 }
