@@ -1,4 +1,7 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
@@ -21,14 +24,14 @@ namespace Azure.Identity.Tests
 
         private object _requestedCodesLock = new object();
 
-        private Task VerifyDeviceCode(DeviceCode code, string message)
+        private Task VerifyDeviceCode(DeviceCodeInfo code, string message)
         {
             Assert.AreEqual(message, code.Message);
 
             return Task.CompletedTask;
         }
 
-        private Task VerifyDeviceCodeAndCancel(DeviceCode code, string message, CancellationTokenSource cancelSource)
+        private Task VerifyDeviceCodeAndCancel(DeviceCodeInfo code, string message, CancellationTokenSource cancelSource)
         {
             Assert.AreEqual(message, code.Message);
 
@@ -37,18 +40,36 @@ namespace Azure.Identity.Tests
             return Task.CompletedTask;
         }
 
+        private async Task VerifyDeviceCodeCallbackCancellationToken(DeviceCodeInfo code, CancellationToken cancellationToken)
+        {
+            await Task.Delay(2000, cancellationToken);
+
+            cancellationToken.ThrowIfCancellationRequested();
+        }
+
+        private class MockException : Exception
+        {
+
+        }
+        private async Task ThrowingDeviceCodeCallback(DeviceCodeInfo code, CancellationToken cancellationToken)
+        {
+            await Task.CompletedTask;
+
+            throw new MockException();
+        }
+
         [Test]
         public async Task AuthenticateWithDeviceCodeMockAsync()
         {
-            var exprectedCode = Guid.NewGuid().ToString();
+            var expectedCode = Guid.NewGuid().ToString();
 
             var expectedToken = Guid.NewGuid().ToString();
             
-            var mockTransport = new MockTransport(request => ProcessMockRequest(request, exprectedCode, expectedToken));
+            var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, code => VerifyDeviceCode(code, exprectedCode), options));
+            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
 
             AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
 
@@ -58,15 +79,15 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithDeviceCodeMockAsync2()
         {
-            var exprectedCode = Guid.NewGuid().ToString();
+            var expectedCode = Guid.NewGuid().ToString();
 
             var expectedToken = Guid.NewGuid().ToString();
 
-            var mockTransport = new MockTransport(request => ProcessMockRequest(request, exprectedCode, expectedToken));
+            var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, code => VerifyDeviceCode(code, exprectedCode), options));
+            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
 
             AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
 
@@ -74,21 +95,68 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void AuthenticateWithDeviceCodeMockVerifyCancellationAsync()
+        public void AuthenticateWithDeviceCodeMockVerifyMsalCancellationAsync()
         {
-            var exprectedCode = Guid.NewGuid().ToString();
+            var expectedCode = Guid.NewGuid().ToString();
 
             var expectedToken = Guid.NewGuid().ToString();
 
             var cancelSource = new CancellationTokenSource();
 
-            var mockTransport = new MockTransport(request => ProcessMockRequest(request, exprectedCode, expectedToken));
+            var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, code => VerifyDeviceCodeAndCancel(code, exprectedCode, cancelSource), options));
+            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCodeAndCancel(code, expectedCode, cancelSource), options));
 
             Assert.ThrowsAsync<OperationCanceledException>(async () => await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token));
+        }
+
+        [Test]
+        public async Task AuthenticateWithDeviceCodeMockVerifyCallbackCancellationAsync()
+        {
+            var expectedCode = Guid.NewGuid().ToString();
+
+            var expectedToken = Guid.NewGuid().ToString();
+
+            var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
+
+            var options = new IdentityClientOptions() { Transport = mockTransport };
+
+            var cancelSource = new CancellationTokenSource(1000);
+
+            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, VerifyDeviceCodeCallbackCancellationToken, options));
+
+            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token);
+
+            try
+            {
+                AccessToken token = await getTokenTask;
+
+                Assert.Fail();
+            }
+            catch(TaskCanceledException)
+            {
+
+            }
+        }
+
+        [Test]
+        public void AuthenticateWithDeviceCodeCallbackThrowsAsync()
+        {
+            var expectedCode = Guid.NewGuid().ToString();
+
+            var expectedToken = Guid.NewGuid().ToString();
+
+            var cancelSource = new CancellationTokenSource();
+
+            var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
+
+            var options = new IdentityClientOptions() { Transport = mockTransport };
+
+            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, ThrowingDeviceCodeCallback, options));
+
+            Assert.ThrowsAsync<MockException>(async () => await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token));
         }
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)

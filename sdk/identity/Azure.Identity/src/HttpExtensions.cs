@@ -15,7 +15,7 @@ namespace Azure.Identity
         {
             Request pipelineRequest = pipeline.CreateRequest();
 
-            pipelineRequest.Method = request.Method.ToPipelineRequestMethod();
+            pipelineRequest.Method = RequestMethod.Parse(request.Method.Method);
 
             pipelineRequest.UriBuilder.Uri = request.RequestUri;
 
@@ -65,38 +65,6 @@ namespace Azure.Identity
             }
 
             return responseMessage;
-        }
-
-        public static RequestMethod ToPipelineRequestMethod(this HttpMethod httpMethod)
-        {
-            if(httpMethod == HttpMethod.Post)
-            {
-                return RequestMethod.Post;
-            }
-            else if (httpMethod == HttpMethod.Get)
-            {
-                return RequestMethod.Get;
-            }
-            else if (httpMethod == HttpMethod.Put)
-            {
-                return RequestMethod.Put;
-            }
-            else if (httpMethod == HttpMethod.Delete)
-            {
-                return RequestMethod.Delete;
-            }
-            else if (httpMethod == HttpMethod.Head)
-            {
-                return RequestMethod.Head;
-            }
-            else if (Enum.TryParse<RequestMethod>(httpMethod.Method, out RequestMethod requestMethod))
-            {
-                return requestMethod;
-            }
-            else
-            {
-                throw new InvalidOperationException($"Unsupported HttpMethod {httpMethod.Method}");
-            }
         }
 
         public static async Task<HttpPipelineRequestContent> ToPipelineRequestContentAsync(this HttpContent content)

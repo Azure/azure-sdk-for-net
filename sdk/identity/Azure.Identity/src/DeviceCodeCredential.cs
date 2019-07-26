@@ -1,4 +1,7 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
@@ -11,22 +14,6 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Details of the device code to present to a user to allow them to authenticate through the device code authentication flow.
-    /// </summary>
-    public struct DeviceCode
-    {
-        /// <summary>
-        /// The UTC time when the device code request will expire.
-        /// </summary>
-        public DateTimeOffset ExpiresOn { get; set; }
-
-        /// <summary>
-        /// The message to display to the user to allow them to authenticate through the device code authentication flow.
-        /// </summary>
-        public string Message { get; set; }
-    }
-
-    /// <summary>
     /// A <see cref="TokenCredential"/> implementation which authenticates a user using the device code flow, and provides access tokens for that user account.  
     /// For more information on the device code authentication flow see https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow.
     /// </summary>
@@ -37,7 +24,7 @@ namespace Azure.Identity
         private IAccount _account = null;
         private IdentityClientOptions _options;
         private string _clientId;
-        private Func<DeviceCode, Task> _deviceCodeCallback;
+        private Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
 
         /// <summary>
         /// Protected constructor for mocking
@@ -53,7 +40,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate.</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
-        public DeviceCodeCredential(string clientId, Func<DeviceCode, Task> deviceCodeCallback)
+        public DeviceCodeCredential(string clientId, Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback)
             : this(clientId, deviceCodeCallback, null)
         {
             
@@ -65,7 +52,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
-        public DeviceCodeCredential(string clientId, Func<DeviceCode, Task> deviceCodeCallback, IdentityClientOptions options)
+        public DeviceCodeCredential(string clientId, Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, IdentityClientOptions options)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
@@ -162,16 +149,16 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenViaDeviceCodeAsync(string[] scopes, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await _pubApp.AcquireTokenWithDeviceCode(scopes, DeviceCodeCallback).ExecuteAsync(cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await _pubApp.AcquireTokenWithDeviceCode(scopes, code => DeviceCodeCallback(code, cancellationToken)).ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
             _account = result.Account;
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
 
-        private Task DeviceCodeCallback(DeviceCodeResult deviceCode)
+        private Task DeviceCodeCallback(DeviceCodeResult deviceCode, CancellationToken cancellationToken)
         {
-            return _deviceCodeCallback(new DeviceCode() { ExpiresOn = deviceCode.ExpiresOn, Message = deviceCode.Message });
+            return _deviceCodeCallback(new DeviceCodeInfo(deviceCode), cancellationToken);
         }
 
 
