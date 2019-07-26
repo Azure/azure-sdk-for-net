@@ -20,7 +20,6 @@ namespace Azure.Security.KeyVault.Test
 
         public SecretClientLiveTests(bool isAsync) : base(isAsync)
         {
-            TestDiagnostics = false;
         }
 
         [Test]
