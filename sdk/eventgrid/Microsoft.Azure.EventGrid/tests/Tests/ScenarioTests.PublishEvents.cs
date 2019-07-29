@@ -17,7 +17,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Need record with permission of centraluseuap")]
         public void PublishEventsToTopic()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Need record with permission of centraluseuap")]
         public void PublishEventsToDomain()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
