@@ -14,15 +14,91 @@ namespace Microsoft.Azure.EventHubs.Tests
     internal static class TestUtility
     {
         private static readonly Lazy<string> EventHubsConnectionStringInstance =
-            new Lazy<string>( () => BuildEventHubsConnectionString(ReadEnvironmentVariable(TestConstants.EventHubsConnectionStringEnvironmentVariableName)), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>( () => ReadEnvironmentVariable(TestConstants.EventHubsConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<string> StorageConnectionStringInstance =
             new Lazy<string>( () => ReadEnvironmentVariable(TestConstants.StorageConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
+        private static readonly Lazy<string> EventHubsSubscriptionInstance =
+          new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSubscriptionEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+
+        /// <summary>The environment variable value for the Event Hubs resource group name, lazily evaluated.</summary>
+        private static readonly Lazy<string> EventHubsResourceGroupInstance =
+            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsResourceGroupEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+
+        /// <summary>The environment variable value for the Event Hubs namespace name, lazily evaluated.</summary>
+        private static readonly Lazy<string> EventHubsNamespaceInstance =
+            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsNamespaceEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+
+        /// <summary>The environment variable value for the Azure Active Directory tenent that holds the service principal, lazily evaluated.</summary>
+        private static readonly Lazy<string> EventHubsTenantInstance =
+            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsTenantEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+
+        /// <summary>The environment variable value for the Azure Active Directory client identifier of the service principal, lazily evaluated.</summary>
+        private static readonly Lazy<string> EventHubsClientInstance =
+            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsClientEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+
+        /// <summary>The environment variable value for the Azure Active Directory client secret of the service principal, lazily evaluated.</summary>
+        private static readonly Lazy<string> EventHubsSecretInstance =
+            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSecretEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
         internal static string EventHubsConnectionString => EventHubsConnectionStringInstance.Value;
 
         internal static string StorageConnectionString => StorageConnectionStringInstance.Value;
 
+        internal static string EventHubsSubscription => EventHubsSubscriptionInstance.Value;
+
+        /// <summary>
+        ///   The name of the resource group containing the Event Hubs namespace instance to be used for
+        ///   Live tests.
+        /// </summary>
+        ///
+        /// <value>The name of the namespace is read from the "EVENT_HUBS_RESOURCEGROUP" environment variable.</value>
+        ///
+        internal static string EventHubsResourceGroup => EventHubsResourceGroupInstance.Value;
+
+        /// <summary>
+        ///   The name of the Event Hubs namespace instance to be used for
+        ///   Live tests.
+        /// </summary>
+        ///
+        /// <value>The name of the namespace is read from the "EVENT_HUBS_NAMESPACE" environment variable.</value>
+        ///
+        internal static string EventHubsNamespace => EventHubsNamespaceInstance.Value;
+
+        /// <summary>
+        ///   The name of the Azure Active Directory tenant that holds the service principal to use for management
+        ///   of the Event Hubs namespace during Live tests.
+        /// </summary>
+        ///
+        /// <value>The name of the namespace is read from the "EVENT_HUBS_TENANT" environment variable.</value>
+        ///
+        internal static string EventHubsTenant => EventHubsTenantInstance.Value;
+
+        /// <summary>
+        ///   The name of the Azure Active Directory client identifier of the service principal to use for management
+        ///   of the Event Hubs namespace during Live tests.
+        /// </summary>
+        ///
+        /// <value>The name of the namespace is read from the "EVENT_HUBS_CLIENT" environment variable.</value>
+        ///
+        internal static string EventHubsClient => EventHubsClientInstance.Value;
+
+        /// <summary>
+        ///   The name of the Azure Active Directory client secret of the service principal to use for management
+        ///   of the Event Hubs namespace during Live tests.
+        /// </summary>
+        ///
+        /// <value>The name of the namespace is read from the "EVENT_HUBS_SECRET" environment variable.</value>
+        ///
+        internal static string EventHubsSecret => EventHubsSecretInstance.Value;
+
+        /// <summary>
+        ///   Builds a connection string for a specific Event Hub instance under the Event Hubs namespace used for
+        ///   Live tests.
+        /// </summary>
+        ///
+        /// <value>The namepsace connection string is read from the "EVENT_HUBS_CONNECTION_STRING" environment variable.</value>
+        ///
         internal static string GetEntityConnectionString(string entityName) =>
             new EventHubsConnectionStringBuilder(EventHubsConnectionString) { EntityPath = entityName }.ToString();
 
@@ -75,16 +151,24 @@ namespace Microsoft.Azure.EventHubs.Tests
             Console.WriteLine(formattedMessage);
         }
 
-        private static string BuildEventHubsConnectionString(string sourceConnectionString)
-        {
-            var connectionString = new EventHubsConnectionStringBuilder(sourceConnectionString);
+        //private static string BuildEventHubsConnectionString(string sourceConnectionString)
+        //{
+        //    var connectionString = new EventHubsConnectionStringBuilder(sourceConnectionString);
 
-            connectionString.EntityPath = connectionString.EntityPath ?? TestConstants.DefultEventHubName;
+        //    connectionString.EntityPath = connectionString.EntityPath ?? TestConstants.DefultEventHubName;
+        //    connectionString.OperationTimeout = TestConstants.DefaultOperationTimeout;
+
+        //    return connectionString.ToString();
+        //}
+        public static string BuildEventHubsConnectionString(string eventHubName)
+        {
+            var connectionString = new EventHubsConnectionStringBuilder(EventHubsConnectionString);
+
+            connectionString.EntityPath = connectionString.EntityPath ?? eventHubName;
             connectionString.OperationTimeout = TestConstants.DefaultOperationTimeout;
 
             return connectionString.ToString();
         }
-
         private static string ReadEnvironmentVariable(string variableName)
         {
             var environmentVar = Environment.GetEnvironmentVariable(variableName);
