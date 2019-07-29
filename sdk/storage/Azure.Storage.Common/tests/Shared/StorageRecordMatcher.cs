@@ -294,22 +294,22 @@ namespace Azure.Storage.Test.Shared
 
             object Parse(JsonElement element)
             {
-                switch (element.Type)
+                switch (element.ValueKind)
                 {
                     // Keep all primitives (except null) as strings
-                    case JsonValueType.False: return "false";
-                    case JsonValueType.True: return "true";
-                    case JsonValueType.Undefined: return "undefined";
-                    case JsonValueType.Number: return element.GetRawText();
-                    case JsonValueType.String: return element.GetString();
-                    case JsonValueType.Object:
+                    case JsonValueKind.False: return "false";
+                    case JsonValueKind.True: return "true";
+                    case JsonValueKind.Undefined: return "undefined";
+                    case JsonValueKind.Number: return element.GetRawText();
+                    case JsonValueKind.String: return element.GetString();
+                    case JsonValueKind.Object:
                         var obj = new Dictionary<string, object>();
                         foreach (var property in element.EnumerateObject())
                         {
                             obj.Add(property.Name, Parse(property.Value));
                         }
                         return obj;
-                    case JsonValueType.Array:
+                    case JsonValueKind.Array:
                         var values = new Dictionary<string, object>();
                         var index = 0;
                         foreach (var value in element.EnumerateArray())
@@ -317,7 +317,7 @@ namespace Azure.Storage.Test.Shared
                             values.Add(index++.ToString(CultureInfo.InvariantCulture), Parse(value));
                         }
                         return values;
-                    case JsonValueType.Null:
+                    case JsonValueKind.Null:
                     default:
                         return null;
 

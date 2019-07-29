@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (json.TryGetProperty("value", out JsonElement value))
             {
-                if(value.Type != JsonValueType.Null)
+                if(value.ValueKind != JsonValueKind.Null)
                 {
                     _items = new T[value.GetArrayLength()];
 
