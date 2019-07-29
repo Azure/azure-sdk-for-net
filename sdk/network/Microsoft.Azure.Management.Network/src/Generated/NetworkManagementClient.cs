@@ -194,6 +194,16 @@ namespace Microsoft.Azure.Management.Network
         public virtual IExpressRouteLinksOperations ExpressRouteLinks { get; private set; }
 
         /// <summary>
+        /// Gets the IFirewallPoliciesOperations.
+        /// </summary>
+        public virtual IFirewallPoliciesOperations FirewallPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyRuleGroupsOperations.
+        /// </summary>
+        public virtual IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; private set; }
+
+        /// <summary>
         /// Gets the ILoadBalancersOperations.
         /// </summary>
         public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
@@ -742,6 +752,8 @@ namespace Microsoft.Azure.Management.Network
             ExpressRoutePortsLocations = new ExpressRoutePortsLocationsOperations(this);
             ExpressRoutePorts = new ExpressRoutePortsOperations(this);
             ExpressRouteLinks = new ExpressRouteLinksOperations(this);
+            FirewallPolicies = new FirewallPoliciesOperations(this);
+            FirewallPolicyRuleGroups = new FirewallPolicyRuleGroupsOperations(this);
             LoadBalancers = new LoadBalancersOperations(this);
             LoadBalancerBackendAddressPools = new LoadBalancerBackendAddressPoolsOperations(this);
             LoadBalancerFrontendIPConfigurations = new LoadBalancerFrontendIPConfigurationsOperations(this);
@@ -829,6 +841,10 @@ namespace Microsoft.Azure.Management.Network
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FirewallPolicyRule>("ruleType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FirewallPolicyRule>("ruleType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FirewallPolicyRuleCondition>("ruleConditionType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FirewallPolicyRuleCondition>("ruleConditionType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
