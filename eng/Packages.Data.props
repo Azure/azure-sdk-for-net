@@ -42,6 +42,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="1.0.2" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.1.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Update="Microsoft.NETCore.Platforms" Version="2.2.1" />
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" />
