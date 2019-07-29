@@ -10,6 +10,7 @@ namespace Azure.Core.Extensions
     {
         public string Name { get; set; }
         public object Version { get; set; }
+        public bool RequiresTokenCredential { get; set; }
 
         private readonly Func<TOptions, TokenCredential, TClient> _factory;
 
@@ -41,6 +42,12 @@ namespace Azure.Core.Extensions
                 if (_cachedClient != null)
                 {
                     return _cachedClient;
+                }
+
+
+                if (RequiresTokenCredential && tokenCredential == null)
+                {
+                    throw new InvalidOperationException("Client registration requires a token credential. Configure it using UseCredential method.");
                 }
 
                 try

@@ -70,9 +70,11 @@ namespace Azure.Core.Extensions
             return this;
         }
 
-        IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilderWithCredential.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory)
+        IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilderWithCredential.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory, bool supportsAnonymous)
         {
             var clientRegistration = new ClientRegistration<TClient, TOptions>(DefaultClientName, clientFactory);
+            clientRegistration.RequiresTokenCredential = !supportsAnonymous;
+
             _serviceCollection.AddSingleton(clientRegistration);
 
             _serviceCollection.TryAddSingleton(typeof(IConfigureOptions<AzureClientCredentialOptions<TClient>>), typeof(DefaultCredentialClientOptionsSetup<TClient>));
