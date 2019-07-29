@@ -9,8 +9,13 @@ namespace Azure.Core.Extensions.Tests
     {
         public TokenCredential Credential { get; }
 
+        public TestClientWithCredentials(Uri uri, TestClientOptions options) : base(uri, options)
+        {
+        }
+
         public TestClientWithCredentials(Uri uri, TokenCredential credential, TestClientOptions options) : base(uri, options)
         {
+            if (credential == null) throw new ArgumentNullException(nameof(credential));
             Credential = credential;
         }
     }

@@ -25,9 +25,11 @@ namespace Azure.Storage.Blobs
         /// Registers a <see cref="QueueServiceClient"/> instance with the provided <paramref name="serviceUri"/>
         /// </summary>
         public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
-            where TBuilder: IAzureClientFactoryBuilder
+            where TBuilder: IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<QueueServiceClient, QueueClientOptions>(options => new QueueServiceClient(serviceUri, options));
+            return builder.RegisterClientFactory<QueueServiceClient, QueueClientOptions>(
+                (options, token) => token != null ? new QueueServiceClient(serviceUri, token, options) : new QueueServiceClient(serviceUri, options),
+                requiresCredential: false);
         }
 
         /// <summary>

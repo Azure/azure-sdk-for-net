@@ -24,9 +24,11 @@ namespace Azure.Storage.Blobs
         /// Registers a <see cref="BlobServiceClient"/> instance with the provided <paramref name="serviceUri"/>
         /// </summary>
         public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
-            where TBuilder: IAzureClientFactoryBuilder
+            where TBuilder: IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<BlobServiceClient, BlobClientOptions>(options => new BlobServiceClient(serviceUri, options));
+            return builder.RegisterClientFactory<BlobServiceClient, BlobClientOptions>(
+                (options, token) => token != null ? new BlobServiceClient(serviceUri, token, options) : new BlobServiceClient(serviceUri, options),
+                requiresCredential: false);
         }
 
         /// <summary>

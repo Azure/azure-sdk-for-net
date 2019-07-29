@@ -31,6 +31,12 @@ namespace Azure.Core.Extensions
                 {
                     if (IsCredentialParameter(parameter))
                     {
+                        if (credential == null)
+                        {
+                            match = false;
+                            break;
+                        }
+
                         arguments.Add(credential);
                         continue;
                     }

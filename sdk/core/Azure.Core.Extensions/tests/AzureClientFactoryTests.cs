@@ -319,6 +319,17 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual(TestClientOptions.ServiceVersion.B, client.Options.Version);
         }
 
+        [Test]
+        public void ThrowsIfCredentialIsNullButIsRequired()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")).WithCredential((TokenCredential)null));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => provider.GetService<TestClient>());
+            Assert.AreEqual("Client registration requires a TokenCredential. Configure it using UseCredential method.", exception.Message);
+        }
+
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {
             return new ConfigurationBuilder().AddInMemoryCollection(items).Build();

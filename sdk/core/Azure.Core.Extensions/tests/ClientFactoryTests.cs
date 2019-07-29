@@ -153,6 +153,18 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
         }
 
+        [Test]
+        public void IgnoresConstructorWhenCredentialsNull()
+        {
+            IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "http://localhost"));
+
+            var clientOptions = new TestClientOptions();
+            var client = (TestClientWithCredentials)ClientFactory.CreateClient(typeof(TestClientWithCredentials), typeof(TestClientOptions), clientOptions, configuration, null);
+
+            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.AreSame(clientOptions, client.Options);
+        }
+
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {
             return new ConfigurationBuilder().AddInMemoryCollection(items).Build();
