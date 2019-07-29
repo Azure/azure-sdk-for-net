@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace Azure.Core.Extensions
 {
-    internal class DefaultClientOptionsSetup<T> : IConfigureNamedOptions<T> where T : ClientOptions
+    internal class DefaultClientOptionsSetup<T> : IConfigureNamedOptions<T> where T : class
     {
         private readonly IOptions<AzureClientsGlobalOptions> _defaultOptions;
         private readonly IServiceProvider _serviceProvider;
@@ -20,9 +20,12 @@ namespace Azure.Core.Extensions
 
         public void Configure(T options)
         {
-            foreach (var globalConfigureOption in _defaultOptions.Value.ConfigureOptionDelegates)
+            if (options is ClientOptions clientOptions)
             {
-                globalConfigureOption(options, _serviceProvider);
+                foreach (var globalConfigureOption in _defaultOptions.Value.ConfigureOptionDelegates)
+                {
+                    globalConfigureOption(clientOptions, _serviceProvider);
+                }
             }
         }
 

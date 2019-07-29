@@ -32,7 +32,7 @@ namespace Azure.Core.Extensions.Tests
         }
 
         public static IAzureClientBuilder<TestClientWithCredentials, TestClientOptions> AddTestClientWithCredentials<TBuilder>(this TBuilder builder, Uri uri)
-            where TBuilder: IAzureClientsBuilderWithCredential
+            where TBuilder: IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<TestClientWithCredentials, TestClientOptions>((options, cred) => new TestClientWithCredentials(uri, cred, options));
         }
