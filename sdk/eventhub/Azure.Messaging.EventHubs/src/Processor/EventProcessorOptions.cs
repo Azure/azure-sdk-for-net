@@ -6,28 +6,29 @@ using System;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO.
+    ///   The baseline set of options that can be specified when creating a <see cref="EventProcessor" />
+    ///   to configure its behavior.
     /// </summary>
     ///
     public class EventProcessorOptions
     {
         /// <summary>
-        ///   TODO. (nullable? Default value?)
+        ///   The position within a partition where the partition processor should begin reading events.
         /// </summary>
         ///
-        public EventPosition InitialEventPosition { get; set; }
+        public EventPosition InitialEventPosition { get; set; } = EventPosition.Earliest;
 
         /// <summary>
-        ///   TODO. (Guard? Default value?)
+        ///   The maximum number of messages to receive in every receive attempt.
         /// </summary>
         ///
-        public int MaximumMessageCount { get; set; }
+        public int MaximumMessageCount { get; set; } = 10;
 
         /// <summary>
-        ///   TODO. Should we delegate the validation to the Consumer?
+        ///   The maximum amount of time to wait to build up the requested message count in every receive attempt.
         /// </summary>
         ///
-        public TimeSpan MaximumReceiveWaitTime { get; set; }
+        public TimeSpan? MaximumReceiveWaitTime { get; set; } = null;
 
         /// <summary>
         ///   Creates a new copy of the current <see cref="EventProcessorOptions" />, cloning its attributes into a new instance.

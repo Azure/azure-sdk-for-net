@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// TODO: check if used
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,13 +24,14 @@ namespace Azure.Messaging.EventHubs.Processor
         public string Name { get; }
 
         /// <summary>
-        ///   TODO. (name?)
+        ///   TODO.
         /// </summary>
         ///
         private EventHubClient Client { get; }
 
         /// <summary>
-        ///   TODO. (name?)
+        ///   The name of the consumer group that this event processor is associated with.  Events will be
+        ///   read only in the context of this group.
         /// </summary>
         ///
         private string ConsumerGroup { get; }
@@ -57,29 +58,16 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   TODO.
         /// </summary>
         ///
-        private CancellationTokenSource TokenSource { get; set; }
+        private PartitionPump Pump { get; set; }
 
         /// <summary>
-        ///   TODO.
+        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///
-        private EventHubConsumer Consumer { get; set; }
-
-        /// <summary>
-        ///   TODO.
-        /// </summary>
-        ///
-        private IPartitionProcessor PartitionProcessor { get; set; }
-
-        /// <summary>
-        ///   TODO.
-        /// </summary>
-        ///
-        private Task RunningTask { get; set; }
-
-        /// <summary>
-        ///   TODO.
-        /// </summary>
+        /// <param name="eventHubClient">TODO.</param>
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionProcessorFactory">TODO.</param>
+        /// <param name="partitionManager">TODO.</param>
         ///
         public EventProcessor(EventHubClient eventHubClient,
                               string consumerGroup,
@@ -120,20 +108,16 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public async Task Start()
         {
-            TokenSource = new CancellationTokenSource();
-
             var partitionId = (await Client.GetPartitionIdsAsync()).First();
-
-            Consumer = Client.CreateConsumer(ConsumerGroup, partitionId, Options?.InitialEventPosition ?? EventPosition.Earliest);
 
             var partitionContext = new PartitionContext(partitionId, Client.EventHubPath, ConsumerGroup);
             var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
-            PartitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+            var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
-            await PartitionProcessor.Initialize().ConfigureAwait(false);
+            Pump = new PartitionPump(Client, ConsumerGroup, partitionId, partitionProcessor, Options);
 
-            RunningTask = Run(TokenSource.Token);
+            await Pump.Start();
         }
 
         /// <summary>
@@ -142,60 +126,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public async Task Stop()
         {
-            // TODO: check if running before stopping it
-
-            TokenSource.Cancel();
-
-            // TODO: create lock with Run (on Processor and Consumer)
-
-            // TODO: in case of error, T1 logs it.
-
-            await Consumer.CloseAsync();
-            Consumer = null;
-
-            await PartitionProcessor.Close("Stop requested.").ConfigureAwait(false);
-            PartitionProcessor = null;
-
-            // TODO: await running task?
-            RunningTask = null;
-
-            TokenSource = null;
-        }
-
-        /// <summary>
-        ///   TODO.
-        /// </summary>
-        ///
-        private async Task Run(CancellationToken token)
-        {
-            var maximumMessageCount = Options?.MaximumMessageCount ?? 10;
-
-            while (!token.IsCancellationRequested)
-            {
-                try
-                {
-                    // TODO: Pass the cancellation token?
-                    var receivedEvents = await Consumer.ReceiveAsync(maximumMessageCount, Options?.MaximumReceiveWaitTime);
-
-                    // TODO: should we lock it with close?
-                    await PartitionProcessor.ProcessEvents(receivedEvents).ConfigureAwait(false);
-                }
-                catch (Exception exception)
-                {
-                    try
-                    {
-                        await PartitionProcessor.ProcessError(exception).ConfigureAwait(false);
-                    }
-                    catch { }
-
-                    if (exception is ConsumerDisconnectedException)
-                    {
-                        // TODO: should we use a cancellation token?
-                        // TODO: should we call stop?
-                        break;
-                    }
-                }
-            }
+            await Pump.Stop();
         }
     }
 }
