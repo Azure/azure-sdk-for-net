@@ -47,7 +47,7 @@ namespace Azure.Core.Extensions
 
                 if (RequiresTokenCredential && tokenCredential == null)
                 {
-                    throw new InvalidOperationException("Client registration requires a token credential. Configure it using UseCredential method.");
+                    throw new InvalidOperationException("Client registration requires a TokenCredential. Configure it using UseCredential method.");
                 }
 
                 try

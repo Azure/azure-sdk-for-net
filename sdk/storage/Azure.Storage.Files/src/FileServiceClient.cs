@@ -135,26 +135,6 @@ namespace Azure.Storage.Files
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the file service.
         /// </param>
-        /// <param name="credential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public FileServiceClient(Uri serviceUri, TokenCredential credential, FileClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FileServiceClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="serviceUri">
-        /// A <see cref="Uri"/> referencing the file service.
-        /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
         /// </param>

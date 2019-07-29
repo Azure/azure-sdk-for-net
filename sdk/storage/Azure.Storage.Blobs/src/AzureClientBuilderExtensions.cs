@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs
         {
             return builder.RegisterClientFactory<BlobServiceClient, BlobClientOptions>(
                 (options, token) => token != null ? new BlobServiceClient(serviceUri, token, options) : new BlobServiceClient(serviceUri, options),
-                supportsAnonymous: true);
+                requiresCredential: false);
         }
 
         /// <summary>

@@ -327,7 +327,7 @@ namespace Azure.Core.Extensions.Tests
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => provider.GetService<TestClient>());
-            Assert.AreEqual("Client registration requires a token credential. Configure it using UseCredential method.", exception.Message);
+            Assert.AreEqual("Client registration requires a TokenCredential. Configure it using UseCredential method.", exception.Message);
         }
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)

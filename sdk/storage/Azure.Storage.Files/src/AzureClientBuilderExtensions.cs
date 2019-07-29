@@ -25,11 +25,9 @@ namespace Azure.Storage.Blobs
         /// Registers a <see cref="FileServiceClient"/> instance with the provided <paramref name="serviceUri"/>
         /// </summary>
         public static IAzureClientBuilder<FileServiceClient, FileClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
-            where TBuilder: IAzureClientFactoryBuilderWithCredential
+            where TBuilder: IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<FileServiceClient, FileClientOptions>(
-                (options, token) => new FileServiceClient(serviceUri, options),
-                supportsAnonymous: true);
+            return builder.RegisterClientFactory<FileServiceClient, FileClientOptions>(options => new FileServiceClient(serviceUri, options));
         }
 
         /// <summary>

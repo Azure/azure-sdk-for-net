@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs
         {
             return builder.RegisterClientFactory<QueueServiceClient, QueueClientOptions>(
                 (options, token) => token != null ? new QueueServiceClient(serviceUri, token, options) : new QueueServiceClient(serviceUri, options),
-                supportsAnonymous: true);
+                requiresCredential: false);
         }
 
         /// <summary>
