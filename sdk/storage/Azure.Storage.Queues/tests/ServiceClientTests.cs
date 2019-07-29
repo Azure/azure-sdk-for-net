@@ -63,7 +63,7 @@ namespace Azure.Storage.Queues.Test
                     service.GetQueuesAsync()
                     .ByPage(pageSizeHint: 1)
                     .FirstAsync();
-                Assert.AreEqual(1, page.Values.Length);
+                Assert.AreEqual(1, page.Values.Count);
             }
         }
 

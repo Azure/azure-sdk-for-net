@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Azure
@@ -15,7 +16,7 @@ namespace Azure
         /// <summary>
         /// Gets the values in this <see cref="Page{T}"/>.
         /// </summary>
-        public T[] Values { get; }
+        public IReadOnlyList<T> Values { get; }
 
         /// <summary>
         /// Gets the continuation token used to request the next
@@ -47,7 +48,7 @@ namespace Azure
         /// <param name="response">
         /// The <see cref="Response"/> that provided this <see cref="Page{T}"/>.
         /// </param>
-        public Page(T[] values, string continuationToken, Response response)
+        public Page(IReadOnlyList<T> values, string continuationToken, Response response)
         {
             this.Values = values;
             this.ContinuationToken = continuationToken;
