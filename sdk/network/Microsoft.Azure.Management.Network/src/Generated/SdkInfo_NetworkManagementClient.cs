@@ -48,6 +48,8 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "ExpressRoutePorts", "2019-06-01"),
                 new Tuple<string, string, string>("Network", "ExpressRoutePortsLocations", "2019-06-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteServiceProviders", "2019-06-01"),
+                new Tuple<string, string, string>("Network", "FirewallPolicies", "2019-06-01"),
+                new Tuple<string, string, string>("Network", "FirewallPolicyRuleGroups", "2019-06-01"),
                 new Tuple<string, string, string>("Network", "HubVirtualNetworkConnections", "2019-06-01"),
                 new Tuple<string, string, string>("Network", "InboundNatRules", "2019-06-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerBackendAddressPools", "2019-06-01"),
