@@ -15,7 +15,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Polly;
 
-
+// Ported from Track Two EventHubScope.cs
 namespace Microsoft.Azure.EventHubs.Tests.Infrastructure
 {
     /// <summary>
