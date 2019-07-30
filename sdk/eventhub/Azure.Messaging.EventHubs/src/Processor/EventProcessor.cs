@@ -3,7 +3,8 @@
 
 using Azure.Messaging.EventHubs.Core;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -59,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The set of partition pumps used by this event processor.  Partition ids are used as keys.
         /// </summary>
         ///
-        private Dictionary<string, PartitionPump> Pumps { get; set; }
+        private ConcurrentDictionary<string, PartitionPump> PartitionPumps { get; set; }
 
         /// <summary>
         ///   A boolean value indicating whether this event processor is currently running or not.
@@ -121,26 +122,25 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public async Task Start()
         {
-            //   TODO: What to do in case of exception? T1 logs it and sets processor to null.
-            //   T1 logs it and does some retries on Consumer failure. If it still fails, report it to Processor.
+            // TODO: Retries?
             if (!IsRunning)
             {
-                Pumps = new Dictionary<string, PartitionPump>();
+                PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
 
                 var partitionIds = await Client.GetPartitionIdsAsync();
 
-                foreach (var partitionId in partitionIds)
+                await Task.WhenAll(partitionIds.Select(partitionId =>
                 {
-                    var partitionContext = new PartitionContext(partitionId, Client.EventHubPath, ConsumerGroup);
+                    var partitionContext = new PartitionContext(Client.EventHubPath, ConsumerGroup, partitionId);
                     var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
                     var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
                     var partitionPump = new PartitionPump(Client, ConsumerGroup, partitionId, partitionProcessor, Options);
-                    Pumps.Add(partitionId, partitionPump);
+                    PartitionPumps.TryAdd(partitionId, partitionPump);
 
-                    await partitionPump.Start();
-                }
+                    return partitionPump.Start();
+                }));
 
                 IsRunning = true;
             }
@@ -156,12 +156,9 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (IsRunning)
             {
-                foreach (var partitionPump in Pumps)
-                {
-                    await partitionPump.Value.Stop();
-                }
+                await Task.WhenAll(PartitionPumps.Select(partitionPump => partitionPump.Value.Stop()));
 
-                Pumps = null;
+                PartitionPumps = null;
                 IsRunning = false;
             }
         }

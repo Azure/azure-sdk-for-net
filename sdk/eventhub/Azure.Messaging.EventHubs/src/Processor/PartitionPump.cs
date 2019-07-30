@@ -124,8 +124,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public async Task Stop()
         {
-            // TODO: create lock with Run (on Processor and Consumer)
-            // TODO: in case of error, T1 logs it.
             if (RunningTask != null)
             {
                 TokenSource.Cancel();
@@ -163,7 +161,6 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     var receivedEvents = await Consumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime);
 
-                    // TODO: should we lock it with close?
                     await PartitionProcessor.ProcessEvents(receivedEvents).ConfigureAwait(false);
                 }
                 catch (Exception exception)
