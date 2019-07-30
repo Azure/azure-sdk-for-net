@@ -4,41 +4,46 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO.
+    ///   Contains information about a partition that an <see cref="IPartitionProcessor" /> will
+    ///   be processing events from.
     /// </summary>
     ///
     public class PartitionContext
     {
         /// <summary>
-        ///   TODO.
-        /// </summary>
-        ///
-        public string PartitionId { get; }
-
-        /// <summary>
-        ///   The path of the specific Event Hub that the client is connected to, relative
+        ///   The path of the specific Event Hub that the context is associated with, relative
         ///   to the Event Hubs namespace that contains it.
         /// </summary>
         ///
         public string EventHubName { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The name of the consumer group this context is associated with.
         /// </summary>
         ///
         public string ConsumerGroup { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The identifier of the Event Hub partition this context is associated with.
         /// </summary>
         ///
-        internal PartitionContext(string partitionId,
-                                  string eventHubName,
-                                  string consumerGroup)
+        public string PartitionId { get; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The path of the specific Event Hub this context is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
+        ///
+        internal PartitionContext(string eventHubName,
+                                  string consumerGroup,
+                                  string partitionId)
         {
-            PartitionId = partitionId;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
+            PartitionId = partitionId;
         }
     }
 }

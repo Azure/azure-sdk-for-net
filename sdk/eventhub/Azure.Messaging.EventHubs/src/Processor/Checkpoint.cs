@@ -4,7 +4,7 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   A checkpoint instance contains all the information needed to store the state of an
+    ///   A <see cref="Checkpoint" /> instance contains all the information needed to store the state of an
     ///   <see cref="IPartitionProcessor" />.
     /// </summary>
     ///

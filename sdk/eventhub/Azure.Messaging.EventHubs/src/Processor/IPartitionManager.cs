@@ -6,27 +6,46 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO.
+    ///   Responsible for dealing with the interaction with the chosen storage service.  A class implementing
+    ///   this interface must be able to create checkpoints and list/claim ownership.
     /// </summary>
+    ///
+    /// <remarks>
+    ///   An instance of a class implementing this interface is provided by the user in the <see cref="EventProcessor" />
+    ///   constructor.
+    /// </remarks>
     ///
     public interface IPartitionManager
     {
         /// <summary>
-        ///   TODO.
+        ///   Retrieves a complete ownership list from the chosen storage service.
         /// </summary>
         ///
-        public Task<PartitionOwnership[]> ListOwnerships(string eventHubName,
-                                                         string consumerGroup);
+        /// <param name="eventHubName">The path of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        ///
+        /// <returns>An array containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        ///
+        public Task<PartitionOwnership[]> ListOwnership(string eventHubName,
+                                                        string consumerGroup);
 
         /// <summary>
-        ///   TODO.
+        ///   Tries to claim a list of specified ownership.
         /// </summary>
         ///
-        public Task<PartitionOwnership[]> ClaimOwnerships(PartitionOwnership[] partitionOwnerships);
+        /// <param name="partitionOwnership">An array containing all the ownership to claim.</param>
+        ///
+        /// <returns>An array containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        ///
+        public Task<PartitionOwnership[]> ClaimOwnership(PartitionOwnership[] partitionOwnership);
 
         /// <summary>
-        ///   TODO.
+        ///   Creates a new checkpoint in the chosen storage service.
         /// </summary>
+        ///
+        /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public Task CreateCheckpoint(Checkpoint checkpoint);
     }

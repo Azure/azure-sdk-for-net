@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public async Task Start()
         {
-            //   What to do in case of exception? T1 logs it and sets processor to null.
+            //   TODO: What to do in case of exception? T1 logs it and sets processor to null.
             //   T1 logs it and does some retries on Consumer failure. If it still fails, report it to Processor.
             if (!IsRunning)
             {

@@ -4,19 +4,22 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO.
+    ///   A <see cref="PartitionOwnership" /> instance contains all the information needed to describe the owner of a
+    ///   lease.  It's used by <see cref="IPartitionManager" /> to claim ownership of a partition and to list existing
+    ///   leases.
     /// </summary>
     ///
     public class PartitionOwnership
     {
         /// <summary>
-        ///   TODO.
+        ///   The path of the specific Event Hub this partition ownership is associated with, relative
+        ///   to the Event Hubs namespace that contains it.
         /// </summary>
         ///
         public string EventHubName { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The name of the consumer group this partition ownership is associated with.
         /// </summary>
         ///
         public string ConsumerGroup { get; }
@@ -28,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string InstanceId { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The identifier of the Event Hub partition this partition ownership is associated with.
         /// </summary>
         ///
         public string PartitionId { get; }
@@ -64,8 +67,18 @@ namespace Azure.Messaging.EventHubs.Processor
         public string ETag { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   Initializes a new instance of the <see cref="PartitionOwnership"/> class.
         /// </summary>
+        ///
+        /// <param name="eventHubName">The path of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
+        /// <param name="instanceId">TODO.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
+        /// <param name="ownerLevel">TODO.</param>
+        /// <param name="offset">TODO.</param>
+        /// <param name="sequenceNumber">TODO.</param>
+        /// <param name="lastModifiedTime">TODO.</param>
+        /// <param name="eTag">TODO.</param>
         ///
         public PartitionOwnership(string eventHubName,
                                   string consumerGroup,
