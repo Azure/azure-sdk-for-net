@@ -2,30 +2,35 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO.
+    ///   Responsible for the creation of checkpoints.  The interaction with the chosen storage service is done
+    ///   via <see cref="IPartitionManager" />.
     /// </summary>
     ///
     public class CheckpointManager
     {
         /// <summary>
-        ///   TODO.
+        ///   Contains information about the partition this instance is associated with.
         /// </summary>
         ///
         private PartitionContext Context { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   Interacts with the storage system, dealing with the creation of checkpoints.
         /// </summary>
         ///
         private IPartitionManager Manager { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   Initializes a new instance of the <see cref="CheckpointManager"/> class.
         /// </summary>
+        ///
+        /// <param name="partitionContext">Contains information about the partition this instance will be associated with.</param>
+        /// <param name="partitionManager">Interacts with the storage system, dealing with the creation of checkpoints.</param>
         ///
         internal CheckpointManager(PartitionContext partitionContext,
                                    IPartitionManager partitionManager)
@@ -35,19 +40,28 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   TODO. (make it async)
+        ///   Creates a new checkpoint in the chosen storage service.
         /// </summary>
         ///
-        public void CreateCheckpoint(EventData eventData)
+        /// <param name="eventData">The event containing the information to be stored.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public Task CreateCheckpoint(EventData eventData)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        ///   TODO. (make it async)
+        ///   Creates a new checkpoint in the chosen storage service.
         /// </summary>
         ///
-        public void CreateCheckpoint(long offset,
+        /// <param name="offset">The offset of the <see cref="EventData" /> the new checkpoint will be associated with.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the <see cref="EventData" /> the new checkpoint will be associated with.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public Task CreateCheckpoint(long offset,
                                      long sequenceNumber)
         {
             throw new NotImplementedException();

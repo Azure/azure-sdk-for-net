@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Creates an instance of a class implementing the <see cref="IPartitionProcessor" /> interface.
         /// </summary>
         ///
-        /// <param name="partitionContext">Context containing information about the partition the <see cref="IPartitionProcessor" /> will be associated with.</param>
+        /// <param name="partitionContext">Contains information about the partition the <see cref="IPartitionProcessor" /> will be associated with.</param>
         /// <param name="checkpointManager">Passed to the <see cref="IPartitionProcessor" /> so it can create checkpoints when processing events.</param>
         ///
         /// <returns>A partition processor instance.</returns>
