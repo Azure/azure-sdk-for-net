@@ -25,7 +25,7 @@
 /sdk/eventhub/ @serkantkaraca 
 /sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
 
-/sdk/identity/azure.identity/ @shaabs
+/sdk/identity/azure.identity/ @schaabs
 
 /sdk/keyvault/ @schaabs 
 /sdk/keyvault/azure.*/ @schaabs @shahabhijeet 
