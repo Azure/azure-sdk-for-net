@@ -5,7 +5,7 @@ namespace TrackOne.Amqp
 {
     using System;
     using System.Collections.Generic;
-    
+
     // WARNING: Consult filter engine owner before modifying this enum.
     // Introducing a new member here has impact to filtering engine in data type precedence and data conversion.
     // ALWASYS insert new types before Unknown!

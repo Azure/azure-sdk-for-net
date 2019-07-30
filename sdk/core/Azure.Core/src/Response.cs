@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure

@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the create or update private endpoint
-        /// operation
+        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the create or update private endpoint
-        /// operation
+        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

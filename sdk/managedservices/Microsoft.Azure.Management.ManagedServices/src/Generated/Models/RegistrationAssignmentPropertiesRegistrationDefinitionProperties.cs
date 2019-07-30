@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <param name="managedByTenantId">Id of the managedBy tenant.</param>
         /// <param name="managedByTenantName">Name of the managedBy
         /// tenant.</param>
-        public RegistrationAssignmentPropertiesRegistrationDefinitionProperties(string description = default(string), IList<Authorization> authorizations = default(IList<Authorization>), string registrationDefinitionName = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), string manageeTenantId = default(string), string manageeTenantName = default(string), string managedByTenantId = default(string), string managedByTenantName = default(string))
+        public RegistrationAssignmentPropertiesRegistrationDefinitionProperties(string description = default(string), IList<Authorization> authorizations = default(IList<Authorization>), string registrationDefinitionName = default(string), string provisioningState = default(string), string manageeTenantId = default(string), string manageeTenantName = default(string), string managedByTenantId = default(string), string managedByTenantName = default(string))
         {
             Description = description;
             Authorizations = authorizations;
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// 'Succeeded', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public ProvisioningState? ProvisioningState { get; set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets id of the home tenant.

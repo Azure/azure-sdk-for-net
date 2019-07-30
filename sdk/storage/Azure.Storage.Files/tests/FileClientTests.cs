@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -18,11 +19,10 @@ using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestFixture]
     public class FileClientTests : FileTestBase
     {
-        public FileClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public FileClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -530,9 +530,8 @@ namespace Azure.Storage.Files.Test
                 var directoryFaulty = this.InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
-                        this.GetFaultyFileConnectionOptions(
-                            new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
-                            raiseAt: 256 * Constants.KB)));
+                        new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey),
+                        this.GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
 
                 await directory.CreateAsync();
 
@@ -556,7 +555,7 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 var downloadResponse = await fileFaulty.DownloadAsync(range: new HttpRange(offset, data.LongLength));
                 var actual = new MemoryStream();
-                await downloadResponse.Value.Content.CopyToAsync(actual);
+                await downloadResponse.Value.Content.CopyToAsync(actual, 128 * Constants.KB);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
@@ -639,10 +638,10 @@ namespace Azure.Storage.Files.Test
                 var directoryFaulty = this.InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
-                        this.GetFaultyFileConnectionOptions(
-                            new SharedKeyCredentials(
-                                TestConfigurations.DefaultTargetTenant.AccountName,
-                                TestConfigurations.DefaultTargetTenant.AccountKey))));
+                        new StorageSharedKeyCredential(
+                            this.TestConfigDefault.AccountName,
+                            this.TestConfigDefault.AccountKey),
+                        this.GetFaultyFileConnectionOptions()));
 
                 await directory.CreateAsync();
 
@@ -671,13 +670,9 @@ namespace Azure.Storage.Files.Test
                     result.GetRawResponse().Headers.TryGetValue("x-ms-version", out var version);
                     Assert.IsNotNull(version);
 
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
-
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-
-                    var lastProgress = progressList.Last();
-
-                    Assert.AreEqual(data.LongLength, lastProgress.BytesTransferred, "Final progress has unexpected value");
+                    Assert.AreEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
                 }
 
                 // Assert
@@ -695,11 +690,15 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewFile(out var file))
             {
                 // Act
-                var response = await file.ListHandlesAsync(maxResults: 5);
+                var handles =
+                    (await file.GetHandlesAsync()
+                    .ByPage(pageSizeHint: 5)
+                    .ToListAsync())
+                    .SelectMany(p => p.Values)
+                    .ToList();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.Handles.Count());
-                Assert.AreEqual(String.Empty, response.Value.NextMarker);
+                Assert.AreEqual(0, handles.Count);
             }
         }
 
@@ -710,11 +709,10 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewFile(out var file))
             {
                 // Act
-                var response = await file.ListHandlesAsync();
+                var handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.Handles.Count());
-                Assert.AreEqual(String.Empty, response.Value.NextMarker);
+                Assert.AreEqual(0, handles.Count);
             }
         }
 
@@ -728,7 +726,7 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    file.ListHandlesAsync(),
+                    file.GetHandlesAsync().ToListAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
             }

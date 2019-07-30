@@ -4,16 +4,17 @@
 using ManagedServices.Tests.Helpers;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Xunit;
 using Microsoft.Azure.Management.ManagedServices;
 using Microsoft.Azure.Management.ManagedServices.Models;
+using Xunit;
+using System.Linq;
 
 namespace ManagedServices.Tests.ScenarioTests
 {
     public class RegistrationDefintionTests : TestBase
     {
         [Fact]
-        public void RegistrationDefintionTests_CRUD()
+        public async void RegistrationDefintionTests_CRUD()
         {
             using (var context = MockContext.Start(GetType().FullName))
             {
@@ -22,10 +23,9 @@ namespace ManagedServices.Tests.ScenarioTests
                     var registrationDefinition = ManagedServicesTestUtilities.GetRegistrationDefintion();
 
                     //1. Create Registration Defintion
-                    var registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
-                        .CreateOrUpdate(
+                    var registrationDefinitionResponse = await testFixture.ManagedServicesClient.RegistrationDefinitions
+                        .CreateOrUpdateAsync(
                             registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
-                            apiVersion: ManagedServicesTestUtilities.apiVersion,
                             scope: ManagedServicesTestUtilities.scope,
                             requestBody: registrationDefinition);
 
@@ -33,40 +33,31 @@ namespace ManagedServices.Tests.ScenarioTests
                     Assert.Equal(ProvisioningState.Succeeded, registrationDefinitionResponse.Properties.ProvisioningState);
 
                     //2. Get Registration Defintion
-                    registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
-                        .Get(
+                    registrationDefinitionResponse = await testFixture.ManagedServicesClient.RegistrationDefinitions
+                        .GetAsync(
                         scope: ManagedServicesTestUtilities.scope,
-                        registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
-                        apiVersion: ManagedServicesTestUtilities.apiVersion);
+                        registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId);
 
                     Assert.NotNull(registrationDefinitionResponse);
                     Assert.Equal(ManagedServicesTestUtilities.registrationDefinitionName, registrationDefinitionResponse.Properties.RegistrationDefinitionName);
 
                     //3. Get Registration Defintion collection
-                    var registrationDefinitionsResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
-                        .List(
-                        scope: ManagedServicesTestUtilities.scope,
-                        apiVersion: ManagedServicesTestUtilities.apiVersion);
+                    var registrationDefinitionsResponses = await testFixture.ManagedServicesClient.RegistrationDefinitions
+                        .ListAsync(scope: ManagedServicesTestUtilities.scope);
 
-                    Assert.NotNull(registrationDefinitionsResponse);
-                    Assert.Single(registrationDefinitionsResponse);
+                    Assert.Contains(ManagedServicesTestUtilities.registratonDefinitionId, registrationDefinitionsResponses.Select(x => x.Name));
 
                     //4. Delete Registration Defintion
-                    registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
-                        .Delete(
+                    await testFixture.ManagedServicesClient.RegistrationDefinitions
+                        .DeleteAsync(
                         scope: ManagedServicesTestUtilities.scope,
-                        registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
-                        apiVersion: ManagedServicesTestUtilities.apiVersion);
+                        registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId);
 
-                    Assert.NotNull(registrationDefinitionResponse);
+                    //5. Get Registration Defintion (make sure it is deleted)
+                    registrationDefinitionsResponses = await testFixture.ManagedServicesClient.RegistrationDefinitions
+                        .ListAsync(scope: ManagedServicesTestUtilities.scope);
 
-                    //5. Get Registration Defintion collection
-                    registrationDefinitionsResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
-                        .List(
-                        scope: ManagedServicesTestUtilities.scope,
-                        apiVersion: ManagedServicesTestUtilities.apiVersion);
-
-                    Assert.Empty(registrationDefinitionsResponse);
+                    Assert.DoesNotContain(ManagedServicesTestUtilities.registratonDefinitionId, registrationDefinitionsResponses.Select(x => x.Name));
                 }
             }
         }

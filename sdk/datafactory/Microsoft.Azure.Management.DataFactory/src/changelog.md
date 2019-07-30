@@ -3,6 +3,37 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.1.1
+###  Feature Additions
+- Add PostgreSql Sink
+- Add Partition settings for Oracle, SapTable
+- Add dedicated source and dataset for several relational sources including ODBC, MySql
+- Add Azure Data Explorer Command activity, which allows users executing Kusto Control Commands
+- Update PostgreSql Dataset to use a dedicated AzurePostgreSqlTableDatasetTypeProperties
+
+## Version 4.1.0
+###  Feature Additions
+### Breaking Changes
+- Fixed missing types CopyTranslator and TabularTranslator.
+- Added support in Copy for MicrosoftAccessTable, InformixTable, SalesforceServiceCloudObject, AzureSqlMITable, DynamicsCrmEntity, CommonDataServiceForAppsEntity, TeradataTable, Binary, which inhcludes their Dataset, Linked Service, CopySource, and CopySink types
+- Added TeradataTable CopySource support
+- Added logLocation property to ExecuteSSISPackageActivity
+- Added SSIS File system support by expanding SSISPackageLocation to support SSISDB and File location types
+
+## Version 4.0.0
+###  Feature Additions
+### Breaking Changes
+- Added support for the follwoing new datasets in ADF - ParquetDataset, DelimitedTextDataset, SapTableResourceDataset
+- ParquetDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
+- Added support for parameterization to a number of properties
+- The table name is not required anymore for AzureSqlTable, AzureSqlDWTable, SqlServerTable
+- Added a new property dataProxyProperties to Integration Runtime
+- Added new SapTable Linked Services type
+- Added types for Read and Write Connector settings in activities - AzureBlobStorageReadSettings, AzureBlobFSReadSettings, AzureDataLakeStoreReadSettings, AmazonS3ReadSettings, FileServerReadSettings, FtpReadSettings, SftpReadSettings, HttpReadSettings, HdfsReadSettings,
+AzureBlobStorageWriteSettings, AzureBlobFSWriteSettings, AzureDataLakeStoreWriteSettings, FileServerWriteSettings, FormatReadSettings, DelimitedTextReadSettings, FormatWriteSettings, DelimitedTextWriteSettings
+- Added new Copy sources - SapTableSource, SqlServerSource, AzureSqlSource
+- Added new Copy sinks - ParquetSink, SqlServerSink, AzureSqlSink
+
 ## Version 3.0.2
 ###  Feature Additions
     - Added new Validation and Webhook activities

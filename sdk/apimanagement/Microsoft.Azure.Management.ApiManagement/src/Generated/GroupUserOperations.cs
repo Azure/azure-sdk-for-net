@@ -127,10 +127,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
-                }
             }
             if (Client.ApiVersion == null)
             {
@@ -369,10 +365,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
-                }
             }
             if (userId == null)
             {
@@ -387,10 +379,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (userId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "userId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -608,10 +596,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
-                }
             }
             if (userId == null)
             {
@@ -626,10 +610,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (userId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "userId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -879,10 +859,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
-                }
             }
             if (userId == null)
             {
@@ -897,10 +873,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (userId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "userId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)

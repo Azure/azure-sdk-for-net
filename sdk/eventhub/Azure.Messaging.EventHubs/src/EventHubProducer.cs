@@ -33,11 +33,11 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The maximum allowable size, in bytes, for a batch to be sent.</summary>
         internal const int MinimumBatchSizeLimit = 24;
 
-        /// <summary>The maximum allowable size, in bytes, for a batch to be sent.</summary>
-        internal const int MaximumBatchSizeLimit = 4 * 1024 * 1024;
-
-        /// <summary>The set of default batching options to use when no specific options are requested.</summary>
+        /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
         private static readonly SendOptions DefaultSendOptions = new SendOptions();
+
+        /// <summary>The policy to use for determining retry behavior for when an operation fails.</summary>
+        private EventHubRetryPolicy _retryPolicy;
 
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventHubProducer" /> is bound to, indicating
@@ -59,6 +59,27 @@ namespace Azure.Messaging.EventHubs
         public string EventHubPath { get; }
 
         /// <summary>
+        ///   The policy to use for determining retry behavior for when an operation fails.
+        /// </summary>
+        ///
+        public EventHubRetryPolicy RetryPolicy
+        {
+            get => _retryPolicy;
+
+            set
+            {
+                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                _retryPolicy = value;
+
+                // Applying a custom retry policy invalidates the retry options specified.
+                // Clear them to ensure the custom policy is propagated as the default.
+
+                Options.RetryOptions = null;
+                InnerProducer.UpdateRetryPolicy(value);
+            }
+        }
+
+        /// <summary>
         ///   The set of options used for creation of this producer.
         /// </summary>
         ///
@@ -77,6 +98,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="transportProducer">An abstracted Event Hub producer specific to the active protocol and transport intended to perform delegated operations.</param>
         /// <param name="eventHubPath">The path of the Event Hub to which events will be sent.</param>
         /// <param name="producerOptions">The set of options to use for this consumer.</param>
+        /// <param name="retryPolicy">The policy to apply when making retry decisions for failed operations.</param>
         ///
         /// <remarks>
         ///   Because this is a non-public constructor, it is assumed that the <paramref name="producerOptions" /> passed are
@@ -86,16 +108,20 @@ namespace Azure.Messaging.EventHubs
         ///
         internal EventHubProducer(TransportEventHubProducer transportProducer,
                                   string eventHubPath,
-                                  EventHubProducerOptions producerOptions)
+                                  EventHubProducerOptions producerOptions,
+                                  EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(transportProducer), transportProducer);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNull(nameof(producerOptions), producerOptions);
+            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
 
             PartitionId = producerOptions.PartitionId;
             EventHubPath = eventHubPath;
             Options = producerOptions;
             InnerProducer = transportProducer;
+
+            _retryPolicy = retryPolicy;
         }
 
         /// <summary>
@@ -116,7 +142,10 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)"/>
+        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         public virtual Task SendAsync(EventData eventData,
                                       CancellationToken cancellationToken = default)
@@ -136,7 +165,10 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
+        /// <seealso cref="SendAsync(EventData, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         public virtual Task SendAsync(EventData eventData,
                                       SendOptions options,
@@ -172,22 +204,88 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
+        /// <seealso cref="SendAsync(EventData, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
                                       SendOptions options,
                                       CancellationToken cancellationToken = default)
         {
-            Guard.ArgumentNotNull(nameof(events), events);
-
             options = options ?? DefaultSendOptions;
 
-            if ((!String.IsNullOrEmpty(PartitionId)) && (!String.IsNullOrEmpty(options.PartitionKey)))
-            {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, PartitionId));
-            }
+            Guard.ArgumentNotNull(nameof(events), events);
+            GuardSinglePartitionReference(PartitionId, options.PartitionKey);
 
             return InnerProducer.SendAsync(events, options, cancellationToken);
+        }
+
+        /// <summary>
+        ///   Sends a set of events to the associated Event Hub using a batched approach.
+        /// </summary>
+        ///
+        /// <param name="eventBatch">The set of event data to send.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        /// <seealso cref="SendAsync(EventData, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventData, SendOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
+        ///
+        public virtual Task SendAsync(EventDataBatch eventBatch,
+                                      CancellationToken cancellationToken = default)
+        {
+            Guard.ArgumentNotNull(nameof(eventBatch), eventBatch);
+            GuardSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
+
+            return InnerProducer.SendAsync(eventBatch, cancellationToken);
+        }
+
+        /// <summary>
+        ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
+        ///   exceed the maximum allowable size of the batch, the batch will not allow adding the event and signal that scenario using its
+        ///   return value.
+        ///
+        ///   Because events that would violate the size constraint cannot be added, publishing a batch will not trigger an exception when
+        ///   attempting to send the events to the Event Hubs service.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="EventDataBatch" /> with the default batch options.</returns>
+        ///
+        /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
+        ///
+        public virtual Task<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
+
+        /// <summary>
+        ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
+        ///   exceed the maximum allowable size of the batch, the batch will not allow adding the event and signal that scenario using its
+        ///   return value.
+        ///
+        ///   Because events that would violate the size constraint cannot be added, publishing a batch will not trigger an exception when
+        ///   attempting to send the events to the Event Hubs service.
+        /// </summary>
+        ///
+        /// <param name="options">The set of options to consider when creating this batch.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
+        ///
+        /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
+        ///
+        public virtual async Task<EventDataBatch> CreateBatchAsync(BatchOptions options,
+                                                                   CancellationToken cancellationToken = default)
+        {
+            options = options?.Clone() ?? new BatchOptions();
+
+            GuardSinglePartitionReference(PartitionId, options.PartitionKey);
+
+            var transportBatch = await InnerProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            return new EventDataBatch(transportBatch, options);
         }
 
         /// <summary>
@@ -218,7 +316,7 @@ namespace Azure.Messaging.EventHubs
         public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -245,5 +343,21 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Ensures that no more than a single partition reference is active.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition to which the producer is bound.</param>
+        /// <param name="partitionKey">The hash key for partition routing that was requested for a publish operation.</param>
+        ///
+        private static void GuardSinglePartitionReference(string partitionId,
+                                                          string partitionKey)
+        {
+            if ((!String.IsNullOrEmpty(partitionId)) && (!String.IsNullOrEmpty(partitionKey)))
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
+            }
+        }
     }
 }

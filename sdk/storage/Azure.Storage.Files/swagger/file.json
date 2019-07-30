@@ -8,8 +8,10 @@
       "strictSpecAdherence": false,
       "namespace": "Azure.Storage.Files",
       "client-name": "FileRestClient",
-      "client-extensions-name": "FileExtensions",
+      "client-extensions-name": "FilesExtensions",
+      "client-model-factory-name": "FilesModelFactory",
       "x-ms-skip-path-components": true,
+      "x-ms-include-sync-methods": true,
       "x-ms-public": false
     }
   },
@@ -2566,7 +2568,7 @@
         "ContainerQuotaDowngradeNotAllowed"
       ],
       "x-ms-enum": {
-        "name": "StorageErrorCode",
+        "name": "FileErrorCode",
         "modelAsString": true
       }
     },
@@ -2576,6 +2578,7 @@
       },
       "description": "A listed directory item.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "Name"
       ],
@@ -2591,6 +2594,7 @@
       },
       "description": "A listed file item.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "Name",
         "Properties"
@@ -2607,6 +2611,7 @@
     "FileProperty": {
       "description": "File properties.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "Content-Length"
       ],
@@ -2675,6 +2680,7 @@
       },
       "description": "An enumeration of directories and files.",
       "type": "object",
+      "x-ms-public":  false,
       "required": [
         "ServiceEndpoint",
         "ShareName",
@@ -2746,6 +2752,7 @@
       },
       "description": "An enumeration of handles.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "NextMarker"
       ],
@@ -2771,6 +2778,7 @@
       },
       "description": "An enumeration of shares.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "ServiceEndpoint",
         "NextMarker"
@@ -3298,7 +3306,8 @@
       "required": true,
       "type": "string",
       "format": "url",
-      "x-ms-skip-url-encoding": true
+      "x-ms-skip-url-encoding": true,
+      "x-ms-trace": true
     },
     "ShareAcl": {
       "name": "shareAcl",

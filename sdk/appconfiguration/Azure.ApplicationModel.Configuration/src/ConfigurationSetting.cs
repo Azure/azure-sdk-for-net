@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.Core.Http;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -79,6 +80,10 @@ namespace Azure.ApplicationModel.Configuration
             set => _tags = value;
         }
 
+        /// <summary>
+        /// Check if two ConfigurationSetting instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
         public bool Equals(ConfigurationSetting other)
         {
             if (other == null) return false;
@@ -97,6 +102,10 @@ namespace Azure.ApplicationModel.Configuration
             return true;
         }
 
+        /// <summary>
+        /// Check if two ConfigurationSetting instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
@@ -119,6 +128,9 @@ namespace Azure.ApplicationModel.Configuration
             return true;
         }
 
+        /// <summary>
+        /// Get a hash code for the ConfigurationSetting
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
@@ -134,6 +146,9 @@ namespace Azure.ApplicationModel.Configuration
             return hashCode.ToHashCode();
         }
 
+        /// <summary>
+        /// Creates a (Key,Value) string in reference to the ConfigurationSetting.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString()
             => $"({Key},{Value})";

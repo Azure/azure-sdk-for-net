@@ -1105,6 +1105,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// or large occlusions will cause failures.
         /// * Adding/deleting faces to/from a same face list are processed sequentially
         /// and to/from different face lists are in parallel.
+        /// * The minimum detectable face size is 36x36 pixels in an image no larger
+        /// than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels
+        /// will need a proportionally larger minimum face size.
+        /// * Different 'detectionModel' values can be provided. To use and compare
+        /// different detection models, please refer to [How to specify a detection
+        /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
+        /// | Model | Recommended use-case(s) |
+        /// | ---------- | -------- |
+        /// | 'detection_01': | The default detection model for [FaceList - Add
+        /// Face](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395250).
+        /// Recommend for near frontal face detection. For scenarios with exceptionally
+        /// large angle (head-pose) faces, occluded faces or wrong image orientation,
+        /// the faces in such cases may not be detected. |
+        /// | 'detection_02': | Detection model released in 2019 May with improved
+        /// accuracy especially on small, side and blurry faces. |
         /// </summary>
         /// <param name='faceListId'>
         /// Id referencing a particular face list.
@@ -1122,6 +1137,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// "targetFace=10,10,100,100". If there is more than one face in the image,
         /// targetFace is required to specify which face to add. No targetFace means
         /// there is only one face detected in the entire image.
+        /// </param>
+        /// <param name='detectionModel'>
+        /// Name of detection model. Detection model is used to detect faces in the
+        /// submitted image. A detection model name can be provided when performing
+        /// Face - Detect or (Large)FaceList - Add Face or (Large)PersonGroup - Add
+        /// Face. The default value is 'detection_01', if another model is needed,
+        /// please explicitly specify it. Possible values include: 'detection_01',
+        /// 'detection_02'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1144,7 +1167,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromUrlWithHttpMessagesAsync(string faceListId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromUrlWithHttpMessagesAsync(string faceListId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), string detectionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1191,6 +1214,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("faceListId", faceListId);
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
+                tracingParameters.Add("detectionModel", detectionModel);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AddFaceFromUrl", tracingParameters);
@@ -1208,6 +1232,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             if (targetFace != null)
             {
                 _queryParameters.Add(string.Format("targetFace={0}", System.Uri.EscapeDataString(string.Join(",", targetFace))));
+            }
+            if (detectionModel != null)
+            {
+                _queryParameters.Add(string.Format("detectionModel={0}", System.Uri.EscapeDataString(detectionModel)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1320,9 +1348,48 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Add a face to a face list. The input face is specified as an image with a
-        /// targetFace rectangle. It returns a persistedFaceId representing the added
-        /// face, and persistedFaceId will not expire.
+        /// Add a face to a specified face list, up to 1,000 faces.
+        /// &lt;br /&gt; To deal with an image contains multiple faces, input face can
+        /// be specified as an image with a targetFace rectangle. It returns a
+        /// persistedFaceId representing the added face. No image will be stored. Only
+        /// the extracted face feature will be stored on server until [FaceList -
+        /// Delete
+        /// Face](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395251)
+        /// or [FaceList -
+        /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039524f)
+        /// is called.
+        /// &lt;br /&gt; Note persistedFaceId is different from faceId generated by
+        /// [Face -
+        /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236).
+        /// * Higher face image quality means better detection and recognition
+        /// precision. Please consider high-quality faces: frontal, clear, and face
+        /// size is 200x200 pixels (100 pixels between eyes) or bigger.
+        /// * JPEG, PNG, GIF (the first frame), and BMP format are supported. The
+        /// allowed image file size is from 1KB to 6MB.
+        /// * "targetFace" rectangle should contain one face. Zero or multiple faces
+        /// will be regarded as an error. If the provided "targetFace" rectangle is not
+        /// returned from [Face -
+        /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236),
+        /// there’s no guarantee to detect and add the face successfully.
+        /// * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose,
+        /// or large occlusions will cause failures.
+        /// * Adding/deleting faces to/from a same face list are processed sequentially
+        /// and to/from different face lists are in parallel.
+        /// * The minimum detectable face size is 36x36 pixels in an image no larger
+        /// than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels
+        /// will need a proportionally larger minimum face size.
+        /// * Different 'detectionModel' values can be provided. To use and compare
+        /// different detection models, please refer to [How to specify a detection
+        /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
+        /// | Model | Recommended use-case(s) |
+        /// | ---------- | -------- |
+        /// | 'detection_01': | The default detection model for [FaceList - Add
+        /// Face](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395250).
+        /// Recommend for near frontal face detection. For scenarios with exceptionally
+        /// large angle (head-pose) faces, occluded faces or wrong image orientation,
+        /// the faces in such cases may not be detected. |
+        /// | 'detection_02': | Detection model released in 2019 May with improved
+        /// accuracy especially on small, side and blurry faces. |
         /// </summary>
         /// <param name='faceListId'>
         /// Id referencing a particular face list.
@@ -1340,6 +1407,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// "targetFace=10,10,100,100". If there is more than one face in the image,
         /// targetFace is required to specify which face to add. No targetFace means
         /// there is only one face detected in the entire image.
+        /// </param>
+        /// <param name='detectionModel'>
+        /// Name of detection model. Detection model is used to detect faces in the
+        /// submitted image. A detection model name can be provided when performing
+        /// Face - Detect or (Large)FaceList - Add Face or (Large)PersonGroup - Add
+        /// Face. The default value is 'detection_01', if another model is needed,
+        /// please explicitly specify it. Possible values include: 'detection_01',
+        /// 'detection_02'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1362,7 +1437,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), string detectionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1405,6 +1480,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
                 tracingParameters.Add("image", image);
+                tracingParameters.Add("detectionModel", detectionModel);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AddFaceFromStream", tracingParameters);
             }
@@ -1421,6 +1497,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             if (targetFace != null)
             {
                 _queryParameters.Add(string.Format("targetFace={0}", System.Uri.EscapeDataString(string.Join(",", targetFace))));
+            }
+            if (detectionModel != null)
+            {
+                _queryParameters.Add(string.Format("detectionModel={0}", System.Uri.EscapeDataString(detectionModel)));
             }
             if (_queryParameters.Count > 0)
             {

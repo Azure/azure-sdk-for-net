@@ -230,12 +230,12 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// credentials and service endpoints.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="blobEndpoint">A <see cref="System.Uri"/> specifying the primary Blob service endpoint.</param>
         /// <param name="queueEndpoint">A <see cref="System.Uri"/> specifying the primary Queue service endpoint.</param>
         /// <param name="tableEndpoint">A <see cref="System.Uri"/> specifying the primary Table service endpoint.</param>
         /// <param name="fileEndpoint">A <see cref="System.Uri"/> specifying the primary File service endpoint.</param>
-        public StorageConnectionString(IStorageCredentials storageCredentials, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint, Uri fileEndpoint)
+        public StorageConnectionString(object storageCredentials, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint, Uri fileEndpoint)
             : this(storageCredentials, (blobEndpoint, default), (queueEndpoint, default), (tableEndpoint, default), (fileEndpoint, default))
         {
         }
@@ -244,12 +244,12 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// account credentials and service endpoints.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
-        /// <param name="blobStorageUri">A <see cref="StorageUri"/> specifying the Blob service endpoint or endpoints.</param>
-        /// <param name="queueStorageUri">A <see cref="StorageUri"/> specifying the Queue service endpoint or endpoints.</param>
-        /// <param name="tableStorageUri">A <see cref="StorageUri"/> specifying the Table service endpoint or endpoints.</param>
-        /// <param name="fileStorageUri">A <see cref="StorageUri"/> specifying the File service endpoint or endpoints.</param>
-        public StorageConnectionString(IStorageCredentials storageCredentials, (Uri, Uri) blobStorageUri, (Uri, Uri) queueStorageUri, (Uri, Uri) tableStorageUri, (Uri, Uri) fileStorageUri)
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
+        /// <param name="blobStorageUri">A <see cref="System.Uri"/> specifying the Blob service endpoint or endpoints.</param>
+        /// <param name="queueStorageUri">A <see cref="System.Uri"/> specifying the Queue service endpoint or endpoints.</param>
+        /// <param name="tableStorageUri">A <see cref="System.Uri"/> specifying the Table service endpoint or endpoints.</param>
+        /// <param name="fileStorageUri">A <see cref="System.Uri"/> specifying the File service endpoint or endpoints.</param>
+        public StorageConnectionString(object storageCredentials, (Uri, Uri) blobStorageUri, (Uri, Uri) queueStorageUri, (Uri, Uri) tableStorageUri, (Uri, Uri) fileStorageUri)
         {
             this.Credentials = storageCredentials;
             this.BlobStorageUri = blobStorageUri;
@@ -261,12 +261,12 @@ namespace Azure.Storage.Common
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
-        /// credentials, and specifies whether to use HTTP or HTTPS to connect to the storage services. 
+        /// credentials, and specifies whether to use HTTP or HTTPS to connect to the storage services.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
         /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
-        public StorageConnectionString(IStorageCredentials storageCredentials, bool useHttps)
+        public StorageConnectionString(object storageCredentials, bool useHttps)
             : this(storageCredentials, null /* endpointSuffix */, useHttps)
         {
         }
@@ -275,12 +275,12 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// credentials and endpoint suffix, and specifies whether to use HTTP or HTTPS to connect to the storage services.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="endpointSuffix">The DNS endpoint suffix for all storage services, e.g. "core.windows.net".</param>
         /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
         /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
-        public StorageConnectionString(IStorageCredentials storageCredentials, string endpointSuffix, bool useHttps)
-            : this(storageCredentials, storageCredentials is SharedKeyCredentials sharedKeyCredentials ? sharedKeyCredentials.AccountName : default, endpointSuffix, useHttps)
+        public StorageConnectionString(object storageCredentials, string endpointSuffix, bool useHttps)
+            : this(storageCredentials, storageCredentials is StorageSharedKeyCredential sharedKeyCredentials ? sharedKeyCredentials.AccountName : default, endpointSuffix, useHttps)
         {
         }
 
@@ -288,19 +288,19 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// credentials and endpoint suffix, and specifies whether to use HTTP or HTTPS to connect to the storage services.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="accountName">The name of the account.</param>
         /// <param name="endpointSuffix">The DNS endpoint suffix for all storage services, e.g. "core.windows.net".</param>
         /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
         /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
-        public StorageConnectionString(IStorageCredentials storageCredentials, string accountName, string endpointSuffix, bool useHttps)
+        public StorageConnectionString(object storageCredentials, string accountName, string endpointSuffix, bool useHttps)
         {
             if (storageCredentials == default)
             {
                 throw Errors.ArgumentNull(nameof(storageCredentials));
             }
 
-            if (storageCredentials is SharedKeyCredentials sharedKeyCredentials && !String.IsNullOrEmpty(sharedKeyCredentials.AccountName))
+            if (storageCredentials is StorageSharedKeyCredential sharedKeyCredentials && !String.IsNullOrEmpty(sharedKeyCredentials.AccountName))
             {
                 if (String.IsNullOrEmpty(accountName))
                 {
@@ -394,32 +394,32 @@ namespace Azure.Storage.Common
         /// <summary>
         /// Gets the endpoints for the Blob service at the primary and secondary location, as configured for the storage account.
         /// </summary>
-        /// <value>A <see cref="StorageUri"/> containing the Blob service endpoints.</value>
+        /// <value>A <see cref="System.Uri"/> containing the Blob service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) BlobStorageUri { get; private set; }
 
         /// <summary>
         /// Gets the endpoints for the Queue service at the primary and secondary location, as configured for the storage account.
         /// </summary>
-        /// <value>A <see cref="StorageUri"/> containing the Queue service endpoints.</value>
+        /// <value>A <see cref="System.Uri"/> containing the Queue service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) QueueStorageUri { get; private set; }
 
         /// <summary>
         /// Gets the endpoints for the Table service at the primary and secondary location, as configured for the storage account.
         /// </summary>
-        /// <value>A <see cref="StorageUri"/> containing the Table service endpoints.</value>
+        /// <value>A <see cref="System.Uri"/> containing the Table service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) TableStorageUri { get; private set; }
 
         /// <summary>
         /// Gets the endpoints for the File service at the primary and secondary location, as configured for the storage account.
         /// </summary>
-        /// <value>A <see cref="StorageUri"/> containing the File service endpoints.</value>
+        /// <value>A <see cref="System.Uri"/> containing the File service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) FileStorageUri { get; private set; }
 
         /// <summary>
         /// Gets the credentials used to create this <see cref="StorageConnectionString"/> object.
         /// </summary>
-        /// <value>A <see cref="StorageCredentials"/> object.</value>
-        public IStorageCredentials Credentials { get; private set; }
+        /// <value>A StorageCredentials object.</value>
+        public object Credentials { get; private set; }
 
         /// <summary>
         /// Private record of the account name for use in ToString(bool).
@@ -572,10 +572,10 @@ namespace Azure.Storage.Common
 
             if (this.Credentials != null && !this.IsDevStoreAccount)
             {
-                listOfSettings.Add(this.Credentials.ToString(exportSecrets));
+                listOfSettings.Add(StorageCredentialsExtensions.ToString(this.Credentials, exportSecrets));
             }
 
-            if (!String.IsNullOrWhiteSpace(this.accountName) && (this.Credentials is SharedKeyCredentials sharedKeyCredentials ? String.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
+            if (!String.IsNullOrWhiteSpace(this.accountName) && (this.Credentials is StorageSharedKeyCredential sharedKeyCredentials ? String.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
             {
                 listOfSettings.Add(String.Format(CultureInfo.InvariantCulture, "{0}={1}", AccountNameSettingString, this.accountName));
             }
@@ -616,7 +616,7 @@ namespace Azure.Storage.Common
             builder.Port = 10002;
             var tableSecondaryEndpoint = builder.Uri;
 
-            var credentials = new SharedKeyCredentials(DevstoreAccountName, DevstoreAccountKey);
+            var credentials = new StorageSharedKeyCredential(DevstoreAccountName, DevstoreAccountKey);
 #pragma warning disable IDE0017 // Simplify object initialization
             var account = new StorageConnectionString(
                 credentials,
@@ -660,7 +660,7 @@ namespace Azure.Storage.Common
                 return false;
             }
 
-            // helper method 
+            // helper method
 
             string settingOrDefault(string key)
             {
@@ -840,7 +840,7 @@ namespace Azure.Storage.Common
         /// <param name="name">The name of the setting.</param>
         /// <param name="validValues">A list of valid values for the setting.</param>
         /// <returns>An <see cref="AccountSetting"/> representing the enumeration constraint.</returns>
-        private static AccountSetting Setting(string name, params string[] validValues) => 
+        private static AccountSetting Setting(string name, params string[] validValues) =>
             new AccountSetting(
                 name,
                 (settingValue) => validValues.Length == 0 ? true : validValues.Contains(settingValue)
@@ -939,7 +939,7 @@ namespace Azure.Storage.Common
         /// <param name="atLeastOneSettings">A list of settings of which one must be present.</param>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
-        private static ConnectionStringFilter AtLeastOne(params AccountSetting[] atLeastOneSettings) => 
+        private static ConnectionStringFilter AtLeastOne(params AccountSetting[] atLeastOneSettings) =>
             (settings) =>
             {
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
@@ -985,7 +985,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="filters">A list of filters of which all must match.</param>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
-        private static ConnectionStringFilter MatchesAll(params ConnectionStringFilter[] filters) => 
+        private static ConnectionStringFilter MatchesAll(params ConnectionStringFilter[] filters) =>
             (settings) =>
             {
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
@@ -1008,7 +1008,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="filters">A list of filters of which exactly one must match.</param>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
-        private static ConnectionStringFilter MatchesOne(params ConnectionStringFilter[] filters) => 
+        private static ConnectionStringFilter MatchesOne(params ConnectionStringFilter[] filters) =>
             (settings) =>
             {
                 var results =
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="filter">A list of filters of which ensures that the specified filter is an exact match.</param>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
-        private static ConnectionStringFilter MatchesExactly(ConnectionStringFilter filter) => 
+        private static ConnectionStringFilter MatchesExactly(ConnectionStringFilter filter) =>
             (settings) =>
             {
                 var results = filter(settings);
@@ -1081,18 +1081,20 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="settings">The settings to check.</param>
         /// <returns>The StorageCredentials object specified in the settings.</returns>
-        private static IStorageCredentials GetCredentials(IDictionary<string, string> settings)
+        private static object GetCredentials(IDictionary<string, string> settings)
         {
 
             settings.TryGetValue(AccountNameSettingString, out var accountName);
             settings.TryGetValue(AccountKeySettingString, out var accountKey);
-            settings.TryGetValue(AccountKeyNameSettingString, out var accountKeyName);
             settings.TryGetValue(SharedAccessSignatureSettingString, out var sharedAccessSignature);
 
-            return 
+            // The accountKeyName isn't used
+            //settings.TryGetValue(AccountKeyNameSettingString, out var accountKeyName);
+
+            return
                 accountName != null && accountKey != null && sharedAccessSignature == null
-                ? new SharedKeyCredentials(accountName, accountKey, accountKeyName)
-                : (IStorageCredentials)(accountKey == null && accountKeyName == null && sharedAccessSignature != null
+                ? new StorageSharedKeyCredential(accountName, accountKey/*, accountKeyName */)
+                : (object)(accountKey == null /* && accountKeyName == null */ && sharedAccessSignature != null
                     ? new SharedAccessSignatureCredentials(sharedAccessSignature)
                     : null);
         }
@@ -1316,9 +1318,9 @@ namespace Azure.Storage.Common
 
     static class StorageCredentialsExtensions
     {
-        public static string ToString(this IStorageCredentials credentials, bool exportSecrets)
+        public static string ToString(object credentials, bool exportSecrets)
         {
-            if (credentials is SharedKeyCredentials sharedKeyCredentials)
+            if (credentials is StorageSharedKeyCredential sharedKeyCredentials)
             {
                 return String.Format(
                     CultureInfo.InvariantCulture,
@@ -1326,7 +1328,7 @@ namespace Azure.Storage.Common
                     StorageConnectionString.AccountNameSettingString,
                     sharedKeyCredentials.AccountName,
                     StorageConnectionString.AccountKeySettingString,
-                    exportSecrets ? sharedKeyCredentials.ExportBase64EncodedKey() : "[key hidden]");
+                    exportSecrets ? sharedKeyCredentials.ExportBase64EncodedKey() : "Sanitized");
             } else if (credentials is SharedAccessSignatureCredentials sasCredentials)
             {
                 return String.Format(CultureInfo.InvariantCulture, "{0}={1}", StorageConnectionString.SharedAccessSignatureSettingString, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");

@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// subscriptions used in the current request) to retrieve the next
         /// page of data.</param>
         /// <param name="facets">Query facets.</param>
-        public QueryResponse(long totalRecords, long count, ResultTruncated resultTruncated, Table data, string skipToken = default(string), IList<Facet> facets = default(IList<Facet>))
+        public QueryResponse(long totalRecords, long count, ResultTruncated resultTruncated, object data, string skipToken = default(string), IList<Facet> facets = default(IList<Facet>))
         {
             TotalRecords = totalRecords;
             Count = count;
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// Gets or sets query output in tabular format.
         /// </summary>
         [JsonProperty(PropertyName = "data")]
-        public Table Data { get; set; }
+        public object Data { get; set; }
 
         /// <summary>
         /// Gets or sets query facets.
@@ -113,10 +113,6 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
             if (Data == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Data");
-            }
-            if (Data != null)
-            {
-                Data.Validate();
             }
             if (Facets != null)
             {

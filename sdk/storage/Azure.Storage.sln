@@ -25,8 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{A4
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		ci.yml = ci.yml
+		CONTRIBUTING.md = CONTRIBUTING.md
 		Directory.Build.props = Directory.Build.props
 		generate.ps1 = generate.ps1
+		README.md = README.md
 		tests.yml = tests.yml
 	EndProjectSection
 EndProject
@@ -76,6 +78,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{6EEF
 		Azure.Storage.Queues\swagger\readme.md = Azure.Storage.Queues\swagger\readme.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\identity\Azure.Identity\src\Azure.Identity.csproj", "{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Samples.Tests", "Azure.Storage.Blobs\samples\Azure.Storage.Blobs.Samples.Tests.csproj", "{3CB9895E-D5CC-4F30-B122-68A5522A51AB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Samples.Tests", "Azure.Storage.Queues\samples\Azure.Storage.Queues.Samples.Tests.csproj", "{1CDEBFBF-280D-4618-B52A-238EE6751A33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Samples.Tests", "Azure.Storage.Files\samples\Azure.Storage.Files.Samples.Tests.csproj", "{6C62BFA4-DB03-4701-934D-915AB28B9761}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Samples.Tests", "Azure.Storage.Common\samples\Azure.Storage.Common.Samples.Tests.csproj", "{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +130,26 @@ Global
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CDEBFBF-280D-4618-B52A-238EE6751A33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CDEBFBF-280D-4618-B52A-238EE6751A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CDEBFBF-280D-4618-B52A-238EE6751A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CDEBFBF-280D-4618-B52A-238EE6751A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C62BFA4-DB03-4701-934D-915AB28B9761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C62BFA4-DB03-4701-934D-915AB28B9761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C62BFA4-DB03-4701-934D-915AB28B9761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C62BFA4-DB03-4701-934D-915AB28B9761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
@@ -51,49 +52,49 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (json.TryGetProperty("nbf", out JsonElement nbf))
             {
-                if (nbf.Type == JsonValueType.Null)
+                if (nbf.ValueKind == JsonValueKind.Null)
                 {
                     NotBefore = null;
                 }
                 else
                 {
-                    NotBefore = DateTimeOffset.Parse(nbf.GetString());
+                    NotBefore = DateTimeOffset.Parse(nbf.GetString(), CultureInfo.InvariantCulture);
                 }
             }
 
             if (json.TryGetProperty("exp", out JsonElement exp))
             {
-                if (exp.Type == JsonValueType.Null)
+                if (exp.ValueKind == JsonValueKind.Null)
                 {
                     Expires = null;
                 }
                 else
                 {
-                    Expires = DateTimeOffset.Parse(exp.GetString());
+                    Expires = DateTimeOffset.Parse(exp.GetString(), CultureInfo.InvariantCulture);
                 }
             }
 
             if (json.TryGetProperty("created", out JsonElement created))
             {
-                if (created.Type == JsonValueType.Null)
+                if (created.ValueKind == JsonValueKind.Null)
                 {
                     Created = null;
                 }
                 else
                 {
-                    Created = DateTimeOffset.Parse(created.GetString());
+                    Created = DateTimeOffset.Parse(created.GetString(), CultureInfo.InvariantCulture);
                 }
             }
 
             if (json.TryGetProperty("updated", out JsonElement updated))
             {
-                if (updated.Type == JsonValueType.Null)
+                if (updated.ValueKind == JsonValueKind.Null)
                 {
                     Updated = null;
                 }
                 else
                 {
-                    Updated = DateTimeOffset.Parse(updated.GetString());
+                    Updated = DateTimeOffset.Parse(updated.GetString(), CultureInfo.InvariantCulture);
                 }
             }
 

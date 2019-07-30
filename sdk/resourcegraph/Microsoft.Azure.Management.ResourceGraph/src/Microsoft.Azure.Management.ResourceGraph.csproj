@@ -7,9 +7,9 @@
     <PackageId>Microsoft.Azure.Management.ResourceGraph</PackageId>
     <Description>Provides Resource Graph operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.ResourceGraph</AssemblyName>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <PackageTags>Azure;ResourceGraph;</PackageTags>
-    <PackageReleaseNotes>Releasing the GA version of Azure Resource Graph.</PackageReleaseNotes>
+    <PackageReleaseNotes>Result format can be table or objectArray.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

@@ -9,6 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// Defines helpers for deserialize and serialize.
+    /// </summary>
     public abstract class Model
     {
         internal void Deserialize(Stream content)

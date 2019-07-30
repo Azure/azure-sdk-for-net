@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ComponentModel;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -13,14 +13,14 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubProducerOptions
     {
-        /// <summary>The timeout that will be used by default for sending events.</summary>
-        private TimeSpan? _timeout = TimeSpan.FromMinutes(1);
+        /// <summary>The identifier of the partition that the producer will be bound to.</summary>
+        private string _partitionId = null;
 
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventHubProducer" /> will be bound to,
         ///   limiting it to sending events to only that partition.
         ///
-        ///   If the identifier is not spedified, the Event Hubs service will be responsible for routing events that
+        ///   If the identifier is not specified, the Event Hubs service will be responsible for routing events that
         ///   are sent to an available partition.
         /// </summary>
         ///
@@ -36,45 +36,26 @@ namespace Azure.Messaging.EventHubs
         ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
         /// </remarks>
         ///
-        public string PartitionId { get; set; }
-
-        /// <summary>
-        ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue is
-        ///   encountered while sending.
-        /// </summary>
-        ///
-        /// <value>If not specified, the retry policy configured on the associated <see cref="EventHubClient" /> will be used.</value>
-        ///
-        public Retry Retry { get; set; }
-
-        /// <summary>
-        ///   The default timeout to apply when sending events.  If the timeout is reached, before the Event Hub
-        ///   acknowledges receipt of the event data being sent, the attempt will be conisdered failed and considered
-        ///   to be retried.
-        /// </summary>
-        ///
-        /// <value>If not specified, the operation timeout requested for the associated <see cref="EventHubClient" /> will be used.</value>
-        ///
-        public TimeSpan? Timeout
+        public string PartitionId
         {
-            get => _timeout;
-
+            get => _partitionId;
             set
             {
-                ValidateTimeout(value);
-                _timeout = value;
+                Guard.ArgumentNotEmptyOrWhitespace(nameof(PartitionId), value);
+                _partitionId = value;
             }
         }
 
         /// <summary>
-        ///   Normalizes the specified timeout value, returning the timeout period or the
-        ///   a <c>null</c> value if no timeout was specified.
+        ///   The set of options to use for determining whether a failed operation should be retried and,
+        ///   if so, the amount of time to wait between retry attempts.  If not specified, the retry policy from
+        ///   the associcated <see cref="EventHubClient" /> will be used.
         /// </summary>
         ///
-        internal TimeSpan? TimeoutOrDefault => (_timeout == TimeSpan.Zero) ? null : _timeout;
+        public RetryOptions RetryOptions { get; set; }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -111,24 +92,8 @@ namespace Azure.Messaging.EventHubs
         internal EventHubProducerOptions Clone() =>
             new EventHubProducerOptions
             {
-                PartitionId = this.PartitionId,
-                Retry = this.Retry?.Clone(),
-                Timeout = this.Timeout
+                RetryOptions = this.RetryOptions?.Clone(),
+                _partitionId = this.PartitionId
             };
-
-        /// <summary>
-        ///   Validates the time period specified as the timeout to use when sending vents, throwing an <see cref="ArgumentException" /> if
-        ///   it is not valid.
-        /// </summary>
-        ///
-        /// <param name="timeout">The time period to validate.</param>
-        ///
-        protected virtual void ValidateTimeout(TimeSpan? timeout)
-        {
-            if (timeout < TimeSpan.Zero)
-            {
-                throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(Timeout));
-            }
-        }
     }
 }

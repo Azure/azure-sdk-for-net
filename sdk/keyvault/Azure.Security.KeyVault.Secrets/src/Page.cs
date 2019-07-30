@@ -7,6 +7,10 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Secrets
 {
+    /// <summary>
+    /// Defines a page in Azure responses.
+    /// </summary>
+    /// <typeparam name="T">Type of the page content items</typeparam>
     public class Page<T> : Model
         where T : Model
     {
@@ -19,25 +23,34 @@ namespace Azure.Security.KeyVault.Secrets
             _itemFactory = itemFactory;
         }
 
+        /// <summary>
+        /// Gets the content items.
+        /// </summary>
         public ReadOnlySpan<T> Items { get => _items.AsSpan(); }
 
+        /// <summary>
+        /// Gets the link to the next page.
+        /// </summary>
         public Uri NextLink { get => _nextLink; }
 
         internal override void ReadProperties(JsonElement json)
         {
             if (json.TryGetProperty("value", out JsonElement value))
             {
-                _items = new T[value.GetArrayLength()];
-
-                int i = 0;
-
-                foreach (var elem in value.EnumerateArray())
+                if(value.ValueKind != JsonValueKind.Null)
                 {
-                    _items[i] = _itemFactory();
+                    _items = new T[value.GetArrayLength()];
 
-                    _items[i].ReadProperties(elem);
+                    int i = 0;
 
-                    i++;
+                    foreach (var elem in value.EnumerateArray())
+                    {
+                        _items[i] = _itemFactory();
+
+                        _items[i].ReadProperties(elem);
+
+                        i++;
+                    }
                 }
             }
 
@@ -54,7 +67,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         internal override void WriteProperties(ref Utf8JsonWriter json)
         {
-            // serialization is not needed this type is only in responses 
+            // serialization is not needed this type is only in responses
             throw new NotImplementedException();
         }
     }

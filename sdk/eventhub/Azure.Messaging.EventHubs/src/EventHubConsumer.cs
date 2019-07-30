@@ -25,6 +25,12 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubConsumer : IAsyncDisposable
     {
+        /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
+        public const string DefaultConsumerGroupName = "$Default";
+
+        /// <summary>The policy to use for determining retry behavior for when an operation fails.</summary>
+        private EventHubRetryPolicy _retryPolicy;
+
         /// <summary>
         ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
         ///   only from this partition.
@@ -60,6 +66,33 @@ namespace Azure.Messaging.EventHubs
         public EventPosition StartingPosition { get; protected set; }
 
         /// <summary>
+        ///   The text-based identifier label that has optionally been assigned to the consumer.
+        /// </summary>
+        ///
+        public string Identifier => Options?.Identifier;
+
+        /// <summary>
+        ///   The policy to use for determining retry behavior for when an operation fails.
+        /// </summary>
+        ///
+        public EventHubRetryPolicy RetryPolicy
+        {
+            get => _retryPolicy;
+
+            set
+            {
+                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                _retryPolicy = value;
+
+                // Applying a custom retry policy invalidates the retry options specified.
+                // Clear them to ensure the custom policy is propagated as the default.
+
+                Options.RetryOptions = null;
+                InnerConsumer.UpdateRetryPolicy(value);
+            }
+        }
+
+        /// <summary>
         ///   The set of consumer options used for creation of this consumer.
         /// </summary>
         ///
@@ -78,8 +111,10 @@ namespace Azure.Messaging.EventHubs
         /// <param name="transportConsumer">An abstracted Event Consumer specific to the active protocol and transport intended to perform delegated operations.</param>
         /// <param name="eventHubPath">The path of the Event Hub from which events will be received.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="consumerOptions">The set of options to use for this consumer.</param>
+        /// <param name="retryPolicy">The policy to apply when making retry decisions for failed operations.</param>
         ///
         /// <remarks>
         ///   If the starting event position is not specified in the <paramref name="consumerOptions"/>, the consumer will
@@ -92,23 +127,29 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         internal EventHubConsumer(TransportEventHubConsumer transportConsumer,
-                               string eventHubPath,
-                               string partitionId,
-                               EventPosition eventPosition,
-                               EventHubConsumerOptions consumerOptions)
+                                   string eventHubPath,
+                                   string consumerGroup,
+                                   string partitionId,
+                                   EventPosition eventPosition,
+                                   EventHubConsumerOptions consumerOptions,
+                                   EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(transportConsumer), transportConsumer);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
             Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
             Guard.ArgumentNotNull(nameof(consumerOptions), consumerOptions);
+            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
 
             PartitionId = partitionId;
             StartingPosition = eventPosition;
             OwnerLevel = consumerOptions.OwnerLevel;
-            ConsumerGroup = consumerOptions.ConsumerGroup;
+            ConsumerGroup = consumerGroup;
             Options = consumerOptions;
             InnerConsumer = transportConsumer;
+
+            _retryPolicy = retryPolicy;
         }
 
         /// <summary>
@@ -120,7 +161,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Receives a bach of <see cref="EventData" /> from the the Event Hub partition.
+        ///   Receives a bach of <see cref="EventData" /> from the Event Hub partition.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
@@ -169,7 +210,7 @@ namespace Azure.Messaging.EventHubs
         public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>

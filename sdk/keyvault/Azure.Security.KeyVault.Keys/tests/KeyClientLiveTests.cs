@@ -298,7 +298,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             await WaitForPurgedKey(keyName);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
-            
+
             Key restoredResult = await Client.RestoreKeyAsync(backup);
             RegisterForCleanup(restoredResult);
 

@@ -19,7 +19,7 @@ namespace Azure.Identity.Tests.Mock
         {
             var credential = new ManagedIdentityCredential();
 
-            credential._client(new MockIdentityClient());
+            credential._client(new MockManagedIdentityClient());
 
             var cancellation = new CancellationTokenSource();
 
@@ -37,43 +37,11 @@ namespace Azure.Identity.Tests.Mock
         {
             var credential = new ManagedIdentityCredential();
 
-            credential._client(new MockIdentityClient());
+            credential._client(new MockManagedIdentityClient());
 
             AccessToken defaultScopeToken = await credential.GetTokenAsync(MockScopes.Default);
 
             Assert.IsTrue(new MockToken(defaultScopeToken.Token).HasField("scopes", MockScopes.Default.ToString()));
-        }
-
-        [Test]
-        public async Task VerifyMSIRequest()
-        {
-            var response = new MockResponse(200);
-
-            var expectedToken = "mock-msi-access-token";
-
-            response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_in\": 3600 }}");
-
-            var mockTransport = new MockTransport(response);
-
-            var options = new IdentityClientOptions() { Transport = mockTransport };
-
-            var credential = new ManagedIdentityCredential(options: options);
-
-            AccessToken actualToken = await credential.GetTokenAsync(MockScopes.Default);
-
-            Assert.AreEqual(expectedToken, actualToken.Token);
-
-            MockRequest request = mockTransport.SingleRequest;
-
-            string query = request.UriBuilder.Query;
-
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-
-            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
-
-            Assert.AreEqual("true", metadataValue);
         }
     }
 }

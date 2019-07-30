@@ -31,9 +31,18 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     /// Enums, primitive types, and any other type not falling into the other categories are compared using Object.Equals().
     /// </para>
     /// </remarks>
-    public class ModelComparer<T> : IEqualityComparer<T>
+    public sealed class ModelComparer<T> : IEqualityComparer<T>
     {
-        private readonly IEqualityComparer _comparer = new DynamicModelComparer(typeof(T));
+        private readonly IEqualityComparer _comparer;
+
+        public ModelComparer() : this(areBothNull: (x, y) => x == null && y == null, shouldIgnoreProperty: _ => false)
+        {
+        }
+
+        public ModelComparer(Func<object, object, bool> areBothNull, Func<PropertyInfo, bool> shouldIgnoreProperty)
+        {
+            _comparer = new DynamicModelComparer(typeof(T), areBothNull, shouldIgnoreProperty);
+        }
 
         public bool Equals(T x, T y) => _comparer.Equals(x, y);
 
@@ -43,10 +52,17 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         {
             private readonly Type _type;
 
-            public DynamicModelComparer(Type type)
+            public DynamicModelComparer(Type type, Func<object, object, bool> areBothNull, Func<PropertyInfo, bool> shouldIgnoreProperty)
             {
+                AreBothNull = areBothNull ?? throw new ArgumentNullException(nameof(areBothNull));
+                ShouldIgnoreProperty = shouldIgnoreProperty ?? throw new ArgumentNullException(nameof(shouldIgnoreProperty));
+
                 _type = type;
             }
+
+            private Func<object, object, bool> AreBothNull { get; }
+
+            private Func<PropertyInfo, bool> ShouldIgnoreProperty { get; }
 
             int IEqualityComparer.GetHashCode(object obj) => obj?.GetHashCode() ?? 0;
 
@@ -54,7 +70,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             {
                 if (_type.CanBeNull() && (x == null || y == null))
                 {
-                    return CompareNull(x, y);
+                    return AreBothNull(x, y);
                 }
 
                 // At this point x and y are guaranteed to be non-null (possibly because they are boxed value types).
@@ -101,51 +117,19 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 return x.Equals(y);
             }
 
-            private static bool CompareRecursive(Type type, object x, object y)
+            private bool CompareRecursive(Type type, object x, object y)
             {
-                IEqualityComparer comparer = new DynamicModelComparer(type);
+                IEqualityComparer comparer = new DynamicModelComparer(type, AreBothNull, ShouldIgnoreProperty);
                 return comparer.Equals(x, y);
             }
 
-            private static bool CompareNull(object x, object y)
-            {
-                if (x == null && y == null)
-                {
-                    return true;
-                }
-
-                object notNull = (x != null) ? x : y;
-                Type type = notNull.GetType();
-
-                // ASSUMPTION: ModelComparer is used to compare model classes that map to OData JSON payloads. In OData, the default value of
-                // a collection is an empty collection, not null. However, in .NET, missing JSON properties are modeled as null. To compensate
-                // for this semantic gap, we will consider null and empty enumerables to be equivalent.
-                if (type.IsIEnumerable())
-                {
-                    IEnumerator enumerator = ((IEnumerable)notNull).GetEnumerator();
-                    enumerator.Reset();
-                    bool isEmpty = !enumerator.MoveNext();
-                    return isEmpty;
-                }
-
-                // For value types, we go by the rule that null is equal to default(T). This works for cases where a client omits a property in
-                // a request, and the property comes back with its default value in the response.
-                if (type.GetTypeInfo().IsValueType)
-                {
-                    object defaultInstance = Activator.CreateInstance(type);
-                    return notNull.Equals(defaultInstance);
-                }
-
-                return false;
-            }
-
-            private static bool CompareEnumerables(Type enumerable, object x, object y)
+            private bool CompareEnumerables(Type enumerable, object x, object y)
             {
                 Type elementType = enumerable.GenericTypeArguments.First();
                 IEnumerator xs = ((IEnumerable)x).GetEnumerator();
                 IEnumerator ys = ((IEnumerable)y).GetEnumerator();
 
-                IEqualityComparer elementComparer = new DynamicModelComparer(elementType);
+                IEqualityComparer elementComparer = new DynamicModelComparer(elementType, AreBothNull, ShouldIgnoreProperty);
 
                 xs.Reset();
                 ys.Reset();
@@ -166,28 +150,17 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 return !ys.MoveNext();
             }
 
-            private static bool ComparePolymorphicObjects(Type derivedType, object x, object y) => CompareRecursive(derivedType, x, y);
+            private bool ComparePolymorphicObjects(Type derivedType, object x, object y) => CompareRecursive(derivedType, x, y);
 
-            private static bool CompareProperty(PropertyInfo property, object x, object y) =>
+            private bool CompareProperty(PropertyInfo property, object x, object y) =>
                 CompareRecursive(property.PropertyType, property.GetValue(x), property.GetValue(y));
 
-            private bool CompareProperties(PropertyInfo[] properties, object x, object y)
-            {
-                IEnumerable<PropertyInfo> selectedProperties = properties;
-
-                Type resourceWithETag = _type.GetIResourceWithETag();
-                if (resourceWithETag != null)
-                {
-                    PropertyInfo[] resourceProperties = resourceWithETag.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                    selectedProperties = properties.Except(resourceProperties, new PropertyInfoComparer());
-                }
-
-                return selectedProperties.All(p => CompareProperty(p, x, y));
-            }
+            private bool CompareProperties(PropertyInfo[] properties, object x, object y) =>
+                properties.Where(p => !ShouldIgnoreProperty(p)).All(p => CompareProperty(p, x, y));
 
             private bool ComparePossibleIntegers(object x, object y)
             {
-                if (!x.GetType().IsInteger() && !x.GetType().IsInteger())
+                if (!x.GetType().IsInteger() || !y.GetType().IsInteger())
                 {
                     return false;
                 }
@@ -203,25 +176,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 Type boundEquatable = typeof(IEquatable<>).MakeGenericType(_type);
                 MethodInfo equals = boundEquatable.GetMethod("Equals");
                 return (bool)equals.Invoke(x, new[] { y });
-            }
-
-            private class PropertyInfoComparer : IEqualityComparer<PropertyInfo>
-            {
-                public bool Equals(PropertyInfo x, PropertyInfo y)
-                {
-                    if (x == null)
-                    {
-                        return y == null;
-                    }
-                    else if (y == null)
-                    {
-                        return false;
-                    }
-
-                    return x.Name == y.Name;
-                }
-
-                public int GetHashCode(PropertyInfo obj) => obj?.Name?.GetHashCode() ?? 0;
             }
         }
     }

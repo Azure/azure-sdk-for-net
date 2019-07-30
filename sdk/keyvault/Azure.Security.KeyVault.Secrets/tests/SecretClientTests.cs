@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Test
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
         {
-            Client = InstrumentClient(new SecretClient(new Uri("http://localhost"), new SystemCredential()));
+            Client = InstrumentClient(new SecretClient(new Uri("http://localhost"), new DefaultAzureCredential()));
         }
 
         public SecretClient Client { get; set; }
@@ -31,7 +31,9 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public void UpdateArgumentValidation()
         {
+            SecretBase secret = new SecretBase("secret-name");
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateAsync(secret));
         }
 
         [Test]

@@ -77,7 +77,9 @@ export interface IServiceInfo {
     description: string|null,
     namespace: string,
     extensionsName: string,
+    modelFactoryName: string,
     public: boolean,
+    sync: boolean,
     consumes: string[],
     produces: string[],
     license: {
@@ -215,7 +217,8 @@ export interface IParameter {
     location: string,
     skipUrlEncoding: boolean,
     parameterGroup?: string,
-    model: IModelType
+    model: IModelType,
+    trace: boolean
 }
 
 export interface IResponses {

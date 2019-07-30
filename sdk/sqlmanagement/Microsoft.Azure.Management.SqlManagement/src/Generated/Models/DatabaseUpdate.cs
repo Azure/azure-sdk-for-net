@@ -91,8 +91,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Online', 'Restoring', 'RecoveryPending', 'Recovering',
         /// 'Suspect', 'Offline', 'Standby', 'Shutdown', 'EmergencyMode',
         /// 'AutoClosed', 'Copying', 'Creating', 'Inaccessible',
-        /// 'OfflineSecondary', 'Pausing', 'Paused', 'Resuming',
-        /// 'Scaling'</param>
+        /// 'OfflineSecondary', 'Pausing', 'Paused', 'Resuming', 'Scaling',
+        /// 'OfflineChangingDwPerformanceTiers',
+        /// 'OnlineChangingDwPerformanceTiers'</param>
         /// <param name="databaseId">The ID of the database.</param>
         /// <param name="creationDate">The creation date of the database
         /// (ISO8601 format).</param>
@@ -277,7 +278,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Restoring', 'RecoveryPending', 'Recovering', 'Suspect', 'Offline',
         /// 'Standby', 'Shutdown', 'EmergencyMode', 'AutoClosed', 'Copying',
         /// 'Creating', 'Inaccessible', 'OfflineSecondary', 'Pausing',
-        /// 'Paused', 'Resuming', 'Scaling'
+        /// 'Paused', 'Resuming', 'Scaling',
+        /// 'OfflineChangingDwPerformanceTiers',
+        /// 'OnlineChangingDwPerformanceTiers'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }

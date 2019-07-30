@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Authorization
         public virtual IClassicAdministratorsOperations ClassicAdministrators { get; private set; }
 
         /// <summary>
+        /// Gets the IGlobalAdministratorOperations.
+        /// </summary>
+        public virtual IGlobalAdministratorOperations GlobalAdministrator { get; private set; }
+
+        /// <summary>
         /// Gets the IProviderOperationsMetadataOperations.
         /// </summary>
         public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
@@ -338,6 +343,7 @@ namespace Microsoft.Azure.Management.Authorization
         private void Initialize()
         {
             ClassicAdministrators = new ClassicAdministratorsOperations(this);
+            GlobalAdministrator = new GlobalAdministratorOperations(this);
             ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
             RoleAssignments = new RoleAssignmentsOperations(this);
             Permissions = new PermissionsOperations(this);

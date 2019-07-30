@@ -4,6 +4,7 @@
 
 using System;
 using System.Net;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files
 {
@@ -268,7 +269,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Check if two FileUriBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(FileUriBuilder other)
             => this.Scheme == other.Scheme

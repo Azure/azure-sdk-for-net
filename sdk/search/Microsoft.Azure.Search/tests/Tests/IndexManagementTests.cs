@@ -528,7 +528,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertIndexesEqual(Index expected, Index actual)
         {
-            Assert.Equal(expected, actual, new ModelComparer<Index>());
+            Assert.Equal(expected, actual, new DataPlaneModelComparer<Index>());
         }
 
         private Index CreateOrUpdateIndex(Index index, SearchRequestOptions options, AccessCondition condition) =>

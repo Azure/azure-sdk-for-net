@@ -4,10 +4,23 @@
 
 namespace Azure.Storage
 {
-    public sealed class SharedAccessSignatureCredentials : IStorageCredentials
+    // TODO: Consider making public if there's ever a reason for developers to use this type
+    internal sealed class SharedAccessSignatureCredentials
     {
-        public SharedAccessSignatureCredentials(string sasToken) => this.SasToken = sasToken;
-
+        /// <summary>
+        /// Gets the SAS token used to authenticate requests to the Storage
+        /// service.
+        /// </summary>
         public string SasToken { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="SharedAccessSignatureCredentials"/> class.
+        /// </summary>
+        /// <param name="sasToken">
+        /// The SAS token used to authenticate requests to the Storage service.
+        /// </param>
+        public SharedAccessSignatureCredentials(string sasToken) =>
+            this.SasToken = sasToken;
     }
 }

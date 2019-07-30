@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -55,6 +56,7 @@ namespace Compute.Tests
                 string galleryName2 = galleryName + "New";
                 m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName2, new ResourceGroup { Location = galleryHomeLocation });
                 Trace.TraceInformation("Created the resource group: " + rgName2);
+                Thread.Sleep(1000);
                 m_CrpClient.Galleries.CreateOrUpdate(rgName2, galleryName2, galleryIn);
                 Trace.TraceInformation(string.Format("Created the gallery: {0} in resource group: {1}", galleryName2, rgName2));
                 IPage<Gallery> listGalleriesInRgResult = m_CrpClient.Galleries.ListByResourceGroup(rgName);
@@ -254,6 +256,7 @@ namespace Compute.Tests
             Assert.Equal(imageIn.Location, imageOut.Location);
             Assert.Equal(imageIn.OsState, imageOut.OsState);
             Assert.Equal(imageIn.OsType, imageOut.OsType);
+            Assert.Equal(imageIn.HyperVGeneration, imageOut.HyperVGeneration);
             if (!string.IsNullOrEmpty(imageIn.Description))
             {
                 Assert.Equal(imageIn.Description, imageOut.Description);
@@ -274,7 +277,7 @@ namespace Compute.Tests
             }
 
             Assert.Equal(imageVersionIn.Location, imageVersionOut.Location);
-            Assert.False(string.IsNullOrEmpty(imageVersionOut.PublishingProfile.Source.ManagedImage.Id),
+            Assert.False(string.IsNullOrEmpty(imageVersionOut.StorageProfile.Source.Id),
                 "imageVersionOut.PublishingProfile.Source.ManagedImage.Id is null or empty.");
             Assert.NotNull(imageVersionOut.PublishingProfile.EndOfLifeDate);
             Assert.NotNull(imageVersionOut.PublishingProfile.PublishedDate);
@@ -302,8 +305,9 @@ namespace Compute.Tests
                 },
                 Location = galleryHomeLocation,
                 OsState = OperatingSystemStateTypes.Generalized,
-                OsType = OperatingSystemTypes.Linux,
-                Description = "This is the gallery image description."
+                OsType = OperatingSystemTypes.Windows,
+                Description = "This is the gallery image description.",
+                HyperVGeneration = null
             };
         }
 
@@ -314,16 +318,19 @@ namespace Compute.Tests
                 Location = galleryHomeLocation,
                 PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    Source = new GalleryArtifactSource
-                    {
-                        ManagedImage = new ManagedArtifact { Id = sourceImageId }
-                    },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
                         new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
                     EndOfLifeDate = DateTime.Today.AddDays(10).Date
+                },
+                StorageProfile = new GalleryImageVersionStorageProfile
+                {
+                    Source = new GalleryArtifactVersionSource
+                    {
+                        Id = sourceImageId
+                    }
                 }
             };
         }

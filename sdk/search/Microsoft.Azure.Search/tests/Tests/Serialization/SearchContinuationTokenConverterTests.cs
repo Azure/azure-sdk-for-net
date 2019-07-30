@@ -2,44 +2,43 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search.Models.Internal;
+using Newtonsoft.Json;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Models;
-    using Newtonsoft.Json;
-    using Xunit;
-
     public sealed class SearchContinuationTokenConverterTests
     {
         private readonly SearchContinuationToken _token =
-            new SearchContinuationToken(
+            SearchContinuationToken.CreateTestToken(
                 $"https://tempuri.org?api-version={ApiVersion}",
-                new SearchRequest()
+                "some words",
+                new SearchParameters()
                 {
                     IncludeTotalResultCount = true,
                     Facets = new[] { "testfacets" },
                     Filter = "testfilter",
-                    HighlightFields = "testhighlight",
+                    HighlightFields = new[] { "testhighlight" },
                     HighlightPostTag = "</b>",
                     HighlightPreTag = "<b>",
                     MinimumCoverage = 50,
-                    OrderBy = "testorderby",
+                    OrderBy = new[] { "testorderby" },
                     QueryType = QueryType.Full,
-                    ScoringParameters = new[] { "testscoringparameter" },
+                    ScoringParameters = new[] { new ScoringParameter("testscoringparameter", new[] { "123" }) },
                     ScoringProfile = "testscoringprofile",
-                    SearchText = "some words",
-                    SearchFields = "somefields",
+                    SearchFields = new[] { "somefields" },
                     SearchMode = SearchMode.All,
-                    Select = "*",
+                    Select = new[] { "*" },
                     Skip = 100,
                     Top = 10
                 });
 
         private readonly SearchContinuationToken _tokenWithOnlyLink =
-            new SearchContinuationToken($"https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version={ApiVersion}", null);
+            SearchContinuationToken.CreateTestToken($"https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version={ApiVersion}");
 
-        private readonly TokenComparer _tokenComparer = new TokenComparer();
+        private readonly SearchContinuationTokenComparer _tokenComparer = new SearchContinuationTokenComparer();
 
         /// <summary>
         /// Returns the api-version from the generated code. Using this in the tests ensures that the object under test has its api-version
@@ -64,7 +63,7 @@ $@"{{
     ""orderby"": ""testorderby"",
     ""queryType"": ""full"",
     ""scoringParameters"": [
-      ""testscoringparameter""
+      ""testscoringparameter-'123'""
     ],
     ""scoringProfile"": ""testscoringprofile"",
     ""search"": ""some words"",
@@ -179,54 +178,6 @@ $@"{{
 
             const string ExpectedMessage = "Cannot deserialize continuation token because the api-version is missing.";
             Assert.Equal(ExpectedMessage, e.Message);
-        }
-
-        private class TokenComparer : IEqualityComparer<SearchContinuationToken>
-        {
-            public bool Equals(SearchContinuationToken x, SearchContinuationToken y)
-            {
-                return 
-                    x.NextLink == y.NextLink &&
-                    NextPageParametersEquals(x.NextPageParameters, y.NextPageParameters);
-            }
-
-            public int GetHashCode(SearchContinuationToken obj)
-            {
-                return obj.GetHashCode();
-            }
-
-            private static bool NextPageParametersEquals(SearchRequest x, SearchRequest y)
-            {
-                if (x == null && y == null)
-                {
-                    return true;
-                }
-
-                if ((x == null) != (y == null))
-                {
-                    return false;
-                }
-
-                return
-                    x.IncludeTotalResultCount == y.IncludeTotalResultCount &&
-                    ((x.Facets == null && y.Facets == null) || x.Facets.SequenceEqual(y.Facets)) &&
-                    x.Filter == y.Filter &&
-                    x.HighlightFields == y.HighlightFields &&
-                    x.HighlightPostTag == y.HighlightPostTag &&
-                    x.HighlightPreTag == y.HighlightPreTag &&
-                    x.MinimumCoverage == y.MinimumCoverage &&
-                    x.OrderBy == y.OrderBy &&
-                    x.QueryType == y.QueryType &&
-                    ((x.ScoringParameters == null && y.ScoringParameters == null) ||
-                      x.ScoringParameters.SequenceEqual(y.ScoringParameters)) &&
-                    x.ScoringProfile == y.ScoringProfile &&
-                    x.SearchText == y.SearchText &&
-                    x.SearchFields == y.SearchFields &&
-                    x.SearchMode == y.SearchMode &&
-                    x.Select == y.Select &&
-                    x.Skip == y.Skip &&
-                    x.Top == y.Top;
-            }
         }
     }
 }

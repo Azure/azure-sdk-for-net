@@ -273,8 +273,12 @@ function createServiceInfo(project: IProject): IServiceInfo {
         extensionsName: <string>optional(
             () => project.swagger.info[`x-ms-code-generation-settings`][`client-extensions-name`],
             title + ' Extensions'),
+        modelFactoryName: <string>optional(
+            () => project.swagger.info[`x-ms-code-generation-settings`][`client-model-factory-name`],
+            title + ' ModelFactory'),
         versions: [ <string>required(() => project.swagger.info.version) ],
         public: isPublic,
+        sync: <boolean>optional(() => project.swagger.info[`x-ms-code-generation-settings`][`x-ms-include-sync-methods`], false),
         consumes: [`application/xml`],
         produces: [`application/xml`],
         host: serviceHost,
@@ -316,6 +320,8 @@ function createParameter(project: IProject, swagger: any, location: string): IPa
         unsupported(() => grouping.postfix, `${location}['x-ms-parameter-grouping'].postfix`);
     }
 
+    const trace = optional(() => swagger[`x-ms-trace`], false);
+
     unsupported(() => swagger[`x-ms-client-flatten`], location);
     unsupported(() => swagger[`x-ms-client-request-id`], location);
 
@@ -334,7 +340,8 @@ function createParameter(project: IProject, swagger: any, location: string): IPa
         location: at,
         skipUrlEncoding,
         parameterGroup,
-        model
+        model,
+        trace
     };
 }
 
@@ -825,7 +832,8 @@ function getOperationParameters(project: IProject, info: IServiceInfo, path: tem
             namespace: 'Azure.Core.Pipeline',
             properties: { },
             xml: { }
-        }
+        },
+        trace: false
     });
 
     return parameters;

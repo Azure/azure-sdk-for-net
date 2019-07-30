@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using Azure.Core.Http;
+using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -22,10 +25,35 @@ namespace Azure.Core.Testing
             "Date",
             "x-ms-date",
             "x-ms-client-request-id",
-            "User-Agent"
+            "User-Agent",
+            "Request-Id"
         };
 
-        public virtual int FindMatch(Request request, IList<RecordEntry> entries)
+        // Headers that don't indicate meaningful changes between updated recordings
+        public HashSet<string> VolatileHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Date",
+            "x-ms-date",
+            "x-ms-client-request-id",
+            "User-Agent",
+            "Request-Id",
+            "If-Match",
+            "If-None-Match",
+            "If-Modified-Since",
+            "If-Unmodified-Since"
+        };
+
+        // Headers that don't indicate meaningful changes between updated recordings
+        public HashSet<string> VolatileResponseHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Date",
+            "ETag",
+            "Last-Modified",
+            "x-ms-request-id",
+            "x-ms-correlation-request-id"
+        };
+
+        public virtual RecordEntry FindMatch(Request request, IList<RecordEntry> entries)
         {
             SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
 
@@ -40,42 +68,169 @@ namespace Azure.Core.Testing
 
             string uri = _sanitizer.SanitizeUri(request.UriBuilder.ToString());
 
-            for (int i = 0; i < entries.Count; i++)
-            {
-                RecordEntry entry = entries[i];
+            int bestScore = int.MaxValue;
+            RecordEntry bestScoreEntry = null;
 
-                if (entry.RequestUri == uri &&
-                    entry.RequestMethod == request.Method &&
-                    CompareHeaderDictionaries(headers, entry.RequestHeaders))
+            foreach (RecordEntry entry in entries)
+            {
+                int score = 0;
+
+                if (!AreUrisSame(entry.RequestUri, uri))
                 {
-                    return i;
+                    score++;
+                }
+
+                if (entry.RequestMethod != request.Method)
+                {
+                    score++;
+                }
+
+                score += CompareHeaderDictionaries(headers, entry.RequestHeaders, ExcludeHeaders);
+
+                if (score == 0)
+                {
+                    return entry;
+                }
+
+                if (score < bestScore)
+                {
+                    bestScoreEntry = entry;
+                    bestScore = score;
                 }
             }
 
-            return -1;
+            throw new InvalidOperationException(GenerateException(request.Method, uri, headers, bestScoreEntry));
         }
 
-        private bool CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders)
+        public virtual bool IsEquivalentRecord(RecordEntry entry, RecordEntry otherEntry) =>
+            IsEquivalentRequest(entry, otherEntry) &&
+            IsEquivalentResponse(entry, otherEntry);
+
+        protected virtual bool IsEquivalentRequest(RecordEntry entry, RecordEntry otherEntry) =>
+            entry.RequestMethod == otherEntry.RequestMethod &&
+            IsEquivalentUri(entry.RequestUri, otherEntry.RequestUri) &&
+            CompareHeaderDictionaries(entry.RequestHeaders, otherEntry.RequestHeaders, VolatileHeaders) == 0;
+
+        private static bool AreUrisSame(string entryUri, string otherEntryUri) =>
+            // Some versions of .NET behave differently when calling new Uri("...")
+            // so we'll normalize the recordings (which may have been against
+            // a different .NET version) to be safe
+            new Uri(entryUri).ToString() == new Uri(otherEntryUri).ToString();
+
+        protected virtual bool IsEquivalentUri(string entryUri, string otherEntryUri) =>
+            AreUrisSame(entryUri, otherEntryUri);
+
+        protected virtual bool IsEquivalentResponse(RecordEntry entry, RecordEntry otherEntry)
         {
-            if (headers.Count != entryHeaders.Count)
+            IEnumerable<KeyValuePair<string, string[]>> entryHeaders = entry.ResponseHeaders.Where(h => !VolatileResponseHeaders.Contains(h.Key));
+            IEnumerable<KeyValuePair<string, string[]>> otherEntryHeaders = otherEntry.ResponseHeaders.Where(h => !VolatileResponseHeaders.Contains(h.Key));
+
+            return
+                entry.StatusCode == otherEntry.StatusCode &&
+                entryHeaders.SequenceEqual(otherEntryHeaders, new HeaderComparer()) &&
+                IsBodyEquivalent(entry, otherEntry);
+        }
+
+        protected virtual bool IsBodyEquivalent(RecordEntry record, RecordEntry otherRecord)
+        {
+            return (record.ResponseBody ?? Array.Empty<byte>()).AsSpan()
+                .SequenceEqual((otherRecord.ResponseBody ?? Array.Empty<byte>()));
+        }
+
+        private string GenerateException(RequestMethod requestMethod, string uri, SortedDictionary<string, string[]> headers, RecordEntry bestScoreEntry)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine($"Unable to find a record for the request {requestMethod} {uri}");
+
+            if (bestScoreEntry == null)
             {
-                return false;
+                builder.AppendLine("No records to match.");
+                return builder.ToString();
             }
 
+            if (requestMethod != bestScoreEntry.RequestMethod)
+            {
+                builder.AppendLine($"Method doesn't match, request <{requestMethod}> record <{bestScoreEntry.RequestMethod}>");
+            }
+
+            if (uri != bestScoreEntry.RequestUri)
+            {
+                builder.AppendLine("Uri doesn't match:");
+                builder.AppendLine($"    request <{uri}>");
+                builder.AppendLine($"    record  <{bestScoreEntry.RequestUri}>");
+            }
+
+            builder.AppendLine("Header differences:");
+
+            var entryHeaders = new SortedDictionary<string, string[]>(bestScoreEntry.RequestHeaders, bestScoreEntry.RequestHeaders.Comparer);
             foreach (KeyValuePair<string, string[]> header in headers)
             {
-                if (ExcludeHeaders.Contains(header.Key))
+                if (entryHeaders.TryGetValue(header.Key, out string[] values))
                 {
-                    continue;
+                    entryHeaders.Remove(header.Key);
+                    if (!ExcludeHeaders.Contains(header.Key) &&
+                        !values.SequenceEqual(header.Value))
+                    {
+                        builder.AppendLine($"    <{header.Key}> values differ, request <{JoinHeaderValues(header.Value)}>, record <{JoinHeaderValues(values)}>");
+
+                    }
                 }
-                if (!entryHeaders.TryGetValue(header.Key, out string[] values) ||
-                    !values.SequenceEqual(header.Value))
+                else
                 {
-                    return false;
+                    builder.AppendLine($"    <{header.Key}> is absent in record, value <{JoinHeaderValues(header.Value)}>");
                 }
             }
 
-            return true;
+            foreach (KeyValuePair<string, string[]> header in entryHeaders)
+            {
+                builder.AppendLine($"    <{header.Key}> is absent in request, value <{JoinHeaderValues(header.Value)}>");
+
+            }
+
+            return builder.ToString();
+        }
+
+        private string JoinHeaderValues(string[] values)
+        {
+            return string.Join(",", values);
+        }
+
+        private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders, HashSet<string> ignoredHeaders)
+        {
+            int difference = 0;
+            var remaining = new SortedDictionary<string, string[]>(entryHeaders, entryHeaders.Comparer);
+            foreach (KeyValuePair<string, string[]> header in headers)
+            {
+                if (remaining.TryGetValue(header.Key, out string[] values))
+                {
+                    remaining.Remove(header.Key);
+                    if (!ignoredHeaders.Contains(header.Key) &&
+                        !values.SequenceEqual(header.Value))
+                    {
+                        difference++;
+                    }
+                }
+                else if (!ignoredHeaders.Contains(header.Key))
+                {
+                    difference++;
+                }
+            }
+            difference += remaining.Count;
+            return difference;
+        }
+
+        private class HeaderComparer : IEqualityComparer<KeyValuePair<string, string[]>>
+        {
+            public bool Equals(KeyValuePair<string, string[]> x, KeyValuePair<string, string[]> y)
+            {
+                return x.Key.Equals(y.Key, StringComparison.OrdinalIgnoreCase) &&
+                       x.Value.SequenceEqual(y.Value);
+            }
+
+            public int GetHashCode(KeyValuePair<string, string[]> obj)
+            {
+                return obj.GetHashCode();
+            }
         }
     }
 }

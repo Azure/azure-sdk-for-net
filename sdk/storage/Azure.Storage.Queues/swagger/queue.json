@@ -8,8 +8,10 @@
       "strictSpecAdherence": false,
       "namespace": "Azure.Storage.Queues",
       "client-name": "QueueRestClient",
-      "client-extensions-name": "QueueExtensions",
+      "client-extensions-name": "QueuesExtensions",
+      "client-model-factory-name": "QueuesModelFactory",
       "x-ms-skip-path-components": true,
+      "x-ms-include-sync-methods": true,
       "x-ms-public": false
     }
   },
@@ -1052,6 +1054,7 @@
       },
       "description": "The object returned when calling List Queues on a Queue Service.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "ServiceEndpoint"
       ],
@@ -1177,7 +1180,7 @@
         "QueueNotFound"
       ],
       "x-ms-enum": {
-        "name": "StorageErrorCode",
+        "name": "QueueErrorCode",
         "modelAsString": true
       }
     },
@@ -1197,7 +1200,7 @@
             "unavailable"
           ],
           "x-ms-enum": {
-            "name": "GeoReplicationStatusType",
+            "name": "GeoReplicationStatus",
             "modelAsString": true
           }
         },
@@ -1305,6 +1308,7 @@
     "QueueMessage": {
       "description": "A Message object which can be stored in a Queue",
       "type": "object",
+      "x-ms-public":  false,
       "xml": { "name": "QueueMessage" },
       "required": [
         "MessageText"
@@ -1590,7 +1594,8 @@
       "type": "string",
       "format": "url",
       "in": "path",
-      "x-ms-skip-url-encoding": true
+      "x-ms-skip-url-encoding": true,
+      "x-ms-trace": true
     },
     "ApiVersionParameter": {
       "name": "x-ms-version",
@@ -1770,7 +1775,7 @@
       "type": "integer",
       "minimum": 0,
       "x-ms-parameter-location": "method",
-      "description": "The The timeout parameter is expressed in seconds. For more information, see <a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service Operations.</a>"
+      "description": "The The timeout parameter is expressed in seconds. For more information, see <a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations\">Setting Timeouts for Queue Service Operations.</a>"
     },
     "VisibilityTimeout": {
       "name": "visibilitytimeout",

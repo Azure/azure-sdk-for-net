@@ -13,7 +13,7 @@ namespace Azure.Core.Testing
     public class TestRecording : IDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
-        private const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
+        internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
         public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
         {
@@ -156,12 +156,17 @@ namespace Azure.Core.Testing
                 var directory = Path.GetDirectoryName(_sessionFile);
                 Directory.CreateDirectory(directory);
 
+                _session.Sanitize(_sanitizer);
+                if (_session.IsEquivalent(_previousSession, _matcher))
+                {
+                    return;
+                }
+
                 using FileStream fileStream = File.Create(_sessionFile);
                 var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
                 {
                     Indented = true
                 });
-                _session.Sanitize(_sanitizer);
                 _session.Serialize(utf8JsonWriter);
                 utf8JsonWriter.Flush();
             }

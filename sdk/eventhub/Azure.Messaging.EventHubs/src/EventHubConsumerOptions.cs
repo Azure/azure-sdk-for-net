@@ -15,9 +15,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubConsumerOptions
     {
-        /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
-        public const string DefaultConsumerGroup = "$Default";
-
         /// <summary>The minimum value allowed for the prefetch count of the consumer.</summary>
         internal const int MinimumPrefetchCount = 10;
 
@@ -34,16 +31,7 @@ namespace Azure.Messaging.EventHubs
         private string _identifier = null;
 
         /// <summary>
-        ///   The name of the consumer group that an Event Hub consumer should be associated with.  Events read
-        ///   by the consumer will be performed in the context of this group.
-        /// </summary>
-        ///
-        /// <value>If not specified, the default consumer group will be assumed.</value>
-        ///
-        public string ConsumerGroup { get; set; } = DefaultConsumerGroup;
-
-        /// <summary>
-        ///   When populated, the priority indicates that a consumer is intended to be the only reader of events for the
+        ///   When populated, the owner level indicates that a consumer is intended to be the only reader of events for the
         ///   requested partition and an associated consumer group.  To do so, this consumer will attempt to assert ownership
         ///   over the partition; in the case where more than one exclusive consumer attempts to assert ownership for the same
         ///   partition/consumer group pair, the one having a larger <see cref="OwnerLevel"/> value will "win."
@@ -52,18 +40,17 @@ namespace Azure.Messaging.EventHubs
         ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
-        /// <value>The priority to associated with an exclusive consumer; for a non-exclusive consumer, this value should be <c>null</c>.</value>
+        /// <value>The relative priority to associate with an exclusive consumer; for a non-exclusive consumer, this value should be <c>null</c>.</value>
         ///
         public long? OwnerLevel { get; set; }
 
         /// <summary>
-        ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue
-        ///   is encountered while receiving.
+        ///   The set of options to use for determining whether a failed operation should be retried and,
+        ///   if so, the amount of time to wait between retry attempts.  If not specified, the retry policy from
+        ///   the associcated <see cref="EventHubClient" /> will be used.
         /// </summary>
         ///
-        /// <value>If not specified, the retry policy configured on the associated <see cref="EventHubClient" /> will be used.</value>
-        ///
-        public Retry Retry { get; set; }
+        public RetryOptions RetryOptions { get; set; }
 
         /// <summary>
         ///   The default amount of time to wait for the requested amount of messages when receiving; if this
@@ -125,7 +112,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -162,10 +149,8 @@ namespace Azure.Messaging.EventHubs
         internal EventHubConsumerOptions Clone() =>
             new EventHubConsumerOptions
             {
-                ConsumerGroup = this.ConsumerGroup,
                 OwnerLevel = this.OwnerLevel,
-                Retry = this.Retry?.Clone(),
-
+                RetryOptions = this.RetryOptions?.Clone(),
                 _identifier = this._identifier,
                 _prefetchCount = this._prefetchCount,
                 _maximumReceiveWaitTime = this._maximumReceiveWaitTime

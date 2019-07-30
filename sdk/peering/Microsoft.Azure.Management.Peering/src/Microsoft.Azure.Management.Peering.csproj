@@ -7,9 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Peering</PackageId>
 		<Description>Microsoft Azure Management Peering library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Peering</AssemblyName>
-		<Version>0.9.0-preview</Version>
+		<Version>0.10.0-preview</Version>
 		<PackageTags>Azure Peering;</PackageTags>
     <PackageReleaseNotes>
+	<![CDATA[New features:   Adding Connection Identifier for BGP Session]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

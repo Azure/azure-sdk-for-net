@@ -5,11 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline.Policies;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
-using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
@@ -20,95 +19,85 @@ namespace Azure.Storage.Queues.Tests
         public string GetNewQueueName() => $"test-queue-{this.Recording.Random.NewGuid()}";
         public string GetNewMessageId() => $"test-message-{this.Recording.Random.NewGuid()}";
 
-        public QueueTestBase(RecordedTestMode? mode = null)
-            : base(mode)
+        public QueueTestBase(bool async) : this(async, null) { }
+
+        public QueueTestBase(bool async, RecordedTestMode? mode = null)
+            : base(async, mode)
         {
         }
 
-        public QueueConnectionOptions GetOptions(IStorageCredentials credentials = null)
+        public QueueClientOptions GetOptions()
             => this.Recording.InstrumentClientOptions(
-                    new QueueConnectionOptions
+                    new QueueClientOptions
                     {
-                        Credentials = credentials,
                         ResponseClassifier = new TestResponseClassifier(),
-                        LoggingPolicy = LoggingPolicy.Shared,
-                        RetryPolicy =
-                            new RetryPolicy()
-                            {
-                                Mode = RetryMode.Exponential,
-                                MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                                Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                                MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                            }
+                        Diagnostics = { IsLoggingEnabled = true },
+                        Retry =
+                        {
+                            Mode = RetryMode.Exponential,
+                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                            Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                            MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                        }
                     });
 
         public QueueServiceClient GetServiceClient_SharedKey()
             => this.InstrumentClient(
                 new QueueServiceClient(
-                    new Uri(TestConfigurations.DefaultTargetTenant.QueueServiceEndpoint),
-                    this.GetOptions(
-                        new SharedKeyCredentials(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey))));
-
-        public QueueServiceClient GetServiceClient_AccountSas(SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
-                new QueueServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.QueueServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri(this.TestConfigDefault.QueueServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
-        public QueueServiceClient GetServiceClient_QueueServiceSas(string queueName, SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
+        public QueueServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new QueueServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.QueueServiceEndpoint}?{sasCredentials ?? this.GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
-        public async Task<QueueServiceClient> GetServiceClient_OauthAccount()
-            => await this.GetServiceClientFromOauthConfig(TestConfigurations.DefaultTargetOAuthTenant);
+        public QueueServiceClient GetServiceClient_QueueServiceSas(string queueName, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
+            => this.InstrumentClient(
+                new QueueServiceClient(
+                    new Uri($"{this.TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? this.GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    this.GetOptions()));
 
-        private async Task<QueueServiceClient> GetServiceClientFromOauthConfig(TenantConfiguration config)
-        {
-            var initalToken = await this.GenerateOAuthToken(
-                config.ActiveDirectoryAuthEndpoint,
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret);
+        public QueueServiceClient GetServiceClient_OauthAccount() =>
+            this.GetServiceClientFromOauthConfig(this.TestConfigOAuth);
 
-            return this.InstrumentClient(
+        private QueueServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config) =>
+            this.InstrumentClient(
                 new QueueServiceClient(
                     new Uri(config.QueueServiceEndpoint),
-                    this.GetOptions(new TokenCredentials(initalToken))));
-        }
+                    this.GetOAuthCredential(config),
+                    this.GetOptions()));
 
         public IDisposable GetNewQueue(out QueueClient queue, QueueServiceClient service = default, IDictionary<string, string> metadata = default)
         {
             var containerName = this.GetNewQueueName();
-            service = service ?? this.GetServiceClient_SharedKey();
-            var result = new DisposingQueue(
-                this.InstrumentClient(service.GetQueueClient(containerName)),
-                metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
-            queue = this.InstrumentClient(result.QueueClient);
-            return result;
+            service ??= this.GetServiceClient_SharedKey();
+            queue = this.InstrumentClient(service.GetQueueClient(containerName));
+            return new DisposingQueue(queue, metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
         }
 
-        public SharedKeyCredentials GetNewSharedKeyCredentials()
-            => new SharedKeyCredentials(
-                TestConfigurations.DefaultTargetTenant.AccountName,
-                TestConfigurations.DefaultTargetTenant.AccountKey);
+        public StorageSharedKeyCredential GetNewSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
+                this.TestConfigDefault.AccountName,
+                this.TestConfigDefault.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(SharedKeyCredentials sharedKeyCredentials = default)
-            => new AccountSasSignatureValues
+        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+            => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Queue = true }.ToString(),
+                Services = new AccountSasServices { Queues = true }.ToString(),
                 ResourceTypes = new AccountSasResourceTypes { Container = true }.ToString(),
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new QueueAccountSasPermissions { Read = true, Write = true, Update = true, Process = true, Add = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
-        public SasQueryParameters GetNewQueueServiceSasCredentials(string queueName, SharedKeyCredentials sharedKeyCredentials = default)
+        public SasQueryParameters GetNewQueueServiceSasCredentials(string queueName, StorageSharedKeyCredential sharedKeyCredentials = default)
             => new QueueSasBuilder
             {
                 QueueName = queueName,
@@ -116,7 +105,7 @@ namespace Azure.Storage.Queues.Tests
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new QueueAccountSasPermissions { Read = true, Update = true, Process = true, Add = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
 
         class DisposingQueue : IDisposable

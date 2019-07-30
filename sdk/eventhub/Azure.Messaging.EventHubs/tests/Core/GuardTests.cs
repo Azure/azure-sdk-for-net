@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class GuardTests
     {
         /// <summary>
@@ -41,6 +41,30 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { TimeSpan.FromHours(1) };
             yield return new object[] { TimeSpan.FromDays(0.3) };
             yield return new object[] { TimeSpan.FromTicks(1) };
+        }
+
+        /// <summary>
+        ///   Provides the invalid test cases for the <see cref="Guard.ArgumentInRange" /> tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ArgumentInRangeForTimeSpanInvalidCases()
+        {
+            yield return new object[] { TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(-2), TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(11), TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(10) };
+        }
+
+        /// <summary>
+        ///   Provides the valid test cases for the <see cref="Guard.ArgumentInRange" /> tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ArgumentInRangeForTimeSpanValidCases()
+        {
+            yield return new object[] { TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(0), TimeSpan.FromSeconds(10) };
+            yield return new object[] { TimeSpan.FromSeconds(9), TimeSpan.FromMilliseconds(0), TimeSpan.FromSeconds(10) };
+            yield return new object[] { TimeSpan.FromHours(1), TimeSpan.FromHours(0), TimeSpan.FromHours(10) };
         }
 
         /// <summary>
@@ -121,6 +145,32 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotEmptyOrWhitespace" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("         ")]
+        public void ArgumentNotEmptyOrWhitespaceEnforcesInvariants(string value)
+        {
+            Assert.That(() => Guard.ArgumentNotEmptyOrWhitespace(nameof(value), value), Throws.ArgumentException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotEmptyOrWhitespace" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("1")]
+        [TestCase("This is a thing")]
+        public void ArgumentNotEmptyOrWhitespaceAllowsValidValues(string value)
+        {
+            Assert.That(() => Guard.ArgumentNotEmptyOrWhitespace(nameof(value), value), Throws.Nothing);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="Guard.ArgumentNotNegative" /> method.
         /// </summary>
         ///
@@ -143,6 +193,38 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentAtLeast" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(2, 3)]
+        [TestCase(0, 1)]
+        [TestCase(1000, 2000)]
+        [TestCase(-1001, -1000)]
+        public void ArgumentAtLeastEnforcesInvariants(long value,
+                                                      long minValue)
+        {
+            Assert.That(() => Guard.ArgumentAtLeast(nameof(value), value, minValue), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentAtLeast" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(1, 0)]
+        [TestCase(10, -100)]
+        [TestCase(-5, -10)]
+        [TestCase(99, 0)]
+        [TestCase(0, 0)]
+        [TestCase(100, 0)]
+        public void ArgumentAtLeastAllowsValidValues(long value,
+                                                     long minValue)
+        {
+            Assert.That(() => Guard.ArgumentAtLeast(nameof(value), value, minValue), Throws.Nothing);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="Guard.ArgumentInRange" /> method.
         /// </summary>
         ///
@@ -151,9 +233,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(0, 1, 100)]
         [TestCase(1000, 1, 10)]
         [TestCase(-10001, -1000, 0)]
-        public void ArgumentInRangeEnforcesInvariants(int value,
-                                                      int minValue,
-                                                      int maxValue)
+        public void ArgumentInRangeForIntegerEnforcesInvariants(int value,
+                                                                int minValue,
+                                                                int maxValue)
         {
             Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
@@ -169,9 +251,69 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(99, 0, 100)]
         [TestCase(0, 0, 100)]
         [TestCase(100, 0, 100)]
-        public void ArgumentInRangeAllowsValidValues(int value,
-                                                     int minValue,
-                                                     int maxValue)
+        public void ArgumentInRangeForIntegerAllowsValidValues(int value,
+                                                               int minValue,
+                                                               int maxValue)
+        {
+            Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentInRange" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(2, 3, 4)]
+        [TestCase(0, 1, 100)]
+        [TestCase(1000, 1, 10)]
+        [TestCase(-10001, -1000, 0)]
+        public void ArgumentInRangeForLongEnforcesInvariants(long value,
+                                                             long minValue,
+                                                             long maxValue)
+        {
+            Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentInRange" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(1, 0, 2)]
+        [TestCase(10, -100, 100)]
+        [TestCase(-5, -10, 0)]
+        [TestCase(99, 0, 100)]
+        [TestCase(0, 0, 100)]
+        [TestCase(100, 0, 100)]
+        public void ArgumentInRangeForLongAllowsValidValues(long value,
+                                                            long minValue,
+                                                            long maxValue)
+        {
+            Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentInRange" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(ArgumentInRangeForTimeSpanInvalidCases))]
+        public void ArgumentInRangeForTimeSpanEnforcesInvariants(TimeSpan value,
+                                                                 TimeSpan minValue,
+                                                                 TimeSpan maxValue)
+        {
+            Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentInRange" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(ArgumentInRangeForTimeSpanValidCases))]
+        public void ArgumentInRangeForTimeSpanAllowsValidValues(TimeSpan value,
+                                                                TimeSpan minValue,
+                                                                TimeSpan maxValue)
         {
             Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.Nothing);
         }

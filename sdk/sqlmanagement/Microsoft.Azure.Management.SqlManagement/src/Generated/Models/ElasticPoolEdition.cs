@@ -19,5 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string Basic = "Basic";
         public const string Standard = "Standard";
         public const string Premium = "Premium";
+        public const string GeneralPurpose = "GeneralPurpose";
+        public const string BusinessCritical = "BusinessCritical";
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         public KeyClientTests(bool isAsync) : base(isAsync)
         {
-            Client = InstrumentClient(new KeyClient(new Uri("http://localhost"), new SystemCredential()));
+            Client = InstrumentClient(new KeyClient(new Uri("http://localhost"), new DefaultAzureCredential()));
         }
 
         public KeyClient Client { get; set; }
@@ -34,9 +34,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             var keyOperations = new List<KeyOperations>() { KeyOperations.Sign };
             var key = new KeyBase("name");
 
-            Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateKeyAsync(null, null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateKeyAsync(null, keyOperations));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateKeyAsync(key, null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, keyOperations));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, keyOperations));
         }
 
         [Test]
