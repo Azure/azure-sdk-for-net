@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http.Headers;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search.Tests.Utilities;
 using Microsoft.Rest.Azure;
@@ -22,6 +23,16 @@ namespace Microsoft.Azure.Search.Tests
         public const string OutputLayoutTextFieldName = "layoutText";
 
         public const string RootPathString = "/document";
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWebApiSkill()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill());
+            });
+        }
 
         [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrKeyPhrase()
@@ -905,6 +916,45 @@ namespace Microsoft.Azure.Search.Tests
             });
 
             return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateTestSkillsetWebApiSkill()
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/text"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "coolResult",
+                    TargetName = "myCoolResult"
+                }
+            };
+
+            skills.Add(new WebApiSkill(
+                    inputs, 
+                    outputs, 
+                    uri: "https://contoso.example.org", 
+                    description: "A simple web api skill", 
+                    context: RootPathString)
+                {
+                    HttpHeaders = new Dictionary<string, string>
+                    {
+                        ["x-ms-example"] = "example"
+                    },
+                    HttpMethod = "POST"
+                });
+
+            return new Skillset("webapiskillset", "Skillset for testing", skills);
         }
     }
 }
