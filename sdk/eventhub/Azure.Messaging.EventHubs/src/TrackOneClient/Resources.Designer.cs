@@ -67,7 +67,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The received message (delivery-id:{0}, size:{1} bytes) exceeds the limit ({2} bytes) currently allowed on the link..
+        ///   Looks up a localized string similar to The received message (delivery-id:{0}, size:{1} bytes) exceeds the limit ({2} bytes) currently allowed on the link.
         /// </summary>
         internal static string AmqpMessageSizeExceeded
         {
@@ -78,7 +78,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Please make sure either all or none of the following arguments are defined: &apos;{0},{1}&apos;..
+        ///   Looks up a localized string similar to Please make sure either all or none of the following arguments are defined: &apos;{0},{1}&apos;.
         /// </summary>
         internal static string ArgumentInvalidCombination
         {
@@ -89,7 +89,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The argument {0} is null or white space..
+        ///   Looks up a localized string similar to The argument {0} is null or white space.
         /// </summary>
         internal static string ArgumentNullOrWhiteSpace
         {
@@ -100,7 +100,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; cannot exceed {1} characters..
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; cannot exceed {1} characters.
         /// </summary>
         internal static string ArgumentStringTooBig
         {
@@ -111,7 +111,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Sending empty {0} is not a valid operation..
+        ///   Looks up a localized string similar to Sending empty {0} is not a valid operation.
         /// </summary>
         internal static string CannotSendAnEmptyEvent
         {
@@ -122,7 +122,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to There are no event data supplied. Please make sure input events are not empty..
+        ///   Looks up a localized string similar to There are no event data supplied. Please make sure input events are not empty.
         /// </summary>
         internal static string EventDataListIsNullOrEmpty
         {
@@ -133,7 +133,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Serialization operation failed due to unsupported type {0}..
+        ///   Looks up a localized string similar to Serialization operation failed due to unsupported type {0}.
         /// </summary>
         internal static string FailedToSerializeUnsupportedType
         {
@@ -144,7 +144,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The string has an invalid encoding format..
+        ///   Looks up a localized string similar to The string has an invalid encoding format.
         /// </summary>
         internal static string InvalidEncoding
         {
@@ -155,7 +155,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to System property &apos;{0}&apos; is missing in the event..
+        ///   Looks up a localized string similar to System property &apos;{0}&apos; is missing in the event.
         /// </summary>
         internal static string MissingSystemProperty
         {
@@ -166,7 +166,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to EventData batch with partitionKey cannot be sent on PartitionSender..
+        ///   Looks up a localized string similar to EventData batch with partitionKey cannot be sent on PartitionSender.
         /// </summary>
         internal static string PartitionSenderInvalidWithPartitionKeyOnBatch
         {
@@ -177,7 +177,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The {0} plugin has already been registered..
+        ///   Looks up a localized string similar to The {0} plugin has already been registered.
         /// </summary>
         internal static string PluginAlreadyRegistered
         {
@@ -188,7 +188,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to There was an error trying to register the {0} plugin..
+        ///   Looks up a localized string similar to There was an error trying to register the {0} plugin.
         /// </summary>
         internal static string PluginRegistrationFailed
         {
@@ -199,7 +199,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
+        ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters.
         /// </summary>
         internal static string ReceiverIdentifierOverMaxValue
         {
@@ -210,7 +210,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to {0} cannot be specified along with {1}. {0} alone should be sufficient to Authenticate the request..
+        ///   Looks up a localized string similar to {0} cannot be specified along with {1}. {0} alone should be sufficient to Authenticate the request.
         /// </summary>
         internal static string SasTokenShouldBeAlone
         {
@@ -221,7 +221,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Argument {0} must be a non-negative timeout value. The provided value was {1}..
+        ///   Looks up a localized string similar to Argument {0} must be a non-negative timeout value. The provided value was {1}.
         /// </summary>
         internal static string TimeoutMustBeNonNegative
         {
@@ -232,7 +232,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Argument {0} must be a positive timeout value. The provided value was {1}..
+        ///   Looks up a localized string similar to Argument {0} must be a positive timeout value. The provided value was {1}.
         /// </summary>
         internal static string TimeoutMustBePositive
         {
@@ -243,7 +243,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The provided token does not specify the &apos;Audience&apos; value..
+        ///   Looks up a localized string similar to The provided token does not specify the &apos;Audience&apos; value.
         /// </summary>
         internal static string TokenMissingAudience
         {
@@ -254,7 +254,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The provided token does not specify the &apos;ExpiresOn&apos; value..
+        ///   Looks up a localized string similar to The provided token does not specify the &apos;ExpiresOn&apos; value.
         /// </summary>
         internal static string TokenMissingExpiresOn
         {
@@ -265,7 +265,7 @@ namespace TrackOne
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The value supplied must be between {0} and {1}..
+        ///   Looks up a localized string similar to The value supplied must be between {0} and {1}.
         /// </summary>
         internal static string ValueOutOfRange
         {
