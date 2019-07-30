@@ -13,7 +13,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
     internal static class TestUtility
     {
-        //Modified to fix Track two TestEnvironment.cs 
+        //Modified to fit Track two TestEnvironment.cs 
         private static readonly Lazy<string> EventHubsConnectionStringInstance =
             new Lazy<string>( () => ReadEnvironmentVariable(TestConstants.EventHubsConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
