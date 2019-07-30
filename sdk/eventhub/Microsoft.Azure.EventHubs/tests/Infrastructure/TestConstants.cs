@@ -24,6 +24,6 @@ namespace Microsoft.Azure.EventHubs.Tests
         // General
         //internal const string DefultEventHubName = "eventhubs-sdk-test-hub";
         //internal const string AlternateConsumerGroupName = "sdk-test-consumer";
-        //internal static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromSeconds(30);
+          internal static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromSeconds(30);
     }
 }
