@@ -47,10 +47,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task CreateCheckpoint(EventData eventData)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task CreateCheckpoint(EventData eventData) => await CreateCheckpoint(eventData.Offset, eventData.SequenceNumber);
 
         /// <summary>
         ///   Creates a new checkpoint in the chosen storage service.
@@ -61,10 +58,20 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task CreateCheckpoint(long offset,
-                                     long sequenceNumber)
+        public async Task CreateCheckpoint(long offset,
+                                           long sequenceNumber)
         {
-            throw new NotImplementedException();
+            var checkpoint = new Checkpoint
+            (
+                Context.EventHubName,
+                Context.ConsumerGroup,
+                "TODO",
+                Context.PartitionId,
+                offset,
+                sequenceNumber
+            );
+
+            await Manager.CreateCheckpoint(checkpoint);
         }
     }
 }
