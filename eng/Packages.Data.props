@@ -31,7 +31,6 @@
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.1, 2.0.0)" />
     <PackageReference Update="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7" />
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19303.8" />
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Update="Microsoft.Build" Version="15.5.180" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.6.1" />
