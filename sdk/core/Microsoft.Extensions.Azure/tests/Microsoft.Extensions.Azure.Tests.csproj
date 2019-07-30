@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.Core.Extensions.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Extensions.Azure.csproj" />
   </ItemGroup>
 </Project>

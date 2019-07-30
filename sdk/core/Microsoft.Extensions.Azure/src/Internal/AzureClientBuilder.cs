@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Azure.Core.Extensions
+namespace Microsoft.Extensions.Azure.Internal
 {
     internal sealed class AzureClientBuilder<TClient, TOptions>: IAzureClientBuilder<TClient, TOptions> where TOptions : class
     {

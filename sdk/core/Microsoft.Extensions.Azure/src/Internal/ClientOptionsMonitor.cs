@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
+using System;
+using System.Collections.Generic;
 
-namespace Azure.Core.Extensions
+namespace Microsoft.Extensions.Azure.Internal
 {
     // Slightly adjusted copy of https://github.com/aspnet/Extensions/blob/master/src/Options/Options/src/OptionsMonitor.cs
     internal class ClientOptionsMonitor<TClient, TOptions> : IOptionsMonitor<TOptions>, IDisposable where TOptions : class
@@ -36,7 +36,7 @@ namespace Azure.Core.Extensions
 
         private void InvokeChanged(string name)
         {
-            name = name ?? Options.DefaultName;
+            name = name ?? Microsoft.Extensions.Options.Options.DefaultName;
             _cache.TryRemove(name);
             var options = Get(name);
             if (_onChange != null)
@@ -50,7 +50,7 @@ namespace Azure.Core.Extensions
         /// </summary>
         public TOptions CurrentValue
         {
-            get => Get(Options.DefaultName);
+            get => Get(Microsoft.Extensions.Options.Options.DefaultName);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.Core.Extensions
         /// </summary>
         public virtual TOptions Get(string name)
         {
-            name = name ?? Options.DefaultName;
+            name = name ?? Microsoft.Extensions.Options.Options.DefaultName;
             return _cache.GetOrAdd(name, () => _factory.Create(name));
         }
 

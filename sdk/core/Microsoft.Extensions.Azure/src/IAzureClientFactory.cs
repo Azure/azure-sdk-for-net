@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Core
+namespace Microsoft.Extensions.Azure
 {
     public interface IAzureClientFactory<TClient>
     {
