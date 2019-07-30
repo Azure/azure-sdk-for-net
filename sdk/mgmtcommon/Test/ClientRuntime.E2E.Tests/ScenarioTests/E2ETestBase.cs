@@ -7,8 +7,8 @@ namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Management.Storage;
     using Microsoft.Azure.Management.Storage.Models;
     using Microsoft.Azure.Test.HttpRecorder;
@@ -153,7 +153,11 @@ namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
                 var stoInput = new StorageAccountCreateParameters
                 {
                     Location = DEFAULT_LOCATION,
-                    AccountType = AccountType.StandardGRS
+                    Kind = Kind.Storage,
+                    Sku = new Microsoft.Azure.Management.Storage.Models.Sku
+                    {
+                        Name = SkuName.StandardGRS
+                    }
                 };
 
                 storageAccountOutput = StorageClient.StorageAccounts.Create(rgName,
