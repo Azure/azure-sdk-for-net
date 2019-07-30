@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace Azure.Core.Extensions.Tests
         public void AllowsResolvingFactoryAndCreatingClientInstance()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -30,7 +31,7 @@ namespace Azure.Core.Extensions.Tests
         public void ReturnsSameInstanceWhenResolvedMultipleTimes()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -46,7 +47,7 @@ namespace Azure.Core.Extensions.Tests
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder =>
-                builder.AddTestClient("Default", new Uri("http://localhost/"), options => options.Property = "Value"));
+                builder.AddTestClient(new Uri("http://localhost/")).ConfigureOptions(options => options.Property = "Value"));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -61,7 +62,7 @@ namespace Azure.Core.Extensions.Tests
         public void ExecutesConfigureDelegateOnOptions()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
             serviceCollection.Configure<TestClientOptions>("Default", options => options.Property = "Value");
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
@@ -77,8 +78,8 @@ namespace Azure.Core.Extensions.Tests
         public void SubsequentRegistrationOverrides()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://otherhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://otherhost/")));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -92,9 +93,10 @@ namespace Azure.Core.Extensions.Tests
         public void CanRegisterMultipleClients()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder
-                .AddTestClient("Default", new Uri("http://localhost/"), options => options.Property = "Value1")
-                .AddTestClient("OtherClient", new Uri("http://otherhost/"), options => options.Property = "Value2"));
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClient(new Uri("http://localhost/")).ConfigureOptions(options => options.Property = "Value1");
+                builder.AddTestClient(new Uri("http://otherhost/")).WithName("OtherClient").ConfigureOptions(options => options.Property = "Value2");
+            });
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -116,7 +118,7 @@ namespace Azure.Core.Extensions.Tests
         {
             var configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "http://localhost/"));
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", configuration));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(configuration));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -138,7 +140,7 @@ namespace Azure.Core.Extensions.Tests
                 );
 
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", configuration));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(configuration));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -155,7 +157,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreateClientThrowsWhenClientIsNotRegistered()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -168,7 +170,7 @@ namespace Azure.Core.Extensions.Tests
         public void RetrhowsExceptionFromClientCreation()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", "throw"));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient("throw"));
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
 
@@ -177,6 +179,155 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.AreSame(otherException, exception);
             Assert.AreEqual(exception.Message, "Throwing");
+        }
+
+        [Test]
+        public void CanSetGlobalOptions()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClient("TestClient1");
+                builder.AddTestClientWithCredentials(new Uri("http://localhost"));
+                builder.ConfigureDefaults(options => options.Diagnostics.ApplicationId = "GlobalAppId");
+            });
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+
+            TestClient testClient = provider.GetService<IAzureClientFactory<TestClient>>().CreateClient("Default");
+            TestClientWithCredentials testClientWithCredentials = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>().CreateClient("Default");
+
+            Assert.AreEqual("GlobalAppId", testClient.Options.Diagnostics.ApplicationId);
+            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.Diagnostics.ApplicationId);
+        }
+
+        [Test]
+        public void CanSetGlobalOptionsUsingConfiguration()
+        {
+            var configuration = GetConfiguration(new KeyValuePair<string, string>("Diagnostics:ApplicationId", "GlobalAppId"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClient("TestClient1");
+                builder.AddTestClientWithCredentials(new Uri("http://localhost"));
+                builder.ConfigureDefaults(configuration);
+            });
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+
+            TestClient testClient = provider.GetService<IAzureClientFactory<TestClient>>().CreateClient("Default");
+            TestClientWithCredentials testClientWithCredentials = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>().CreateClient("Default");
+
+            Assert.AreEqual("GlobalAppId", testClient.Options.Diagnostics.ApplicationId);
+            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.Diagnostics.ApplicationId);
+        }
+
+        [Test]
+        public void ResolvesDefaultClientByDefault()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Connection string"));
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            var client = provider.GetService<TestClient>();
+
+            Assert.AreEqual("Connection string", client.ConnectionString);
+        }
+
+        [Test]
+        public void UsesProvidedCredentialIfOverGlobal()
+        {
+            var serviceCollection = new ServiceCollection();
+            var defaultAzureCredential = new ManagedIdentityCredential();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClientWithCredentials(new Uri("http://localhost")).WithCredential(defaultAzureCredential));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
+
+            Assert.AreSame(defaultAzureCredential, client.Credential);
+        }
+
+        [Test]
+        public void UsesGlobalCredential()
+        {
+            var serviceCollection = new ServiceCollection();
+            var defaultAzureCredential = new ManagedIdentityCredential();
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClientWithCredentials(new Uri("http://localhost"));
+                builder.UseCredential(defaultAzureCredential);
+            });
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
+
+            Assert.AreSame(defaultAzureCredential, client.Credential);
+        }
+
+        [Test]
+        public void UsesCredentialFromGlobalConfiguration()
+        {
+            var configuration = GetConfiguration(new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("clientSecret", "ConfigurationClientSecret"),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClientWithCredentials(new Uri("http://localhost"));
+                builder.ConfigureDefaults(configuration);
+            });
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
+
+            Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
+            var clientSecretCredential = (ClientSecretCredential)client.Credential;
+
+            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
+            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
+            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+        }
+
+        [Test]
+        public void UsesCredentialFromConfiguration()
+        {
+            var configuration = GetConfiguration(
+                new KeyValuePair<string, string>("uri", "http://localhost/"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("clientSecret", "ConfigurationClientSecret"),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder
+                .AddTestClientWithCredentials(configuration));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
+
+            Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
+            var clientSecretCredential = (ClientSecretCredential)client.Credential;
+
+            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
+            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
+            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+        }
+
+        [Test]
+        public void SupportsSettingVersion()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")).WithVersion(TestClientOptions.ServiceVersion.B));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClient client = provider.GetService<TestClient>();
+            Assert.AreEqual(TestClientOptions.ServiceVersion.B, client.Options.Version);
+        }
+
+        [Test]
+        public void ThrowsIfCredentialIsNullButIsRequired()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")).WithCredential((TokenCredential)null));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => provider.GetService<TestClient>());
+            Assert.AreEqual("Client registration requires a TokenCredential. Configure it using UseCredential method.", exception.Message);
         }
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)

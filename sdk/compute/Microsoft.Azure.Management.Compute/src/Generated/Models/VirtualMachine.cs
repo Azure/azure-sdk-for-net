@@ -76,6 +76,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the proximity placement group that the virtual machine should be
         /// assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2018-04-01.</param>
+        /// <param name="host">Specifies information about the dedicated host
+        /// that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum
+        /// api-version: 2018-10-01.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="instanceView">The virtual machine instance
@@ -99,7 +102,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
@@ -111,6 +114,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiagnosticsProfile = diagnosticsProfile;
             AvailabilitySet = availabilitySet;
             ProximityPlacementGroup = proximityPlacementGroup;
+            Host = host;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
             LicenseType = licenseType;
@@ -207,6 +211,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the dedicated host that
+        /// the virtual machine resides in.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2018-10-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.host")]
+        public SubResource Host { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.

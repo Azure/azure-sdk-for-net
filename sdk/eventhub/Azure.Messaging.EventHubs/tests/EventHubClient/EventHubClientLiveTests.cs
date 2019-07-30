@@ -21,8 +21,8 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     /// <remarks>
-    ///   These tests have a depenency on live Azure services and may
-    ///   incur costs for the assocaied Azure subscription.
+    ///   These tests have a dependency on live Azure services and may
+    ///   incur costs for the associated Azure subscription.
     /// </remarks>
     ///
     [TestFixture]
@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
                     Assert.That(partitionProperties.EventHubPath, Is.EqualTo(connectionProperties.EventHubPath).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(Int64)), "The beginning sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(Int64)), "The last sequance number should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(Int64)), "The last sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(Int64)), "The last offset should have been populated.");
                 }
             }
@@ -296,7 +296,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 var clientOptions = new EventHubClientOptions
                 {
                     Proxy = new WebProxy("http://1.2.3.4:9999"),
-                    TransportType = TransportType.AmqpWebSockets
+                    TransportType = TransportType.AmqpWebSockets,
+                    RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(2) }
                 };
 
                 await using (var client = new EventHubClient(connectionString))
@@ -304,9 +305,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    Assert.That(async () => await invalidProxyClient.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>());
-                    Assert.That(async () => await invalidProxyClient.GetPropertiesAsync(), Throws.InstanceOf<WebSocketException>());
-                    Assert.That(async () => await invalidProxyClient.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>());
+                    Assert.That(async () => await invalidProxyClient.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                    Assert.That(async () => await invalidProxyClient.GetPropertiesAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                    Assert.That(async () => await invalidProxyClient.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                 }
             }
         }

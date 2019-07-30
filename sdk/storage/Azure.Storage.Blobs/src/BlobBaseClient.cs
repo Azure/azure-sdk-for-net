@@ -622,6 +622,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                     async: async,
+                    operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -926,6 +927,7 @@ namespace Azure.Storage.Blobs.Specialized
                         leaseId: destinationAccessConditions?.LeaseAccessConditions?.LeaseId,
                         metadata: metadata,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.StartCopyFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1065,6 +1067,7 @@ namespace Azure.Storage.Blobs.Specialized
                         copyId: copyId,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.AbortCopyFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1220,6 +1223,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Delete",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1321,7 +1325,8 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        cancellationToken: cancellationToken)
+                        cancellationToken: cancellationToken,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Undelete")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1454,6 +1459,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1603,6 +1609,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                             ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     return new Response<BlobInfo>(
@@ -1754,6 +1761,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                             ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     return new Response<BlobInfo>(
@@ -1903,6 +1911,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2066,6 +2075,7 @@ namespace Azure.Storage.Blobs.Specialized
                         tier: accessTier,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

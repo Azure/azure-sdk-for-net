@@ -62,8 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// settings.</param>
         /// <param name="customRoutes">The reference of the address space
         /// resource which represents the custom routes address space specified
-        /// by the the customer for virtual network gateway and
-        /// VpnClient.</param>
+        /// by the customer for virtual network gateway and VpnClient.</param>
         /// <param name="resourceGuid">The resource GUID property of the
         /// VirtualNetworkGateway resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -158,7 +157,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the reference of the address space resource which
-        /// represents the custom routes address space specified by the the
+        /// represents the custom routes address space specified by the
         /// customer for virtual network gateway and VpnClient.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customRoutes")]

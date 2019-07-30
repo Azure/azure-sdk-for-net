@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
         private const double RetryExponentialBackoffSeconds = 0.5;
 
-        /// <summary>The number of seconds to use as the basis for applying jitter to retry backoff calculations.</summary>
+        /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
         private const double RetryBaseJitterSeconds = 3.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         /// <summary>The token credential to be used with the Event Hubs management client.</summary>
         private static ManagementToken s_managementToken;
 
-        /// <summary>Serves as a sentinal flag to denote when the instance has been disposed.</summary>
+        /// <summary>Serves as a sentinel flag to denote when the instance has been disposed.</summary>
         private bool _disposed = false;
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         ///
         /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
         /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
+        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry back-off calculations.</param>
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         ///
         /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
         /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
+        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry back-off calculations.</param>
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
@@ -226,8 +226,8 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         ///   Calculates the retry delay to use for management-related operations.
         /// </summary>
         ///
-        /// <param name="attempt">The current attempt numner.</param>
-        /// <param name="exponentialBackoffSeconds">The exponential backoff amount,, in seconds.</param>
+        /// <param name="attempt">The current attempt number.</param>
+        /// <param name="exponentialBackoffSeconds">The exponential back-off amount,, in seconds.</param>
         /// <param name="baseJitterSeconds">The amount of base jitter to include, in seconds.</param>
         ///
         /// <returns>The interval to wait before retrying the attempted operation.</returns>
@@ -236,7 +236,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
             TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds));
 
         /// <summary>
-        ///   Aquires a JWT token for use with the Event Hubs management client.
+        ///   Acquires a JWT token for use with the Event Hubs management client.
         /// </summary>
         ///
         /// <returns>The token to use for management operations against the Event Hubs Live test namespace.</returns>
@@ -247,7 +247,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
 
             // If there was no current token, or it is within the buffer for expiration, request a new token.
             // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
-            // this is test infrastructure, just allow the aquired token to replace the current one without attempting to
+            // this is test infrastructure, just allow the acquired token to replace the current one without attempting to
             // coordinate or ensure that the most recent is kept.
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
@@ -258,7 +258,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
 
                 if ((String.IsNullOrEmpty(result?.AccessToken)))
                 {
-                    throw new AuthenticationException("Unable to aquire an Active Directory token for the Event Hubs management client.");
+                    throw new AuthenticationException("Unable to acquire an Active Directory token for the Event Hubs management client.");
                 }
 
                 token = new ManagementToken(result.AccessToken, result.ExpiresOn);

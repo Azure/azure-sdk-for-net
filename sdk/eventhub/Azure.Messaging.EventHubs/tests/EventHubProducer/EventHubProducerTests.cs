@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
@@ -18,7 +19,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class EventHubProducerTests
     {
         /// <summary>
@@ -28,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheProducer()
         {
-            Assert.That(() => new EventHubProducer(null, "dummy", new EventHubProducerOptions()), Throws.ArgumentNullException);
+            Assert.That(() => new EventHubProducer(null, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHubPath(string eventHubPath)
         {
-            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), eventHubPath, new EventHubProducerOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), eventHubPath, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -50,7 +51,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheOptions()
         {
-            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), "dummy", null), Throws.ArgumentNullException);
+            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), "dummy", null, Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorValidatesTheDefaultRetryPolicy()
+        {
+            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), "dummy", new EventHubProducerOptions(), null), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -63,38 +74,101 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("someValue")]
         public void ConstructorSetsTheEventHubPath(string eventHubPath)
         {
-            var producer = new EventHubProducer(new ObservableTransportProducerMock(), eventHubPath, new EventHubProducerOptions());
+            var producer = new EventHubProducer(new ObservableTransportProducerMock(), eventHubPath, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
             Assert.That(producer.EventHubPath, Is.EqualTo(eventHubPath));
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorSetsTheRetryPolicy()
+        {
+            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var producer = new EventHubProducer(new ObservableTransportProducerMock(), "path", new EventHubProducerOptions(), retryPolicy);
+            Assert.That(producer.RetryPolicy, Is.SameAs(retryPolicy));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.RetryPolicy" />
+        ///   setter.
+        /// </summary>
+        ///
+        [Test]
+        public void SettingTheRetryUpdatesState()
+        {
+            var retryOptions = new RetryOptions
+            {
+                Delay = TimeSpan.FromSeconds(1),
+                MaximumDelay = TimeSpan.FromSeconds(2),
+                TryTimeout = TimeSpan.FromSeconds(3),
+                MaximumRetries = 4,
+                Mode = RetryMode.Fixed
+            };
+
+            var customRetry = Mock.Of<EventHubRetryPolicy>();
+            var producerOptions = new EventHubProducerOptions { RetryOptions = retryOptions };
+            var producer = new EventHubProducer(new ObservableTransportProducerMock(), "dummy", producerOptions, new BasicRetryPolicy(retryOptions));
+
+            Assert.That(producer.RetryPolicy, Is.InstanceOf<BasicRetryPolicy>(), "The retry policy should have been created from options");
+
+            producer.RetryPolicy = customRetry;
+            Assert.That(producer.RetryPolicy, Is.SameAs(customRetry), "The custom retry policy should have been set.");
+
+            var activeOptions = (EventHubProducerOptions)
+                typeof(EventHubProducer)
+                    .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(producer);
+
+            Assert.That(activeOptions.RetryOptions, Is.Null, "Setting a custom policy should clear the retry options.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.RetryPolicy" />
+        ///   setter.
+        /// </summary>
+        ///
+        [Test]
+        public void SettingTheRetryUpdatesTheTransportProducer()
+        {
+            var customRetry = Mock.Of<EventHubRetryPolicy>();
+            var transportProducer = new ObservableTransportProducerMock();
+            var producerOptions = new EventHubProducerOptions();
+            var producer = new EventHubProducer(transportProducer, "dummy", producerOptions, Mock.Of<EventHubRetryPolicy>());
+
+            producer.RetryPolicy = customRetry;
+            Assert.That(transportProducer.UpdateRetryPolicyCalledWith, Is.SameAs(customRetry), "The custom retry policy should have been passed to the transport producer.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
         public void SendSingleWithoutOptionsRequiresAnEvent()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(EventData)), Throws.ArgumentNullException);
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
         public void SendSingleRequiresAnEvent()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(EventData), new SendOptions()), Throws.ArgumentNullException);
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -112,7 +186,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -130,63 +204,106 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
         public void SendWithoutOptionsRequiresEvents()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(IEnumerable<EventData>)), Throws.ArgumentNullException);
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
         public void SendRequiresEvents()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(IEnumerable<EventData>), new SendOptions()), Throws.ArgumentNullException);
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public void SendRequiresTheBatch()
+        {
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.SendAsync(default(EventDataBatch)), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
         public void SendAllowsAPartitionHashKey()
         {
-            var batchingOptions = new SendOptions { PartitionKey = "testKey" };
+            var sendOptions = new SendOptions { PartitionKey = "testKey" };
             var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
-            Assert.That(async () => await producer.SendAsync(events, batchingOptions), Throws.Nothing);
+            Assert.That(async () => await producer.SendAsync(events, sendOptions), Throws.Nothing);
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public void SendAllowsAPartitionHashKeyWithABatch()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "testKey" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
         public void SendForASpecificPartitionDoesNotAllowAPartitionHashKey()
         {
-            var batchingOptions = new SendOptions { PartitionKey = "testKey" };
+            var sendOptions = new SendOptions { PartitionKey = "testKey" };
             var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" });
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
 
-            Assert.That(async () => await producer.SendAsync(events, batchingOptions), Throws.InvalidOperationException);
+            Assert.That(async () => await producer.SendAsync(events, sendOptions), Throws.InvalidOperationException);
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public void SendForASpecificPartitionDoesNotAllowAPartitionHashKeyWithABatch()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "testKey" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.SendAsync(batch), Throws.InvalidOperationException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -194,18 +311,18 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = Mock.Of<IEnumerable<EventData>>();
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.SendAsync(events);
 
-            (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWithParameters;
+            (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWith;
 
             Assert.That(calledWithEvents, Is.SameAs(events), "The events should be the same instance.");
             Assert.That(calledWithOptions, Is.Not.Null, "A default set of options should be used.");
         }
 
         /// <summary>
-        ///   Verifies finctionality of the <see cref="EventHubProducer.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
         /// </summary>
         ///
         [Test]
@@ -214,14 +331,98 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = Mock.Of<IEnumerable<EventData>>();
             var options = new SendOptions();
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.SendAsync(events, options);
 
-            (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWithParameters;
+            (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWith;
 
             Assert.That(calledWithEvents, Is.SameAs(events), "The events should be the same instance.");
             Assert.That(calledWithOptions, Is.SameAs(options), "The options should be the same instance");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.SendAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public async Task SendInvokesTheTransportProducerWithABatch()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "testKey" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            await producer.SendAsync(batch);
+            Assert.That(transportProducer.SendBatchCalledWith, Is.SameAs(batch), "The batch should be the same instance.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public void CreateBatchForASpecificPartitionDoesNotAllowAPartitionHashKey()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "testKey" };
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.CreateBatchAsync(batchOptions), Throws.InvalidOperationException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchInvokesTheTransportProducer()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            await producer.CreateBatchAsync(batchOptions);
+
+            Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.Null, "The batch creation should have passed options.");
+            Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.SameAs(batchOptions), "The options should have been cloned.");
+            Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(batchOptions.PartitionKey), "The partition key should match.");
+            Assert.That(transportProducer.CreateBatchCalledWith.MaximumizeInBytes, Is.EqualTo(batchOptions.MaximumizeInBytes), "The maximum size should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchDefaultsBatchOptions()
+        {
+            var expectedOptions = new BatchOptions();
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+
+            await producer.CreateBatchAsync();
+
+            Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.Null, "The batch creation should have passed options.");
+            Assert.That(transportProducer.CreateBatchCalledWith, Is.Not.SameAs(expectedOptions), "The options should have been cloned.");
+            Assert.That(transportProducer.CreateBatchCalledWith.PartitionKey, Is.EqualTo(expectedOptions.PartitionKey), "The partition key should match.");
+            Assert.That(transportProducer.CreateBatchCalledWith.MaximumizeInBytes, Is.EqualTo(expectedOptions.MaximumizeInBytes), "The maximum size should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducer.CreateBatchAsync"/>
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchSetsTheSendOptionsForTheEventBatch()
+        {
+            var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
+            var transportProducer = new ObservableTransportProducerMock();
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var eventBatch = await producer.CreateBatchAsync(batchOptions);
+
+            Assert.That(eventBatch.SendOptions, Is.SameAs(transportProducer.CreateBatchCalledWith), "The batch options should have used for the send options.");
+            ;
         }
 
         /// <summary>
@@ -233,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheTransportProducer()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.CloseAsync();
 
@@ -249,7 +450,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloseClosesTheTransportProducer()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions());
+            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             producer.Close();
 
@@ -263,14 +464,35 @@ namespace Azure.Messaging.EventHubs.Tests
         private class ObservableTransportProducerMock : TransportEventHubProducer
         {
             public bool WasCloseCalled = false;
-            public (IEnumerable<EventData>, SendOptions) SendCalledWithParameters;
+            public EventHubRetryPolicy UpdateRetryPolicyCalledWith;
+            public (IEnumerable<EventData>, SendOptions) SendCalledWith;
+            public EventDataBatch SendBatchCalledWith;
+            public BatchOptions CreateBatchCalledWith;
 
             public override Task SendAsync(IEnumerable<EventData> events,
-                                           SendOptions batchOptions,
+                                           SendOptions sendOptions,
                                            CancellationToken cancellationToken)
             {
-                SendCalledWithParameters = (events, batchOptions);
+                SendCalledWith = (events, sendOptions);
                 return Task.CompletedTask;
+            }
+            public override Task SendAsync(EventDataBatch batch,
+                                           CancellationToken cancellationToken)
+            {
+                SendBatchCalledWith = batch;
+                return Task.CompletedTask;
+            }
+
+            public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy)
+            {
+                UpdateRetryPolicyCalledWith = newRetryPolicy;
+            }
+
+            public override Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+                                                                       CancellationToken cancellationToken)
+            {
+                CreateBatchCalledWith = options;
+                return Task.FromResult((TransportEventBatch)new MockTransportBatch());
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken)
@@ -278,6 +500,22 @@ namespace Azure.Messaging.EventHubs.Tests
                 WasCloseCalled = true;
                 return Task.CompletedTask;
             }
+        }
+
+        /// <summary>
+        ///   Serves as a non-functional transport event batch for satisfying the
+        ///   non-null constraints of the <see cref="EventDataBatch" /> created by
+        ///   the producer being tested.
+        /// </summary>
+        ///
+        private class MockTransportBatch : TransportEventBatch
+        {
+            public override long MaximumSizeInBytes { get; }
+            public override long SizeInBytes { get; }
+            public override int Count { get; }
+            public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
+            public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
+            public override void Dispose() => throw new NotImplementedException();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">The current state of the gallery
         /// Image Version.</param>
-        public GalleryImageVersion(string location, GalleryImageVersionPublishingProfile publishingProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), GalleryImageVersionStorageProfile storageProfile = default(GalleryImageVersionStorageProfile), ReplicationStatus replicationStatus = default(ReplicationStatus))
+        public GalleryImageVersion(string location, GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
             : base(location, id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageProfile")]
-        public GalleryImageVersionStorageProfile StorageProfile { get; private set; }
+        public GalleryImageVersionStorageProfile StorageProfile { get; set; }
 
         /// <summary>
         /// </summary>
@@ -92,13 +92,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public override void Validate()
         {
             base.Validate();
-            if (PublishingProfile == null)
+            if (StorageProfile == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PublishingProfile");
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageProfile");
             }
-            if (PublishingProfile != null)
+            if (StorageProfile != null)
             {
-                PublishingProfile.Validate();
+                StorageProfile.Validate();
             }
         }
     }

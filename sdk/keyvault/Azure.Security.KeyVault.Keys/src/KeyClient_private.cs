@@ -9,9 +9,9 @@ namespace Azure.Security.KeyVault.Keys
 {
     public partial class KeyClient
     {
-        private const string ApiVersion = "7.0";
         private const string KeysPath = "/keys/";
         private const string DeletedKeysPath = "/deletedkeys/";
+        private readonly string ApiVersion;
 
         private async Task<Response<TResult>> SendRequestAsync<TContent, TResult>(RequestMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TContent : Model
@@ -161,47 +161,69 @@ namespace Azure.Security.KeyVault.Keys
             return new Response<T>(response, result);
         }
 
-        private async Task<PageResponse<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, CancellationToken cancellationToken)
+        private async Task<PageResponse<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
                 where T : Model
         {
-            // if we don't have a nextLink specified, use firstPageUri
-            if (nextLink != null)
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
+            scope.Start();
+
+            try
             {
-                firstPageUri = new Uri(nextLink);
+                // if we don't have a nextLink specified, use firstPageUri
+                if (nextLink != null)
+                {
+                    firstPageUri = new Uri(nextLink);
+                }
+
+                using (Request request = CreateRequest(RequestMethod.Get, firstPageUri))
+                {
+                    Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                    // read the respose
+                    Page<T> responseAsPage = new Page<T>(itemFactory);
+                    responseAsPage.Deserialize(response.ContentStream);
+
+                    // convert from the Page<T> to PageResponse<T>
+                    return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink?.ToString());
+                }
             }
-
-            using (Request request = CreateRequest(RequestMethod.Get, firstPageUri))
+            catch (Exception e)
             {
-                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                // read the respose
-                Page<T> responseAsPage = new Page<T>(itemFactory);
-                responseAsPage.Deserialize(response.ContentStream);
-
-                // convert from the Page<T> to PageResponse<T>
-                return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink?.ToString());
+                scope.Failed(e);
+                throw;
             }
         }
 
-        private PageResponse<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, CancellationToken cancellationToken)
+        private PageResponse<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
             where T : Model
         {
-            // if we don't have a nextLink specified, use firstPageUri
-            if (nextLink != null)
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
+            scope.Start();
+
+            try
             {
-                firstPageUri = new Uri(nextLink);
+                // if we don't have a nextLink specified, use firstPageUri
+                if (nextLink != null)
+                {
+                    firstPageUri = new Uri(nextLink);
+                }
+
+                using (Request request = CreateRequest(RequestMethod.Get, firstPageUri))
+                {
+                    Response response = SendRequest(request, cancellationToken);
+
+                    // read the respose
+                    Page<T> responseAsPage = new Page<T>(itemFactory);
+                    responseAsPage.Deserialize(response.ContentStream);
+
+                    // convert from the Page<T> to PageResponse<T>
+                    return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink?.ToString());
+                }
             }
-
-            using (Request request = CreateRequest(RequestMethod.Get, firstPageUri))
+            catch (Exception e)
             {
-                Response response = SendRequest(request, cancellationToken);
-
-                // read the respose
-                Page<T> responseAsPage = new Page<T>(itemFactory);
-                responseAsPage.Deserialize(response.ContentStream);
-
-                // convert from the Page<T> to PageResponse<T>
-                return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink?.ToString());
+                scope.Failed(e);
+                throw;
             }
         }
     }

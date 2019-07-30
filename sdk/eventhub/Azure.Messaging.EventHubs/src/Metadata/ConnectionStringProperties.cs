@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   Initializes a new instance of the <see cref="ConnectionStringProperties"/> struct.
         /// </summary>
         ///
-        /// <param name="endpoint">The endpoint of the EVent Hubs namespace.</param>
+        /// <param name="endpoint">The endpoint of the Event Hubs namespace.</param>
         /// <param name="eventHubPath">The path to the specific Event Hub under the namespace.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key, to use authorization.</param>
         /// <param name="sharedAccessKey">The shared access key to use for authorization.</param>

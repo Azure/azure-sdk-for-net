@@ -22,7 +22,7 @@ namespace Azure.Storage.Queues
         /// The Uri endpoint used by the object.
         /// </summary>
         private readonly Uri _uri;
-        
+
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
@@ -55,7 +55,7 @@ namespace Azure.Storage.Queues
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         public QueueServiceClient(string connectionString)
@@ -71,7 +71,7 @@ namespace Azure.Storage.Queues
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="options">
@@ -202,7 +202,7 @@ namespace Azure.Storage.Queues
         /// sequence of queues in the storage account.  Enumerating the
         /// queues may make multiple requests to the service while fetching
         /// all the values.  Queue names are returned in lexicographic order.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
         /// <param name="options">
@@ -224,7 +224,7 @@ namespace Azure.Storage.Queues
         /// collection of queues in the storage account.  Enumerating the
         /// queues may make multiple requests to the service while fetching
         /// all the values.  Queue names are returned in lexicographic order.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
         /// <param name="options">
@@ -238,7 +238,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         /// <remarks>
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
-        /// After getting a segment, process it, and then call ListQueuesSegment again (passing in the next marker) to get the next segment. 
+        /// After getting a segment, process it, and then call ListQueuesSegment again (passing in the next marker) to get the next segment.
         /// </remarks>
         public virtual AsyncCollection<QueueItem> GetQueuesAsync(
             GetQueuesOptions? options = default,
@@ -269,7 +269,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         /// <remarks>
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
-        /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment. 
+        /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment.
         /// </remarks>
         internal async Task<Response<QueuesSegment>> GetQueuesInternal(
             string marker,
@@ -575,7 +575,7 @@ namespace Azure.Storage.Queues
         #region CreateQueue
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="queueName">
@@ -590,6 +590,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A newly created <see cref="Response{QueueClient}"/>.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual Response<QueueClient> CreateQueue(
             string queueName,
             IDictionary<string, string> metadata = default,
@@ -602,7 +603,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="queueName">
@@ -617,6 +618,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A newly created <see cref="Response{QueueClient}"/>.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response<QueueClient>> CreateQueueAsync(
             string queueName,
             IDictionary<string, string> metadata = default,
@@ -631,7 +633,7 @@ namespace Azure.Storage.Queues
         #region DeleteQueue
         /// <summary>
         /// Deletes a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
         /// </summary>
         /// <param name="queueName">
@@ -643,6 +645,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
+        [ForwardsClientCalls]
         public virtual Response DeleteQueue(
             string queueName,
             CancellationToken cancellationToken = default) =>
@@ -650,7 +653,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
         /// </summary>
         /// <param name="queueName">
@@ -662,6 +665,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteQueueAsync(
             string queueName,
             CancellationToken cancellationToken = default) =>

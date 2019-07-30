@@ -6,6 +6,7 @@ omitted_paths:
   - Documentation/*
   - sdk/*mgmt*/*
   - sdk/*/*.Management.*/*
+  - samples/*
 language: net
 root_check_enabled: True
 required_readme_sections:
