@@ -66,7 +66,16 @@ namespace Azure
         /// enumerating asynchronously.
         /// </param>
         /// <returns>An async sequence of values.</returns>
-        public abstract IAsyncEnumerator<Response<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default);
+        public virtual async IAsyncEnumerator<Response<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            await foreach (Page<T> page in ByPage())
+            {
+                foreach (T value in page.Values)
+                {
+                    yield return new Response<T>(page.GetRawResponse(), value);
+                }
+            }
+        }
 
         /// <summary>
         /// Creates a string representation of an <see cref="AsyncCollection{T}"/>.
