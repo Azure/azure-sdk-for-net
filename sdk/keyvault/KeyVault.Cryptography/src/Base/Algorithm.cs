@@ -65,19 +65,11 @@ namespace Azure.Security.KeyVault.Cryptography
         #endregion
 
         #region Public Functions
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public AlgorithmInfo GetAlgorithmType()
-        {
-            return null;
-        }
+
         #endregion
 
         #region private functions
 
         #endregion
-
     }
 }

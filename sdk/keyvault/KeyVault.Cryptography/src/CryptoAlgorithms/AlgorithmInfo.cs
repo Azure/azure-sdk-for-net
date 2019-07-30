@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Cryptography
         protected AlgorithmInfo()
         {
             //EqualityComparer<string> ec = new 
-            AlgorithmMap = new Dictionary<string,int>(StringComparer.OrdinalIgnoreCase)
+            AlgorithmMap = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
             {
                 { nameof(Aes128CbcHmacSha256),Aes128CbcHmacSha256 },
                 { nameof(Ecdsa), Ecdsa }
@@ -83,17 +83,20 @@ namespace Azure.Security.KeyVault.Cryptography
 
             //Nullable<KeyValuePair<string, 
 
-            if(IsAlgorithmSupported(algorithmName))
+            if (IsAlgorithmSupported(algorithmName))
             {
                 AlgorithmName = algorithmName;
-                //AlgorithmId = AlgorithmMap.Where<>
             }
 
         }
+
         #endregion
 
         #region Public Functions
+        //public static T GetAlgorithmInfo<T>(AlgorithmType algorithmType) where T: Algorithm
+        //{
 
+        //}
         #endregion
 
         #region private functions
@@ -117,34 +120,47 @@ namespace Azure.Security.KeyVault.Cryptography
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="algorithmId"></param>
         /// <returns></returns>
-        KeyValuePair<string, int> GetAlgorithmMap(int algorithmId)
+        KeyValuePair<string, int> GetAlgorithmMap()
         {
-            return default(KeyValuePair<string,int>);
+            //algorithmId = algorithmId + 1;
+            return new KeyValuePair<string, int>("foo", 1);
         }
         #endregion
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public enum AlgorithmType
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            DES,
+
+            /// <summary>
+            /// 
+            /// </summary>
+            RSA
+        }
     }
 
+    //#region Symmteric
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    //interface ISymmetricType
+    //{
+    //    int DES { get; private set; }
+    //}
 
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    //public class AlgorithmType
+    //{
 
-
-    #region Symmteric
-    /// <summary>
-    /// 
-    /// </summary>
-    interface ISymmetricType
-    {
-        int DES { get; private set; }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class AlgorithmType
-    {
-
-    }
-    #endregion
+    //}
+    //#endregion
 }

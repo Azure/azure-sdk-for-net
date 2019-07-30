@@ -14,14 +14,6 @@ namespace Azure.Security.KeyVault.Cryptography.Client
     /// </summary>
     public abstract class CryptographyOperation
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Encrypt() { }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Decrypt() { }
     }
 }

@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
             Options = options;
             BearerTokenAuthenticationPolicy bearerAuthPolicy = new BearerTokenAuthenticationPolicy(credential, DEFAULT_KV_SCOPE_URI);
 
-            Pipeline = HttpPipelineBuilder.Build(Options, bufferResponse: true, bearerAuthPolicy);
+            Pipeline = HttpPipelineBuilder.Build(Options, bufferResponse: true, clientPolicies: bearerAuthPolicy);
         }
         #endregion
 
