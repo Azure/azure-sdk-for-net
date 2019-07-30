@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Identity;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
