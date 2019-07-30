@@ -13,6 +13,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
     internal static class TestUtility
     {
+        //Modified to fix Track two TestEnvironment.cs 
         private static readonly Lazy<string> EventHubsConnectionStringInstance =
             new Lazy<string>( () => ReadEnvironmentVariable(TestConstants.EventHubsConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
@@ -163,7 +164,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var connectionString = new EventHubsConnectionStringBuilder(EventHubsConnectionString);
 
             connectionString.EntityPath = connectionString.EntityPath ?? eventHubName;
-            connectionString.OperationTimeout = TimeSpan.FromSeconds(30);
+            connectionString.OperationTimeout = TestConstants.DefaultOperationTimeout;
 
             return connectionString.ToString();
         }
