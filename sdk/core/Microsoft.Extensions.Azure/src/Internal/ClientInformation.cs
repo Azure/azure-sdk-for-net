@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
 using System.Runtime.ExceptionServices;
+using Azure.Core;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     internal class ClientRegistration<TClient, TOptions>
     {

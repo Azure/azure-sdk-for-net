@@ -5,16 +5,14 @@ using System;
 using Azure.Core.Pipeline;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using Azure.Storage;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Azure.Core.Extensions.Samples
+namespace Microsoft.Extensions.Azure.Samples
 {
     public class Startup
     {

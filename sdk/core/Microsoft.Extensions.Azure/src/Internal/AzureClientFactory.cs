@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     internal class AzureClientFactory<TClient, TOptions>: IAzureClientFactory<TClient>
     {

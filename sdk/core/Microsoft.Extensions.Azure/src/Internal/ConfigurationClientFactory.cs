@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Identity;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Extensions.Configuration;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     internal static class ClientFactory
     {

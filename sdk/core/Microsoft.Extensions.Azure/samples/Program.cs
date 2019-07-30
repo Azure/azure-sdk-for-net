@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Azure.Core.Extensions.Samples
+namespace Microsoft.Extensions.Azure.Samples
 {
     public class Program
     {

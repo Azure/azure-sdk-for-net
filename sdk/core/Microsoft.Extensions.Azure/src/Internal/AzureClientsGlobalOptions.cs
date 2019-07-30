@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Identity;
-using System;
-using System.Collections.Generic;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     internal class AzureClientsGlobalOptions
     {

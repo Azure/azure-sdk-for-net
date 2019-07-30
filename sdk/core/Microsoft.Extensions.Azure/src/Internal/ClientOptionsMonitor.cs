@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     // Slightly adjusted copy of https://github.com/aspnet/Extensions/blob/master/src/Options/Options/src/OptionsMonitor.cs
     internal class ClientOptionsMonitor<TClient, TOptions> : IOptionsMonitor<TOptions>, IDisposable where TOptions : class

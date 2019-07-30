@@ -4,7 +4,7 @@
 using Azure.Core.Pipeline;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Azure.Core.Extensions.Samples
+namespace Microsoft.Extensions.Azure.Samples
 {
     internal class DependencyInjectionEnabledPolicy : SynchronousHttpPipelinePolicy
     {

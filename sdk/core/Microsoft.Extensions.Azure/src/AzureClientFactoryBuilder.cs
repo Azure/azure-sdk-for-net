@@ -4,7 +4,6 @@
 using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Core.Pipeline;
-using Microsoft.Extensions.Azure.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

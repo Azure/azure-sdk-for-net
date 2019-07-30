@@ -4,7 +4,7 @@
 using Azure.Core.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     internal sealed class AzureClientBuilder<TClient, TOptions>: IAzureClientBuilder<TClient, TOptions> where TOptions : class
     {

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 using Microsoft.Extensions.Options;
-using System;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     internal class ConfigureClientCredentials<TClient, TOptions> : IConfigureNamedOptions<AzureClientCredentialOptions<TClient>>
     {

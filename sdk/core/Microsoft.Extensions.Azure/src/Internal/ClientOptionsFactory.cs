@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Extensions.Options;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     // Slightly adjusted copy of https://github.com/aspnet/Extensions/blob/master/src/Options/Options/src/OptionsFactory.cs
     internal class ClientOptionsFactory<TClient, TOptions> where TOptions : class

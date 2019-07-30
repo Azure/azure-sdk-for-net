@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.Extensions.Azure.Internal
+namespace Microsoft.Extensions.Azure
 {
     internal class DefaultCredentialClientOptionsSetup<T> : IConfigureNamedOptions<AzureClientCredentialOptions<T>>
     {
