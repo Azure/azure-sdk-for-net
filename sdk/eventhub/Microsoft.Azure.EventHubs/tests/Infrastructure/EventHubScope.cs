@@ -15,9 +15,10 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Polly;
 
-// Ported from Track Two EventHubScope.cs
+
 namespace Microsoft.Azure.EventHubs.Tests.Infrastructure
 {
+    // Ported from Track Two EventHubScope.cs
     /// <summary>
     ///  Provides a dynamically created Event Hub instance which exists only in the context
     ///  of the scope; disposal removes the instance.
