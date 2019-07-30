@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs
         public long SequenceNumber => SystemProperties.SequenceNumber;
 
         /// <summary>
-        ///   The offset of the the event when it was received from the associated Event Hub partition.
+        ///   The offset of the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
         public long Offset => SystemProperties.Offset;

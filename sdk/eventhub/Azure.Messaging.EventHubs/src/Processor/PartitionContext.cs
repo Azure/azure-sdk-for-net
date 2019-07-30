@@ -16,7 +16,8 @@ namespace Azure.Messaging.EventHubs.Processor
         public string PartitionId { get; }
 
         /// <summary>
-        ///   TODO. (EventHubPath?)
+        ///   The path of the specific Event Hub that the client is connected to, relative
+        ///   to the Event Hubs namespace that contains it.
         /// </summary>
         ///
         public string EventHubName { get; }

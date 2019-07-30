@@ -9,62 +9,72 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO.
+    ///   An event processor constantly receives <see cref="EventData" /> from every partition in the context of a
+    ///   given consumer group.  The received data is sent to an <see cref="IPartitionProcessor" /> to be processed.
     /// </summary>
     ///
     public class EventProcessor
     {
         /// <summary>
-        ///   TODO.
+        ///   A unique name used to identify this event processor.
         /// </summary>
         ///
         public string Name { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The client used to interact with the Azure Event Hubs service.
         /// </summary>
         ///
         private EventHubClient Client { get; }
 
         /// <summary>
-        ///   The name of the consumer group that this event processor is associated with.  Events will be
+        ///   The name of the consumer group this event processor is associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
         ///
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   An instance of a class that implements the <see cref="IPartitionProcessorFactory" /> interface.
+        ///   It's provided by the user and it's used to create partition processors.
         /// </summary>
         ///
         private IPartitionProcessorFactory PartitionProcessorFactory { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   An instance of a class that implements the <see cref="IPartitionManager" /> interface.
+        ///   It's provided by the user and it's used to interact with the storage system, dealing with
+        ///   leases and checkpoints.
         /// </summary>
         ///
         private IPartitionManager PartitionManager { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The set of options to use for this event processor.
         /// </summary>
         ///
         private EventProcessorOptions Options { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The set of partition pumps used by this event processor.  Partition ids are used as keys.
         /// </summary>
         ///
         private Dictionary<string, PartitionPump> Pumps { get; set; }
 
         /// <summary>
+        ///   A boolean value indicating whether this event processor is currently running or not.
+        /// </summary>
+        ///
+        private bool IsRunning { get; set; } = false;
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubClient">TODO.</param>
-        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
-        /// <param name="partitionProcessorFactory">TODO.</param>
-        /// <param name="partitionManager">TODO.</param>
+        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionProcessorFactory">A factory used to create partition processors.  Its implementation must be provided by the user.</param>
+        /// <param name="partitionManager">A partition manager used to interact with the storage system.  Its implementation must be provided by the user.</param>
         ///
         public EventProcessor(EventHubClient eventHubClient,
                               string consumerGroup,
@@ -74,8 +84,14 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   TODO.
+        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
         /// </summary>
+        ///
+        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionProcessorFactory">A factory used to create partition processors.  Its implementation must be provided by the user.</param>
+        /// <param name="partitionManager">A partition manager used to interact with the storage system.  Its implementation must be provided by the user.</param>
+        /// <param name="options">The set of options to use for this event processor.</param>
         ///
         public EventProcessor(EventHubClient eventHubClient,
                               string consumerGroup,
@@ -98,40 +114,55 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   TODO.
-        ///   What to do in case of exception? T1 logs it and sets processor to null.
-        ///   T1 logs it and does some retries on Consumer failure. If it still fails, report it to Processor.
+        ///   Starts the event processor.  In case it's already running, nothing happens.
         /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public async Task Start()
         {
-            var partitionIds = await Client.GetPartitionIdsAsync();
-            Pumps = new Dictionary<string, PartitionPump>();
-
-            foreach(var partitionId in partitionIds)
+            //   What to do in case of exception? T1 logs it and sets processor to null.
+            //   T1 logs it and does some retries on Consumer failure. If it still fails, report it to Processor.
+            if (!IsRunning)
             {
-                var partitionContext = new PartitionContext(partitionId, Client.EventHubPath, ConsumerGroup);
-                var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
+                Pumps = new Dictionary<string, PartitionPump>();
 
-                var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+                var partitionIds = await Client.GetPartitionIdsAsync();
 
-                var partitionPump = new PartitionPump(Client, ConsumerGroup, partitionId, partitionProcessor, Options);
+                foreach (var partitionId in partitionIds)
+                {
+                    var partitionContext = new PartitionContext(partitionId, Client.EventHubPath, ConsumerGroup);
+                    var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
-                Pumps.Add(partitionId, partitionPump);
+                    var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
-                await partitionPump.Start();
+                    var partitionPump = new PartitionPump(Client, ConsumerGroup, partitionId, partitionProcessor, Options);
+                    Pumps.Add(partitionId, partitionPump);
+
+                    await partitionPump.Start();
+                }
+
+                IsRunning = true;
             }
         }
 
         /// <summary>
-        ///   TODO.
+        ///   Stops the event processor.  In case it hasn't been started, nothing happens.
         /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public async Task Stop()
         {
-            foreach (var partitionPump in Pumps)
+            if (IsRunning)
             {
-                await partitionPump.Value.Stop();
+                foreach (var partitionPump in Pumps)
+                {
+                    await partitionPump.Value.Stop();
+                }
+
+                Pumps = null;
+                IsRunning = false;
             }
         }
     }

@@ -4,70 +4,78 @@
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO.
+    ///   A partition pump constantly receives <see cref="EventData" /> from a single partition in the context of a
+    ///   given consumer group.  The received data is sent to an <see cref="IPartitionProcessor" /> to be processed.
     /// </summary>
     ///
     internal class PartitionPump
     {
         /// <summary>
-        ///   TODO.
+        ///   The client used to interact with the Azure Event Hubs service.
         /// </summary>
         ///
         private EventHubClient Client { get; }
 
         /// <summary>
-        ///   The name of the consumer group that this partition pump is associated with.  Events will be
+        ///   The name of the consumer group this partition pump is associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
         ///
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The identifier of the Event Hub partition this partition pump is associated with.  Events will be
+        ///   read only from this partition.
         /// </summary>
         ///
         private string PartitionId { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   An instance of a class that implements the <see cref="IPartitionProcessor" /> interface.
+        ///   It's provided by the constructor caller and it's used to process events and errors.
         /// </summary>
         ///
         private IPartitionProcessor PartitionProcessor { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The set of options to use for this partition pump.
         /// </summary>
         ///
         private EventProcessorOptions Options { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
         /// </summary>
         ///
         private CancellationTokenSource TokenSource { get; set; }
 
         /// <summary>
-        ///   TODO.
+        ///   The consumer used to receive events from the Azure Event Hubs service.
         /// </summary>
         ///
         private EventHubConsumer Consumer { get; set; }
 
         /// <summary>
-        ///   TODO.
+        ///   The running task responsible for receiving events from the Azure Event Hubs service.
         /// </summary>
         ///
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   TODO.
+        ///   Initializes a new instance of the <see cref="PartitionPump"/> class.
         /// </summary>
+        ///
+        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
+        /// <param name="partitionProcessor">A partition processor used to process events and errors.  Its implementation must be provided by the caller.</param>
+        /// <param name="options">The set of options to use for this partition pump.</param>
         ///
         internal PartitionPump(EventHubClient eventHubClient,
                                string consumerGroup,
@@ -89,45 +97,63 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   TODO.
+        ///   Starts the partition pump.  In case it's already running, nothing happens.
         /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public async Task Start()
         {
-            Consumer = Client.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
+            if (RunningTask == null)
+            {
+                TokenSource = new CancellationTokenSource();
 
-            TokenSource = new CancellationTokenSource();
+                Consumer = Client.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
 
-            // TODO: T1 does it first
-            await PartitionProcessor.Initialize().ConfigureAwait(false);
+                await PartitionProcessor.Initialize().ConfigureAwait(false);
 
-            RunningTask = Run(TokenSource.Token);
+                RunningTask = Run(TokenSource.Token);
+            }
         }
 
         /// <summary>
-        ///   TODO.
+        ///   Stops the partition pump.  In case it hasn't been started, nothing happens.
         /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public async Task Stop()
         {
-            // TODO: check if running before stopping it
-
-            TokenSource.Cancel();
-
             // TODO: create lock with Run (on Processor and Consumer)
-
             // TODO: in case of error, T1 logs it.
+            if (RunningTask != null)
+            {
+                TokenSource.Cancel();
+                TokenSource = null;
 
-            await Consumer.CloseAsync();
+                await RunningTask;
+                RunningTask = null;
 
-            await PartitionProcessor.Close("Stop requested.").ConfigureAwait(false);
+                await Consumer.CloseAsync();
+                Consumer = null;
 
-            // TODO: await running task?
+                await PartitionProcessor.Close("Stop requested.").ConfigureAwait(false);
+            }
         }
 
         /// <summary>
-        ///   TODO.
+        ///   The main loop of a partition pump.  It receives events from the Azure Event Hubs service
+        ///   and delegates their processing to the inner partition processor.
         /// </summary>
+        ///
+        /// <param name="token">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        /// <remarks>
+        ///   This method cannot be called before <see cref="Start" /> because it makes use of variables
+        ///   that would not be initialized otherwise.
+        /// </remarks>
         ///
         private async Task Run(CancellationToken token)
         {
@@ -135,7 +161,6 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 try
                 {
-                    // TODO: Pass the cancellation token?
                     var receivedEvents = await Consumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime);
 
                     // TODO: should we lock it with close?
@@ -151,7 +176,6 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     if (exception is ConsumerDisconnectedException)
                     {
-                        // TODO: should we use a cancellation token?
                         // TODO: should we call stop?
                         break;
                     }

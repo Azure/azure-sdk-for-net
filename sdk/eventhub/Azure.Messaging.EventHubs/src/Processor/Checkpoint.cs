@@ -4,19 +4,21 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   TODO.
+    ///   A checkpoint instance contains all the information needed to store the state of an
+    ///   <see cref="IPartitionProcessor" />.
     /// </summary>
     ///
     public class Checkpoint
     {
         /// <summary>
-        ///   TODO.
+        ///   The path of the specific Event Hub this checkpoint is associated with, relative
+        ///   to the Event Hubs namespace that contains it.
         /// </summary>
         ///
         public string EventHubName { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The name of the consumer group this checkpoint is associated with.
         /// </summary>
         ///
         public string ConsumerGroup { get; }
@@ -28,26 +30,33 @@ namespace Azure.Messaging.EventHubs.Processor
         public string InstanceId { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The identifier of the Event Hub partition this checkpoint is associated with.
         /// </summary>
         ///
         public string PartitionId { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The offset of the <see cref="EventData" /> this checkpoint is associated with.
         /// </summary>
         ///
         public long Offset { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The sequence number assigned to the <see cref="EventData" /> this checkpoint is associated with.
         /// </summary>
         ///
         public long SequenceNumber { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   Initializes a new instance of the <see cref="Checkpoint"/> class.
         /// </summary>
+        ///
+        /// <param name="eventHubName">The path of the specific Event Hub this checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group this checkpoint is associated with.</param>
+        /// <param name="instanceId">TODO.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition this checkpoint is associated with.</param>
+        /// <param name="offset">The offset of the <see cref="EventData" /> this checkpoint is associated with.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the <see cref="EventData" /> this checkpoint is associated with.</param>
         ///
         public Checkpoint(string eventHubName,
                           string consumerGroup,
