@@ -18,10 +18,11 @@ namespace Microsoft.Azure.EventHubs.Tests
 
         private static readonly Lazy<string> StorageConnectionStringInstance =
             new Lazy<string>( () => ReadEnvironmentVariable(TestConstants.StorageConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-
+        //add by Luyun
+        //add 6 ReadEnvironment method, copy from Track 2 testenvironment.cs
         private static readonly Lazy<string> EventHubsSubscriptionInstance =
           new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSubscriptionEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-
+      
         /// <summary>The environment variable value for the Event Hubs resource group name, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsResourceGroupInstance =
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsResourceGroupEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
@@ -45,6 +46,8 @@ namespace Microsoft.Azure.EventHubs.Tests
 
         internal static string StorageConnectionString => StorageConnectionStringInstance.Value;
 
+        //add by Luyun
+        //add 6 set and get method, copy from Track 2 testenvironment.cs
         internal static string EventHubsSubscription => EventHubsSubscriptionInstance.Value;
 
         /// <summary>
@@ -151,21 +154,12 @@ namespace Microsoft.Azure.EventHubs.Tests
             Console.WriteLine(formattedMessage);
         }
 
-        //private static string BuildEventHubsConnectionString(string sourceConnectionString)
-        //{
-        //    var connectionString = new EventHubsConnectionStringBuilder(sourceConnectionString);
-
-        //    connectionString.EntityPath = connectionString.EntityPath ?? TestConstants.DefultEventHubName;
-        //    connectionString.OperationTimeout = TestConstants.DefaultOperationTimeout;
-
-        //    return connectionString.ToString();
-        //}
         public static string BuildEventHubsConnectionString(string eventHubName)
         {
             var connectionString = new EventHubsConnectionStringBuilder(EventHubsConnectionString);
 
             connectionString.EntityPath = connectionString.EntityPath ?? eventHubName;
-            connectionString.OperationTimeout = TestConstants.DefaultOperationTimeout;
+            connectionString.OperationTimeout = TimeSpan.FromSeconds(30);
 
             return connectionString.ToString();
         }
