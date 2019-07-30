@@ -1274,5 +1274,42 @@ namespace DataFactory.Tests.JsonSamples
             }
         }
         ";
+
+
+        [JsonSample]
+        public const string SapBwCube = @"
+        {
+            name: ""SapBwCube"",
+            properties:
+            {
+                type: ""SapBwCube"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                }
+            }
+        }
+        ";
+
+        [JsonSample]
+        public const string SybaseTable = @"
+        {
+            name: ""SybaseTable"",
+            properties:
+            {
+                type: ""SybaseTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                },
+                typeProperties:
+                {            
+                    tableName: ""$EncryptedString$MyEncryptedTableName""
+                }
+            }
+        }
+        ";
     }
 }

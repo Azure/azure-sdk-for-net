@@ -3,6 +3,10 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.1.2
+###  Feature Additions
+- Add SapBwCube and Sybase dataset
+
 ## Version 4.1.1
 ###  Feature Additions
 - Add PostgreSql Sink
