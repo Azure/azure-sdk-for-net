@@ -53,12 +53,6 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
-
-            Assert.True(mockTransport.SingleRequest.TryGetHeader("traceparent", out string requestId));
-            Assert.AreEqual(activity.Id, requestId);
-
-            Assert.True(mockTransport.SingleRequest.TryGetHeader("tracestate", out string traceState));
-            Assert.AreEqual("trace", traceState);
         }
 
 
