@@ -201,29 +201,5 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             Assert.Throws<ArgumentException>(() => new ServiceBusConnectionStringBuilder(connectionString));
         }
-
-        [Theory]
-        [InlineData("Endpoint=sb://test.servicebus.windows.net/;authentication=Managed Identity")]
-        [InlineData("Endpoint=sb://test.servicebus.windows.net/;AUTHENTICATION=ManagedIdentity")]
-        [InlineData("Endpoint=sb://test.servicebus.windows.net/;AUTHENTICATION=managedidentity")]
-        public void ManagementIdentityTokenProviderFromConnectionStringTest(string connectionString)
-        {
-            var builder = new ServiceBusConnectionStringBuilder(connectionString);
-            var connection = new ServiceBusConnection(builder);
-            new ManagementClient(builder); // Will throw without a valid TokenCredential
-            //Assert.Equal(typeof(ManagedIdentityTokenProvider), connection.TokenCredential.GetType());
-        }
-
-        [Theory]
-        [InlineData("Endpoint=sb://test.servicebus.windows.net/;Authentication=")]
-        [InlineData("Endpoint=sb://test.servicebus.windows.net/;Authentication=1")]
-        [InlineData("Endpoint=sb://test.servicebus.windows.net/;Authentication=InvalidValue")]
-        public void ConnectionStringWithInvalidAuthenticationTest(string connectionString)
-        {
-            var builder = new ServiceBusConnectionStringBuilder(connectionString);
-            var connection = new ServiceBusConnection(builder);
-            Assert.Throws<ArgumentException>(() => new ManagementClient(builder));
-            Assert.Null(connection.TokenCredential);
-        }
     }
 }

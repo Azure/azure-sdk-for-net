@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.Management.ServiceBus\src\Microsoft.Azure.Management.ServiceBus.csproj" />
     <ProjectReference Include="..\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 
