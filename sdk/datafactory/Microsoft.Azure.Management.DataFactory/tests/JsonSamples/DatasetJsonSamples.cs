@@ -724,6 +724,19 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string AzureMariaDBDataset = @"
+{
+    name: ""AzureMariaDBDataset"",
+    properties: {
+        type: ""AzureMariaDBTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
         public const string MarketoDataset = @"
 {
     name: ""MarketoDataset"",
