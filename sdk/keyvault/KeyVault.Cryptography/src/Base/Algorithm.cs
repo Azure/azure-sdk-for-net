@@ -3,10 +3,13 @@
 
 namespace Azure.Security.KeyVault.Cryptography
 {
+    using Azure.Security.KeyVault.Cryptography.Base;
+    using Azure.Security.KeyVault.Cryptography.CryptoAlgorithms;
     using Azure.Security.KeyVault.Cryptography.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -16,7 +19,6 @@ namespace Azure.Security.KeyVault.Cryptography
     public abstract class Algorithm
     {
         #region const
-        //const string ARG_ALGORITHM_NAME = "algorithName";
         #endregion
 
         #region fields
@@ -27,7 +29,7 @@ namespace Azure.Security.KeyVault.Cryptography
         /// <summary>
         /// 
         /// </summary>
-        public string Name { get; private set; }
+        public string AlgorithmName { get; protected set; }
         #endregion
 
         #region Constructor
@@ -35,33 +37,89 @@ namespace Azure.Security.KeyVault.Cryptography
         /// 
         /// </summary>
         protected Algorithm() { }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract class EncryptionAlgorithm : Algorithm
+    {
+        #region Properties
+
         /// <summary>
-        /// Constructor for Type of Algorithm that needs to be instantiated
         /// 
         /// </summary>
-        /// <param name="algorithmName"></param>
-        protected Algorithm(string algorithmName)
+        public EncryptionAlgorithmKindEnum AlgorithmType { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        //public string AlgorithmName { get; private set; }
+
+        #region private properties
+        protected virtual AlgorithmResolver AlgoResolver { get; set; }
+
+        #endregion
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// 
+        /// </summary>
+        protected EncryptionAlgorithm() : base()
         {
-            // TODO:
-            // We should have an enum instead of a string.
-            // Serves two purpose, we will have a supported list of algorithms users can instantiate
-            // Secondly, rather than throwing at a later stage for non supported algorithm.
-            // OR
-            // Have a way to validate other than NullCheck on the type of algorithms we support
-            if (string.IsNullOrWhiteSpace(algorithmName))
-                throw new ArgumentNullException(nameof(algorithmName));
-
-            Name = algorithmName.Trim();
+            AlgoResolver = new AlgorithmResolver();
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="algorithmType"></param>
-        protected Algorithm(AlgorithmInfo algorithmType)
+        public EncryptionAlgorithm(EncryptionAlgorithmKindEnum algorithmType) : this()
         {
-            Check.NotNull(algorithmType, nameof(algorithmType));
+            AlgorithmType = algorithmType;
+            AlgorithmName = AlgoResolver.ResolveAlgorithmName(algorithmType.ToString());
         }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract class AsymmetricEncryptionAlgorithm : EncryptionAlgorithm
+    {
+
+        #region const
+
+        #endregion
+
+        #region fields
+        AlgorithmResolver _algoResolver;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override AlgorithmResolver AlgoResolver
+        {
+            get
+            {
+                if(_algoResolver == null)
+                {
+                    _algoResolver = new AsymmetricAlgorithmResolver();
+                }
+
+                return _algoResolver;
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
         #endregion
 
         #region Public Functions
@@ -71,5 +129,65 @@ namespace Azure.Security.KeyVault.Cryptography
         #region private functions
 
         #endregion
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="algorithmType"></param>
+        public AsymmetricEncryptionAlgorithm(EncryptionAlgorithmKindEnum algorithmType) : base(algorithmType)
+        {
+            AlgoResolver.AlgorithmCategory = AlgorithmCategoryEnum.Asymmetric;
+        }
+
+        /// <summary>
+        /// Create an encryptor for the specified key
+        /// </summary>
+        /// <param name="key">The key used to create the encryptor</param>
+        /// <returns>An ICryptoTransform for encrypting data</returns>
+        public abstract ICryptoTransform CreateEncryptor(AsymmetricAlgorithm key);
+
+        /// <summary>
+        /// Create a decryptor for the specified key
+        /// </summary>
+        /// <param name="key">The key used to create decryptor</param>
+        /// <returns>An ICryptoTransform for encrypting data</returns>
+        public abstract ICryptoTransform CreateDecryptor(AsymmetricAlgorithm key);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract class SymmetricEncryptionAlgorithm : EncryptionAlgorithm
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="algorithmType"></param>
+        public SymmetricEncryptionAlgorithm(EncryptionAlgorithmKindEnum algorithmType) : base(algorithmType)
+        {
+            AlgoResolver.AlgorithmCategory = AlgorithmCategoryEnum.Symmetric;
+        }
+
+        /// <summary>
+        /// Create an encryptor for the specified key
+        /// </summary>
+        /// <param name="key">The key material to be used</param>
+        /// <param name="iv">The initialization vector to be used</param>
+        /// <param name="authenticationData">The authentication data to be used with authenticating encryption algorithms (ignored for non-authenticating algorithms)</param>
+        /// <returns>An ICryptoTranform for encrypting data</returns>
+        public abstract ICryptoTransform CreateEncryptor(byte[] key, byte[] iv, byte[] authenticationData);
+
+        /// <summary>
+        /// Create a decryptor for the specified key
+        /// </summary>
+        /// <param name="key">The key material to be used</param>
+        /// <param name="iv">The initialization vector to be used</param>
+        /// <param name="authenticationData">The authentication data to be used with authenticating encryption algorithms (ignored for non-authenticating algorithms)</param>
+        /// <param name="authenticationTag">The authentication tag to verify when using authenticating encryption algorithms (ignored for non-authenticating algorithms)</param>
+        /// <returns>An ICryptoTransform for decrypting data</returns>
+        public abstract ICryptoTransform CreateDecryptor(byte[] key, byte[] iv, byte[] authenticationData, byte[] authenticationTag);
     }
 }

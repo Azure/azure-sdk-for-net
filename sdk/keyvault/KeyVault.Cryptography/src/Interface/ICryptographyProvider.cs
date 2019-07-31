@@ -1,31 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
+namespace Azure.Security.KeyVault.Cryptography.Interface
 {
+    using Azure.Security.KeyVault.Cryptography.Models;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    interface ICryptoProvider
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface ICryptographyProvider
     {
-        /// <summary>
-        /// The default encryption algorithm for this key
-        /// </summary>
-        string DefaultEncryptionAlgorithm { get; }
-
-        /// <summary>
-        /// The default key wrap algorithm for this key
-        /// </summary>
-        string DefaultKeyWrapAlgorithm { get; }
-
-        /// <summary>
-        /// The default signature algorithm for this key
-        /// </summary>
-        string DefaultSignatureAlgorithm { get; }
-
         /// <summary>
         /// The key identifier
         /// </summary>
@@ -46,6 +37,18 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         Task<byte[]> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, string algorithm, CancellationToken token);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <param name="iv"></param>
+        /// <param name="authenticationData"></param>
+        /// <param name="authenticationTag"></param>
+        /// <param name="algorithm"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<byte[]> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, string algorithm, CancellationToken token);
+
+        /// <summary>
         /// Encrypts the specified plain text.
         /// </summary>
         /// <param name="plaintext">The plain text to encrypt</param>
@@ -56,7 +59,18 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <returns>A Tuple consisting of the cipher text, the authentication tag (if applicable), the algorithm used</returns>
         /// <remarks>If the algorithm is not specified, an implementation should use its default algorithm.
         /// Not all algorithyms require, or support, all parameters.</remarks>
-        Task<Tuple<byte[], byte[], string>> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, string algorithm, CancellationToken token);
+        Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, string algorithm, CancellationToken token);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="plaintext"></param>
+        /// <param name="iv"></param>
+        /// <param name="authenticationData"></param>
+        /// <param name="algorithm"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, string algorithm, CancellationToken token);
 
         /// <summary>
         /// Encrypts the specified key material.

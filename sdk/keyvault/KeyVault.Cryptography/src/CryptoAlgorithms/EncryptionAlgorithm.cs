@@ -14,7 +14,6 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoAlgorithms
     /// </summary>
     public class EncryptionAlgorithm : Algorithm
     {
-
         #region const
 
         #endregion

@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Cry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\..\identity\Azure.Identity\src\Azure.Identity.csproj", "{6CCD804F-970B-4492-9A0D-2B26E2398153}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "..\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{3F05BD6A-CFCC-4D61-BC60-E50590D6F639}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.WebKey", "..\Microsoft.Azure.KeyVault.WebKey\src\Microsoft.Azure.KeyVault.WebKey.csproj", "{CA9727AD-806D-4BB5-899C-6792AE697AE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{6CCD804F-970B-4492-9A0D-2B26E2398153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CCD804F-970B-4492-9A0D-2B26E2398153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CCD804F-970B-4492-9A0D-2B26E2398153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F05BD6A-CFCC-4D61-BC60-E50590D6F639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F05BD6A-CFCC-4D61-BC60-E50590D6F639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F05BD6A-CFCC-4D61-BC60-E50590D6F639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F05BD6A-CFCC-4D61-BC60-E50590D6F639}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA9727AD-806D-4BB5-899C-6792AE697AE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA9727AD-806D-4BB5-899C-6792AE697AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA9727AD-806D-4BB5-899C-6792AE697AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA9727AD-806D-4BB5-899C-6792AE697AE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
