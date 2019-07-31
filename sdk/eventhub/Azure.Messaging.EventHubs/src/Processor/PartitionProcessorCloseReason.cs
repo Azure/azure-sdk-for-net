@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   The reason for closing an <see cref="IPartitionProcessor" />.
     /// </summary>
     ///
-    public enum CloseReason
+    public enum PartitionProcessorCloseReason
     {
         /// <summary>A close request was fired by the user.</summary>
         Shutdown,

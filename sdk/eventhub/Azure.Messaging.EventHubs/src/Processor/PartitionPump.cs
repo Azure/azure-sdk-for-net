@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The client used to interact with the Azure Event Hubs service.
         /// </summary>
         ///
-        private EventHubClient Client { get; }
+        private EventHubClient InnerClient { get; }
 
         /// <summary>
         ///   The name of the consumer group this partition pump is associated with.  Events will be
@@ -59,13 +59,13 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.
         /// </summary>
         ///
-        private CancellationTokenSource TokenSource { get; set; }
+        private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
         /// <summary>
         ///   The consumer used to receive events from the Azure Event Hubs service.
         /// </summary>
         ///
-        private EventHubConsumer Consumer { get; set; }
+        private EventHubConsumer InnerConsumer { get; set; }
 
         /// <summary>
         ///   The running task responsible for receiving events from the Azure Event Hubs service.
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                IPartitionProcessor partitionProcessor,
                                EventProcessorOptions options)
         {
-            Client = eventHubClient;
+            InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
             PartitionProcessor = partitionProcessor;
@@ -106,13 +106,13 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask == null)
             {
-                TokenSource = new CancellationTokenSource();
+                RunningTaskTokenSource = new CancellationTokenSource();
 
-                Consumer = Client.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
+                InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
 
                 await PartitionProcessor.Initialize().ConfigureAwait(false);
 
-                RunningTask = Run(TokenSource.Token);
+                RunningTask = Run(RunningTaskTokenSource.Token);
             }
         }
 
@@ -122,10 +122,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task Stop()
-        {
-            return Stop(CloseReason.Shutdown);
-        }
+        public async Task Stop() => await Stop(PartitionProcessorCloseReason.Shutdown);
 
         /// <summary>
         ///   Stops the partition pump.  In case it hasn't been started, nothing happens.
@@ -135,18 +132,18 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task Stop(CloseReason reason)
+        private async Task Stop(PartitionProcessorCloseReason reason)
         {
             if (RunningTask != null)
             {
-                TokenSource.Cancel();
-                TokenSource = null;
+                RunningTaskTokenSource.Cancel();
+                RunningTaskTokenSource = null;
 
                 await RunningTask;
                 RunningTask = null;
 
-                await Consumer.CloseAsync();
-                Consumer = null;
+                await InnerConsumer.CloseAsync();
+                InnerConsumer = null;
 
                 await PartitionProcessor.Close(reason).ConfigureAwait(false);
             }
@@ -157,19 +154,19 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   and delegates their processing to the inner partition processor.
         /// </summary>
         ///
-        /// <param name="token">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task Run(CancellationToken token)
+        private async Task Run(CancellationToken cancellationToken)
         {
-            while (!token.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 IEnumerable<EventData> receivedEvents = null;
 
                 try
                 {
-                    receivedEvents = await Consumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime);
+                    receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime);
                 }
                 catch (Exception exception)
                 {
@@ -179,7 +176,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     if (!(exception is EventHubsException) || !(exception as EventHubsException).IsTransient)
                     {
-                        _ = Stop(CloseReason.EventHubException);
+                        _ = Stop(PartitionProcessorCloseReason.EventHubException);
                         break;
                     }
                 }

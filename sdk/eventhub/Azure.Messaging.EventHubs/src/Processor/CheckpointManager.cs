@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Interacts with the storage system, dealing with the creation of checkpoints.
         /// </summary>
         ///
-        private IPartitionManager Manager { get; }
+        private IPartitionManager PartitionManager { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointManager"/> class.
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                    IPartitionManager partitionManager)
         {
             Context = partitionContext;
-            Manager = partitionManager;
+            PartitionManager = partitionManager;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 sequenceNumber
             );
 
-            await Manager.CreateCheckpoint(checkpoint);
+            await PartitionManager.CreateCheckpoint(checkpoint);
         }
     }
 }
