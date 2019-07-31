@@ -5,7 +5,7 @@ namespace Azure.Messaging.ServiceBus.Management
 {
     using System;
 
-    internal class ManagementClientConstants
+    internal class ClientConstants
     {
         public const int QueueNameMaximumLength = 260;
         public const int TopicNameMaximumLength = 260;
