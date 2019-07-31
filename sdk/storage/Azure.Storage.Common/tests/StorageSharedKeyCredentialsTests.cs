@@ -3,25 +3,23 @@
 // license information.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.Core.Testing;
 using Azure.Storage.Blobs;
-using Azure.Storage.Test;
-using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Common.Test
 {
-    public class StorageSharedKeyCredentialsTests : StorageTestBase
+    public class StorageSharedKeyCredentialsTests : CommonTestBase
     {
         public StorageSharedKeyCredentialsTests(bool async)
             : base(async, null /* RecordedTestMode.Record to re-record */)
         {
         }
 
+        /// <summary>
+        /// Ensure updating the account key is reflected in the client
+        /// </summary>
         [Test]
         public async Task RollCredentials()
         {
@@ -34,31 +32,64 @@ namespace Azure.Storage.Common.Test
                     new BlobServiceClient(
                         new Uri(this.TestConfigDefault.BlobServiceEndpoint),
                         credential,
-                        this.Recording.InstrumentClientOptions(
-                            new BlobClientOptions
-                            {
-                                ResponseClassifier = new TestResponseClassifier(),
-                                Diagnostics = { IsLoggingEnabled = true },
-                                Retry =
-                                {
-                                    Mode = RetryMode.Exponential,
-                                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                                    Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                                    MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                                }
-                            })));
+                        this.GetBlobOptions()));
 
-            // Verify the credential
+            // Verify the credential works (i.e., doesn't throw)
             await service.GetAccountInfoAsync();
 
-            // Clear the credentials and try again
+            // Roll the credential to an Invalid value and make sure it fails
             credential.AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid"));
             Assert.ThrowsAsync<StorageRequestFailedException>(
                 async () => await service.GetAccountInfoAsync());
 
-            // Roll to a valid key and make sure it succeeds
+            // Re-roll the credential and make sure it succeeds again
             credential.AccountKey = this.TestConfigDefault.AccountKey;
             await service.GetAccountInfoAsync();
+        }
+
+        /// <summary>
+        /// Ensure updating the account key is reflected in the client and any
+        /// children it created.
+        /// </summary>
+        [Test]
+        public async Task RollCredentialsToChildren()
+        {
+            // Create a service client
+            var credential = new StorageSharedKeyCredential(
+                this.TestConfigDefault.AccountName,
+                this.TestConfigDefault.AccountKey);
+            var service =
+                this.InstrumentClient(
+                    new BlobServiceClient(
+                        new Uri(this.TestConfigDefault.BlobServiceEndpoint),
+                        credential,
+                        this.GetBlobOptions()));
+
+            // Create a child container
+            BlobContainerClient container = await service.CreateBlobContainerAsync(this.GetNewContainerName());
+            try
+            {
+                // Verify the credential works (i.e., doesn't throw)
+                await service.GetAccountInfoAsync();
+                await container.GetPropertiesAsync();
+
+                // Roll the credential to an Invalid value and make sure it fails
+                credential.AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid"));
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await service.GetAccountInfoAsync());
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await container.GetPropertiesAsync());
+
+                // Re-roll the credential and make sure it succeeds again
+                credential.AccountKey = this.TestConfigDefault.AccountKey;
+                await service.GetAccountInfoAsync();
+                await container.GetPropertiesAsync();
+            }
+            finally
+            {
+                // Clean up the child container
+                await container.DeleteAsync();
+            }
         }
     }
 }

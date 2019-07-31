@@ -21,8 +21,9 @@ namespace Azure.Storage
 
 #pragma warning disable CA1044 // Properties should not be write only
         /// <summary>
-        /// Sets the Storage Account's access key.  This is a write-only property
-        /// intended to be used when rolling your credentials.
+        /// Updates the Storage Account's access key.  This is a write-only
+        /// property only intended to be used when you've regenerated your
+        /// Storage Account's access keys and want to update long lived clients.
         /// </summary>
         public string AccountKey
         {
