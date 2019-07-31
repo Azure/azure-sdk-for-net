@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// <example>
     /// Create a new MessageSender to send to a Queue
     /// <code>
-    /// IMessageSender messageSender = new MessageSender(
+    /// MessageSender messageSender = new MessageSender(
     ///     namespaceConnectionString,
     ///     queueName)
     /// </code>
@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// </code>
     /// </example>
     /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
-    public class MessageSender : ClientEntity, IMessageSender
+    public class MessageSender : ClientEntity
     {
         int deliveryCount;
         readonly ActiveClientLinkManager clientLinkManager;
@@ -190,7 +190,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public override IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
 
         /// <summary>
-        /// Gets the entity path of the MessageSender. 
+        /// Gets the entity path of the MessageSender.
         /// In the case of a via-sender, this returns the path of the via entity.
         /// </summary>
         public override string Path { get; }

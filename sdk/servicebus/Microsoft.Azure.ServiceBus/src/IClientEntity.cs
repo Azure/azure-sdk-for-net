@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>
     /// An interface showing the common functionality between all Service Bus clients.
     /// </summary>
-    public interface IClientEntity
+    public interface ClientEntity
     {
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.

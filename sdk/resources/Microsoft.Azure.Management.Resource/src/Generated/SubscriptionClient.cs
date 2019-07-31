@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     /// tenants. A tenant is a dedicated instance of Azure Active Directory
     /// (Azure AD) for your organization.
     /// </summary>
-    public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient, IAzureClient
+    public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, SubscriptionClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.

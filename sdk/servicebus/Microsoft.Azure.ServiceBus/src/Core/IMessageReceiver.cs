@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <example>
     /// Create a new MessageReceiver to receive a message from a Subscription
     /// <code>
-    /// IMessageReceiver messageReceiver = new MessageReceiver(
+    /// MessageReceiver messageReceiver = new MessageReceiver(
     ///     namespaceConnectionString,
     ///     EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName),
     ///     ReceiveMode.PeekLock);
@@ -34,21 +34,21 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <seealso cref="MessageReceiver"/>
     /// <seealso cref="QueueClient"/>
     /// <seealso cref="SubscriptionClient"/>
-    public interface IMessageReceiver : IReceiverClient
+    public interface MessageReceiver : ReceiverClient
     {
         /// <summary>Gets the sequence number of the last peeked message.</summary>
         /// <seealso cref="PeekAsync()"/>
         long LastPeekedSequenceNumber { get; }
 
         /// <summary>
-        /// Receive a message from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// Receive a message from the entity defined by <see cref="ClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <returns>The message received. Returns null if no message is found.</returns>
         /// <remarks>Operation will time out after duration of <see cref="ClientEntity.OperationTimeout"/></remarks>
         Task<Message> ReceiveAsync();
 
         /// <summary>
-        /// Receive a message from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// Receive a message from the entity defined by <see cref="ClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
         /// <returns>The message received. Returns null if no message is found.</returns>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         Task<Message> ReceiveAsync(TimeSpan operationTimeout);
 
         /// <summary>
-        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="ClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <returns>List of messages received. Returns null if no message is found.</returns>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         Task<IList<Message>> ReceiveAsync(int maxMessageCount);
 
         /// <summary>
-        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="ClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>

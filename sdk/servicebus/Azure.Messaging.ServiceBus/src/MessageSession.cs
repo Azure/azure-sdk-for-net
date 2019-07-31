@@ -12,11 +12,11 @@ namespace Azure.Messaging.ServiceBus
     using Core;
     using Primitives;
 
-    internal class MessageSession : MessageReceiver, IMessageSession
+    public class MessageSession : MessageReceiver
     {
         private readonly ServiceBusDiagnosticSource diagnosticSource;
 
-        public MessageSession(
+        internal MessageSession(
             string entityPath,
             MessagingEntityType? entityType,
             ReceiveMode receiveMode,

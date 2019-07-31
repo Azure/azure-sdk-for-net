@@ -191,7 +191,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var sender = new MessageSender(ConnectionString, queueName);
                 var sessionClient = new SessionClient(ConnectionString, queueName);
-                IMessageSession receiver = null;
+                MessageSession receiver = null;
 
                 try
                 {
@@ -572,9 +572,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        private Task SafeCloseAllAsync(params IClientEntity[] clientEntities)
+        private Task SafeCloseAllAsync(params ClientEntity[] clientEntities)
         {
-            async Task closeEntity(IClientEntity entity)
+            async Task closeEntity(ClientEntity entity)
             {
                 try { await entity.CloseAsync(); }  catch {}
             };

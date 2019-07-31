@@ -9,8 +9,8 @@ namespace Azure.Messaging.ServiceBus
     using Primitives;
 
     /// <summary>Provides options associated with session pump processing using
-    /// <see cref="QueueClient.RegisterSessionHandler(Func{IMessageSession, Message, CancellationToken, Task}, SessionHandlerOptions)" /> and
-    /// <see cref="SubscriptionClient.RegisterSessionHandler(Func{IMessageSession, Message, CancellationToken, Task}, SessionHandlerOptions)" />.</summary>
+    /// <see cref="QueueClient.RegisterSessionHandler(Func{MessageSession, Message, CancellationToken, Task}, SessionHandlerOptions)" /> and
+    /// <see cref="SubscriptionClient.RegisterSessionHandler(Func{MessageSession, Message, CancellationToken, Task}, SessionHandlerOptions)" />.</summary>
     public sealed class SessionHandlerOptions
     {
         int maxConcurrentSessions;

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus
     /// Contract for all client entities with Open-Close/Abort state m/c
     /// main-purpose: closeAll related entities
     /// </summary>
-    public abstract class ClientEntity : IClientEntity
+    public abstract class ClientEntity : ClientEntity
     {
         static int nextId;
         readonly string clientTypeName;

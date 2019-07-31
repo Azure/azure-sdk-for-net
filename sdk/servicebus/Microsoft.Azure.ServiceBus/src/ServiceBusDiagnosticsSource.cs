@@ -108,7 +108,7 @@ namespace Microsoft.Azure.ServiceBus
 
         #region ProcessSession
 
-        internal Activity ProcessSessionStart(IMessageSession session, Message message)
+        internal Activity ProcessSessionStart(MessageSession session, Message message)
         {
             return ProcessStart("ProcessSession", message, () => new
                 {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.ServiceBus
                 a => SetTags(a, message));
         }
 
-        internal void ProcessSessionStop(Activity activity, IMessageSession session, Message message, TaskStatus? status)
+        internal void ProcessSessionStop(Activity activity, MessageSession session, Message message, TaskStatus? status)
         {
             if (activity != null)
             {

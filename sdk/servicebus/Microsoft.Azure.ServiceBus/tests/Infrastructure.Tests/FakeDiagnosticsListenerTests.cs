@@ -140,7 +140,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             {
                 var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
                 var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                var messageSession = default(IMessageSession);
+                var messageSession = default(MessageSession);
                 var eventQueue = this.CreateEventQueue();
 
                 try

@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// <example>
     /// Create a new MessageReceiver to receive a message from a Subscription
     /// <code>
-    /// IMessageReceiver messageReceiver = new MessageReceiver(
+    /// MessageReceiver messageReceiver = new MessageReceiver(
     ///     namespaceConnectionString,
     ///     EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName),
     ///     ReceiveMode.PeekLock);
@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// you to manually renew locks using <see cref="RenewLockAsync(Message)"/>.
     /// It uses AMQP protocol to communicate with service.
     /// </remarks>
-    public class MessageReceiver : ClientEntity, IMessageReceiver
+    public class MessageReceiver : ClientEntity
     {
         private static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
 
@@ -641,7 +641,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
@@ -687,7 +687,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>

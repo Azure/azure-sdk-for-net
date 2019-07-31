@@ -9,13 +9,13 @@ namespace Microsoft.Azure.ServiceBus.Core
     using System.Threading.Tasks;
 
     /// <summary>
-    /// An interface used to describe common functionality for receiving messages from <see cref="IQueueClient"/> and <see cref="ISubscriptionClient"/>.
+    /// An interface used to describe common functionality for receiving messages from <see cref="QueueClient"/> and <see cref="SubscriptionClient"/>.
     /// </summary>
-    /// <remarks>Use <see cref="IMessageReceiver"/> for advanced set of functionality.</remarks>
-    /// <seealso cref="IMessageReceiver"/>
-    /// <seealso cref="IQueueClient"/>
-    /// <seealso cref="ISubscriptionClient"/>
-    public interface IReceiverClient : IClientEntity
+    /// <remarks>Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
+    /// <seealso cref="MessageReceiver"/>
+    /// <seealso cref="QueueClient"/>
+    /// <seealso cref="SubscriptionClient"/>
+    public interface ReceiverClient : ClientEntity
     {
         /// <summary>
         /// Prefetch speeds up the message flow by aiming to have a message readily available for local retrieval when and before the application asks for one using Receive.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>

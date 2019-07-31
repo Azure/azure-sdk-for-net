@@ -25,7 +25,7 @@ namespace ResourceGroups.Tests
         private const string SubscriptionCreationResult = @"{ 
                'SubscriptionLink': '" + SubscriptionLink + "'}";
 
-        public ISubscriptionClient GetSubscriptionClient(RecordedDelegatingHandler handler, Guid? subscriptionId = null)
+        public SubscriptionClient GetSubscriptionClient(RecordedDelegatingHandler handler, Guid? subscriptionId = null)
         {
             TokenCredentials token = subscriptionId.HasValue
                 ? new TokenCredentials(subscriptionId.Value.ToString(), "abc123")

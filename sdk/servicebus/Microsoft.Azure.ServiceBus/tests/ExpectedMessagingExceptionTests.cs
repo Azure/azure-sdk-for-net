@@ -159,7 +159,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
                 var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
-                IMessageSession sessionReceiver = null;
+                MessageSession sessionReceiver = null;
 
                 try
                 {

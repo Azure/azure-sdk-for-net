@@ -10,10 +10,10 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <summary>
     /// Interface that defines common send functionality between different clients.
     /// </summary>
-    /// <seealso cref="IMessageSender"/>
-    /// <seealso cref="IQueueClient"/>
-    /// <seealso cref="ITopicClient"/>
-    public interface ISenderClient : IClientEntity
+    /// <seealso cref="MessageSender"/>
+    /// <seealso cref="QueueClient"/>
+    /// <seealso cref="TopicClient"/>
+    public interface SenderClient : ClientEntity
     {
         /// <summary>
         /// Sends a message to Service Bus.

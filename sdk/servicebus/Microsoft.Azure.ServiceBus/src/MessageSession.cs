@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus
     using Core;
     using Primitives;
 
-    internal class MessageSession : MessageReceiver, IMessageSession
+    internal class MessageSession : MessageReceiver, MessageSession
     {
         private readonly ServiceBusDiagnosticSource diagnosticSource;
 

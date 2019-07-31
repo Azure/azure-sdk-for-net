@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <example>
     /// Create a new MessageSender to send to a Queue
     /// <code>
-    /// IMessageSender messageSender = new MessageSender(
+    /// MessageSender messageSender = new MessageSender(
     ///     namespaceConnectionString,
     ///     queueName)
     /// </code>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// </code>
     /// </example>
     /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
-    public class MessageSender : ClientEntity, IMessageSender
+    public class MessageSender : ClientEntity, MessageSender
     {
         int deliveryCount;
         readonly ActiveClientLinkManager clientLinkManager;

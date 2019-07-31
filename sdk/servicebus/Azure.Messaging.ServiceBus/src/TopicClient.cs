@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus
     /// <example>
     /// Create a new TopicClient
     /// <code>
-    /// ITopicClient topicClient = new TopicClient(
+    /// TopicClient topicClient = new TopicClient(
     ///     namespaceConnectionString,
     ///     topicName,
     ///     RetryExponential);
@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
-    public class TopicClient : ClientEntity, ITopicClient
+    public class TopicClient : ClientEntity
     {
         readonly object syncLock;
         MessageSender innerSender;

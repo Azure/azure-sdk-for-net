@@ -12,8 +12,8 @@ namespace Azure.Messaging.ServiceBus
     sealed class SessionReceivePump
     {
         readonly string clientId;
-        readonly ISessionClient client;
-        readonly Func<IMessageSession, Message, CancellationToken, Task> userOnSessionCallback;
+        readonly SessionClient client;
+        readonly Func<MessageSession, Message, CancellationToken, Task> userOnSessionCallback;
         readonly SessionHandlerOptions sessionHandlerOptions;
         readonly string endpoint;
         readonly string entityPath;
@@ -23,10 +23,10 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusDiagnosticSource diagnosticSource;
 
         public SessionReceivePump(string clientId,
-            ISessionClient client,
+            SessionClient client,
             ReceiveMode receiveMode,
             SessionHandlerOptions sessionHandlerOptions,
-            Func<IMessageSession, Message, CancellationToken, Task> callback,
+            Func<MessageSession, Message, CancellationToken, Task> callback,
             Uri endpoint,
             CancellationToken token)
         {
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus
             return this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
-        async Task CompleteMessageIfNeededAsync(IMessageSession session, Message message)
+        async Task CompleteMessageIfNeededAsync(MessageSession session, Message message)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task AbandonMessageIfNeededAsync(IMessageSession session, Message message)
+        async Task AbandonMessageIfNeededAsync(MessageSession session, Message message)
         {
             try
             {
@@ -167,7 +167,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task MessagePumpTaskAsync(IMessageSession session)
+        async Task MessagePumpTaskAsync(MessageSession session)
         {
             if (session == null)
             {
@@ -279,7 +279,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task CloseSessionIfNeededAsync(IMessageSession session)
+        async Task CloseSessionIfNeededAsync(MessageSession session)
         {
             if (!session.IsClosedOrClosing)
             {
@@ -296,7 +296,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task RenewSessionLockTaskAsync(IMessageSession session, CancellationToken renewLockCancellationToken)
+        async Task RenewSessionLockTaskAsync(MessageSession session, CancellationToken renewLockCancellationToken)
         {
             while (!this.pumpCancellationToken.IsCancellationRequested &&
                    !renewLockCancellationToken.IsCancellationRequested)
