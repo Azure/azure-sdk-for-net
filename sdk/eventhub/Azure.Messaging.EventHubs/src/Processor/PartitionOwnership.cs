@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
@@ -36,31 +38,33 @@ namespace Azure.Messaging.EventHubs.Processor
         public string PartitionId { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   TODO: purpose not clear yet.
         /// </summary>
         ///
-        public long OwnerLevel { get; }
+        internal long OwnerLevel { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The offset of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />
+        ///   upon ownership update.
         /// </summary>
         ///
         public long? Offset { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The sequence number of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />
+        ///   upon ownership update.
         /// </summary>
         ///
         public long? SequenceNumber { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The date and time, in UTC, that the last update was made to this ownership.
         /// </summary>
         ///
-        public long? LastModifiedTime { get; }
+        public DateTimeOffset? LastModifiedTime { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The entity tag needed to update this ownership.
         /// </summary>
         ///
         public string ETag { get; }
@@ -73,27 +77,24 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
         /// <param name="instanceId">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-        /// <param name="ownerLevel">TODO.</param>
-        /// <param name="offset">TODO.</param>
-        /// <param name="sequenceNumber">TODO.</param>
-        /// <param name="lastModifiedTime">TODO.</param>
-        /// <param name="eTag">TODO.</param>
+        /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />.</param>
+        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />.</param>
+        /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
+        /// <param name="eTag">The entity tag needed to update this ownership.</param>
         ///
         public PartitionOwnership(string eventHubName,
                                   string consumerGroup,
                                   string instanceId,
                                   string partitionId,
-                                  long ownerLevel,
                                   long? offset = null,
                                   long? sequenceNumber = null,
-                                  long? lastModifiedTime = null,
+                                  DateTimeOffset? lastModifiedTime = null,
                                   string eTag = null)
         {
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             InstanceId = instanceId;
             PartitionId = partitionId;
-            OwnerLevel = ownerLevel;
             Offset = offset;
             SequenceNumber = sequenceNumber;
             LastModifiedTime = lastModifiedTime;
