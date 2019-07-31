@@ -175,7 +175,9 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     await PartitionProcessor.ProcessError(exception).ConfigureAwait(false);
 
-                    if (exception is ConsumerDisconnectedException)
+                    // Stop the pump if it's not a known retryable exception.
+
+                    if (!(exception is EventHubsException) || !(exception as EventHubsException).IsTransient)
                     {
                         _ = Stop(CloseReason.EventHubException);
                         break;
