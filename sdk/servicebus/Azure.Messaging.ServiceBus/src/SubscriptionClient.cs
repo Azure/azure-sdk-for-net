@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus
         readonly object syncLock;
         readonly ServiceBusDiagnosticSource diagnosticSource;
 
-        IInnerSubscriptionClient innerSubscriptionClient;
+        AmqpSubscriptionClient innerSubscriptionClient;
         SessionClient sessionClient;
         SessionPumpHost sessionPumpHost;
 
@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public override ServiceBusConnection ServiceBusConnection { get; }
 
-        internal IInnerSubscriptionClient InnerSubscriptionClient
+        internal AmqpSubscriptionClient InnerSubscriptionClient
         {
             get
             {

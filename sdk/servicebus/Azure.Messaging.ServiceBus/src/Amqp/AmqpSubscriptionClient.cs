@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using Framing;
     using Primitives;
 
-    internal sealed class AmqpSubscriptionClient : IInnerSubscriptionClient
+    internal sealed class AmqpSubscriptionClient
     {
         int prefetchCount;
         readonly object syncLock;
