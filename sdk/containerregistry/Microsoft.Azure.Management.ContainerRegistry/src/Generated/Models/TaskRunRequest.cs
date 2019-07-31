@@ -12,8 +12,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,17 +30,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the TaskRunRequest class.
         /// </summary>
-        /// <param name="taskName">The name of task against which run has to be
-        /// queued.</param>
+        /// <param name="taskId">The resource ID of task against which run has
+        /// to be queued.</param>
         /// <param name="isArchiveEnabled">The value that indicates whether
         /// archiving is enabled for the run or not.</param>
-        /// <param name="values">The collection of overridable values that can
-        /// be passed when running a task.</param>
-        public TaskRunRequest(string taskName, bool? isArchiveEnabled = default(bool?), IList<SetValue> values = default(IList<SetValue>))
+        /// <param name="overrideTaskStepProperties">Set of overridable
+        /// parameters that can be passed when running a Task.</param>
+        public TaskRunRequest(string taskId, bool? isArchiveEnabled = default(bool?), OverrideTaskStepProperties overrideTaskStepProperties = default(OverrideTaskStepProperties))
             : base(isArchiveEnabled)
         {
-            TaskName = taskName;
-            Values = values;
+            TaskId = taskId;
+            OverrideTaskStepProperties = overrideTaskStepProperties;
             CustomInit();
         }
 
@@ -52,17 +50,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of task against which run has to be queued.
+        /// Gets or sets the resource ID of task against which run has to be
+        /// queued.
         /// </summary>
-        [JsonProperty(PropertyName = "taskName")]
-        public string TaskName { get; set; }
+        [JsonProperty(PropertyName = "taskId")]
+        public string TaskId { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of overridable values that can be
-        /// passed when running a task.
+        /// Gets or sets set of overridable parameters that can be passed when
+        /// running a Task.
         /// </summary>
-        [JsonProperty(PropertyName = "values")]
-        public IList<SetValue> Values { get; set; }
+        [JsonProperty(PropertyName = "overrideTaskStepProperties")]
+        public OverrideTaskStepProperties OverrideTaskStepProperties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -72,19 +71,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TaskName == null)
+            if (TaskId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TaskName");
-            }
-            if (Values != null)
-            {
-                foreach (var element in Values)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "TaskId");
             }
         }
     }

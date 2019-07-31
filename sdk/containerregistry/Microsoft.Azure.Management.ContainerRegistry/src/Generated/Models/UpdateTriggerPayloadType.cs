@@ -12,14 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for Architecture.
+    /// Defines values for UpdateTriggerPayloadType.
     /// </summary>
-    public static class Architecture
+    public static class UpdateTriggerPayloadType
     {
-        public const string Amd64 = "amd64";
-        public const string X86 = "x86";
-        public const string ThreeEightSix = "386";
-        public const string Arm = "arm";
-        public const string Arm64 = "arm64";
+        public const string Default = "Default";
+        public const string Token = "Token";
     }
 }
