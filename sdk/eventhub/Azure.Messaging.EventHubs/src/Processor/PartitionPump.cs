@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -100,13 +100,17 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Starts the partition pump.  In case it's already running, nothing happens.
         /// </summary>
         ///
-        public void Start()
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public async Task Start()
         {
             if (RunningTask == null)
             {
                 TokenSource = new CancellationTokenSource();
 
                 Consumer = Client.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
+
+                await PartitionProcessor.Initialize().ConfigureAwait(false);
 
                 RunningTask = Run(TokenSource.Token);
             }
@@ -118,7 +122,20 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task Stop()
+        public Task Stop()
+        {
+            return Stop("Stop requested");
+        }
+
+        /// <summary>
+        ///   Stops the partition pump.  In case it hasn't been started, nothing happens.
+        /// </summary>
+        ///
+        /// <param name="reason">The reason why the partition pump is being closed.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        private async Task Stop(string reason)
         {
             if (RunningTask != null)
             {
@@ -131,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 await Consumer.CloseAsync();
                 Consumer = null;
 
-                await PartitionProcessor.Close("Stop requested.").ConfigureAwait(false);
+                await PartitionProcessor.Close(reason).ConfigureAwait(false);
             }
         }
 
@@ -148,26 +165,24 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             while (!token.IsCancellationRequested)
             {
+                IEnumerable<EventData> receivedEvents = null;
+
                 try
                 {
-                    var receivedEvents = await Consumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime);
-
-                    await PartitionProcessor.ProcessEvents(receivedEvents).ConfigureAwait(false);
+                    receivedEvents = await Consumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime);
                 }
                 catch (Exception exception)
                 {
-                    try
-                    {
-                        await PartitionProcessor.ProcessError(exception).ConfigureAwait(false);
-                    }
-                    catch { }
+                    await PartitionProcessor.ProcessError(exception).ConfigureAwait(false);
 
                     if (exception is ConsumerDisconnectedException)
                     {
-                        // TODO: should we call stop?
+                        _ = Stop("Consumer disconnected");
                         break;
                     }
                 }
+
+                await PartitionProcessor.ProcessEvents(receivedEvents).ConfigureAwait(false);
             }
         }
     }

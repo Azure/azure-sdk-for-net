@@ -4,6 +4,7 @@
 using Azure.Messaging.EventHubs.Core;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -143,12 +144,11 @@ namespace Azure.Messaging.EventHubs.Processor
                     var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
                     var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
-                    await partitionProcessor.Initialize().ConfigureAwait(false);
 
                     var partitionPump = new PartitionPump(Client, ConsumerGroup, partitionId, partitionProcessor, Options);
                     PartitionPumps.TryAdd(partitionId, partitionPump);
 
-                    partitionPump.Start();
+                    await partitionPump.Start().ConfigureAwait(false);
                 }));
 
                 RunningTask = Run(TokenSource.Token);
@@ -177,8 +177,8 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   The main loop of an event processor.  It loops through every owned <see cref="PartitionPump" />,
-        ///   checking its status and restarting it if necessary.
+        ///   The main loop of an event processor.  It loops through every owned <see cref="PartitionPump" />, checking
+        ///   its status and creating a new one if necessary.
         /// </summary>
         ///
         /// <param name="token">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -189,8 +189,10 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The actual goal of this method is to perform load balancing between multiple <see cref="EventProcessor" />
         ///   instances, but this feature is currently out of the scope of the current preview.
         /// </remarks>
+        ///
         private async Task Run(CancellationToken token)
         {
+            var pumpsToUpdate = new List<string>();
             await Client.GetPartitionIdsAsync();
 
             while (!token.IsCancellationRequested)
@@ -201,9 +203,26 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     if (!partitionPump.IsRunning)
                     {
-                        partitionPump.Start();
+                        pumpsToUpdate.Add(kvp.Key);
                     }
                 }
+
+                foreach (var partitionId in pumpsToUpdate)
+                {
+                    await Client.GetPartitionIdsAsync();
+
+                    var partitionContext = new PartitionContext(Client.EventHubPath, ConsumerGroup, partitionId);
+                    var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
+
+                    var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+
+                    var partitionPump = new PartitionPump(Client, ConsumerGroup, partitionId, partitionProcessor, Options);
+                    PartitionPumps[partitionId] = partitionPump;
+
+                    await partitionPump.Start().ConfigureAwait(false);
+                }
+
+                pumpsToUpdate.Clear();
             }
         }
     }
