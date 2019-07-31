@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task Close(string reason);
+        public Task Close(CloseReason reason);
 
         /// <summary>
         ///   Processes a set of received <see cref="EventData" />.

@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public Task Stop()
         {
-            return Stop("Stop requested");
+            return Stop(CloseReason.Shutdown);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task Stop(string reason)
+        private async Task Stop(CloseReason reason)
         {
             if (RunningTask != null)
             {
@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     if (exception is ConsumerDisconnectedException)
                     {
-                        _ = Stop("Consumer disconnected");
+                        _ = Stop(CloseReason.EventHubException);
                         break;
                     }
                 }
