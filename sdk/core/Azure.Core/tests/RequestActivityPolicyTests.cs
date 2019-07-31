@@ -53,6 +53,48 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
+
+            Assert.True(mockTransport.SingleRequest.TryGetHeader("traceparent", out string requestId));
+            Assert.AreEqual(activity.Id, requestId);
+
+            Assert.True(mockTransport.SingleRequest.TryGetHeader("tracestate", out string traceState));
+            Assert.AreEqual("trace", traceState);
+        }
+
+
+        [Test]
+        [NonParallelizable]
+        public async Task ActivityIdIsStampedOnRequest()
+        {
+            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+
+            var previousFormat = Activity.DefaultIdFormat;
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            try
+            {
+                Activity activity = null;
+
+                MockTransport mockTransport = CreateMockTransport(_ =>
+                {
+                    activity = Activity.Current;
+                    return new MockResponse(201);
+                });
+
+                using Request request = mockTransport.CreateRequest();
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("http://example.com");
+
+                Task<Response> requestTask = SendRequestAsync(mockTransport, request, RequestActivityPolicy.Shared);
+
+                await requestTask;
+
+                Assert.True(mockTransport.SingleRequest.TryGetHeader("traceparent", out string requestId));
+                Assert.AreEqual(activity.Id, requestId);
+            }
+            finally
+            {
+                Activity.DefaultIdFormat = previousFormat;
+            }
         }
 
         [Test]
