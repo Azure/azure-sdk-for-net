@@ -17,6 +17,12 @@ namespace Azure.Messaging.EventHubs.Processor
     internal class PartitionPump
     {
         /// <summary>
+        ///   A boolean value indicating whether this partition pump is currently running or not.
+        /// </summary>
+        ///
+        public bool IsRunning => RunningTask != null;
+
+        /// <summary>
         ///   The client used to interact with the Azure Event Hubs service.
         /// </summary>
         ///
@@ -94,17 +100,13 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Starts the partition pump.  In case it's already running, nothing happens.
         /// </summary>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public async Task Start()
+        public void Start()
         {
             if (RunningTask == null)
             {
                 TokenSource = new CancellationTokenSource();
 
                 Consumer = Client.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
-
-                await PartitionProcessor.Initialize().ConfigureAwait(false);
 
                 RunningTask = Run(TokenSource.Token);
             }
@@ -141,11 +143,6 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="token">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        /// <remarks>
-        ///   This method cannot be called before <see cref="Start" /> because it makes use of variables
-        ///   that would not be initialized otherwise.
-        /// </remarks>
         ///
         private async Task Run(CancellationToken token)
         {
