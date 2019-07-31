@@ -114,7 +114,7 @@ namespace Microsoft.Azure.ServiceBus
         public SessionClient(
             string endpoint,
             string entityPath,
-            ITokenProvider tokenProvider,
+            TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             RetryPolicy retryPolicy = null,
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.ServiceBus
                 null,
                 receiveMode,
                 prefetchCount,
-                new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider},
+                new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenCredential = tokenProvider},
                 null,
                 retryPolicy,
                 null)
@@ -188,9 +188,9 @@ namespace Microsoft.Azure.ServiceBus
             {
                 this.CbsTokenProvider = cbsTokenProvider;
             }
-            else if (this.ServiceBusConnection.TokenProvider != null)
+            else if (this.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {

@@ -103,11 +103,11 @@ namespace Microsoft.Azure.ServiceBus
             string endpoint,
             string topicPath,
             string subscriptionName,
-            ITokenProvider tokenProvider,
+            TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             RetryPolicy retryPolicy = null)
-            : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, topicPath, subscriptionName, receiveMode, retryPolicy)
+            : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenCredential = tokenProvider}, topicPath, subscriptionName, receiveMode, retryPolicy)
         {
             this.OwnsConnection = true;
         }
@@ -144,9 +144,9 @@ namespace Microsoft.Azure.ServiceBus
             this.OwnsConnection = false;
             this.ServiceBusConnection.ThrowIfClosed();
 
-            if (this.ServiceBusConnection.TokenProvider != null)
+            if (this.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {

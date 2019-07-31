@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Azure.Core;
+
 namespace Azure.Messaging.ServiceBus.Primitives
 {
     /// <summary>
-    /// A enum representing the scope of the <see cref="SecurityToken"/>.
+    /// A enum representing the scope of the <see cref="TokenCredential"/>.
     /// </summary>
     public enum TokenScope
     {

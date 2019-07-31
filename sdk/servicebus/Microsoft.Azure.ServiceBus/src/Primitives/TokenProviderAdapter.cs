@@ -10,14 +10,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     using Microsoft.Azure.Amqp;
 
     /// <summary>
-    /// Provides an adapter from TokenProvider to ICbsTokenProvider for AMQP CBS usage.
+    /// Provides an adapter from TokenCredential to ICbsTokenProvider for AMQP CBS usage.
     /// </summary>
     sealed class TokenProviderAdapter : ICbsTokenProvider
     {
-        readonly ITokenProvider tokenProvider;
+        readonly TokenCredential tokenProvider;
         readonly TimeSpan operationTimeout;
 
-        public TokenProviderAdapter(ITokenProvider tokenProvider, TimeSpan operationTimeout)
+        public TokenProviderAdapter(TokenCredential tokenProvider, TimeSpan operationTimeout)
         {
             Debug.Assert(tokenProvider != null, "tokenProvider cannot be null");
             this.tokenProvider = tokenProvider;

@@ -10,7 +10,7 @@ namespace Microsoft.Rest
     /// <summary>
     /// A simple token provider that always provides a static access token.
     /// </summary>
-    public sealed class StringTokenProvider : ITokenProvider
+    public sealed class StringTokenProvider : TokenCredential
     {
         private string _accessToken;
         private string _type;

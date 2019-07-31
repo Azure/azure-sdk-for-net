@@ -11,67 +11,67 @@ namespace TrackOne
     /// <summary>
     /// This abstract base class can be extended to implement additional token providers.
     /// </summary>
-    internal abstract class TokenProvider : ITokenProvider
+    internal abstract class TokenCredential : TokenCredential
     {
         /// <summary>
-        /// Construct a TokenProvider based on a sharedAccessSignature.
+        /// Construct a TokenCredential based on a sharedAccessSignature.
         /// </summary>
         /// <param name="sharedAccessSignature">The shared access signature</param>
-        /// <returns>A TokenProvider initialized with the shared access signature</returns>
-        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature)
+        /// <returns>A TokenCredential initialized with the shared access signature</returns>
+        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature)
         {
             return new SharedAccessSignatureTokenProvider(sharedAccessSignature);
         }
 
         /// <summary>
-        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
+        /// Construct a TokenCredential based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
-        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
-        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey)
+        /// <returns>A TokenCredential initialized with the provided RuleId and Password</returns>
+        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey);
         }
 
-        //internal static TokenProvider CreateIoTTokenProvider(string keyName, string sharedAccessKey)
+        //internal static TokenCredential CreateIoTTokenProvider(string keyName, string sharedAccessKey)
         //{
         //    return new IoTTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
         //}
 
         /// <summary>
-        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
+        /// Construct a TokenCredential based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <param name="tokenTimeToLive">The token time to live</param>
-        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
-        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive)
+        /// <returns>A TokenCredential initialized with the provided RuleId and Password</returns>
+        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenTimeToLive);
         }
 
         /// <summary>
-        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
+        /// Construct a TokenCredential based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
-        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
-        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope)
+        /// <returns>A TokenCredential initialized with the provided RuleId and Password</returns>
+        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenScope);
         }
 
         /// <summary>
-        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
+        /// Construct a TokenCredential based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <param name="tokenTimeToLive">The token time to live</param>
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
-        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
-        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope)
+        /// <returns>A TokenCredential initialized with the provided RuleId and Password</returns>
+        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenTimeToLive, tokenScope);
         }
@@ -81,8 +81,8 @@ namespace TrackOne
         /// <summary>Creates an Azure Active Directory token provider.</summary>
         /// <param name="authContext">AuthenticationContext for AAD.</param>
         /// <param name="clientCredential">The app credential.</param>
-        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateAadTokenProvider(AuthenticationContext authContext, ClientCredential clientCredential)
+        /// <returns>The <see cref="TokenCredential" /> for returning Json web token.</returns>
+        public static TokenCredential CreateAadTokenProvider(AuthenticationContext authContext, ClientCredential clientCredential)
         {
             Guard.ArgumentNotNull(nameof(authContext), authContext);
             Guard.ArgumentNotNull(nameof(clientCredential), clientCredential);
@@ -97,8 +97,8 @@ namespace TrackOne
         /// <param name="redirectUri">The redirectUri on Client App.</param>
         /// <param name="platformParameters">Platform parameters</param>
         /// <param name="userIdentifier">User Identifier</param>
-        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateAadTokenProvider(
+        /// <returns>The <see cref="TokenCredential" /> for returning Json web token.</returns>
+        public static TokenCredential CreateAadTokenProvider(
             AuthenticationContext authContext,
             string clientId,
             Uri redirectUri,
@@ -117,8 +117,8 @@ namespace TrackOne
         /// <summary>Creates an Azure Active Directory token provider.</summary>
         /// <param name="authContext">AuthenticationContext for AAD.</param>
         /// <param name="clientAssertionCertificate">The client assertion certificate credential.</param>
-        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateAadTokenProvider(AuthenticationContext authContext, ClientAssertionCertificate clientAssertionCertificate)
+        /// <returns>The <see cref="TokenCredential" /> for returning Json web token.</returns>
+        public static TokenCredential CreateAadTokenProvider(AuthenticationContext authContext, ClientAssertionCertificate clientAssertionCertificate)
         {
             Guard.ArgumentNotNull(nameof(authContext), authContext);
             Guard.ArgumentNotNull(nameof(clientAssertionCertificate), clientAssertionCertificate);
@@ -128,8 +128,8 @@ namespace TrackOne
 #endif
 
         /// <summary>Creates Azure Managed Service Identity token provider.</summary>
-        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateManagedServiceIdentityTokenProvider()
+        /// <returns>The <see cref="TokenCredential" /> for returning Json web token.</returns>
+        public static TokenCredential CreateManagedServiceIdentityTokenProvider()
         {
             return new ManagedServiceIdentityTokenProvider();
         }

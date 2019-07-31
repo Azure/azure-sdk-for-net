@@ -9,7 +9,7 @@ namespace Microsoft.Azure.EventHubs
     /// <summary>
     /// Provides interface definition of a token provider.
     /// </summary>
-    public interface ITokenProvider
+    public interface TokenCredential
     {
         /// <summary>
         /// Gets a <see cref="SecurityToken"/>.

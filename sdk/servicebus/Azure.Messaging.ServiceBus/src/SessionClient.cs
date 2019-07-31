@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Azure.Core;
+
 namespace Azure.Messaging.ServiceBus
 {
     using System;
@@ -52,16 +54,15 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="connectionStringBuilder">The <see cref="ServiceBusConnectionStringBuilder"/> having entity level connection details.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with ServiceBus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages the session object
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
         /// <remarks>Creates a new connection to the entity, which is used for all the sessions objects accepted using this client.</remarks>
         public SessionClient(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null,
-            int prefetchCount = DefaultPrefetchCount)
-            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, retryPolicy, prefetchCount)
+            int prefetchCount = DefaultPrefetchCount,
+            ClientOptions options = null)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, prefetchCount, options)
         {
         }
 
@@ -71,7 +72,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connectionString">Namespace connection string used to communicate with Service Bus. Must not contain entity details.</param>
         /// <param name="entityPath">The path of the entity for this receiver. For Queues this will be the name, but for Subscriptions this will be the full path.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with ServiceBus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages the session object
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
         /// <remarks>Creates a new connection to the entity, which is used for all the sessions objects accepted using this client.</remarks>
@@ -79,8 +79,8 @@ namespace Azure.Messaging.ServiceBus
             string connectionString,
             string entityPath,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null,
-            int prefetchCount = DefaultPrefetchCount)
+            int prefetchCount = DefaultPrefetchCount,
+            ClientOptions options = null)
             : this(nameof(SessionClient),
                   entityPath,
                   null,
@@ -88,8 +88,7 @@ namespace Azure.Messaging.ServiceBus
                   prefetchCount,
                   new ServiceBusConnection(connectionString),
                   null,
-                  retryPolicy,
-                  null)
+                  options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -107,27 +106,25 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
         /// <param name="transportType">Transport type.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public SessionClient(
             string endpoint,
             string entityPath,
-            ITokenProvider tokenProvider,
+            TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null,
+            ClientOptions options = null,
             int prefetchCount = DefaultPrefetchCount)
             : this(nameof(SessionClient),
                 entityPath,
                 null,
                 receiveMode,
                 prefetchCount,
-                new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider},
+                new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider},
                 null,
-                retryPolicy,
-                null)
+                options)
         {
             this.OwnsConnection = true;
         }
@@ -138,14 +135,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">The path of the entity for this receiver. For Queues this will be the name, but for Subscriptions this will be the full path.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with ServiceBus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages the session object
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
         public SessionClient(
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             ReceiveMode receiveMode,
-            RetryPolicy retryPolicy = null,
+            ClientOptions options = null,
             int prefetchCount = DefaultPrefetchCount)
             : this(nameof(SessionClient),
                 entityPath,
@@ -154,8 +150,7 @@ namespace Azure.Messaging.ServiceBus
                 prefetchCount,
                 serviceBusConnection,
                 null,
-                retryPolicy,
-                null)
+                options)
         {
             this.OwnsConnection = false;
         }
@@ -168,9 +163,8 @@ namespace Azure.Messaging.ServiceBus
             int prefetchCount,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
-            RetryPolicy retryPolicy,
-            IList<ServiceBusPlugin> registeredPlugins)
-            : base(clientTypeName, entityPath, retryPolicy ?? RetryPolicy.Default)
+            ClientOptions options)
+            : base(options, entityPath)
         {
             if (string.IsNullOrWhiteSpace(entityPath))
             {
@@ -188,9 +182,9 @@ namespace Azure.Messaging.ServiceBus
             {
                 this.CbsTokenProvider = cbsTokenProvider;
             }
-            else if (this.ServiceBusConnection.TokenProvider != null)
+            else if (this.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {
@@ -198,15 +192,6 @@ namespace Azure.Messaging.ServiceBus
             }
 
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
-
-            // Register plugins on the message session.
-            if (registeredPlugins != null)
-            {
-                foreach (var serviceBusPlugin in registeredPlugins)
-                {
-                    this.RegisterPlugin(serviceBusPlugin);
-                }
-            }
         }
 
         ReceiveMode ReceiveMode { get; }
@@ -222,15 +207,6 @@ namespace Azure.Messaging.ServiceBus
         public override string Path => this.EntityPath;
 
         /// <summary>
-        /// Duration after which individual operations will timeout.
-        /// </summary>
-        public override TimeSpan OperationTimeout
-        {
-            get => this.ServiceBusConnection.OperationTimeout;
-            set => this.ServiceBusConnection.OperationTimeout = value;
-        }
-
-        /// <summary>
         /// Connection object to the service bus namespace.
         /// </summary>
         public override ServiceBusConnection ServiceBusConnection { get; }
@@ -240,11 +216,6 @@ namespace Azure.Messaging.ServiceBus
         internal int PrefetchCount { get; set; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
-
-        /// <summary>
-        /// Gets a list of currently registered plugins.
-        /// </summary>
-        public override IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
 
         /// <summary>
         /// Gets a session object of any <see cref="MessageSession.SessionId"/> that can be used to receive messages for that sessionId.
@@ -306,7 +277,7 @@ namespace Azure.Messaging.ServiceBus
                 this.ReceiveMode,
                 this.ServiceBusConnection,
                 this.CbsTokenProvider,
-                this.RetryPolicy,
+                this.Options,
                 this.PrefetchCount,
                 sessionId,
                 true);
@@ -344,55 +315,8 @@ namespace Azure.Messaging.ServiceBus
                 session.SessionIdInternal);
 
             session.UpdateClientId(ClientEntity.GenerateClientId(nameof(MessageSession), $"{this.EntityPath}_{session.SessionId}"));
-            // Register plugins on the message session.
-            foreach (var serviceBusPlugin in this.RegisteredPlugins)
-            {
-                session.RegisterPlugin(serviceBusPlugin);
-            }
 
             return session;
-        }
-
-        /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
-        /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
-        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
-        {
-            this.ThrowIfClosed();
-
-            if (serviceBusPlugin == null)
-            {
-                throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
-            }
-            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPlugin.Name))
-            {
-                throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(nameof(serviceBusPlugin)));
-            }
-            this.RegisteredPlugins.Add(serviceBusPlugin);
-        }
-
-        /// <summary>
-        /// Unregisters a <see cref="ServiceBusPlugin"/>.
-        /// </summary>
-        /// <param name="serviceBusPluginName">The <see cref="ServiceBusPlugin.Name"/> of the plugin to be unregistered.</param>
-        public override void UnregisterPlugin(string serviceBusPluginName)
-        {
-            this.ThrowIfClosed();
-
-            if (this.RegisteredPlugins == null)
-            {
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(serviceBusPluginName))
-            {
-                throw new ArgumentNullException(nameof(serviceBusPluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPluginName)));
-            }
-            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPluginName))
-            {
-                var plugin = this.RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
-                this.RegisteredPlugins.Remove(plugin);
-            }
         }
 
         protected override Task OnClosingAsync()

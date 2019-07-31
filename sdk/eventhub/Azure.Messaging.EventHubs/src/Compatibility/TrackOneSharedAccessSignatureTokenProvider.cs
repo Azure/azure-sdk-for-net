@@ -16,9 +16,9 @@ namespace Azure.Messaging.EventHubs.Compatibility
     /// </summary>
     ///
     /// <seealso cref="Authorization.SharedAccessSignature"/>
-    /// <seealso cref="TrackOne.TokenProvider" />
+    /// <seealso cref="TrackOne.TokenCredential" />
     ///
-    internal sealed class TrackOneSharedAccessTokenProvider : TokenProvider
+    internal sealed class TrackOneSharedAccessTokenProvider : TokenCredential
     {
         /// <summary>
         ///   The shared access signature that forms the basis of this security token.

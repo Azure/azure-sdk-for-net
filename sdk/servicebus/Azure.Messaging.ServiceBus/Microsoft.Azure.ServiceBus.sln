@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus.Performance", "tests\Performance\Azure.Messaging.ServiceBus.Performance.csproj", "{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE6A749-1361-466D-B5B3-4CA66BCE7EA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

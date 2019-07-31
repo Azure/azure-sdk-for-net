@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Azure.Core;
+
 namespace Azure.Messaging.ServiceBus.Core
 {
     using System;
@@ -45,12 +47,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Creates a new AMQP MessageSender.
         /// </summary>
         /// <param name="connectionStringBuilder">The <see cref="ServiceBusConnectionStringBuilder"/> having entity level connection details.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageSender(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
-            RetryPolicy retryPolicy = null)
-            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, retryPolicy)
+            ClientOptions options = null)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, options)
         {
         }
 
@@ -59,13 +60,12 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="connectionString">Namespace connection string used to communicate with Service Bus. Must not contain Entity details.</param>
         /// <param name="entityPath">The path of the entity this sender should connect to.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageSender(
             string connectionString,
             string entityPath,
-            RetryPolicy retryPolicy = null)
-            : this(entityPath, null, null, new ServiceBusConnection(connectionString), null, retryPolicy)
+            ClientOptions options = null)
+            : this(entityPath, null, null, new ServiceBusConnection(connectionString), null, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -82,15 +82,14 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="entityPath">Queue path.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
         /// <param name="transportType">Transport type.</param>
-        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageSender(
             string endpoint,
             string entityPath,
-            ITokenProvider tokenProvider,
+            TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
-            RetryPolicy retryPolicy = null)
-            : this(entityPath, null, null, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy)
+            ClientOptions options = null)
+            : this(entityPath, null, null, new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider}, null, options)
         {
             this.OwnsConnection = true;
         }
@@ -100,12 +99,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">The path of the entity this sender should connect to.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
         public MessageSender(
             ServiceBusConnection serviceBusConnection,
             string entityPath,
-            RetryPolicy retryPolicy = null)
-            : this(entityPath, null, null, serviceBusConnection, null, retryPolicy)
+            ClientOptions options = null)
+            : this(entityPath, null, null, serviceBusConnection, null, options)
         {
             this.OwnsConnection = false;
         }
@@ -116,7 +114,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">The final destination of the message.</param>
         /// <param name="viaEntityPath">The first destination of the message.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>
         /// This is mainly to be used when sending messages in a transaction.
         /// When messages need to be sent across entities in a single transaction, this can be used to ensure
@@ -127,8 +124,8 @@ namespace Azure.Messaging.ServiceBus.Core
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             string viaEntityPath,
-            RetryPolicy retryPolicy = null)
-            :this(viaEntityPath, entityPath, null, serviceBusConnection, null, retryPolicy)
+            ClientOptions options = null)
+            :this(viaEntityPath, entityPath, null, serviceBusConnection, null, options)
         {
             this.OwnsConnection = false;
         }
@@ -139,8 +136,8 @@ namespace Azure.Messaging.ServiceBus.Core
             MessagingEntityType? entityType,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
-            RetryPolicy retryPolicy)
-            : base(nameof(MessageSender), entityPath, retryPolicy ?? RetryPolicy.Default)
+            ClientOptions options)
+            : base(options, entityPath)
         {
             MessagingEventSource.Log.MessageSenderCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
 
@@ -159,9 +156,9 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 this.CbsTokenProvider = cbsTokenProvider;
             }
-            else if (this.ServiceBusConnection.TokenProvider != null)
+            else if (this.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {
@@ -184,12 +181,6 @@ namespace Azure.Messaging.ServiceBus.Core
         }
 
         /// <summary>
-        /// Gets a list of currently registered plugins for this sender.
-        /// </summary>
-        /// <seealso cref="RegisterPlugin"/>
-        public override IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
-
-        /// <summary>
         /// Gets the entity path of the MessageSender.
         /// In the case of a via-sender, this returns the path of the via entity.
         /// </summary>
@@ -204,15 +195,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// In the case of a via-sender, the message is sent to <see cref="TransferDestinationPath"/> via <see cref="ViaEntityPath"/>; null otherwise.
         /// </summary>
         public string ViaEntityPath { get; }
-
-        /// <summary>
-        /// Duration after which individual operations will timeout.
-        /// </summary>
-        public override TimeSpan OperationTimeout
-        {
-            get => this.ServiceBusConnection.OperationTimeout;
-            set => this.ServiceBusConnection.OperationTimeout = value;
-        }
 
         /// <summary>
         /// Connection object to the service bus namespace.
@@ -386,43 +368,6 @@ namespace Azure.Messaging.ServiceBus.Core
                 this.diagnosticSource.CancelStop(activity, sequenceNumber, cancelTask?.Status);
             }
             MessagingEventSource.Log.CancelScheduledMessageStop(this.ClientId);
-        }
-
-        /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this sender.
-        /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
-        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
-        {
-            this.ThrowIfClosed();
-            if (serviceBusPlugin == null)
-            {
-                throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
-            }
-
-            if (this.RegisteredPlugins.Any(p => p.GetType() == serviceBusPlugin.GetType()))
-            {
-                throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(serviceBusPlugin.Name));
-            }
-            this.RegisteredPlugins.Add(serviceBusPlugin);
-        }
-
-        /// <summary>
-        /// Unregisters a <see cref="ServiceBusPlugin"/>.
-        /// </summary>
-        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public override void UnregisterPlugin(string serviceBusPluginName)
-        {
-            this.ThrowIfClosed();
-            if (string.IsNullOrWhiteSpace(serviceBusPluginName))
-            {
-                throw new ArgumentNullException(nameof(serviceBusPluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPluginName)));
-            }
-            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPluginName))
-            {
-                var plugin = this.RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
-                this.RegisteredPlugins.Remove(plugin);
-            }
         }
 
         internal async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage)

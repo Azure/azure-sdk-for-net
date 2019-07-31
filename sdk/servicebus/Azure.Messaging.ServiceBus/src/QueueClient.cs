@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Azure.Core;
+
 namespace Azure.Messaging.ServiceBus
 {
     using System;
@@ -67,10 +69,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and queue information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
-        public QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
-            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, retryPolicy)
+        public QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, options)
         {
         }
 
@@ -80,10 +81,9 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connectionString">Namespace connection string. Must not contain queue information.</param>
         /// <param name="entityPath">Name of the queue</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
-        public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
-            : this(new ServiceBusConnection(connectionString), entityPath, receiveMode, retryPolicy ?? RetryPolicy.Default)
+        public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+            : this(new ServiceBusConnection(connectionString, options), entityPath, receiveMode, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -99,18 +99,15 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="entityPath">Queue path.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
-        /// <param name="transportType">Transport type.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
         public QueueClient(
             string endpoint,
             string entityPath,
-            ITokenProvider tokenProvider,
-            TransportType transportType = TransportType.Amqp,
+            TokenCredential tokenProvider,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null)
-            : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, entityPath, receiveMode, retryPolicy)
+            ClientOptions options = null)
+            : this(new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider}, entityPath, receiveMode, options)
         {
             this.OwnsConnection = true;
         }
@@ -121,9 +118,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">Queue path.</param>
         /// <param name="receiveMode">Mode of receive of messages. Default to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        public QueueClient(ServiceBusConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, RetryPolicy retryPolicy)
-            : base(nameof(QueueClient), entityPath, retryPolicy)
+        public QueueClient(ServiceBusConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, ClientOptions options)
+            : base(options, entityPath)
         {
             MessagingEventSource.Log.QueueClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath, receiveMode.ToString());
 
@@ -139,9 +135,9 @@ namespace Azure.Messaging.ServiceBus
             this.OwnsConnection = false;
             this.ServiceBusConnection.ThrowIfClosed();
 
-            if (this.ServiceBusConnection.TokenProvider != null)
+            if (this.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {
@@ -160,15 +156,6 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the <see cref="ServiceBus.ReceiveMode"/> for the QueueClient.
         /// </summary>
         public ReceiveMode ReceiveMode { get; }
-
-        /// <summary>
-        /// Duration after which individual operations will timeout.
-        /// </summary>
-        public override TimeSpan OperationTimeout
-        {
-            get => this.ServiceBusConnection.OperationTimeout;
-            set => this.ServiceBusConnection.OperationTimeout = value;
-        }
 
         /// <summary>
         /// Gets the name of the queue.
@@ -216,11 +203,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a list of currently registered plugins for this QueueClient.
-        /// </summary>
-        public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSender.RegisteredPlugins;
-
-        /// <summary>
         /// Connection object to the service bus namespace.
         /// </summary>
         public override ServiceBusConnection ServiceBusConnection { get; }
@@ -241,7 +223,7 @@ namespace Azure.Messaging.ServiceBus
                                 MessagingEntityType.Queue,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.RetryPolicy);
+                                this.Options);
                         }
                     }
                 }
@@ -266,7 +248,7 @@ namespace Azure.Messaging.ServiceBus
                                 this.ReceiveMode,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.RetryPolicy,
+                                this.Options,
                                 this.PrefetchCount);
                         }
                     }
@@ -294,8 +276,7 @@ namespace Azure.Messaging.ServiceBus
                                 this.PrefetchCount,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.RetryPolicy,
-                                this.RegisteredPlugins);
+                                this.Options);
                         }
                     }
                 }
@@ -492,27 +473,6 @@ namespace Azure.Messaging.ServiceBus
         {
             this.ThrowIfClosed();
             return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
-        }
-
-        /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this queue client.
-        /// </summary>
-        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
-        {
-            this.ThrowIfClosed();
-            this.InnerSender.RegisterPlugin(serviceBusPlugin);
-            this.InnerReceiver.RegisterPlugin(serviceBusPlugin);
-        }
-
-        /// <summary>
-        /// Unregisters a <see cref="ServiceBusPlugin"/>.
-        /// </summary>
-        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public override void UnregisterPlugin(string serviceBusPluginName)
-        {
-            this.ThrowIfClosed();
-            this.InnerSender.UnregisterPlugin(serviceBusPluginName);
-            this.InnerReceiver.UnregisterPlugin(serviceBusPluginName);
         }
 
         protected override async Task OnClosingAsync()

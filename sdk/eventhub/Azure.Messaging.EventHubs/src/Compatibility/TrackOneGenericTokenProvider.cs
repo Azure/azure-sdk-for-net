@@ -17,9 +17,9 @@ namespace Azure.Messaging.EventHubs.Compatibility
     /// </summary>
     ///
     /// <seealso cref="Authorization.EventHubTokenCredential"/>
-    /// <seealso cref="TrackOne.TokenProvider" />
+    /// <seealso cref="TrackOne.TokenCredential" />
     ///
-    internal sealed class TrackOneGenericTokenProvider : TokenProvider
+    internal sealed class TrackOneGenericTokenProvider : TokenCredential
     {
         /// <summary>The default scope to use for token aquisition with the Event Hubs service.</summary>
         private static readonly string[] EventHubsDefaultScopes = new[] { "https://eventhubs.azure.net/.default" };

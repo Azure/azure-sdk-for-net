@@ -10,7 +10,7 @@ namespace TrackOne
     /// <summary>
     /// Represents the Azure Active Directory token provider for Azure Managed Service Identity integration.
     /// </summary>
-    internal class ManagedServiceIdentityTokenProvider : TokenProvider
+    internal class ManagedServiceIdentityTokenProvider : TokenCredential
     {
         static readonly AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
 

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Auth
         /// <summary>
         /// Gets a function which returns an authentication token.
         /// </summary>
-        public Func<Task<string>> TokenProvider { get; }
+        public Func<Task<string>> TokenCredential { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchTokenCredentials"/> class with the specified Batch service endpoint and authentication token.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Batch.Auth
 
             this.BaseUrl = baseUrl;
             var tokenTask = Task.FromResult(token);
-            TokenProvider = () => tokenTask;
+            TokenCredential = () => tokenTask;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Batch.Auth
                 throw new ArgumentNullException(nameof(tokenProvider));
             }
             this.BaseUrl = baseUrl;
-            this.TokenProvider = tokenProvider;
+            this.TokenCredential = tokenProvider;
         }
     }
 }

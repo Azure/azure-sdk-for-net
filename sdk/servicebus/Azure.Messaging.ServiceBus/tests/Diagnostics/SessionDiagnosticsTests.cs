@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                 var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 var messageSession = default(MessageSession);
                 var eventQueue = this.CreateEventQueue();
-                
+
                 try
                 {
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
@@ -90,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                 {
                     await Task.WhenAll(
                         messageSession.CloseAsync(),
-                        messageSender.CloseAsync(), 
+                        messageSender.CloseAsync(),
                         sessionClient.CloseAsync());
                 }
             });
@@ -106,21 +106,19 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                 var timeout = TimeSpan.FromSeconds(5);
                 var eventQueue = this.CreateEventQueue();
 
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete, new NoRetry())
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete, new ClientOptions()
                 {
-                    OperationTimeout = timeout
-                };
-                
+                    OperationTimeout = timeout,
+                    RetryPolicy = RetryPolicy.NoRetry,
+                });
+
                 try
                 {
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
-                        queueClient.ServiceBusConnection.OperationTimeout = timeout;
-                        queueClient.SessionClient.OperationTimeout = timeout;
-
                         var sw = Stopwatch.StartNew();
-                
+
                         listener.Enable((name, queue, arg) => !name.Contains("AcceptMessageSession") &&
                                                                    !name.Contains("Receive") &&
                                                                    !name.Contains("Exception"));
@@ -139,7 +137,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;
                         },
-                        exArgs => 
+                        exArgs =>
                         {
                             tcs.TrySetException(exArgs.Exception);
                             return Task.CompletedTask;
@@ -195,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
             this.AssertCommonPayloadProperties(entityName, payload);
 
             var sessionId = this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
-            
+
             Assert.NotNull(activity);
             Assert.Null(activity.Parent);
             Assert.Equal(sessionId, activity.Tags.Single(t => t.Key == "SessionId").Value);
@@ -219,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
             this.AssertCommonPayloadProperties(entityName, payload);
 
             var sessionId = this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
-            
+
             Assert.NotNull(activity);
             Assert.Null(activity.Parent);
             Assert.Equal(sessionId, activity.Tags.Single(t => t.Key == "SessionId").Value);

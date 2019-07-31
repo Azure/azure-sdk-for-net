@@ -16,7 +16,7 @@ namespace TrackOne
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
-    internal class SharedAccessSignatureTokenProvider : TokenProvider
+    internal class SharedAccessSignatureTokenProvider : TokenCredential
     {
         internal static readonly TimeSpan DefaultTokenTimeout = TimeSpan.FromMinutes(60);
 

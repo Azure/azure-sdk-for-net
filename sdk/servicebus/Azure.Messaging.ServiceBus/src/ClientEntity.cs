@@ -1,13 +1,15 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
+using System.Linq;
+using Azure.Messaging.ServiceBus.Core;
+
 namespace Azure.Messaging.ServiceBus
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Core;
 
     /// <summary>
     /// Contract for all client entities with Open-Close/Abort state m/c
@@ -16,22 +18,28 @@ namespace Azure.Messaging.ServiceBus
     public abstract class ClientEntity
     {
         static int nextId;
-        readonly string clientTypeName;
+
+        public ClientOptions Options { get; }
+
         readonly object syncLock;
         bool isClosedOrClosing;
 
-        protected ClientEntity(string clientTypeName, string postfix, RetryPolicy retryPolicy)
+        protected ClientEntity(ClientOptions options, string postfix)
         {
-            this.clientTypeName = clientTypeName;
-            this.ClientId = GenerateClientId(clientTypeName, postfix);
-            this.RetryPolicy = retryPolicy ?? RetryPolicy.Default;
+            this.Options = options;
             this.syncLock = new object();
+            this.ClientId = options.ClientId ?? GenerateClientId(this.GetType().Name, options.ClientIdPostfix);
+            this.RetryPolicy = options.RetryPolicy;
+            this.OperationTimeout = options.OperationTimeout;
+            this.RegisteredPlugins = options.RegisteredPlugins.ToArray();
         }
+
+        public IReadOnlyList<ServiceBusPlugin> RegisteredPlugins { get; set; }
 
         /// <summary>
         /// Returns true if the client is closed or closing.
         /// </summary>
-        public bool IsClosedOrClosing
+        internal bool IsClosedOrClosing
         {
             get
             {
@@ -40,7 +48,7 @@ namespace Azure.Messaging.ServiceBus
                     return isClosedOrClosing;
                 }
             }
-            internal set
+             set
             {
                 lock (syncLock)
                 {
@@ -65,20 +73,14 @@ namespace Azure.Messaging.ServiceBus
         public abstract string Path { get; }
 
         /// <summary>
-        /// Duration after which individual operations will timeout.
-        /// </summary>
-        public abstract TimeSpan OperationTimeout { get; set; }
-
-        /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID (in that process).</remarks>
         public string ClientId { get; private set; }
 
-        /// <summary>
-        /// Gets the <see cref="ServiceBus.RetryPolicy"/> defined on the client.
-        /// </summary>
         public RetryPolicy RetryPolicy { get; }
+
+        public TimeSpan OperationTimeout { get; }
 
         /// <summary>
         /// Closes the Client. Closes the connections opened by it.
@@ -105,25 +107,6 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>
-        /// Gets a list of currently registered plugins for this client.
-        /// </summary>
-        public abstract IList<ServiceBusPlugin> RegisteredPlugins { get; }
-
-        /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this client.
-        /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
-        public abstract void RegisterPlugin(ServiceBusPlugin serviceBusPlugin);
-
-        /// <summary>
-        /// Unregisters a <see cref="ServiceBusPlugin"/>.
-        /// </summary>
-        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public abstract void UnregisterPlugin(string serviceBusPluginName);
-
-        protected abstract Task OnClosingAsync();
-
         protected static long GetNextId()
         {
             return Interlocked.Increment(ref nextId);
@@ -139,6 +122,17 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Updates the client id.
+        /// </summary>
+        internal void UpdateClientId(string newClientId)
+        {
+            MessagingEventSource.Log.UpdateClientId(this.ClientId, newClientId);
+            this.ClientId = newClientId;
+        }
+
+        protected abstract Task OnClosingAsync();
+
+        /// <summary>
         /// Throw an OperationCanceledException if the object is Closing.
         /// </summary>
         protected virtual void ThrowIfClosed()
@@ -146,17 +140,8 @@ namespace Azure.Messaging.ServiceBus
             this.ServiceBusConnection.ThrowIfClosed();
             if (this.IsClosedOrClosing)
             {
-                throw new ObjectDisposedException($"{this.clientTypeName} with Id '{this.ClientId}' has already been closed. Please create a new {this.clientTypeName}.");
+                throw new ObjectDisposedException($"{this.GetType().Name} with Id '{this.ClientId}' has already been closed. Please create a new {this.GetType().Name}.");
             }
-        }
-
-        /// <summary>
-        /// Updates the client id.
-        /// </summary>
-        internal void UpdateClientId(string newClientId)
-        {
-            MessagingEventSource.Log.UpdateClientId(this.ClientId, newClientId);
-            this.ClientId = newClientId;
         }
     }
 }

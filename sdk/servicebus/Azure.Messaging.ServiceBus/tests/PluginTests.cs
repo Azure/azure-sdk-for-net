@@ -16,84 +16,22 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public async Task Registering_plugin_multiple_times_should_throw()
-        {
-            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
-            {
-                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    var firstPlugin = new FirstSendPlugin();
-                    var secondPlugin = new FirstSendPlugin();
-
-                    messageReceiver.RegisterPlugin(firstPlugin);
-                    Assert.Throws<ArgumentException>(() => messageReceiver.RegisterPlugin(secondPlugin));
-                }
-                finally
-                {
-                    await messageReceiver.CloseAsync();
-                }
-            });
-        }
-
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
-        public async Task Unregistering_plugin_should_complete_with_plugin_set()
-        {
-            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
-            {
-                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    var firstPlugin = new FirstSendPlugin();
-
-                    messageReceiver.RegisterPlugin(firstPlugin);
-                    messageReceiver.UnregisterPlugin(firstPlugin.Name);
-                }
-                finally
-                {
-                    await messageReceiver.CloseAsync();
-                }
-            });
-        }
-
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
-        public async Task Unregistering_plugin_should_complete_without_plugin_set()
-        {
-            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
-            {
-                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    messageReceiver.UnregisterPlugin("Non-existant plugin");
-                }
-                finally
-                {
-                    await messageReceiver.CloseAsync();
-                }
-            });
-        }
-
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
         public async Task Multiple_plugins_should_run_in_order()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var firstPlugin = new FirstSendPlugin();
+                var secondPlugin = new SecondSendPlugin();
+
+                var options = new ClientOptions()
+                {
+                    RegisteredPlugins = { firstPlugin, secondPlugin }
+                };
+
+                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName, options);
                 var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 try
                 {
-                    var firstPlugin = new FirstSendPlugin();
-                    var secondPlugin = new SecondSendPlugin();
-
-                    messageSender.RegisterPlugin(firstPlugin);
-                    messageSender.RegisterPlugin(secondPlugin);
-
                     var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"));
                     await messageSender.SendAsync(sendMessage);
 
@@ -119,14 +57,15 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                var sendReceivePlugin = new SendReceivePlugin();
+                var options = new ClientOptions()
+                {
+                    RegisteredPlugins = { sendReceivePlugin }
+                };
+                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName, options);
+                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete, options);
                 try
                 {
-                    var sendReceivePlugin = new SendReceivePlugin();
-                    messageSender.RegisterPlugin(sendReceivePlugin);
-                    messageReceiver.RegisterPlugin(sendReceivePlugin);
-
                     var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"))
                     {
                         MessageId = Guid.NewGuid().ToString()
@@ -156,13 +95,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var plugin = new ExceptionPlugin();
+                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName, new ClientOptions()
+                {
+                    RegisteredPlugins = { plugin }
+                });
                 try
                 {
-                    var plugin = new ExceptionPlugin();
-
-                    messageSender.RegisterPlugin(plugin);
-
                     var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"));
                     await Assert.ThrowsAsync<NotImplementedException>(() => messageSender.SendAsync(sendMessage));
                 }
@@ -180,13 +119,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var plugin = new ShouldCompleteAnywayExceptionPlugin();
+                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName, new ClientOptions()
+                {
+                    RegisteredPlugins = { plugin }
+                });
                 try
                 {
-                    var plugin = new ShouldCompleteAnywayExceptionPlugin();
-
-                    messageSender.RegisterPlugin(plugin);
-
                     var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"));
                     await messageSender.SendAsync(sendMessage);
                 }
@@ -214,12 +153,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                var sendReceivePlugin = new SendReceivePlugin();
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock, new ClientOptions()
+                {
+                    RegisteredPlugins = { sendReceivePlugin }
+                });
                 try
                 {
                     var messageReceived = false;
-                    var sendReceivePlugin = new SendReceivePlugin();
-                    queueClient.RegisterPlugin(sendReceivePlugin);
 
                     var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"))
                     {
@@ -235,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         (session, message, cancellationToken) =>
                         {
                             Assert.Equal(sendMessage.SessionId, session.SessionId);
-                            Assert.True(session.RegisteredPlugins.Contains(sendReceivePlugin));
+                            Assert.Contains(sendReceivePlugin, session.RegisteredPlugins);
                             Assert.Equal(sendMessage.Body, message.Body);
 
                             messageReceived = true;

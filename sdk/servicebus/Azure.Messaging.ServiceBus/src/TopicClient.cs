@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Azure.Core;
+
 namespace Azure.Messaging.ServiceBus
 {
     using System;
@@ -38,10 +40,9 @@ namespace Azure.Messaging.ServiceBus
         /// Instantiates a new <see cref="TopicClient"/> to perform operations on a topic.
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
-        /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
-        public TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, RetryPolicy retryPolicy = null)
-            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, retryPolicy)
+        public TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ClientOptions options = null)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, options)
         {
         }
 
@@ -50,10 +51,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="connectionString">Namespace connection string. Must not contain topic information.</param>
         /// <param name="entityPath">Path to the topic</param>
-        /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
-        public TopicClient(string connectionString, string entityPath, RetryPolicy retryPolicy = null)
-            : this(new ServiceBusConnection(connectionString), entityPath, retryPolicy ?? RetryPolicy.Default)
+        public TopicClient(string connectionString, string entityPath, ClientOptions options = null)
+            : this(new ServiceBusConnection(connectionString), entityPath, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -70,15 +70,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityPath">Topic path.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
         /// <param name="transportType">Transport type.</param>
-        /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
         public TopicClient(
             string endpoint,
             string entityPath,
-            ITokenProvider tokenProvider,
+            TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
-            RetryPolicy retryPolicy = null)
-            : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, entityPath, retryPolicy)
+            ClientOptions options = null)
+            : this(new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider}, entityPath, options)
         {
             this.OwnsConnection = true;
         }
@@ -88,9 +87,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">Topic path.</param>
-        /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        public TopicClient(ServiceBusConnection serviceBusConnection, string entityPath, RetryPolicy retryPolicy)
-            : base(nameof(TopicClient), entityPath, retryPolicy)
+        public TopicClient(ServiceBusConnection serviceBusConnection, string entityPath, ClientOptions options)
+            : base(options, entityPath)
         {
             MessagingEventSource.Log.TopicClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
 
@@ -104,9 +102,9 @@ namespace Azure.Messaging.ServiceBus
             this.OwnsConnection = false;
             this.ServiceBusConnection.ThrowIfClosed();
 
-            if (this.ServiceBusConnection.TokenProvider != null)
+            if (this.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {
@@ -120,15 +118,6 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the name of the topic.
         /// </summary>
         public string TopicName { get; }
-
-        /// <summary>
-        /// Duration after which individual operations will timeout.
-        /// </summary>
-        public override TimeSpan OperationTimeout
-        {
-            get => this.ServiceBusConnection.OperationTimeout;
-            set => this.ServiceBusConnection.OperationTimeout = value;
-        }
 
         /// <summary>
         /// Gets the name of the topic.
@@ -156,7 +145,7 @@ namespace Azure.Messaging.ServiceBus
                                 MessagingEntityType.Topic,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.RetryPolicy);
+                                this.Options);
                         }
                     }
                 }
@@ -164,7 +153,7 @@ namespace Azure.Messaging.ServiceBus
                 return this.innerSender;
             }
         }
-        
+
         ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
@@ -204,30 +193,6 @@ namespace Azure.Messaging.ServiceBus
         {
             this.ThrowIfClosed();
             return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
-        }
-
-        /// <summary>
-        /// Gets a list of currently registered plugins for this TopicClient.
-        /// </summary>
-        public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSender.RegisteredPlugins;
-
-        /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this topic client.
-        /// </summary>
-        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
-        {
-            this.ThrowIfClosed();
-            this.InnerSender.RegisterPlugin(serviceBusPlugin);
-        }
-
-        /// <summary>
-        /// Unregisters a <see cref="ServiceBusPlugin"/>.
-        /// </summary>
-        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public override void UnregisterPlugin(string serviceBusPluginName)
-        {
-            this.ThrowIfClosed();
-            this.InnerSender.UnregisterPlugin(serviceBusPluginName);
         }
 
         protected override async Task OnClosingAsync()

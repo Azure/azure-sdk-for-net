@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Azure.Core;
+
 namespace Azure.Messaging.ServiceBus
 {
     using System;
@@ -22,84 +24,26 @@ namespace Azure.Messaging.ServiceBus
         readonly object syncLock;
         bool isClosedOrClosing;
 
+        private ClientOptions options;
+
         /// <summary>
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace information.</param>
         /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
-        public ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder)
-            : this(connectionStringBuilder?.GetNamespaceConnectionString())
+        public ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder, ClientOptions options = null)
+            : this(options)
         {
-        }
 
-        /// <summary>
-        /// Creates a new connection to service bus.
-        /// </summary>
-        /// <param name="namespaceConnectionString">Namespace connection string</param>
-        /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
-        public ServiceBusConnection(string namespaceConnectionString)
-            : this(namespaceConnectionString, RetryPolicy.Default)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new connection to service bus.
-        /// </summary>
-        /// <param name="namespaceConnectionString">Namespace connection string.</param>
-        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
-        public ServiceBusConnection(string namespaceConnectionString, RetryPolicy retryPolicy = null)
-            : this(retryPolicy)
-        {
-            if (string.IsNullOrWhiteSpace(namespaceConnectionString))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(namespaceConnectionString));
-            }
-
-            var serviceBusConnectionStringBuilder = new ServiceBusConnectionStringBuilder(namespaceConnectionString);
-            if (!string.IsNullOrWhiteSpace(serviceBusConnectionStringBuilder.EntityPath))
-            {
-                throw Fx.Exception.Argument(nameof(namespaceConnectionString), "NamespaceConnectionString should not contain EntityPath.");
-            }
-
-            this.InitializeConnection(serviceBusConnectionStringBuilder);
-        }
-
-        /// <summary>
-        /// Creates a new connection to service bus.
-        /// </summary>
-        /// <param name="namespaceConnectionString">Namespace connection string.</param>
-        /// <param name="operationTimeout">Duration after which individual operations will timeout.</param>
-        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
-        [Obsolete("This constructor is obsolete. Use ServiceBusConnection(string namespaceConnectionString, RetryPolicy retryPolicy) constructor instead, providing operationTimeout in the connection string.")]
-        public ServiceBusConnection(string namespaceConnectionString, TimeSpan operationTimeout, RetryPolicy retryPolicy = null)
-            : this(retryPolicy)
-        {
-            if (string.IsNullOrWhiteSpace(namespaceConnectionString))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(namespaceConnectionString));
-            }
-
-            var serviceBusConnectionStringBuilder = new ServiceBusConnectionStringBuilder(namespaceConnectionString);
-            if (!string.IsNullOrWhiteSpace(serviceBusConnectionStringBuilder.EntityPath))
-            {
-                throw Fx.Exception.Argument(nameof(namespaceConnectionString), "NamespaceConnectionString should not contain EntityPath.");
-            }
-
-            this.InitializeConnection(serviceBusConnectionStringBuilder);
-            // operationTimeout argument explicitly provided by caller should take precedence over OperationTimeout found in the connection string.
-            this.OperationTimeout = operationTimeout;
+            this.InitializeConnection(connectionStringBuilder);
         }
 
         /// <summary>
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
-        /// <param name="transportType">Transport type.</param>
-        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        public ServiceBusConnection(string endpoint, TransportType transportType, RetryPolicy retryPolicy = null)
-            : this(retryPolicy)
+        public ServiceBusConnection(string endpoint, ClientOptions options = null)
+            : this(options)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
             {
@@ -108,16 +52,18 @@ namespace Azure.Messaging.ServiceBus
 
             var serviceBusConnectionStringBuilder = new ServiceBusConnectionStringBuilder()
             {
-                Endpoint = endpoint,
-                TransportType = transportType
+                Endpoint = endpoint
             };
 
             this.InitializeConnection(serviceBusConnectionStringBuilder);
         }
 
-        internal ServiceBusConnection(RetryPolicy retryPolicy = null)
+        internal ServiceBusConnection(ClientOptions options = null)
         {
-            this.RetryPolicy = retryPolicy ?? RetryPolicy.Default;
+            this.options = options ?? new ClientOptions();
+            this.OperationTimeout = options.OperationTimeout;
+            this.TransportType = options.TransportType;
+            this.RetryPolicy = options.RetryPolicy;
             this.syncLock = new object();
         }
 
@@ -130,24 +76,23 @@ namespace Azure.Messaging.ServiceBus
         /// OperationTimeout is applied in erroneous situations to notify the caller about the relevant <see cref="ServiceBusException"/>
         /// </summary>
         /// <remarks>Defaults to 1 minute.</remarks>
-        public TimeSpan OperationTimeout { get; set; }
+        public TimeSpan OperationTimeout { get; private set; }
 
         /// <summary>
         /// Retry policy for operations performed on the connection.
         /// </summary>
-        /// <remarks>Defaults to <see cref="RetryPolicy.Default"/></remarks>
-        public RetryPolicy RetryPolicy { get; set; }
+        public RetryPolicy RetryPolicy { get; private set; }
 
         /// <summary>
         /// Get the transport type from the connection string.
         /// <remarks>Available options: Amqp and AmqpWebSockets.</remarks>
         /// </summary>
-        public TransportType TransportType { get; set; }
+        public TransportType TransportType { get; private set; }
 
         /// <summary>
-        /// Token provider for authentication. <see cref="TokenProvider"/>
+        /// Token provider for authentication. <see cref="TokenCredential"/>
         /// </summary>
-        public ITokenProvider TokenProvider { get; set; }
+        public TokenCredential TokenCredential { get; set; }
 
         /// <summary>
         /// Returns true if the Service Bus Connection is closed or closing.
@@ -212,15 +157,15 @@ namespace Azure.Messaging.ServiceBus
 
             if (builder.SasToken != null)
             {
-                this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasToken);
+                this.TokenCredential = new SharedAccessSignatureTokenProvider(builder.SasToken);
             }
             else if (builder.SasKeyName != null || builder.SasKey != null)
             {
-                this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
+                this.TokenCredential = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
             }
             else if (builder.Authentication.Equals(ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity))
             {
-                this.TokenProvider = new ManagedIdentityTokenProvider();
+                this.TokenCredential = null;
             }
 
             this.OperationTimeout = builder.OperationTimeout;

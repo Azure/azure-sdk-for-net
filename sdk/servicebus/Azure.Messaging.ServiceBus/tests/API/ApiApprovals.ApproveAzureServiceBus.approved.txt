@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus
     {
         public QueueClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public QueueClient(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
-        public QueueClient(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public QueueClient(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.TokenCredential tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public QueueClient(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy) { }
         public override System.TimeSpan OperationTimeout { get; set; }
         public override string Path { get; }
@@ -319,7 +319,7 @@ namespace Azure.Messaging.ServiceBus
         public bool IsClosedOrClosing { get; }
         public System.TimeSpan OperationTimeout { get; set; }
         public Microsoft.Azure.ServiceBus.RetryPolicy RetryPolicy { get; set; }
-        public Microsoft.Azure.ServiceBus.Primitives.ITokenProvider TokenProvider { get; set; }
+        public Microsoft.Azure.ServiceBus.Primitives.TokenCredential TokenCredential { get; set; }
         public Microsoft.Azure.ServiceBus.TransportType TransportType { get; set; }
         public System.Threading.Tasks.Task CloseAsync() { }
     }
@@ -372,7 +372,7 @@ namespace Azure.Messaging.ServiceBus
     {
         public SessionClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public SessionClient(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
-        public SessionClient(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
+        public SessionClient(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.TokenCredential tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public SessionClient(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public string EntityPath { get; }
         public override System.TimeSpan OperationTimeout { get; set; }
@@ -429,7 +429,7 @@ namespace Azure.Messaging.ServiceBus
     {
         public SubscriptionClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
-        public SubscriptionClient(string endpoint, string topicPath, string subscriptionName, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public SubscriptionClient(string endpoint, string topicPath, string subscriptionName, Microsoft.Azure.ServiceBus.Primitives.TokenCredential tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public SubscriptionClient(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy) { }
         public override System.TimeSpan OperationTimeout { get; set; }
         public override string Path { get; }
@@ -460,7 +460,7 @@ namespace Azure.Messaging.ServiceBus
     {
         public TopicClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public TopicClient(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
-        public TopicClient(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public TopicClient(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.TokenCredential tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public TopicClient(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy) { }
         public override System.TimeSpan OperationTimeout { get; set; }
         public override string Path { get; }
@@ -539,7 +539,7 @@ namespace Azure.Messaging.ServiceBus.Core
     {
         public MessageReceiver(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public MessageReceiver(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
-        public MessageReceiver(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
+        public MessageReceiver(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.TokenCredential tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public MessageReceiver(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public long LastPeekedSequenceNumber { get; }
         public override System.TimeSpan OperationTimeout { get; set; }
@@ -585,7 +585,7 @@ namespace Azure.Messaging.ServiceBus.Core
     {
         public MessageSender(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public MessageSender(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
-        public MessageSender(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public MessageSender(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.TokenCredential tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public MessageSender(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public MessageSender(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string entityPath, string viaEntityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public override System.TimeSpan OperationTimeout { get; set; }
@@ -671,8 +671,8 @@ namespace Azure.Messaging.ServiceBus.Management
     public class ManagementClient
     {
         public ManagementClient(string connectionString) { }
-        public ManagementClient(string endpoint, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider) { }
-        public ManagementClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider = null) { }
+        public ManagementClient(string endpoint, Microsoft.Azure.ServiceBus.Primitives.TokenCredential tokenProvider) { }
+        public ManagementClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.Primitives.TokenCredential tokenProvider = null) { }
         public static System.Net.Http.HttpRequestMessage CloneRequest(System.Net.Http.HttpRequestMessage req) { }
         public System.Threading.Tasks.Task CloseAsync() { }
         public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.QueueDescription> CreateQueueAsync(string queuePath, System.Threading.CancellationToken cancellationToken = null) { }
@@ -864,14 +864,14 @@ namespace Azure.Messaging.ServiceBus.Management
 }
 namespace Azure.Messaging.ServiceBus.Primitives
 {
-    public class AzureActiveDirectoryTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
+    public class AzureActiveDirectoryTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenCredential
     {
         public AzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authenticationCallback, string authority, object state) { }
         public event Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback AuthCallback;
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
         public delegate System.Threading.Tasks.Task<string> AuthenticationCallback(string audience, string authority, object state);
     }
-    public interface ITokenProvider
+    public interface TokenCredential
     {
         System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout);
     }
@@ -879,7 +879,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     {
         public JsonSecurityToken(string rawToken, string audience) { }
     }
-    public class ManagedIdentityTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
+    public class ManagedIdentityTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenCredential
     {
         public ManagedIdentityTokenProvider() { }
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
@@ -892,22 +892,22 @@ namespace Azure.Messaging.ServiceBus.Primitives
         public virtual string TokenType { get; }
         public virtual string TokenValue { get; }
     }
-    public class SharedAccessSignatureTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
+    public class SharedAccessSignatureTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenCredential
     {
         protected SharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, System.Func<string, byte[]> customKeyEncoder, System.TimeSpan tokenTimeToLive, Microsoft.Azure.ServiceBus.Primitives.TokenScope tokenScope) { }
         protected virtual string BuildSignature(string targetUri) { }
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
     }
-    public abstract class TokenProvider : Microsoft.Azure.ServiceBus.Primitives.ITokenProvider
+    public abstract class TokenCredential : Microsoft.Azure.ServiceBus.Primitives.TokenCredential
     {
-        protected TokenProvider() { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority, object state = null) { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateManagedIdentityTokenProvider() { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature) { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey) { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, System.TimeSpan tokenTimeToLive) { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, Microsoft.Azure.ServiceBus.Primitives.TokenScope tokenScope) { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, System.TimeSpan tokenTimeToLive, Microsoft.Azure.ServiceBus.Primitives.TokenScope tokenScope) { }
+        protected TokenCredential() { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenCredential CreateAzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority, object state = null) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenCredential CreateManagedIdentityTokenProvider() { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenCredential CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, System.TimeSpan tokenTimeToLive) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, Microsoft.Azure.ServiceBus.Primitives.TokenScope tokenScope) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, System.TimeSpan tokenTimeToLive, Microsoft.Azure.ServiceBus.Primitives.TokenScope tokenScope) { }
         public abstract System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout);
     }
     public enum TokenScope

@@ -11,20 +11,20 @@ namespace Microsoft.Azure.Batch.Protocol
     using System.Threading.Tasks;
     using Rest;
 
-    public class BatchTokenProvider : ITokenProvider
+    public class BatchTokenProvider : TokenCredential
     {
         private const string BearerAuthenticationScheme = "Bearer";
 
-        private Func<Task<string>> TokenProvider { get; }
+        private Func<Task<string>> TokenCredential { get; }
 
         public BatchTokenProvider(Func<Task<string>> tokenProvider)
         {
-            this.TokenProvider = tokenProvider;
+            this.TokenCredential = tokenProvider;
         }
 
         public async Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync(CancellationToken cancellationToken)
         {
-            string token = await this.TokenProvider().ConfigureAwait(false);
+            string token = await this.TokenCredential().ConfigureAwait(false);
             return new AuthenticationHeaderValue(BearerAuthenticationScheme, token);
         }
     }

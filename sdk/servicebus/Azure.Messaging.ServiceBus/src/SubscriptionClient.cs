@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Azure.Core;
+
 namespace Azure.Messaging.ServiceBus
 {
     using System;
@@ -63,10 +65,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
-        public SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
-            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, subscriptionName, receiveMode, retryPolicy)
+        public SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, subscriptionName, receiveMode, options)
         {
         }
 
@@ -75,10 +76,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="connectionString">Namespace connection string. Must not contain topic or subscription information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
-        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
-            : this(new ServiceBusConnection(connectionString), topicPath, subscriptionName, receiveMode, retryPolicy ?? RetryPolicy.Default)
+        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+            : this(new ServiceBusConnection(connectionString), topicPath, subscriptionName, receiveMode, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -95,19 +95,16 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicPath">Topic path.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
-        /// <param name="transportType">Transport type.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
         public SubscriptionClient(
             string endpoint,
             string topicPath,
             string subscriptionName,
-            ITokenProvider tokenProvider,
-            TransportType transportType = TransportType.Amqp,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null)
-            : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, topicPath, subscriptionName, receiveMode, retryPolicy)
+            TokenCredential tokenProvider,
+            ClientOptions options,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock)
+            : this(new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider}, topicPath, subscriptionName, receiveMode, options)
         {
             this.OwnsConnection = true;
         }
@@ -119,9 +116,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicPath">Topic path.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, RetryPolicy retryPolicy)
-            : base(nameof(SubscriptionClient), $"{topicPath}/{subscriptionName}", retryPolicy)
+        public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, ClientOptions options)
+            : base(options, $"{topicPath}/{subscriptionName}")
         {
             if (string.IsNullOrWhiteSpace(topicPath))
             {
@@ -144,9 +140,9 @@ namespace Azure.Messaging.ServiceBus
             this.OwnsConnection = false;
             this.ServiceBusConnection.ThrowIfClosed();
 
-            if (this.ServiceBusConnection.TokenProvider != null)
+            if (this.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {
@@ -176,15 +172,6 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the <see cref="ServiceBus.ReceiveMode"/> for the SubscriptionClient.
         /// </summary>
         public ReceiveMode ReceiveMode { get; }
-
-        /// <summary>
-        /// Duration after which individual operations will timeout.
-        /// </summary>
-        public override TimeSpan OperationTimeout
-        {
-            get => this.ServiceBusConnection.OperationTimeout;
-            set => this.ServiceBusConnection.OperationTimeout = value;
-        }
 
         /// <summary>
         /// Prefetch speeds up the message flow by aiming to have a message readily available for local retrieval when and before the application asks for one using Receive.
@@ -242,7 +229,7 @@ namespace Azure.Messaging.ServiceBus
                         this.innerSubscriptionClient = new AmqpSubscriptionClient(
                             this.Path,
                             this.ServiceBusConnection,
-                            this.RetryPolicy,
+                            this.Options,
                             this.CbsTokenProvider,
                             this.PrefetchCount,
                             this.ReceiveMode);
@@ -271,8 +258,7 @@ namespace Azure.Messaging.ServiceBus
                                 this.PrefetchCount,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.RetryPolicy,
-                                this.RegisteredPlugins);
+                                this.Options);
                         }
                     }
                 }
@@ -597,31 +583,6 @@ namespace Azure.Messaging.ServiceBus
 
             MessagingEventSource.Log.GetRulesStop(this.ClientId);
             return rules;
-        }
-
-        /// <summary>
-        /// Gets a list of currently registered plugins for this SubscriptionClient.
-        /// </summary>
-        public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSubscriptionClient.InnerReceiver.RegisteredPlugins;
-
-        /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used for receiving messages from Service Bus.
-        /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
-        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
-        {
-            this.ThrowIfClosed();
-            this.InnerSubscriptionClient.InnerReceiver.RegisterPlugin(serviceBusPlugin);
-        }
-
-        /// <summary>
-        /// Unregisters a <see cref="ServiceBusPlugin"/>.
-        /// </summary>
-        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public override void UnregisterPlugin(string serviceBusPluginName)
-        {
-            this.ThrowIfClosed();
-            this.InnerSubscriptionClient.InnerReceiver.UnregisterPlugin(serviceBusPluginName);
         }
 
         protected override async Task OnClosingAsync()

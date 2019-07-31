@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpSubscriptionClient(
             string path,
             ServiceBusConnection servicebusConnection,
-            RetryPolicy retryPolicy,
+            ClientOptions options,
             ICbsTokenProvider cbsTokenProvider,
             int prefetchCount = 0,
             ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
@@ -40,11 +40,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             this.syncLock = new object();
             this.Path = path;
             this.ServiceBusConnection = servicebusConnection;
-            this.RetryPolicy = retryPolicy;
+            this.Options = options;
             this.CbsTokenProvider = cbsTokenProvider;
             this.PrefetchCount = prefetchCount;
             this.ReceiveMode = mode;
         }
+
+        ClientOptions Options { get; set; }
 
         public MessageReceiver InnerReceiver
         {
@@ -62,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                 this.ReceiveMode,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.RetryPolicy,
+                                this.Options,
                                 this.PrefetchCount);
                         }
                     }

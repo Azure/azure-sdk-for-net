@@ -14,7 +14,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     public sealed class EventProcessorHost
     {
         // A processor host will work on either the token provider or the connection string.
-        readonly ITokenProvider tokenProvider;
+        readonly TokenCredential tokenProvider;
         string eventHubConnectionString;
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// Create a new host to process events from an Event Hub with provided <see cref="TokenProvider"/>
+        /// Create a new host to process events from an Event Hub with provided <see cref="TokenCredential"/>
         /// </summary>
         /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="eventHubPath">The name of the EventHub.</param>
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             Uri endpointAddress,
             string eventHubPath,
             string consumerGroupName,
-            ITokenProvider tokenProvider,
+            TokenCredential tokenProvider,
             CloudStorageAccount cloudStorageAccount,
             string leaseContainerName)
             : this(EventProcessorHost.CreateHostName(null),
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// Create a new host to process events from an Event Hub with provided <see cref="TokenProvider"/>
+        /// Create a new host to process events from an Event Hub with provided <see cref="TokenCredential"/>
         /// </summary>
         /// <param name="hostName">Name of the processor host. MUST BE UNIQUE. Strongly recommend including a Guid to ensure uniqueness.</param>
         /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             Uri endpointAddress,
             string eventHubPath,
             string consumerGroupName,
-            ITokenProvider tokenProvider,
+            TokenCredential tokenProvider,
             CloudStorageAccount cloudStorageAccount,
             string leaseContainerName,
             string storageBlobPrefix = null,

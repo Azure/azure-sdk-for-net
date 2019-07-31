@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Linq;
+using System.Threading;
+using Azure.Core;
+
 namespace Azure.Messaging.ServiceBus.Primitives
 {
     using System;
@@ -15,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
-    public class SharedAccessSignatureTokenProvider : TokenProvider
+    public class SharedAccessSignatureTokenProvider: TokenCredential
     {
         const TokenScope DefaultTokenScope = TokenScope.Entity;
 
@@ -84,25 +88,6 @@ namespace Azure.Messaging.ServiceBus.Primitives
             this.tokenScope = tokenScope;
         }
 
-        /// <summary>
-        /// Gets a <see cref="SecurityToken"/> for the given audience and duration.
-        /// </summary>
-        /// <param name="appliesTo">The URI which the access token applies to. If <see cref="SharedAccessSignatureTokenProvider"/>
-        /// is initiated with SASKeyName and SASKey, the token will be generated for this uri. If initiated with SASToken, then 
-        /// the value is ignored.</param>
-        /// <param name="timeout">The timeout value for how long it takes to get the security token (not the token time to live). 
-        /// For SAS token, no asynchronous operation takes place and hence this timeout is ignored.</param>
-        /// <remarks>This parameter <paramref name="timeout"/> is here for compatibility, but is not currently used.</remarks>
-        /// <returns><see cref="SecurityToken"/></returns>
-        public override Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
-        {
-            TimeoutHelper.ThrowIfNegativeArgument(timeout);
-            appliesTo = NormalizeAppliesTo(appliesTo);
-            string tokenString = this.BuildSignature(appliesTo);
-            var securityToken = new SharedAccessSignatureToken(tokenString);
-            return Task.FromResult<SecurityToken>(securityToken);
-        }
-
         /// <summary></summary>
         /// <param name="targetUri"></param>
         /// <returns></returns>
@@ -117,9 +102,9 @@ namespace Azure.Messaging.ServiceBus.Primitives
                 : this.sharedAccessSignature;
         }
 
-        string NormalizeAppliesTo(string appliesTo)
+        string NormalizeAppliesTo(string[] appliesTo)
         {
-            return ServiceBusUriHelper.NormalizeUri(appliesTo, "https", true, stripPath: this.tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
+            return ServiceBusUriHelper.NormalizeUri(appliesTo.Single(), "https", true, stripPath: this.tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
         }
 
         static class SharedAccessSignatureBuilder
@@ -131,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
                 string targetUri,
                 TimeSpan timeToLive)
             {
-                // Note that target URI is not normalized because in IoT scenario it 
+                // Note that target URI is not normalized because in IoT scenario it
                 // is case sensitive.
                 string expiresOn = BuildExpiresOn(timeToLive);
                 string audienceUri = WebUtility.UrlEncode(targetUri);
@@ -169,6 +154,22 @@ namespace Azure.Messaging.ServiceBus.Primitives
                     return Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(requestString)));
                 }
             }
+        }
+
+        public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+        {
+            var appliesTo = NormalizeAppliesTo(scopes);
+            string tokenString = this.BuildSignature(appliesTo);
+            var securityToken = new AccessToken(tokenString, DateTimeOffset.MaxValue);
+            return Task.FromResult<AccessToken>(securityToken);
+        }
+
+        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
+        {
+            var appliesTo = NormalizeAppliesTo(scopes);
+            string tokenString = this.BuildSignature(appliesTo);
+            var securityToken = new AccessToken(tokenString, DateTimeOffset.MaxValue);
+            return securityToken;
         }
     }
 }

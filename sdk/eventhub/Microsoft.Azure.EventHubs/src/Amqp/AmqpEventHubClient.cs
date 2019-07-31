@@ -19,14 +19,14 @@ namespace Microsoft.Azure.EventHubs.Amqp
         internal AmqpEventHubClient(
             Uri endpointAddress,
             string entityPath,
-            ITokenProvider tokenProvider,
+            TokenCredential tokenProvider,
             TimeSpan operationTimeout,
             EventHubs.TransportType transportType)
             : this(new EventHubsConnectionStringBuilder(endpointAddress, entityPath, operationTimeout, transportType), tokenProvider)
         {
         }
 
-        internal AmqpEventHubClient(EventHubsConnectionStringBuilder csb, ITokenProvider tokenProvider)
+        internal AmqpEventHubClient(EventHubsConnectionStringBuilder csb, TokenCredential tokenProvider)
             : base(csb)
         {
             this.ContainerId = Guid.NewGuid().ToString("N");
@@ -39,15 +39,15 @@ namespace Microsoft.Azure.EventHubs.Amqp
             }
             else if (!string.IsNullOrWhiteSpace(csb.SharedAccessSignature))
             {
-                this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SharedAccessSignature);
+                this.InternalTokenProvider = TokenCredential.CreateSharedAccessSignatureTokenProvider(csb.SharedAccessSignature);
             }
             else if (!string.IsNullOrWhiteSpace(csb.SasKey))
             {
-                this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
+                this.InternalTokenProvider = TokenCredential.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
             }
             else if (!string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
             {
-                this.InternalTokenProvider = TokenProvider.CreateManagedIdentityTokenProvider();
+                this.InternalTokenProvider = TokenCredential.CreateManagedIdentityTokenProvider();
             }
 
             this.CbsTokenProvider = new TokenProviderAdapter(this);
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
 
         uint MaxFrameSize { get; }
 
-        internal ITokenProvider InternalTokenProvider { get; }
+        internal TokenCredential InternalTokenProvider { get; }
 
         internal override EventDataSender OnCreateEventSender(string partitionId)
         {
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
         }
 
         /// <summary>
-        /// Provides an adapter from TokenProvider to ICbsTokenProvider for AMQP CBS usage.
+        /// Provides an adapter from TokenCredential to ICbsTokenProvider for AMQP CBS usage.
         /// </summary>
         sealed class TokenProviderAdapter : ICbsTokenProvider
         {

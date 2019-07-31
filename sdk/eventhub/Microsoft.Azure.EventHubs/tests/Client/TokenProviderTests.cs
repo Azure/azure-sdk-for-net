@@ -19,7 +19,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             // Generate shared access token.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
+            var tokenProvider = TokenCredential.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
             var token = await tokenProvider.GetTokenAsync(csb.Endpoint.ToString(), TimeSpan.FromSeconds(120));
             var sas = token.TokenValue.ToString();
 
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             // Generate SAS token provider.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
+            var tokenProvider = TokenCredential.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
 
             // Create new client with updated connection string.
             var ehClient = EventHubClient.CreateWithTokenProvider(csb.Endpoint, csb.EntityPath, tokenProvider);
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     return authResult.AccessToken;
                 };
 
-            var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, appAuthority);
+            var tokenProvider = TokenCredential.CreateAzureActiveDirectoryTokenProvider(authCallback, appAuthority);
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);

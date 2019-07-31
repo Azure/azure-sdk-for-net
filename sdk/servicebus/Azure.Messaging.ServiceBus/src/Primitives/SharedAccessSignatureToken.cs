@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// A WCF SecurityToken that wraps a Shared Access Signature
     /// </summary>
-    internal class SharedAccessSignatureToken : SecurityToken
+    internal class SharedAccessSignatureToken
     {
         internal const string SharedAccessSignature = "SharedAccessSignature";
         internal const string SignedResource = "sr";
@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
         /// </summary>
         /// <param name="tokenString">The token</param>
         public SharedAccessSignatureToken(string tokenString)
-            : base(tokenString, GetExpirationDateTimeUtcFromToken(tokenString), GetAudienceFromToken(tokenString), Constants.SasTokenType)
+            //: base(tokenString, GetExpirationDateTimeUtcFromToken(tokenString), GetAudienceFromToken(tokenString), Constants.SasTokenType)
         {
         }
 

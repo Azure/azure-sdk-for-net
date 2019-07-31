@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.InteropExtensions
     /// <summary>
     /// Returns a static <see cref="DataContractBinarySerializer"/> instance of type T
     /// </summary>
-    public static class DataContractBinarySerializer<T>
+    static class DataContractBinarySerializer<T>
     {
         /// <summary>
         /// Initializes a DataContractBinarySerializer instance of type T

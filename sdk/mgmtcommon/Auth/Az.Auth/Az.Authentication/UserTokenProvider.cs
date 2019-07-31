@@ -15,7 +15,7 @@ namespace Microsoft.Rest.Azure.Authentication
     /// <summary>
     /// Provides tokens for Azure Active Directory Microsoft Id and Organization Id users.
     /// </summary>
-    public partial class UserTokenProvider : ITokenProvider
+    public partial class UserTokenProvider : TokenCredential
     {   
         /// <summary>
         /// Uri parameters used in the credential prompt.  Allows recalling previous 

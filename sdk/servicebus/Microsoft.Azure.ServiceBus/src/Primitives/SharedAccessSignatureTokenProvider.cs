@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
-    public class SharedAccessSignatureTokenProvider : TokenProvider
+    public class SharedAccessSignatureTokenProvider : TokenCredential
     {
         const TokenScope DefaultTokenScope = TokenScope.Entity;
 

@@ -22,11 +22,11 @@ namespace Azure.Messaging.ServiceBus
             ReceiveMode receiveMode,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
-            RetryPolicy retryPolicy,
+            ClientOptions options,
             int prefetchCount = Constants.DefaultClientPrefetchCount,
             string sessionId = null,
             bool isSessionReceiver = false)
-            : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
+            : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, options, prefetchCount, sessionId, isSessionReceiver)
         {
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
         }

@@ -40,9 +40,7 @@
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Memory" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
@@ -50,4 +48,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
   </ItemGroup>
+
+  <Import Project="../../../core/Azure.Core/src/Azure.Core.props" />
 </Project>

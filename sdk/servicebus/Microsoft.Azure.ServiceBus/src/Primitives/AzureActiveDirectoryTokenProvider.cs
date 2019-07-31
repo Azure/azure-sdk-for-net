@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// <summary>
     /// Represents the Azure Active Directory token provider for the Service Bus.
     /// </summary>
-    public class AzureActiveDirectoryTokenProvider : TokenProvider
+    public class AzureActiveDirectoryTokenProvider : TokenCredential
     {
         readonly string authority;
         readonly object authCallbackState;
