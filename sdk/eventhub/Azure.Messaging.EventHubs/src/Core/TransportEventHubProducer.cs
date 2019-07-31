@@ -38,6 +38,37 @@ namespace Azure.Messaging.EventHubs.Core
                                        CancellationToken cancellationToken);
 
         /// <summary>
+        ///   Sends a set of events to the associated Event Hub using a batched approach.
+        /// </summary>
+        ///
+        /// <param name="eventBatch">The set of event data to send.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public abstract Task SendAsync(EventDataBatch eventBatch,
+                                       CancellationToken cancellationToken);
+
+        /// <summary>
+        ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
+        ///   exceed the maximum allowable size of the batch, the batch will not allow adding the event and signal that scenario using its
+        ///   return value.
+        ///
+        ///   Because events that would violate the size constraint cannot be added, publishing a batch will not trigger an exception when
+        ///   attempting to send the events to the Event Hubs service.
+        /// </summary>
+        ///
+        /// <param name="options">The set of options to consider when creating this batch.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
+        ///
+        /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
+        ///
+        public abstract Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+                                                                   CancellationToken cancellationToken);
+
+        /// <summary>
         ///   Closes the connection to the transport producer instance.
         /// </summary>
         ///

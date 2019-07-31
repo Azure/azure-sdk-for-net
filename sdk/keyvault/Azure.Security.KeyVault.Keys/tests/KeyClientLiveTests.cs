@@ -17,7 +17,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public KeyClientLiveTests(bool isAsync) : base(isAsync)
         {
-            TestDiagnostics = false;
         }
 
         [Test]

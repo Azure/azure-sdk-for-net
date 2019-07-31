@@ -153,6 +153,9 @@
   <data name="ValueOutOfRange" xml:space="preserve">
     <value>The value supplied must be between {0} and {1}.</value>
   </data>
+  <data name="ValueMustBeAtLeast" xml:space="preserve">
+    <value>The value supplied must be greater than or equal to {0}.</value>
+  </data>
   <data name="ProxyMustUseWebsockets" xml:space="preserve">
     <value>A proxy may only be used for a websockets connection.</value>
   </data>
@@ -197,5 +200,11 @@
   </data>
   <data name="UnknownRetryMode" xml:space="preserve">
     <value>The requested retry mode, '{0}', is not known; a retry delay canot be determined.</value>
+  </data>
+  <data name="FailedToSerializeUnsupportedType" xml:space="preserve">
+    <value>Serialization failed due to an unsupported type, {0}.</value>
+  </data>
+  <data name="UnsupportedTransportEventType" xml:space="preserve">
+    <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
   </data>
 </root>

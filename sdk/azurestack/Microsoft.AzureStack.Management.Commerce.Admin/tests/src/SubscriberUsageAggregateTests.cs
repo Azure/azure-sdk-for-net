@@ -46,7 +46,7 @@ namespace Commerce.Tests
                 var testDate = new DateTime(2017, 09, 06);
                 testDate = DateTime.SpecifyKind(testDate, DateTimeKind.Utc);
                 var start = testDate.Floor();
-                var end = start.AddDays(1).Floor();
+                var end = testDate.AddDays(1).Floor();
 
                 // You need to do this.  ARM does this and you need to make
                 // sure you work with ARM.

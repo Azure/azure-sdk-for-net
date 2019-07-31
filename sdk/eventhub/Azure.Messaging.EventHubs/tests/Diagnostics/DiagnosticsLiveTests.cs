@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     /// <remarks>
-    ///   These tests have a depenency on live Azure services and may
+    ///   These tests have a dependency on live Azure services and may
     ///   incur costs for the associated Azure subscription.
     ///
     ///   Every send or receive call will trigger diagnostics events as
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="listener">The <see cref="IObserver{T}" /> that will subscribe to the Azure.Messaging.EventHubs <see cref="DiagnosticListener" />.</param>
         ///
-        /// <returns>An <see cref="IDisposable" /> subscription. The subscription can be cancelled by disposing of it.</returns>
+        /// <returns>An <see cref="IDisposable" /> subscription. The subscription can be canceled by disposing of it.</returns>
         ///
         private static IDisposable SubscribeToEvents(IObserver<DiagnosticListener> listener) =>
             DiagnosticListener.AllListeners.Subscribe(listener);

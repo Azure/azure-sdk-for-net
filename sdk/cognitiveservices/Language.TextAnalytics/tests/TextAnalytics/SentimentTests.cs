@@ -43,10 +43,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "SentimentAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                SentimentBatchResult result = await client.SentimentAsync(
-                    "I love my team mates");
+                SentimentResult result = await client.SentimentAsync("I love my team mates");
 
-                Assert.True(result.Documents[0].Score > 0);
+                Assert.True(result.Score > 0);
             }
         }
 
@@ -80,10 +79,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "Sentiment");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                SentimentBatchResult result = client.Sentiment(
-                    "I love my team mates");
+                SentimentResult result = client.Sentiment("I love my team mates");
 
-                Assert.True(result.Documents[0].Score > 0);
+                Assert.True(result.Score > 0);
             }
         }
     }

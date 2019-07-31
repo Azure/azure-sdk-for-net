@@ -9,7 +9,7 @@ namespace TrackOne
     internal class BatchOptions
     {
         /// <summary>
-        /// Partition key associated with the batch.
+        /// Partition key associate with the batch.
         /// </summary>
         public string PartitionKey { get; set; }
 

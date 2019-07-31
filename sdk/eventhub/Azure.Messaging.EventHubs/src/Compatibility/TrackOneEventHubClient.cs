@@ -170,9 +170,12 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 ? new BasicRetryPolicy(clientOptions.RetryOptions)
                 : defaultRetryPolicyFactory();
 
-            var client = TrackOne.EventHubClient.Create(endpointBuilder.Uri, eventHubPath, tokenProvider, retryPolicy.CalculateTryTimeout(0), transportType);
+            var operationTimeout = retryPolicy.CalculateTryTimeout(0);
+            var client = TrackOne.EventHubClient.Create(endpointBuilder.Uri, eventHubPath, tokenProvider, operationTimeout, transportType);
+
             client.WebProxy = clientOptions.Proxy;
             client.RetryPolicy = new TrackOneRetryPolicy(retryPolicy);
+            client.ConnectionStringBuilder.OperationTimeout = operationTimeout;
 
             return client;
         }

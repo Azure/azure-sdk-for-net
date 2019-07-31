@@ -91,13 +91,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReceiveCanReadOneEventBatch()
+        public async Task ReceiveCanReadOneEventBatchFromAnEventSet()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                var eventBatch = new[]
+                var eventSet = new[]
                 {
                     new EventData(Encoding.UTF8.GetBytes("One")),
                     new EventData(Encoding.UTF8.GetBytes("Two")),
@@ -118,6 +118,78 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events.
 
+                        await producer.SendAsync(eventSet);
+
+                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while ((receivedEvents.Count < eventSet.Length) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventSet.Length + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        index = 0;
+
+                        Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
+
+                        foreach (var receivedEvent in receivedEvents)
+                        {
+                            Assert.That(receivedEvent.IsEquivalentTo(eventSet[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
+                            ++index;
+                        }
+
+                        Assert.That(index, Is.EqualTo(eventSet.Length), "The number of received events did not match the batch size.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReceiveCanReadOneEventBatchFromAnEventBatch()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(4))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var eventSet = new[]
+                {
+                    new EventData(Encoding.UTF8.GetBytes("One")),
+                    new EventData(Encoding.UTF8.GetBytes("Two")),
+                    new EventData(Encoding.UTF8.GetBytes("Three"))
+                };
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
+                    {
+                        // Create the batch of events to publish.
+
+                        using var eventBatch = await producer.CreateBatchAsync();
+
+                        foreach (var eventData in eventSet)
+                        {
+                            eventBatch.TryAdd(eventData);
+                        }
+
+                        // Initiate an operation to force the consumer to connect and set its position at the
+                        // end of the event stream.
+
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                        // Send the batch of events.
+
                         await producer.SendAsync(eventBatch);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
@@ -127,9 +199,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         var receivedEvents = new List<EventData>();
                         var index = 0;
 
-                        while ((receivedEvents.Count < eventBatch.Length) && (++index < ReceiveRetryLimit))
+                        while ((receivedEvents.Count < eventBatch.Count) && (++index < ReceiveRetryLimit))
                         {
-                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Count + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
                         index = 0;
@@ -138,11 +210,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         foreach (var receivedEvent in receivedEvents)
                         {
-                            Assert.That(receivedEvent.IsEquivalentTo(eventBatch[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
+                            Assert.That(receivedEvent.IsEquivalentTo(eventSet[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
                             ++index;
                         }
 
-                        Assert.That(index, Is.EqualTo(eventBatch.Length), "The number of received events did not match the batch size.");
+                        Assert.That(index, Is.EqualTo(eventBatch.Count), "The number of received events did not match the batch size.");
                     }
                 }
             }
@@ -160,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                var eventBatch = new[]
+                var eventSet = new[]
                 {
                     new EventData(Encoding.UTF8.GetBytes("One")),
                     new EventData(Encoding.UTF8.GetBytes("Two")),
@@ -186,6 +258,15 @@ namespace Azure.Messaging.EventHubs.Tests
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
                     await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
                     {
+                        // Create the batch of events to publish.
+
+                        using var eventBatch = await producer.CreateBatchAsync();
+
+                        foreach (var eventData in eventSet)
+                        {
+                            eventBatch.TryAdd(eventData);
+                        }
+
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
 
@@ -193,7 +274,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events, receive and validate them.
 
-                        await producer.SendAsync(eventBatch);
+                        await producer.SendAsync(eventSet);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -202,11 +283,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         var receivedEvents = new List<EventData>();
                         var index = 0;
                         var batchNumber = 1;
-                        var batchSize = (eventBatch.Length / 3);
+                        var setSize = (eventSet.Length / 3);
 
-                        while ((receivedEvents.Count < eventBatch.Length) && (++index < eventBatch.Length + ReceiveRetryLimit))
+                        while ((receivedEvents.Count < eventSet.Length) && (++index < eventSet.Length + ReceiveRetryLimit))
                         {
-                            var currentReceiveBatch = await consumer.ReceiveAsync(batchSize, TimeSpan.FromMilliseconds(25));
+                            var currentReceiveBatch = await consumer.ReceiveAsync(setSize, TimeSpan.FromMilliseconds(25));
                             receivedEvents.AddRange(currentReceiveBatch);
 
                             Assert.That(currentReceiveBatch, Is.Not.Empty, $"There should have been a set of events received for batch number: { batchNumber }.");
@@ -218,11 +299,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         foreach (var receivedEvent in receivedEvents)
                         {
-                            Assert.That(receivedEvent.IsEquivalentTo(eventBatch[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
+                            Assert.That(receivedEvent.IsEquivalentTo(eventSet[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
                             ++index;
                         }
 
-                        Assert.That(index, Is.EqualTo(eventBatch.Length), "The number of received events did not match the batch size.");
+                        Assert.That(index, Is.EqualTo(eventSet.Length), "The number of received events did not match the batch size.");
                     }
                 }
             }
@@ -352,13 +433,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReceiveCanReadOneZeroLengthEventBatch()
+        public async Task ReceiveCanReadOneZeroLengthEventSet()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                var eventBatch = new[]
+                var eventSet = new[]
                 {
                     new EventData(new byte[0]),
                     new EventData(new byte[0]),
@@ -377,9 +458,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
 
-                        // Send the batch of events.
+                        // Send the set of events.
 
-                        await producer.SendAsync(eventBatch);
+                        await producer.SendAsync(eventSet);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -388,9 +469,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         var receivedEvents = new List<EventData>();
                         var index = 0;
 
-                        while ((receivedEvents.Count < eventBatch.Length) && (++index < ReceiveRetryLimit))
+                        while ((receivedEvents.Count < eventSet.Length) && (++index < ReceiveRetryLimit))
                         {
-                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventSet.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
                         index = 0;
@@ -399,11 +480,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         foreach (var receivedEvent in receivedEvents)
                         {
-                            Assert.That(receivedEvent.IsEquivalentTo(eventBatch[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
+                            Assert.That(receivedEvent.IsEquivalentTo(eventSet[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
                             ++index;
                         }
 
-                        Assert.That(index, Is.EqualTo(eventBatch.Length), "The number of received events did not match the batch size.");
+                        Assert.That(index, Is.EqualTo(eventSet.Length), "The number of received events did not match the batch size.");
                     }
                 }
             }
@@ -424,10 +505,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 var eventBatch = new[]
                 {
                     // Actual limit is 1046520 for a single event
-                    new EventData(new byte[1000000])
+                    new EventData(new byte[100000])
                 };
 
-                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) }}))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) } }))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
@@ -1715,7 +1796,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 var clientOptions = new EventHubClientOptions
                 {
                     Proxy = new WebProxy("http://1.2.3.4:9999"),
-                    TransportType = TransportType.AmqpWebSockets
+                    TransportType = TransportType.AmqpWebSockets,
+                    RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(2) }
                 };
 
                 await using (var client = new EventHubClient(connectionString))
@@ -1725,7 +1807,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (var invalidProxyConsumer = invalidProxyClient.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
                     {
-                        Assert.That(async () => await invalidProxyConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<WebSocketException>());
+                        Assert.That(async () => await invalidProxyConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     }
                 }
             }

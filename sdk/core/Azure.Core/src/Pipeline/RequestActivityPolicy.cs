@@ -59,11 +59,11 @@ namespace Azure.Core.Pipeline
 
             if (isAsync)
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
             }
             else
             {
-                ProcessNext(message, pipeline);
+                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
             }
 
             activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));

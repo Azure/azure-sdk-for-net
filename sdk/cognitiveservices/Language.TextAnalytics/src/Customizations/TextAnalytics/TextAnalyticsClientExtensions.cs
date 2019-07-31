@@ -7,6 +7,7 @@
 namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
 {
     using Models;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
@@ -163,7 +164,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<LanguageBatchResult> DetectLanguageAsync(
+        public static async Task<LanguageResult> DetectLanguageAsync(
             this ITextAnalyticsClient operations,
             string inputText = default,
             string countryHint = "en",
@@ -173,7 +174,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             var languageBatchInput = new LanguageBatchInput(new List<LanguageInput> { new LanguageInput("1", inputText, countryHint) });
             using (var _result = await operations.DetectLanguageWithHttpMessagesAsync(showStats, languageBatchInput, null, cancellationToken).ConfigureAwait(false))
             {
-                return _result.Body;
+                IList<DetectedLanguage> languages = _result.Body.Documents.Count > 0 ? _result.Body.Documents[0].DetectedLanguages : null;
+                string errorMessage = _result.Body.Errors.Count > 0 ? _result.Body.Errors[0].Message : null;
+                RequestStatistics stats = _result.Body.Statistics;
+
+                return new LanguageResult(languages, errorMessage, stats);
             }
         }
 
@@ -204,7 +209,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<EntitiesBatchResult> EntitiesAsync(
+        public static async Task<EntitiesResult> EntitiesAsync(
             this ITextAnalyticsClient operations,
             string inputText = default,
             string language = "en",
@@ -214,7 +219,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             var multiLanguageBatchInput = new MultiLanguageBatchInput(new List<MultiLanguageInput> { new MultiLanguageInput("1", inputText, language) });
             using (var _result = await operations.EntitiesWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false))
             {
-                return _result.Body;
+                IList<EntityRecord> entities = _result.Body.Documents.Count > 0 ? _result.Body.Documents[0].Entities : null;
+                string errorMessage = _result.Body.Errors.Count > 0 ? _result.Body.Errors[0].Message : null;
+                RequestStatistics stats = _result.Body.Statistics;
+
+                return new EntitiesResult(entities, errorMessage, stats);
             }
         }
 
@@ -244,7 +253,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<KeyPhraseBatchResult> KeyPhrasesAsync(
+        public static async Task<KeyPhraseResult> KeyPhrasesAsync(
             this ITextAnalyticsClient operations,
             string inputText = default,
             string language = "en",
@@ -254,7 +263,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             var multiLanguageBatchInput = new MultiLanguageBatchInput(new List<MultiLanguageInput> { new MultiLanguageInput("1", inputText, language) });
             using (var _result = await operations.KeyPhrasesWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false))
             {
-                return _result.Body;
+                IList<string> keyPhrases = _result.Body.Documents.Count > 0 ? _result.Body.Documents[0].KeyPhrases : null;
+                string errorMessage = _result.Body.Errors.Count > 0 ? _result.Body.Errors[0].Message : null;
+                RequestStatistics stats = _result.Body.Statistics;
+
+                return new KeyPhraseResult(keyPhrases, errorMessage, stats);
             }
         }
 
@@ -285,7 +298,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SentimentBatchResult> SentimentAsync(
+        public static async Task<SentimentResult> SentimentAsync(
             this ITextAnalyticsClient operations,
             string inputText = default,
             string language = "en",
@@ -295,7 +308,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             var multiLanguageBatchInput = new MultiLanguageBatchInput(new List<MultiLanguageInput> { new MultiLanguageInput("1", inputText, language) });
             using (var _result = await operations.SentimentWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false))
             {
-                return _result.Body;
+                double? score = _result.Body.Documents.Count > 0 ? _result.Body.Documents[0].Score : null;
+                string errorMessage = _result.Body.Errors.Count > 0 ? _result.Body.Errors[0].Message : null;
+                RequestStatistics stats = _result.Body.Statistics;
+
+                return new SentimentResult(score, errorMessage, stats);
             }
         }
 
@@ -438,7 +455,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static LanguageBatchResult DetectLanguage(
+        public static LanguageResult DetectLanguage(
             this ITextAnalyticsClient operations,
             string inputText = default,
             string countryHint = "en",
@@ -447,7 +464,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         {
             var languageBatchInput = new LanguageBatchInput(new List<LanguageInput> { new LanguageInput("1", inputText, countryHint) });
             var _result = operations.DetectLanguageWithHttpMessagesAsync(showStats, languageBatchInput, null, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
-            return _result.Body;
+
+            IList<DetectedLanguage> languages = _result.Body.Documents.Count > 0 ? _result.Body.Documents[0].DetectedLanguages : null;
+            string errorMessage = _result.Body.Errors.Count > 0 ? _result.Body.Errors[0].Message : null;
+            RequestStatistics stats = _result.Body.Statistics;
+
+            return new LanguageResult(languages, errorMessage, stats);
         }
 
         /// <summary>
@@ -477,7 +499,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static EntitiesBatchResult Entities(
+        public static EntitiesResult Entities(
             this ITextAnalyticsClient operations,
             string inputText = default,
             string language = "en",
@@ -486,7 +508,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         {
             var multiLanguageBatchInput = new MultiLanguageBatchInput(new List<MultiLanguageInput> { new MultiLanguageInput("1", inputText, language) });
             var _result = operations.EntitiesWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
-            return _result.Body;
+
+            IList<EntityRecord> entities = _result.Body.Documents.Count > 0 ? _result.Body.Documents[0].Entities : null;
+            string errorMessage = _result.Body.Errors.Count > 0 ? _result.Body.Errors[0].Message : null;
+            RequestStatistics stats = _result.Body.Statistics;
+
+            return new EntitiesResult(entities, errorMessage, stats);
         }
 
         /// <summary>
@@ -515,7 +542,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static KeyPhraseBatchResult KeyPhrases(
+        public static KeyPhraseResult KeyPhrases(
             this ITextAnalyticsClient operations,
             string inputText = default,
             string language = "en",
@@ -524,7 +551,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         {
             var multiLanguageBatchInput = new MultiLanguageBatchInput(new List<MultiLanguageInput> { new MultiLanguageInput("1", inputText, language) });
             var _result = operations.KeyPhrasesWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
-            return _result.Body;
+
+            IList<string> keyPhrases = _result.Body.Documents.Count > 0 ? _result.Body.Documents[0].KeyPhrases : null;
+            string errorMessage = _result.Body.Errors.Count > 0 ? _result.Body.Errors[0].Message : null;
+            RequestStatistics stats = _result.Body.Statistics;
+
+            return new KeyPhraseResult(keyPhrases, errorMessage, stats);
         }
 
         /// <summary>
@@ -554,7 +586,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static SentimentBatchResult Sentiment(
+        public static SentimentResult Sentiment(
             this ITextAnalyticsClient operations,
             string inputText = default,
             string language = "en",
@@ -563,7 +595,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         {
             var multiLanguageBatchInput = new MultiLanguageBatchInput(new List<MultiLanguageInput> { new MultiLanguageInput("1", inputText, language) });
             var _result = operations.SentimentWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
-            return _result.Body;
+
+            double? score = _result.Body.Documents.Count > 0 ? _result.Body.Documents[0].Score : null;
+            string errorMessage = _result.Body.Errors.Count > 0 ? _result.Body.Errors[0].Message : null;
+            RequestStatistics stats = _result.Body.Statistics;
+
+            return new SentimentResult(score, errorMessage, stats);
         }
     }
 }

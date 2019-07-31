@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ApplicationModel.Conf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "src\Azure.Core.csproj", "{CA90A9FA-F955-49DC-A191-6DEE6FA2E493}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Extensions", "..\Azure.Core.Extensions\src\Azure.Core.Extensions.csproj", "{F8B2A9A5-1730-4EC6-B2E5-9029F1066D4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure", "..\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{F8B2A9A5-1730-4EC6-B2E5-9029F1066D4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Extensions.Tests", "..\Azure.Core.Extensions\tests\Azure.Core.Extensions.Tests.csproj", "{30AAFF15-4204-493D-9E61-407194FF2330}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{30AAFF15-4204-493D-9E61-407194FF2330}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
 EndProject
@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Tests"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1BC0D7C7-2E71-4CAA-830C-856E9E2D71A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Extensions.Samples", "..\Azure.Core.Extensions\samples\Azure.Core.Extensions.Samples.csproj", "{C772E341-1EC6-451A-BDAB-647B02BF262B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Samples", "..\Microsoft.Extensions.Azure\samples\Microsoft.Extensions.Azure.Samples.csproj", "{C772E341-1EC6-451A-BDAB-647B02BF262B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

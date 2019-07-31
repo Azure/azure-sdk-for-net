@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Compatibility
 {
@@ -101,6 +103,71 @@ namespace Azure.Messaging.EventHubs.Compatibility
             {
                 throw ex.MapToTrackTwoException();
             }
+        }
+
+        /// <summary>
+        ///   Sends a set of events to the associated Event Hub using a batched approach.
+        /// </summary>
+        ///
+        /// <param name="eventBatch">The set of event data to send.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public override async Task SendAsync(EventDataBatch eventBatch,
+                                             CancellationToken cancellationToken)
+        {
+            static TrackOne.EventData TransformMessage(AmqpMessage message) =>
+                new TrackOne.EventData(Array.Empty<byte>())
+                {
+                    AmqpMessage = message
+                };
+
+            try
+            {
+                var events = eventBatch.AsEnumerable<AmqpMessage>().Select(TransformMessage);
+                await TrackOneSender.SendAsync(events, eventBatch.SendOptions?.PartitionKey).ConfigureAwait(false);
+            }
+            catch (TrackOne.EventHubsException ex)
+            {
+                throw ex.MapToTrackTwoException();
+            }
+        }
+
+        /// <summary>
+        ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
+        ///   exceed the maximum allowable size of the batch, the batch will not allow adding the event and signal that scenario using its
+        ///   return value.
+        ///
+        ///   Because events that would violate the size constraint cannot be added, publishing a batch will not trigger an exception when
+        ///   attempting to send the events to the Event Hubs service.
+        /// </summary>
+        ///
+        /// <param name="options">The set of options to consider when creating this batch.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
+        ///
+        /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
+        ///
+        public override async Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+                                                                         CancellationToken cancellationToken)
+        {
+            Guard.ArgumentNotNull(nameof(options), options);
+
+            // Ensure that the underlying AMQP link was created so that the maximum
+            // message size was set on the track one sender.
+
+            await TrackOneSender.EnsureLinkAsync().ConfigureAwait(false);
+
+            // Ensure that there was a maximum size populated; if none was provided,
+            // default to the maximum size allowed by the link.
+
+            options.MaximumizeInBytes = options.MaximumizeInBytes ?? TrackOneSender.MaxMessageSize;
+
+            Guard.ArgumentInRange(nameof(options.MaximumizeInBytes), options.MaximumizeInBytes.Value, EventHubProducer.MinimumBatchSizeLimit, TrackOneSender.MaxMessageSize);
+
+            return new AmqpEventBatch(new AmqpMessageConverter(), options);
         }
 
         /// <summary>

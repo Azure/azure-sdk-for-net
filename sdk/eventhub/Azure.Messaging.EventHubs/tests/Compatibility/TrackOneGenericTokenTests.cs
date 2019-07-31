@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(token.Audience, Is.EqualTo(resource), "The audience for the token should match.");
             Assert.That(token.TokenValue, Is.EqualTo(jwtToken), "The JWT token value should match.");
             Assert.That(token.Credential, Is.EqualTo(credential), "The credential should match.");
-            Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration), "The expiration shoud match.");
+            Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration), "The expiration should match.");
             Assert.That(token.TokenType, Is.EqualTo(ClientConstants.JsonWebTokenType), "The token type should identify a generic JWT.");
         }
     }

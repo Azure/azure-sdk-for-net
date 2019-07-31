@@ -45,7 +45,7 @@ namespace Azure.ApplicationModel.Configuration
             if (root.TryGetProperty("etag", out var eTagValue)) setting.ETag = new ETag(eTagValue.GetString());
             if (root.TryGetProperty("last_modified", out var lastModified))
             {
-                if(lastModified.Type == JsonValueType.Null)
+                if(lastModified.ValueKind == JsonValueKind.Null)
                 {
                     setting.LastModified = null;
                 }
@@ -56,7 +56,7 @@ namespace Azure.ApplicationModel.Configuration
             }
             if (root.TryGetProperty("locked", out var lockedValue))
             {
-                if(lockedValue.Type == JsonValueType.Null)
+                if(lockedValue.ValueKind == JsonValueKind.Null)
                 {
                     setting.Locked = null;
                 }

@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     /// <remarks>
-    ///   These tests have a depenency on live Azure services and may
+    ///   These tests have a dependency on live Azure services and may
     ///   incur costs for the associated Azure subscription.
     /// </remarks>
     ///

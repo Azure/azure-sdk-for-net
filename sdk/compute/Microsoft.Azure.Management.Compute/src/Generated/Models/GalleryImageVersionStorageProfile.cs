@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// This is the storage profile of a gallery Image Version.
+    /// This is the storage profile of a Gallery Image Version.
     /// </summary>
     public partial class GalleryImageVersionStorageProfile
     {
@@ -34,8 +34,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="dataDiskImages">A list of data disk images.</param>
-        public GalleryImageVersionStorageProfile(GalleryOSDiskImage osDiskImage = default(GalleryOSDiskImage), IList<GalleryDataDiskImage> dataDiskImages = default(IList<GalleryDataDiskImage>))
+        public GalleryImageVersionStorageProfile(GalleryArtifactVersionSource source = default(GalleryArtifactVersionSource), GalleryOSDiskImage osDiskImage = default(GalleryOSDiskImage), IList<GalleryDataDiskImage> dataDiskImages = default(IList<GalleryDataDiskImage>))
         {
+            Source = source;
             OsDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             CustomInit();
@@ -48,14 +49,46 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "osDiskImage")]
-        public GalleryOSDiskImage OsDiskImage { get; private set; }
+        [JsonProperty(PropertyName = "source")]
+        public GalleryArtifactVersionSource Source { get; set; }
 
         /// <summary>
-        /// Gets a list of data disk images.
+        /// </summary>
+        [JsonProperty(PropertyName = "osDiskImage")]
+        public GalleryOSDiskImage OsDiskImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of data disk images.
         /// </summary>
         [JsonProperty(PropertyName = "dataDiskImages")]
-        public IList<GalleryDataDiskImage> DataDiskImages { get; private set; }
+        public IList<GalleryDataDiskImage> DataDiskImages { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Source != null)
+            {
+                Source.Validate();
+            }
+            if (OsDiskImage != null)
+            {
+                OsDiskImage.Validate();
+            }
+            if (DataDiskImages != null)
+            {
+                foreach (var element in DataDiskImages)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }
