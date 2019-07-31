@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes).
+        ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
         /// </summary>
         internal static string MessageSizeExceeded
         {
@@ -78,7 +78,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or empty.
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or empty..
         /// </summary>
         internal static string ArgumentNullOrEmpty
         {
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or white space.
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or white space..
         /// </summary>
         internal static string ArgumentNullOrWhiteSpace
         {
@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; cannot exceed {1} characters.
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; cannot exceed {1} characters..
         /// </summary>
         internal static string ArgumentStringTooLong
         {
@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A producer created for a specific partition cannot send events using a partition key.  This producer is associated with partition &apos;{0}&apos;.
+        ///   Looks up a localized string similar to A producer created for a specific partition cannot send events using a partition key.  This producer is associated with partition &apos;{0}&apos;..
         /// </summary>
         internal static string CannotSendWithPartitionIdAndPartitionKey
         {
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The connection string could not be parsed; either it was malformed or contains no well-known tokens.
+        ///   Looks up a localized string similar to The connection string could not be parsed; either it was malformed or contains no well-known tokens..
         /// </summary>
         internal static string InvalidConnectionString
         {
@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The string has an invalid encoding format.
+        ///   Looks up a localized string similar to The string has an invalid encoding format..
         /// </summary>
         internal static string InvalidEncoding
         {
@@ -155,7 +155,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The shared access signature could not be parsed; it was either malformed or incorrectly encoded.
+        ///   Looks up a localized string similar to The shared access signature could not be parsed; it was either malformed or incorrectly encoded..
         /// </summary>
         internal static string InvalidSharedAccessSignature
         {
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The time period may not be Zero or Infinite.
+        ///   Looks up a localized string similar to The time period may not be Zero or Infinite..
         /// </summary>
         internal static string InvalidTimePeriod
         {
@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The requested transport type, &apos;{0}&apos; is not supported.
+        ///   Looks up a localized string similar to The requested transport type, &apos;{0}&apos; is not supported..
         /// </summary>
         internal static string InvalidTransportType
         {
@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid.  The path to an Event Hub must be included in the connection string or specified separately.
+        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid.  The path to an Event Hub must be included in the connection string or specified separately..
         /// </summary>
         internal static string MissingConnectionInformation
         {
@@ -210,7 +210,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to System property &apos;{0}&apos; is missing in the event.
+        ///   Looks up a localized string similar to System property &apos;{0}&apos; is missing in the event..
         /// </summary>
         internal static string MissingSystemProperty
         {
@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A proxy may only be used for a websockets connection.
+        ///   Looks up a localized string similar to A proxy may only be used for a websockets connection..
         /// </summary>
         internal static string ProxyMustUseWebsockets
         {
@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters.
+        ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
         /// </summary>
         internal static string ConsumerIdentifierOverMaxValue
         {
@@ -243,7 +243,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The requested resource, &apos;{0}&apos;, does not match the resource of the shared access signature, &apos;{1}&apos;. A token cannot be issued.
+        ///   Looks up a localized string similar to The requested resource, &apos;{0}&apos;, does not match the resource of the shared access signature, &apos;{1}&apos;. A token cannot be issued..
         /// </summary>
         internal static string ResourceMustMatchSharedAccessSignature
         {
@@ -254,7 +254,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly.
+        ///   Looks up a localized string similar to Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly..
         /// </summary>
         internal static string RetryOptionsMustBeSet
         {
@@ -265,7 +265,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created.
+        ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created..
         /// </summary>
         internal static string SharedAccessKeyIsRequired
         {
@@ -276,7 +276,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A timeout value must be positive.  To request using the default timeout, please use TimeSpan.Zero or null.
+        ///   Looks up a localized string similar to A timeout value must be positive.  To request using the default timeout, please use TimeSpan.Zero or null..
         /// </summary>
         internal static string TimeoutMustBePositive
         {
@@ -287,7 +287,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Argument {0} must be a non-negative timespan value. The provided value was {1}.
+        ///   Looks up a localized string similar to Argument {0} must be a non-negative timespan value. The provided value was {1}..
         /// </summary>
         internal static string TimeSpanMustBeNonNegative
         {
@@ -298,7 +298,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The specified connection type, &quot;{0}&quot;, is not recognized as valid in this context.
+        ///   Looks up a localized string similar to The specified connection type, &quot;{0}&quot;, is not recognized as valid in this context..
         /// </summary>
         internal static string UnknownConnectionType
         {
@@ -309,7 +309,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The value supplied must be between {0} and {1}.
+        ///   Looks up a localized string similar to The value supplied must be between {0} and {1}..
         /// </summary>
         internal static string ValueOutOfRange
         {
@@ -320,7 +320,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential.
+        ///   Looks up a localized string similar to The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential..
         /// </summary>
         internal static string UnsupportedCredential
         {
@@ -331,7 +331,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to >A shared key credential is unable to generate a token directly.  Please use this credential when creating an Event Hub Client, for proper generation of shared key tokens.
+        ///   Looks up a localized string similar to >A shared key credential is unable to generate a token directly.  Please use this credential when creating an Event Hub Client, for proper generation of shared key tokens..
         /// </summary>
         internal static string SharedKeyCredentialCannotGenerateTokens
         {
@@ -342,7 +342,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The {0} value is expected to be a {1} bit signed integer. Actual value: '{2}'.
+        ///   Looks up a localized string similar to The {0} value is expected to be a {1} bit signed integer. Actual value: '{2}'..
         /// </summary>
         internal static string CannotParseIntegerType
         {
@@ -353,7 +353,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The requested retry mode, '{0}' is not known; a retry delay canot be determined.
+        ///   Looks up a localized string similar to The requested retry mode, '{0}' is not known; a retry delay canot be determined..
         /// </summary>
         internal static string UnknownRetryMode
         {
