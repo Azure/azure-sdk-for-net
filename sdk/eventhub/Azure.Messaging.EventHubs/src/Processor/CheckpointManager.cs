@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Processor
             (
                 Context.EventHubName,
                 Context.ConsumerGroup,
-                "TODO",
+                Context.InstanceId,
                 Context.PartitionId,
                 offset,
                 sequenceNumber

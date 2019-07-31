@@ -4,9 +4,8 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   A <see cref="PartitionOwnership" /> instance contains all the information needed to describe the owner of a
-    ///   lease.  It's used by <see cref="IPartitionManager" /> to claim ownership of a partition and to list existing
-    ///   leases.
+    ///   Contains all the information needed to describe the status of the owner of a partition.  It's used by
+    ///   <see cref="IPartitionManager" /> to claim ownership of a partition and to list existing ownership.
     /// </summary>
     ///
     public class PartitionOwnership

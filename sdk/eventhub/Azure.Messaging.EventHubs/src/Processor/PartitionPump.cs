@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   A partition pump constantly receives <see cref="EventData" /> from a single partition in the context of a
-    ///   given consumer group.  The received data is sent to an <see cref="IPartitionProcessor" /> to be processed.
+    ///   Constantly receives <see cref="EventData" /> from a single partition in the context of a given consumer
+    ///   group.  The received data is sent to an <see cref="IPartitionProcessor" /> to be processed.
     /// </summary>
     ///
     internal class PartitionPump

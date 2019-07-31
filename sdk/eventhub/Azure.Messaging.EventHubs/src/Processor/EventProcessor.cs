@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   An event processor constantly receives <see cref="EventData" /> from every partition in the context of a
-    ///   given consumer group.  The received data is sent to an <see cref="IPartitionProcessor" /> to be processed.
+    ///   Constantly receives <see cref="EventData" /> from every partition in the context of a given consumer group.
+    ///   The received data is sent to an <see cref="IPartitionProcessor" /> to be processed.
     /// </summary>
     ///
     public class EventProcessor
@@ -140,7 +140,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await Task.WhenAll(partitionIds.Select(async partitionId =>
                 {
-                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
+                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, Name, partitionId);
                     var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
                     var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await Task.WhenAll(pumpsToUpdate.Select(async partitionId =>
                 {
-                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
+                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, Name, partitionId);
                     var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
                     var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
