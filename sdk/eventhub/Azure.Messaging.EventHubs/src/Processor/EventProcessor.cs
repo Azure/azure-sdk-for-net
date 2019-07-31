@@ -148,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
                     PartitionPumps.TryAdd(partitionId, partitionPump);
 
-                    await partitionPump.Start().ConfigureAwait(false);
+                    await partitionPump.Start();
                 }));
 
                 RunningTask = Run(RunningTaskTokenSource.Token);
@@ -216,7 +216,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
                     PartitionPumps[partitionId] = partitionPump;
 
-                    await partitionPump.Start().ConfigureAwait(false);
+                    await partitionPump.Start();
                 }));
 
                 pumpsToUpdate.Clear();
