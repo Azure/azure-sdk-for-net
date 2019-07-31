@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// A enum representing the scope of the <see cref="TokenCredential"/>.
     /// </summary>
-    public enum TokenScope
+    enum TokenScope
     {
         /// <summary>
         /// The namespace.
