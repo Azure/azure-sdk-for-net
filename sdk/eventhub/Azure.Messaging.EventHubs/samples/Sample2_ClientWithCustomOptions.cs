@@ -53,11 +53,12 @@ namespace Azure.Messaging.EventHubs.Samples
 
             var clientOptions = new EventHubClientOptions
             {
-               DefaultTimeout = TimeSpan.FromMinutes(1),
-               Retry = new ExponentialRetry(TimeSpan.FromSeconds(0.25), TimeSpan.FromSeconds(30), 5),
                TransportType = TransportType.AmqpWebSockets,
                Proxy = (IWebProxy)null
             };
+
+            clientOptions.RetryOptions.MaximumRetries = 5;
+            clientOptions.RetryOptions.TryTimeout = TimeSpan.FromMinutes(1);
 
             await using (var client = new EventHubClient(connectionString, eventHubName, clientOptions))
             {
@@ -68,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 Console.WriteLine("The Event Hub has the following properties:");
                 Console.WriteLine($"\tThe path to the Event Hub from the namespace is: { properties.Path }");
-                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedAtUtc.ToString("yyyy-MM-dd hh:mm:ss tt") }, in UTC.");
+                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
                 Console.WriteLine("\tThe Event Hub has the following partitions:");
 
                 foreach (string partitionId in properties.PartitionIds)

@@ -66,9 +66,11 @@ namespace TrackOne
                     return baseMessage;
                 }
 
-                return "{0}, ({1})".FormatInvariant(this.EventHubsNamespace);
+                return "{0}, ({1})".FormatInvariant(base.Message, this.EventHubsNamespace);
             }
         }
+
+        public string RawMessage => base.Message;
 
         /// <summary>
         /// A boolean indicating if the exception is a transient error or not.

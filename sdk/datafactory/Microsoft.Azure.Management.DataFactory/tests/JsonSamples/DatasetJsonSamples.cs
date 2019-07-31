@@ -85,6 +85,27 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string AzureSqlMITable = @"
+{
+    name: ""AzureSqlMITable"",
+    properties:
+    {
+        type: ""AzureSqlMITable"",
+        linkedServiceName:
+        {
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {
+            schema: ""dbo"",
+            table: ""test""
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string AzureSqlDWTable = @"
 {
     name: ""AzureSqlDWTable"",
@@ -435,6 +456,25 @@ namespace DataFactory.Tests.JsonSamples
         linkedServiceName:
         {
             referenceName: ""SalesforceLinkedService"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string SalesforceServiceCloudDataset = @"
+{
+    name: ""SalesforceServiceCloudDataset"",
+    properties:
+    {
+        type: ""SalesforceServiceCloudObject"",
+        typeProperties:
+        {
+            objectApiName: ""fakeObjectApiName""
+        },
+        linkedServiceName:
+        {
+            referenceName: ""SalesforceServiceCloudLinkedService"",
             type: ""LinkedServiceReference""
         }
     }
@@ -1044,5 +1084,232 @@ namespace DataFactory.Tests.JsonSamples
     }
   }
 }";
+
+        [JsonSample]
+        public const string BinaryDataset = @"
+{
+  ""name"": ""BinaryDataset"",
+  ""properties"": {
+    ""type"": ""Binary"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""data.parquet""
+      },
+      ""compression"": {
+        ""type"": ""Deflate"",
+        ""level"": ""Fastest""
+      }
+    }
+  }
+}";
+
+        [JsonSample]
+        public const string TeradataDataset = @"
+{
+  ""name"": ""TeradataDataset"",
+  ""properties"": {
+    ""type"": ""TeradataTable"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""TeradataOdbcLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""database"": ""AdventureWorksDW2012"",
+      ""table"": ""DimAccount""
+    }
+  }
+}";
+
+        [JsonSample]
+        public const string DynamicsCrmEntity = @"
+{
+  ""name"": ""DynamicsCrmEntity"",
+  ""properties"": {
+    ""type"": ""DynamicsCrmEntity"",
+    ""typeProperties"": {
+      ""entityName"": ""test""
+    },
+    ""linkedServiceName"": {
+      ""referenceName"": ""exampleLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    }
+  }
+}
+";
+
+        [JsonSample]
+        public const string CommonDataServiceForAppsEntity = @"
+{
+  ""name"": ""CommonDataServiceForAppsEntity"",
+  ""properties"": {
+    ""type"": ""CommonDataServiceForAppsEntity"",
+    ""typeProperties"": {
+      ""entityName"": ""test""
+    },
+    ""linkedServiceName"": {
+      ""referenceName"": ""exampleLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    }
+  }
+}
+";
+
+        [JsonSample]
+        public const string InformixTable = @"
+{
+  ""name"": ""InformixTable"",
+  ""properties"": {
+    ""type"": ""InformixTable"",
+    ""typeProperties"": {
+      ""tableName"": ""test""
+    },
+    ""linkedServiceName"": {
+      ""referenceName"": ""exampleLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    }
+  }
+}
+";
+
+        [JsonSample]
+        public const string MicrosoftAccessTable = @"
+{
+  ""name"": ""MicrosoftAccessTable"",
+  ""properties"": {
+    ""type"": ""MicrosoftAccessTable"",
+    ""typeProperties"": {
+      ""tableName"": ""test""
+    },
+    ""linkedServiceName"": {
+      ""referenceName"": ""exampleLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    }
+  }
+}
+";
+
+        [JsonSample]
+        public const string AzurePostgreSqlTable = @"
+{
+    name: ""AzurePostgreSqlTable"",
+    properties:
+    {
+        type: ""AzurePostgreSqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string MySqlTable = @"
+{
+    name: ""MySqlTable"",
+    properties:
+    {
+        type: ""MySqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzurePostgreSqlTableAndSchema = @"
+        {
+            name: ""AzurePostgreSqlTable"",
+            properties:
+            {
+                type: ""AzurePostgreSqlTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                },
+                typeProperties:
+                {            
+                    table: ""$EncryptedString$MyEncryptedTableName"",
+                    schema: ""$EncryptedString$MyEncryptedSchemaName""
+                }
+            }
+        }
+        ";
+
+        [JsonSample]
+        public const string OdbcTable = @"
+        {
+            name: ""OdbcTable"",
+            properties:
+            {
+                type: ""OdbcTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                },
+                typeProperties:
+                {            
+                    tableName: ""$EncryptedString$MyEncryptedTableName""
+                }
+            }
+        }
+        ";
+
+        [JsonSample]
+        public const string AzureDataExplorerTable = @"
+        {
+            name: ""AzureDataExplorerTable"",
+            properties:
+            {
+                type: ""AzureDataExplorerTable"",
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                }
+            }
+        }
+        ";
+
+        [JsonSample]
+        public const string AzureDataExplorerWithTablePropertyTable = @"
+        {
+            name: ""AzureDataExplorerTable"",
+            properties:
+            {
+                type: ""AzureDataExplorerTable"",
+                typeProperties:
+                {
+                    table: ""myTable""
+                },
+                linkedServiceName: 
+                {  
+                    referenceName : ""ls"",
+                    type : ""LinkedServiceReference""
+                }                
+            }
+        }
+        ";
     }
 }

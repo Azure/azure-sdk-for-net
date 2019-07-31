@@ -37,17 +37,20 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (json.TryGetProperty("value", out JsonElement value))
             {
-                _items = new T[value.GetArrayLength()];
-
-                int i = 0;
-
-                foreach (var elem in value.EnumerateArray())
+                if(value.ValueKind != JsonValueKind.Null)
                 {
-                    _items[i] = _itemFactory();
+                    _items = new T[value.GetArrayLength()];
 
-                    _items[i].ReadProperties(elem);
+                    int i = 0;
 
-                    i++;
+                    foreach (var elem in value.EnumerateArray())
+                    {
+                        _items[i] = _itemFactory();
+
+                        _items[i].ReadProperties(elem);
+
+                        i++;
+                    }
                 }
             }
 
@@ -64,7 +67,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         internal override void WriteProperties(ref Utf8JsonWriter json)
         {
-            // serialization is not needed this type is only in responses 
+            // serialization is not needed this type is only in responses
             throw new NotImplementedException();
         }
     }

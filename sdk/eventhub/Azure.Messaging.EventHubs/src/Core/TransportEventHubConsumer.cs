@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -16,6 +17,14 @@ namespace Azure.Messaging.EventHubs.Core
     ///
     internal abstract class TransportEventHubConsumer
     {
+        /// <summary>
+        ///   Updates the active retry policy for the client.
+        /// </summary>
+        ///
+        /// <param name="newRetryPolicy">The retry policy to set as active.</param>
+        ///
+        public abstract void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy);
+
         /// <summary>
         ///   Receives a bach of <see cref="EventData" /> from the the Event Hub partition.
         /// </summary>

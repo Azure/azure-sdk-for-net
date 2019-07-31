@@ -43,7 +43,7 @@ namespace Azure.Storage.Common
 
                 return new StreamPartition(
                     buffer.Memory,
-                    count, 
+                    count,
                     () =>
                     {
                         buffer.Dispose();
@@ -66,7 +66,7 @@ namespace Azure.Storage.Common
                 if (disposing)
                 {
                 }
-                
+
                 this.stream = default;
                 this.memoryPool = default;
 

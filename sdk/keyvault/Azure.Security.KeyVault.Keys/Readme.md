@@ -3,7 +3,7 @@ Azure Key Vault is a cloud service that provides secure storage of keys for encr
 
 The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC) keys, each with corresponding support in hardware security modules (HSM). It offers operations to create, retrieve, update, delete, purge, backup, restore and list the keys and its versions.
 
-[Source code][key_client_src] | [Package (NuGet)][key_client_nuget_package] | [API reference documentation] (coming soon) | [Product documentation][keyvault_docs] | [Samples][key_client_samples]
+[Source code][key_client_src] | [Package (NuGet)][key_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][key_client_samples]
 
 ## Getting started
 
@@ -55,10 +55,10 @@ $Env:AZURE_TENANT_ID="tenant-ID"
 
 * Grant the above mentioned application authorization to perform key operations on the key vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list set
+    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create
     ```
     > --key-permissions:
-    > Accepted values: backup, delete, get, list, purge, recover, restore, set
+    > Accepted values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
 
 * Use the above mentioned Key Vault name to retrieve details of your Vault which also contains your Key Vault URL:
     ```PowerShell
@@ -148,7 +148,7 @@ Key key = client.CreateKey("key-name", KeyType.EllipticCurve);
 // You can specify additional application-specific metadata in the form of tags.
 key.Tags["foo"] = "updated tag";
 
-KeyBase updatedKey = client.UpdateKey(key);
+KeyBase updatedKey = client.UpdateKey(key, key.KeyMaterial.KeyOps);
 
 Console.WriteLine(updatedKey.Name);
 Console.WriteLine(updatedKey.Version);
@@ -279,6 +279,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
+[API_reference]: https://azure.github.io/azure-sdk-for-net/api/KeyVault/Azure.Security.KeyVault.Keys.html
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/

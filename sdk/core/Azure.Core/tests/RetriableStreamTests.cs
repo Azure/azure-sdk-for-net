@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -255,7 +256,7 @@ namespace Azure.Core.Tests
         private static Request CreateRequest(HttpPipeline pipeline, long offset)
         {
             Request request = pipeline.CreateRequest();
-            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
+            request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com"));
             request.Headers.Add("Range", "bytes=" + offset);
             return request;
         }

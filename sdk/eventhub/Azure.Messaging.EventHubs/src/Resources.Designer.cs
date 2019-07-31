@@ -67,6 +67,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
+        /// </summary>
+        internal static string MessageSizeExceeded
+        {
+            get
+            {
+                return ResourceManager.GetString("MessageSizeExceeded", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or empty..
         /// </summary>
         internal static string ArgumentNullOrEmpty
@@ -232,7 +243,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The reqested resource, &apos;{0}&apos;, does not match the resource of the shared access signature, &apos;{1}&apos;.   A token cannot be issued..
+        ///   Looks up a localized string similar to The requested resource, &apos;{0}&apos;, does not match the resource of the shared access signature, &apos;{1}&apos;. A token cannot be issued..
         /// </summary>
         internal static string ResourceMustMatchSharedAccessSignature
         {
@@ -243,13 +254,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A retry must be set for the options; if no retry is desired, please set the value to Retry.NoRetry.
+        ///   Looks up a localized string similar to Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly..
         /// </summary>
-        internal static string RetryMustBeSet
+        internal static string RetryOptionsMustBeSet
         {
             get
             {
-                return ResourceManager.GetString("RetryMustBeSet", resourceCulture);
+                return ResourceManager.GetString("RetryOptionsMustBeSet", resourceCulture);
             }
         }
 
@@ -309,6 +320,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The value supplied must be greater than or equal to {0}..
+        /// </summary>
+        internal static string ValueMustBeAtLeast
+        {
+            get
+            {
+                return ResourceManager.GetString("ValueMustBeAtLeast", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential..
         /// </summary>
         internal static string UnsupportedCredential
@@ -327,6 +349,50 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("SharedKeyCredentialCannotGenerateTokens", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} value is expected to be a {1} bit signed integer. Actual value: '{2}'..
+        /// </summary>
+        internal static string CannotParseIntegerType
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotParseIntegerType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The requested retry mode, '{0}' is not known; a retry delay canot be determined..
+        /// </summary>
+        internal static string UnknownRetryMode
+        {
+            get
+            {
+                return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Serialization operation failed due to unsupported type {0}..
+        /// </summary>
+        internal static string FailedToSerializeUnsupportedType
+        {
+            get
+            {
+                return ResourceManager.GetString("FailedToSerializeUnsupportedType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The requested transport event type, '{0}', is not supported by the active transport client..
+        /// </summary>
+        internal static string UnsupportedTransportEventType
+        {
+            get
+            {
+                return ResourceManager.GetString("UnsupportedTransportEventType", resourceCulture);
             }
         }
     }

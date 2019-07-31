@@ -5,8 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline.Policies;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
@@ -32,40 +31,39 @@ namespace Azure.Storage.Queues.Tests
                     new QueueClientOptions
                     {
                         ResponseClassifier = new TestResponseClassifier(),
-                        LoggingPolicy = LoggingPolicy.Shared,
-                        RetryPolicy =
-                            new RetryPolicy()
-                            {
-                                Mode = RetryMode.Exponential,
-                                MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                                Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                                MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                            }
+                        Diagnostics = { IsLoggingEnabled = true },
+                        Retry =
+                        {
+                            Mode = RetryMode.Exponential,
+                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                            Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                            MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                        }
                     });
 
         public QueueServiceClient GetServiceClient_SharedKey()
             => this.InstrumentClient(
                 new QueueServiceClient(
-                    new Uri(TestConfigurations.DefaultTargetTenant.QueueServiceEndpoint),
+                    new Uri(this.TestConfigDefault.QueueServiceEndpoint),
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
         public QueueServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new QueueServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.QueueServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public QueueServiceClient GetServiceClient_QueueServiceSas(string queueName, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new QueueServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.QueueServiceEndpoint}?{sasCredentials ?? this.GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? this.GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public QueueServiceClient GetServiceClient_OauthAccount() =>
-            this.GetServiceClientFromOauthConfig(TestConfigurations.DefaultTargetOAuthTenant);
+            this.GetServiceClientFromOauthConfig(this.TestConfigOAuth);
 
         private QueueServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config) =>
             this.InstrumentClient(
@@ -84,8 +82,8 @@ namespace Azure.Storage.Queues.Tests
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
-                TestConfigurations.DefaultTargetTenant.AccountName,
-                TestConfigurations.DefaultTargetTenant.AccountKey);
+                this.TestConfigDefault.AccountName,
+                this.TestConfigDefault.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
             => new AccountSasBuilder

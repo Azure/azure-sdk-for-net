@@ -12,7 +12,6 @@ namespace Azure.Storage.Blobs
         public string EncryptionKey { get; set; }
         public string EncryptionKeySha256 { get; set; }
 
-
         public override bool Equals(object obj)
             => obj is CustomerProvidedKeyInfo other && this.Equals(other);
 

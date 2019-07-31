@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Batch
         {
             // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
-            Task asyncTask = this.parentBatchClient.PoolOperations.CopyNodeFileContentToStreamAsyncImpl(
+            Task asyncTask = this.parentBatchClient.JobOperations.CopyNodeFileContentToStreamAsyncImpl(
                 this.parentJobId,
                 this.Id,
                 filePath,
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Batch
         {
             // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
-            return this.parentBatchClient.PoolOperations.CopyNodeFileContentToStringAsyncImpl(
+            return this.parentBatchClient.JobOperations.CopyNodeFileContentToStringAsyncImpl(
                 this.parentJobId,
                 this.Id,
                 filePath,

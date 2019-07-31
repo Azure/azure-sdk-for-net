@@ -530,7 +530,7 @@ namespace Azure.Storage.Files.Test
                 var directoryFaulty = this.InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
-                        new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
+                        new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey),
                         this.GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
 
                 await directory.CreateAsync();
@@ -555,7 +555,7 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 var downloadResponse = await fileFaulty.DownloadAsync(range: new HttpRange(offset, data.LongLength));
                 var actual = new MemoryStream();
-                await downloadResponse.Value.Content.CopyToAsync(actual);
+                await downloadResponse.Value.Content.CopyToAsync(actual, 128 * Constants.KB);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
@@ -639,8 +639,8 @@ namespace Azure.Storage.Files.Test
                     new DirectoryClient(
                         directory.Uri,
                         new StorageSharedKeyCredential(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey),
+                            this.TestConfigDefault.AccountName,
+                            this.TestConfigDefault.AccountKey),
                         this.GetFaultyFileConnectionOptions()));
 
                 await directory.CreateAsync();
@@ -670,13 +670,9 @@ namespace Azure.Storage.Files.Test
                     result.GetRawResponse().Headers.TryGetValue("x-ms-version", out var version);
                     Assert.IsNotNull(version);
 
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
-
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-
-                    var lastProgress = progressList.Last();
-
-                    Assert.AreEqual(data.LongLength, lastProgress.BytesTransferred, "Final progress has unexpected value");
+                    Assert.AreEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
                 }
 
                 // Assert

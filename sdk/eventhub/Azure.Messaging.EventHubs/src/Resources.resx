@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MessageSizeExceeded" xml:space="preserve">
+    <value>The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes).</value>
+  </data>
   <data name="ArgumentNullOrEmpty" xml:space="preserve">
     <value>The argument '{0}' may not be null or empty.</value>
   </data>
@@ -142,7 +145,7 @@
     <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
   </data>
   <data name="TimeoutMustBePositive" xml:space="preserve">
-    <value>A timeout value must be positive.  To request using the default timeout, please use TimeSpan.Zero or null.</value>
+    <value>A timeout value must be positive. To request using the default timeout, please use TimeSpan.Zero or null.</value>
   </data>
   <data name="TimeSpanMustBeNonNegative" xml:space="preserve">
     <value>Argument {0} must be a non-negative timespan value. The provided value was {1}.</value>
@@ -150,17 +153,20 @@
   <data name="ValueOutOfRange" xml:space="preserve">
     <value>The value supplied must be between {0} and {1}.</value>
   </data>
+  <data name="ValueMustBeAtLeast" xml:space="preserve">
+    <value>The value supplied must be greater than or equal to {0}.</value>
+  </data>
   <data name="ProxyMustUseWebsockets" xml:space="preserve">
     <value>A proxy may only be used for a websockets connection.</value>
   </data>
-  <data name="RetryMustBeSet" xml:space="preserve">
-    <value>A retry must be set for the options; if no retry is desired, please set the value to Retry.NoRetry</value>
+  <data name="RetryOptionsMustBeSet" xml:space="preserve">
+    <value>Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly.</value>
   </data>
   <data name="InvalidConnectionString" xml:space="preserve">
     <value>The connection string could not be parsed; either it was malformed or contains no well-known tokens.</value>
   </data>
   <data name="MissingConnectionInformation" xml:space="preserve">
-    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid.  The path to an Event Hub must be included in the connection string or specified separately.</value>
+    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately.</value>
   </data>
   <data name="OnlyOneEventHubNameMayBeSpecified" xml:space="preserve">
     <value>The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both.</value>
@@ -175,18 +181,30 @@
     <value>In order to update the signature, a shared access key must have been provided when the shared access signature was created.</value>
   </data>
   <data name="ResourceMustMatchSharedAccessSignature" xml:space="preserve">
-    <value>The reqested resource, '{0}', does not match the resource of the shared access signature, '{1}'.   A token cannot be issued.</value>
+    <value>The requested resource, '{0}', does not match the resource of the shared access signature, '{1}'. A token cannot be issued.</value>
   </data>
   <data name="InvalidTransportType" xml:space="preserve">
     <value>The requested transport type, '{0}' is not supported.</value>
   </data>
   <data name="CannotSendWithPartitionIdAndPartitionKey" xml:space="preserve">
-    <value>A producer created for a specific partition cannot send events using a partition key.  This producer is associated with partition '{0}'.</value>
+    <value>A producer created for a specific partition cannot send events using a partition key. This producer is associated with partition '{0}'.</value>
   </data>
   <data name="UnsupportedCredential" xml:space="preserve">
-    <value>The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential.</value>
+    <value>The credential is not a known and supported credential type. Please use a JWT credential or shared key credential.</value>
   </data>
   <data name="SharedKeyCredentialCannotGenerateTokens" xml:space="preserve">
-    <value>A shared key credential is unable to generate a token directly.  Please use this credential when creating an Event Hub Client, for proper generation of shared key tokens.</value>
+    <value>A shared key credential is unable to generate a token directly. Please use this credential when creating an Event Hub Client, for proper generation of shared key tokens.</value>
+  </data>
+  <data name="CannotParseIntegerType" xml:space="preserve">
+    <value>The {0} value is expected to be a {1} bit signed integer. Actual value: '{2}'.</value>
+  </data>
+  <data name="UnknownRetryMode" xml:space="preserve">
+    <value>The requested retry mode, '{0}', is not known; a retry delay canot be determined.</value>
+  </data>
+  <data name="FailedToSerializeUnsupportedType" xml:space="preserve">
+    <value>Serialization failed due to an unsupported type, {0}.</value>
+  </data>
+  <data name="UnsupportedTransportEventType" xml:space="preserve">
+    <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
   </data>
 </root>

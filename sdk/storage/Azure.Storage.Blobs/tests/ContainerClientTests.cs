@@ -1161,7 +1161,7 @@ namespace Azure.Storage.Blobs.Test
                 var page = await container.GetBlobsAsync().ByPage(pageSizeHint: 2).FirstAsync();
                 
                 // Assert
-                Assert.AreEqual(2, page.Values.Length);
+                Assert.AreEqual(2, page.Values.Count);
             }
         }
         
@@ -1365,7 +1365,7 @@ namespace Azure.Storage.Blobs.Test
                     .FirstAsync();
 
                 // Assert
-                Assert.AreEqual(2, page.Values.Length);
+                Assert.AreEqual(2, page.Values.Count);
             }
         }
         

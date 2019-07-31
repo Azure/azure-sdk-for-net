@@ -13,9 +13,9 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// An <see cref="Operation{Int64}"/> for tracking the status of a 
-    /// <see cref="BlobBaseClient.StartCopyFromUriAsync"/> request.  Its
-    /// <see cref="Value"/> upon succesful completion will be the number of
-    /// bytes copied.
+    /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+    /// request.  Its <see cref="Operation{Int64}.Value"/> upon succesful
+    /// completion will be the number of bytes copied.
     /// </summary>
     public class CopyFromUriOperation : Operation<long>
     {
@@ -59,8 +59,8 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Gets a value indicating whether the operation completed and
-        /// succesfully produced a value.  The <see cref="Value"/> property
-        /// is the number of bytes copied by the operation.
+        /// succesfully produced a value.  The <see cref="Operation{Int64}.Value"/>
+        /// property is the number of bytes copied by the operation.
         /// </summary>
         public override bool HasValue => this._hasValue;
 
@@ -149,6 +149,7 @@ namespace Azure.Storage.Blobs.Models
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="async" />
         /// <returns>The <see cref="Response"/> with the status update.</returns>
         private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {

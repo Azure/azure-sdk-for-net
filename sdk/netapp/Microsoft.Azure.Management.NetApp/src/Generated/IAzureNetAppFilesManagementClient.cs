@@ -114,13 +114,26 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='location'>
         /// The location
         /// </param>
+        /// <param name='name'>
+        /// Resource name to verify.
+        /// </param>
+        /// <param name='type'>
+        /// Resource type used for verification. Possible values include:
+        /// 'Microsoft.NetApp/netAppAccounts',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
+        /// </param>
+        /// <param name='resourceGroup'>
+        /// Resource group name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Check file path availability
@@ -131,13 +144,26 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='location'>
         /// The location
         /// </param>
+        /// <param name='name'>
+        /// Resource name to verify.
+        /// </param>
+        /// <param name='type'>
+        /// Resource type used for verification. Possible values include:
+        /// 'Microsoft.NetApp/netAppAccounts',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
+        /// </param>
+        /// <param name='resourceGroup'>
+        /// Resource group name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ResourceNameAvailability>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceNameAvailability>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

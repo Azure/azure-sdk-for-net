@@ -83,7 +83,7 @@ namespace TrackOne.Amqp
         public const string WebSocketsPathSuffix = "/$servicebus/websocket/";
         public const string UriSchemeWss = "wss";
 
-        // Miscellaneous 
+        // Miscellaneous
         public const int AmqpSessionTimeoutInSeconds = 30;
     }
 }

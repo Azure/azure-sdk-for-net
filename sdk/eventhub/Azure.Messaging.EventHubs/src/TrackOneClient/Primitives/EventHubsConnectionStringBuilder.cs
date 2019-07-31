@@ -71,7 +71,7 @@ namespace TrackOne
             string entityPath,
             string sharedAccessKeyName,
             string sharedAccessKey)
-            : this (endpointAddress, entityPath, sharedAccessKeyName, sharedAccessKey, ClientConstants.DefaultOperationTimeout)
+            : this(endpointAddress, entityPath, sharedAccessKeyName, sharedAccessKey, ClientConstants.DefaultOperationTimeout)
         {
         }
 
@@ -176,7 +176,7 @@ namespace TrackOne
         /// </summary>
         /// <value>Shared Access Signature</value>
         public string SharedAccessSignature { get; set; }
-        
+
         /// <summary>
         /// Get the entity path value from the connection string
         /// </summary>

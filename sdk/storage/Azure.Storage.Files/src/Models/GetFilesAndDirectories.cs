@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Check if two GetFilesAndDirectoriesOptions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetFilesAndDirectoriesOptions other) =>
             this.ShareSnapshot == other.ShareSnapshot &&
@@ -99,7 +99,7 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetFilesAndDirectoriesAsync(
+            var task = this._client.GetFilesAndDirectoriesInternal(
                 continuationToken,
                 this._options,
                 pageSizeHint,

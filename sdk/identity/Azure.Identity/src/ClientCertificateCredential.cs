@@ -17,10 +17,22 @@ namespace Azure.Identity
     /// </summary>
     public class ClientCertificateCredential : TokenCredential
     {
-        private string _tenantId;
-        private string _clientId;
-        private X509Certificate2 _clientCertificate;
-        private AadIdentityClient _client;
+        /// <summary>
+        /// Gets the Azure Active Directory tenant (directory) Id of the service principal
+        /// </summary>
+        public string TenantId { get; }
+
+        /// <summary>
+        /// Gets the client (application) ID of the service principal
+        /// </summary>
+        public string ClientId { get; }
+
+        /// <summary>
+        /// Gets the authentication X509 Certificate of the service principal
+        /// </summary>
+        public X509Certificate2 ClientCertificate { get; }
+
+        private readonly AadIdentityClient _client;
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
@@ -42,11 +54,11 @@ namespace Azure.Identity
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, IdentityClientOptions options)
         {
-            _tenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
+            TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            _clientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
+            ClientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
 
             _client = (options != null) ? new AadIdentityClient(options) : AadIdentityClient.SharedClient;
         }
@@ -59,7 +71,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return _client.Authenticate(_tenantId, _clientId, _clientCertificate, scopes, cancellationToken);
+            return _client.Authenticate(TenantId, ClientId, ClientCertificate, scopes, cancellationToken);
         }
 
         /// <summary>
@@ -70,7 +82,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return await _client.AuthenticateAsync(_tenantId, _clientId, _clientCertificate, scopes, cancellationToken).ConfigureAwait(false);
+            return await _client.AuthenticateAsync(TenantId, ClientId, ClientCertificate, scopes, cancellationToken).ConfigureAwait(false);
         }
     }
 }

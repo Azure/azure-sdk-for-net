@@ -25,6 +25,7 @@ namespace Azure.Storage.Blobs
     /// </summary>
 	public class BlobClient : BlobBaseClient
     {
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>
         /// class for mocking.
@@ -41,7 +42,7 @@ namespace Azure.Storage.Blobs
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="containerName">
@@ -63,7 +64,7 @@ namespace Azure.Storage.Blobs
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="containerName">
@@ -161,17 +162,19 @@ namespace Azure.Storage.Blobs
             : base(blobUri, pipeline)
         {
         }
+        #endregion ctors
 
+        #region Upload
         /// <summary>
-        /// The <see cref="Upload"/> operation creates a new block blob
+        /// The <see cref="Upload(Stream)"/> operation creates a new block blob
         /// or updates the content of an existing block blob.  Updating an
         /// existing block blob overwrites any existing metadata on the blob.
-        /// 
+        ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
         /// <param name="content">
@@ -185,45 +188,48 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(Stream content) =>
             this.Upload(content, CancellationToken.None);
 
         /// <summary>
-        /// The <see cref="UploadAsync"/> operation creates a new block blob
+        /// The <see cref="UploadAsync(Stream)"/> operation creates a new block blob
         /// or updates the content of an existing block blob.  Updating an
         /// existing block blob overwrites any existing metadata on the blob.
-        /// 
+        ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(Stream content) =>
             await this.UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="Upload"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
-        /// 
+        /// The <see cref="Upload(Stream, CancellationToken)"/> operation
+        /// creates a new block blob or updates the content of an existing
+        /// block blob.  Updating an existing block blob overwrites any
+        /// existing metadata on the blob.
+        ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
         /// <param name="content">
@@ -241,6 +247,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             CancellationToken cancellationToken) =>
@@ -250,15 +257,16 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
-        /// 
+        /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
+        /// creates a new block blob or updates the content of an existing
+        /// block blob.  Updating an existing block blob overwrites any
+        /// existing metadata on the blob.
+        ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
         /// <param name="content">
@@ -269,13 +277,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             CancellationToken cancellationToken) =>
@@ -286,15 +295,16 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="Upload"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
-        /// 
+        /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, CancellationToken)"/>
+        /// operation creates a new block blob or updates the content of an
+        /// existing block blob.  Updating an existing block blob overwrites
+        /// any existing metadata on the blob.
+        ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
         /// <param name="content">
@@ -327,6 +337,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders? blobHttpHeaders = default,
@@ -345,15 +356,16 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
-        /// 
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, CancellationToken)"/>
+        /// operation creates a new block blob or updates the content of an
+        /// existing block blob.  Updating an existing block blob overwrites
+        /// any existing metadata on the blob.
+        ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
         /// <param name="content">
@@ -379,13 +391,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders? blobHttpHeaders = default,
@@ -441,7 +454,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
@@ -481,7 +494,7 @@ namespace Azure.Storage.Blobs
                 Stream content,
                 bool async,
                 CancellationToken cancellation) =>
-                client.UploadAsync(
+                client.UploadInternal(
                     content,
                     blobHttpHeaders,
                     metadata,
@@ -504,7 +517,7 @@ namespace Azure.Storage.Blobs
                 blockList.Add(blockId);
 
                 // Upload the block
-                return client.StageBlockAsync(
+                return client.StageBlockInternal(
                     blockId,
                     chunk,
                     null,
@@ -518,7 +531,7 @@ namespace Azure.Storage.Blobs
             Task<Response<BlobContentInfo>> CommitBlockListAsync(
                 bool async,
                 CancellationToken cancellation) =>
-                client.CommitBlockListAsync(
+                client.CommitBlockListInternal(
                     blockList,
                     blobHttpHeaders,
                     metadata,
@@ -526,5 +539,6 @@ namespace Azure.Storage.Blobs
                     async,
                     cancellationToken);
         }
+        #endregion Upload
     }
 }
