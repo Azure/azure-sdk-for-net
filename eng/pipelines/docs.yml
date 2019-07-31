@@ -3,7 +3,7 @@ trigger:
 jobs:
   - job: CreateDocs
     variables:
-      skipComponentGovernanceDetection: true
+      - template: templates/variables/globals.yml
     pool:
       vmImage: vs2017-win2016
     steps:
@@ -18,8 +18,8 @@ jobs:
         workingDirectory: $(Build.BinariesDirectory)
         displayName: Download and Extract DocFX
       - pwsh: |
-          dotnet restore "$(Build.SourcesDirectory)\eng\docgeneration\assets\docgen.csproj"
-          dotnet restore "$(Build.SourcesDirectory)\eng\service.proj"
+          dotnet restore "$(Build.SourcesDirectory)/eng/docgeneration/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
+          dotnet restore "$(Build.SourcesDirectory)/eng/service.proj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
         displayName: Restore Nuget Packages Needed
       - pwsh: |
           New-Item -Type dir dll-docs/my-api
@@ -30,9 +30,9 @@ jobs:
         displayName: Create Directories for Doc Generation
         workingDirectory: $(Build.BinariesDirectory)
       - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core sdk 3.0.100-preview5-011568"
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
-          version: 3.0.100-preview5-011568
+          version: $(DotNetCoreSDKVersion)
       - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.ArtifactStagingDirectory)/dll-output /p:TargetFramework=netstandard2.0
         displayName: Build Packages
       - task: CopyFiles@2
@@ -43,11 +43,6 @@ jobs:
           contents: |
             *.dll
             *.xml 
-      - task: CopyFiles@2
-        displayName: 'Copy over Api Dependencies'
-        inputs:
-          SourceFolder: '$(Build.SourcesDirectory)/restoredPackages/netstandard.library/2.0.0/build/netstandard2.0/ref'
-          TargetFolder: '$(Build.BinariesDirectory)/dll-docs/dependencies/my-api'
       - task: CmdLine@2
         displayName: Initialize Frameworks File
         inputs:
@@ -55,9 +50,7 @@ jobs:
           workingDirectory: $(Build.BinariesDirectory)/mdoc
           failOnStderr: true
       - pwsh: |
-          Copy-Item -Path "$(Build.SourcesDirectory)/restoredPackages/microsoft.bcl.asyncinterfaces/1.0.0-preview6.19303.8/ref/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll" `
-           -Destination "$(Build.BinariesDirectory)/dll-docs/dependencies/my-api"
-          & "$(Build.SourcesDirectory)/restoredPackages/popimport/1.0.0/Release/popimport.exe" -f "./dll-docs/"
+          & "$(Build.BinariesDirectory)/PopImport/popimport.exe" -f "./dll-docs/"
         displayName: Include XML Files
       - task: CmdLine@2
         displayName: Produce ECMAXML
@@ -70,7 +63,7 @@ jobs:
         displayName: Generate YAML
         inputs:
           script: |
-            "$(Build.SourcesDirectory)/restoredPackages/microsoft.docascode.ecma2yaml/1.0.644-alpha/tools/ECMA2Yaml.exe" -s "./dll-xml-output" -o "./dll-yaml-output"
+            "$(Build.BinariesDirectory)/ECMA2Yml/ECMA2Yaml.exe" -s "./dll-xml-output" -o "./dll-yaml-output"
           workingDirectory: $(Build.BinariesDirectory)
           failOnStderr: true
       - task: CmdLine@2
