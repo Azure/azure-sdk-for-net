@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.Azure.Samples
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Registering policy to use in ConfigureDefaults later
             services.AddSingleton<DependencyInjectionEnabledPolicy>();
@@ -53,8 +53,6 @@ namespace Microsoft.Extensions.Azure.Samples
                 builder.AddBlobServiceClient(Configuration.GetSection("Storage"))
                         .WithVersion(BlobClientOptions.ServiceVersion.V2018_11_09);
             });
-
-            return services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure
 {
@@ -68,7 +69,7 @@ namespace Azure
         /// <returns>An async sequence of values.</returns>
         public virtual async IAsyncEnumerator<Response<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
-            await foreach (Page<T> page in ByPage())
+            await foreach (Page<T> page in ByPage().ConfigureAwait(false).WithCancellation(cancellationToken))
             {
                 foreach (T value in page.Values)
                 {

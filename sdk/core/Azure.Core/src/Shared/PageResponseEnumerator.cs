@@ -27,14 +27,19 @@ namespace Azure.Core
 
         public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string, Task<Page<T>>> pageFunc)
         {
+            return new FuncAsyncCollection<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
+        }
+
+        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string, int?, Task<Page<T>>> pageFunc)
+        {
             return new FuncAsyncCollection<T>(pageFunc);
         }
 
         internal class FuncAsyncCollection<T>: AsyncCollection<T>
         {
-            private readonly Func<string, Task<Page<T>>> _pageFunc;
+            private readonly Func<string, int?, Task<Page<T>>> _pageFunc;
 
-            public FuncAsyncCollection(Func<string, Task<Page<T>>> pageFunc)
+            public FuncAsyncCollection(Func<string, int?, Task<Page<T>>> pageFunc)
             {
                 _pageFunc = pageFunc;
             }
@@ -43,7 +48,7 @@ namespace Azure.Core
             {
                 do
                 {
-                    Page<T> pageResponse = await _pageFunc(continuationToken).ConfigureAwait(false);
+                    Page<T> pageResponse = await _pageFunc(continuationToken, pageSizeHint).ConfigureAwait(false);
                     yield return pageResponse;
                     continuationToken = pageResponse.ContinuationToken;
                 } while (continuationToken != null);
