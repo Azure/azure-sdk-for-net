@@ -119,6 +119,14 @@ namespace Azure.Core.Tests
                 _ = operation.Value;
             });
         }
+
+        [Test]
+        public void OperationId()
+        {
+            string testId = "operation-id";
+            var operation = new TestOperation<int>(testId);
+            Assert.AreEqual(testId, operation.Id);
+        }
     }
 }
 

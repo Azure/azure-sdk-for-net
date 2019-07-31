@@ -14,8 +14,25 @@ namespace Azure
     /// <typeparam name="T">The final result of the LRO.</typeparam>
     public abstract class Operation<T>
     {
+        readonly string _id;
         T _value;
         Response _response;
+
+        /// <summary>
+        /// Creates a new instance of the Operation representing the specified
+        /// <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The ID of the LRO.</param>
+        protected Operation(string id)
+        {
+            _id = id;
+        }
+
+        /// <summary>
+        /// Gets an ID representing the operation that can be used to poll for
+        /// the status of the LRO.
+        /// </summary>
+        public string Id => _id;
 
         /// <summary>
         /// Final result of the LRO.
