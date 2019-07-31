@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string ConsumerGroup { get; }
 
         /// <summary>
-        ///   TODO.
+        ///   The identifier of the associated <see cref="EventProcessor" /> instance.
         /// </summary>
         ///
         public string InstanceId { get; }
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string PartitionId { get; }
 
         /// <summary>
-        ///   TODO. (validate value)
+        ///   TODO.
         /// </summary>
         ///
         public long OwnerLevel { get; }
@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public long? SequenceNumber { get; }
 
         /// <summary>
-        ///   TODO. (datetimeoffset?) (LastEnqueuedTime?)
+        ///   TODO.
         /// </summary>
         ///
         public long? LastModifiedTime { get; }
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="eventHubName">The path of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-        /// <param name="instanceId">TODO.</param>
+        /// <param name="instanceId">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
         /// <param name="ownerLevel">TODO.</param>
         /// <param name="offset">TODO.</param>

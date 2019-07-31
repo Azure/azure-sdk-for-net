@@ -83,12 +83,6 @@ namespace Azure.Messaging.EventHubs.Processor
                                IPartitionProcessor partitionProcessor,
                                EventProcessorOptions options)
         {
-            Guard.ArgumentNotNull(nameof(eventHubClient), eventHubClient);
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNull(nameof(partitionProcessor), partitionProcessor);
-            Guard.ArgumentNotNull(nameof(options), options);
-
             Client = eventHubClient;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;

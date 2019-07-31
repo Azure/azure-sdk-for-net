@@ -122,7 +122,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public async Task Start()
         {
-            // TODO: Retries?
             if (!IsRunning)
             {
                 PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
