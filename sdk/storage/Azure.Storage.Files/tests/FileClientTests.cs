@@ -508,7 +508,7 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 var response = await file.DownloadAsync(range: new HttpRange(Constants.KB, data.LongLength));
-                
+
                 // Assert
                 Assert.AreEqual(data.Length, response.Value.ContentLength);
                 var actual = new MemoryStream();
@@ -548,7 +548,7 @@ namespace Azure.Storage.Files.Test
                 {
                     await fileFaulty.UploadRangeAsync(
                         writeType: FileRangeWriteType.Update,
-                        range: new HttpRange(offset, dataSize), 
+                        range: new HttpRange(offset, dataSize),
                         content: stream);
                 }
 
@@ -661,7 +661,7 @@ namespace Azure.Storage.Files.Test
                     var result = await fileFaulty.UploadRangeAsync(
                         writeType: FileRangeWriteType.Update,
                         range: new HttpRange(offset, dataSize),
-                        content: stream, 
+                        content: stream,
                         progressHandler: progressHandler);
 
                     Assert.IsNotNull(result);
@@ -690,12 +690,7 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewFile(out var file))
             {
                 // Act
-                var handles =
-                    (await file.GetHandlesAsync()
-                    .ByPage(pageSizeHint: 5)
-                    .ToListAsync())
-                    .SelectMany(p => p.Values)
-                    .ToList();
+                var handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);

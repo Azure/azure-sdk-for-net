@@ -99,7 +99,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-a9daa292-8626-4059-fd38-24cc282d84cc\u002ftest-directory-c11c111d-9767-4f63-e5b4-02fbf11e3525\u002ftest-file-17afbdb5-c210-8565-363e-1d438bdc20a6?comp=listhandles\u0026maxresults=5",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-a9daa292-8626-4059-fd38-24cc282d84cc\u002ftest-directory-c11c111d-9767-4f63-e5b4-02fbf11e3525\u002ftest-file-17afbdb5-c210-8565-363e-1d438bdc20a6?comp=listhandles",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

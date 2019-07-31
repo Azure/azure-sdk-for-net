@@ -228,7 +228,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task DeleteAsync_AccessConditions()
         {
-            var garbageLeaseId = this.GetGarbageLeaseId(); 
+            var garbageLeaseId = this.GetGarbageLeaseId();
             foreach (var parameters in this.AccessConditions_Data)
             {
                 // Arrange
@@ -699,7 +699,7 @@ namespace Azure.Storage.Blobs.Test
             var duration = 15;
 
             var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(
-                duration: duration); 
+                duration: duration);
 
             // Act
             var renewResponse = await container.GetLeaseClient(leaseResponse.Value.LeaseId).RenewAsync();
@@ -1150,6 +1150,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListBlobsFlatSegmentAsync_MaxResults()
         {
             using (this.GetNewContainer(out var container))
@@ -1159,12 +1160,12 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var page = await container.GetBlobsAsync().ByPage(pageSizeHint: 2).FirstAsync();
-                
+
                 // Assert
                 Assert.AreEqual(2, page.Values.Count);
             }
         }
-        
+
         [Test]
         public async Task ListBlobsFlatSegmentAsync_Metadata()
         {
@@ -1351,6 +1352,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListBlobsHierarchySegmentAsync_MaxResults()
         {
             using (this.GetNewContainer(out var container))
@@ -1368,7 +1370,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(2, page.Values.Count);
             }
         }
-        
+
         [Test]
         public async Task ListBlobsHierarchySegmentAsync_Metadata()
         {

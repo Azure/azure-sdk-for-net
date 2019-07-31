@@ -128,6 +128,11 @@ namespace Azure.Core.Testing
                     throw new InvalidOperationException("Calling ByPage with a continuationToken is not supported in the sync mode");
                 }
 
+                if (pageSizeHint != null)
+                {
+                    throw new InvalidOperationException("Calling ByPage with a pageSizeHint is not supported in the sync mode");
+                }
+
                 foreach (Response<T> response in _enumerable)
                 {
                     yield return new Page<T>(new [] { response.Value}, null, response.GetRawResponse());
