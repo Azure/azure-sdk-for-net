@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Monitor
                 new Tuple<string, string, string>("Insights", "MetricAlerts", "2018-03-01"),
                 new Tuple<string, string, string>("Insights", "MetricAlertsStatus", "2018-03-01"),
                 new Tuple<string, string, string>("Insights", "VMInsights", "2018-11-27-preview"),
-                new Tuple<string, string, string>("insights", "ActionGroups", "2019-03-01"),
+                new Tuple<string, string, string>("insights", "ActionGroups", "2019-06-01"),
                 new Tuple<string, string, string>("insights", "ActivityLogAlerts", "2017-04-01"),
                 new Tuple<string, string, string>("insights", "ActivityLogs", "2015-04-01"),
                 new Tuple<string, string, string>("insights", "AlertRuleIncidents", "2016-03-01"),

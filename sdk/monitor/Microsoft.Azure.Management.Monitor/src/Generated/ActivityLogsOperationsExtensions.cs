@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*,
             /// *subStatus*, *subscriptionId*
             /// </param>
-            public static IPage<EventData> List(this IActivityLogsOperations operations, ODataQuery<EventData> odataQuery = default(ODataQuery<EventData>), string select = default(string))
+            public static IPage<EventData> List(this IActivityLogsOperations operations, ODataQuery<EventData> odataQuery, string select = default(string))
             {
                 return operations.ListAsync(odataQuery, select).GetAwaiter().GetResult();
             }
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EventData>> ListAsync(this IActivityLogsOperations operations, ODataQuery<EventData> odataQuery = default(ODataQuery<EventData>), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventData>> ListAsync(this IActivityLogsOperations operations, ODataQuery<EventData> odataQuery, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, select, null, cancellationToken).ConfigureAwait(false))
                 {
