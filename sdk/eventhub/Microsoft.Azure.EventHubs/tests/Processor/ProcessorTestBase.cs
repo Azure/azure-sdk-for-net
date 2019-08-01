@@ -18,48 +18,23 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
 
     public class ProcessorTestBase
     {
-        //Unused after Track two test infrastructure ported
-        //protected string LeaseContainerName;
-        //protected string[] PartitionIds;
-
-        //Unused after Track two test infrastructure ported
-        //public ProcessorTestBase()
-        //{
-        //    // Use entity name as lease container name.
-        //    // Convert to lowercase in case there is capital letter in the entity path.
-        //    // Uppercase is invalid for Azure Storage container names.
-        //    this.LeaseContainerName = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString).EntityPath.ToLower();
-
-        //    // Discover partition ids.
-        //    TestUtility.Log("Discovering partitions on eventhub");
-        //    var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-        //    var eventHubInfo = ehClient.GetRuntimeInformationAsync().WaitAndUnwrapException();
-        //    this.PartitionIds = eventHubInfo.PartitionIds;
-        //    TestUtility.Log($"EventHub has {PartitionIds.Length} partitions");
-        //}
-
-        //update method to use EventHub managed by EventHubScope
-        public String[] ProcessorPartitionIds(string connectionString)
+              
+        public string[] GetPartitionIds(string connectionString)
         {
             var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
             var eventHubInfo = ehClient.GetRuntimeInformationAsync().WaitAndUnwrapException();
-           String[] PartitionIds = eventHubInfo.PartitionIds;
-            return PartitionIds;
+            return eventHubInfo.PartitionIds;
         }
-
-        //Update Live test to use EventHub managed by EventHubScope
+      
         /// <summary>
         /// Validating cases where entity path is provided through eventHubPath and EH connection string parameters
         /// on the EPH constructor.
         /// </summary>
-        [Fact]
-        [LiveTest]
+        [Fact]       
         [DisplayTestMethodName]
-        public async Task ProcessorHostEntityPathSetting()
+        public void ProcessorHostEntityPathSetting()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
-            {
-                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var connectionString = TestUtility.BuildEventHubsConnectionString("dimmyeventhubname");
 
                 var csb = new EventHubsConnectionStringBuilder(connectionString)
                 {
@@ -73,7 +48,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     PartitionReceiver.DefaultConsumerGroupName,
                     csb.ToString(),
                     TestUtility.StorageConnectionString,
-                    scope.EventHubName.ToLower());
+                    "dimmyeventhubname".ToLower());
                 Assert.Equal("myeh", eventProcessorHost.EventHubPath);
 
                 // Entity path provided in the eventHubPath parameter.
@@ -84,7 +59,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     PartitionReceiver.DefaultConsumerGroupName,
                     csb.ToString(),
                     TestUtility.StorageConnectionString,
-                     scope.EventHubName.ToLower());
+                    "dimmyeventhubname".ToLower());
                 Assert.Equal("myeh2", eventProcessorHost.EventHubPath);
 
                 // The same entity path provided in both eventHubPath parameter and the connection string.
@@ -95,7 +70,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     PartitionReceiver.DefaultConsumerGroupName,
                     csb.ToString(),
                     TestUtility.StorageConnectionString,
-                     scope.EventHubName.ToLower());
+                    "dimmyeventhubname".ToLower());
                 Assert.Equal("myeh", eventProcessorHost.EventHubPath);
 
                 // Entity path not provided in both eventHubPath and the connection string.
@@ -108,7 +83,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                         PartitionReceiver.DefaultConsumerGroupName,
                         csb.ToString(),
                         TestUtility.StorageConnectionString,
-                         scope.EventHubName.ToLower());
+                        "dimmyeventhubname".ToLower());
                     throw new Exception("Entity path wasn't provided and this new call was supposed to fail");
                 }
                 catch (ArgumentException)
@@ -126,18 +101,15 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                         PartitionReceiver.DefaultConsumerGroupName,
                         csb.ToString(),
                         TestUtility.StorageConnectionString,
-                         scope.EventHubName.ToLower());
+                        "dimmyeventhubname".ToLower());
                     throw new Exception("Entity path values conflict and this new call was supposed to fail");
                 }
                 catch (ArgumentException)
                 {
                     TestUtility.Log("Caught ArgumentException as expected.");
                 }
-
-            }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -159,7 +131,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -168,7 +139,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);              
-                string[] PartitionIds = ProcessorPartitionIds(connectionString);
+                string[] PartitionIds = GetPartitionIds(connectionString);
                 int hostCount = 3;
 
                 TestUtility.Log($"Testing with {hostCount} EventProcessorHost instances");
@@ -277,7 +248,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -327,7 +297,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -336,7 +305,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-                string[] PartitionIds = ProcessorPartitionIds(connectionString);
+                string[] PartitionIds = GetPartitionIds(connectionString);
                 const int ReceiveTimeoutInSeconds = 15;
 
                 TestUtility.Log("Testing EventProcessorHost with InvokeProcessorAfterReceiveTimeout=true");
@@ -398,7 +367,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -457,7 +425,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         /// <summary>
         /// This test requires a eventhub with consumer groups $Default and cgroup1.
         /// </summary>
@@ -488,7 +455,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -526,7 +492,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -565,7 +530,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -596,7 +560,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -643,7 +606,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -681,7 +643,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -719,7 +680,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -728,7 +688,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);              
-                string[] PartitionIds = ProcessorPartitionIds(connectionString);
+                string[] PartitionIds = GetPartitionIds(connectionString);
 
                 // We will target one partition and do validation on it.
                 var targetPartition = PartitionIds.First();
@@ -820,7 +780,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         /// <summary>
         /// If a host doesn't checkpoint on the processed events and shuts down, new host should start processing from the beginning.
         /// </summary>
@@ -864,7 +823,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         /// <summary>
         /// Checkpointing every message received should be Ok. No failures expected.
         /// </summary>
@@ -894,7 +852,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         /// <summary>
         /// While processing events one event causes a failure. Host should be able to recover any error.
         /// </summary>
@@ -1047,7 +1004,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         /// <summary>
         /// This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret before running.
         /// </summary>
@@ -1088,7 +1044,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -1119,7 +1074,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -1154,10 +1108,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update method to use new eventhub created by EventHubScope
         private async Task<Dictionary<string, Tuple<string, DateTime>>> DiscoverEndOfStream(string connectionString)
         {
-            string[] PartitionIds = ProcessorPartitionIds(connectionString);
+            string[] PartitionIds = GetPartitionIds(connectionString);
             var ehClient = EventHubClient.CreateFromConnectionString(connectionString);    
             var partitions = new Dictionary<string, Tuple<string, DateTime>>();
 
@@ -1170,7 +1123,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             return partitions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
-        //Update method to use new eventhub created by EventHubScope
         private async Task<GenericScenarioResult> RunGenericScenario(EventProcessorHost eventProcessorHost,
             EventProcessorOptions epo = null, int totalNumberOfEventsToSend = 1, bool checkpointLastEvent = true,
             bool checkpointBatch = false, bool checkpoingEveryEvent = false)
@@ -1234,7 +1186,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
 
                 // Wait 5 seconds to avoid races in scenarios like EndOfStream.
                 await Task.Delay(5000);
-                string[] PartitionIds = ProcessorPartitionIds(TestUtility.BuildEventHubsConnectionString(eventProcessorHost.EventHubPath));
+                string[] PartitionIds = GetPartitionIds(TestUtility.BuildEventHubsConnectionString(eventProcessorHost.EventHubPath));
                 if (totalNumberOfEventsToSend > 0)
                 {
                     var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.BuildEventHubsConnectionString(eventProcessorHost.EventHubPath));
