@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,12 +22,8 @@ namespace Azure.Core.Tests.TestFramework
 
         public Action UpdateCalled { get; set; }
 
-        internal TestOperation(string id)
+        internal TestOperation(string id, TimeSpan after, T finalResult, Response finalResponse)
             : base(id)
-        {
-        }
-
-        internal TestOperation(TimeSpan after, T finalResult, Response finalResponse)
         {
             _after = after;
             _finalResult = finalResult;

@@ -122,8 +122,6 @@ namespace Azure
         /// </remarks>
         public abstract Response UpdateStatus(CancellationToken cancellationToken = default);
 
-        protected Operation() { }
-
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
