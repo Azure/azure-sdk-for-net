@@ -19,6 +19,11 @@ namespace Azure.Core.Tests.TestFramework
 
         public Action UpdateCalled { get; set; }
 
+        internal TestOperation(string id)
+            : base(id)
+        {
+        }
+
         internal TestOperation(TimeSpan after, T finalResult, Response finalResponse)
         {
             _after = after;

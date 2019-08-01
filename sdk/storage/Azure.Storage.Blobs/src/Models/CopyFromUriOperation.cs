@@ -7,8 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 
-// TODO: Make this type internal once Operation<T> has an Id property
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
@@ -17,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     /// request.  Its <see cref="Operation{Int64}.Value"/> upon succesful
     /// completion will be the number of bytes copied.
     /// </summary>
-    public class CopyFromUriOperation : Operation<long>
+    internal class CopyFromUriOperation : Operation<long>
     {
         /// <summary>
         /// The client used to check for completion.
@@ -28,19 +26,6 @@ namespace Azure.Storage.Blobs.Models
         /// The CancellationToken to use for all status checking.
         /// </summary>
         private readonly CancellationToken _cancellationToken;
-
-        /// <summary>
-        /// ID of the copy operation.
-        /// </summary>
-        private readonly string _copyId;
-
-        /// <summary>
-        /// Gets the ID of the copy operation that can be compared with the
-        /// <see cref="BlobProperties.CopyId"/> value returned from
-        /// <see cref="BlobBaseClient.GetPropertiesAsync" /> or passed to
-        /// <see cref="BlobBaseClient.AbortCopyFromUriAsync" />.
-        /// </summary>
-        public virtual string Id => this._copyId;
 
         /// <summary>
         /// Whether the operation has completed.
@@ -68,13 +53,13 @@ namespace Azure.Storage.Blobs.Models
         /// Initializes a new <see cref="CopyFromUriOperation"/> instance for
         /// mocking.
         /// </summary>
-        internal CopyFromUriOperation(
+        public CopyFromUriOperation(
             string copyId,
             bool hasCompleted,
             long? value = default,
             Response rawResponse = default)
+            : base(copyId)
         {
-            this._copyId = copyId;
             this._hasCompleted = hasCompleted;
             if (value != null)
             {
@@ -106,15 +91,15 @@ namespace Azure.Storage.Blobs.Models
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        internal CopyFromUriOperation(
+        public CopyFromUriOperation(
             BlobBaseClient client,
             string copyId,
             Response initialResponse,
             CancellationToken cancellationToken)
+            : base(copyId)
         {
             this._client = client;
             this._cancellationToken = cancellationToken;
-            this._copyId = copyId;
             this.SetRawResponse(initialResponse);
         }
 
@@ -198,9 +183,10 @@ namespace Azure.Storage.Blobs.Models
     public static partial class BlobsModelFactory
     {
         /// <summary>
-        /// Creates a new CopyFromUriOperation instance for mocking.
+        /// Creates a new Operation{long} instance for mocking long running
+        /// Copy From URI operations.
         /// </summary>
-        public static CopyFromUriOperation CopyFromUriOperation(
+        public static Operation<long> CopyFromUriOperation(
             string copyId,
             bool hasCompleted,
             long? value = default,

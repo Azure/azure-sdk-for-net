@@ -1614,7 +1614,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="CopyFromUriOperation"/> referencing the incremental
+        /// A <see cref="Operation{Int64}"/> referencing the incremental
         /// copy operation.
         /// </returns>
         /// <remarks>
@@ -1667,7 +1667,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// This can be determined by performing a <see cref="GetPageRangesDiff"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        public virtual CopyFromUriOperation StartCopyIncremental(
+        public virtual Operation<long> StartCopyIncremental(
             Uri sourceUri,
             string snapshot,
             PageBlobAccessConditions? accessConditions = default,
@@ -1719,7 +1719,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="CopyFromUriOperation"/> describing the
+        /// A <see cref="Operation{Int64}"/> describing the
         /// state of the incremental copy operation.
         /// </returns>
         /// <remarks>
@@ -1772,7 +1772,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// This can be determined by performing a <see cref="GetPageRangesDiffAsync"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        public virtual async Task<CopyFromUriOperation> StartCopyIncrementalAsync(
+        public virtual async Task<Operation<long>> StartCopyIncrementalAsync(
             Uri sourceUri,
             string snapshot,
             PageBlobAccessConditions? accessConditions = default,
@@ -1808,14 +1808,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="CopyFromUriOperation"/> referencing the incremental
+        /// A <see cref="Operation{Int64}"/> referencing the incremental
         /// copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual CopyFromUriOperation StartCopyIncremental(
+        public virtual Operation<long> StartCopyIncremental(
             string copyId,
             CancellationToken cancellationToken = default)
         {
@@ -1843,14 +1843,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="CopyFromUriOperation"/> describing the
+        /// A <see cref="Operation{Int64}"/> describing the
         /// state of the incremental copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<CopyFromUriOperation> StartCopyIncrementalAsync(
+        public virtual async Task<Operation<long>> StartCopyIncrementalAsync(
             string copyId,
             CancellationToken cancellationToken = default)
         {

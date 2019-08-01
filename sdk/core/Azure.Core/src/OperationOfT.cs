@@ -18,6 +18,22 @@ namespace Azure
         Response _response;
 
         /// <summary>
+        /// Creates a new instance of the Operation representing the specified
+        /// <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The ID of the LRO.</param>
+        protected Operation(string id)
+        {
+            Id = id;
+        }
+
+        /// <summary>
+        /// Gets an ID representing the operation that can be used to poll for
+        /// the status of the LRO.
+        /// </summary>
+        public string Id { get; }
+
+        /// <summary>
         /// Final result of the LRO.
         /// </summary>
         /// <remarks>
