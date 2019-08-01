@@ -14,7 +14,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
 
     public class NegativeCases : ProcessorTestBase
     {
-        //Update Live test to use EventHub managed by EventHubScope
+
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -49,7 +49,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
-        //Update Live test to use EventHub managed by EventHubScope
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
