@@ -19,9 +19,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
     public class WebSocketTests : ClientTestBase
     {
-        string webSocketConnString;
+       
 
-        public String WebSocketTest(string ConnectionString)
+        private string getWebSocketConnectionString(string ConnectionString)
         {
 
             // Create connection string builder with web-sockets enabled.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             csb.OperationTimeout = TimeSpan.FromMinutes(5);
 
             // Confirm connection string has transport-type set as desired.
-            this.webSocketConnString = csb.ToString();
+            string webSocketConnString = csb.ToString();
 
             // Remove secrets.
             csb.SasKey = "XXX";
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-                var ehClient = EventHubClient.CreateFromConnectionString(WebSocketTest(connectionString));
+                var ehClient = EventHubClient.CreateFromConnectionString(getWebSocketConnectionString(connectionString));
 
                 TestUtility.Log("Getting  EventHubRuntimeInformation");
                 var eventHubRuntimeInformation = await ehClient.GetRuntimeInformationAsync();
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             {
 
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-                var ehClient = EventHubClient.CreateFromConnectionString(WebSocketTest(connectionString));
+                var ehClient = EventHubClient.CreateFromConnectionString(getWebSocketConnectionString(connectionString));
 
                 PartitionSender sender = null;
                 try
