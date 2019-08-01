@@ -14,7 +14,6 @@ namespace Azure
     /// <typeparam name="T">The final result of the LRO.</typeparam>
     public abstract class Operation<T>
     {
-        readonly string _id;
         T _value;
         Response _response;
 
@@ -25,14 +24,14 @@ namespace Azure
         /// <param name="id">The ID of the LRO.</param>
         protected Operation(string id)
         {
-            _id = id;
+            Id = id;
         }
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
         /// the status of the LRO.
         /// </summary>
-        public string Id => _id;
+        public string Id { get; }
 
         /// <summary>
         /// Final result of the LRO.
