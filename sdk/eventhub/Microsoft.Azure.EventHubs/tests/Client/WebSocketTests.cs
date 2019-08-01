@@ -21,7 +21,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     {
        
 
-        private string getWebSocketConnectionString(string ConnectionString)
+        private string GetWebSocketConnectionString(string ConnectionString)
         {
 
             // Create connection string builder with web-sockets enabled.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-                var ehClient = EventHubClient.CreateFromConnectionString(getWebSocketConnectionString(connectionString));
+                var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
 
                 TestUtility.Log("Getting  EventHubRuntimeInformation");
                 var eventHubRuntimeInformation = await ehClient.GetRuntimeInformationAsync();
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             {
 
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-                var ehClient = EventHubClient.CreateFromConnectionString(getWebSocketConnectionString(connectionString));
+                var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
 
                 PartitionSender sender = null;
                 try
