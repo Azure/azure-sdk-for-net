@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
-        public string InstanceId { get; }
+        public string Identifier { get; }
 
         /// <summary>
         ///   The client used to interact with the Azure Event Hubs service.
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Processor
             PartitionManager = partitionManager;
             Options = options?.Clone() ?? new EventProcessorOptions();
 
-            InstanceId = Guid.NewGuid().ToString();
+            Identifier = Guid.NewGuid().ToString();
             PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         await Task.WhenAll(partitionIds.Select(async partitionId =>
                         {
-                            var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, InstanceId, partitionId);
+                            var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, Identifier, partitionId);
                             var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
                             var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
@@ -219,7 +219,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await Task.WhenAll(pumpsToUpdate.Select(async partitionId =>
                 {
-                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, InstanceId, partitionId);
+                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, Identifier, partitionId);
                     var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
                     var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
