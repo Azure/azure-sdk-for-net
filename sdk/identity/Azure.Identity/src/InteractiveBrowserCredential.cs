@@ -33,7 +33,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new DeviceCodeCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
@@ -57,24 +57,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
-            if (_account != null)
-            {
-                try
-                {
-                    AuthenticationResult result = _pubApp.AcquireTokenSilent(scopes, _account).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
-
-                    return new AccessToken(result.AccessToken, result.ExpiresOn);
-                }
-                catch (MsalUiRequiredException)
-                {
-                    // TODO: logging for exception here?
-                    return GetTokenViaBrowserLoginAsync(scopes, cancellationToken).GetAwaiter().GetResult();
-                }
-            }
-            else
-            {
-                return GetTokenViaBrowserLoginAsync(scopes, cancellationToken).GetAwaiter().GetResult();
-            }
+            return GetTokenAsync(scopes, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
