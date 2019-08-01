@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await PartitionProcessor.Initialize().ConfigureAwait(false);
 
-                RunningTask = Run(RunningTaskTokenSource.Token);
+                RunningTask = RunAsync(RunningTaskTokenSource.Token);
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task Run(CancellationToken cancellationToken)
+        private async Task RunAsync(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {

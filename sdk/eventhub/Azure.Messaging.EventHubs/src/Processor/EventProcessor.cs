@@ -84,29 +84,13 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="partitionProcessorFactory">A factory used to create partition processors.  Its implementation must be provided by the user.</param>
         /// <param name="partitionManager">A partition manager used to interact with the storage system.  Its implementation must be provided by the user.</param>
-        ///
-        public EventProcessor(string consumerGroup,
-                              EventHubClient eventHubClient,
-                              IPartitionProcessorFactory partitionProcessorFactory,
-                              IPartitionManager partitionManager) : this(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager, null)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
-        /// </summary>
-        ///
-        /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
-        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionProcessorFactory">A factory used to create partition processors.  Its implementation must be provided by the user.</param>
-        /// <param name="partitionManager">A partition manager used to interact with the storage system.  Its implementation must be provided by the user.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
         public EventProcessor(string consumerGroup,
                               EventHubClient eventHubClient,
                               IPartitionProcessorFactory partitionProcessorFactory,
                               IPartitionManager partitionManager,
-                              EventProcessorOptions options)
+                              EventProcessorOptions options = default)
         {
             Guard.ArgumentNotNull(nameof(eventHubClient), eventHubClient);
             Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
@@ -151,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     await partitionPump.Start();
                 }));
 
-                RunningTask = Run(RunningTaskTokenSource.Token);
+                RunningTask = RunAsync(RunningTaskTokenSource.Token);
             }
         }
 
@@ -190,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   instances, but this feature is currently out of the scope of the current preview.
         /// </remarks>
         ///
-        private async Task Run(CancellationToken cancellationToken)
+        private async Task RunAsync(CancellationToken cancellationToken)
         {
             var pumpsToUpdate = new List<string>();
 
@@ -214,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
                     var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
-                    PartitionPumps[partitionId] = partitionPump;
+                    PartitionPumps.TryUpdate(partitionId, partitionPump, partitionPump);
 
                     await partitionPump.Start();
                 }));

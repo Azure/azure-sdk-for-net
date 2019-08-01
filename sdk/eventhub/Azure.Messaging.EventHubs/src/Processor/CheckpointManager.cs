@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task UpdateCheckpoint(EventData eventData) => await UpdateCheckpoint(eventData.Offset, eventData.SequenceNumber);
+        public Task UpdateCheckpoint(EventData eventData) => UpdateCheckpoint(eventData.Offset, eventData.SequenceNumber);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.

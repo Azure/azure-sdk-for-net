@@ -54,6 +54,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     Guard.ArgumentNotNegative(nameof(MaximumReceiveWaitTime), _maximumReceiveWaitTime.Value);
                 }
+
                 _maximumReceiveWaitTime = value;
             }
         }

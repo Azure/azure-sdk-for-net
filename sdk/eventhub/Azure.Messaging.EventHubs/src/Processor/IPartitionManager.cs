@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -24,20 +25,20 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The path of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
-        /// <returns>An array containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public Task<PartitionOwnership[]> ListOwnership(string eventHubName,
-                                                        string consumerGroup);
+        public Task<IEnumerable<PartitionOwnership>> ListOwnership(string eventHubName,
+                                                                   string consumerGroup);
 
         /// <summary>
         ///   Tries to claim a list of specified ownership.
         /// </summary>
         ///
-        /// <param name="partitionOwnership">An array containing all the ownership to claim.</param>
+        /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
         ///
-        /// <returns>An array containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public Task<PartitionOwnership[]> ClaimOwnership(PartitionOwnership[] partitionOwnership);
+        public Task<IEnumerable<PartitionOwnership>> ClaimOwnership(IEnumerable<PartitionOwnership> partitionOwnership);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
