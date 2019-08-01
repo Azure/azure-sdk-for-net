@@ -19,7 +19,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
     public class WebSocketTests : ClientTestBase
     {
-       
+
 
         private string GetWebSocketConnectionString(string ConnectionString)
         {
@@ -134,47 +134,47 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             {
                 await using (var scope = await EventHubScope.CreateAsync(2))
                 {
-                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-                var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
-                ehClient.WebProxy = new WebProxy("http://1.2.3.4:9999");
-                var edToFail = new EventData(Encoding.UTF8.GetBytes("This is a sample event."));
-                await ehClient.SendAsync(edToFail);
+                    var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                    var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
+                    ehClient.WebProxy = new WebProxy("http://1.2.3.4:9999");
+                    var edToFail = new EventData(Encoding.UTF8.GetBytes("This is a sample event."));
+                    await ehClient.SendAsync(edToFail);
                 }
             });
 
- 
+
 
             // Receive call should fail.
             await Assert.ThrowsAsync<WebSocketException>(async () =>
-            { 
+            {
                 await using (var scope = await EventHubScope.CreateAsync(2))
                 {
-                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-                var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
-                ehClient.WebProxy = new WebProxy("http://1.2.3.4:9999");
-                await ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart()).ReceiveAsync(1);
+                    var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                    var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
+                    ehClient.WebProxy = new WebProxy("http://1.2.3.4:9999");
+                    await ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart()).ReceiveAsync(1);
                 }
             });
 
- 
+
 
             // Management link call should fail.
             await Assert.ThrowsAsync<WebSocketException>(async () =>
             {
                 await using (var scope = await EventHubScope.CreateAsync(2))
                 {
-                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-                var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
-                ehClient.WebProxy = new WebProxy("http://1.2.3.4:9999");
-                await ehClient.GetRuntimeInformationAsync();
+                    var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                    var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
+                    ehClient.WebProxy = new WebProxy("http://1.2.3.4:9999");
+                    await ehClient.GetRuntimeInformationAsync();
                 }
             });
 
- 
+
 
             // Send/receive should work fine w/o proxy.
-              await using (var scope = await EventHubScope.CreateAsync(2))
-             {
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehNoProxyClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
                 var eventData = new EventData(Encoding.UTF8.GetBytes("This is a sample event."));
@@ -182,4 +182,5 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         }
 #endif
     }
+
 }
