@@ -27,8 +27,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public Task<IEnumerable<PartitionOwnership>> ListOwnership(string eventHubName,
-                                                                   string consumerGroup);
+        public Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string eventHubName,
+                                                                        string consumerGroup);
 
         /// <summary>
         ///   Tries to claim a list of specified ownership.
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public Task<IEnumerable<PartitionOwnership>> ClaimOwnership(IEnumerable<PartitionOwnership> partitionOwnership);
+        public Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
@@ -48,6 +48,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task UpdateCheckpoint(Checkpoint checkpoint);
+        public Task UpdateCheckpointAsync(Checkpoint checkpoint);
     }
 }

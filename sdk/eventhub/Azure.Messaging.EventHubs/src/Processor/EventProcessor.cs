@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The set of partition pumps used by this event processor.  Partition ids are used as keys.
         /// </summary>
         ///
-        private ConcurrentDictionary<string, PartitionPump> PartitionPumps { get; set; }
+        private ConcurrentDictionary<string, PartitionPump> PartitionPumps { get; }
 
         /// <summary>
         ///   The running task responsible for checking the status of the owned partition pumps.
@@ -107,6 +107,7 @@ namespace Azure.Messaging.EventHubs.Processor
             Options = options?.Clone() ?? new EventProcessorOptions();
 
             InstanceId = Guid.NewGuid().ToString();
+            PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
+                        PartitionPumps.Clear();
 
                         var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
 
@@ -177,7 +178,6 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTask = null;
 
                         await Task.WhenAll(PartitionPumps.Select(kvp => kvp.Value.StopAsync())).ConfigureAwait(false);
-                        PartitionPumps = null;
                     }
                 }
                 finally

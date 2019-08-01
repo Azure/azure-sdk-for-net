@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task Initialize();
+        public Task InitializeAsync();
 
         /// <summary>
         ///   Closes the partition processor.
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task Close(PartitionProcessorCloseReason reason);
+        public Task CloseAsync(PartitionProcessorCloseReason reason);
 
         /// <summary>
         ///   Processes a set of received <see cref="EventData" />.
@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task ProcessEvents(IEnumerable<EventData> events);
+        public Task ProcessEventsAsync(IEnumerable<EventData> events);
 
         /// <summary>
         ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
@@ -55,6 +55,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task ProcessError(Exception exception);
+        public Task ProcessErrorAsync(Exception exception);
     }
 }

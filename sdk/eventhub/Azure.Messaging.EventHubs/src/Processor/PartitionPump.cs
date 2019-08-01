@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
 
-                        await PartitionProcessor.Initialize().ConfigureAwait(false);
+                        await PartitionProcessor.InitializeAsync().ConfigureAwait(false);
 
                         RunningTask = RunAsync(RunningTaskTokenSource.Token);
                     }
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         await InnerConsumer.CloseAsync().ConfigureAwait(false);
                         InnerConsumer = null;
 
-                        await PartitionProcessor.Close(reason).ConfigureAwait(false);
+                        await PartitionProcessor.CloseAsync(reason).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 catch (Exception exception)
                 {
-                    await PartitionProcessor.ProcessError(exception).ConfigureAwait(false);
+                    await PartitionProcessor.ProcessErrorAsync(exception).ConfigureAwait(false);
 
                     // Stop the pump if it's not a known retryable exception.
 
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     }
                 }
 
-                await PartitionProcessor.ProcessEvents(receivedEvents).ConfigureAwait(false);
+                await PartitionProcessor.ProcessEventsAsync(receivedEvents).ConfigureAwait(false);
             }
         }
     }
