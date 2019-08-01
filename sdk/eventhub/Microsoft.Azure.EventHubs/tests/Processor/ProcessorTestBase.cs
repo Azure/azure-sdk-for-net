@@ -30,8 +30,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         /// Validating cases where entity path is provided through eventHubPath and EH connection string parameters
         /// on the EPH constructor.
         /// </summary>
-        [Fact]
-        [LiveTest]
+        [Fact]       
         [DisplayTestMethodName]
         public void ProcessorHostEntityPathSetting()
         {
