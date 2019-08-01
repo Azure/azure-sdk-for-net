@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+
+
 namespace Microsoft.Azure.EventHubs.Tests.Client
 {
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,14 +16,16 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Threading.Tasks;
     using Xunit;
 
+
     public class WebSocketTests : ClientTestBase
     {
         string webSocketConnString;
 
-        public WebSocketTests()
+        public String WebSocketTest(string ConnectionString)
         {
+
             // Create connection string builder with web-sockets enabled.
-            var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
+            var csb = new EventHubsConnectionStringBuilder(ConnectionString);
             csb.TransportType = EventHubs.TransportType.AmqpWebSockets;
             csb.OperationTimeout = TimeSpan.FromMinutes(5);
 
@@ -33,28 +38,38 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
             Assert.True(webSocketConnString.Contains("TransportType=AmqpWebSockets"),
                 $"Web-sockets enabled connection string doesn't contain desired setting: {webSocketConnStringTest}");
+            return webSocketConnString;
         }
+
+
 
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task GetEventHubRuntimeInformation()
         {
-            var ehClient = EventHubClient.CreateFromConnectionString(webSocketConnString);
 
-            TestUtility.Log("Getting  EventHubRuntimeInformation");
-            var eventHubRuntimeInformation = await ehClient.GetRuntimeInformationAsync();
-
-            Assert.True(eventHubRuntimeInformation != null, "eventHubRuntimeInformation was null!");
-            Assert.True(eventHubRuntimeInformation.PartitionIds != null, "eventHubRuntimeInformation.PartitionIds was null!");
-            Assert.True(eventHubRuntimeInformation.PartitionIds.Length != 0, "eventHubRuntimeInformation.PartitionIds.Length was 0!");
-
-            TestUtility.Log("Found partitions:");
-            foreach (string partitionId in eventHubRuntimeInformation.PartitionIds)
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
-                TestUtility.Log(partitionId);
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(WebSocketTest(connectionString));
+
+                TestUtility.Log("Getting  EventHubRuntimeInformation");
+                var eventHubRuntimeInformation = await ehClient.GetRuntimeInformationAsync();
+
+                Assert.True(eventHubRuntimeInformation != null, "eventHubRuntimeInformation was null!");
+                Assert.True(eventHubRuntimeInformation.PartitionIds != null, "eventHubRuntimeInformation.PartitionIds was null!");
+                Assert.True(eventHubRuntimeInformation.PartitionIds.Length != 0, "eventHubRuntimeInformation.PartitionIds.Length was 0!");
+
+                TestUtility.Log("Found partitions:");
+                foreach (string partitionId in eventHubRuntimeInformation.PartitionIds)
+                {
+                    TestUtility.Log(partitionId);
+                }
             }
         }
+
+
 
         [Fact]
         [LiveTest]
@@ -63,38 +78,46 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             string targetPartitionId = "0";
 
-            // Create new client with updated connection string.
             TestUtility.Log("Creating Event Hub client");
-            var ehClient = EventHubClient.CreateFromConnectionString(webSocketConnString);
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
 
-            PartitionSender sender = null;
-            try
-            {
-                // Send single message
-                TestUtility.Log("Sending single event");
-                sender = ehClient.CreatePartitionSender(targetPartitionId);
-                var eventData = new EventData(Encoding.UTF8.GetBytes("This event will be transported via web-sockets"));
-                await sender.SendAsync(eventData);
-            }
-            finally
-            {
-                await sender?.CloseAsync();
-            }
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(WebSocketTest(connectionString));
 
-            PartitionReceiver receiver = null;
-            try
-            {
-                // Receive single message.
-                TestUtility.Log("Receiving single event");
-                receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart());
-                var msg = await receiver.ReceiveAsync(1);
-                Assert.True(msg != null, $"Failed to receive single event from partition {targetPartitionId}");
-            }
-            finally
-            {
-                await receiver?.CloseAsync();
+                PartitionSender sender = null;
+                try
+                {
+                    // Send single message
+                    TestUtility.Log("Sending single event");
+                    sender = ehClient.CreatePartitionSender(targetPartitionId);
+                    var eventData = new EventData(Encoding.UTF8.GetBytes("This event will be transported via web-sockets"));
+                    await sender.SendAsync(eventData);
+                }
+                finally
+                {
+                    await sender?.CloseAsync();
+                }
+
+
+
+                PartitionReceiver receiver = null;
+                try
+                {
+                    // Receive single message.
+                    TestUtility.Log("Receiving single event");
+                    receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart());
+                    var msg = await receiver.ReceiveAsync(1);
+                    Assert.True(msg != null, $"Failed to receive single event from partition {targetPartitionId}");
+                }
+                finally
+                {
+                    await receiver?.CloseAsync();
+                }
             }
         }
+
+
 
 #if FullNetFx
         /// <summary>
@@ -115,6 +138,8 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 await ehClient.SendAsync(edToFail);
             });
 
+ 
+
             // Receive call should fail.
             await Assert.ThrowsAsync<WebSocketException>(async () =>
             {
@@ -123,6 +148,8 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 await ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart()).ReceiveAsync(1);
             });
 
+ 
+
             // Management link call should fail.
             await Assert.ThrowsAsync<WebSocketException>(async () =>
             {
@@ -130,6 +157,8 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 ehClient.WebProxy = new WebProxy("http://1.2.3.4:9999");
                 await ehClient.GetRuntimeInformationAsync();
             });
+
+ 
 
             // Send/receive should work fine w/o proxy.
             var ehNoProxyClient = EventHubClient.CreateFromConnectionString(webSocketConnString);
