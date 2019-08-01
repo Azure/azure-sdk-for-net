@@ -82,14 +82,14 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
         /// <param name="eTag">The entity tag needed to update this ownership.</param>
         ///
-        public PartitionOwnership(string eventHubName,
-                                  string consumerGroup,
-                                  string ownerIdentifier,
-                                  string partitionId,
-                                  long? offset = null,
-                                  long? sequenceNumber = null,
-                                  DateTimeOffset? lastModifiedTime = null,
-                                  string eTag = null)
+        internal PartitionOwnership(string eventHubName,
+                                    string consumerGroup,
+                                    string ownerIdentifier,
+                                    string partitionId,
+                                    long? offset = null,
+                                    long? sequenceNumber = null,
+                                    DateTimeOffset? lastModifiedTime = null,
+                                    string eTag = null)
         {
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;

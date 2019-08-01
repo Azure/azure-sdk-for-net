@@ -132,18 +132,19 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
 
-                        await Task.WhenAll(partitionIds.Select(async partitionId =>
-                        {
-                            var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
-                            var checkpointManager = new CheckpointManager(partitionContext, PartitionManager, Identifier);
+                        await Task.WhenAll(partitionIds
+                            .Select(partitionId =>
+                            {
+                                var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
+                                var checkpointManager = new CheckpointManager(partitionContext, PartitionManager, Identifier);
 
-                            var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+                                var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
-                            var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
-                            PartitionPumps.TryAdd(partitionId, partitionPump);
+                                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
+                                PartitionPumps.TryAdd(partitionId, partitionPump);
 
-                            await partitionPump.StartAsync().ConfigureAwait(false);
-                        })).ConfigureAwait(false);
+                                return partitionPump.StartAsync();
+                            })).ConfigureAwait(false);
 
                         RunningTask = RunAsync(RunningTaskTokenSource.Token);
                     }
@@ -203,34 +204,24 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
-            var pumpsToUpdate = new List<string>();
-
             while (!cancellationToken.IsCancellationRequested)
             {
-                foreach (var kvp in PartitionPumps)
-                {
-                    var partitionPump = kvp.Value;
-
-                    if (!partitionPump.IsRunning)
+                await Task.WhenAll(PartitionPumps
+                    .Where(kvp => !kvp.Value.IsRunning)
+                    .Select(kvp =>
                     {
-                        pumpsToUpdate.Add(kvp.Key);
-                    }
-                }
+                        var partitionId = kvp.Key;
 
-                await Task.WhenAll(pumpsToUpdate.Select(async partitionId =>
-                {
-                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
-                    var checkpointManager = new CheckpointManager(partitionContext, PartitionManager, Identifier);
+                        var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
+                        var checkpointManager = new CheckpointManager(partitionContext, PartitionManager, Identifier);
 
-                    var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+                        var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
-                    var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
-                    PartitionPumps.TryUpdate(partitionId, partitionPump, partitionPump);
+                        var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
+                        PartitionPumps.TryUpdate(partitionId, partitionPump, partitionPump);
 
-                    await partitionPump.StartAsync().ConfigureAwait(false);
-                })).ConfigureAwait(false);
-
-                pumpsToUpdate.Clear();
+                        return partitionPump.StartAsync();
+                    })).ConfigureAwait(false);
 
                 // Wait 1 second before the next verification.
 
