@@ -16,6 +16,9 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     internal class PartitionPump
     {
+        /// <summary>The primitive for synchronizing access during start and close operations.</summary>
+        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
+
         /// <summary>
         ///   A boolean value indicating whether this partition pump is currently running or not.
         /// </summary>
@@ -102,17 +105,29 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task Start()
+        public async Task StartAsync()
         {
             if (RunningTask == null)
             {
-                RunningTaskTokenSource = new CancellationTokenSource();
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
-                InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
+                try
+                {
+                    if (RunningTask == null)
+                    {
+                        RunningTaskTokenSource = new CancellationTokenSource();
 
-                await PartitionProcessor.Initialize().ConfigureAwait(false);
+                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
 
-                RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                        await PartitionProcessor.Initialize().ConfigureAwait(false);
+
+                        RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                    }
+                }
+                finally
+                {
+                    RunningTaskSemaphore.Release();
+                }
             }
         }
 
@@ -122,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task Stop() => Stop(PartitionProcessorCloseReason.Shutdown);
+        public Task StopAsync() => StopAsync(PartitionProcessorCloseReason.Shutdown);
 
         /// <summary>
         ///   Stops the partition pump.  In case it hasn't been started, nothing happens.
@@ -132,20 +147,32 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task Stop(PartitionProcessorCloseReason reason)
+        private async Task StopAsync(PartitionProcessorCloseReason reason)
         {
             if (RunningTask != null)
             {
-                RunningTaskTokenSource.Cancel();
-                RunningTaskTokenSource = null;
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
-                await RunningTask.ConfigureAwait(false);
-                RunningTask = null;
+                try
+                {
+                    if (RunningTask != null)
+                    {
+                        RunningTaskTokenSource.Cancel();
+                        RunningTaskTokenSource = null;
 
-                await InnerConsumer.CloseAsync().ConfigureAwait(false);
-                InnerConsumer = null;
+                        await RunningTask.ConfigureAwait(false);
+                        RunningTask = null;
 
-                await PartitionProcessor.Close(reason).ConfigureAwait(false);
+                        await InnerConsumer.CloseAsync().ConfigureAwait(false);
+                        InnerConsumer = null;
+
+                        await PartitionProcessor.Close(reason).ConfigureAwait(false);
+                    }
+                }
+                finally
+                {
+                    RunningTaskSemaphore.Release();
+                }
             }
         }
 
@@ -176,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     if (!(exception is EventHubsException) || !(exception as EventHubsException).IsTransient)
                     {
-                        _ = Stop(PartitionProcessorCloseReason.EventHubException);
+                        _ = StopAsync(PartitionProcessorCloseReason.EventHubException);
                         break;
                     }
                 }

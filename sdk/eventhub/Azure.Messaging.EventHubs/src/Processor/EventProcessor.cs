@@ -18,6 +18,9 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public class EventProcessor
     {
+        /// <summary>The primitive for synchronizing access during start and close operations.</summary>
+        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
+
         /// <summary>
         ///   A unique name used to identify this event processor.
         /// </summary>
@@ -112,30 +115,42 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task Start()
+        public async Task StartAsync()
         {
             if (RunningTask == null)
             {
-                RunningTaskTokenSource = new CancellationTokenSource();
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
-                PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
-
-                var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
-
-                await Task.WhenAll(partitionIds.Select(async partitionId =>
+                try
                 {
-                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, InstanceId, partitionId);
-                    var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
+                    if (RunningTask == null)
+                    {
+                        RunningTaskTokenSource = new CancellationTokenSource();
 
-                    var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+                        PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
 
-                    var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
-                    PartitionPumps.TryAdd(partitionId, partitionPump);
+                        var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
 
-                    await partitionPump.Start().ConfigureAwait(false);
-                })).ConfigureAwait(false);
+                        await Task.WhenAll(partitionIds.Select(async partitionId =>
+                        {
+                            var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, InstanceId, partitionId);
+                            var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
 
-                RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                            var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+
+                            var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
+                            PartitionPumps.TryAdd(partitionId, partitionPump);
+
+                            await partitionPump.StartAsync().ConfigureAwait(false);
+                        })).ConfigureAwait(false);
+
+                        RunningTask = RunAsync(RunningTaskTokenSource.Token);
+                    }
+                }
+                finally
+                {
+                    RunningTaskSemaphore.Release();
+                }
             }
         }
 
@@ -145,18 +160,30 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task Stop()
+        public async Task StopAsync()
         {
             if (RunningTask != null)
             {
-                RunningTaskTokenSource.Cancel();
-                RunningTaskTokenSource = null;
+                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
-                await RunningTask.ConfigureAwait(false);
-                RunningTask = null;
+                try
+                {
+                    if (RunningTask != null)
+                    {
+                        RunningTaskTokenSource.Cancel();
+                        RunningTaskTokenSource = null;
 
-                await Task.WhenAll(PartitionPumps.Select(kvp => kvp.Value.Stop())).ConfigureAwait(false);
-                PartitionPumps = null;
+                        await RunningTask.ConfigureAwait(false);
+                        RunningTask = null;
+
+                        await Task.WhenAll(PartitionPumps.Select(kvp => kvp.Value.StopAsync())).ConfigureAwait(false);
+                        PartitionPumps = null;
+                    }
+                }
+                finally
+                {
+                    RunningTaskSemaphore.Release();
+                }
             }
         }
 
@@ -200,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
                     PartitionPumps.TryUpdate(partitionId, partitionPump, partitionPump);
 
-                    await partitionPump.Start().ConfigureAwait(false);
+                    await partitionPump.StartAsync().ConfigureAwait(false);
                 })).ConfigureAwait(false);
 
                 pumpsToUpdate.Clear();
