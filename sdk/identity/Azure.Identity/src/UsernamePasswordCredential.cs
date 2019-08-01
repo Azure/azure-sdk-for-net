@@ -20,7 +20,6 @@ namespace Azure.Identity
     {
         private IPublicClientApplication _pubApp = null;
         private HttpPipeline _pipeline = null;
-        private IAccount _account = null;
         private IdentityClientOptions _options;
         private string _username = null;
         private SecureString _password;
