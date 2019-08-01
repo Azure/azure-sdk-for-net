@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 PartitionPumps = new ConcurrentDictionary<string, PartitionPump>();
 
-                var partitionIds = await InnerClient.GetPartitionIdsAsync();
+                var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
 
                 await Task.WhenAll(partitionIds.Select(async partitionId =>
                 {
@@ -132,8 +132,8 @@ namespace Azure.Messaging.EventHubs.Processor
                     var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
                     PartitionPumps.TryAdd(partitionId, partitionPump);
 
-                    await partitionPump.Start();
-                }));
+                    await partitionPump.Start().ConfigureAwait(false);
+                })).ConfigureAwait(false);
 
                 RunningTask = RunAsync(RunningTaskTokenSource.Token);
             }
@@ -152,10 +152,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 RunningTaskTokenSource.Cancel();
                 RunningTaskTokenSource = null;
 
-                await RunningTask;
+                await RunningTask.ConfigureAwait(false);
                 RunningTask = null;
 
-                await Task.WhenAll(PartitionPumps.Select(kvp => kvp.Value.Stop()));
+                await Task.WhenAll(PartitionPumps.Select(kvp => kvp.Value.Stop())).ConfigureAwait(false);
                 PartitionPumps = null;
             }
         }
@@ -200,14 +200,14 @@ namespace Azure.Messaging.EventHubs.Processor
                     var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
                     PartitionPumps.TryUpdate(partitionId, partitionPump, partitionPump);
 
-                    await partitionPump.Start();
-                }));
+                    await partitionPump.Start().ConfigureAwait(false);
+                })).ConfigureAwait(false);
 
                 pumpsToUpdate.Clear();
 
                 // Wait 1 second before the next verification.
 
-                await Task.Delay(1000);
+                await Task.Delay(1000).ConfigureAwait(false);
             }
         }
     }

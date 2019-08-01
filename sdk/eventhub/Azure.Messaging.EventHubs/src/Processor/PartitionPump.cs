@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task Stop() => await Stop(PartitionProcessorCloseReason.Shutdown);
+        public Task Stop() => Stop(PartitionProcessorCloseReason.Shutdown);
 
         /// <summary>
         ///   Stops the partition pump.  In case it hasn't been started, nothing happens.
@@ -139,10 +139,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 RunningTaskTokenSource.Cancel();
                 RunningTaskTokenSource = null;
 
-                await RunningTask;
+                await RunningTask.ConfigureAwait(false);
                 RunningTask = null;
 
-                await InnerConsumer.CloseAsync();
+                await InnerConsumer.CloseAsync().ConfigureAwait(false);
                 InnerConsumer = null;
 
                 await PartitionProcessor.Close(reason).ConfigureAwait(false);
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 try
                 {
-                    receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime);
+                    receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime).ConfigureAwait(false);
                 }
                 catch (Exception exception)
                 {
