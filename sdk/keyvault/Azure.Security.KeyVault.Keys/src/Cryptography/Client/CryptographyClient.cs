@@ -82,6 +82,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// <param name="options"></param>
         public CryptographyClient(Uri keyVaultKeyUri, CryptographyClientOptions options)
         {
+            KeyVaultKeyUri = keyVaultKeyUri;
             options.EnableServerCryptographyOperations = false;
         }
 
@@ -99,6 +100,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// <param name="options"></param>
         public CryptographyClient(Key keyVaultKey, CryptographyClientOptions options)
         {
+            KeyVaultKey = keyVaultKey;
             options.EnableServerCryptographyOperations = false;
         }
 
@@ -197,7 +199,6 @@ namespace Azure.Security.KeyVault.Cryptography.Client
                 case KeyType.Rsa:
                     {
                         CryptoProvider = new RsaCryptographyProvider(this);
-                        
                         break;
                     }
                 case KeyType.RsaHsm:

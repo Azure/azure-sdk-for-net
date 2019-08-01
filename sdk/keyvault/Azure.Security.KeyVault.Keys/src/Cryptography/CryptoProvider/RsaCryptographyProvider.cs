@@ -3,12 +3,17 @@
 
 namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
 {
+    using Azure.Core;
+    using Azure.Core.Http;
+    using Azure.Core.Pipeline;
     using Azure.Security.KeyVault.Cryptography.Base;
     using Azure.Security.KeyVault.Cryptography.Client;
     using Azure.Security.KeyVault.Cryptography.Defaults;
     using Azure.Security.KeyVault.Cryptography.Models;
+    using Azure.Security.KeyVault.Keys;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -94,13 +99,13 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         public override async Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
         {
             Task<EncryptResult> result = null;
-            if(LocalCryptoProvider != null)
-            {
-                result =  LocalCryptoProvider.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
-            }
-            else if(ServerCryptoProvider != null)
+            if (ServerCryptoProvider != null)
             {
                 result = ServerCryptoProvider.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
+            }
+            else if (LocalCryptoProvider != null)
+            {
+                result =  LocalCryptoProvider.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
             }
 
             return await result.ConfigureAwait(false);
@@ -234,12 +239,20 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <returns></returns>
         public override Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
         {
+            //keys/{key-name}/{key-version}/encrypt
+            List<KeyOperations> keyOperationList = new List<KeyOperations>() { KeyOperations.Encrypt };
+            KeyRequestParameters keyReqParam = new KeyRequestParameters(CryptoClient.KeyVaultKey, keyOperationList);
 
+            Request req = CreateEncryptDecryptRequest();
+            req.Content = HttpPipelineRequestContent.Create(keyReqParam.Serialize());
+
+            Response response = SendRequest(req, token);
+
+            //Create result model
             return null;
         }
 
         #endregion
-
 
         #region Virtual Overrides
         /// <summary>
@@ -252,11 +265,44 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
             return base.IsAlgorithmKindSupported(algorithmKind);
         }
         #endregion
+
         #endregion
 
         #region private functions
+        Request CreateEncryptDecryptRequest()
+        {
+            //keys/{key-name}/{key-version}/encrypt
 
+            string keyReqPath = string.Format(CultureInfo.CurrentCulture, "keys/{0}/{1}/encrypt", CryptoClient.KeyVaultKey.Name, CryptoClient.KeyVaultKey.Version);
+            Request request = CryptoClient.Pipeline.CreateRequest();
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Headers.Add(HttpHeader.Common.JsonAccept);
+            request.Method = RequestMethod.Post;
+            request.UriBuilder.Uri = CryptoClient.KeyVaultKeyUri;
+            request.UriBuilder.AppendPath(keyReqPath);
+
+            request.UriBuilder.AppendQuery("api-version", CryptoClient.CryptoClientOptions.Version.ToString());
+
+            return request;
+        }
+
+        private Response SendRequest(Request request, CancellationToken cancellationToken)
+        {
+            var response = CryptoClient.Pipeline.SendRequest(request, cancellationToken);
+
+            switch (response.Status)
+            {
+                case 200:
+                case 201:
+                case 204:
+                    return response;
+                default:
+                    throw response.CreateRequestFailedException();
+            }
+        }
         #endregion
 
     }
 }
+;

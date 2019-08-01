@@ -24,8 +24,8 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
 
         #region fields
         Uri _kvVaultUri;
-        KeyClient _kvKeyClient;
-        CryptographyClient _kvCryptoClient;
+        //KeyClient _kvKeyClient;
+        //CryptographyClient _kvCryptoClient;
         Core.TokenCredential _creds;
         #endregion
 
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
         #endregion
 
         #region Constructor
-        public KeyTestBase(bool isAsync) : base(isAsync)
+        public CryptoTestBase(bool isAsync) : base(isAsync)
         {
             TestcaseKeysQueue = new Queue<(KeyBase key, bool deleteKey)>();
         }
@@ -185,80 +185,80 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
         #endregion
 
         #region Cleanup
-        [TearDown]
-        public async Task Cleanup()
-        {
-            try
-            {
-                foreach (var cleanupItem in TestcaseKeysQueue)
-                {
-                    if (cleanupItem.DeleteKey)
-                    {
-                        await KVKeyClient.DeleteKeyAsync(cleanupItem.Key.Name);
-                    }
-                }
+        //[TearDown]
+        //public async Task Cleanup()
+        //{
+        //    try
+        //    {
+        //        foreach (var cleanupItem in TestcaseKeysQueue)
+        //        {
+        //            if (cleanupItem.DeleteKey)
+        //            {
+        //                await KVKeyClient.DeleteKeyAsync(cleanupItem.Key.Name);
+        //            }
+        //        }
 
-                foreach (var cleanupItem in TestcaseKeysQueue)
-                {
-                    await WaitForDeletedKey(cleanupItem.Key.Name);
-                }
+        //        foreach (var cleanupItem in TestcaseKeysQueue)
+        //        {
+        //            await WaitForDeletedKey(cleanupItem.Key.Name);
+        //        }
 
-                foreach (var cleanupItem in TestcaseKeysQueue)
-                {
-                    await KVKeyClient.PurgeDeletedKeyAsync(cleanupItem.Key.Name);
-                }
+        //        foreach (var cleanupItem in TestcaseKeysQueue)
+        //        {
+        //            await KVKeyClient.PurgeDeletedKeyAsync(cleanupItem.Key.Name);
+        //        }
 
-                foreach (var cleanupItem in TestcaseKeysQueue)
-                {
-                    await WaitForPurgedKey(cleanupItem.Key.Name);
-                }
-            }
-            finally
-            {
-                TestcaseKeysQueue.Clear();
-            }
-        }
+        //        foreach (var cleanupItem in TestcaseKeysQueue)
+        //        {
+        //            await WaitForPurgedKey(cleanupItem.Key.Name);
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        TestcaseKeysQueue.Clear();
+        //    }
+        //}
 
-        protected Task WaitForPurgedKey(string name)
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return Task.CompletedTask;
-            }
+        //protected Task WaitForPurgedKey(string name)
+        //{
+        //    if (Mode == RecordedTestMode.Playback)
+        //    {
+        //        return Task.CompletedTask;
+        //    }
 
-            using (Recording.DisableRecording())
-            {
-                return TestRetryHelper.RetryAsync(async () => {
-                    try
-                    {
-                        await KVKeyClient.GetDeletedKeyAsync(name);
-                        throw new InvalidOperationException("Key still exists");
-                    }
-                    catch
-                    {
-                        return (Response)null;
-                    }
-                });
-            }
-        }
+        //    using (Recording.DisableRecording())
+        //    {
+        //        return TestRetryHelper.RetryAsync(async () => {
+        //            try
+        //            {
+        //                await KVKeyClient.GetDeletedKeyAsync(name);
+        //                throw new InvalidOperationException("Key still exists");
+        //            }
+        //            catch
+        //            {
+        //                return (Response)null;
+        //            }
+        //        });
+        //    }
+        //}
 
-        protected Task WaitForDeletedKey(string name)
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return Task.CompletedTask;
-            }
+        //protected Task WaitForDeletedKey(string name)
+        //{
+        //    if (Mode == RecordedTestMode.Playback)
+        //    {
+        //        return Task.CompletedTask;
+        //    }
 
-            using (Recording.DisableRecording())
-            {
-                return TestRetryHelper.RetryAsync(async () => await KVKeyClient.GetDeletedKeyAsync(name));
-            }
-        }
+        //    using (Recording.DisableRecording())
+        //    {
+        //        return TestRetryHelper.RetryAsync(async () => await KVKeyClient.GetDeletedKeyAsync(name));
+        //    }
+        //}
 
-        protected void RegisterForCleanup(KeyBase key, bool deleteKey = true)
-        {
-            TestcaseKeysQueue.Enqueue((key, deleteKey));
-        }
+        //protected void RegisterForCleanup(KeyBase key, bool deleteKey = true)
+        //{
+        //    TestcaseKeysQueue.Enqueue((key, deleteKey));
+        //}
         #endregion
 
         #endregion
