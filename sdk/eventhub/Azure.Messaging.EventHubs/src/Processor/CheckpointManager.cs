@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Creates a new checkpoint in the chosen storage service.
+        ///   Updates the checkpoint using the given information for the associated partition & consumer group in the chosen storage service.
         /// </summary>
         ///
         /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public async Task CreateCheckpoint(EventData eventData) => await CreateCheckpoint(eventData.Offset, eventData.SequenceNumber);
 
         /// <summary>
-        ///   Creates a new checkpoint in the chosen storage service.
+        ///   Updates the checkpoint using the given information for the associated partition & consumer group in the chosen storage service.
         /// </summary>
         ///
         /// <param name="offset">The offset of the <see cref="EventData" /> the new checkpoint will be associated with.</param>
