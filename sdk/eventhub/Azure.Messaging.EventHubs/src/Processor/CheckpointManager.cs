@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Creates a new checkpoint in the chosen storage service.
         /// </summary>
         ///
-        /// <param name="eventData">The event containing the information to be stored.</param>
+        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
