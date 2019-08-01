@@ -19,4 +19,9 @@
     <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Keys.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CryptoTests\" />
+    <Folder Include="Utilities\" />
+  </ItemGroup>
 </Project>

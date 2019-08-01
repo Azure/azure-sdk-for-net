@@ -26,23 +26,25 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         #endregion
 
         #region Properties
-        #region internal/private properties
-        /// <summary>
-        /// Cryptography Client Options
-        /// </summary>
-        internal CryptographyClientOptions CryptoClientOptions { get; }
-
-        /// <summary>
-        /// HttpPipeline
-        /// </summary>
-        internal HttpPipeline Pipeline {get;}
-
-        #endregion
 
         /// <summary>
         /// 
         /// </summary>
-        public ICryptographyProvider CryptoProvider { get; set; }
+        public TokenCredential Credentials { get; }
+        /// <summary>
+        /// Cryptography Client Options
+        /// </summary>
+        public CryptographyClientOptions CryptoClientOptions { get; }
+
+        /// <summary>
+        /// HttpPipeline
+        /// </summary>
+        public HttpPipeline Pipeline {get;}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICryptographyProvider CryptoProvider { get; protected set; }
 
         /// <summary>
         /// KeyVault Uri
@@ -71,10 +73,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// </summary>
         /// <param name="keyVaultKeyUri"></param>
         public CryptographyClient(Uri keyVaultKeyUri)
-            : this(keyVaultKeyUri, new CryptographyClientOptions())
-        {
-
-        }
+            : this(keyVaultKeyUri, new CryptographyClientOptions()) { }
 
         /// <summary>
         /// 
@@ -91,10 +90,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// </summary>
         /// <param name="keyVaultKey"></param>
         public CryptographyClient(Key keyVaultKey)
-            : this(keyVaultKey, new CryptographyClientOptions())
-        {
-
-        }
+            : this(keyVaultKey, new CryptographyClientOptions()) { }
 
         /// <summary>
         /// 
@@ -132,6 +128,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
 
             KeyVaultKeyUri = keyVaultKeyUri;
             CryptoClientOptions = options;
+            Credentials = credential;
             BearerTokenAuthenticationPolicy bearerAuthPolicy = new BearerTokenAuthenticationPolicy(credential, DEFAULT_KV_SCOPE_URI);
             Pipeline = HttpPipelineBuilder.Build(CryptoClientOptions, bufferResponse: true, clientPolicies: bearerAuthPolicy);
         }
@@ -142,8 +139,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// <param name="keyVaultKey"></param>
         /// <param name="credential"></param>
         public CryptographyClient(Key keyVaultKey, TokenCredential credential)
-            : this(keyVaultKey, credential, new CryptographyClientOptions())
-        { }
+            : this(keyVaultKey, credential, new CryptographyClientOptions()) { }
 
         /// <summary>
         /// 
@@ -159,8 +155,9 @@ namespace Azure.Security.KeyVault.Cryptography.Client
 
             KeyVaultKey = keyVaultKey;
             KeyVaultKeyUri = KeyVaultKey.VaultUri;
-
             CryptoClientOptions = options;
+            Credentials = credential;
+
             BearerTokenAuthenticationPolicy bearerAuthPolicy = new BearerTokenAuthenticationPolicy(credential, DEFAULT_KV_SCOPE_URI);
             Pipeline = HttpPipelineBuilder.Build(CryptoClientOptions, bufferResponse: true, clientPolicies: bearerAuthPolicy);
 
