@@ -9,6 +9,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using Microsoft.Azure.EventHubs.Core;
     using Xunit;
 
+
     public class PluginTests
     {
         protected EventHubClient EventHubClient;
@@ -18,13 +19,17 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Registering_plugin_multiple_times_should_throw()
         {
-            this.EventHubClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            var firstPlugin = new SamplePlugin();
-            var secondPlugin = new SamplePlugin();
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var firstPlugin = new SamplePlugin();
+                var secondPlugin = new SamplePlugin();
 
-            this.EventHubClient.RegisterPlugin(firstPlugin);
-            Assert.Throws<ArgumentException>(() => EventHubClient.RegisterPlugin(secondPlugin));
-            await EventHubClient.CloseAsync();
+                this.EventHubClient.RegisterPlugin(firstPlugin);
+                Assert.Throws<ArgumentException>(() => EventHubClient.RegisterPlugin(secondPlugin));
+                await EventHubClient.CloseAsync();
+            }
         }
 
         [Fact]
@@ -32,12 +37,16 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Unregistering_plugin_should_complete_with_plugin_set()
         {
-            this.EventHubClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            var firstPlugin = new SamplePlugin();
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var firstPlugin = new SamplePlugin();
 
-            this.EventHubClient.RegisterPlugin(firstPlugin);
-            this.EventHubClient.UnregisterPlugin(firstPlugin.Name);
-            await this.EventHubClient.CloseAsync();
+                this.EventHubClient.RegisterPlugin(firstPlugin);
+                this.EventHubClient.UnregisterPlugin(firstPlugin.Name);
+                await this.EventHubClient.CloseAsync();
+            }
         }
 
         [Fact]
@@ -45,9 +54,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Unregistering_plugin_should_complete_without_plugin_set()
         {
-            this.EventHubClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            this.EventHubClient.UnregisterPlugin("Non-existant plugin");
-            await this.EventHubClient.CloseAsync();
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
+                this.EventHubClient.UnregisterPlugin("Non-existant plugin");
+                await this.EventHubClient.CloseAsync();
+            }
         }
 
         [Fact]
@@ -55,18 +68,22 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Plugin_without_ShouldContinueOnException_should_throw()
         {
-            this.EventHubClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            try
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
-                var plugin = new ExceptionPlugin();
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
+                try
+                {
+                    var plugin = new ExceptionPlugin();
 
-                this.EventHubClient.RegisterPlugin(plugin);
-                var testEvent = new EventData(Encoding.UTF8.GetBytes("Test message"));
-                await Assert.ThrowsAsync<NotImplementedException>(() => this.EventHubClient.SendAsync(testEvent));
-            }
-            finally
-            {
-                await this.EventHubClient.CloseAsync();
+                    this.EventHubClient.RegisterPlugin(plugin);
+                    var testEvent = new EventData(Encoding.UTF8.GetBytes("Test message"));
+                    await Assert.ThrowsAsync<NotImplementedException>(() => this.EventHubClient.SendAsync(testEvent));
+                }
+                finally
+                {
+                    await this.EventHubClient.CloseAsync();
+                }
             }
         }
 
@@ -75,19 +92,23 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Plugin_with_ShouldContinueOnException_should_continue()
         {
-            this.EventHubClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            try
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
-                var plugin = new ShouldCompleteAnywayExceptionPlugin();
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
+                try
+                {
+                    var plugin = new ShouldCompleteAnywayExceptionPlugin();
 
-                this.EventHubClient.RegisterPlugin(plugin);
+                    this.EventHubClient.RegisterPlugin(plugin);
 
-                var testEvent = new EventData(Encoding.UTF8.GetBytes("Test message"));
-                await this.EventHubClient.SendAsync(testEvent);
-            }
-            finally
-            {
-                await this.EventHubClient.CloseAsync();
+                    var testEvent = new EventData(Encoding.UTF8.GetBytes("Test message"));
+                    await this.EventHubClient.SendAsync(testEvent);
+                }
+                finally
+                {
+                    await this.EventHubClient.CloseAsync();
+                }
             }
         }
     }
