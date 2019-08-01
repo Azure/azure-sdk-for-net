@@ -40,13 +40,13 @@ namespace Azure.Messaging.EventHubs.Processor
         public Task<PartitionOwnership[]> ClaimOwnership(PartitionOwnership[] partitionOwnership);
 
         /// <summary>
-        ///   Creates a new checkpoint in the chosen storage service.
+        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task CreateCheckpoint(Checkpoint checkpoint);
+        public Task UpdateCheckpoint(Checkpoint checkpoint);
     }
 }

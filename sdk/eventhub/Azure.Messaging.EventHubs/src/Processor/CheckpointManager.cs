@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 sequenceNumber
             );
 
-            await PartitionManager.CreateCheckpoint(checkpoint).ConfigureAwait(false);
+            await PartitionManager.UpdateCheckpoint(checkpoint).ConfigureAwait(false);
         }
     }
 }
