@@ -26,17 +26,26 @@ namespace Azure.Messaging.EventHubs.Processor
         private IPartitionManager PartitionManager { get; }
 
         /// <summary>
+        ///   The identifier of the associated <see cref="EventProcessor" /> instance.
+        /// </summary>
+        ///
+        public string OwnerIdentifier { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointManager"/> class.
         /// </summary>
         ///
         /// <param name="partitionContext">Contains information about the partition this instance will be associated with.</param>
         /// <param name="partitionManager">Interacts with the storage system, dealing with the creation of checkpoints.</param>
+        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
         ///
         internal CheckpointManager(PartitionContext partitionContext,
-                                   IPartitionManager partitionManager)
+                                   IPartitionManager partitionManager,
+                                   string ownerIdentifier)
         {
             Context = partitionContext;
             PartitionManager = partitionManager;
+            OwnerIdentifier = ownerIdentifier;
         }
 
         /// <summary>
@@ -65,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Processor
             (
                 Context.EventHubName,
                 Context.ConsumerGroup,
-                Context.OwnerId,
+                OwnerIdentifier,
                 Context.PartitionId,
                 offset,
                 sequenceNumber

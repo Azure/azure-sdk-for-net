@@ -134,8 +134,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         await Task.WhenAll(partitionIds.Select(async partitionId =>
                         {
-                            var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, Identifier, partitionId);
-                            var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
+                            var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
+                            var checkpointManager = new CheckpointManager(partitionContext, PartitionManager, Identifier);
 
                             var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
@@ -219,8 +219,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await Task.WhenAll(pumpsToUpdate.Select(async partitionId =>
                 {
-                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, Identifier, partitionId);
-                    var checkpointManager = new CheckpointManager(partitionContext, PartitionManager);
+                    var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
+                    var checkpointManager = new CheckpointManager(partitionContext, PartitionManager, Identifier);
 
                     var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
 
