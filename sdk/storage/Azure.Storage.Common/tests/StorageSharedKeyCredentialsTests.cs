@@ -38,12 +38,12 @@ namespace Azure.Storage.Common.Test
             await service.GetAccountInfoAsync();
 
             // Roll the credential to an Invalid value and make sure it fails
-            credential.AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid"));
+            credential.SetAccountKey(Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid")));
             Assert.ThrowsAsync<StorageRequestFailedException>(
                 async () => await service.GetAccountInfoAsync());
 
             // Re-roll the credential and make sure it succeeds again
-            credential.AccountKey = this.TestConfigDefault.AccountKey;
+            credential.SetAccountKey(this.TestConfigDefault.AccountKey);
             await service.GetAccountInfoAsync();
         }
 
@@ -74,14 +74,14 @@ namespace Azure.Storage.Common.Test
                 await container.GetPropertiesAsync();
 
                 // Roll the credential to an Invalid value and make sure it fails
-                credential.AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid"));
+                credential.SetAccountKey(Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid")));
                 Assert.ThrowsAsync<StorageRequestFailedException>(
                     async () => await service.GetAccountInfoAsync());
                 Assert.ThrowsAsync<StorageRequestFailedException>(
                     async () => await container.GetPropertiesAsync());
 
                 // Re-roll the credential and make sure it succeeds again
-                credential.AccountKey = this.TestConfigDefault.AccountKey;
+                credential.SetAccountKey(this.TestConfigDefault.AccountKey);
                 await service.GetAccountInfoAsync();
                 await container.GetPropertiesAsync();
             }
