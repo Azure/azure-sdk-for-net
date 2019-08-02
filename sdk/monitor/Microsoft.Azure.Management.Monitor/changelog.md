@@ -12,7 +12,7 @@
 
 **Notes**
 
-- Added Dynamic Treshold for Metric Alert API and its Unit tests and Scenario Tests.
+- Added Dynamic Threshold for Metric Alert API and its Unit tests and Scenario Tests
 
 ### Changes in 0.22.0-preview
 
