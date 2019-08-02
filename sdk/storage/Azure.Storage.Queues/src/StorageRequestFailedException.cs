@@ -33,8 +33,8 @@ namespace Azure.Storage.Queues.Models
             {
                 switch (element.Name.LocalName)
                 {
-                    case "Code":
-                    case "Message":
+                    case Constants.Xml.Code:
+                    case Constants.Xml.Message:
                         continue;
                     default:
                         error.AdditionalInformation[element.Name.LocalName] = element.Value;
