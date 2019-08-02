@@ -219,4 +219,7 @@
   <data name="ArgumentInvalidCombination" xml:space="preserve">
     <value>The following arguments must all be provided or none at all: {0}.</value>
   </data>
+  <data name="MaxBatchSizeMustBeGreaterThanZero" xml:space="preserve">
+    <value>The specified value '{0}' is invalid. "maxBatchSize" must be greater than zero.</value>
+  </data>
 </root>

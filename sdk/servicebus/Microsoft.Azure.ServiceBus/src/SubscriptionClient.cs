@@ -418,6 +418,34 @@ namespace Microsoft.Azure.ServiceBus
             this.ThrowIfClosed();
             this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, messageHandlerOptions);
         }
+        
+        /// <summary>
+        /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
+        /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IList{Message}, CancellationToken, Task}"/> that processes message batches.</param>
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
+        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate.
+        /// Use <see cref="RegisterMessageHandler(Func{IList{Message},CancellationToken,Task}, MessageBatchHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        public void RegisterMessageBatchHandler(Func<IList<Message>, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
+        {
+            this.ThrowIfClosed();
+            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageBatchHandler(handler, exceptionReceivedHandler);
+        }
+
+        /// <summary>
+        /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
+        /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IList{Message}, CancellationToken, Task}"/> that processes message batches.</param>
+        /// <param name="messageBatchHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
+        public void RegisterMessageBatchHandler(Func<IList<Message>, CancellationToken, Task> handler, MessageBatchHandlerOptions messageBatchHandlerOptions)
+        {
+            this.ThrowIfClosed();
+            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageBatchHandler(handler, messageBatchHandlerOptions);
+        }
 
         /// <summary>
         /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.

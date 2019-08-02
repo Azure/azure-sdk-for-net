@@ -105,6 +105,34 @@ namespace Microsoft.Azure.ServiceBus
 
         #endregion
 
+        #region ProcessBatch
+
+        internal Activity ProcessBatchStart(IList<Message> messages)
+        {
+            return ProcessBatchStart("ProcessBatch", messages, () => new
+            {
+                Messages = messages,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
+                a => SetTags(a, messages));
+        }
+
+        internal void ProcessBatchStop(Activity activity, IList<Message> messages, TaskStatus? status)
+        {
+            if (activity != null)
+            {
+                DiagnosticListener.StopActivity(activity, new
+                {
+                    Messages = messages,
+                    Entity = this.entityPath,
+                    Endpoint = this.endpoint,
+                    Status = status ?? TaskStatus.Faulted
+                });
+            }
+        }
+
+        #endregion
 
         #region ProcessSession
 
@@ -367,7 +395,35 @@ namespace Microsoft.Azure.ServiceBus
 
         #endregion
 
- 
+        #region DisposeMany
+
+        internal Activity DisposeManyStart(string operationName, IEnumerable<string> lockTokens)
+        {
+            return Start(operationName, () => new
+            {
+                LockTokens = lockTokens,
+                Entity = this.entityPath,
+                Endpoint = this.endpoint
+            },
+            null);
+        }
+
+        internal void DisposeManyStop(Activity activity, IEnumerable<string> lockTokens, TaskStatus? status)
+        {
+            if (activity != null)
+            {
+                DiagnosticListener.StopActivity(activity, new
+                {
+                    LockTokens = lockTokens,
+                    Entity = this.entityPath,
+                    Endpoint = this.endpoint,
+                    Status = status ?? TaskStatus.Faulted
+                });
+            }
+        }
+
+        #endregion
+
         #region RenewLock
 
         internal Activity RenewLockStart(string lockToken)
@@ -721,6 +777,33 @@ namespace Microsoft.Azure.ServiceBus
                 var tmpActivity = message.ExtractActivity(activityName);
                 setTags?.Invoke(tmpActivity);
                 
+                if (DiagnosticListener.IsEnabled(activityName, entityPath, tmpActivity))
+                {
+                    activity = tmpActivity;
+                    if (DiagnosticListener.IsEnabled(activityName + ".Start"))
+                    {
+                        DiagnosticListener.StartActivity(activity, getPayload());
+                    }
+                    else
+                    {
+                        activity.Start();
+                    }
+                }
+            }
+            return activity;
+        }
+
+        private Activity ProcessBatchStart(string operationName, IList<Message> message, Func<object> getPayload, Action<Activity> setTags)
+        {
+            Activity activity = null;
+            string activityName = BaseActivityName + operationName;
+
+            if (message != null && DiagnosticListener.IsEnabled(activityName, entityPath))
+            {
+                var tmpActivity = new Activity(operationName);
+                // BLOCKER: Should we add tmpActivity.AddBaggage("Count", messages.Count)?
+                setTags?.Invoke(tmpActivity);
+
                 if (DiagnosticListener.IsEnabled(activityName, entityPath, tmpActivity))
                 {
                     activity = tmpActivity;

@@ -899,6 +899,35 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.OnMessageHandler(messageHandlerOptions, handler);
         }
 
+
+        /// <summary>
+        /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
+        /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IList{Message}, CancellationToken, Task}"/> that processes message batches.</param>
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
+        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate.
+        /// Use <see cref="RegisterMessageHandler(Func{IList{Message},CancellationToken,Task}, MessageBatchHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        public void RegisterMessageBatchHandler(Func<IList<Message>, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
+        {
+            this.RegisterMessageBatchHandler(handler, new MessageBatchHandlerOptions(exceptionReceivedHandler));
+        }
+
+        /// <summary>
+        /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
+        /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IList{Message}, CancellationToken, Task}"/> that processes message batches.</param>
+        /// <param name="messageBatchHandlerOptions">The <see cref="MessageBatchHandlerOptions"/> options used to configure the settings of the pump.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
+        public void RegisterMessageBatchHandler(Func<IList<Message>, CancellationToken, Task> handler, MessageBatchHandlerOptions messageBatchHandlerOptions)
+        {
+            this.ThrowIfClosed();
+            this.OnMessageBatchHandler(messageBatchHandlerOptions, handler);
+        }
+
+
         /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
         /// </summary>
@@ -1277,8 +1306,55 @@ namespace Microsoft.Azure.ServiceBus.Core
                     throw new InvalidOperationException(Resources.MessageHandlerAlreadyRegistered);
                 }
 
+                var messageBatchHandlerOptions = new MessageBatchHandlerOptions(registerHandlerOptions);
+                // BLOCKER: First() or Single()?
+                Func<IList<Message>, CancellationToken, Task> callbackWrapper = (messages, cancellationToken) => callback(messages.First(), cancellationToken);
+
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
-                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
+                this.receivePump = new MessageReceivePump(this, messageBatchHandlerOptions, callbackWrapper, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
+            }
+
+            try
+            {
+                this.receivePump.StartPump();
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.RegisterOnMessageHandlerException(this.ClientId, exception);
+                lock (this.messageReceivePumpSyncLock)
+                {
+                    if (this.receivePump != null)
+                    {
+                        this.receivePumpCancellationTokenSource.Cancel();
+                        this.receivePumpCancellationTokenSource.Dispose();
+                        this.receivePump = null;
+                    }
+                }
+
+                throw;
+            }
+
+            MessagingEventSource.Log.RegisterOnMessageHandlerStop(this.ClientId);
+        }
+
+        
+        /// <summary> </summary>
+        protected virtual void OnMessageBatchHandler(
+            MessageBatchHandlerOptions registerBatchHandlerOptions,
+            Func<IList<Message>, CancellationToken, Task> callback)
+        {
+            // BLOCKER:  Should make new event instead of using existing?  Same for other similar events below?
+            MessagingEventSource.Log.RegisterOnMessageHandlerStart(this.ClientId, registerBatchHandlerOptions);
+
+            lock (this.messageReceivePumpSyncLock)
+            {
+                if (this.receivePump != null)
+                {
+                    throw new InvalidOperationException(Resources.MessageHandlerAlreadyRegistered);
+                }
+
+                this.receivePumpCancellationTokenSource = new CancellationTokenSource();
+                this.receivePump = new MessageReceivePump(this, registerBatchHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
             }
 
             try

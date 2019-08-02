@@ -64,6 +64,26 @@ namespace Microsoft.Azure.ServiceBus.Core
         void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions);
 
         /// <summary>
+        /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
+        /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IList{Message}, CancellationToken, Task}"/> that processes message batches.</param>
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
+        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate.
+        /// Use <see cref="RegisterMessageHandler(Func{IList{Message},CancellationToken,Task}, MessageBatchHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        void RegisterMessageBatchHandler(Func<IList<Message>, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler);
+
+        /// <summary>
+        /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
+        /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IList{Message}, CancellationToken, Task}"/> that processes message batches.</param>
+        /// <param name="messageBatchHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
+        void RegisterMessageBatchHandler(Func<IList<Message>, CancellationToken, Task> handler, MessageBatchHandlerOptions messageBatchHandlerOptions);
+
+        /// <summary>
         /// Completes a <see cref="Message"/> using its lock token. This will delete the message from the queue.
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
@@ -89,7 +109,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Moves a message to the deadletter sub-queue.
         /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
+        /// <param name="lockToken">The lock tokens of the corresponding messages to deadletter.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
