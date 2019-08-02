@@ -429,7 +429,7 @@ namespace Azure.Storage.Blobs
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobServiceClient.GetAccountInfo",
+                        operationName: Constants.Blob.Service.GetAccountInfoOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -534,7 +534,7 @@ namespace Azure.Storage.Blobs
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobServiceClient.GetProperties",
+                        operationName: Constants.Blob.Service.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -661,7 +661,7 @@ namespace Azure.Storage.Blobs
                         this.Uri,
                         properties,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobServiceClient.SetProperties",
+                        operationName: Constants.Blob.Service.SetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -772,7 +772,7 @@ namespace Azure.Storage.Blobs
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobServiceClient.GetStatistics",
+                        operationName: Constants.Blob.Service.GetStatisticsOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -916,7 +916,7 @@ namespace Azure.Storage.Blobs
                         this.Uri,
                         keyInfo: keyInfo,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKey",
+                        operationName: Constants.Blob.Service.GetUserDelegationKeyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
