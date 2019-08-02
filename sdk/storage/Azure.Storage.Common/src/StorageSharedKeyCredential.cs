@@ -19,10 +19,22 @@ namespace Azure.Storage
         /// </summary>
         public string AccountName { get; }
 
+#pragma warning disable CA1044 // Properties should not be write only
+        /// <summary>
+        /// Updates the Storage Account's access key.  This is a write-only
+        /// property only intended to be used when you've regenerated your
+        /// Storage Account's access keys and want to update long lived clients.
+        /// </summary>
+        public string AccountKey
+        {
+            set => this.AccountKeyValue = Convert.FromBase64String(value);
+        }
+#pragma warning restore CA1044 // Properties should not be write only
+
         /// <summary>
         /// Gets the value of a Storage Account access key.
         /// </summary>
-        internal byte[] AccountKeyValue { get; }
+        internal byte[] AccountKeyValue { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -35,7 +47,7 @@ namespace Azure.Storage
             string accountKey)
         {
             this.AccountName = accountName;
-            this.AccountKeyValue = Convert.FromBase64String(accountKey);
+            this.AccountKey = accountKey;
         }
 
         /// <summary>
