@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Processor
     public class Checkpoint
     {
         /// <summary>
-        ///   The path of the specific Event Hub this checkpoint is associated with, relative
+        ///   The name of the specific Event Hub this checkpoint is associated with, relative
         ///   to the Event Hubs namespace that contains it.
         /// </summary>
         ///
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="Checkpoint"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubName">The path of the specific Event Hub this checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub this checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this checkpoint is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this checkpoint is associated with.</param>

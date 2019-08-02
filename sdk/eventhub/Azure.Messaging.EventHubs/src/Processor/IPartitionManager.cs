@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Retrieves a complete ownership list from the chosen storage service.
         /// </summary>
         ///
-        /// <param name="eventHubName">The path of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
