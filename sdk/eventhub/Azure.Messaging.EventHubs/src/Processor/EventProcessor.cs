@@ -125,6 +125,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     if (RunningTask == null)
                     {
+                        RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
                         PartitionPumps.Clear();
