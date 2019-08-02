@@ -13,8 +13,8 @@ namespace Azure.Messaging.EventHubs.Processor
     /// </summary>
     ///
     /// <remarks>
-    ///   Every aforementioned instance is created by an <see cref="IPartitionProcessorFactory" /> provided by
-    ///   the user in the <see cref="EventProcessor" /> constructor.
+    ///   Every aforementioned instance is created by a factory provided by the user in the <see cref="EventProcessor" />
+    ///   constructor.
     /// </remarks>
     ///
     public interface IPartitionProcessor

@@ -40,11 +40,10 @@ namespace Azure.Messaging.EventHubs.Processor
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   An instance of a class that implements the <see cref="IPartitionProcessorFactory" /> interface.
-        ///   It's provided by the user and it's used to create partition processors.
+        ///   A factory used to create partition processors.
         /// </summary>
         ///
-        private IPartitionProcessorFactory PartitionProcessorFactory { get; }
+        private Func<PartitionContext, CheckpointManager, IPartitionProcessor> PartitionProcessorFactory { get; }
 
         /// <summary>
         ///   An instance of a class that implements the <see cref="IPartitionManager" /> interface.
@@ -84,13 +83,13 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionProcessorFactory">A factory used to create partition processors.  Its implementation must be provided by the user.</param>
+        /// <param name="partitionProcessorFactory">Creates an instance of a class implementing the <see cref="IPartitionProcessor" /> interface.</param>
         /// <param name="partitionManager">A partition manager used to interact with the storage system.  Its implementation must be provided by the user.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
         public EventProcessor(string consumerGroup,
                               EventHubClient eventHubClient,
-                              IPartitionProcessorFactory partitionProcessorFactory,
+                              Func<PartitionContext, CheckpointManager, IPartitionProcessor> partitionProcessorFactory,
                               IPartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
@@ -138,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                 var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
                                 var checkpointManager = new CheckpointManager(partitionContext, PartitionManager, Identifier);
 
-                                var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+                                var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
 
                                 var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
                                 PartitionPumps.TryAdd(partitionId, partitionPump);
@@ -221,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
                         var checkpointManager = new CheckpointManager(partitionContext, PartitionManager, Identifier);
 
-                        var partitionProcessor = PartitionProcessorFactory.CreatePartitionProcessor(partitionContext, checkpointManager);
+                        var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
 
                         var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
                         PartitionPumps.TryUpdate(partitionId, partitionPump, partitionPump);
