@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   A boolean value indicating whether this partition pump is currently running or not.
         /// </summary>
         ///
-        public bool IsRunning => RunningTask != null;
+        public bool IsRunning => RunningTask != null && !RunningTask.IsCompleted;
 
         /// <summary>
         ///   The client used to interact with the Azure Event Hubs service.

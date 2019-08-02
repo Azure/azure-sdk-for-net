@@ -213,8 +213,18 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 await Task.WhenAll(PartitionPumps
                     .Where(kvp => !kvp.Value.IsRunning)
-                    .Select(kvp =>
+                    .Select(async kvp =>
                     {
+                        try
+                        {
+                            await kvp.Value.StopAsync();
+                        }
+                        catch(Exception)
+                        {
+                            // We're catching every possible unhandled exception that may have happened during Partition Pump execution.
+                            // TODO: delegate the exception handling to an Exception Callback.
+                        }
+
                         var partitionId = kvp.Key;
 
                         var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
@@ -225,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
                         PartitionPumps.TryUpdate(partitionId, partitionPump, partitionPump);
 
-                        return partitionPump.StartAsync();
+                        await partitionPump.StartAsync();
                     })).ConfigureAwait(false);
 
                 try
