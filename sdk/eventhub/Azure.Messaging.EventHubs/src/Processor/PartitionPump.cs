@@ -161,8 +161,14 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource.Cancel();
                         RunningTaskTokenSource = null;
 
-                        await RunningTask.ConfigureAwait(false);
-                        RunningTask = null;
+                        try
+                        {
+                            await RunningTask.ConfigureAwait(false);
+                        }
+                        finally
+                        {
+                            RunningTask = null;
+                        }
 
                         await InnerConsumer.CloseAsync().ConfigureAwait(false);
                         InnerConsumer = null;

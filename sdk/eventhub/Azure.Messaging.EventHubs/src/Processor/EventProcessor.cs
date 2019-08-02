@@ -175,8 +175,14 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource.Cancel();
                         RunningTaskTokenSource = null;
 
-                        await RunningTask.ConfigureAwait(false);
-                        RunningTask = null;
+                        try
+                        {
+                            await RunningTask.ConfigureAwait(false);
+                        }
+                        finally
+                        {
+                            RunningTask = null;
+                        }
 
                         await Task.WhenAll(PartitionPumps.Select(kvp => kvp.Value.StopAsync())).ConfigureAwait(false);
                     }
