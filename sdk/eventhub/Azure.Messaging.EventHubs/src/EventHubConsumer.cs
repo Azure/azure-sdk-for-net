@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -58,11 +57,11 @@ namespace Azure.Messaging.EventHubs
         private EventHubRetryPolicy _retryPolicy;
 
         /// <summary>
-        ///   The path of the specific Event Hub that the consumer is connected to, relative
-        ///   to the Event Hubs namespace that contains it.
+        ///   The name of the Event Hub that the consumer is connected to, specific to the
+        ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public string EventHubPath { get; }
+        public string EventHubName { get; }
 
         /// <summary>
         ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
@@ -142,7 +141,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="transportConsumer">An abstracted Event Consumer specific to the active protocol and transport intended to perform delegated operations.</param>
-        /// <param name="eventHubPath">The path of the Event Hub from which events will be received.</param>
+        /// <param name="eventHubName">The name of the Event Hub from which events will be received.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
@@ -160,7 +159,7 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         internal EventHubConsumer(TransportEventHubConsumer transportConsumer,
-                                   string eventHubPath,
+                                   string eventHubName,
                                    string consumerGroup,
                                    string partitionId,
                                    EventPosition eventPosition,
@@ -168,14 +167,14 @@ namespace Azure.Messaging.EventHubs
                                    EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(transportConsumer), transportConsumer);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
             Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
             Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
             Guard.ArgumentNotNull(nameof(consumerOptions), consumerOptions);
             Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
 
-            EventHubPath = eventHubPath;
+            EventHubName = eventHubName;
             PartitionId = partitionId;
             StartingPosition = eventPosition;
             OwnerLevel = consumerOptions.OwnerLevel;
@@ -277,7 +276,7 @@ namespace Azure.Messaging.EventHubs
             try
             {
                 var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2));
-                var subscription = SubscribeToChannel(EventHubPath, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
+                var subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
 
                 return new ChannelEnumerableSubscription<EventData>(subscription.ChannelReader, maximumWaitTime, () => UnsubscribeFromChannelAsync(subscription.Identifier), cancellationToken);
             }
@@ -432,7 +431,7 @@ namespace Azure.Messaging.EventHubs
                             }
                             catch (TaskCanceledException)
                             {
-                               // This is an expected scenario; no action is needed.
+                                // This is an expected scenario; no action is needed.
                             }
                         }
 

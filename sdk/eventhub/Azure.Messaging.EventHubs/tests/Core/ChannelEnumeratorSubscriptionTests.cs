@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var subscription = new ChannelEnumerableSubscription<int>(mockReader.Object, null, disposeCallback, CancellationToken.None);
 
-            await foreach(var item in subscription)
+            await foreach (var item in subscription)
             {
                 readItems.Add(item);
                 ++readIndex;
@@ -254,7 +254,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var subscription = new ChannelEnumerableSubscription<int>(mockReader.Object, null, disposeCallback, readCancellation.Token);
 
-            await foreach(var item in subscription)
+            await foreach (var item in subscription)
             {
                 ++readIndex;
 
@@ -331,7 +331,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var subscription = new ChannelEnumerableSubscription<int>(mockReader.Object, maxWaitTime, disposeCallback, readCancellation.Token);
             var stopWatch = Stopwatch.StartNew();
 
-            await foreach(var item in subscription)
+            await foreach (var item in subscription)
             {
                 ++iterateCount;
 
@@ -342,8 +342,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (stopWatch.Elapsed > abortTimeout)
                 {
-                   forcedAbort = true;
-                   break;
+                    forcedAbort = true;
+                    break;
                 }
             }
 
@@ -414,7 +414,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var subscription = new ChannelEnumerableSubscription<int>(mockReader.Object, null, disposeCallback, readCancellation.Token);
             var stopWatch = Stopwatch.StartNew();
 
-            await foreach(var item in subscription)
+            await foreach (var item in subscription)
             {
                 ++iterateCount;
 
@@ -425,8 +425,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (stopWatch.Elapsed > abortTimeout)
                 {
-                   forcedAbort = true;
-                   break;
+                    forcedAbort = true;
+                    break;
                 }
             }
 

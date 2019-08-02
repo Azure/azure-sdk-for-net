@@ -455,7 +455,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             AssertTagMatches(activity, "peer.hostname", connectionStringProperties.Endpoint.Host);
-            AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubPath);
+            AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubName);
             AssertTagMatches(activity, "eh.active_partition_routing", activePartitionRouting);
             AssertTagMatches(activity, "eh.event_count", eventCount.ToString());
             AssertTagExists(activity, "eh.client_id");
@@ -569,7 +569,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             AssertTagMatches(activity, "peer.hostname", connectionStringProperties.Endpoint.Host);
-            AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubPath);
+            AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubName);
             AssertTagMatches(activity, "eh.active_partition_routing", activePartitionRouting);
             AssertTagMatches(activity, "eh.consumer_group", consumerGroup);
             AssertTagMatches(activity, "eh.start_offset", position.Offset);
@@ -673,7 +673,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedEndpointStart = "amqps://" + connectionStringProperties.Endpoint.Host;
 
             Assert.That(endpoint.AbsoluteUri.StartsWith(expectedEndpointStart), Is.True);
-            Assert.That(entityPath, Is.EqualTo(connectionStringProperties.EventHubPath));
+            Assert.That(entityPath, Is.EqualTo(connectionStringProperties.EventHubName));
             Assert.That(partitionRouting, Is.EqualTo(activePartitionRouting));
         }
 

@@ -1170,7 +1170,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 PublishDelayCallback?.Invoke();
                 stopWatch.Stop();
 
-                if (((maximumWaitTime.HasValue) && (stopWatch.Elapsed >= maximumWaitTime))  || (PublishIndex >= EventsToPublish.Count))
+                if (((maximumWaitTime.HasValue) && (stopWatch.Elapsed >= maximumWaitTime)) || (PublishIndex >= EventsToPublish.Count))
                 {
                     return Task.FromResult(Enumerable.Empty<EventData>());
                 }
@@ -1179,7 +1179,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (index + maximumMessageCount > EventsToPublish.Count)
                 {
-                   maximumMessageCount = (EventsToPublish.Count - index);
+                    maximumMessageCount = (EventsToPublish.Count - index);
                 }
 
                 PublishIndex = (index + maximumMessageCount);
@@ -1190,7 +1190,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
-            public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy){}
+            public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy) { }
         }
 
         /// <summary>
@@ -1218,7 +1218,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
-            public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy){}
+            public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy) { }
         }
     }
 }
