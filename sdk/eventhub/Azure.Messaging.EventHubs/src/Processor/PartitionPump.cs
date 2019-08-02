@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using System;
 using System.Collections.Generic;
 using System.Threading;
