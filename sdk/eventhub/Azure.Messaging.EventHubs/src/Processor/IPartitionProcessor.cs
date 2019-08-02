@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -42,19 +43,23 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="events">The received events to be processed.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task ProcessEventsAsync(IEnumerable<EventData> events);
+        public Task ProcessEventsAsync(IEnumerable<EventData> events,
+                                       CancellationToken cancellationToken);
 
         /// <summary>
         ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
         /// </summary>
         ///
         /// <param name="exception">The exception to be processed.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task ProcessErrorAsync(Exception exception);
+        public Task ProcessErrorAsync(Exception exception,
+                                      CancellationToken cancellationToken);
     }
 }

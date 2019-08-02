@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 catch (Exception exception)
                 {
-                    await PartitionProcessor.ProcessErrorAsync(exception).ConfigureAwait(false);
+                    await PartitionProcessor.ProcessErrorAsync(exception, cancellationToken).ConfigureAwait(false);
 
                     // Stop the pump if it's not a retryable exception.
 
@@ -220,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     }
                 }
 
-                await PartitionProcessor.ProcessEventsAsync(receivedEvents).ConfigureAwait(false);
+                await PartitionProcessor.ProcessEventsAsync(receivedEvents, cancellationToken).ConfigureAwait(false);
             }
         }
     }
