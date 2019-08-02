@@ -166,6 +166,10 @@ namespace Azure.Storage
             internal static class Lease
             {
                 /// <summary>
+                /// Lease Duration is set as infinite when passed -1
+                /// </summary>
+                public const int InfiniteLeaseDuration = -1;
+                /// <summary>
                 /// The Azure Storage Operation Names for Blob Lease Client.
                 /// </summary>
                 public const string AcquireOperationName =
