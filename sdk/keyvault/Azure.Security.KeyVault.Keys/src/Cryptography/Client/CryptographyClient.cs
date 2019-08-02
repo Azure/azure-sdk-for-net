@@ -27,29 +27,31 @@ namespace Azure.Security.KeyVault.Cryptography.Client
 
         #region Properties
 
+        #region internal properties
         /// <summary>
         /// 
         /// </summary>
-        public TokenCredential Credentials { get; }
+        internal TokenCredential Credentials { get; }
         /// <summary>
         /// Cryptography Client Options
         /// </summary>
-        public CryptographyClientOptions CryptoClientOptions { get; }
+        internal CryptographyClientOptions CryptoClientOptions { get; }
 
         /// <summary>
         /// HttpPipeline
         /// </summary>
-        public HttpPipeline Pipeline {get;}
+        internal HttpPipeline Pipeline {get;}
 
         /// <summary>
         /// 
         /// </summary>
-        public ICryptographyProvider CryptoProvider { get; protected set; }
+        internal ICryptographyProvider CryptoProvider { get; set; }
+        #endregion
 
         /// <summary>
         /// KeyVault Uri
         /// </summary>
-        public Uri KeyVaultKeyUri { get; }
+        public Uri KeyId { get; }
 
         /// <summary>
         /// KeyVault Key
@@ -63,7 +65,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// </summary>
         protected CryptographyClient()
         {
-            KeyVaultKeyUri = null;
+            KeyId = null;
             KeyVaultKey = null;
         }
 
@@ -82,7 +84,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// <param name="options"></param>
         public CryptographyClient(Uri keyVaultKeyUri, CryptographyClientOptions options)
         {
-            KeyVaultKeyUri = keyVaultKeyUri;
+            KeyId = keyVaultKeyUri;
             options.EnableServerCryptographyOperations = false;
         }
 
@@ -128,7 +130,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
             Check.NotNull(options, nameof(options));
             Check.NotNull(credential, nameof(credential));
 
-            KeyVaultKeyUri = keyVaultKeyUri;
+            KeyId = keyVaultKeyUri;
             CryptoClientOptions = options;
             Credentials = credential;
             BearerTokenAuthenticationPolicy bearerAuthPolicy = new BearerTokenAuthenticationPolicy(credential, DEFAULT_KV_SCOPE_URI);
@@ -156,7 +158,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
             Check.NotNull(credential, nameof(credential));
 
             KeyVaultKey = keyVaultKey;
-            KeyVaultKeyUri = KeyVaultKey.VaultUri;
+            KeyId = KeyVaultKey.VaultUri;
             CryptoClientOptions = options;
             Credentials = credential;
 

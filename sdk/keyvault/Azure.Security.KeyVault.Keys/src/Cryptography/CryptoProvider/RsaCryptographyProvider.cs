@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
     /// <summary>
     /// 
     /// </summary>
-    public class RsaCryptographyProvider : BaseCryptographyProvider<CryptoProviderDefaults>
+    internal class RsaCryptographyProvider : BaseCryptographyProvider<CryptoProviderDefaults>
     {
         #region const
         const string RSA_CRYPTO_DEFAULT_NAME = "RSAProviderDefaults";
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
             {
                 if(_cryptoProviderDefaults == null)
                 {
-                    _cryptoProviderDefaults = new CryptoProviderDefaults(EncryptionAlgorithmKindEnum.RsaOaep, EncryptionAlgorithmKindEnum.RsaOaep, EncryptionAlgorithmKindEnum.Rsa256, RSA_CRYPTO_DEFAULT_NAME);
+                    _cryptoProviderDefaults = new CryptoProviderDefaults(EncryptionAlgorithmKind.RsaOaep, EncryptionAlgorithmKind.RsaOaep, EncryptionAlgorithmKind.Rsa256, RSA_CRYPTO_DEFAULT_NAME);
                 }
 
                 return _cryptoProviderDefaults;
@@ -96,7 +96,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public override async Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public override async Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             Task<EncryptResult> result = null;
             if (ServerCryptoProvider != null)
@@ -120,7 +120,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public override Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public override Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             return base.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
         }
@@ -167,7 +167,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public override Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public override Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -181,7 +181,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public override Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public override Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             return base.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
         }
@@ -192,7 +192,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// </summary>
         /// <param name="algorithmKind"></param>
         /// <returns></returns>
-        protected override bool IsAlgorithmKindSupported(EncryptionAlgorithmKindEnum algorithmKind)
+        protected override bool IsAlgorithmKindSupported(EncryptionAlgorithmKind algorithmKind)
         {
             return base.IsAlgorithmKindSupported(algorithmKind);
         }
@@ -237,7 +237,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public override Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public override Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             //keys/{key-name}/{key-version}/encrypt
             List<KeyOperations> keyOperationList = new List<KeyOperations>() { KeyOperations.Encrypt };
@@ -260,7 +260,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// </summary>
         /// <param name="algorithmKind"></param>
         /// <returns></returns>
-        protected override bool IsAlgorithmKindSupported(EncryptionAlgorithmKindEnum algorithmKind)
+        protected override bool IsAlgorithmKindSupported(EncryptionAlgorithmKind algorithmKind)
         {
             return base.IsAlgorithmKindSupported(algorithmKind);
         }
@@ -279,7 +279,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = RequestMethod.Post;
-            request.UriBuilder.Uri = CryptoClient.KeyVaultKeyUri;
+            request.UriBuilder.Uri = CryptoClient.KeyId;
             request.UriBuilder.AppendPath(keyReqPath);
 
             request.UriBuilder.AppendQuery("api-version", CryptoClient.CryptoClientOptions.Version.ToString());

@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// 
     /// </summary>
-    public class KeyId
+    internal class KeyId
     {
         #region const
 
@@ -79,6 +79,5 @@ namespace Azure.Security.KeyVault.Keys
             KeyVersion = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }
         #endregion
-
     }
 }

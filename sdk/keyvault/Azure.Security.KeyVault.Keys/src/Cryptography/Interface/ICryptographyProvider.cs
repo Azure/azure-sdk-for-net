@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<byte[]> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token);
+        Task<byte[]> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token);
 
         /// <summary>
         /// 
@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<byte[]> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token);
+        Task<byte[]> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token);
         #endregion
 
         #region Encrypt
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token);
+        Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token);
 
         /// <summary>
         /// 
@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token);
+        Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token);
 
         #endregion
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
         /// <param name="token">Cancellation token</param>
         /// <returns>A Tuple consisting of the encrypted key and the algorithm used</returns>
         /// <remarks>If the algorithm is not specified, an implementation should use its default algorithm</remarks>
-        Task<Tuple<byte[], string>> WrapKeyAsync(byte[] key, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token);
+        Task<Tuple<byte[], string>> WrapKeyAsync(byte[] key, EncryptionAlgorithmKind algorithmKind, CancellationToken token);
 
         /// <summary>
         /// Decrypts the specified key material.
@@ -93,7 +93,7 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
         /// <param name="token">Cancellation token</param>
         /// <returns>The decrypted key material</returns>
         /// <remarks>If the algorithm is not specified, an implementation should use its default algorithm</remarks>
-        Task<byte[]> UnwrapKeyAsync(byte[] encryptedKey, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token);
+        Task<byte[]> UnwrapKeyAsync(byte[] encryptedKey, EncryptionAlgorithmKind algorithmKind, CancellationToken token);
 
         /// <summary>
         /// Signs the specified digest.
@@ -103,7 +103,7 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
         /// <param name="token">Cancellation token</param>
         /// <returns>A Tuple consisting of the signature and the algorithm used</returns>
         /// <remarks>If the algorithm is not specified, an implementation should use its default algorithm</remarks>
-        Task<Tuple<byte[], string>> SignAsync(byte[] digest, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token);
+        Task<Tuple<byte[], string>> SignAsync(byte[] digest, EncryptionAlgorithmKind algorithmKind, CancellationToken token);
         /// <summary>
         /// Verifies the specified signature value
         /// </summary>
@@ -112,6 +112,6 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
         /// <param name="algorithmKind">The algorithm to use</param>
         /// <param name="token">Cancellation token</param>
         /// <returns>A bool indicating whether the signature was successfully verified</returns>
-        Task<bool> VerifyAsync(byte[] digest, byte[] signature, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token);
+        Task<bool> VerifyAsync(byte[] digest, byte[] signature, EncryptionAlgorithmKind algorithmKind, CancellationToken token);
     }
 }

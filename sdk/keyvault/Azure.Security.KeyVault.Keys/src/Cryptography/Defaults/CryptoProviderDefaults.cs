@@ -35,17 +35,17 @@ namespace Azure.Security.KeyVault.Cryptography.Defaults
         /// <summary>
         /// 
         /// </summary>
-        public EncryptionAlgorithmKindEnum EncryptionAlgorithm { get; private set; }
+        public EncryptionAlgorithmKind EncryptionAlgorithm { get; private set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public EncryptionAlgorithmKindEnum KeyWrapAlgorithm { get; private set; }
+        public EncryptionAlgorithmKind KeyWrapAlgorithm { get; private set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public EncryptionAlgorithmKindEnum SignatureAlgorithm { get; private set; }
+        public EncryptionAlgorithmKind SignatureAlgorithm { get; private set; }
         #endregion
 
         #region Constructor
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Cryptography.Defaults
         /// <param name="keyWrapAlgorithm"></param>
         /// <param name="signatureAlgorithm"></param>
         /// <param name="defaultCategoryName"></param>
-        public CryptoProviderDefaults(EncryptionAlgorithmKindEnum encryptionAlgorithm, EncryptionAlgorithmKindEnum keyWrapAlgorithm, EncryptionAlgorithmKindEnum signatureAlgorithm, string defaultCategoryName) : this()
+        public CryptoProviderDefaults(EncryptionAlgorithmKind encryptionAlgorithm, EncryptionAlgorithmKind keyWrapAlgorithm, EncryptionAlgorithmKind signatureAlgorithm, string defaultCategoryName) : this()
         {
             EncryptionAlgorithm = encryptionAlgorithm;
             KeyWrapAlgorithm = keyWrapAlgorithm;

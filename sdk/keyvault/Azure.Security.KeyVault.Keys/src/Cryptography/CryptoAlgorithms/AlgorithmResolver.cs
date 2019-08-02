@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoAlgorithms
     /// <summary>
     /// 
     /// </summary>
-    public class AlgorithmResolver
+    internal class AlgorithmResolver
     {
         #region Properties
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoAlgorithms
             SupportedAlgorithmMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             NotSupportedAlgorithmMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            string[] definedAlgoNames = Enum.GetNames(typeof(EncryptionAlgorithmKindEnum));
+            string[] definedAlgoNames = Enum.GetNames(typeof(EncryptionAlgorithmKind));
             foreach(string algoName in definedAlgoNames)
             {
                 if(!SupportedAlgorithmMap.ContainsKey(algoName))
@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoAlgorithms
     /// <summary>
     /// 
     /// </summary>
-    public class AsymmetricAlgorithmResolver : AlgorithmResolver
+    internal class AsymmetricAlgorithmResolver : AlgorithmResolver
     {
         #region Constructor
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoAlgorithms
             return SupportedAlgorithmMap.ContainsKey(algorithmName);
         }
 
-        private bool IsAsymmetricAlgorithm(EncryptionAlgorithmKindEnum algoKind)
+        private bool IsAsymmetricAlgorithm(EncryptionAlgorithmKind algoKind)
         {
             return SupportedAlgorithmMap.ContainsKey(ResolveAlgorithmName(algoKind.ToString()));
         }
@@ -135,9 +135,8 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoAlgorithms
     /// <summary>
     /// 
     /// </summary>
-    public class SymmetricAlgorithmResolver : AlgorithmResolver
+    internal class SymmetricAlgorithmResolver : AlgorithmResolver
     {
-
         #region const
 
         #endregion
@@ -182,7 +181,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoAlgorithms
             return SupportedAlgorithmMap.ContainsKey(algorithmName);
         }
 
-        bool IsSymmetricAlgorithm(EncryptionAlgorithmKindEnum algoKind)
+        bool IsSymmetricAlgorithm(EncryptionAlgorithmKind algoKind)
         {
             return SupportedAlgorithmMap.ContainsKey(ResolveAlgorithmName(algoKind.ToString()));
         }

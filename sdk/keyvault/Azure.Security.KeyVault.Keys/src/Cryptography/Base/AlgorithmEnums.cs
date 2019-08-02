@@ -9,28 +9,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
     /// <summary>
     /// 
     /// </summary>
-    internal enum AlgorithmCategoryEnum
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        Symmetric,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        Asymmetric,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        UnSupported
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public enum EncryptionAlgorithmKindEnum
+    public enum EncryptionAlgorithmKind
     {
         /// <summary>
         /// 

@@ -97,7 +97,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public virtual Task<byte[]> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public virtual Task<byte[]> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -112,7 +112,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public virtual Task<byte[]> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public virtual Task<byte[]> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -126,7 +126,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public virtual Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public virtual Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -140,7 +140,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public virtual Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public virtual Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -152,7 +152,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public virtual Task<Tuple<byte[], string>> SignAsync(byte[] digest, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public virtual Task<Tuple<byte[], string>> SignAsync(byte[] digest, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -164,7 +164,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public virtual Task<byte[]> UnwrapKeyAsync(byte[] encryptedKey, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public virtual Task<byte[]> UnwrapKeyAsync(byte[] encryptedKey, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -177,7 +177,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public virtual Task<bool> VerifyAsync(byte[] digest, byte[] signature, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public virtual Task<bool> VerifyAsync(byte[] digest, byte[] signature, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -189,7 +189,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public virtual Task<Tuple<byte[], string>> WrapKeyAsync(byte[] key, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        public virtual Task<Tuple<byte[], string>> WrapKeyAsync(byte[] key, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -208,7 +208,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        protected virtual Task<byte[]> LocalDecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKindEnum algorithmKind, CancellationToken token)
+        protected virtual Task<byte[]> LocalDecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
@@ -225,7 +225,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// </summary>
         /// <param name="algorithmKind"></param>
         /// <returns></returns>
-        protected virtual bool IsAlgorithmKindSupported(EncryptionAlgorithmKindEnum algorithmKind)
+        protected virtual bool IsAlgorithmKindSupported(EncryptionAlgorithmKind algorithmKind)
         {
             throw new NotImplementedException();
         }

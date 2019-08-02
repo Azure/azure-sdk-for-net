@@ -32,6 +32,7 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
         public async Task InstantiateCryptoClient()
         {
             Key key = await GetKeyAsync(KeyType.Rsa, verifyCreatedKey: false);
+            key = null;
             InitCryptoClient(key);
 
 
@@ -43,7 +44,7 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
         {
             string keyName = Recording.GenerateId();
             Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
-            RegisterForCleanup(key);
+            //RegisterForCleanup(key);
 
             if(verifyCreatedKey)
             {
@@ -53,9 +54,6 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
 
             return key;
         }
-
-
-
         #endregion
     }
 }

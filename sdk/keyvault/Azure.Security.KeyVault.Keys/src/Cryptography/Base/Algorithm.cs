@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Cryptography
         /// <summary>
         /// 
         /// </summary>
-        public EncryptionAlgorithmKindEnum AlgorithmType { get; }
+        public EncryptionAlgorithmKind AlgorithmType { get; }
 
         /// <summary>
         /// 
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Cryptography
         //public string AlgorithmName { get; private set; }
 
         #region private properties
-        protected virtual AlgorithmResolver AlgorithmResolver { get; set; }
+        internal virtual AlgorithmResolver AlgorithmResolver { get; set; }
 
         #endregion
         #endregion
@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Cryptography
         /// 
         /// </summary>
         /// <param name="algorithmType"></param>
-        public EncryptionAlgorithm(EncryptionAlgorithmKindEnum algorithmType) : this()
+        public EncryptionAlgorithm(EncryptionAlgorithmKind algorithmType) : this()
         {
             AlgorithmType = algorithmType;
             AlgorithmName = AlgorithmResolver.ResolveAlgorithmName(algorithmType.ToString());
@@ -102,7 +102,7 @@ namespace Azure.Security.KeyVault.Cryptography
         /// <summary>
         /// 
         /// </summary>
-        protected override AlgorithmResolver AlgorithmResolver
+        internal override AlgorithmResolver AlgorithmResolver
         {
             get
             {
@@ -122,7 +122,7 @@ namespace Azure.Security.KeyVault.Cryptography
         /// 
         /// </summary>
         /// <param name="algorithmType"></param>
-        public AsymmetricEncryptionAlgorithm(EncryptionAlgorithmKindEnum algorithmType) : base(algorithmType)
+        public AsymmetricEncryptionAlgorithm(EncryptionAlgorithmKind algorithmType) : base(algorithmType)
         {
             //AlgoResolver.AlgorithmCategory = AlgorithmCategoryEnum.Asymmetric;
         }
@@ -167,7 +167,7 @@ namespace Azure.Security.KeyVault.Cryptography
         /// <summary>
         /// 
         /// </summary>
-        protected override AlgorithmResolver AlgorithmResolver
+        internal override AlgorithmResolver AlgorithmResolver
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Azure.Security.KeyVault.Cryptography
         /// 
         /// </summary>
         /// <param name="algorithmType"></param>
-        public SymmetricEncryptionAlgorithm(EncryptionAlgorithmKindEnum algorithmType) : base(algorithmType)
+        public SymmetricEncryptionAlgorithm(EncryptionAlgorithmKind algorithmType) : base(algorithmType)
         {
             //AlgoResolver.AlgorithmCategory = AlgorithmCategoryEnum.Symmetric;
         }
