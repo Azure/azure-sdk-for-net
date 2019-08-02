@@ -10,18 +10,26 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>Context provided for <see cref="ExceptionReceivedEventArgs"/> exception raised by the client.</summary>
     public class ExceptionReceivedContext
     {
+        // BLOCKER: Potential breaking change.
+
         /// <summary>Initializes a new instance of the <see cref="ExceptionReceivedContext" /> class.</summary>
+        /// <param name="message">The message associated with the exception, if applicable.</param>
         /// <param name="action">The action associated with the exception.</param>
         /// <param name="endpoint">The endpoint associated with the exception.</param>
         /// <param name="entityPath">The entity path associated with the exception.</param>
         /// <param name="clientId">The Client Id can be used to associate with the <see cref="QueueClient"/>, <see cref="SubscriptionClient"/>, <see cref="MessageSender"/> or <see cref="MessageReceiver"/> that encountered the exception.</param>
-        public ExceptionReceivedContext(string action, string endpoint, string entityPath, string clientId)
+        public ExceptionReceivedContext(Message message, string action, string endpoint, string entityPath, string clientId)
         {
+            Message = message;
             Action = action ?? throw new ArgumentNullException(nameof(action));
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             EntityPath = entityPath ?? throw new ArgumentNullException(nameof(entityPath));
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
         }
+
+        /// <summary>Gets the message associated with the event, if applicable.</summary>
+        /// <value>The message associated with the event or <c>null</c> if not applicable.</value>
+        public Message Message { get; }
 
         /// <summary>Gets the action associated with the event.</summary>
         /// <value>The action associated with the event.</value>

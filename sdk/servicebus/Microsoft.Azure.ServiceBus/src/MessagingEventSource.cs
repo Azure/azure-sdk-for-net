@@ -178,12 +178,22 @@ namespace Microsoft.Azure.ServiceBus
             this.WriteEvent(15, clientId, exception);
         }
 
-        [Event(16, Level = EventLevel.Informational, Message = "{0}: AbandonAsync start. MessageCount = {1}, LockToken = {2}")]
-        public void MessageAbandonStart(string clientId, int messageCount, string lockToken)
+        [NonEvent]
+        public void MessageAbandonStart(string clientId, int messageCount, IEnumerable<string> lockTokens)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(16, clientId, messageCount, lockToken);
+                var formattedLockTokens = StringUtility.GetFormattedLockTokens(lockTokens);
+                this.MessageAbandonStart(clientId, messageCount, formattedLockTokens);
+            }
+        }
+
+        [Event(16, Level = EventLevel.Informational, Message = "{0}: AbandonAsync start. MessageCount = {1}, LockTokens = {2}")]
+        public void MessageAbandonStart(string clientId, int messageCount, string lockTokens)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(16, clientId, messageCount, lockTokens);
             }
         }
 

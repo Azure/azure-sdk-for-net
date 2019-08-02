@@ -567,7 +567,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                abandonTask = this.RetryPolicy.RunOperation(() => this.OnAbandonAsync(lockToken, propertiesToModify),
+                abandonTask = this.RetryPolicy.RunOperation(() => this.OnAbandonAsync(new[] { lockToken }, propertiesToModify),
                     this.OperationTimeout);
                 await abandonTask.ConfigureAwait(false);
             }
@@ -584,6 +584,60 @@ namespace Microsoft.Azure.ServiceBus.Core
             finally
             {
                 this.diagnosticSource.DisposeStop(activity, lockToken, abandonTask?.Status);
+            }
+
+
+            MessagingEventSource.Log.MessageAbandonStop(this.ClientId);
+        }
+
+        /// <summary>
+        /// Abandons a series of <see cref="Message"/> using a list of lock tokens. This will make the messages available again for processing.
+        /// </summary>
+        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to abandon.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while abandoning the messages.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
+        /// Abandoning a message will increase the delivery count on the message.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
+        public async Task AbandonAsync(IEnumerable<string> lockTokens, IDictionary<string, object> propertiesToModify = null)
+        {
+            this.ThrowIfClosed();
+            this.ThrowIfNotPeekLockMode();
+            if (lockTokens == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(lockTokens));
+            }
+            var lockTokenList = lockTokens.ToList();
+            if (lockTokenList.Count == 0)
+            {
+                throw Fx.Exception.Argument(nameof(lockTokens), Resources.ListOfLockTokensCannotBeEmpty);
+            }
+
+            MessagingEventSource.Log.MessageAbandonStart(this.ClientId, lockTokenList.Count, lockTokenList);
+            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.DisposeManyStart("Abandon", lockTokenList) : null;
+            Task abandonTask = null;
+
+            try
+            {
+                abandonTask = this.RetryPolicy.RunOperation(() => this.OnAbandonAsync(lockTokenList, propertiesToModify),
+                    this.OperationTimeout);
+                await abandonTask.ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                if (isDiagnosticSourceEnabled)
+                {
+                    this.diagnosticSource.ReportException(exception);
+                }
+
+                MessagingEventSource.Log.MessageAbandonException(this.ClientId, exception);
+                throw;
+            }
+            finally
+            {
+                this.diagnosticSource.DisposeManyStop(activity, lockTokens, abandonTask?.Status);
             }
 
 
@@ -899,6 +953,35 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.OnMessageHandler(messageHandlerOptions, handler);
         }
 
+
+        /// <summary>
+        /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
+        /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IList{Message}, CancellationToken, Task}"/> that processes message batches.</param>
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
+        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate.
+        /// Use <see cref="RegisterMessageHandler(Func{IList{Message},CancellationToken,Task}, MessageBatchHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        public void RegisterMessageBatchHandler(Func<IList<Message>, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
+        {
+            this.RegisterMessageBatchHandler(handler, new MessageBatchHandlerOptions(exceptionReceivedHandler));
+        }
+
+        /// <summary>
+        /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
+        /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IList{Message}, CancellationToken, Task}"/> that processes message batches.</param>
+        /// <param name="messageBatchHandlerOptions">The <see cref="MessageBatchHandlerOptions"/> options used to configure the settings of the pump.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
+        public void RegisterMessageBatchHandler(Func<IList<Message>, CancellationToken, Task> handler, MessageBatchHandlerOptions messageBatchHandlerOptions)
+        {
+            this.ThrowIfClosed();
+            this.OnMessageBatchHandler(messageBatchHandlerOptions, handler);
+        }
+
+
         /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
         /// </summary>
@@ -1189,14 +1272,15 @@ namespace Microsoft.Azure.ServiceBus.Core
             return this.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome);
         }
 
-        protected virtual Task OnAbandonAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
+        protected virtual Task OnAbandonAsync(IEnumerable<string> lockToken, IDictionary<string, object> propertiesToModify = null)
         {
-            var lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
+            var lockTokenArray = lockToken.Select(lt => new Guid(lt)).ToArray();
+
+            if (lockTokenArray.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
-                return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Abandoned, propertiesToModify);
+                return this.DisposeMessageRequestResponseAsync(lockTokenArray, DispositionStatus.Abandoned, propertiesToModify);
             }
-            return this.DisposeMessagesAsync(lockTokens, GetAbandonOutcome(propertiesToModify));
+            return this.DisposeMessagesAsync(lockTokenArray, GetAbandonOutcome(propertiesToModify));
         }
 
         protected virtual Task OnDeferAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
@@ -1278,8 +1362,55 @@ namespace Microsoft.Azure.ServiceBus.Core
                     throw new InvalidOperationException(Resources.MessageHandlerAlreadyRegistered);
                 }
 
+                var messageBatchHandlerOptions = new MessageBatchHandlerOptions(registerHandlerOptions);
+                // BLOCKER: First() or Single()?
+                Func<IList<Message>, CancellationToken, Task> callbackWrapper = (messages, cancellationToken) => callback(messages.First(), cancellationToken);
+
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
-                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
+                this.receivePump = new MessageReceivePump(this, messageBatchHandlerOptions, callbackWrapper, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
+            }
+
+            try
+            {
+                this.receivePump.StartPump();
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.RegisterOnMessageHandlerException(this.ClientId, exception);
+                lock (this.messageReceivePumpSyncLock)
+                {
+                    if (this.receivePump != null)
+                    {
+                        this.receivePumpCancellationTokenSource.Cancel();
+                        this.receivePumpCancellationTokenSource.Dispose();
+                        this.receivePump = null;
+                    }
+                }
+
+                throw;
+            }
+
+            MessagingEventSource.Log.RegisterOnMessageHandlerStop(this.ClientId);
+        }
+
+        
+        /// <summary> </summary>
+        protected virtual void OnMessageBatchHandler(
+            MessageBatchHandlerOptions registerBatchHandlerOptions,
+            Func<IList<Message>, CancellationToken, Task> callback)
+        {
+            // BLOCKER:  Should make new event instead of using existing?  Same for other similar events below?
+            MessagingEventSource.Log.RegisterOnMessageHandlerStart(this.ClientId, registerBatchHandlerOptions);
+
+            lock (this.messageReceivePumpSyncLock)
+            {
+                if (this.receivePump != null)
+                {
+                    throw new InvalidOperationException(Resources.MessageHandlerAlreadyRegistered);
+                }
+
+                this.receivePumpCancellationTokenSource = new CancellationTokenSource();
+                this.receivePump = new MessageReceivePump(this, registerBatchHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
             }
 
             try

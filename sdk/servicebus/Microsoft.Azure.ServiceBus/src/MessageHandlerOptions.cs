@@ -8,10 +8,12 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading.Tasks;
     using Primitives;
 
+    // BLOCKER: Removing sealed could be considered breaking.
+
     /// <summary>Provides options associated with message pump processing using
     /// <see cref="QueueClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" /> and
     /// <see cref="SubscriptionClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" />.</summary>
-    public sealed class MessageHandlerOptions
+    public class MessageHandlerOptions
     {
         int maxConcurrentCalls;
         TimeSpan maxAutoRenewDuration;

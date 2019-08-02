@@ -75,9 +75,9 @@ namespace Microsoft.Azure.ServiceBus
                 this.sessionHandlerOptions.AutoRenewLock;
         }
 
-        Task RaiseExceptionReceived(Exception e, string action)
+        Task RaiseExceptionReceived(Exception e, Message message, string action)
         {
-            var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.entityPath, this.clientId);
+            var eventArgs = new ExceptionReceivedEventArgs(e, message, action, this.endpoint, this.entityPath, this.clientId);
             return this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Complete).ConfigureAwait(false);
+                await this.RaiseExceptionReceived(exception, message, ExceptionReceivedEventArgsAction.Complete).ConfigureAwait(false);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Abandon).ConfigureAwait(false);
+                await this.RaiseExceptionReceived(exception, message, ExceptionReceivedEventArgsAction.Abandon).ConfigureAwait(false);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.ServiceBus
                     {
                         if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
                         {
-                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false); 
+                            await this.RaiseExceptionReceived(exception, null, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false); 
                         }
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.ServiceBus
 
                         if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
                         {
-                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false); 
+                            await this.RaiseExceptionReceived(exception, null, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false); 
                         }
                         break;
                     }
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.ServiceBus
                             }
 
                             MessagingEventSource.Log.MessageReceivePumpTaskException(this.clientId, session.SessionId, exception);
-                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
+                            await this.RaiseExceptionReceived(exception, message, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
                             callbackExceptionOccurred = true;
                             if (!(exception is MessageLockLostException || exception is SessionLockLostException))
                             {
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.ServiceBus
                 catch (Exception exception)
                 {
                     MessagingEventSource.Log.SessionReceivePumpSessionCloseException(this.clientId, session.SessionId, exception);
-                    await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.CloseMessageSession).ConfigureAwait(false);
+                    await this.RaiseExceptionReceived(exception, null, ExceptionReceivedEventArgsAction.CloseMessageSession).ConfigureAwait(false);
                 }
             }
         }
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.ServiceBus
                     // this renew exception is not relevant anymore. Lets not bother user with this exception.
                     if (!(exception is TaskCanceledException) && !(exception is ObjectDisposedException))
                     {
-                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.RenewLock).ConfigureAwait(false);
+                        await this.RaiseExceptionReceived(exception, null, ExceptionReceivedEventArgsAction.RenewLock).ConfigureAwait(false);
                     }
                     if (!MessagingUtilities.ShouldRetry(exception))
                     {

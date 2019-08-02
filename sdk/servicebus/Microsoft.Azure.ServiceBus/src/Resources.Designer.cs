@@ -214,6 +214,15 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The specified value &apos;{0}&apos; is invalid. &quot;maxBatchSize&quot; must be greater than zero..
+        /// </summary>
+        internal static string MaxBatchSizeMustBeGreaterThanZero {
+            get {
+                return ResourceManager.GetString("MaxBatchSizeMustBeGreaterThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified value &apos;{0}&apos; is invalid. &quot;maxConcurrentCalls&quot; must be greater than zero..
         /// </summary>
         internal static string MaxConcurrentCallsMustBeGreaterThanZero {
