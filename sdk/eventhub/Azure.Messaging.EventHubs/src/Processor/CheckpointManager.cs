@@ -69,6 +69,8 @@ namespace Azure.Messaging.EventHubs.Processor
         public async Task UpdateCheckpointAsync(long offset,
                                                 long sequenceNumber)
         {
+            // Parameter validation is done by Checkpoint constructor.
+
             var checkpoint = new Checkpoint
             (
                 Context.EventHubName,
