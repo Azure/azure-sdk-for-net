@@ -11,7 +11,11 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release is adding dedicated host APIs and update of Gallery APIs.
+        This is a public release of the Azure Compute SDK. Included with this release are the following 
+		1. Adding dedicated host APIs 
+		2. Update of Gallery APIs.
+		3. Addition of Terminate Scheduled Events for Virtual Machine Scale Sets
+		4. Addition of GET VMScaleSetVM instanceView option.		
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
