@@ -25,12 +25,22 @@ namespace Microsoft.Azure.Search.Tests
         public const string RootPathString = "/document";
 
         [Fact]
-        public void CreateSkillsetReturnsCorrectDefinitionWebApiSkill()
+        public void CreateSkillsetReturnsCorrectDefinitionWebApiSkillWithHeaders()
         {
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill());
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWebApiSkillWithoutHeaders()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill(false));
             });
         }
 
@@ -906,7 +916,7 @@ namespace Microsoft.Azure.Search.Tests
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
 
-        private static Skillset CreateTestSkillsetWebApiSkill()
+        private static Skillset CreateTestSkillsetWebApiSkill(bool includeHeader = true)
         {
             var skills = new List<Skill>();
 
@@ -928,19 +938,25 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new WebApiSkill(
-                    inputs, 
-                    outputs, 
-                    uri: "https://contoso.example.org", 
-                    description: "A simple web api skill", 
+            var skill = new WebApiSkill(
+                    inputs,
+                    outputs,
+                    uri: "https://contoso.example.org",
+                    description: "A simple web api skill",
                     context: RootPathString)
+            {
+                HttpMethod = "POST"
+            };
+
+            if (includeHeader)
+            {
+                skill.HttpHeaders = new Dictionary<string, string>
                 {
-                    HttpHeaders = new Dictionary<string, string>
-                    {
-                        ["x-ms-example"] = "example"
-                    },
-                    HttpMethod = "POST"
-                });
+                    ["x-ms-example"] = "example"
+                };
+            }
+
+            skills.Add(skill);
 
             return new Skillset("webapiskillset", "Skillset for testing", skills);
         }
