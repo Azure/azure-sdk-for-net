@@ -1,9 +1,9 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests
@@ -13,6 +13,7 @@ namespace Azure.Identity.Tests
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 
         [Test]
+        [Ignore("This test requires a user account which doesn't have MFA enabled.")]
         public async Task AuthenticateUsernamePasswordLiveAsync()
         {
             var username = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_USERNAME");
@@ -21,7 +22,7 @@ namespace Azure.Identity.Tests
 
             var tenantId = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_TENANTID");
 
-            var cred = new UsernamePasswordCredential(username, password.ToSecureString(), tenantId, ClientId);
+            var cred = new UsernamePasswordCredential(username, password.ToSecureString(), ClientId, tenantId);
 
             AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
 
