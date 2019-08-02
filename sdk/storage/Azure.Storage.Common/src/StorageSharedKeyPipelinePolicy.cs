@@ -96,7 +96,7 @@ namespace Azure.Storage.Common
             foreach (var headerName in
                 message.Request.Headers
                 .Select(h => h.Name)
-                .Where(name => name.StartsWith(Constants.HeaderNames.prefixXMs, StringComparison.OrdinalIgnoreCase))
+                .Where(name => name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
 #pragma warning disable CA1308 // Normalize strings to uppercase
                 .OrderBy(name => name.Trim().ToLowerInvariant()))
 #pragma warning restore CA1308 // Normalize strings to uppercase

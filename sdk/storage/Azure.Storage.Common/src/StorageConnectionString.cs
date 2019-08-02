@@ -428,22 +428,26 @@ namespace Azure.Storage.Common
 
                     if (this.BlobStorageUri.SecondaryUri != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.BlobSecondaryEndpointSetting, this.BlobStorageUri.SecondaryUri.ToString());
+                        this.Settings.Add(Constants.ConnectionStrings.BlobSecondaryEndpointSetting,
+                            this.BlobStorageUri.SecondaryUri.ToString());
                     }
 
                     if (this.QueueStorageUri.SecondaryUri != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.QueueSecondaryEndpointSetting, this.QueueStorageUri.SecondaryUri.ToString());
+                        this.Settings.Add(Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
+                            this.QueueStorageUri.SecondaryUri.ToString());
                     }
 
                     if (this.TableStorageUri.SecondaryUri != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.TableSecondaryEndpointSetting, this.TableStorageUri.SecondaryUri.ToString());
+                        this.Settings.Add(Constants.ConnectionStrings.TableSecondaryEndpointSetting,
+                            this.TableStorageUri.SecondaryUri.ToString());
                     }
 
                     if (this.FileStorageUri.SecondaryUri != null)
                     {
-                        this.Settings.Add(Constants.ConnectionStrings.FileSecondaryEndpointSetting, this.FileStorageUri.SecondaryUri.ToString());
+                        this.Settings.Add(Constants.ConnectionStrings.FileSecondaryEndpointSetting,
+                            this.FileStorageUri.SecondaryUri.ToString());
                     }
                 }
             }
@@ -476,24 +480,24 @@ namespace Azure.Storage.Common
 
             builder.Path = Constants.ConnectionStrings.DevStoreAccountName;
 
-            builder.Port = Constants.blobEndpointPortNumber;
+            builder.Port = Constants.ConnectionStrings.BlobEndpointPortNumber;
             var blobEndpoint = builder.Uri;
 
-            builder.Port = Constants.queueEndpointPortNumber;
+            builder.Port = Constants.ConnectionStrings.QueueEndpointPortNumber;
             var queueEndpoint = builder.Uri;
 
-            builder.Port = Constants.tableEndpointPortNumber;
+            builder.Port = Constants.ConnectionStrings.TableEndpointPortNumber;
             var tableEndpoint = builder.Uri;
 
             builder.Path = Constants.ConnectionStrings.DevStoreAccountName + Constants.ConnectionStrings.SecondaryLocationAccountSuffix;
 
-            builder.Port = Constants.blobEndpointPortNumber;
+            builder.Port = Constants.ConnectionStrings.BlobEndpointPortNumber;
             var blobSecondaryEndpoint = builder.Uri;
 
-            builder.Port = Constants.queueEndpointPortNumber;
+            builder.Port = Constants.ConnectionStrings.QueueEndpointPortNumber;
             var queueSecondaryEndpoint = builder.Uri;
 
-            builder.Port = Constants.tableEndpointPortNumber;
+            builder.Port = Constants.ConnectionStrings.TableEndpointPortNumber;
             var tableSecondaryEndpoint = builder.Uri;
 
             var credentials = new StorageSharedKeyCredential(Constants.ConnectionStrings.DevStoreAccountName, Constants.ConnectionStrings.DevStoreAccountKey);

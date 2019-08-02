@@ -41,17 +41,17 @@ namespace Azure.Storage
         public const string SnapshotParameterName = "snapshot";
 
         /// <summary>
-        /// The default port numbers for development storage credentials
-        /// </summary>
-        public const int blobEndpointPortNumber = 10000;
-        public const int queueEndpointPortNumber = 10001;
-        public const int tableEndpointPortNumber = 10002;
-
-        /// <summary>
         /// Storage Connection Strings 
         /// </summary>
         internal static class ConnectionStrings
         {
+            /// <summary>
+            /// The default port numbers for development storage credentials
+            /// </summary>
+            internal const int BlobEndpointPortNumber = 10000;
+            internal const int QueueEndpointPortNumber = 10001;
+            internal const int TableEndpointPortNumber = 10002;
+
             internal const string UseDevelopmentSetting = "UseDevelopmentStorage";
             internal const string DevelopmentProxyUriSetting = "DevelopmentStorageProxyUri";
             internal const string DefaultEndpointsProtocolSetting = "DefaultEndpointsProtocol";
@@ -69,7 +69,8 @@ namespace Azure.Storage
             internal const string EndpointSuffixSetting = "EndpointSuffix";
             internal const string SharedAccessSignatureSetting = "SharedAccessSignature";
             internal const string DevStoreAccountName = "devstoreaccount1";
-            internal const string DevStoreAccountKey = "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
+            internal const string DevStoreAccountKey =
+                "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
             internal const string SecondaryLocationAccountSuffix = "-secondary";
             internal const string DefaultEndpointSuffix = "core.windows.net";
             internal const string DefaultBlobHostnamePrefix = "blob";
@@ -83,7 +84,7 @@ namespace Azure.Storage
         /// </summary>
         internal static class HeaderNames
         {
-            public const string prefixXMs = "x-ms-";
+            public const string XMsPrefix = "x-ms-";
             public const string ErrorCode = "x-ms-error-code";
             public const string RequestId = "x-ms-request-id";
             public const string Date = "x-ms-date";
