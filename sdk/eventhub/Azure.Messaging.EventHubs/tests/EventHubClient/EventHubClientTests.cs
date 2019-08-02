@@ -160,10 +160,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCaseSource(nameof(ConstructorExpandedArgumentInvalidCases))]
         public void ConstructorValidatesExpandedArguments(string host,
-                                                          string eventHubPath,
+                                                          string eventHubName,
                                                           TokenCredential credential)
         {
-            Assert.That(() => new EventHubClient(host, eventHubPath, credential), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubClient(host, eventHubName, credential), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityPath }";
             var client = new EventHubClient(fakeConnection);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
             var client = new EventHubClient(fakeConnection, entityPath);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = Mock.Of<TokenCredential>();
             var client = new EventHubClient(host, entityPath, credential);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -886,10 +886,10 @@ namespace Azure.Messaging.EventHubs.Tests
         private string BuildResource(EventHubClient client,
                                      TransportType transportType,
                                      string host,
-                                     string eventHubPath) =>
+                                     string eventHubName) =>
              typeof(EventHubClient)
                  .GetMethod("BuildResource", BindingFlags.Static | BindingFlags.NonPublic)
-                 .Invoke(client, new object[] { transportType, host, eventHubPath }) as string;
+                 .Invoke(client, new object[] { transportType, host, eventHubName }) as string;
 
         /// <summary>
         ///   Provides a test shim for retrieving the transport client contained by an
@@ -930,13 +930,13 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public ReadableOptionsMock(string host,
-                                       string eventHubPath,
+                                       string eventHubName,
                                        TokenCredential credential,
-                                       EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                       EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
             }
 
-            internal override TransportEventHubClient BuildTransportClient(string host, string eventHubPath, TokenCredential credential, EventHubClientOptions options, EventHubRetryPolicy defaultRetry)
+            internal override TransportEventHubClient BuildTransportClient(string host, string eventHubName, TokenCredential credential, EventHubClientOptions options, EventHubRetryPolicy defaultRetry)
             {
                 TransportClientOptions = options;
                 _transportClient = new ObservableTransportClientMock();
@@ -958,9 +958,9 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public ObservableOperationsMock(string host,
-                                       string eventHubPath,
+                                       string eventHubName,
                                        TokenCredential credential,
-                                       EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                       EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
             }
 
@@ -991,16 +991,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public InjectableTransportClientMock(TransportEventHubClient transportClient,
                                                  string host,
-                                                 string eventHubPath,
+                                                 string eventHubName,
                                                  TokenCredential credential,
-                                                 EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                                 EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
                 TransportClient = transportClient;
                 SetTransportClient(transportClient);
             }
 
             internal override TransportEventHubClient BuildTransportClient(string host,
-                                                                           string eventHubPath,
+                                                                           string eventHubName,
                                                                            TokenCredential credential,
                                                                            EventHubClientOptions options,
                                                                            EventHubRetryPolicy defaultRetry) => TransportClient;

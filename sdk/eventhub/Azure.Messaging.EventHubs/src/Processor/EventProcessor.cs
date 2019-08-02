@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Messaging.EventHubs.Core;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         await Task.WhenAll(partitionIds
                             .Select(partitionId =>
                             {
-                                var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
+                                var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId);
                                 var checkpointManager = new CheckpointManager(partitionContext, Manager, Identifier);
 
                                 var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
@@ -217,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         {
                             await kvp.Value.StopAsync();
                         }
-                        catch(Exception)
+                        catch (Exception)
                         {
                             // We're catching every possible unhandled exception that may have happened during Partition Pump execution.
                             // TODO: delegate the exception handling to an Exception Callback.
@@ -225,7 +225,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         var partitionId = kvp.Key;
 
-                        var partitionContext = new PartitionContext(InnerClient.EventHubPath, ConsumerGroup, partitionId);
+                        var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId);
                         var checkpointManager = new CheckpointManager(partitionContext, Manager, Identifier);
 
                         var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
@@ -242,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
                 }
-                catch(TaskCanceledException) { }
+                catch (TaskCanceledException) { }
             }
         }
     }

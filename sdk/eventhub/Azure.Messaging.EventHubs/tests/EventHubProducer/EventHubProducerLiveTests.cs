@@ -664,7 +664,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         // The following properties should not have been altered.
 
                         Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
-                        Assert.That(newPartitionProperties.EventHubPath, Is.EqualTo(oldPartitionProperties.EventHubPath));
+                        Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
                         Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
 
                         // The following properties should have been updated.
@@ -713,7 +713,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         // All properties should remain the same.
 
                         Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
-                        Assert.That(newPartitionProperties.EventHubPath, Is.EqualTo(oldPartitionProperties.EventHubPath));
+                        Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
                         Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
                         Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.EqualTo(oldPartitionProperties.LastEnqueuedSequenceNumber));
                         Assert.That(newPartitionProperties.LastEnqueuedOffset, Is.EqualTo(oldPartitionProperties.LastEnqueuedOffset));
