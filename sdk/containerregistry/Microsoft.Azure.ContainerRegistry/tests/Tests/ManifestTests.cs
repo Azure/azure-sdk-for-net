@@ -37,7 +37,7 @@ namespace ContainerRegistry.Tests
             }
         };
 
-        private static readonly Manifest ExpectedManifestProd = new Manifest()
+        private static readonly Manifest ExpectedV2ManifestProd = new Manifest()
         {
             Architecture = null,
             Config = new V2Descriptor() {
@@ -66,6 +66,50 @@ namespace ContainerRegistry.Tests
             Tag = null,
             Signatures = null
         };
+
+        private static readonly Manifest ExpectedV1ManifestProd = new Manifest()
+        {
+            Config = null,
+            Architecture = "amd64",
+            FsLayers = new FsLayer[] {
+                new FsLayer () {
+                    BlobSum = "sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4"
+                },
+                new FsLayer () {
+                    BlobSum = "sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4"
+                },
+                new FsLayer () {
+                    BlobSum = "sha256:1beb2aaf8cf93eacf658fa7f7f10f89ccec1838d1ac643a273345d4d0bc813a8"
+                },
+                new FsLayer () {
+                    BlobSum = "sha256:7bf5420b55e6bbefb64ddb4fbb98ef094866f3a3facda638a155715ab6002d9b"
+                },
+                new FsLayer () {
+                    BlobSum =  "sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4"
+                },
+                new FsLayer () {
+                    BlobSum =  "sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4"
+                },
+                new FsLayer () {
+                    BlobSum =  "sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4"
+                },
+                new FsLayer () {
+                    BlobSum =  "sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4"
+                },
+                new FsLayer () {
+                    BlobSum =  "sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4"
+                },
+                new FsLayer () {
+                    BlobSum = "sha256:0503825856099e6adb39c8297af09547f69684b7016b7f3680ed801aa310baaa"
+                }
+            },
+            MediaType = "application/vnd.docker.distribution.manifest.v2+json",
+            SchemaVersion = 2,
+            Name = null,
+            Tag = null,
+            Signatures = null
+        };
+
 
         [Fact]        
         public async Task GetAcrManifestAttributes()
