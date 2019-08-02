@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
 using System;
 using System.Collections.Generic;
@@ -187,6 +188,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
+            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 IEnumerable<EventData> receivedEvents = null;
@@ -199,10 +202,13 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     await PartitionProcessor.ProcessErrorAsync(exception).ConfigureAwait(false);
 
-                    // Stop the pump if it's not a known retryable exception.
+                    // Stop the pump if it's not a retryable exception.
 
-                    if (!(exception is EventHubsException) || !(exception as EventHubsException).IsTransient)
+                    if (retryPolicy.CalculateRetryDelay(exception, 1) == null)
                     {
+                        // StopAsync cannot be awaited in this method because it awaits RunningTask, so we would have a deadlock.
+                        // For this reason, StopAsync starts to run concurrently with this task.
+
                         _ = StopAsync(PartitionProcessorCloseReason.EventHubException);
                         break;
                     }
