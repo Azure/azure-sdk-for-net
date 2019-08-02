@@ -12,6 +12,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     public class ConnectionStringBuilderTests
     {
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public void ParseAndBuild()
         {
