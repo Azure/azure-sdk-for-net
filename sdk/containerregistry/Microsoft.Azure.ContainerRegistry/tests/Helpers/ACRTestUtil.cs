@@ -22,8 +22,8 @@ namespace ContainerRegistry.Tests
         public static readonly string ProdRepository = "prod/bash";
         public static readonly string TestRepository = "test/bash";
 
-        public static readonly string ManagedTestRegistry = "managedtestregistry";
-        public static readonly string ManagedTestRegistryFullName = "managedtestregistry.azurecr.io";
+        public static readonly string ManagedTestRegistry = "azuresdkunittest";
+        public static readonly string ManagedTestRegistryFullName = "azuresdkunittest.azurecr.io";
         public static readonly string ManagedTestRegistryForDeleting = "managedtestregistryfordel";
 
         public static readonly string ClassicTestRegistry = "classictestregistry";

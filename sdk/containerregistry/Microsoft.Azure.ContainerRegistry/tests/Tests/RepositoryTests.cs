@@ -13,38 +13,24 @@ namespace ContainerRegistry.Tests
 
     public class RepositoryTests
     {
-        [Fact]
-        public async Task ListRepositoryCR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(ListRepositoryCR)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                var repositories = await client.GetRepositoriesAsync();
-                
-                Assert.Equal(2, repositories.Names.Count);
-                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
-                                                      name => Assert.Equal(ACRTestUtil.TestRepository, name));
-            }
-        }
 
         [Fact]
-        public async Task ListRepositoryMR()
+        public async Task ListRepository()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(ListRepositoryMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(ListRepository)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositories = await client.GetRepositoriesAsync();
+                var repositories = await client.GetRepositoriesAsync(null, 1);
 
-                Assert.Equal(2, repositories.Names.Count);
-                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
-                                                      name => Assert.Equal(ACRTestUtil.TestRepository, name));
+                Assert.Equal(1, repositories.Names.Count);
+                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name));
             }
         }
 
         [Fact]
-        public async Task GetAcrRepositoryDetailsMR()
+        public async Task GetAcrRepositoryDetails()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetailsMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetails)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
@@ -62,24 +48,14 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
-        public async Task GetAcrRepositoryDetailsCRThrowException()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetailsCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository));
-            }
-        }
 
         [Fact]
-        public async Task GetAcrRepositoriesMR()
+        public async Task GetAcrRepositories()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoriesMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositories)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var repositories = await client.GetAcrRepositoriesAsync();
-
                 Assert.Equal(2, repositories.Names.Count);
                 Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
                                                       name => Assert.Equal(ACRTestUtil.TestRepository, name));
@@ -87,19 +63,9 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task GetAcrRepositoriesCRThrowException()
+        public async Task DeleteAcrRepository()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoriesCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrRepositoriesAsync());                
-            }
-        }
-
-        [Fact]
-        public async Task DeleteAcrRepositoryMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepositoryMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepository)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForDeleting);
                 var deletedRepo = await client.DeleteAcrRepositoryAsync(ACRTestUtil.TestRepository);
@@ -113,19 +79,9 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task DeleteAcrRepositoryCRThrowException()
+        public async Task UpdateAcrRepositoryAttributes()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepositoryCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistryForDeleting);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.DeleteAcrRepositoryAsync("prod/bash"));
-            }            
-        }
-
-        [Fact]
-        public async Task UpdateAcrRepositoryAttributesMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrRepositoryAttributesMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrRepositoryAttributes)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
@@ -147,5 +103,6 @@ namespace ContainerRegistry.Tests
                 await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository, updateAttributes);
             }
         }
+
     }
 }

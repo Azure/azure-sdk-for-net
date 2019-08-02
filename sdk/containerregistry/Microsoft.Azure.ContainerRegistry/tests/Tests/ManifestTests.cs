@@ -37,10 +37,40 @@ namespace ContainerRegistry.Tests
             }
         };
 
-        [Fact]        
-        public async Task GetAcrManifestAttributesMR()
+        private static readonly Manifest ExpectedManifestProd = new Manifest()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesMR)))
+            Architecture = null,
+            Config = new V2Descriptor() {
+                Digest = "sha256:16463e0c481e161aabb735437d30b3c9c7391c2747cc564bb927e843b73dcb39",
+                MediaType = "application/vnd.docker.container.image.v1+json"
+            },
+            FsLayers = null,
+            History = null,
+            Layers = new V2Descriptor[] {
+                new V2Descriptor() {
+                    Digest = "sha256:0503825856099e6adb39c8297af09547f69684b7016b7f3680ed801aa310baaa",
+                    MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip"
+                },
+                new V2Descriptor() {
+                    Digest = "sha256:7bf5420b55e6bbefb64ddb4fbb98ef094866f3a3facda638a155715ab6002d9b",
+                    MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip"
+                },
+                new V2Descriptor() {
+                    Digest = "sha256:1beb2aaf8cf93eacf658fa7f7f10f89ccec1838d1ac643a273345d4d0bc813a8",
+                    MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip"
+                }
+            },
+            MediaType = "application/vnd.docker.distribution.manifest.v2+json",
+            SchemaVersion = 2,
+            Name = null,
+            Tag = null,
+            Signatures = null
+        };
+
+        [Fact]        
+        public async Task GetAcrManifestAttributes()
+        {
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributes)))
             {                
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var repositoryAttributes = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, 
@@ -53,27 +83,9 @@ namespace ContainerRegistry.Tests
         }
         
         [Fact]
-        public async Task GetAcrManifestAttributesCRReturnsNull()
+        public async Task GetAcrManifests()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesCRReturnsNull)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                AcrManifestAttributes manifestAttributes = null;
-                try {
-                    manifestAttributes = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository,
-                    "sha256:eabe547f78d4c18c708dd97ec3166cf7464cc651f1cbb67e70d407405b7ad7b6");
-                } catch (Exception e) {
-                    Assert.Equal("Operation returned an invalid status code 'NotFound'", e.Message);
-                }
-                Assert.Null(manifestAttributes);
-
-            }
-        }
-
-        [Fact]
-        public async Task GetAcrManifestsMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestsMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifests)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var manifests = await client.GetAcrManifestsAsync(ACRTestUtil.ProdRepository);
@@ -86,19 +98,9 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task GetAcrManifestsCRThrowException()
+        public async Task GetManifest()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestsCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrManifestsAsync(ACRTestUtil.ProdRepository));
-            }
-        }
-
-        [Fact]
-        public async Task GetManifestMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetManifest)))
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
@@ -121,36 +123,9 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task GetManifestCR()
+        public async Task UpdateAcrManifestAttributes()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestCR)))
-            {
-                var tag = "latest";
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                var manifest = await client.GetManifestAsync(ACRTestUtil.ProdRepository, tag);
-
-                Assert.Equal(1, manifest.SchemaVersion);
-                Assert.Equal(ACRTestUtil.ProdRepository, manifest.Name);
-                Assert.Equal(tag, manifest.Tag);
-                Assert.Equal("amd64", manifest.Architecture);
-                Assert.Equal(10, manifest.FsLayers.Count);
-                Assert.Equal(10, manifest.FsLayers.Count);
-                Assert.Equal(1, manifest.Signatures.Count);
-                var signature = manifest.Signatures[0];
-                Assert.NotEqual(string.Empty, signature.ProtectedProperty);
-                Assert.NotEqual(string.Empty, signature.Signature);
-                Assert.Equal("P-256", signature.Header.Jwk.Crv);
-                Assert.NotEqual(string.Empty, signature.Header.Jwk.Kid);
-                Assert.Equal("EC", signature.Header.Jwk.Kty);
-                Assert.NotEqual(string.Empty, signature.Header.Jwk.X);
-                Assert.NotEqual(string.Empty, signature.Header.Jwk.Y);
-            }
-        }
-
-        [Fact]
-        public async Task UpdateAcrManifestAttributesMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrManifestAttributesMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrManifestAttributes)))
             {
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
                 var digest = "sha256:eabe547f78d4c18c708dd97ec3166cf7464cc651f1cbb67e70d407405b7ad7b6";
@@ -165,6 +140,34 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, updatedManifest.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, updatedManifest.Registry);
                 VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, updatedManifest.ManifestAttributes);
+            }
+        }
+
+
+        [Fact]
+        public async Task CreateAcrManifest()
+        {
+            using (var context = MockContext.Start(GetType().FullName, nameof(CreateAcrManifest)))
+            {
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                await client.CreateManifestAsync(ACRTestUtil.ProdRepository, "brandnew", manifest);
+                var newManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, "brandnew");
+
+                Assert.Equal(ExpectedAttributesOfProdRepository.Registry, newManifest.Registry);
+                Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, newManifest.ImageName);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, newManifest.ManifestAttributes);
+
+            }
+        }
+
+        [Fact]
+        public async Task DeleteAcrManifest()
+        {
+            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrManifest)))
+            {
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                await client.DeleteManifestAsync(ACRTestUtil.ProdRepository, "deleteable");
+                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetManifestAsync(ACRTestUtil.TestRepository, "deleteable"));
             }
         }
 
@@ -184,4 +187,5 @@ namespace ContainerRegistry.Tests
             Assert.Equal(expectedManifestBase.ChangeableAttributes.WriteEnabled, actualManifestBase.ChangeableAttributes.WriteEnabled);
         }
     }
+
 }

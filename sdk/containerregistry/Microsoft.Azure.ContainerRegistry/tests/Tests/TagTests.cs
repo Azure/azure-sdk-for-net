@@ -8,15 +8,16 @@ namespace ContainerRegistry.Tests
     using Microsoft.Azure.ContainerRegistry.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Linq;
+    using System.Reflection.Metadata.Ecma335;
     using System.Threading.Tasks;
     using Xunit;
 
     public class TagTests
     {
         [Fact]
-        public async Task GetAcrTagsMR()
+        public async Task GetAcrTags()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrTagsMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrTags)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var tags = await client.GetAcrTagsAsync(ACRTestUtil.ProdRepository);
@@ -37,19 +38,9 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task GetAcrTagsCRThrowException()
+        public async Task GetTags()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrTagsCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrTagsAsync(ACRTestUtil.ProdRepository));
-            }
-        }
-
-        [Fact]
-        public async Task GetTagsMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetTagsMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetTags)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var tags = await client.GetTagListAsync(ACRTestUtil.ProdRepository);
@@ -60,44 +51,21 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task GetTagsCR()
+        public async Task DeleteAcrTag()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetTagsCR)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                var tags = await client.GetTagListAsync(ACRTestUtil.ProdRepository);
-                Assert.Equal(1, tags.Tags.Count);
-                Assert.Equal("latest", tags.Tags[0]);
-                Assert.Equal(ACRTestUtil.ProdRepository, tags.Name);
-            }
-        }
-
-        [Fact]
-        public async Task DeleteAcrTagMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrTagMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrTag)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForDeleting);
-                await client.DeleteAcrTagAsync(ACRTestUtil.ProdRepository, "latest");
-                var tags = await client.GetTagListAsync(ACRTestUtil.ProdRepository);
-                Assert.Equal(0, tags.Tags.Count);
+                await client.DeleteAcrTagAsync(ACRTestUtil.TestRepository, "deleteabletag");
+                var tags = await client.GetTagListAsync(ACRTestUtil.TestRepository);
+                Assert.DoesNotContain(tags.Tags, tag => { return tag.Equals("deletabletag"); });
             }
         }
 
         [Fact]
-        public async Task DeleteAcrTagCRThrowException()
+        public async Task UpdateAcrTagAttributes()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrTagCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.DeleteAcrTagAsync(ACRTestUtil.ProdRepository, "latest"));
-            }
-        }
-
-        [Fact]
-        public async Task UpdateAcrTagAttributesMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrTagAttributesMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrTagAttributes)))
             {
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
                 var tag = "latest";
@@ -116,19 +84,9 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task UpdateAcrTagAttributesCRThrowException()
+        public async Task GetAcrTagAttributes()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrTagAttributesCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.UpdateAcrTagAttributesAsync(ACRTestUtil.ProdRepository, "latest", default(ChangeableAttributes)));
-            }
-        }
-
-        [Fact]
-        public async Task GetAcrTagAttributesMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrTagAttributesMR)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrTagAttributes)))
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
@@ -145,16 +103,6 @@ namespace ContainerRegistry.Tests
                 Assert.True(tagAttributes.TagAttributes.ChangeableAttributes.ReadEnabled);
                 Assert.True(tagAttributes.TagAttributes.ChangeableAttributes.ListEnabled);
                 Assert.True(tagAttributes.TagAttributes.ChangeableAttributes.WriteEnabled);
-            }
-        }
-
-        [Fact]
-        public async Task GetAcrTagAttributesCRThrowException()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrTagAttributesCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrTagAttributesAsync(ACRTestUtil.ProdRepository, "latest"));
             }
         }
     }
