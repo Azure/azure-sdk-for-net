@@ -8,7 +8,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Contains all the information needed to describe the status of the owner of a partition.  It's used by
-    ///   <see cref="IPartitionManager" /> to claim ownership of a partition and to list existing ownership.
+    ///   <see cref="PartitionManager" /> to claim ownership of a partition and to list existing ownership.
     /// </summary>
     ///
     public class PartitionOwnership

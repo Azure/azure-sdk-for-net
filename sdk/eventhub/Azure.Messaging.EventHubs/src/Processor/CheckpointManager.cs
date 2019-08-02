@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Responsible for the creation of checkpoints.  The interaction with the chosen storage service is done
-    ///   via <see cref="IPartitionManager" />.
+    ///   via <see cref="PartitionManager" />.
     /// </summary>
     ///
     public class CheckpointManager
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Interacts with the storage system, dealing with the creation of checkpoints.
         /// </summary>
         ///
-        private IPartitionManager PartitionManager { get; }
+        private PartitionManager Manager { get; }
 
         /// <summary>
         ///   The identifier of the associated <see cref="EventProcessor" /> instance.
@@ -39,11 +39,11 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
         ///
         internal CheckpointManager(PartitionContext partitionContext,
-                                   IPartitionManager partitionManager,
+                                   PartitionManager partitionManager,
                                    string ownerIdentifier)
         {
             Context = partitionContext;
-            PartitionManager = partitionManager;
+            Manager = partitionManager;
             OwnerIdentifier = ownerIdentifier;
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 sequenceNumber
             );
 
-            await PartitionManager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+            await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
         }
     }
 }
