@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 try
                 {
-                    receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime).ConfigureAwait(false);
+                    receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception exception)
                 {

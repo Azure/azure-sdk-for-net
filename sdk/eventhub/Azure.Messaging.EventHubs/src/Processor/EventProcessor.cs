@@ -229,9 +229,13 @@ namespace Azure.Messaging.EventHubs.Processor
                         return partitionPump.StartAsync();
                     })).ConfigureAwait(false);
 
-                // Wait 1 second before the next verification.
+                try
+                {
+                    // Wait 1 second before the next verification.
 
-                await Task.Delay(1000).ConfigureAwait(false);
+                    await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
+                }
+                catch(TaskCanceledException) { }
             }
         }
     }
