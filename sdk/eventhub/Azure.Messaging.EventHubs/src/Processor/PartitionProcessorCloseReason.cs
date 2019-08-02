@@ -9,6 +9,9 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public enum PartitionProcessorCloseReason
     {
+        /// <summary>An unknown circumstance forced the processor to close.</summary>
+        Unknown,
+
         /// <summary>A close request was fired by the user.</summary>
         Shutdown,
 
@@ -16,9 +19,6 @@ namespace Azure.Messaging.EventHubs.Processor
         OwnershipLost,
 
         /// <summary>A non-retryable exception was thrown by the Event Hub Client.</summary>
-        EventHubException,
-
-        /// <summary>An unknown circumstance forced the processor to close.</summary>
-        Unknown
+        EventHubException
     }
 }
