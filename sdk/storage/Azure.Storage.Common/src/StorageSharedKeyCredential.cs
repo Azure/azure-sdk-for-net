@@ -5,6 +5,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace Azure.Storage
 {
@@ -19,22 +20,19 @@ namespace Azure.Storage
         /// </summary>
         public string AccountName { get; }
 
-#pragma warning disable CA1044 // Properties should not be write only
         /// <summary>
-        /// Updates the Storage Account's access key.  This is a write-only
-        /// property only intended to be used when you've regenerated your
-        /// Storage Account's access keys and want to update long lived clients.
+        /// The value of a Storage Account access key.
         /// </summary>
-        public string AccountKey
-        {
-            set => this.AccountKeyValue = Convert.FromBase64String(value);
-        }
-#pragma warning restore CA1044 // Properties should not be write only
+        private byte[] _accountKeyValue;
 
         /// <summary>
         /// Gets the value of a Storage Account access key.
         /// </summary>
-        internal byte[] AccountKeyValue { get; private set; }
+        internal byte[] AccountKeyValue
+        {
+            get => Volatile.Read(ref this._accountKeyValue);
+            private set => Volatile.Write(ref this._accountKeyValue, value);
+        }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -47,8 +45,17 @@ namespace Azure.Storage
             string accountKey)
         {
             this.AccountName = accountName;
-            this.AccountKey = accountKey;
+            this.SetAccountKey(accountKey);
         }
+
+        /// <summary>
+        /// Update the Storage Account's access key.  This intended to be used
+        /// when you've regenerated your Storage Account's access keys and want
+        /// to update long lived clients.
+        /// </summary>
+        /// <param name="accountKey">A Storage Account access key.</param>
+        public void SetAccountKey(string accountKey) =>
+            this.AccountKeyValue = Convert.FromBase64String(accountKey);
 
         /// <summary>
         /// Exports the value of the account's key to a Base64-encoded string.
