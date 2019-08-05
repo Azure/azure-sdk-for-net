@@ -85,6 +85,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
+        /// <remarks>
+        ///   Ownership of the <paramref name="eventHubClient" /> is assumed to be responsibility of the caller; this
+        ///   processor will delegate operations to it, but will not perform any clean-up tasks, such as closing or
+        ///   disposing of the instance.
+        /// </remarks>
+        ///
         public EventProcessor(string consumerGroup,
                               EventHubClient eventHubClient,
                               Func<PartitionContext, CheckpointManager, IPartitionProcessor> partitionProcessorFactory,
