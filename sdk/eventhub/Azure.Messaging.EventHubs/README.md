@@ -129,7 +129,7 @@ await using (var client = new EventHubClient(connectionString, eventHubName))
 }
 ```
 
-### Consume events from all partitions of an Event Hub
+### Consume events using an Event Processor
 
 To consume events for all partitions of an Event Hub, you'll create an `EventProcessor` for a specific consumer group.  When an Event Hub is created, it provides a default consumer group that can be used to get started.
 
@@ -210,32 +210,43 @@ Each of the samples is self-contained and focused on illustrating one specific s
 
 The available samples are:
 
-- [Hello world](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample1_HelloWorld.cs)  
+- [Hello world](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample01_HelloWorld.cs)  
   An introduction to Event Hubs, illustrating how to connect and query the service.
 
-- [Create an Event Hub client with custom options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample2_ClientWithCustomOptions.cs)  
+- [Create an Event Hub client with custom options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_ClientWithCustomOptions.cs)  
   An introduction to Event Hubs, exploring additional options for creating an Event Hub client.
   
-- [Publish an event to an Event Hub](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample3_PublishAnEvent3.cs)  
+- [Publish an event to an Event Hub](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample03_PublishAnEvent.cs)  
   An introduction to publishing events, using a simple Event Hub producer.
   
-- [Publish events using a partition key](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample4_PublishEventsWithPartitionKey.cs)  
+- [Publish events using a partition key](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishEventsWithPartitionKey.cs)  
   An introduction to publishing events, using a partition key to group them together.
   
-- [Publish events to a specific Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample5_PublishEventsToSpecificPartitions.cs)  
+- [Publish a size-limited batch of events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_PublishAnEventBatch.cs)  
+  An introduction to publishing events, using a size-aware batch to ensure the size does not exceed the transport size limits.
+
+- [Publish events to a specific Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_PublishEventsToSpecificPartitions.cs)  
   An introduction to publishing events, using an Event Hub producer that is associated with a specific partition.
   
-- [Publish events with custom metadata](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample6_PublishEventsWithCustomMetadata.cs)  
+- [Publish events with custom metadata](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_PublishEventsWithCustomMetadata.cs)  
   An example of publishing events, extending the event data with custom metadata.
   
-- [Consume events from an Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample7_ConsumeEvents.cs)  
+- [Consume events from an Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample08_ConsumeEvents.cs)  
   An introduction to consuming events, using a simple Event Hub consumer.
   
-- [Consume events from an Event Hub partition in batches](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample8_ConsumeEventsByBatch.cs)   
+- [Consume events from an Event Hub partition, limiting the period of time to wait for an event](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ConsumeEventsWithMaximumWaitTime.cs)  
+  An introduction to consuming events, using an Event Hub consumer with maximum wait time.
+
+- [Consume events from a known position in the Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_ConsumeEventsFromAKnownPosition.cs)  
+  An example of consuming events, starting at a well-known position in the Event Hub partition.
+  
+- [Consume events from an Event Hub partition in batches](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_ConsumeEventsByBatch.cs)
+
   An example of consuming events, using a batch approach to control throughput.
   
-- [Consume events from a known position in the Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample9_ConsumeEventsFromAKnownPosition.cs)  
-  An example of consuming events, starting at a well-known position in the Event Hub partition.
+- [Consume events from all partitions of an Event Hub with the Event Processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample12_ConsumeEventsWithEventProcessor.cs)
+
+  An example of consuming events from all Event Hub partitions at once, using the Event Processor.
 
 ## Contributing  
 

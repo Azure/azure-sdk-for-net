@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events, using a batch approach to control throughput.
     /// </summary>
     ///
-    public class Sample8_ConsumeEventsByBatch : IEventHubsSample
+    public class Sample11_ConsumeEventsByBatch : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample8_ConsumeEventsByBatch);
+        public string Name { get; } = nameof(Sample11_ConsumeEventsByBatch);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An example of consuming events, using a batch approach tocontrol throughput.";
+        public string Description { get; } = "An example of consuming events, using a batch approach to control throughput.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // because it opens its connection only when it needs to.  The first receive that we ask of it will not see
                     // any events, but will allow the consumer to start watching the partition.
                     //
-                    // Because the maximum wait time is specivied as zero, this call will return immediately and will not
+                    // Because the maximum wait time is specified as zero, this call will return immediately and will not
                     // have consumed any events.
 
                     await consumer.ReceiveAsync(1, TimeSpan.Zero);
@@ -88,9 +88,9 @@ namespace Azure.Messaging.EventHubs.Samples
                     // where some experimentation in the application context may prove helpful.
                     //
                     // Our example will attempt to read about 1/5 of the batch at a time, which should result in the need for 5 batches to
-                    // be consumed.  Because publishing and receving events is asynchronous, the events that we published may not be
+                    // be consumed.  Because publishing and receiving events is asynchronous, the events that we published may not be
                     // immediately available for our consumer to see. To compensate, we will allow for a small number of extra attempts beyond
-                    // the expected 5 to to be sure that we don't stop reading before we receive all of our events.
+                    // the expected 5 to be sure that we don't stop reading before we receive all of our events.
 
                     var receivedEvents = new List<EventData>();
                     int consumeBatchSize = (int)Math.Floor(eventBatchSize / 5.0f);

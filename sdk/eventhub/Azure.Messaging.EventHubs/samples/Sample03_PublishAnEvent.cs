@@ -12,13 +12,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to publishing events, using a simple <see cref="EventHubProducer" />.
     /// </summary>
     ///
-    public class Sample3_PublishAnEvent : IEventHubsSample
+    public class Sample03_PublishAnEvent : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample3_PublishAnEvent);
+        public string Name { get; } = nameof(Sample03_PublishAnEvent);
 
         /// <summary>
         ///   A short description of the sample.
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Samples
             //
             // Using our client, we will then create a producer.  Like the client, our Event Hub producer also manages resources
             // and should be explicitly closed or disposed, but it is not necessary to do both.  In our case, we will take
-            // advantage of the new asynchonous dispose to ensure that we clean up our client and producer when we are
+            // advantage of the new asynchronous dispose to ensure that we clean up our client and producer when we are
             // done or when an exception is encountered.
 
             await using (var client = new EventHubClient(connectionString, eventHubName))
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 var eventData = new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!"));
 
-                // When the producer sends the event, it will receive an acknowedgement from the Event Hubs service; so
+                // When the producer sends the event, it will receive an acknowledgment from the Event Hubs service; so
                 // long as there is no exception thrown by this call, the service is now responsible for delivery.  Your
                 // event data will be published to one of the Event Hub partitions, though there may be a (very) slight
                 // delay until it is available to be consumed.
