@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill(false));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill(includeHeader: false));
             });
         }
 
