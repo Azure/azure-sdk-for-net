@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,12 +26,12 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The Azure Storage name used to identify a storage account's root container.
         /// </summary>
-        public const string RootContainerName = "$root";
+        public const string RootContainerName = Constants.Blob.Container.RootName;
 
         /// <summary>
         /// The Azure Storage name used to identify a storage account's logs container.
         /// </summary>
-        public const string LogsContainerName = "$logs";
+        public const string LogsContainerName = Constants.Blob.Container.LogsName;
 
         #pragma warning disable IDE0032 // Use auto property
         /// <summary>
@@ -355,7 +356,7 @@ namespace Azure.Storage.Blobs
                         metadata: metadata,
                         access: publicAccessType,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobContainerClient.Create",
+                        operationName: Constants.Blob.Container.CreateOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -487,7 +488,7 @@ namespace Azure.Storage.Blobs
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobContainerClient.Delete",
+                        operationName: Constants.Blob.Container.DeleteOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -619,7 +620,7 @@ namespace Azure.Storage.Blobs
                             this.Uri,
                             leaseId: leaseAccessConditions?.LeaseId,
                             async: async,
-                            operationName: "Azure.Storage.Blobs.BlobContainerClient.GetProperties",
+                            operationName: Constants.Blob.Container.GetPropertiesOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -787,7 +788,7 @@ namespace Azure.Storage.Blobs
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobContainerClient.SetMetadata",
+                        operationName: Constants.Blob.Container.SetMetaDataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -914,7 +915,7 @@ namespace Azure.Storage.Blobs
                         this.Uri,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobContainerClient.GetAccessPolicy",
+                        operationName: Constants.Blob.Container.GetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1112,7 +1113,7 @@ namespace Azure.Storage.Blobs
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.BlobContainerClient.SetAccessPolicy",
+                        operationName: Constants.Blob.Container.SetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

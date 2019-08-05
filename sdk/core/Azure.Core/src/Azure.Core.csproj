@@ -6,6 +6,11 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
+      Support for distributed tracing added.
+      Support for TokenCredential in ASP.NET Core integration added.
+      Shared types for long running operations and async collections added.
+      .NET Core dependencies updated to preview7.
+      Bug fixes.
       ]]>
     </PackageReleaseNotes>
 

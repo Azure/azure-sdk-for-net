@@ -312,7 +312,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
-                        operationName: "Azure.Storage.Files.DirectoryClient.Create",
+                        operationName: Constants.File.Directory.CreateOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -408,7 +408,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Files.DirectoryClient.Delete",
+                        operationName: Constants.File.Directory.DeleteOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -541,7 +541,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
-                        operationName: "Azure.Storage.Files.DirectoryClient.GetProperties",
+                        operationName: Constants.File.Directory.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -657,7 +657,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
-                        operationName: "Azure.Storage.Files.DirectoryClient.SetMetadata",
+                        operationName: Constants.File.Directory.SetMetadataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -794,7 +794,7 @@ namespace Azure.Storage.Files
                         maxresults: pageSizeHint,
                         sharesnapshot: options?.ShareSnapshot,
                         async: async,
-                        operationName: "Azure.Storage.Files.DirectoryClient.ListFilesAndDirectoriesSegment",
+                        operationName: Constants.File.Directory.ListFilesAndDirectoriesSegmentOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -931,7 +931,7 @@ namespace Azure.Storage.Files
                         maxresults: maxResults,
                         recursive: recursive,
                         async: async,
-                        operationName: "Azure.Storage.Files.DirectoryClient.ListHandles",
+                        operationName: Constants.File.Directory.GetHandlesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1128,7 +1128,7 @@ namespace Azure.Storage.Files
                         handleId: handleId,
                         recursive: recursive,
                         async: async,
-                        operationName: "Azure.Storage.Files.DirectoryClient.ForceCloseHandles",
+                        operationName: Constants.File.Directory.ForceCloseHandlesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

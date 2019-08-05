@@ -99,9 +99,9 @@ await using (EventHubProducer producer = client.CreateProducer())
 }
 ```
 
-### Consume events from an Event Hub
+### Consume events from an Event Hub partition
 
-In order to consume events, you'll need to create an `EventHubConsumer` for a specific partition and consumer group combination.  When an Event Hub is created, it starts with a default consumer group that can be used to get started.  A consumer also needs to specify where in the event stream to begin receiving events; in our example, we will focus on reading all published events in a partition.
+In order to consume events for an Event Hub partition, you'll need to create an `EventHubConsumer` for that partition and consumer group combination.  When an Event Hub is created, it provides a default consumer group that can be used to get started.  A consumer also needs to specify where in the event stream to begin receiving events; in our example, we will focus on reading all published events in a partition using an iterator.
 
 ```csharp
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -115,20 +115,76 @@ await using (var client = new EventHubClient(connectionString, eventHubName))
     
     await using (EventHubConsumer consumer = client.CreateConsumer(consumerGroup, firstPartition, startingPosition))
     {
-        int maximumEventBatchSize = 25;
-        IEnumerable<EventData> eventBatch = await consumer.Receive(maximumEventBatchSize);
- 
-        // At this point, the eventBatch may have no events or may have as many as the maximum size requested, 
-        // depending on how many events were available in the partition.
+        using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+        cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+    
+        await foreach (EventData receivedEvent in consumer.SubcribeToEvents(cancellationSource.Token))
+        {
+            // At this point, the loop will wait for events to be available in the partition.  When an event 
+            // is available, the loop will iterate with the received event available.  Because we did not 
+            // specify a maximum wait time, the loop will wait forever unless cancellation is requested using
+            // the cancellation token.
+        }
     }
 }
 ```
 
+### Consume events from all partitions of an Event Hub
+
+To consume events for all partitions of an Event Hub, you'll create an `EventProcessor` for a specific consumer group.  When an Event Hub is created, it provides a default consumer group that can be used to get started.
+
+The `EventProcessor` will delegate processing of events to a `IPartitionProcessor` implementation that you provide, allowing your logic to focus on the logic needed to provide value while the processor holds responsibility for managing the underlying consumer operations.  In our example, we will focus on building the `EventProcessor` and use a very minimal partition processor that does no actual processing.
+
+```csharp
+public class SimplePartitionProcessor : IPartitionProcessor
+{
+    public Task InitializeAsync() => Task.CompletedTask;
+    public Task CloseAsync((PartitionProcessorCloseReason reason) => Task.CompletedTask;
+    public Task ProcessEventsAsync(IEnumerable<EventData> events, CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task ProcessErrorAsync(Exception exception, CancellationToken cancellationToken) => Task.CompletedTask;
+}
+
+// This function is used by the EventProcessor to create a new partition processor for each partition of the 
+// Event Hub.  
+//
+// Its implementation may take various forms, such as a local function (as illustrated), a class or 
+// static method, an inline lambda, or a variable of type Func<PartitionContext, CheckpointManager, IPartitionProcessor>.
+
+IPartitionProcessor SimpleProcessorFactory(PartitionContext context, CheckpointManager manager)
+{
+    return new SimplePartitionProcessor();
+}
+
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
+await using (var client = new EventHubClient(connectionString, eventHubName))
+{
+    string consumerGroup = EventHubConsumer.DefaultConsumerGroup;
+    PartitionManager partitionManager = new InMemoryPartitionManager(Console.WriteLine);
+    
+    EventProcessor processor = new EventProcessor(consumerGroup, client, SimpleProcessorFactory);
+    await processor.StartAsync();
+    
+    // At this point, the processor is consuming events from each partition of the Event Hub and
+    // delegating them to the SimplePartitionProcessor instance created for that partition.  This
+    // processing takes place in the background and will not block. 
+    //
+    // It is important to note that the processor does not own the EventHubClient that was passed into it.  
+    // You are responsible for ensuring that it is disposed after processing.  It is also important that it
+    // not be closed or disposed during the time that the EventProcessor is running.  
+    //
+    // In this example, we'll stop processing after five minutes.
+    
+    await Task.Delay(TimeSpan.FromMinutes(5));
+    await processor.StopAsync();
+}
+```
 ## Troubleshooting
 
 ### Common exceptions
 
-#### Operation Cancelled
+#### Operation Canceled
 
 This occurs when an operation has been requested on a client, producer, or consumer that has already been closed or disposed of.  It is recommended to check the application code and ensure that objects from the Event Hubs client library are created and closed/disposed in the intended scope.  
 
