@@ -84,19 +84,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlockBlobMaxUploadBlobBytes"/> indicates the maximum number of bytes
         /// that can be sent in a call to <see cref="UploadAsync"/>.
         /// </summary>
-        public const int BlockBlobMaxUploadBlobBytes = 256 * Constants.MB; // 256MB
+        public const int BlockBlobMaxUploadBlobBytes = Constants.Blob.Block.MaxUploadBytes;
 
         /// <summary>
         /// <see cref="BlockBlobMaxStageBlockBytes"/> indicates the maximum
         /// number of bytes that can be sent in a call to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public const int BlockBlobMaxStageBlockBytes = 100 * Constants.MB; // 100MB
+        public const int BlockBlobMaxStageBlockBytes = Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// <see cref="BlockBlobMaxBlocks"/> indicates the maximum number of
         /// blocks allowed in a block blob.
         /// </summary>
-        public const int BlockBlobMaxBlocks = 50000;
+        public const int BlockBlobMaxBlocks = Constants.Blob.Block.MaxBlocks;
 
         #region ctors
         /// <summary>
@@ -491,7 +491,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
                                 ifNoneMatch: blobAccessConditions?.HttpAccessConditions?.IfNoneMatch,
                                 async: async,
-                                operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.Upload",
+                                operationName: Constants.Blob.Block.UploadOperationName,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         },
@@ -714,7 +714,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    var uploadAttempt = 0;
+                    var stageBlockAttempt = 0;
                     return await ReliableOperation.DoSyncOrAsync(
                         async,
                         reset: () => content.Seek(0, SeekOrigin.Begin),
@@ -723,7 +723,7 @@ namespace Azure.Storage.Blobs.Specialized
                         operation:
                             () =>
                             {
-                                this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
+                                this.Pipeline.LogTrace($"Stage Block {++stageBlockAttempt}");
                                 return BlobRestClient.BlockBlob.StageBlockAsync(
                                     this.Pipeline,
                                     this.Uri,
@@ -733,7 +733,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     transactionalContentHash: transactionalContentHash,
                                     leaseId: leaseAccessConditions?.LeaseId,
                                     async: async,
-                                    operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.StageBlock",
+                                    operationName: Constants.Blob.Block.StageBlockOperationName,
                                     cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
@@ -1003,7 +1003,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceAccessConditions?.IfMatch,
                         sourceIfNoneMatch: sourceAccessConditions?.IfNoneMatch,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.StageBlockFromUri",
+                        operationName: Constants.Blob.Block.StageBlockFromUriOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1229,7 +1229,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: blobAccessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.CommitBlockList",
+                        operationName: Constants.Blob.Block.CommitBlockListOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1412,7 +1412,7 @@ namespace Azure.Storage.Blobs.Specialized
                         snapshot: snapshot,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlockBlobClient.GetBlockList",
+                        operationName: Constants.Blob.Block.GetBlockListOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false))
                         .ToBlockList();
