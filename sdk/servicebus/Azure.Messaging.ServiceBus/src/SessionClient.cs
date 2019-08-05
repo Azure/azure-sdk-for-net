@@ -86,7 +86,7 @@ namespace Azure.Messaging.ServiceBus
                   null,
                   receiveMode,
                   prefetchCount,
-                  new ServiceBusConnection(connectionString),
+                  new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)),
                   null,
                   options)
         {

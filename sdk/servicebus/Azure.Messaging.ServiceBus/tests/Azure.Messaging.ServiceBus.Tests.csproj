@@ -37,6 +37,7 @@
     <PackageReference Include="ApprovalTests" NoWarn="NU1701" />
     <PackageReference Include="ApprovalUtilities" NoWarn="NU1701" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" />
   </ItemGroup>
 
   <ItemGroup>

@@ -26,6 +26,7 @@ namespace Azure.Messaging.ServiceBus
 
         protected ClientEntity(ClientOptions options, string postfix)
         {
+            options = options ?? new ClientOptions();
             this.Options = options;
             this.syncLock = new object();
             this.ClientId = options.ClientId ?? GenerateClientId(this.GetType().Name, options.ClientIdPostfix);

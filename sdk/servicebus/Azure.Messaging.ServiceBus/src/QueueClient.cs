@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
         public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
-            : this(new ServiceBusConnection(connectionString, options), entityPath, receiveMode, options)
+            : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), entityPath, receiveMode, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {

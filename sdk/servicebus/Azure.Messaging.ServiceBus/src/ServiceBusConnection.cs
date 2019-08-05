@@ -60,7 +60,8 @@ namespace Azure.Messaging.ServiceBus
 
         internal ServiceBusConnection(ClientOptions options = null)
         {
-            this.options = options ?? new ClientOptions();
+            options = options ?? new ClientOptions();
+            this.options = options;
             this.OperationTimeout = options.OperationTimeout;
             this.TransportType = options.TransportType;
             this.RetryPolicy = options.RetryPolicy;

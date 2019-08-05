@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityPath">Path to the topic</param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
         public TopicClient(string connectionString, string entityPath, ClientOptions options = null)
-            : this(new ServiceBusConnection(connectionString), entityPath, options)
+            : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), entityPath, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {

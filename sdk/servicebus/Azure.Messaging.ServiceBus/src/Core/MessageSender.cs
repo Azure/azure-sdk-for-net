@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string connectionString,
             string entityPath,
             ClientOptions options = null)
-            : this(entityPath, null, null, new ServiceBusConnection(connectionString), null, options)
+            : this(entityPath, null, null, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), null, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {

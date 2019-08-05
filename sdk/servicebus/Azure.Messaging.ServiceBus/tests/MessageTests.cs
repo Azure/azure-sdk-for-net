@@ -149,7 +149,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                         var receivedMaxSizeMessage = await queueClient.InnerReceiver.ReceiveAsync();
                         await queueClient.CompleteAsync(receivedMaxSizeMessage.SystemProperties.LockToken);
-                        Assert.Equal(maxPayload, receivedMaxSizeMessage.Body);
+                        Assert.Equal(maxPayload, receivedMaxSizeMessage.Body.ToArray());
                     }
                     finally
                     {

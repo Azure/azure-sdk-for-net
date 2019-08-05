@@ -378,7 +378,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var connection = new ServiceBusConnection(ConnectionString);
+                var connection = new ServiceBusConnection(new ServiceBusConnectionStringBuilder(ConnectionString));
                 var sender = new MessageSender(connection, queueName);
                 var receiver = new MessageReceiver(connection, queueName);
 
@@ -430,7 +430,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var connection = new ServiceBusConnection(ConnectionString);
+                var connection = new ServiceBusConnection(new ServiceBusConnectionStringBuilder(ConnectionString));
                 var sender = new MessageSender(connection, queueName);
                 var receiver = new MessageReceiver(connection, queueName);
 
@@ -477,7 +477,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         [DisplayTestMethodName]
         public async Task TransactionalSendViaCommitTest()
         {
-            var connection = new ServiceBusConnection(ConnectionString);
+            var connection = new ServiceBusConnection(new ServiceBusConnectionStringBuilder(ConnectionString));
 
             var intermediateQueue = default(ServiceBusScope.QueueScope);
             var destination1 = default(ServiceBusScope.TopicScope);

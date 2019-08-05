@@ -3,6 +3,8 @@
 
 using Microsoft.Azure.Management.ServiceBus;
 using Microsoft.Azure.Management.ServiceBus.Models;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Rest;
 
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
@@ -19,7 +21,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
         private static readonly ThreadLocal<Random> Rng = new ThreadLocal<Random>( () => new Random(Interlocked.Increment(ref randomSeed)), false);
 
-        private static readonly ServiceBusManagementClient ManagementClient = null;// new ServiceBusManagementClient(TestUtility.NamespaceConnectionString);
+        private static readonly ServiceBusManagementClient ManagementClient = new ServiceBusManagementClient(new TokenCredentials(GetToken(
+            TestUtility.ClientTenant,
+            TestUtility.ClientId,
+            TestUtility.ClientSecret).GetAwaiter().GetResult()))
+        {
+            SubscriptionId = TestUtility.Subscription
+        };
 
         /// <summary>
         ///   Creates a temporary Service Bus queue to be used within a given scope and then removed.
@@ -41,13 +49,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             var queueDescription = BuildQueueDescription(name, partitioned, sessionEnabled);
 
             configureQueue?.Invoke(queueDescription);
-            await CreateRetryPolicy<SBQueue>().ExecuteAsync( () => ManagementClient.Queues.CreateOrUpdateAsync("RG", "NS", queueDescription.Name, queueDescription));
+            await CreateRetryPolicy<SBQueue>().ExecuteAsync( () => ManagementClient.Queues.CreateOrUpdateAsync(TestUtility.ResourceGroup, TestUtility.Namespace, queueDescription.Id, queueDescription));
 
             return new QueueScope(name, async () =>
             {
                 try
                 {
-                    await CreateRetryPolicy().ExecuteAsync( () => ManagementClient.Queues.DeleteAsync("RG", "NS", name));
+                    await CreateRetryPolicy().ExecuteAsync( () => ManagementClient.Queues.DeleteAsync(TestUtility.ResourceGroup, TestUtility.Namespace, name));
                 }
                 catch (Exception ex)
                 {
@@ -82,14 +90,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             configureTopic?.Invoke(topicDescription);
             configureSubscription?.Invoke(subscriptionDescription);
 
-            await CreateRetryPolicy<SBTopic>().ExecuteAsync( () => ManagementClient.Topics.CreateOrUpdateAsync("RG", "NS", topicDescription.Name, topicDescription));
-            await CreateRetryPolicy<SBSubscription>().ExecuteAsync( () => ManagementClient.Subscriptions.CreateOrUpdateAsync("RG", "NS", topicName, subscriptionDescription.Name, subscriptionDescription));
+            await CreateRetryPolicy<SBTopic>().ExecuteAsync( () => ManagementClient.Topics.CreateOrUpdateAsync(TestUtility.ResourceGroup, TestUtility.Namespace, topicDescription.Id, topicDescription));
+            await CreateRetryPolicy<SBSubscription>().ExecuteAsync( () => ManagementClient.Subscriptions.CreateOrUpdateAsync(TestUtility.ResourceGroup, TestUtility.Namespace, topicName, subscriptionDescription.Id, subscriptionDescription));
 
             return new TopicScope(topicName, subscripionName, async () =>
             {
                 try
                 {
-                    await CreateRetryPolicy().ExecuteAsync( () => ManagementClient.Topics.DeleteAsync("RG", "NS", topicName));
+                    await CreateRetryPolicy().ExecuteAsync( () => ManagementClient.Topics.DeleteAsync(TestUtility.ResourceGroup, TestUtility.Namespace, topicName));
                 }
                 catch (Exception ex)
                 {
@@ -130,7 +138,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             }
             finally
             {
-                await scope?.CleanupAsync();
+                if (scope != null)
+                {
+                    await scope.CleanupAsync();
+                }
             }
         }
 
@@ -244,6 +255,17 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             }
 
             public Task CleanupAsync() => CleanupAction?.Invoke() ?? Task.CompletedTask;
+        }
+
+
+        private static async Task<string> GetToken(string tenantId, string clientId, string clientSecret)
+        {
+            var context = new AuthenticationContext($"https://login.microsoftonline.com/{tenantId}");
+
+            return (await context.AcquireTokenAsync(
+                "https://management.core.windows.net/",
+                new ClientCredential(clientId, clientSecret)
+            )).AccessToken;
         }
     }
 }

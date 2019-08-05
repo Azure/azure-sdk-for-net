@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Duration after which individual operations will timeout.
         /// </summary>
-        public TimeSpan OperationTimeout { get; set; }
+        public TimeSpan OperationTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
