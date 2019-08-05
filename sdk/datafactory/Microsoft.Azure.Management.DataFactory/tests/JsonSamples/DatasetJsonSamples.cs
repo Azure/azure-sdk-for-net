@@ -968,6 +968,50 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string AvroDataset = @"
+{
+  ""name"": ""MyDataset"",
+  ""properties"": {
+	""type"": ""Avro"",
+	""typeProperties"": {
+	  ""location"": {
+		""type"": ""AzureBlobLocation"",
+		""folderPath"": ""fakedContainerName"",
+		""fileName"": ""*.avro""
+	  },
+	  ""avroCompressionCodec"": ""deflate"",
+	  ""avroCompressionLevel"": 4
+	},
+	""linkedServiceName"": {
+	  ""referenceName"": ""MyLinkedService"",
+	  ""type"": ""LinkedServiceReference""
+	},
+	""schema"": {
+	  ""type"": ""record"",
+	  ""namespace"": ""com.example"",
+	  ""name"": ""test"",
+	  ""fields"": [
+		{
+		  ""name"": ""first"",
+		  ""type"": ""string""
+		},
+		{
+		  ""name"": ""last"",
+		  ""type"": ""int""
+		},
+		{
+		  ""name"": ""Hobby"",
+		  ""type"": {
+			""type"": ""array"",
+			""items"": ""string""
+		  }
+		}
+	  ]
+	}
+  }
+}";
+
+        [JsonSample]
         public const string ParquetDataset = @"
 {
   ""name"": ""ParquetDataset"",
