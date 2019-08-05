@@ -76,13 +76,10 @@ namespace Azure.Messaging.EventHubs.Samples
             }
 
             Console.WriteLine();
-            Console.Write("Please enter the number of a sample to run or press \"X\" to exit: ");
+            var choice = ReadSelection(samples.Count);
 
-            var key = ReadSelection(samples.Count);
-
-            if ((key == 'x') || (key == 'X'))
+            if (choice == null)
             {
-                Console.Write(key);
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("Quitting...");
@@ -91,18 +88,15 @@ namespace Azure.Messaging.EventHubs.Samples
             }
             else
             {
-                var choice = ((int)key);
-
-                Console.Write(key);
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("-------------------------------------------------------------------------");
-                Console.WriteLine($"Running: { samples[choice].Name }");
+                Console.WriteLine($"Running: { samples[choice.Value].Name }");
                 Console.WriteLine("-------------------------------------------------------------------------");
                 Console.WriteLine();
 
-                await samples[choice].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
+                await samples[choice.Value].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
                 return;
             }
         }
@@ -150,24 +144,26 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         /// <returns>The validated selection that was made.</returns>
         ///
-        private static char ReadSelection(int sampleCount)
+        private static int? ReadSelection(int sampleCount)
         {
             while(true)
             {
-                var key = Console.ReadKey(true);
+                Console.Write("Please enter the number of a sample to run or press \"X\" to exit: ");
 
-                if ((key.KeyChar == 'x') || (key.KeyChar == 'X'))
+                var value = Console.ReadLine();
+
+                if (String.Equals(value, "X", StringComparison.OrdinalIgnoreCase))
                 {
-                    return key.KeyChar;
+                    return null;
                 }
 
-                if (Char.IsDigit(key.KeyChar))
+                if (Int32.TryParse(value, out var choice))
                 {
-                    var choice = ((int)Char.GetNumericValue(key.KeyChar) - 1);
+                    --choice;
 
                     if ((choice >= 0) && (choice < sampleCount))
                     {
-                        return (char)choice;
+                        return choice;
                     }
                 }
             }

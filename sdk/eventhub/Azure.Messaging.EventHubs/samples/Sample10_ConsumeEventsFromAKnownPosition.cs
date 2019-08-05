@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
@@ -14,13 +15,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events, starting at a well-known position in the Event Hub partition.
     /// </summary>
     ///
-    public class Sample9_ConsumeEventsFromAKnownPosition : IEventHubsSample
+    public class Sample10_ConsumeEventsFromAKnownPosition : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample9_ConsumeEventsFromAKnownPosition);
+        public string Name { get; } = nameof(Sample10_ConsumeEventsFromAKnownPosition);
 
         /// <summary>
         ///   A short description of the sample.
@@ -80,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     await using (EventHubConsumer initialConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.Latest))
                     {
                         // The first receive that we ask of it will not see any events, but allows the consumer to start watching the partition.  Because
-                        // the maximum wait time is specivied as zero, this call will return immediately and will not have consumed any events.
+                        // the maximum wait time is specified as zero, this call will return immediately and will not have consumed any events.
 
                         await initialConsumer.ReceiveAsync(1, TimeSpan.Zero);
 
@@ -96,23 +97,27 @@ namespace Azure.Messaging.EventHubs.Samples
                         await producer.SendAsync(eventBatch);
                         Console.WriteLine($"The event batch with { eventBatchSize } events has been published.");
 
-                        // We will consume the events in batches using the initial consumer until all of the published events
-                        // have been received.
+                        // We will consume the events until all of the published events have been received.
 
                         var receivedEvents = new List<EventData>();
-                        int consumeBatchSize = (int)Math.Floor(eventBatchSize / 5.0f);
-                        int maximumAttempts = 15;
-                        int attempts = 0;
 
-                        while ((receivedEvents.Count < eventBatchSize) && (++attempts < maximumAttempts))
+                        CancellationTokenSource cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                        await foreach (EventData currentEvent in initialConsumer.SubscribeToEvents(cancellationSource.Token))
                         {
-                            receivedEvents.AddRange(await initialConsumer.ReceiveAsync(consumeBatchSize, TimeSpan.FromMilliseconds(25)));
+                            receivedEvents.Add(currentEvent);
+
+                            if (receivedEvents.Count >= eventBatchSize)
+                            {
+                                break;
+                            }
                         }
 
                         // Print out the events that we received.
 
                         Console.WriteLine();
-                        Console.WriteLine($"The initial consumer processed { receivedEvents.Count } events of the { eventBatchSize } that were published.");
+                        Console.WriteLine($"The initial consumer processed { receivedEvents.Count } events of the { eventBatchSize } that were published.  { eventBatchSize } were expected.");
 
                         foreach (EventData eventData in receivedEvents)
                         {
@@ -135,24 +140,29 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     await using (EventHubConsumer newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber)))
                     {
-                        // We will consume the events in batches using the new consumer until all of the published events
-                        // have been received.
+                        // We will consume the events using the new consumer until all of the published events have been received.
 
+                        CancellationTokenSource cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                        int expectedCount = (eventBatchSize - 3);
                         var receivedEvents = new List<EventData>();
-                        int consumeBatchSize = (int)Math.Floor(eventBatchSize / 3.0f);
-                        int maximumAttempts = 10;
-                        int attempts = 0;
 
-                        while ((receivedEvents.Count < eventBatchSize) && (++attempts < maximumAttempts))
+                        await foreach (EventData currentEvent in newConsumer.SubscribeToEvents(cancellationSource.Token))
                         {
-                            receivedEvents.AddRange(await newConsumer.ReceiveAsync(consumeBatchSize, TimeSpan.FromMilliseconds(25)));
+                            receivedEvents.Add(currentEvent);
+
+                            if (receivedEvents.Count >= expectedCount)
+                            {
+                                break;
+                            }
                         }
 
                         // Print out the events that we received.
 
                         Console.WriteLine();
                         Console.WriteLine();
-                        Console.WriteLine($"The new consumer processed { receivedEvents.Count } events of the { eventBatchSize } that were published.");
+                        Console.WriteLine($"The new consumer processed { receivedEvents.Count } events of the { eventBatchSize } that were published.  { expectedCount } were expected.");
 
                         foreach (EventData eventData in receivedEvents)
                         {

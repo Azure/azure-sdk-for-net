@@ -12,13 +12,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to publishing events, using an <see cref="EventHubProducer" /> that is associated with a specific partition.
     /// </summary>
     ///
-    public class Sample5_PublishEventsToSpecificPartitions : IEventHubsSample
+    public class Sample06_PublishEventsToSpecificPartitions : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample5_PublishEventsToSpecificPartitions);
+        public string Name { get; } = nameof(Sample06_PublishEventsToSpecificPartitions);
 
         /// <summary>
         ///   A short description of the sample.
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Samples
             await using (var client = new EventHubClient(connectionString, eventHubName))
             {
                 // Because partitions are owned by the Event Hubs service, it is not advised to assume that they have a stable
-                // and predictable set of identifiers.  We'll inspect the Event Hub and select the first parition to use for
+                // and predictable set of identifiers.  We'll inspect the Event Hub and select the first partition to use for
                 // publishing our event batch.
 
                 string[] partitionIds = await client.GetPartitionIdsAsync();
