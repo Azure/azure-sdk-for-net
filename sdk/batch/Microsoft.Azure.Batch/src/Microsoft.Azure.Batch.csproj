@@ -8,7 +8,7 @@
     <PackageTags>Microsoft;Azure;Batch;windowsazureofficial</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <SignAssembly>true</SignAssembly>
-    <NoWarn>1591;NU5105</NoWarn>
+    <NoWarn>1591;NU5105;CA1308;CA1825;CA2237</NoWarn>  <!-- Remove CA1825 supression here when we deprecate net452 -->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -34,4 +34,14 @@
     <Analyzer Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\bin\Debug\netstandard1.4\ConfigureAwaitAnalyzer.dll" />
     -->
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; reliability</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>AzureBatch.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>
