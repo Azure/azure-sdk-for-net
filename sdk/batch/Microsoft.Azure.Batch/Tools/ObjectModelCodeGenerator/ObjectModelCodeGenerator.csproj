@@ -3,6 +3,7 @@
     <Description>Azure Batch object model code generator</Description>
     <OutputType>Exe</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup>
