@@ -2730,6 +2730,40 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample(version: "Copy")]
+        public const string CopyAzureMariaDBToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyAzureMariaDBToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""AzureMariaDBSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""AzureMariaDBDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
         public const string CopyMarketoToBlob = @"
 {
     name: ""MyPipelineName"",
@@ -3410,7 +3444,9 @@ namespace DataFactory.Tests.JsonSamples
                 {
                     source:
                     {
-                        type: ""SapOpenHubSource""
+                        type: ""SapOpenHubSource"",
+                        excludeLastRequest: false,
+                        baseRequestId: ""123""
                     },
                     sink:
                     {
@@ -3434,7 +3470,7 @@ namespace DataFactory.Tests.JsonSamples
                 policy:
                 {
                     retry: 3,
-                    timeout: ""00:00:05"",
+                    timeout: ""00:00:05""
                 }
             }
         ]
@@ -3445,55 +3481,107 @@ namespace DataFactory.Tests.JsonSamples
         [JsonSample(version: "Copy")]
         public const string CopyRestToAdls = @"
 {
-    name: ""MyPipelineName"",
-    properties: 
-    {
-        description : ""Copy from REST to Azure Data Lake Store"",
-        activities:
-        [
-            {
-                type: ""Copy"",
-                name: ""TestActivity"",
-                description: ""Test activity description"", 
-                typeProperties:
-                {
-                    source:
-                    {
-                        type: ""RestSource"",
-                        ""httpRequestTimeout"": ""00:01:00""
-                    },
-                    sink:
-                    {
-                        type: ""AzureDataLakeStoreSink"",
-                        copyBehavior: ""FlattenHierarchy""
-                    },
-                    translator:
-                    {
-                        type: ""TabularTranslator"",
-                        collectionReference: ""$.fakekey""
-                    }
-                },
-                inputs: 
-                [ 
-                    {
-                        referenceName: ""InputRest"", type: ""DatasetReference""
-                    }
-                ],
-                outputs: 
-                [ 
-                    {
-                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
-                    }
-                ],
-                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
-                policy:
-                {
-                    retry: 3,
-                    timeout: ""00:00:05"",
-                }
-            }
-        ]
-    }
+  ""name"": ""MyPipelineName"",
+  ""properties"": {
+    ""description"": ""Copy from REST to Azure Data Lake Store"",
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""name"": ""TestActivity"",
+        ""description"": ""Test activity description"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""RestSource"",
+            ""requestMethod"": ""POST"",
+            ""requestBody"": ""{\""id\"":123}"",
+            ""additionalHeaders"": {
+              ""content-type"": ""application/json""
+            },
+            ""httpRequestTimeout"": ""00:01:00""
+          },
+          ""sink"": {
+            ""type"": ""AzureDataLakeStoreSink"",
+            ""copyBehavior"": ""FlattenHierarchy""
+          },
+          ""translator"": {
+            ""type"": ""TabularTranslator"",
+            ""collectionReference"": ""$.fakekey""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""InputRest"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""OutputAdlsDA"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""linkedServiceName"": {
+          ""referenceName"": ""MyLinkedServiceName"",
+          ""type"": ""LinkedServiceReference""
+        },
+        ""policy"": {
+          ""retry"": 3,
+          ""timeout"": ""00:00:05""
+        }
+      }
+    ]
+  }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyOffice365ToBlob = @"
+{
+  ""name"": ""MyPipelineName"",
+  ""properties"": {
+    ""description"": ""Copy from Office365 to Azure Blob"",
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""name"": ""TestActivity"",
+        ""description"": ""Test activity description"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""Office365Source"",
+            ""allowedGroups"": ""my_group"",
+            ""userScopeFilterUri"": ""https://graph.microsoft.com/v1.0/users?$filter=Department eq 'Finance'"",
+            ""dateFilterColumn"": ""CreatedDateTime"",
+            ""startTime"": ""2019-04-28T16:00:00.000Z"",
+            ""endTime"": ""2019-05-05T16:00:00.000Z""
+          },
+          ""sink"": {
+            ""type"": ""AzureDataLakeStoreSink"",
+            ""copyBehavior"": ""FlattenHierarchy""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""InputRest"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""OutputAdlsDA"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""linkedServiceName"": {
+          ""referenceName"": ""MyLinkedServiceName"",
+          ""type"": ""LinkedServiceReference""
+        },
+        ""policy"": {
+          ""retry"": 3,
+          ""timeout"": ""00:00:05""
+        }
+      }
+    ]
+  }
 }
 ";
 
@@ -4849,6 +4937,44 @@ namespace DataFactory.Tests.JsonSamples
                 typeProperties: {
                     command: ""TestTable1 | take 10"",
                     commandTimeout: ""00:10:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string SapBwViaMdxSourcePipeline = @"
+{
+    name: ""DataPipeline_SapBwViaMdxSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""SapBwToBlobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""SapBwSource"",
+                        query: ""fake query""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
                 }
             }
         ]

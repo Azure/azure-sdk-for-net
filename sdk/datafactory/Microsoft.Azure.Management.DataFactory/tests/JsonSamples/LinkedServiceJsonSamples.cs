@@ -1665,6 +1665,21 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string AzureMariaDBLinkedService = @"
+{
+    name: ""AzureMariaDBLinkedService"",
+    properties: {
+        type: ""AzureMariaDB"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
         public const string MariaDBLinkedServiceWithPwdInAKV = @"
 {
     name: ""MariaDBLinkedServiceWithPwdInAKV"",
