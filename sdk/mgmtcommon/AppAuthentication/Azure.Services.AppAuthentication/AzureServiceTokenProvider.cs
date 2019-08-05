@@ -249,9 +249,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return authResult.AccessToken;
         }
 
-        public async Task<string> GetAccessTokenAsync(string resource, string tenantId)
+        public Task<string> GetAccessTokenAsync(string resource, string tenantId)
         {
-            return await GetAccessTokenAsync(resource, tenantId, default(CancellationToken)).ConfigureAwait(false);
+            return GetAccessTokenAsync(resource, tenantId, default(CancellationToken));
         }
 
         /// <summary>
@@ -281,9 +281,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return await GetAuthResultAsyncImpl(authority, resource, string.Empty, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
+        public Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
         {
-            return await GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken));
+            return GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken));
         }
     }
 }
