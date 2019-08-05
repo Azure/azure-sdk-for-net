@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="start">The first exit code in the range.</param>
         /// <param name="end">The last exit code in the range.</param>
         /// <param name="exitOptions">How the Batch service should respond if
-        /// the task exits with an exit code in the range start to end
+        /// the Task exits with an exit code in the range start to end
         /// (inclusive).</param>
         public ExitCodeRangeMapping(int start, int end, ExitOptions exitOptions)
         {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int End { get; set; }
 
         /// <summary>
-        /// Gets or sets how the Batch service should respond if the task exits
+        /// Gets or sets how the Batch service should respond if the Task exits
         /// with an exit code in the range start to end (inclusive).
         /// </summary>
         [JsonProperty(PropertyName = "exitOptions")]

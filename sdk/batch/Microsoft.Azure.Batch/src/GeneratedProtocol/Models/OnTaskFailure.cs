@@ -22,15 +22,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum OnTaskFailure
     {
         /// <summary>
-        /// Do nothing. The job remains active unless terminated or disabled by
+        /// Do nothing. The Job remains active unless terminated or disabled by
         /// some other means.
         /// </summary>
         [EnumMember(Value = "noaction")]
         NoAction,
         /// <summary>
-        /// Take the action associated with the task exit condition in the
-        /// task's exitConditions collection. (This may still result in no
-        /// action being taken, if that is what the task specifies.)
+        /// Take the action associated with the Task exit condition in the
+        /// Task's exitConditions collection. (This may still result in no
+        /// action being taken, if that is what the Task specifies.)
         /// </summary>
         [EnumMember(Value = "performexitoptionsjobaction")]
         PerformExitOptionsJobAction

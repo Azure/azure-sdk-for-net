@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An error that occurred when resizing a pool.
+    /// An error that occurred when resizing a Pool.
     /// </summary>
     public partial class ResizeError
     {
@@ -31,13 +31,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ResizeError class.
         /// </summary>
-        /// <param name="code">An identifier for the pool resize error. Codes
+        /// <param name="code">An identifier for the Pool resize error. Codes
         /// are invariant and are intended to be consumed
         /// programmatically.</param>
-        /// <param name="message">A message describing the pool resize error,
+        /// <param name="message">A message describing the Pool resize error,
         /// intended to be suitable for display in a user interface.</param>
         /// <param name="values">A list of additional error details related to
-        /// the pool resize error.</param>
+        /// the Pool resize error.</param>
         public ResizeError(string code = default(string), string message = default(string), IList<NameValuePair> values = default(IList<NameValuePair>))
         {
             Code = code;
@@ -52,21 +52,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an identifier for the pool resize error. Codes are
+        /// Gets or sets an identifier for the Pool resize error. Codes are
         /// invariant and are intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a message describing the pool resize error, intended
+        /// Gets or sets a message describing the Pool resize error, intended
         /// to be suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of additional error details related to the pool
+        /// Gets or sets a list of additional error details related to the Pool
         /// resize error.
         /// </summary>
         [JsonProperty(PropertyName = "values")]

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The set of changes to be made to a pool.
+    /// The set of changes to be made to a Pool.
     /// </summary>
     public partial class PoolUpdatePropertiesParameter
     {
@@ -33,15 +33,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolUpdatePropertiesParameter
         /// class.
         /// </summary>
-        /// <param name="certificateReferences">A list of certificates to be
-        /// installed on each compute node in the pool.</param>
-        /// <param name="applicationPackageReferences">The list of application
-        /// packages to be installed on each compute node in the pool.</param>
+        /// <param name="certificateReferences">A list of Certificates to be
+        /// installed on each Compute Node in the Pool.</param>
+        /// <param name="applicationPackageReferences">The list of Application
+        /// Packages to be installed on each Compute Node in the Pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
-        /// the pool as metadata.</param>
-        /// <param name="startTask">A task to run on each compute node as it
-        /// joins the pool. The task runs when the node is added to the pool or
-        /// when the node is restarted.</param>
+        /// the Pool as metadata.</param>
+        /// <param name="startTask">A Task to run on each Compute Node as it
+        /// joins the Pool. The Task runs when the Compute Node is added to the
+        /// Pool or when the Compute Node is restarted.</param>
         public PoolUpdatePropertiesParameter(IList<CertificateReference> certificateReferences, IList<ApplicationPackageReference> applicationPackageReferences, IList<MetadataItem> metadata, StartTask startTask = default(StartTask))
         {
             StartTask = startTask;
@@ -57,62 +57,62 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a task to run on each compute node as it joins the
-        /// pool. The task runs when the node is added to the pool or when the
-        /// node is restarted.
+        /// Gets or sets a Task to run on each Compute Node as it joins the
+        /// Pool. The Task runs when the Compute Node is added to the Pool or
+        /// when the Compute Node is restarted.
         /// </summary>
         /// <remarks>
-        /// If this element is present, it overwrites any existing start task.
-        /// If omitted, any existing start task is removed from the pool.
+        /// If this element is present, it overwrites any existing StartTask.
+        /// If omitted, any existing StartTask is removed from the Pool.
         /// </remarks>
         [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of certificates to be installed on each compute
-        /// node in the pool.
+        /// Gets or sets a list of Certificates to be installed on each Compute
+        /// Node in the Pool.
         /// </summary>
         /// <remarks>
-        /// This list replaces any existing certificate references configured
-        /// on the pool. If you specify an empty collection, any existing
-        /// certificate references are removed from the pool. For Windows
-        /// compute nodes, the Batch service installs the certificates to the
-        /// specified certificate store and location. For Linux compute nodes,
-        /// the certificates are stored in a directory inside the task working
+        /// This list replaces any existing Certificate references configured
+        /// on the Pool. If you specify an empty collection, any existing
+        /// Certificate references are removed from the Pool. For Windows
+        /// Nodes, the Batch service installs the Certificates to the specified
+        /// Certificate store and location. For Linux Compute Nodes, the
+        /// Certificates are stored in a directory inside the Task working
         /// directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is
-        /// supplied to the task to query for this location. For certificates
+        /// supplied to the Task to query for this location. For Certificates
         /// with visibility of 'remoteUser', a 'certs' directory is created in
         /// the user's home directory (e.g., /home/{user-name}/certs) and
-        /// certificates are placed in that directory.
+        /// Certificates are placed in that directory.
         /// </remarks>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of application packages to be installed on
-        /// each compute node in the pool.
+        /// Gets or sets the list of Application Packages to be installed on
+        /// each Compute Node in the Pool.
         /// </summary>
         /// <remarks>
-        /// The list replaces any existing application package references on
-        /// the pool. Changes to application package references affect all new
-        /// compute nodes joining the pool, but do not affect compute nodes
-        /// that are already in the pool until they are rebooted or reimaged.
-        /// There is a maximum of 10 application package references on any
-        /// given pool. If omitted, or if you specify an empty collection, any
-        /// existing application packages references are removed from the pool.
-        /// A maximum of 10 references may be specified on a given pool.
+        /// The list replaces any existing Application Package references on
+        /// the Pool. Changes to Application Package references affect all new
+        /// Compute Nodes joining the Pool, but do not affect Compute Nodes
+        /// that are already in the Pool until they are rebooted or reimaged.
+        /// There is a maximum of 10 Application Package references on any
+        /// given Pool. If omitted, or if you specify an empty collection, any
+        /// existing Application Packages references are removed from the Pool.
+        /// A maximum of 10 references may be specified on a given Pool.
         /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the pool as
+        /// Gets or sets a list of name-value pairs associated with the Pool as
         /// metadata.
         /// </summary>
         /// <remarks>
-        /// This list replaces any existing metadata configured on the pool. If
+        /// This list replaces any existing metadata configured on the Pool. If
         /// omitted, or if you specify an empty collection, any existing
-        /// metadata is removed from the pool.
+        /// metadata is removed from the Pool.
         /// </remarks>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }

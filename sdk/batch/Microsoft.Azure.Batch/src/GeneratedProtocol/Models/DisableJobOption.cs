@@ -22,20 +22,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum DisableJobOption
     {
         /// <summary>
-        /// Terminate running tasks and requeue them. The tasks will run again
-        /// when the job is enabled.
+        /// Terminate running Tasks and requeue them. The Tasks will run again
+        /// when the Job is enabled.
         /// </summary>
         [EnumMember(Value = "requeue")]
         Requeue,
         /// <summary>
-        /// Terminate running tasks. The tasks will be completed with
+        /// Terminate running Tasks. The Tasks will be completed with
         /// failureInfo indicating that they were terminated, and will not run
         /// again.
         /// </summary>
         [EnumMember(Value = "terminate")]
         Terminate,
         /// <summary>
-        /// Allow currently running tasks to complete.
+        /// Allow currently running Tasks to complete.
         /// </summary>
         [EnumMember(Value = "wait")]
         Wait
