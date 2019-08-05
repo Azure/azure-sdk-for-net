@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private ConcurrentDictionary<string, Checkpoint> Checkpoints;
 
         /// <summary>The set of stored ownership.  Partition ids are used as keys.</summary>
-        private ConcurrentDictionary<string, PartitionOwnership> Ownership;
+        private Dictionary<string, PartitionOwnership> Ownership;
 
         /// <summary>Logs activities performed by this partition manager.</summary>
         private Action<string> Logger;
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Processor
             Logger = logger;
 
             Checkpoints = new ConcurrentDictionary<string, Checkpoint>();
-            Ownership = new ConcurrentDictionary<string, PartitionOwnership>();
+            Ownership = new Dictionary<string, PartitionOwnership>();
         }
 
         /// <summary>
@@ -54,12 +54,15 @@ namespace Azure.Messaging.EventHubs.Processor
         public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string eventHubName,
                                                                                  string consumerGroup)
         {
-            return Task.Run(() =>
-                Ownership
-                    .Select(kvp => kvp.Value)
+            lock(OwnershipClaimLock)
+            {
+                var ownershipList = Ownership.Values
                     .Where(ownership => ownership.EventHubName == eventHubName &&
                         ownership.ConsumerGroup == consumerGroup)
-            );
+                    .ToList();
+
+                return Task.FromResult(ownershipList.AsEnumerable());
+            }
         }
 
         /// <summary>
@@ -72,58 +75,55 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership)
         {
-            return Task.Run(() =>
+            var claimedOwnership = new List<PartitionOwnership>();
+
+            foreach(var ownership in partitionOwnership)
+            {
+                var isClaimable = true;
+
+                // In case the partition already has an owner, the ETags must match in order to claim it.
+
+                if (Ownership.TryGetValue(ownership.PartitionId, out var currentOwnership))
                 {
-                    List<PartitionOwnership> claimedOwnership = new List<PartitionOwnership>();
+                    isClaimable = ownership.ETag == currentOwnership.ETag;
+                }
 
-                    foreach(var ownership in partitionOwnership)
+                // The following lock makes sure two different event processors won't try to claim ownership of a partition
+                // simultaneously.  This approach prevents an ownership from being stolen just after being claimed.
+
+                if (isClaimable)
+                {
+                    lock (OwnershipClaimLock)
                     {
-                        var isClaimable = true;
+                        isClaimable = true;
 
-                        // In case the partition already has an owner, the ETags must match in order to claim it.
-
-                        if (Ownership.TryGetValue(ownership.PartitionId, out var currentOwnership))
+                        if (Ownership.TryGetValue(ownership.PartitionId, out currentOwnership))
                         {
                             isClaimable = ownership.ETag == currentOwnership.ETag;
                         }
 
-                        // The following lock makes sure two different event processors won't try to claim ownership of a partition
-                        // simultaneously.  This approach prevents an ownership from being stolen just after being claimed.
-
                         if (isClaimable)
                         {
-                            lock (OwnershipClaimLock)
-                            {
-                                isClaimable = true;
+                            ownership.ETag = Guid.NewGuid().ToString();
 
-                                if (Ownership.TryGetValue(ownership.PartitionId, out currentOwnership))
-                                {
-                                    isClaimable = ownership.ETag == currentOwnership.ETag;
-                                }
+                            Ownership[ownership.PartitionId] = ownership;
+                            claimedOwnership.Add(ownership);
 
-                                if (isClaimable)
-                                {
-                                    ownership.ETag = Guid.NewGuid().ToString();
-
-                                    Ownership[ownership.PartitionId] = ownership;
-                                    claimedOwnership.Add(ownership);
-
-                                    Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
-                                }
-                                else
-                                {
-                                    Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
-                                }
-                            }
+                            Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
                         }
                         else
                         {
                             Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
                         }
                     }
+                }
+                else
+                {
+                    Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
+                }
+            }
 
-                    return claimedOwnership.AsEnumerable();
-                });
+            return Task.FromResult(claimedOwnership.AsEnumerable());
         }
 
         /// <summary>
@@ -136,12 +136,11 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public override Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            return Task.Run(() =>
-                {
-                    Checkpoints[checkpoint.PartitionId] = checkpoint;
+            Checkpoints[checkpoint.PartitionId] = checkpoint;
 
-                    Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated.");
-                });
+            Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated.");
+
+            return Task.CompletedTask;
         }
 
         /// <summary>
