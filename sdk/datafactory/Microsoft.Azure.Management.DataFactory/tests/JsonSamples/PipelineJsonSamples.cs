@@ -3470,7 +3470,7 @@ namespace DataFactory.Tests.JsonSamples
                 policy:
                 {
                     retry: 3,
-                    timeout: ""00:00:05"",
+                    timeout: ""00:00:05""
                 }
             }
         ]
