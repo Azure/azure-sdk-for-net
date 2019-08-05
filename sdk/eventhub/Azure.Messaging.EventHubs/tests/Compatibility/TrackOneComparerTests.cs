@@ -13,6 +13,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     public class TrackOneComparerTests
     {
         /// <summary>
@@ -141,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var trackOnePosition = TrackOne.EventPosition.FromOffset("12", false);
             var trackTwoPosition = EventPosition.FromOffset(12);
 
-            Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.False, "The offset for track two is inclusive; even the same base offset with non-inclusive is not equivilent.");
+            Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.False, "The offset for track two is inclusive; even the same base offset with non-inclusive is not equivalent.");
         }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var trackOnePosition = TrackOne.EventPosition.FromOffset("12", true);
             var trackTwoPosition = EventPosition.FromOffset(12);
 
-            Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True, "The offset for track two is inclusive; the equivilent offset set as inclusive should match.");
+            Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True, "The offset for track two is inclusive; the equivalent offset set as inclusive should match.");
         }
 
         /// <summary>

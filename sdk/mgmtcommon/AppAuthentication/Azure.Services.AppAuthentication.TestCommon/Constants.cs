@@ -46,6 +46,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string TokenNotInExpectedFormatError = "Index was outside the bounds of the array";
         public static readonly string SqlAppAuthProviderInvalidAuthority = "The Azure AD instance could not be parsed";
         public static readonly string SqlAppAuthProviderInvalidResource = "A resource must be specified";
+        public static readonly string NotSupportedInNetCoreError = "not supported for .NET Core";
 
         // Connection strings
         public static readonly string ClientSecret = "Secret";

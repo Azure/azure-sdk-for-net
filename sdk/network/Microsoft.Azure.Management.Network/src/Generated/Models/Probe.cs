@@ -62,11 +62,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// public IP resource. Possible values are: 'Updating', 'Deleting',
         /// and 'Failed'.</param>
         /// <param name="name">Gets name of the resource that is unique within
-        /// a resource group. This name can be used to access the
-        /// resource.</param>
+        /// the set of probes used by the load balancer. This name can be used
+        /// to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public Probe(string protocol, int port, string id = default(string), IList<SubResource> loadBalancingRules = default(IList<SubResource>), int? intervalInSeconds = default(int?), int? numberOfProbes = default(int?), string requestPath = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Type of the resource.</param>
+        public Probe(string protocol, int port, string id = default(string), IList<SubResource> loadBalancingRules = default(IList<SubResource>), int? intervalInSeconds = default(int?), int? numberOfProbes = default(int?), string requestPath = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             LoadBalancingRules = loadBalancingRules;
@@ -78,6 +79,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -144,8 +146,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource.
+        /// Gets name of the resource that is unique within the set of probes
+        /// used by the load balancer. This name can be used to access the
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -156,6 +159,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.

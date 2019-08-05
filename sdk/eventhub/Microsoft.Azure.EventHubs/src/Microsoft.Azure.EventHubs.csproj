@@ -6,9 +6,6 @@
     <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.xml</DocumentationFile>
     <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <FileVersion>4.0.0.0</FileVersion>
-    <Version>4.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,13 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Amqp" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.3" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Net.Http" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">

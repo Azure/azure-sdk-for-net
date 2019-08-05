@@ -320,6 +320,8 @@ function createParameter(project: IProject, swagger: any, location: string): IPa
         unsupported(() => grouping.postfix, `${location}['x-ms-parameter-grouping'].postfix`);
     }
 
+    const trace = optional(() => swagger[`x-ms-trace`], false);
+
     unsupported(() => swagger[`x-ms-client-flatten`], location);
     unsupported(() => swagger[`x-ms-client-request-id`], location);
 
@@ -338,7 +340,8 @@ function createParameter(project: IProject, swagger: any, location: string): IPa
         location: at,
         skipUrlEncoding,
         parameterGroup,
-        model
+        model,
+        trace
     };
 }
 
@@ -829,7 +832,8 @@ function getOperationParameters(project: IProject, info: IServiceInfo, path: tem
             namespace: 'Azure.Core.Pipeline',
             properties: { },
             xml: { }
-        }
+        },
+        trace: false
     });
 
     return parameters;

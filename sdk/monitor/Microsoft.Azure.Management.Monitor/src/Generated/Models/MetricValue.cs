@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="count">the number of samples in the time range. Can be
         /// used to determine the number of values that contributed to the
         /// average value.</param>
-        public MetricValue(System.DateTime timeStamp, double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), long? count = default(long?))
+        public MetricValue(System.DateTime timeStamp, double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?))
         {
             TimeStamp = timeStamp;
             Average = average;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// value.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
-        public long? Count { get; set; }
+        public double? Count { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -128,7 +128,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Check if two FileAccountSasPermissions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(FileAccountSasPermissions other) =>
             this.Read == other.Read &&

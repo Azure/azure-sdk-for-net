@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="storageAccountType">Specifies the storage account type
         /// to be used to store the image. This property is not updatable.
         /// Possible values include: 'Standard_LRS', 'Standard_ZRS'</param>
-        public GalleryImageVersionPublishingProfile(GalleryArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string))
-            : base(source, targetRegions)
+        public GalleryImageVersionPublishingProfile(IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string))
+            : base(targetRegions)
         {
             ReplicaCount = replicaCount;
             ExcludeFromLatest = excludeFromLatest;
@@ -106,15 +106,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "storageAccountType")]
         public string StorageAccountType { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

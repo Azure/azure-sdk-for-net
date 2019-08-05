@@ -1,18 +1,18 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition="'$(IsDataPlane)' == 'true'">
-    <VersionPrefix>3.0.3</VersionPrefix>
-    <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-        Republishing to publish symbols
-      ]]>
-    </PackageReleaseNotes>
-  </PropertyGroup>
-
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Samples'))">
     <IsTestProject>true</IsTestProject>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+  <PropertyGroup Condition="'$(IsDataPlaneProject)' == 'true'">
+    <VersionPrefix>3.0.4</VersionPrefix>
+    <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+      Fix for issue https://github.com/Azure/azure-sdk-for-net/issues/5702
+      ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
 </Project>

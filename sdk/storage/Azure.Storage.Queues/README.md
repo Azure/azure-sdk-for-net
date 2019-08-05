@@ -158,6 +158,9 @@ Get started with our [Queue samples][samples]:
 
 ## Contributing
 
+See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
+testing, and contributing to this library.
+
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
@@ -189,6 +192,7 @@ additional questions or comments.
 [StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-error-codes
 [samples]: samples/
+[storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

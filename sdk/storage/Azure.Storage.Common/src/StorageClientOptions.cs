@@ -5,7 +5,6 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Storage.Common;
 
 namespace Azure.Storage
@@ -40,7 +39,7 @@ namespace Azure.Storage
         /// <summary>
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
-        /// <param name="credentials">Credential to use.</param>
+        /// <param name="credential">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this StorageSharedKeyCredential credential) =>
             new StorageSharedKeyPipelinePolicy(
@@ -49,7 +48,7 @@ namespace Azure.Storage
         /// <summary>
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
-        /// <param name="credentials">Credential to use.</param>
+        /// <param name="credential">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
             new BearerTokenAuthenticationPolicy(

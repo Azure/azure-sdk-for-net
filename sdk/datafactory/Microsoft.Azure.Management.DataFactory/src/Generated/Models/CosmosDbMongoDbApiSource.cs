@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="batchSize">Specifies the number of documents to return
         /// in each batch of the response from MongoDB instance. In most cases,
         /// modifying the batch size will not affect the user or the
-        /// application. This property�s main purpose is to avoid hit the
+        /// application. This property's main purpose is to avoid hit the
         /// limitation of response size. Type: integer (or Expression with
         /// resultType integer).</param>
         public CosmosDbMongoDbApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object))
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets specifies the number of documents to return in each
         /// batch of the response from MongoDB instance. In most cases,
         /// modifying the batch size will not affect the user or the
-        /// application. This property�s main purpose is to avoid hit the
+        /// application. This property's main purpose is to avoid hit the
         /// limitation of response size. Type: integer (or Expression with
         /// resultType integer).
         /// </summary>

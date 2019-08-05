@@ -888,6 +888,42 @@ namespace Compute.Tests
             return vm;
         }
 
+        protected DedicatedHostGroup CreateDedicatedHostGroup( string rgName, string dedicatedHostGroupName)
+        {
+            m_ResourcesClient.ResourceGroups.CreateOrUpdate(
+                   rgName,
+                   new ResourceGroup
+                   {
+                       Location = m_location,
+                       Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
+                   });
+
+            DedicatedHostGroup dedicatedHostGroup = new DedicatedHostGroup()
+            {
+                Location = m_location,
+                Zones = new List<string> { "1" },
+                PlatformFaultDomainCount = 1
+            };
+            return m_CrpClient.DedicatedHostGroups.CreateOrUpdate(rgName, dedicatedHostGroupName, dedicatedHostGroup);
+        }
+
+        protected DedicatedHost CreateDedicatedHost(string rgName, string dedicatedHostGroupName, string dedicatedHostName)
+        {
+            //Check if DedicatedHostGroup already exist and if does not exist, create one.
+            DedicatedHostGroup existingDHG = m_CrpClient.DedicatedHostGroups.Get(rgName, dedicatedHostGroupName);
+            if (existingDHG == null)
+            {
+                existingDHG = CreateDedicatedHostGroup(rgName, dedicatedHostGroupName);
+            }
+            return m_CrpClient.DedicatedHosts.CreateOrUpdate(rgName, dedicatedHostGroupName, dedicatedHostName,
+                new DedicatedHost()
+                {
+                    Location = m_location,
+                    Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } },
+                    Sku = new CM.Sku() { Name = "ESv3-Type1" }
+                });
+        }
+
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
             bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null)
         {

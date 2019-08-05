@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,18 +27,29 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // Azure Instance Metadata Service (IMDS) endpoint
         private const string AzureVmImdsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
 
-        // Timeout for Azure IMDS
-        internal const int AzureVmImdsTimeoutInSecs = 2;
-        internal readonly TimeSpan AzureVmImdsTimeout = TimeSpan.FromSeconds(AzureVmImdsTimeoutInSecs);
+        // Timeout for Azure IMDS probe request
+        internal const int AzureVmImdsProbeTimeoutInSeconds = 2;
+        internal readonly TimeSpan AzureVmImdsProbeTimeout = TimeSpan.FromSeconds(AzureVmImdsProbeTimeoutInSeconds);
 
-        internal MsiAccessTokenProvider(string managedIdentityClientId = default(string))
+        // Configurable timeout for MSI retry logic
+        internal readonly int _retryTimeoutInSeconds = 0;
+
+        internal MsiAccessTokenProvider(int retryTimeoutInSeconds = 0, string managedIdentityClientId = default(string))
         {
+            // require storeLocation if using subject name or thumbprint identifier
+            if (retryTimeoutInSeconds < 0)
+            {
+                throw new ArgumentException(
+                    $"MsiRetryTimeout {retryTimeoutInSeconds} is not valid. Valid values are integers greater than or equal to 0.");
+            }
+
             _managedIdentityClientId = managedIdentityClientId;
+            _retryTimeoutInSeconds = retryTimeoutInSeconds;
 
             PrincipalUsed = new Principal { Type = "App" };
         }
 
-        internal MsiAccessTokenProvider(HttpClient httpClient, string managedIdentityClientId = null) : this(managedIdentityClientId)
+        internal MsiAccessTokenProvider(HttpClient httpClient, int retryTimeoutInSeconds = 0, string managedIdentityClientId = null) : this(retryTimeoutInSeconds, managedIdentityClientId)
         {
             _httpClient = httpClient;
         }
@@ -55,7 +67,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 string msiSecret = Environment.GetEnvironmentVariable("MSI_SECRET");
                 var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiSecret);
 
-                // if App Service MSI is not available then Azure VM IMDS must be available, verify with a probe request
+                // if App Service MSI is not available then Azure VM IMDS may be available, test with a probe request
                 if (!isAppServicesMsiAvailable)
                 {
                     using (var internalTokenSource = new CancellationTokenSource())
@@ -65,7 +77,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                         try
                         {
-                            internalTokenSource.CancelAfter(AzureVmImdsTimeout);
+                            internalTokenSource.CancelAfter(AzureVmImdsProbeTimeout);
                             await httpClient.SendAsync(imdsProbeRequest, linkedTokenSource.Token).ConfigureAwait(false);
                         }
                         catch (OperationCanceledException)
@@ -112,7 +124,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 HttpResponseMessage response;
                 try
                 {
-                    response = await httpClient.SendAsyncWithRetry(getRequestMessage, cancellationToken).ConfigureAwait(false);
+                    response = await httpClient.SendAsyncWithRetry(getRequestMessage, _retryTimeoutInSeconds, cancellationToken).ConfigureAwait(false);
                 }
                 catch (HttpRequestException)
                 {
@@ -139,16 +151,21 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         PrincipalUsed.TenantId = token.TenantId;
                     }
 
-                    TokenResponse.DateFormat expectedDateFormat = isAppServicesMsiAvailable
-                        ? TokenResponse.DateFormat.DateTimeString
-                        : TokenResponse.DateFormat.Unix;
-
-                    return AppAuthenticationResult.Create(tokenResponse, expectedDateFormat);
+                    // App Services MSI returns en-US format datetime strings
+                    var datetimeCulture = isAppServicesMsiAvailable
+                        ? new CultureInfo("en-US")
+                        : null;
+                    
+                    return AppAuthenticationResult.Create(tokenResponse, datetimeCulture);
                 }
 
-                string exceptionText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                string errorStatusDetail = response.IsRetryableStatusCode()
+                    ? AzureServiceTokenProviderException.RetryFailure
+                    : AzureServiceTokenProviderException.NonRetryableError;
 
-                throw new Exception($"{AzureServiceTokenProviderException.RetryFailure} MSI ResponseCode: {response.StatusCode}, Response: {exceptionText}");
+                string errorText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                throw new Exception($"{errorStatusDetail} MSI ResponseCode: {response.StatusCode}, Response: {errorText}");
             }
             catch (Exception exp)
             {

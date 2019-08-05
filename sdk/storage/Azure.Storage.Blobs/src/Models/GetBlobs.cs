@@ -27,8 +27,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Gets or sets a flag specifing that metadata related to any current
-        /// or previous <see cref="Specialized.BlobClient.StartCopyFromUriAsync"/>
-        /// operation should be included.
+        /// or previous copy operation should be included.
         /// </summary>
         public bool IncludeCopyOperationStatus { get; set; }
 
@@ -47,7 +46,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Gets or sets a flag specifing that blobs for which blocks have
         /// been uploaded, but which have not been committed using
-        /// <see cref="BlockBlobClient.CommitBlockListAsync"/> should be
+        /// <see cref="Specialized.BlockBlobClient.CommitBlockListAsync"/> should be
         /// included.
         /// </summary>
         public bool IncludeUncommittedBlobs { get; set; }
@@ -118,7 +117,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two GetBlobsOptions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetBlobsOptions other) =>
             this.IncludeCopyOperationStatus == other.IncludeCopyOperationStatus &&
@@ -150,7 +149,7 @@ namespace Azure.Storage.Blobs.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetBlobsAsync(
+            var task = this._client.GetBlobsInternal(
                 continuationToken,
                 this._options,
                 pageSizeHint,
@@ -190,7 +189,7 @@ namespace Azure.Storage.Blobs.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetBlobsByHierarchyAsync(
+            var task = this._client.GetBlobsByHierarchyInternal(
                 continuationToken,
                 this._delimiter,
                 this._options,

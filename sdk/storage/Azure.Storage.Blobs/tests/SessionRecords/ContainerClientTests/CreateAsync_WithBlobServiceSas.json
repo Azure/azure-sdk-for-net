@@ -1,14 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-786e4663-793c-5c6c-f51c-aa2923776e8e?sv=2018-11-09\u0026st=2019-06-17T19%3A57%3A08Z\u0026se=2019-06-17T21%3A57%3A08Z\u0026sr=c\u0026sp=racwdl\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-01efa011-3717-00ac-6c46-5b894e517049?sv=2018-11-09\u0026st=2019-07-19T21%3A28%3A15Z\u0026se=2019-07-19T23%3A28%3A15Z\u0026sr=c\u0026sp=racwdl\u0026sig=Sanitized\u0026restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Request-Id": "|83329364-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "d3d0d044bd3de67d591df622fa1e1dfa",
+        "x-ms-client-request-id": "78a036a24250f19741371a37ddf8184d",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -16,25 +17,26 @@
       "StatusCode": 403,
       "ResponseHeaders": {
         "Content-Length": "246",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:57:07 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:28:14 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "AuthorizationFailure",
-        "x-ms-request-id": "a93570fe-b01e-0079-4d4f-25b12a000000",
+        "x-ms-request-id": "feb65529-501e-0061-4881-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eAuthorizationFailure\u003c/Code\u003e\u003cMessage\u003eThis request is not authorized to perform this operation.\n",
-        "RequestId:a93570fe-b01e-0079-4d4f-25b12a000000\n",
-        "Time:2019-06-17T20:57:08.0239266Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eAuthorizationFailure\u003c\u002fCode\u003e\u003cMessage\u003eThis request is not authorized to perform this operation.\n",
+        "RequestId:feb65529-501e-0061-4881-3e6e4d000000\n",
+        "Time:2019-07-19T22:28:15.0045704Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-06-17T13:57:08.0304096-07:00",
-    "RandomSeed": "493860103"
+    "DateTimeOffsetNow": "2019-07-19T15:28:15.0311574-07:00",
+    "RandomSeed": "1932360900",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

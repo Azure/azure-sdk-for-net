@@ -15,11 +15,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
     {
         private const string TokenResponseFormatExceptionMessage = "Token response is not in the expected format.";
 
-        internal enum DateFormat
-        {
-            Unix,
-            DateTimeString
-        };
 
         // VS token service and MSI endpoint return access_token
         [DataMember(Name = "access_token", IsRequired = false)]

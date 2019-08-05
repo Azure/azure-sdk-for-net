@@ -11,17 +11,35 @@ namespace Azure.Security.KeyVault.Keys
     /// </summary>
     public enum KeyType : uint
     {
+        /// <summary>
+        /// Cryptographic algorithm Elliptic Curve
+        /// </summary>
         EllipticCurve = 0x0001,
+        /// <summary>
+        /// Cryptographic algorithm Elliptic Curve HSM
+        /// </summary>
         EllipticCurveHsm = 0x0002,
+        /// <summary>
+        /// Cryptographic algorithm RSA
+        /// </summary>
         Rsa = 0x0004,
+        /// <summary>
+        /// Cryptographic algorithm RSA HSM
+        /// </summary>
         RsaHsm = 0x0008,
+        /// <summary>
+        /// Cryptographic algorithm Octet
+        /// </summary>
         Octet = 0x0010,
+        /// <summary>
+        /// Other type of cyptographic algorithm 
+        /// </summary>
         Other = 0x0020,
     }
 
-    public static class KeyTypeExtensions
+    internal static class KeyTypeExtensions
     {
-        public static KeyType ParseFromString(string value)
+        internal static KeyType ParseFromString(string value)
         {
             switch (value)
             {
@@ -40,7 +58,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        public static string AsString(KeyType keyType)
+        internal static string AsString(KeyType keyType)
         {
             switch (keyType)
             {
