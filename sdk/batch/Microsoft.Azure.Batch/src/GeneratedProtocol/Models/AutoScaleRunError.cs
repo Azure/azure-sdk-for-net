@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An error that occurred when executing or evaluating a pool autoscale
+    /// An error that occurred when executing or evaluating a Pool autoscale
     /// formula.
     /// </summary>
     public partial class AutoScaleRunError

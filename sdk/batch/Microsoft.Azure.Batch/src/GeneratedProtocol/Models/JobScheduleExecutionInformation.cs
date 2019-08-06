@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about jobs that have been and will be run under a
-    /// job schedule.
+    /// Contains information about Jobs that have been and will be run under a
+    /// Job Schedule.
     /// </summary>
     public partial class JobScheduleExecutionInformation
     {
@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobScheduleExecutionInformation
         /// class.
         /// </summary>
-        /// <param name="nextRunTime">The next time at which a job will be
+        /// <param name="nextRunTime">The next time at which a Job will be
         /// created under this schedule.</param>
-        /// <param name="recentJob">Information about the most recent job under
-        /// the job schedule.</param>
+        /// <param name="recentJob">Information about the most recent Job under
+        /// the Job Schedule.</param>
         /// <param name="endTime">The time at which the schedule ended.</param>
         public JobScheduleExecutionInformation(System.DateTime? nextRunTime = default(System.DateTime?), RecentJob recentJob = default(RecentJob), System.DateTime? endTime = default(System.DateTime?))
         {
@@ -51,24 +51,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the next time at which a job will be created under
+        /// Gets or sets the next time at which a Job will be created under
         /// this schedule.
         /// </summary>
         /// <remarks>
         /// This property is meaningful only if the schedule is in the active
         /// state when the time comes around. For example, if the schedule is
-        /// disabled, no job will be created at nextRunTime unless the job is
+        /// disabled, no Job will be created at nextRunTime unless the Job is
         /// enabled before then.
         /// </remarks>
         [JsonProperty(PropertyName = "nextRunTime")]
         public System.DateTime? NextRunTime { get; set; }
 
         /// <summary>
-        /// Gets or sets information about the most recent job under the job
-        /// schedule.
+        /// Gets or sets information about the most recent Job under the Job
+        /// Schedule.
         /// </summary>
         /// <remarks>
-        /// This property is present only if the at least one job has run under
+        /// This property is present only if the at least one Job has run under
         /// the schedule.
         /// </remarks>
         [JsonProperty(PropertyName = "recentJob")]
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the time at which the schedule ended.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the job schedule is in the completed
+        /// This property is set only if the Job Schedule is in the completed
         /// state.
         /// </remarks>
         [JsonProperty(PropertyName = "endTime")]

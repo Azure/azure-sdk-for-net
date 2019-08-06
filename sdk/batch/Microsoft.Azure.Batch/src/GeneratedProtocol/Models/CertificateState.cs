@@ -22,26 +22,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum CertificateState
     {
         /// <summary>
-        /// The certificate is available for use in pools.
+        /// The Certificate is available for use in Pools.
         /// </summary>
         [EnumMember(Value = "active")]
         Active,
         /// <summary>
-        /// The user has requested that the certificate be deleted, but the
+        /// The user has requested that the Certificate be deleted, but the
         /// delete operation has not yet completed. You may not reference the
-        /// certificate when creating or updating pools.
+        /// Certificate when creating or updating Pools.
         /// </summary>
         [EnumMember(Value = "deleting")]
         Deleting,
         /// <summary>
-        /// The user requested that the certificate be deleted, but there are
-        /// pools that still have references to the certificate, or it is still
-        /// installed on one or more compute nodes. (The latter can occur if
-        /// the certificate has been removed from the pool, but the node has
-        /// not yet restarted. Nodes refresh their certificates only when they
-        /// restart.) You may use the cancel certificate delete operation to
-        /// cancel the delete, or the delete certificate operation to retry the
-        /// delete.
+        /// The user requested that the Certificate be deleted, but there are
+        /// Pools that still have references to the Certificate, or it is still
+        /// installed on one or more Nodes. (The latter can occur if the
+        /// Certificate has been removed from the Pool, but the Compute Node
+        /// has not yet restarted. Compute Nodes refresh their Certificates
+        /// only when they restart.) You may use the cancel Certificate delete
+        /// operation to cancel the delete, or the delete Certificate operation
+        /// to retry the delete.
         /// </summary>
         [EnumMember(Value = "deletefailed")]
         DeleteFailed

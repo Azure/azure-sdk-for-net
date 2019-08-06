@@ -39,7 +39,7 @@
 
         private static string GenerateMessageString(AddTaskResult result)
         {
-            return string.Format(BatchErrorMessages.AddTaskCollectionTerminated, result);
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, BatchErrorMessages.AddTaskCollectionTerminated, result);
         }
     }
 
@@ -64,13 +64,13 @@
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("{0}: ", this.GetType()).AppendLine(this.Message);
+            builder.Append($"{this.GetType()}: ").AppendLine(this.Message);
             builder.AppendLine(this.StackTrace);
             builder.AppendLine();
 
             for (int i = 0; i < this.InnerExceptions.Count; i++)
             {
-                builder.AppendFormat("Exception #{0}:", i).AppendLine();
+                builder.Append($"Exception #{i}:").AppendLine();
                 builder.Append(this.InnerExceptions[i]).AppendLine().AppendLine();
             }
 
