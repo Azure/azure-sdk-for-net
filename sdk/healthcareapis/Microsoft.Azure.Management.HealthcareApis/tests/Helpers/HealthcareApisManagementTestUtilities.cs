@@ -22,7 +22,7 @@ namespace HealthcareApis.Tests.Helpers
 
         // These are used to create default accounts
         public static string DefaultLocation = IsTestTenant ? null : "westus";
-        public static Kind DefaultKind = Kind.FhirR4;
+        public static Kind DefaultKind = Kind.Fhir;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
             {
                 {"key1","value1"},
@@ -79,7 +79,7 @@ namespace HealthcareApis.Tests.Helpers
         public static ServicesDescription GetServiceDescriptionWithProperties()
         {
             var serviceProperties = GetServiceProperties();
-            var serviceDescription = new ServicesDescription(DefaultKind,DefaultLocation, default(string), default(string), default(string), DefaultTags, default(string), serviceProperties);
+            var serviceDescription = new ServicesDescription(DefaultKind, DefaultLocation, default(string), default(string), default(string), DefaultTags, default(string), serviceProperties);
             return serviceDescription;
         }
 
