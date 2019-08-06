@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce?restype=share",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063?restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869b9e-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "9f1ebb83c17a4c115f1c38e36e5bb372",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-client-request-id": "0237d40c5cb94367bcc8f7375e9d3e8a",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "1",
         "x-ms-version": "2018-11-09"
@@ -19,29 +20,30 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:59:07 GMT",
-        "ETag": "\u00220x8D6F366A362DC35\u0022",
-        "Last-Modified": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "Date": "Fri, 19 Jul 2019 22:31:31 GMT",
+        "ETag": "\u00220x8D70C98D93F965D\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:31:31 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "f4093676-701a-0076-4f4f-25c746000000",
+        "x-ms-request-id": "7b2d103a-701a-0082-6181-3e0cb0000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": null
+      "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce/test-directory-2d02171a-3189-079a-1e2a-9ebe3f11781d?restype=directory",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063\u002ftest-directory-67efb8bf-07f1-2e3c-94b7-79da97391c0d?restype=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869b9f-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "7e9e7cc9ae1c413c81b132c80a01e8db",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-client-request-id": "104612a1319e5ceb6ec7efeb43e04337",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -49,31 +51,32 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:59:07 GMT",
-        "ETag": "\u00220x8D6F366A365B4D2\u0022",
-        "Last-Modified": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "Date": "Fri, 19 Jul 2019 22:31:31 GMT",
+        "ETag": "\u00220x8D70C98D941EE04\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:31:31 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "f4093678-701a-0076-504f-25c746000000",
+        "x-ms-request-id": "7b2d103c-701a-0082-6281-3e0cb0000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": null
+      "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce/test-directory-2d02171a-3189-079a-1e2a-9ebe3f11781d/test-file-5a7526f9-2234-5144-2117-805022530c4e",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063\u002ftest-directory-67efb8bf-07f1-2e3c-94b7-79da97391c0d\u002ftest-file-dcd23603-28db-0471-9709-6d02e38cac82",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869ba0-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "f11a1aa334bc6c56dbc0abd7ffd1fd1d",
+        "x-ms-client-request-id": "4b96e9ac2d578eeccd93f92a1851eab4",
         "x-ms-content-length": "1048576",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
         "x-ms-version": "2018-11-09"
@@ -82,31 +85,32 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:59:07 GMT",
-        "ETag": "\u00220x8D6F366A369381D\u0022",
-        "Last-Modified": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "Date": "Fri, 19 Jul 2019 22:31:31 GMT",
+        "ETag": "\u00220x8D70C98D9445F9D\u0022",
+        "Last-Modified": "Fri, 19 Jul 2019 22:31:31 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "f4093679-701a-0076-514f-25c746000000",
+        "x-ms-request-id": "7b2d103d-701a-0082-6381-3e0cb0000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": null
+      "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce/test-directory-2d02171a-3189-079a-1e2a-9ebe3f11781d/test-file-5a7526f9-2234-5144-2117-805022530c4e",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063\u002ftest-directory-67efb8bf-07f1-2e3c-94b7-79da97391c0d\u002ftest-file-dcd23603-28db-0471-9709-6d02e38cac82",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869ba1-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "19c4c2411d9ba6e9374c5d042eec1e2e",
-        "x-ms-copy-source": "https://error.file.core.windows.net/",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-client-request-id": "61d741733f667832a1427895c3e978e1",
+        "x-ms-copy-source": "https:\u002f\u002ferror.file.core.windows.net\u002f",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -114,34 +118,35 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "269",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "CannotVerifyCopySource",
-        "x-ms-request-id": "f409367a-701a-0076-524f-25c746000000",
+        "x-ms-request-id": "7b2d103e-701a-0082-6481-3e0cb0000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c/Code\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:f409367a-701a-0076-524f-25c746000000\n",
-        "Time:2019-06-17T20:59:08.0109660Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
+        "RequestId:7b2d103e-701a-0082-6481-3e0cb0000000\n",
+        "Time:2019-07-19T22:31:32.0664799Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce/test-directory-2d02171a-3189-079a-1e2a-9ebe3f11781d/test-file-5a7526f9-2234-5144-2117-805022530c4e",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063\u002ftest-directory-67efb8bf-07f1-2e3c-94b7-79da97391c0d\u002ftest-file-dcd23603-28db-0471-9709-6d02e38cac82",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869ba1-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "19c4c2411d9ba6e9374c5d042eec1e2e",
-        "x-ms-copy-source": "https://error.file.core.windows.net/",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-client-request-id": "61d741733f667832a1427895c3e978e1",
+        "x-ms-copy-source": "https:\u002f\u002ferror.file.core.windows.net\u002f",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -149,34 +154,35 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "269",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:08 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:31:32 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "CannotVerifyCopySource",
-        "x-ms-request-id": "f409367f-701a-0076-534f-25c746000000",
+        "x-ms-request-id": "7b2d1041-701a-0082-6581-3e0cb0000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c/Code\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:f409367f-701a-0076-534f-25c746000000\n",
-        "Time:2019-06-17T20:59:08.7106358Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
+        "RequestId:7b2d1041-701a-0082-6581-3e0cb0000000\n",
+        "Time:2019-07-19T22:31:32.5779646Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce/test-directory-2d02171a-3189-079a-1e2a-9ebe3f11781d/test-file-5a7526f9-2234-5144-2117-805022530c4e",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063\u002ftest-directory-67efb8bf-07f1-2e3c-94b7-79da97391c0d\u002ftest-file-dcd23603-28db-0471-9709-6d02e38cac82",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869ba1-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "19c4c2411d9ba6e9374c5d042eec1e2e",
-        "x-ms-copy-source": "https://error.file.core.windows.net/",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-client-request-id": "61d741733f667832a1427895c3e978e1",
+        "x-ms-copy-source": "https:\u002f\u002ferror.file.core.windows.net\u002f",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -184,34 +190,35 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "269",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:09 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:31:33 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "CannotVerifyCopySource",
-        "x-ms-request-id": "f4093681-701a-0076-544f-25c746000000",
+        "x-ms-request-id": "7b2d1042-701a-0082-6681-3e0cb0000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c/Code\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:f4093681-701a-0076-544f-25c746000000\n",
-        "Time:2019-06-17T20:59:09.6275136Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
+        "RequestId:7b2d1042-701a-0082-6681-3e0cb0000000\n",
+        "Time:2019-07-19T22:31:33.7020336Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce/test-directory-2d02171a-3189-079a-1e2a-9ebe3f11781d/test-file-5a7526f9-2234-5144-2117-805022530c4e",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063\u002ftest-directory-67efb8bf-07f1-2e3c-94b7-79da97391c0d\u002ftest-file-dcd23603-28db-0471-9709-6d02e38cac82",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869ba1-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "19c4c2411d9ba6e9374c5d042eec1e2e",
-        "x-ms-copy-source": "https://error.file.core.windows.net/",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-client-request-id": "61d741733f667832a1427895c3e978e1",
+        "x-ms-copy-source": "https:\u002f\u002ferror.file.core.windows.net\u002f",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -219,34 +226,35 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "269",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:11 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:31:34 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "CannotVerifyCopySource",
-        "x-ms-request-id": "f4093687-701a-0076-574f-25c746000000",
+        "x-ms-request-id": "7b2d1044-701a-0082-6781-3e0cb0000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c/Code\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:f4093687-701a-0076-574f-25c746000000\n",
-        "Time:2019-06-17T20:59:11.6284288Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
+        "RequestId:7b2d1044-701a-0082-6781-3e0cb0000000\n",
+        "Time:2019-07-19T22:31:35.4036573Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce/test-directory-2d02171a-3189-079a-1e2a-9ebe3f11781d/test-file-5a7526f9-2234-5144-2117-805022530c4e",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063\u002ftest-directory-67efb8bf-07f1-2e3c-94b7-79da97391c0d\u002ftest-file-dcd23603-28db-0471-9709-6d02e38cac82",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869ba1-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "19c4c2411d9ba6e9374c5d042eec1e2e",
-        "x-ms-copy-source": "https://error.file.core.windows.net/",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-client-request-id": "61d741733f667832a1427895c3e978e1",
+        "x-ms-copy-source": "https:\u002f\u002ferror.file.core.windows.net\u002f",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -254,34 +262,35 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "269",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:16 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:31:38 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "CannotVerifyCopySource",
-        "x-ms-request-id": "f409368e-701a-0076-594f-25c746000000",
+        "x-ms-request-id": "7b2d1047-701a-0082-6881-3e0cb0000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c/Code\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:f409368e-701a-0076-594f-25c746000000\n",
-        "Time:2019-06-17T20:59:16.5781680Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
+        "RequestId:7b2d1047-701a-0082-6881-3e0cb0000000\n",
+        "Time:2019-07-19T22:31:38.7608599Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce/test-directory-2d02171a-3189-079a-1e2a-9ebe3f11781d/test-file-5a7526f9-2234-5144-2117-805022530c4e",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063\u002ftest-directory-67efb8bf-07f1-2e3c-94b7-79da97391c0d\u002ftest-file-dcd23603-28db-0471-9709-6d02e38cac82",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869ba1-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "19c4c2411d9ba6e9374c5d042eec1e2e",
-        "x-ms-copy-source": "https://error.file.core.windows.net/",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:07 GMT",
+        "x-ms-client-request-id": "61d741733f667832a1427895c3e978e1",
+        "x-ms-copy-source": "https:\u002f\u002ferror.file.core.windows.net\u002f",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:31 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -289,33 +298,34 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "269",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:23 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:31:44 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "CannotVerifyCopySource",
-        "x-ms-request-id": "f4093695-701a-0076-5c4f-25c746000000",
+        "x-ms-request-id": "7b2d105f-701a-0082-6b81-3e0cb0000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c/Code\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:f4093695-701a-0076-5c4f-25c746000000\n",
-        "Time:2019-06-17T20:59:23.7730562Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eCannotVerifyCopySource\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
+        "RequestId:7b2d105f-701a-0082-6b81-3e0cb0000000\n",
+        "Time:2019-07-19T22:31:45.4071999Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-91fe9303-42e4-57e5-36ad-9890723750ce?restype=share",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-ac0bd5b8-3ab4-a117-d541-c19294cb9063?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|4a869ba2-4dc84921435af1be.",
         "User-Agent": [
-          "azsdk-net-storage-files/1.0.0.0",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "ef25e3a5f7e7c51ed0097f73776d514f",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:23 GMT",
+        "x-ms-client-request-id": "593e6d1bf74ad5e049440e472f47ec45",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:45 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -323,18 +333,19 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:59:23 GMT",
+        "Date": "Fri, 19 Jul 2019 22:31:44 GMT",
         "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-File\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
-        "x-ms-request-id": "f4093696-701a-0076-5d4f-25c746000000",
+        "x-ms-request-id": "7b2d1061-701a-0082-6c81-3e0cb0000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": null
+      "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "1311081911"
+    "RandomSeed": "883998416",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

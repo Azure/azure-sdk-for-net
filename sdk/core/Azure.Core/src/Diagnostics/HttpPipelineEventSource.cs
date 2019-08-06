@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 // TODO (pri 2): we should log correction/activity
 // TODO (pri 2): we should log exceptions

@@ -4,64 +4,97 @@
 namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Concurrent;
+    using System.Threading;
     using System.Threading.Tasks;
 
     sealed class ConcurrentExpiringSet<TKey>
     {
         readonly ConcurrentDictionary<TKey, DateTime> dictionary;
-        readonly object cleanupSynObject = new object();
-        bool cleanupScheduled;
-        static TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
+        readonly ICollection<KeyValuePair<TKey, DateTime>> dictionaryAsCollection;
+        readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
+        volatile TaskCompletionSource<bool> cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        int closeSignaled;
+        bool closed;
+        static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
 
         public ConcurrentExpiringSet()
         {
             this.dictionary = new ConcurrentDictionary<TKey, DateTime>();
+            this.dictionaryAsCollection = dictionary;
+            _ = CollectExpiredEntriesAsync(tokenSource.Token);
         }
 
         public void AddOrUpdate(TKey key, DateTime expiration)
         {
+            this.ThrowIfClosed();
+
             this.dictionary[key] = expiration;
-            this.ScheduleCleanup();
+            this.cleanupTaskCompletionSource.TrySetResult(true);
         }
 
         public bool Contains(TKey key)
         {
+            this.ThrowIfClosed();
+
             return this.dictionary.TryGetValue(key, out var expiration) && expiration > DateTime.UtcNow;
         }
 
-        void ScheduleCleanup()
+        public void Close()
         {
-            lock (this.cleanupSynObject)
+            if (Interlocked.Exchange(ref this.closeSignaled, 1) != 0)
             {
-                if (this.cleanupScheduled || this.dictionary.Count <= 0)
+                return;
+            }
+
+            this.closed = true;
+
+            this.tokenSource.Cancel();
+            this.cleanupTaskCompletionSource.TrySetCanceled();
+            this.dictionary.Clear();
+            this.tokenSource.Dispose();
+        }
+
+        async Task CollectExpiredEntriesAsync(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                try
+                {
+                    await this.cleanupTaskCompletionSource.Task.ConfigureAwait(false);
+                    await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
                 {
                     return;
                 }
 
-                this.cleanupScheduled = true;
-                Task.Run(async () => await this.CollectExpiredEntriesAsync().ConfigureAwait(false));
+                var isEmpty = true;
+                var utcNow = DateTime.UtcNow;
+                foreach (var kvp in this.dictionary)
+                {
+                    isEmpty = false;
+                    var expiration = kvp.Value;
+                    if (utcNow > expiration)
+                    {
+                        this.dictionaryAsCollection.Remove(kvp);
+                    }
+                }
+
+                if (isEmpty)
+                {
+                    this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                }
             }
         }
 
-        async Task CollectExpiredEntriesAsync()
+        void ThrowIfClosed()
         {
-            await Task.Delay(delayBetweenCleanups);
-
-            lock (this.cleanupSynObject)
+            if (closed)
             {
-                this.cleanupScheduled = false;
+                throw new ObjectDisposedException($"ConcurrentExpiringSet has already been closed. Please create a new set instead.");
             }
-
-            foreach (var key in this.dictionary.Keys)
-            {
-                if (DateTime.UtcNow > this.dictionary[key])
-                {
-                    this.dictionary.TryRemove(key, out _);
-                }
-            }
-
-            this.ScheduleCleanup();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace TrackOne.Amqp
     class AmqpEventDataSender : EventDataSender
     {
         int deliveryCount;
+        bool linkCreated;
         readonly ActiveClientLinkManager clientLinkManager;
 
         internal AmqpEventDataSender(AmqpEventHubClient eventHubClient, string partitionId)
@@ -100,6 +101,18 @@ namespace TrackOne.Amqp
             } while (shouldRetry);
         }
 
+        internal override async ValueTask EnsureLinkAsync()
+        {
+            if (this.linkCreated)
+            {
+                return;
+            }
+
+            await this.SendLinkManager.GetOrCreateAsync(TimeSpan.FromSeconds(AmqpClientConstants.AmqpSessionTimeoutInSeconds)).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromMilliseconds(15)).ConfigureAwait(false);
+
+        }
+
         ArraySegment<byte> GetNextDeliveryTag()
         {
             int deliveryId = Interlocked.Increment(ref this.deliveryCount);
@@ -161,6 +174,7 @@ namespace TrackOne.Amqp
 
                 this.MaxMessageSize = (long)activeClientLink.Link.Settings.MaxMessageSize();
                 this.clientLinkManager.SetActiveLink(activeClientLink);
+                this.linkCreated = true;
                 return link;
             }
             catch

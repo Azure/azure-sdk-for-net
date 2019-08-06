@@ -13,6 +13,7 @@ namespace Azure.Storage.Sas
     /// permissions string for a queue account's access policy.  Use
     /// <see cref="ToString"/> to generate a permissions string you can provide
     /// to <see cref="QueueSasBuilder.Permissions"/>.
+    /// </summary>
     public struct QueueAccountSasPermissions : IEquatable<QueueAccountSasPermissions>
     {
         /// <summary>
@@ -122,7 +123,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Check if two QueueAccountSasPermissions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(QueueAccountSasPermissions other) =>
             other.Add == this.Add &&

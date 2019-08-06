@@ -88,12 +88,45 @@ namespace Sql.Tests
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
 
-        public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location)
+        public static void ValidateInstancePool(
+            InstancePool actual, string name, int vCores, string subnetId, string location, Dictionary<string, string> tags)
+        {
+            Assert.NotNull(actual);
+
+            Assert.Equal(name, actual.Name);
+            Assert.Equal(vCores, actual.VCores);
+            Assert.Equal(subnetId, actual.SubnetId);
+            SqlManagementTestUtilities.AssertCollection(tags, actual.Tags);
+
+            // Location is being returned two different ways across different APIs.
+            Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
+        }
+
+        public static void ValidateInstancePoolUsage(
+            Usage actual,
+            int? currentValue,
+            int? limit,
+            int? requestedLimit,
+            string usageName)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(currentValue, actual.CurrentValue);
+            Assert.Equal(limit, actual.Limit);
+            Assert.Equal(requestedLimit, actual.RequestedLimit);
+            Assert.Equal(usageName, actual.Name.Value);
+        }
+
+        public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location, string instancePoolId = null)
         {
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
             Assert.Equal(login, actual.AdministratorLogin);
             SqlManagementTestUtilities.AssertCollection(tags, actual.Tags);
+
+            if (instancePoolId != null)
+            {
+                Assert.Equal(actual.InstancePoolId, instancePoolId);
+            }
 
             // Location is being returned two different ways across different APIs.
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));

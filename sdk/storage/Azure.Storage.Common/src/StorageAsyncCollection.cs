@@ -32,12 +32,13 @@ namespace Azure.Storage
         /// <see cref="AsyncCollection{T}"/>.
         /// </summary>
         /// <remarks>
-        /// This is all you need to implement when providng a new 
+        /// This is all you need to implement when providng a new
         /// <see cref="AsyncCollection{T}"/>.
         /// </remarks>
         /// <param name="continuationToken">
         /// Continuation token indicating where to begin enumerating.
         /// </param>
+        /// <param name="pageHintSize"></param>
         /// <param name="isAsync">
         /// Whether to fetch the next page asynchronously.
         /// </param>
@@ -73,7 +74,7 @@ namespace Azure.Storage
         /// A continuation token indicating where to resume paging or null to
         /// begin paging from the beginning.
         /// </param>
-        /// <param name="pageSizeHint">
+        /// <param name="pageHintSize">
         /// The size of <see cref="Page{T}"/>s that should be requested (from
         /// service operations that support it).
         /// </param>
@@ -120,7 +121,7 @@ namespace Azure.Storage
             {
                 var page = await this.GetNextPageAsync(
                     continuationToken,
-                    null, 
+                    null,
                     isAsync: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -136,12 +137,8 @@ namespace Azure.Storage
         /// Enumerate the values in the collection synchronously.  This may
         /// make mutliple service requests.
         /// </summary>
-        /// <param name="cancellationToken">
-        /// The <see cref="CancellationToken"/> used for requests made while
-        /// enumerating.
-        /// </param>
         /// <returns>A sequence of values.</returns>
-        protected override IEnumerator<Response<T>> GetEnumerator()
+        protected IEnumerator<Response<T>> GetEnumerator()
         {
             string continuationToken = null;
             do

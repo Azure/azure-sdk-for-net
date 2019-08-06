@@ -307,6 +307,11 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Equal(IndexerExecutionStatus.InProgress, info.LastResult.Status);
                 Assert.Equal(3, info.ExecutionHistory.Count);
 
+                Assert.NotNull(info.Limits);
+                Assert.Equal(100000, info.Limits.MaxDocumentContentCharactersToExtract);
+                Assert.Equal(1000, info.Limits.MaxDocumentExtractionSize);
+                Assert.Equal(TimeSpan.FromDays(1), info.Limits.MaxRunTime);
+
                 IndexerExecutionResult newestResult = info.ExecutionHistory[0];
                 IndexerExecutionResult middleResult = info.ExecutionHistory[1];
                 IndexerExecutionResult oldestResult = info.ExecutionHistory[2];

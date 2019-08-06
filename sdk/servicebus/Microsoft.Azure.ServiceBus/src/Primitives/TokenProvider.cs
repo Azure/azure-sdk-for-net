@@ -79,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns>The <see cref="Microsoft.ServiceBus.TokenProvider" /> for returning Json web token.</returns>
         public static TokenProvider CreateAzureActiveDirectoryTokenProvider(
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
-            string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
+            string authority,
             object state = null)
         {
             if (authCallback == null)

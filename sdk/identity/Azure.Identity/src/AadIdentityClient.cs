@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -16,12 +15,13 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Identity
 {
     internal class AadIdentityClient
     {
-        private static Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient());
+        private static Lazy<AadIdentityClient> s_sharedClient = new Lazy<AadIdentityClient>(() => new AadIdentityClient(null));
 
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
@@ -29,6 +29,10 @@ namespace Azure.Identity
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 
         private const string AuthenticationRequestFailedError = "The request to the identity service failed.  See inner exception for details.";
+
+        protected AadIdentityClient()
+        {
+        }
 
         public AadIdentityClient(IdentityClientOptions options = null)
         {
@@ -42,8 +46,12 @@ namespace Azure.Identity
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
                 try
                 {
                     return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
@@ -52,13 +60,22 @@ namespace Azure.Identity
                 {
                     throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
                 }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes);
                 try
                 {
                     return SendAuthRequest(request, cancellationToken);
@@ -68,12 +85,21 @@ namespace Azure.Identity
                     throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
                 }
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
                 try
                 {
                     return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
@@ -83,12 +109,21 @@ namespace Azure.Identity
                     throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
                 }
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public virtual AccessToken Authenticate(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes))
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.AadIdentityClient.Authenticate");
+            scope.Start();
+
+            try
             {
+                using Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes);
                 try
                 {
                     return SendAuthRequest(request, cancellationToken);
@@ -98,7 +133,13 @@ namespace Azure.Identity
                     throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
                 }
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
+
         private async Task<AccessToken> SendAuthRequestAsync(Request request, CancellationToken cancellationToken)
         {
             var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);

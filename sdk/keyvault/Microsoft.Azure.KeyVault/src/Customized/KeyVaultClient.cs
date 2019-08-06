@@ -16,6 +16,7 @@ namespace Microsoft.Azure.KeyVault
     using Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
+    using Microsoft.Azure.KeyVault.Customized.Authentication;
 
 
     /// <summary>
@@ -225,6 +226,21 @@ namespace Microsoft.Azure.KeyVault
                 ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
+        }
+
+        /// <summary>
+        /// Overrides the base <see cref="CreateHttpHandlerPipeline"/> to add a <see cref="ChallengeCacheHandler"/> as the outermost <see cref="DelegatingHandler"/>.
+        /// </summary>
+        /// <param name="httpClientHandler">The base handler for the client</param>
+        /// <param name="handlers">The handler pipeline for the client</param>
+        /// <returns></returns>
+        protected override DelegatingHandler CreateHttpHandlerPipeline(HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
+        {
+            var challengeCacheHandler = new ChallengeCacheHandler();
+
+            challengeCacheHandler.InnerHandler = base.CreateHttpHandlerPipeline(httpClientHandler, handlers);
+
+            return challengeCacheHandler;
         }
     }
 }

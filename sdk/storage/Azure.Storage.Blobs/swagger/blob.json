@@ -374,7 +374,7 @@
           "service"
         ],
         "operationId": "Service_GetAccountInfo",
-        "description": "Returns the sku name and account kind ",
+        "description": "Returns the sku name and account kind",
         "parameters": [
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -5608,6 +5608,7 @@
     "BlockLookupList": {
       "type": "object",
       "x-ms-public": false,
+      "description": "A list of block IDs split between the committed block list, in the uncommitted block list, or in the uncommitted block list first and then in the committed block list.",
       "properties": {
         "Committed": {
           "type": "array",
@@ -6198,7 +6199,8 @@
       "type": "string",
       "format": "url",
       "in": "path",
-      "x-ms-skip-url-encoding": true
+      "x-ms-skip-url-encoding": true,
+      "x-ms-trace": true
     },
     "ApiVersionParameter": {
       "name": "x-ms-version",

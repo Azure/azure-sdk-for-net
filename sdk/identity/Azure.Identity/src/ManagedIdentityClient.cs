@@ -9,12 +9,13 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Identity
 {
     internal class ManagedIdentityClient
     {
-        private static Lazy<ManagedIdentityClient> s_sharedClient = new Lazy<ManagedIdentityClient>(() => new ManagedIdentityClient());
+        private static Lazy<ManagedIdentityClient> s_sharedClient = new Lazy<ManagedIdentityClient>(() => new ManagedIdentityClient(null));
 
         private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
@@ -36,6 +37,10 @@ namespace Azure.Identity
 
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
+
+        protected ManagedIdentityClient()
+        {
+        }
 
         public ManagedIdentityClient(IdentityClientOptions options = null)
         {
@@ -65,13 +70,24 @@ namespace Azure.Identity
                 return default;
             }
 
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
+            scope.Start();
+
             try
             {
-                return await SendAuthRequestAsync(msiType, scopes, clientId, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    return await SendAuthRequestAsync(msiType, scopes, clientId, cancellationToken).ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex)
+                {
+                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                }
             }
-            catch (RequestFailedException ex)
+            catch (Exception e)
             {
-                throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -85,13 +101,24 @@ namespace Azure.Identity
                 return default;
             }
 
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Identity.ManagedIdentityClient.Authenticate");
+            scope.Start();
+
             try
             {
-                return SendAuthRequest(msiType, scopes, clientId, cancellationToken);
+                try
+                {
+                    return SendAuthRequest(msiType, scopes, clientId, cancellationToken);
+                }
+                catch(RequestFailedException ex)
+                {
+                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                }
             }
-            catch(RequestFailedException ex)
+            catch (Exception e)
             {
-                throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -459,8 +486,8 @@ namespace Azure.Identity
             {
                 // the seconds from epoch may be returned as a Json number or a Json string which is a number
                 // depending on the environment.  If neither of these are the case we throw an AuthException.
-                if (!(expiresOnProp.Type == JsonValueType.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) && 
-                    !(expiresOnProp.Type == JsonValueType.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
+                if (!(expiresOnProp.ValueKind == JsonValueKind.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) &&
+                    !(expiresOnProp.ValueKind == JsonValueKind.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }

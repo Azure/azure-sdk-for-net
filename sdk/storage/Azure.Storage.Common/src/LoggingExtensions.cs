@@ -30,7 +30,7 @@ namespace Azure.Storage.Common
 #pragma warning restore CA1801 // Review unused parameters
             // Methods that return values can't be marked [Conditional], but
             // using statements will check for null before calling Dispose
-            => null;        
+            => null;
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [Conditional("EnableLoggingHelpers")]
@@ -71,7 +71,7 @@ namespace Azure.Storage.Common
         }
 
         /*
-        Temporarily removing unused code that depends on HttpUtility.ParseQueryString 
+        Temporarily removing unused code that depends on HttpUtility.ParseQueryString
 
 
         public static HttpRequestMessage Sanitize(this HttpRequestMessage httpRequest)

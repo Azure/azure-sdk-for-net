@@ -16,8 +16,8 @@ namespace Azure.Storage.Sas
     public struct FileSasBuilder : IEquatable<FileSasBuilder>
     {
         /// <summary>
-        /// The storage service version to use to authenticate requests made 
-        /// with this shared access signature, and the service version to use 
+        /// The storage service version to use to authenticate requests made
+        /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
         public string Version { get; set; }
@@ -40,7 +40,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
-        /// This field must be omitted if it has been specified in an 
+        /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
         public DateTimeOffset ExpiryTime { get; set; }
@@ -57,10 +57,10 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
-        /// accept requests. If the IP address from which the request 
-        /// originates does not match the IP address or address range 
+        /// accept requests. If the IP address from which the request
+        /// originates does not match the IP address or address range
         /// specified on the SAS token, the request is not authenticated.
-        /// When specifying a range of IP addresses, note that the range is 
+        /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
         public IPRange IPRange { get; set; }
@@ -109,7 +109,7 @@ namespace Azure.Storage.Sas
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this 
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>
@@ -156,11 +156,11 @@ namespace Azure.Storage.Sas
                 this.IPRange.ToString(),
                 this.Protocol.ToString(),
                 this.Version,
-                this.CacheControl,       
-                this.ContentDisposition, 
-                this.ContentEncoding,    
-                this.ContentLanguage,    
-                this.ContentType);       
+                this.CacheControl,
+                this.ContentDisposition,
+                this.ContentEncoding,
+                this.ContentLanguage,
+                this.ContentType);
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
 
@@ -173,8 +173,8 @@ namespace Azure.Storage.Sas
                 expiryTime: this.ExpiryTime,
                 ipRange: this.IPRange,
                 identifier: this.Identifier,
-                resource: resource, 
-                permissions: this.Permissions, 
+                resource: resource,
+                permissions: this.Permissions,
                 signature: signature);
             return p;
         }
@@ -252,7 +252,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Check if two FileSasBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(FileSasBuilder other)
             => this.CacheControl == other.CacheControl

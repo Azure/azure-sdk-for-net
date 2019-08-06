@@ -13,6 +13,7 @@ namespace Azure.Core.Tests
     {
         public ClientTestBaseTests(bool isAsync) : base(isAsync)
         {
+            TestDiagnostics = false;
         }
 
         [Test]

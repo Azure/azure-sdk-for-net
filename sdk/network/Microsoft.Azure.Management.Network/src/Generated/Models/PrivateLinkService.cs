@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="loadBalancerFrontendIPConfigurations">An array of
+        /// <param name="loadBalancerFrontendIpConfigurations">An array of
         /// references to the load balancer IP configurations.</param>
         /// <param name="ipConfigurations">An array of references to the
         /// private link service IP configuration.</param>
@@ -58,10 +58,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="alias">The alias of the private link service.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public PrivateLinkService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<FrontendIPConfiguration> loadBalancerFrontendIPConfigurations = default(IList<FrontendIPConfiguration>), IList<PrivateLinkServiceIpConfiguration> ipConfigurations = default(IList<PrivateLinkServiceIpConfiguration>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), PrivateLinkServicePropertiesVisibility visibility = default(PrivateLinkServicePropertiesVisibility), PrivateLinkServicePropertiesAutoApproval autoApproval = default(PrivateLinkServicePropertiesAutoApproval), IList<string> fqdns = default(IList<string>), string alias = default(string), string etag = default(string))
+        public PrivateLinkService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations = default(IList<FrontendIPConfiguration>), IList<PrivateLinkServiceIpConfiguration> ipConfigurations = default(IList<PrivateLinkServiceIpConfiguration>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), PrivateLinkServicePropertiesVisibility visibility = default(PrivateLinkServicePropertiesVisibility), PrivateLinkServicePropertiesAutoApproval autoApproval = default(PrivateLinkServicePropertiesAutoApproval), IList<string> fqdns = default(IList<string>), string alias = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
-            LoadBalancerFrontendIPConfigurations = loadBalancerFrontendIPConfigurations;
+            LoadBalancerFrontendIpConfigurations = loadBalancerFrontendIpConfigurations;
             IpConfigurations = ipConfigurations;
             NetworkInterfaces = networkInterfaces;
             ProvisioningState = provisioningState;
@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets an array of references to the load balancer IP
         /// configurations.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancerFrontendIPConfigurations")]
-        public IList<FrontendIPConfiguration> LoadBalancerFrontendIPConfigurations { get; set; }
+        [JsonProperty(PropertyName = "properties.loadBalancerFrontendIpConfigurations")]
+        public IList<FrontendIPConfiguration> LoadBalancerFrontendIpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets an array of references to the private link service IP
