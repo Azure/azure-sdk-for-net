@@ -221,6 +221,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task CreateClientWithoutEntityPathShouldFail()
         {
