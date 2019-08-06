@@ -112,7 +112,7 @@ namespace Microsoft.Azure.ContainerRegistry
             {
                 throw new System.ArgumentNullException("credentials");
             }
-            BaseUri = baseUri.AbsoluteUri;
+            BaseUri = "{url}";
             Credentials = credentials;
             if (Credentials != null)
 

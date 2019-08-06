@@ -12,11 +12,6 @@
     <Compile Remove="Tests\ACRTestUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="SessionRecords\**\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <ProjectReference Include="..\src\Microsoft.Azure.ContainerRegistry.csproj" />
