@@ -36,15 +36,14 @@ namespace ContainerRegistry.Tests
                 var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
                 
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, repositoryDetails.Registry);
-                Assert.Equal(1, repositoryDetails.TagCount);
-                Assert.Equal(1, repositoryDetails.ManifestCount);
-                Assert.Equal("2018-09-28T23:37:52.0356217Z", repositoryDetails.LastUpdateTime);
-                Assert.Equal("2018-09-28T23:37:51.9668212Z", repositoryDetails.CreatedTime);
+                Assert.Equal(2, repositoryDetails.TagCount);
+                Assert.Equal(2, repositoryDetails.ManifestCount);
+                Assert.Equal("2019-08-01T22:49:11.1632015Z", repositoryDetails.CreatedTime);
                 Assert.Equal(ACRTestUtil.ProdRepository, repositoryDetails.ImageName);
                 Assert.True(repositoryDetails.ChangeableAttributes.DeleteEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ListEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ReadEnabled);
-                Assert.True(repositoryDetails.ChangeableAttributes.WriteEnabled);
+                Assert.False(repositoryDetails.ChangeableAttributes.WriteEnabled);
             }
         }
 
@@ -67,7 +66,7 @@ namespace ContainerRegistry.Tests
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepository)))
             {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForDeleting);
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
                 var deletedRepo = await client.DeleteAcrRepositoryAsync(ACRTestUtil.TestRepository);
 
                 Assert.Equal(1, deletedRepo.ManifestsDeleted.Count);
@@ -83,7 +82,7 @@ namespace ContainerRegistry.Tests
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrRepositoryAttributes)))
             {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
                 await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository, updateAttributes);
                 var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
