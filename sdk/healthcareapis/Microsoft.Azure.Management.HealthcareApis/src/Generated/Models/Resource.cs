@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
+        /// <param name="kind">The kind of the service. Valid values are: fhir,
+        /// fhir-Stu3 and fhir-R4. Possible values include: 'fhir',
+        /// 'fhir-Stu3', 'fhir-R4'</param>
         /// <param name="location">The resource location.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
@@ -36,22 +39,16 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <param name="tags">The resource tags.</param>
         /// <param name="etag">An etag associated with the resource, used for
         /// optimistic concurrency when editing it.</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
+        public Resource(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
+            Kind = kind;
             Location = location;
             Tags = tags;
             Etag = etag;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for Resource class.
-        /// </summary>
-        static Resource()
-        {
-            Kind = "fhir";
         }
 
         /// <summary>
@@ -78,6 +75,14 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         public string Type { get; private set; }
 
         /// <summary>
+        /// Gets or sets the kind of the service. Valid values are: fhir,
+        /// fhir-Stu3 and fhir-R4. Possible values include: 'fhir',
+        /// 'fhir-Stu3', 'fhir-R4'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public Kind Kind { get; set; }
+
+        /// <summary>
         /// Gets or sets the resource location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
@@ -95,12 +100,6 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
-
-        /// <summary>
-        /// The kind of the service. Valid values are: fhir.
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public static string Kind { get; private set; }
 
         /// <summary>
         /// Validate the object.
