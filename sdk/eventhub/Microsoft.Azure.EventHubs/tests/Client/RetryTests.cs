@@ -97,7 +97,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var testMaxRetryCount = 99;
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);

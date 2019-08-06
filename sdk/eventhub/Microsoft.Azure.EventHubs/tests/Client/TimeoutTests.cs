@@ -8,7 +8,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Threading.Tasks;
     using Xunit;
 
-
     public class TimeoutTests : ClientTestBase
     {
         [Fact]
@@ -18,11 +17,12 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var testValues = new[] { 30, 60, 120 };
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 var receiver = default(PartitionReceiver);
+
                 try
                 {
                     foreach (var receiveTimeoutInSeconds in testValues)
@@ -74,12 +74,14 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             // Issue receives with 1 second so that some of the Receive calls will timeout while creating AMQP link.
             // Even those Receive calls should return NULL instead of bubbling the exception up.
             var receiveTimeoutInSeconds = 1;
-            await using (var scope = await EventHubScope.CreateAsync(2))
+
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var tasks = Enumerable.Range(0, maxClients)
                 .Select(async i =>
                 {
                     PartitionReceiver receiver = null;
+
                     try
                     {
                         TestUtility.Log($"Testing with {receiveTimeoutInSeconds} seconds on client {i}.");

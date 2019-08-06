@@ -12,7 +12,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     public class ConnectionStringBuilderTests
     {
         [Fact]
-        [LiveTest]
         [DisplayTestMethodName]
         public void ParseAndBuild()
         {
@@ -119,7 +118,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task UseSharedAccessSignatureApi()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Generate shared access token.
