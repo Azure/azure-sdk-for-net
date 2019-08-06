@@ -7,7 +7,7 @@ namespace SmokeTest
 {
     class KeyVaultTest
     {
-        private const string SecretName = "SmokeTestSecret";
+        private static string SecretName = "SmokeTestSecret-" + Guid.NewGuid();
         private const string SecretValue = "smokeTestValue";
         private static SecretClient client;
 
