@@ -54,15 +54,17 @@ namespace Azure.Messaging.EventHubs.Processor
         public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string eventHubName,
                                                                                  string consumerGroup)
         {
+            List<PartitionOwnership> ownershipList;
+
             lock(OwnershipClaimLock)
             {
-                var ownershipList = Ownership.Values
+                ownershipList = Ownership.Values
                     .Where(ownership => ownership.EventHubName == eventHubName &&
                         ownership.ConsumerGroup == consumerGroup)
                     .ToList();
-
-                return Task.FromResult((IEnumerable<PartitionOwnership>)ownershipList);
             }
+
+            return Task.FromResult((IEnumerable<PartitionOwnership>)ownershipList);
         }
 
         /// <summary>
@@ -77,12 +79,12 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             var claimedOwnership = new List<PartitionOwnership>();
 
-            foreach(var ownership in partitionOwnership)
-            {
-                // The following lock makes sure two different event processors won't try to claim ownership of a partition
-                // simultaneously.  This approach prevents an ownership from being stolen just after being claimed.
+            // The following lock makes sure two different event processors won't try to claim ownership of a partition
+            // simultaneously.  This approach prevents an ownership from being stolen just after being claimed.
 
-                lock (OwnershipClaimLock)
+            lock (OwnershipClaimLock)
+            {
+                foreach (var ownership in partitionOwnership)
                 {
                     var isClaimable = true;
 
