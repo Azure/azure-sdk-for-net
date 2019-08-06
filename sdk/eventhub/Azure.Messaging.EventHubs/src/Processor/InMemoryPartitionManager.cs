@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         ownership.ConsumerGroup == consumerGroup)
                     .ToList();
 
-                return Task.FromResult(ownershipList.AsEnumerable());
+                return Task.FromResult((IEnumerable<PartitionOwnership>)ownershipList);
             }
         }
 
@@ -79,51 +79,37 @@ namespace Azure.Messaging.EventHubs.Processor
 
             foreach(var ownership in partitionOwnership)
             {
-                var isClaimable = true;
-
-                // In case the partition already has an owner, the ETags must match in order to claim it.
-
-                if (Ownership.TryGetValue(ownership.PartitionId, out var currentOwnership))
-                {
-                    isClaimable = ownership.ETag == currentOwnership.ETag;
-                }
-
                 // The following lock makes sure two different event processors won't try to claim ownership of a partition
                 // simultaneously.  This approach prevents an ownership from being stolen just after being claimed.
 
-                if (isClaimable)
+                lock (OwnershipClaimLock)
                 {
-                    lock (OwnershipClaimLock)
+                    var isClaimable = true;
+
+                    // In case the partition already has an owner, the ETags must match in order to claim it.
+
+                    if (Ownership.TryGetValue(ownership.PartitionId, out var currentOwnership))
                     {
-                        isClaimable = true;
-
-                        if (Ownership.TryGetValue(ownership.PartitionId, out currentOwnership))
-                        {
-                            isClaimable = ownership.ETag == currentOwnership.ETag;
-                        }
-
-                        if (isClaimable)
-                        {
-                            ownership.ETag = Guid.NewGuid().ToString();
-
-                            Ownership[ownership.PartitionId] = ownership;
-                            claimedOwnership.Add(ownership);
-
-                            Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
-                        }
-                        else
-                        {
-                            Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
-                        }
+                        isClaimable = ownership.ETag == currentOwnership.ETag;
                     }
-                }
-                else
-                {
-                    Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
+
+                    if (isClaimable)
+                    {
+                        ownership.ETag = Guid.NewGuid().ToString();
+
+                        Ownership[ownership.PartitionId] = ownership;
+                        claimedOwnership.Add(ownership);
+
+                        Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
+                    }
+                    else
+                    {
+                        Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
+                    }
                 }
             }
 
-            return Task.FromResult(claimedOwnership.AsEnumerable());
+            return Task.FromResult((IEnumerable<PartitionOwnership>)claimedOwnership);
         }
 
         /// <summary>
