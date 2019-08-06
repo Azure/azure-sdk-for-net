@@ -1,4 +1,8 @@
-﻿using Azure.Storage.Blobs.Models;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
+using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;

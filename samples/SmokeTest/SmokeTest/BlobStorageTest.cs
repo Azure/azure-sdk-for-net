@@ -1,4 +1,8 @@
-﻿using Azure.Storage.Blobs;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
+using Azure.Storage.Blobs;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;

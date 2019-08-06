@@ -1,4 +1,8 @@
-﻿using Azure;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
+using Azure;
 using Azure.Messaging.EventHubs;
 using Microsoft.Azure.Amqp.Framing;
 using System;
