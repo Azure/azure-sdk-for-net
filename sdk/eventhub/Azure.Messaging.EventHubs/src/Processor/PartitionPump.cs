@@ -16,6 +16,9 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     internal class PartitionPump
     {
+        /// <summary>The <see cref="EventHubRetryPolicy" /> used to verify whether an exception is retryable or not.</summary>
+        private static readonly BasicRetryPolicy RetryPolicy = new BasicRetryPolicy(new RetryOptions());
+
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
         private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
 
@@ -194,8 +197,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
-            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
-
             while (!cancellationToken.IsCancellationRequested)
             {
                 IEnumerable<EventData> receivedEvents = null;
@@ -210,7 +211,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     // Stop the pump if it's not a retryable exception.
 
-                    if (retryPolicy.CalculateRetryDelay(exception, 1) == null)
+                    if (RetryPolicy.CalculateRetryDelay(exception, 1) == null)
                     {
                         // StopAsync cannot be awaited in this method because it awaits RunningTask, so we would have a deadlock.
                         // For this reason, StopAsync starts to run concurrently with this task.
