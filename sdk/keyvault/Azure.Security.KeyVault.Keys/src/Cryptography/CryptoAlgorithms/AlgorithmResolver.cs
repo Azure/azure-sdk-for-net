@@ -19,7 +19,9 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoAlgorithms
     {
         #region Properties
         /// <summary>
-        /// 
+        /// Dictionay
+        /// Key: Algorithm Enum value
+        /// Value: Algorithm name on the wire
         /// </summary>
         protected Dictionary<string, string> SupportedAlgorithmMap { get; }
 

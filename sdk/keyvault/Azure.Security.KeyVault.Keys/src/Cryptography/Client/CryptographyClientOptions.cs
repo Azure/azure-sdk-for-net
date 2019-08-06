@@ -81,7 +81,22 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         #endregion
 
         #region Public Functions
+        internal string GetVersionString()
+        {
+            var version = string.Empty;
 
+            switch (this.Version)
+            {
+                case ServiceVersion.V7_0:
+                    version = "7.0";
+                    break;
+
+                default:
+                    throw new ArgumentException(this.Version.ToString());
+            }
+
+            return version;
+        }
         #endregion
 
         #region private functions

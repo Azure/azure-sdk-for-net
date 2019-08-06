@@ -11,10 +11,12 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class KVCryptoTests: CryptoTestBase
     {
+        static byte[] CEK = { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
 
         public KVCryptoTests(bool isAsync): base(isAsync)
         {   
@@ -31,19 +33,21 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
         [Test]
         public async Task InstantiateCryptoClient()
         {
+
             Key key = await GetKeyAsync(KeyType.Rsa, verifyCreatedKey: false);
-            key = null;
+            //key = null;
             InitCryptoClient(key);
 
+            var encryptedData = await KVCryptoClient.CryptoProvider.EncryptAsync(CEK, null, null, Base.EncryptionAlgorithmKind.Rsa15, default(CancellationToken)).ConfigureAwait(false);
 
-
+            Assert.NotNull(encryptedData);
         }
 
         #region private functions
         async Task<Key> GetKeyAsync(KeyType keyType, bool verifyCreatedKey)
         {
             string keyName = Recording.GenerateId();
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Rsa);
             //RegisterForCleanup(key);
 
             if(verifyCreatedKey)

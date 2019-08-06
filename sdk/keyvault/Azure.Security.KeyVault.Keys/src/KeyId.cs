@@ -52,6 +52,24 @@ namespace Azure.Security.KeyVault.Keys
             Check.NotNull(keyVaultKeyId, nameof(keyVaultKeyId));
             ParseId(keyVaultKeyId.ToString());
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyVaultUri"></param>
+        /// <param name="keyName"></param>
+        /// <param name="keyVersion"></param>
+        public KeyId(Uri keyVaultUri, string keyName, string keyVersion)
+        {
+            Check.NotNull(keyVaultUri, nameof(keyVaultUri));
+            Check.NotEmptyNotNull(keyName, nameof(keyName));
+            Check.NotEmptyNotNull(keyVersion, nameof(keyVersion));
+
+            KeyVaultUri = keyVaultUri;
+            KeyName = keyName;
+            KeyVersion = keyVersion;
+        }
+
         #endregion
 
         #region Public Functions

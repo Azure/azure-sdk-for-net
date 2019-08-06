@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Cryptography.Interface
     /// <summary>
     /// 
     /// </summary>
-    internal interface IKeyVaultDefault
+    public interface IKeyVaultDefault
     {
         /// <summary>
         /// Category name that defines what category does the defaults belongs to

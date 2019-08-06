@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// <summary>
         /// KeyVault Uri
         /// </summary>
-        public Uri KeyId { get; }
+        internal KeyId KeyId { get; }
 
         /// <summary>
         /// KeyVault Key
@@ -70,41 +70,38 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         }
 
         #region Local Crypto
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="keyVaultKeyUri"></param>
-        public CryptographyClient(Uri keyVaultKeyUri)
-            : this(keyVaultKeyUri, new CryptographyClientOptions()) { }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="keyVaultKeyUri"></param>
-        /// <param name="options"></param>
-        public CryptographyClient(Uri keyVaultKeyUri, CryptographyClientOptions options)
-        {
-            KeyId = keyVaultKeyUri;
-            options.EnableServerCryptographyOperations = false;
-        }
+        //public CryptographyClient(Uri keyId)
+        //    : this(keyId, new CryptographyClientOptions()) { }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="keyVaultKey"></param>
-        public CryptographyClient(Key keyVaultKey)
-            : this(keyVaultKey, new CryptographyClientOptions()) { }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="keyVaultKeyUri"></param>
+        ///// <param name="options"></param>
+        //public CryptographyClient(Uri keyVaultKeyUri, CryptographyClientOptions options)
+        //{
+        //    KeyId = keyVaultKeyUri;
+        //    options.EnableServerCryptographyOperations = false;
+        //}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="keyVaultKey"></param>
-        /// <param name="options"></param>
-        public CryptographyClient(Key keyVaultKey, CryptographyClientOptions options)
-        {
-            KeyVaultKey = keyVaultKey;
-            options.EnableServerCryptographyOperations = false;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="keyVaultKey"></param>
+        //public CryptographyClient(Key keyVaultKey)
+        //    : this(keyVaultKey, new CryptographyClientOptions()) { }
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="keyVaultKey"></param>
+        ///// <param name="options"></param>
+        //public CryptographyClient(Key keyVaultKey, CryptographyClientOptions options)
+        //{
+        //    KeyVaultKey = keyVaultKey;
+        //    options.EnableServerCryptographyOperations = false;
+        //}
 
         #endregion
 
@@ -113,24 +110,24 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// <summary>
         /// Initializes a new instance of Cryptography Client
         /// </summary>
-        /// <param name="keyVaultKeyUri">Endpoint URL for the Azure Key Vault service.</param>
+        /// <param name="keyId">Endpoint URL for the Azure Key Vault service.</param>
         /// <param name="credential">Represents a credential capable of providing an OAuth token.</param>
-        public CryptographyClient(Uri keyVaultKeyUri, TokenCredential credential)
-            : this(keyVaultKeyUri, credential, new CryptographyClientOptions()) { }
+        public CryptographyClient(Uri keyId, TokenCredential credential)
+            : this(keyId, credential, new CryptographyClientOptions()) { }
 
         /// <summary>
         /// Initializes a new instance of Cryptography Client
         /// </summary>
-        /// <param name="keyVaultKeyUri">Endpoint URL for the Azure Key Vault service.</param>
+        /// <param name="keyId">Endpoint URL for the Azure Key Vault service.</param>
         /// <param name="credential">Represents a credential capable of providing an OAuth token.</param>
         /// <param name="options">Options that allow to configure the management of the request sent to Key Vault.</param>
-        public CryptographyClient(Uri keyVaultKeyUri, TokenCredential credential, CryptographyClientOptions options) : this()
+        public CryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options) : this()
         {
-            Check.NotNull(keyVaultKeyUri, nameof(keyVaultKeyUri));
+            Check.NotNull(keyId, nameof(keyId));
             Check.NotNull(options, nameof(options));
             Check.NotNull(credential, nameof(credential));
 
-            KeyId = keyVaultKeyUri;
+            KeyId = new KeyId(keyId);
             CryptoClientOptions = options;
             Credentials = credential;
             BearerTokenAuthenticationPolicy bearerAuthPolicy = new BearerTokenAuthenticationPolicy(credential, DEFAULT_KV_SCOPE_URI);
@@ -158,7 +155,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
             Check.NotNull(credential, nameof(credential));
 
             KeyVaultKey = keyVaultKey;
-            KeyId = KeyVaultKey.VaultUri;
+            KeyId = new KeyId(KeyVaultKey.VaultUri, KeyVaultKey.Name, KeyVaultKey.Version);
             CryptoClientOptions = options;
             Credentials = credential;
 
