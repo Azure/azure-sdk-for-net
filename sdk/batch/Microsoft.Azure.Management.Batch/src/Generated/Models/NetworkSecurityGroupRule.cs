@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.Batch.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,11 +37,14 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// specified IP address, subnet range or tag.</param>
         /// <param name="sourceAddressPrefix">The source address prefix or tag
         /// to match for the rule.</param>
-        public NetworkSecurityGroupRule(int priority, NetworkSecurityGroupRuleAccess access, string sourceAddressPrefix)
+        /// <param name="sourcePortRanges">The source port ranges to match for
+        /// the rule.</param>
+        public NetworkSecurityGroupRule(int priority, NetworkSecurityGroupRuleAccess access, string sourceAddressPrefix, IList<string> sourcePortRanges = default(IList<string>))
         {
             Priority = priority;
             Access = access;
             SourceAddressPrefix = sourceAddressPrefix;
+            SourcePortRanges = sourcePortRanges;
             CustomInit();
         }
 
@@ -85,6 +90,19 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the source port ranges to match for the rule.
+        /// </summary>
+        /// <remarks>
+        /// Valid values are '*' (for all ports 0 - 65535) or arrays of ports
+        /// or port ranges (i.e. 100-200). The ports should in the range of 0
+        /// to 65535 and the port ranges or ports can't overlap. If any other
+        /// values are provided the request fails with HTTP status code 400.
+        /// Default value will be *.
+        /// </remarks>
+        [JsonProperty(PropertyName = "sourcePortRanges")]
+        public IList<string> SourcePortRanges { get; set; }
 
         /// <summary>
         /// Validate the object.
