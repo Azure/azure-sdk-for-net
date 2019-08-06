@@ -103,10 +103,12 @@ namespace ContainerRegistry.Tests
                     BlobSum = "sha256:0503825856099e6adb39c8297af09547f69684b7016b7f3680ed801aa310baaa"
                 }
             },
-            MediaType = "application/vnd.docker.distribution.manifest.v2+json",
-            SchemaVersion = 2,
-            Name = null,
-            Tag = null,
+            History = new History[] { },
+            Layers = null,
+            MediaType = null,
+            SchemaVersion = 1,
+            Name = "prod/bash",
+            Tag = "latest",
             Signatures = null
         };
 
@@ -142,27 +144,26 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task GetManifest()
+        public async Task GetV1Manifest()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetManifest)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetV1Manifest)))
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var manifest = await client.GetManifestAsync(ACRTestUtil.TestRepository, tag);
+                verifyManifest(ExpectedV1ManifestProd, manifest);
+            }
+        }
 
-                Assert.Equal(1, manifest.SchemaVersion);
-                Assert.Equal(ACRTestUtil.TestRepository, manifest.Name);
-                Assert.Equal(tag, manifest.Tag);
-                Assert.Equal("amd64", manifest.Architecture);
-                Assert.Equal(10, manifest.FsLayers.Count);
-                Assert.Equal(1, manifest.Signatures.Count);
-                var signature = manifest.Signatures[0];
-                Assert.NotEqual(string.Empty, signature.Signature);
-                Assert.Equal("P-256", signature.Header.Jwk.Crv);
-                Assert.NotEqual(string.Empty, signature.Header.Jwk.Kid);
-                Assert.Equal("EC", signature.Header.Jwk.Kty);
-                Assert.NotEqual(string.Empty, signature.Header.Jwk.X);
-                Assert.NotEqual(string.Empty, signature.Header.Jwk.Y);
+        [Fact]
+        public async Task GetV2Manifest()
+        {
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetV2Manifest)))
+            {
+                var tag = "latest";
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                var manifest = await client.GetManifestAsync(ACRTestUtil.TestRepository, tag, "application/vnd.docker.distribuition.manivest.v2+json");
+                verifyManifest(ExpectedV2ManifestProd, manifest);
             }
         }
 
@@ -194,7 +195,7 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(CreateAcrManifest)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                await client.CreateManifestAsync(ACRTestUtil.ProdRepository, "brandnew", manifest);
+                await client.CreateManifestAsync(ACRTestUtil.ProdRepository, "brandnew", ExpectedV2ManifestProd);
                 var newManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, "brandnew");
 
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, newManifest.Registry);
@@ -230,6 +231,51 @@ namespace ContainerRegistry.Tests
             Assert.Equal(expectedManifestBase.ChangeableAttributes.ReadEnabled, actualManifestBase.ChangeableAttributes.ReadEnabled);
             Assert.Equal(expectedManifestBase.ChangeableAttributes.WriteEnabled, actualManifestBase.ChangeableAttributes.WriteEnabled);
         }
-    }
 
+
+        private void verifyManifest(Manifest baseManifest, Manifest actualManifest)
+        {
+            Assert.Equal(baseManifest.Architecture, actualManifest.Architecture);
+            Assert.Equal(baseManifest.MediaType, actualManifest.MediaType);
+            Assert.Equal(baseManifest.Name, actualManifest.Name);
+            Assert.Equal(baseManifest.SchemaVersion, actualManifest.SchemaVersion);
+            Assert.Equal(baseManifest.Tag, actualManifest.Tag);
+
+            //Nested Properties
+            if (baseManifest.Config != null && actualManifest.Config != null) {
+                Assert.Equal(baseManifest.Config.Digest, actualManifest.Config.Digest);
+                Assert.Equal(baseManifest.Config.MediaType, actualManifest.Config.MediaType);
+                Assert.Equal(baseManifest.Config.Size, actualManifest.Config.Size);
+            }
+
+            if (baseManifest.FsLayers != null && actualManifest.FsLayers != null)
+            {
+                Assert.Equal(baseManifest.FsLayers.Count, actualManifest.FsLayers.Count);
+
+                for (int i = 0; i < baseManifest.FsLayers.Count; i++) {
+                    Assert.Equal(baseManifest.FsLayers[i].BlobSum, actualManifest.FsLayers[i].BlobSum);
+                }
+            }
+
+            if (baseManifest.Layers != null && actualManifest.Layers != null)
+            {
+                Assert.Equal(baseManifest.Layers.Count, actualManifest.Layers.Count);
+                for (int i = 0; i < baseManifest.Layers.Count; i++)
+                {
+                    Assert.Equal(baseManifest.Layers[i].Digest, actualManifest.Layers[i].Digest);
+                    Assert.Equal(baseManifest.Layers[i].MediaType, actualManifest.Layers[i].MediaType);
+                    Assert.Equal(baseManifest.Layers[i].Size, actualManifest.Layers[i].Size);
+                }
+            }
+
+            if (baseManifest.History != null && actualManifest.History != null)
+            {
+                Assert.Equal(baseManifest.History.Count, actualManifest.History.Count);
+                for (int i = 0; i < baseManifest.History.Count; i++)
+                {
+                    Assert.Equal(baseManifest.History[i].V1Compatibility, actualManifest.History[i].V1Compatibility);
+                }
+            }
+        }
+    }
 }

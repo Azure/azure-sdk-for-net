@@ -8,7 +8,6 @@ namespace ContainerRegistry.Tests
     using Microsoft.Azure.ContainerRegistry.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Linq;
-    using System.Reflection.Metadata.Ecma335;
     using System.Threading.Tasks;
     using Xunit;
 

@@ -17,7 +17,7 @@ namespace ContainerRegistry.Tests
 
     public static class ACRTestUtil
     {
-        private static readonly string _testResourceGroup = "matttest";
+        private static readonly string _testResourceGroup = "ereyTest";
 
         public static readonly string ProdRepository = "prod/bash";
         public static readonly string TestRepository = "test/bash";
@@ -29,6 +29,9 @@ namespace ContainerRegistry.Tests
         public static readonly string ClassicTestRegistry = "classictestregistry";
         public static readonly string ClassicTestRegistryNameFullName = "classictestregistry.azurecr.io";
         public static readonly string ClassicTestRegistryForDeleting = "classictestregistryfordel";
+        public static readonly string AadAccessToken = "";
+        public static readonly string Scope = "";
+
 
         public static async Task<AzureContainerRegistryClient> GetACRClientAsync(MockContext context, string registryName)
         {
@@ -55,5 +58,6 @@ namespace ContainerRegistry.Tests
         {
             return new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
         }
+
     }
 }
