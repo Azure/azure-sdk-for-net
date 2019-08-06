@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-
-
 namespace Microsoft.Azure.EventHubs.Tests.Client
 {
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,14 +13,10 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Threading.Tasks;
     using Xunit;
 
-
     public class WebSocketTests : ClientTestBase
     {
-
-
         private string GetWebSocketConnectionString(string ConnectionString)
         {
-
             // Create connection string builder with web-sockets enabled.
             var csb = new EventHubsConnectionStringBuilder(ConnectionString);
             csb.TransportType = EventHubs.TransportType.AmqpWebSockets;
@@ -41,15 +34,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             return webSocketConnString;
         }
 
-
-
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task GetEventHubRuntimeInformation()
         {
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(GetWebSocketConnectionString(connectionString));
@@ -70,7 +61,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         }
 
 
-
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -79,7 +69,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             string targetPartitionId = "0";
 
             TestUtility.Log("Creating Event Hub client");
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
 
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
@@ -98,8 +88,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 {
                     await sender?.CloseAsync();
                 }
-
-
 
                 PartitionReceiver receiver = null;
                 try

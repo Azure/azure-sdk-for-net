@@ -8,7 +8,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Threading.Tasks;
     using Xunit;
 
-
     public class ReceiverRuntimeMetricsTests : ClientTestBase
     {
         string targetPartitionId = "1";
@@ -23,6 +22,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 var partitionReceiver = default(PartitionReceiver);
+
                 try
                 {
                     // Send some number of messages to target partition.
@@ -51,7 +51,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -62,6 +61,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 var partitionReceiver = default(PartitionReceiver);
+
                 try
                 {
                     // Send single event
@@ -80,7 +80,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -91,6 +90,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 var partitionReceiver = default(PartitionReceiver);
+
                 try
                 {
                     // Send single event
@@ -129,6 +129,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 var partitionReceiver1 = default(PartitionReceiver);
                 var partitionReceiver2 = default(PartitionReceiver);
+
                 try
                 {
                     // Send some number of messages to target partition.
