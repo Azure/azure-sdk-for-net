@@ -131,6 +131,7 @@ namespace HealthcareApis.Tests.Helpers
                 Assert.Equal(400, account.Properties.CosmosDbConfiguration.OfferThroughput);
                 Assert.Equal(1, account.Properties.AccessPolicies.Count);
                 Assert.Equal(ProvisioningState.Succeeded, account.Properties.ProvisioningState);
+                Assert.Equal(Kind.Fhir, account.Kind);
             }
         }
 
