@@ -10,9 +10,11 @@ namespace FaceSDK.Tests
 {
     public class FaceDetectionTests : BaseTests
     {
+        private static readonly string detectionModel = DetectionModel.Detection01;
+
         private static readonly string recognitionModel = RecognitionModel.Recognition02;
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6216")]
+        [Fact]
         public void FaceDetectionWithAttributes()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -43,6 +45,7 @@ namespace FaceSDK.Tests
                             FaceAttributeType.Occlusion,
                             FaceAttributeType.Smile
                             },
+                        detectionModel: detectionModel,
                         recognitionModel: recognitionModel,
                         returnRecognitionModel: true
                         ).Result;
@@ -146,7 +149,7 @@ namespace FaceSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6216")]
+        [Fact]
         public void FaceDetectionNoFace()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -156,7 +159,7 @@ namespace FaceSDK.Tests
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "NoFace.jpg"), FileMode.Open))
                 {
-                    IList<DetectedFace> faceList = client.Face.DetectWithStreamAsync(stream, recognitionModel: recognitionModel).Result;
+                    IList<DetectedFace> faceList = client.Face.DetectWithStreamAsync(stream, detectionModel: detectionModel, recognitionModel: recognitionModel).Result;
                     Assert.Equal(0, faceList.Count);
                 }
             }

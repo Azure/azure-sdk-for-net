@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {

@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core
 {
@@ -37,7 +35,7 @@ namespace Azure.Core
 
         public static async Task<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
         {
-            message = await CreateRequestFailedMessageAsync(message, response, async);
+            message = await CreateRequestFailedMessageAsync(message, response, async).ConfigureAwait(false);
             return new RequestFailedException(response.Status, message);
         }
 

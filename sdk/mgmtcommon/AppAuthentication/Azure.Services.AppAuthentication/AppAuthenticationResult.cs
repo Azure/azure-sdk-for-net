@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Azure.Services.AppAuthentication
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return ExpiresOn < DateTimeOffset.UtcNow.AddMinutes(5);
         }
 
-        internal static AppAuthenticationResult Create(TokenResponse response, TokenResponse.DateFormat dateFormat)
+        internal static AppAuthenticationResult Create(TokenResponse response, CultureInfo datetimeCulture = null)
         {
             if (response == null)
             {
@@ -53,15 +54,14 @@ namespace Microsoft.Azure.Services.AppAuthentication
             string expiresOnString = response.ExpiresOn ?? response.ExpiresOn2;
             DateTimeOffset expiresOn = DateTimeOffset.MinValue;
 
-            switch (dateFormat)
+            double seconds;
+            if (double.TryParse(expiresOnString, out seconds))
             {
-                case TokenResponse.DateFormat.DateTimeString:
-                    expiresOn = DateTimeOffset.Parse(expiresOnString);
-                    break;
-                case TokenResponse.DateFormat.Unix:
-                    double seconds = double.Parse(expiresOnString);
-                    expiresOn = AppAuthentication.AccessToken.UnixTimeEpoch.AddSeconds(seconds);
-                    break;
+                expiresOn = AppAuthentication.AccessToken.UnixTimeEpoch.AddSeconds(seconds);
+            }
+            else if (!DateTimeOffset.TryParse(expiresOnString, datetimeCulture, DateTimeStyles.None, out expiresOn))
+            {
+                throw new ArgumentException("ExpiresOn in token response could not be parsed");
             }
 
             var result = new AppAuthenticationResult()

@@ -56,13 +56,13 @@ namespace Azure.Identity.Tests
         [Test]
         public void CtorInvalidInput()
         {
-            Assert.Throws<ArgumentNullException>(() => new AggregateCredential(null));
+            Assert.Throws<ArgumentNullException>(() => new ChainedTokenCredential(null));
 
-            Assert.Throws<ArgumentException>(() => new AggregateCredential((TokenCredential)null));
+            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential((TokenCredential)null));
 
-            Assert.Throws<ArgumentException>(() => new AggregateCredential());
+            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential());
 
-            Assert.Throws<ArgumentException>(() => new AggregateCredential(new TokenCredential[] { }));
+            Assert.Throws<ArgumentException>(() => new ChainedTokenCredential(new TokenCredential[] { }));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Azure.Identity.Tests
             var cred2 = new SimpleMockTokenCredential("scopeB", "tokenB");
             var cred3 = new SimpleMockTokenCredential("scopeB", "NotToBeReturned");
             var cred4 = new SimpleMockTokenCredential("scopeC", "tokenC");
-            var provider = new AggregateCredential(cred1, cred2, cred3, cred4);
+            var provider = new ChainedTokenCredential(cred1, cred2, cred3, cred4);
 
             Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new string[] { "scopeA" })).Token);
             Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new string[] { "scopeB" })).Token);
@@ -86,7 +86,7 @@ namespace Azure.Identity.Tests
             var cred1 = new SimpleMockTokenCredential("scopeA", "tokenA");
             var cred2 = new ExceptionalMockTokenCredential();
             var cred3 = new SimpleMockTokenCredential("scopeB", "tokenB");
-            var provider = new AggregateCredential(cred1, cred2, cred3);
+            var provider = new ChainedTokenCredential(cred1, cred2, cred3);
 
             Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new string[] { "scopeA" })).Token);
             Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeB" }));

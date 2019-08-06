@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public override async Task<SqlAuthenticationToken> AcquireTokenAsync(SqlAuthenticationParameters parameters)
         {
             var appAuthParameters = new SqlAppAuthenticationParameters(parameters);
-            return await AcquireTokenAsync(appAuthParameters);
+            return await AcquireTokenAsync(appAuthParameters).ConfigureAwait(false);
         }
 
         /// <summary>

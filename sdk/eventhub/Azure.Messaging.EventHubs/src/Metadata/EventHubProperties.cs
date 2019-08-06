@@ -12,17 +12,17 @@ namespace Azure.Messaging.EventHubs.Metadata
     public sealed class EventHubProperties
     {
         /// <summary>
-        ///   The path of the Event Hub, relative to the namespace
+        ///   The name of the Event Hub, specific to the namespace
         ///   that contains it.
         /// </summary>
         ///
-        public string Path { get; }
+        public string Name { get; }
 
         /// <summary>
         ///   The date and time, in UTC, at which the Event Hub was created.
         /// </summary>
         ///
-        public DateTime CreatedAtUtc { get; }
+        public DateTimeOffset CreatedAt { get; }
 
         /// <summary>
         ///   The set of unique identifiers for each partition in the Event Hub.
@@ -34,16 +34,16 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
         /// </summary>
         ///
-        /// <param name="path">The path of the Event Hub.</param>
-        /// <param name="createdUtc">The date and time at which the Event Hub was created.</param>
+        /// <param name="name">The name of the Event Hub.</param>
+        /// <param name="createdAt">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         ///
-        internal EventHubProperties(string path,
-                                    DateTime createdUtc,
+        internal EventHubProperties(string name,
+                                    DateTimeOffset createdAt,
                                     string[] partitionIds)
         {
-            Path = path;
-            CreatedAtUtc = createdUtc;
+            Name = name;
+            CreatedAt = createdAt;
             PartitionIds = partitionIds;
         }
     }

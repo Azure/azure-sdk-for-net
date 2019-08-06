@@ -2,17 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http.Headers;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search.Tests.Utilities;
+using Microsoft.Rest.Azure;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Utilities;
-    using Microsoft.Rest.Azure;
-    using Xunit;
-
     public sealed class SkillsetsTests : SearchTestBase<SearchServiceFixture>
     {
         public const string InputImageFieldName = "image";
@@ -24,6 +23,26 @@ namespace Microsoft.Azure.Search.Tests
         public const string OutputLayoutTextFieldName = "layoutText";
 
         public const string RootPathString = "/document";
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWebApiSkillWithHeaders()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill());
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWebApiSkillWithoutHeaders()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill(includeHeader: false));
+            });
+        }
 
         [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrKeyPhrase()
@@ -62,18 +81,6 @@ namespace Microsoft.Azure.Search.Tests
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Pt, SentimentSkillLanguage.PtPt, TextExtractionAlgorithm.Printed));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi, TextExtractionAlgorithm.Printed));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.En, SentimentSkillLanguage.En, TextExtractionAlgorithm.Handwritten));
-            });
-        }
-
-        [Fact]
-        public void CreateSkillsetThrowsExceptionWithInvalidLanguageSelection()
-        {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                Skillset skillset = CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi, TextExtractionAlgorithm.Handwritten);
-                CloudException exception = Assert.Throws<CloudException>(() => searchClient.Skillsets.Create(skillset));
-                Assert.Contains("When 'textExtractionAlgorithm' parameter is set to 'handwritten' the only supported value for 'defaultLanguageCode' parameter is 'en'", exception.Message);
             });
         }
 
@@ -568,7 +575,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertSkillsetEqual(Skillset expected, Skillset actual)
         {
-            Assert.Equal(expected, actual, new ModelComparer<Skillset>());
+            Assert.Equal(expected, actual, new DataPlaneModelComparer<Skillset>());
         }
 
         private static Skillset CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage ocrLanguageCode, KeyPhraseExtractionSkillLanguage keyPhraseLanguageCode)
@@ -907,6 +914,51 @@ namespace Microsoft.Azure.Search.Tests
             });
 
             return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateTestSkillsetWebApiSkill(bool includeHeader = true)
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/text"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "coolResult",
+                    TargetName = "myCoolResult"
+                }
+            };
+
+            var skill = new WebApiSkill(
+                    inputs,
+                    outputs,
+                    uri: "https://contoso.example.org",
+                    description: "A simple web api skill",
+                    context: RootPathString)
+            {
+                HttpMethod = "POST"
+            };
+
+            if (includeHeader)
+            {
+                skill.HttpHeaders = new Dictionary<string, string>
+                {
+                    ["x-ms-example"] = "example"
+                };
+            }
+
+            skills.Add(skill);
+
+            return new Skillset("webapiskillset", "Skillset for testing", skills);
         }
     }
 }

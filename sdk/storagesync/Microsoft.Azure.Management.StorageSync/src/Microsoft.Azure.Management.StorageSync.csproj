@@ -6,14 +6,12 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
         <Description>Provides management capabilities for Azure Storage Sync.</Description>
-        <Version>3.0.0</Version>
+        <Version>3.1.0</Version>
         <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
         <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
         <![CDATA[
-            This version supports the StorageSync API version 2019-02-01. New features include:
-                1. Support for tracking parallel upload and download for server endpoints
-                2. Rename the StorageAccountShareName parameter for cloud endpoints to AzureFileShareName
+            This version supports the StorageSync API version 2019-03-01 and includes support for Invoke Change Detection command.
         ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

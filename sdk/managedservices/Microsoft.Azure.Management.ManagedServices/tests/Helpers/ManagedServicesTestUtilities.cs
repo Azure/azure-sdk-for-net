@@ -18,30 +18,29 @@ namespace ManagedServices.Tests.Helpers
 
         public static string registratonDefinitionId = "0cb6fbd6-90df-4923-9d92-c266f6c27bba",
                 registrationAssignmentId = "46c2a6a8-3dda-49ae-bc99-ecc5d28dd98a",
-                subscriptionId = "45062c92-741a-4e9b-acc4-f0afbfce9c7a",
-                apiVersion = "2018-06-01-preview",
+                subscriptionId = "38bd4bef-41ff-45b5-b3af-d03e55a4ca15",
+                apiVersion = "2019-06-01",
                 scope = string.Format("subscriptions/{0}", subscriptionId),
                 planName = "planName",
                 publisher = "publisher",
                 product = "product",
                 version = "1.0.0",
-                defintionDesctiption = "Registration Defintion Description",
-                principalId = "1445e20d-2d4f-4616-9c19-564f4a963499",
+                defintionDescription = "Registration Defintion Description",
+                principalId = "d6f6c88a-5b7a-455e-ba40-ce146d4d3671",
                 roleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7",
                 registrationDefinitionName = "registrationDefinitionName",
-                managedByTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+                managedByTenantId = "bab3375b-6197-4a15-a44b-16c41faa91d7";
 
         public static RegistrationDefinition GetRegistrationDefintion()
         {
             return new RegistrationDefinition(
-                properties: ManagedServicesTestUtilities.GetRegistrationDefinitionProperties(),
-                plan: ManagedServicesTestUtilities.GetPlan());
+                properties: ManagedServicesTestUtilities.GetRegistrationDefinitionProperties());
         }
  
         public static RegistrationDefinitionProperties GetRegistrationDefinitionProperties()
         {
             return new RegistrationDefinitionProperties(
-                description: defintionDesctiption,
+                description: defintionDescription,
                 authorizations: ManagedServicesTestUtilities.GetAuthorizations(),
                 registrationDefinitionName: registrationDefinitionName,
                 managedByTenantId: managedByTenantId);

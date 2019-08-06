@@ -249,6 +249,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return authResult.AccessToken;
         }
 
+        public async Task<string> GetAccessTokenAsync(string resource, string tenantId)
+        {
+            return await GetAccessTokenAsync(resource, tenantId, default(CancellationToken));
+        }
+
         /// <summary>
         /// Gets an authentication result which contains an access token to access the given Azure resource. 
         /// </summary>
@@ -274,6 +279,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
             string authority = string.IsNullOrEmpty(tenantId) ? string.Empty : $"{_azureAdInstance}{tenantId}";
 
             return await GetAuthResultAsyncImpl(authority, resource, string.Empty, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
+        {
+            return await GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken));
         }
     }
 }

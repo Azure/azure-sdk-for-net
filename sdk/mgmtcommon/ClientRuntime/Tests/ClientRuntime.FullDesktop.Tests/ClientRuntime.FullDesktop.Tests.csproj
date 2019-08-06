@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />-->
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <ExcludeFromTest>false</ExcludeFromTest>
+  </PropertyGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />-->
     <ProjectReference Include="..\TestCommon\ClientRuntime.Test.Common.csproj" />
   </ItemGroup>
   <ItemGroup>

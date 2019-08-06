@@ -31,12 +31,13 @@ namespace Microsoft.Azure.Search.Tests
                     {
                         MaxFieldsPerIndex = 1000,
                         MaxFieldNestingDepthPerIndex = 10,
-                        MaxComplexCollectionFieldsPerIndex = 40
+                        MaxComplexCollectionFieldsPerIndex = 40,
+                        MaxComplexObjectsInCollectionsPerDocument = 3000
                     }
                 };
 
                 ServiceStatistics stats = searchClient.GetServiceStatistics();
-                Assert.Equal(expectedStats, stats, new ModelComparer<ServiceStatistics>());
+                Assert.Equal(expectedStats, stats, new DataPlaneModelComparer<ServiceStatistics>());
             });
         }
     }

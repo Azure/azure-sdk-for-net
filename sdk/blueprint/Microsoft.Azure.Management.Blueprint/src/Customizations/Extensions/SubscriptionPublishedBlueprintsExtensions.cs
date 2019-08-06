@@ -49,13 +49,16 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='versionId'>
         /// version of the published blueprint.
         /// </param>
+        /// <param name='publishedBlueprint'>
+        /// published blueprint object
+        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<PublishedBlueprint> CreateInSubscriptionAsync(this IPublishedBlueprintsOperations operations, string subscriptionId, string blueprintName, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<PublishedBlueprint> CreateInSubscriptionAsync(this IPublishedBlueprintsOperations operations, string subscriptionId, string blueprintName, string versionId, PublishedBlueprint publishedBlueprint = default(PublishedBlueprint), CancellationToken cancellationToken = default(CancellationToken))
         {
             var scope = string.Format(Constants.ResourceScopes.SubscriptionScope, subscriptionId);
-            using (var _result = await operations.CreateWithHttpMessagesAsync(scope, blueprintName, versionId, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.CreateWithHttpMessagesAsync(scope, blueprintName, versionId, publishedBlueprint, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

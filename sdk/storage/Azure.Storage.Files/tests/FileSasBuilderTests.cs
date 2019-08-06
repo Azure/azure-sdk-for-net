@@ -3,21 +3,19 @@
 // license information.
 
 using System;
-using Azure.Core.Testing;
 using Azure.Storage.Files.Tests;
-using Azure.Storage.Test;
+using Azure.Storage.Sas;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestFixture]
     public class FileSasBuilderTests : FileTestBase
     {
         private const string Permissions = "rcwd";
 
-        public FileSasBuilderTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public FileSasBuilderTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -62,7 +60,7 @@ namespace Azure.Storage.Files.Test
             var sasQueryParameters = fileSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
 
             // Assert
-            Assert.AreEqual(SasQueryParameters.SasVersion, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
             Assert.AreEqual(String.Empty, sasQueryParameters.Services);
             Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
@@ -137,7 +135,7 @@ namespace Azure.Storage.Files.Test
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
                 constants.Sas.Protocol.ToString(),
-                includeVersion ? constants.Sas.Version : SasQueryParameters.SasVersion,
+                includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,

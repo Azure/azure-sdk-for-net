@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualMachineScaleSetReimageParameters class.
         /// </summary>
         /// <param name="tempDisk">Specifies whether to reimage temp disk.
-        /// Default value: false.</param>
+        /// Default value: false. Note: This temp disk reimage parameter is
+        /// only supported for VM/VMSS with Ephemeral OS disk.</param>
         /// <param name="instanceIds">The virtual machine scale set instance
         /// ids. Omitting the virtual machine scale set instance ids will
         /// result in the operation being performed on all virtual machines in

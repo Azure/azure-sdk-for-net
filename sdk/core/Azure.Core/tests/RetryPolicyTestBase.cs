@@ -9,8 +9,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -300,14 +300,10 @@ namespace Azure.Core.Tests
             return (policy, policy.DelayGate);
         }
 
-        protected class RetryPolicyMock: RetryPolicy
+        internal class RetryPolicyMock: RetryPolicy
         {
-            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
+            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default): base(mode, delay, maxDelay, maxRetries)
             {
-                MaxRetries = maxRetries;
-                Delay = delay;
-                MaxDelay = maxDelay;
-                Mode = mode;
             }
 
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();

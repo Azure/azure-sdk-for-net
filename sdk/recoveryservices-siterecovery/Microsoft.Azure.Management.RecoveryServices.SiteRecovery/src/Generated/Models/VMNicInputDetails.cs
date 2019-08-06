@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,14 +36,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="replicaNicStaticIPAddress">Replica nic static IP
         /// address.</param>
         /// <param name="selectionType">Selection type for failover.</param>
+        /// <param name="recoveryPublicIpAddressId">The id of the public IP
+        /// address resource associated with the NIC.</param>
+        /// <param name="recoveryNetworkSecurityGroupId">The id of the NSG
+        /// associated with the NIC.</param>
+        /// <param name="recoveryLBBackendAddressPoolIds">The target backend
+        /// address pools for the NIC.</param>
         /// <param name="enableAcceleratedNetworkingOnRecovery">Whether the NIC
         /// has accelerated networking enabled.</param>
-        public VMNicInputDetails(string nicId = default(string), string recoveryVMSubnetName = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), bool? enableAcceleratedNetworkingOnRecovery = default(bool?))
+        public VMNicInputDetails(string nicId = default(string), string recoveryVMSubnetName = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), string recoveryPublicIpAddressId = default(string), string recoveryNetworkSecurityGroupId = default(string), IList<string> recoveryLBBackendAddressPoolIds = default(IList<string>), bool? enableAcceleratedNetworkingOnRecovery = default(bool?))
         {
             NicId = nicId;
             RecoveryVMSubnetName = recoveryVMSubnetName;
             ReplicaNicStaticIPAddress = replicaNicStaticIPAddress;
             SelectionType = selectionType;
+            RecoveryPublicIpAddressId = recoveryPublicIpAddressId;
+            RecoveryNetworkSecurityGroupId = recoveryNetworkSecurityGroupId;
+            RecoveryLBBackendAddressPoolIds = recoveryLBBackendAddressPoolIds;
             EnableAcceleratedNetworkingOnRecovery = enableAcceleratedNetworkingOnRecovery;
             CustomInit();
         }
@@ -74,6 +85,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "selectionType")]
         public string SelectionType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the public IP address resource associated
+        /// with the NIC.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryPublicIpAddressId")]
+        public string RecoveryPublicIpAddressId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the NSG associated with the NIC.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryNetworkSecurityGroupId")]
+        public string RecoveryNetworkSecurityGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target backend address pools for the NIC.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryLBBackendAddressPoolIds")]
+        public IList<string> RecoveryLBBackendAddressPoolIds { get; set; }
 
         /// <summary>
         /// Gets or sets whether the NIC has accelerated networking enabled.

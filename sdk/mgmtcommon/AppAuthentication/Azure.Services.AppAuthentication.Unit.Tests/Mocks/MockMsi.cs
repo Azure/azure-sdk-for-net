@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
                 case MsiTestType.MsiAzureVmTimeout:
                     var start = DateTime.Now;
-                    while(DateTime.Now - start < TimeSpan.FromSeconds(MsiAccessTokenProvider.AzureVmImdsTimeoutInSecs + 10))
+                    while(DateTime.Now - start < TimeSpan.FromSeconds(MsiAccessTokenProvider.AzureVmImdsProbeTimeoutInSeconds + 10))
                     {
                         if (cancellationToken.IsCancellationRequested)
                         {
@@ -157,22 +157,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     {
                         responseMessage = new HttpResponseMessage
                         {
-                            Content = new StringContent(TokenHelper.GetMsiAzureVmTokenResponse(),
+                            Content = new StringContent(TokenHelper.GetMsiAppServicesTokenResponse(),
                                 Encoding.UTF8,
                                 Constants.JsonContentType)
                         };
-                    }
-                    // for unresponsive MSI, must give a response for initial probe request
-                    else if (HitCount == 1 && _msiTestType == MsiTestType.MsiUnresponsive)
-                    {
-                        responseMessage = new HttpResponseMessage
-                        {
-                            StatusCode = HttpStatusCode.BadRequest,
-                            Content = new StringContent(Constants.IncorrectFormatError,
-                                Encoding.UTF8,
-                                Constants.JsonContentType)
-                        };
-                        break;
                     }
                     else
                     {
@@ -187,7 +175,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                             {
                                 StatusCode = (_msiTestType == MsiTestType.MsiThrottled)
                                     ? (HttpStatusCode)429
-                                    : HttpStatusCode.InternalServerError
+                                    : HttpStatusCode.InternalServerError,
+                                Content = new StringContent($"test error {_msiTestType.ToString()}")
                             };
                         }
                     }

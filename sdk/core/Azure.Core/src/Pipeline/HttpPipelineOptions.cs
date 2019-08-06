@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {
@@ -15,11 +13,9 @@ namespace Azure.Core.Pipeline
 
         protected ClientOptions()
         {
-            (string name, string version)= GetComponentNameAndVersion();
-
-            TelemetryPolicy = new TelemetryPolicy(name, version);
-            LoggingPolicy = LoggingPolicy.Shared;
-            RetryPolicy = new RetryPolicy();
+            Retry = new RetryOptions();
+            Diagnostics = new DiagnosticsOptions();
+            ResponseClassifier = new ResponseClassifier();
         }
 
         public HttpPipelineTransport Transport {
@@ -27,13 +23,11 @@ namespace Azure.Core.Pipeline
             set => _transport = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public TelemetryPolicy TelemetryPolicy { get; set; }
+        public DiagnosticsOptions Diagnostics { get; }
 
-        public LoggingPolicy LoggingPolicy { get; set; }
+        public RetryOptions Retry { get; }
 
-        public RetryPolicy RetryPolicy { get; set; }
-
-        public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         public void AddPolicy(HttpPipelinePosition position, HttpPipelinePolicy policy)
         {
@@ -53,19 +47,6 @@ namespace Azure.Core.Pipeline
         internal IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
 
         internal IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
-
-        private (string ComponentName, string ComponentVersion) GetComponentNameAndVersion()
-        {
-            Assembly clientAssembly = GetType().Assembly;
-            AzureSdkClientLibraryAttribute componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
-            if (componentAttribute == null)
-            {
-                throw new InvalidOperationException(
-                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
-            }
-
-            return (componentAttribute.ComponentName, clientAssembly.GetName().Version.ToString());
-        }
 
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]

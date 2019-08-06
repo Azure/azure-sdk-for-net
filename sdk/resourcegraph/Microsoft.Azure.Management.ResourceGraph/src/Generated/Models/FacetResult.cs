@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// response.</param>
         /// <param name="data">A table containing the desired facets. Only
         /// present if the facet is valid.</param>
-        public FacetResult(string expression, long totalRecords, int count, Table data)
+        public FacetResult(string expression, long totalRecords, int count, object data)
             : base(expression)
         {
             TotalRecords = totalRecords;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// the facet is valid.
         /// </summary>
         [JsonProperty(PropertyName = "data")]
-        public Table Data { get; set; }
+        public object Data { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -84,10 +84,6 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
             if (Data == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Data");
-            }
-            if (Data != null)
-            {
-                Data.Validate();
             }
         }
     }

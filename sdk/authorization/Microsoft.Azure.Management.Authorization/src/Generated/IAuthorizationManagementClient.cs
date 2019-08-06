@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.Authorization
         IClassicAdministratorsOperations ClassicAdministrators { get; }
 
         /// <summary>
+        /// Gets the IGlobalAdministratorOperations.
+        /// </summary>
+        IGlobalAdministratorOperations GlobalAdministrator { get; }
+
+        /// <summary>
         /// Gets the IProviderOperationsMetadataOperations.
         /// </summary>
         IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }

@@ -3,7 +3,6 @@
 // license information.
 
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
 using System.Net.Http;
@@ -25,15 +24,12 @@ namespace Azure.ApplicationModel.Configuration.Samples
             options.Transport = new HttpClientTransport(s_client);
 
             // remove logging policy
-            options.LoggingPolicy = null;
+            options.Diagnostics.IsLoggingEnabled = false;
 
             // specify custom retry policy options
-            options.RetryPolicy = new RetryPolicy()
-            {
-                Mode = RetryMode.Fixed,
-                MaxRetries = 10,
-                Delay = TimeSpan.FromSeconds(1)
-            };
+            options.Retry.Mode = RetryMode.Fixed;
+            options.Retry.MaxRetries = 10;
+            options.Retry.Delay = TimeSpan.FromSeconds(1);
 
             // add a policy (custom behavior) that executes once per client call
             options.AddPolicy(HttpPipelinePosition.PerCall, new AddHeaderPolicy());

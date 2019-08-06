@@ -27,7 +27,8 @@ Param(
     [string] $SpecsRepoBranch = "master"
 )
 
-$repoRoot = "$PSScriptRoot\..\..\..\..\.."
+"$PSScriptRoot\..\..\Install-BuildTools.ps1"
+
 $generateFolder = "$PSScriptRoot\Generated"
 
 # TODO: Change AutoRestVersion back to "latest" when the hanging issue is fixed.

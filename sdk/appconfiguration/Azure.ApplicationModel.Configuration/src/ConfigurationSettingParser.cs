@@ -4,10 +4,12 @@
 
 using System;
 using System.Buffers;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -43,18 +45,18 @@ namespace Azure.ApplicationModel.Configuration
             if (root.TryGetProperty("etag", out var eTagValue)) setting.ETag = new ETag(eTagValue.GetString());
             if (root.TryGetProperty("last_modified", out var lastModified))
             {
-                if(lastModified.Type == JsonValueType.Null)
+                if(lastModified.ValueKind == JsonValueKind.Null)
                 {
                     setting.LastModified = null;
                 }
                 else
                 {
-                    setting.LastModified = DateTimeOffset.Parse(lastModified.GetString());
+                    setting.LastModified = DateTimeOffset.Parse(lastModified.GetString(), CultureInfo.InvariantCulture);
                 }
             }
             if (root.TryGetProperty("locked", out var lockedValue))
             {
-                if(lockedValue.Type == JsonValueType.Null)
+                if(lockedValue.ValueKind == JsonValueKind.Null)
                 {
                     setting.Locked = null;
                 }
@@ -83,7 +85,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public static ConfigurationSetting DeserializeSetting(Stream content, CancellationToken cancellation)
+        public static ConfigurationSetting DeserializeSetting(Stream content)
         {
             using (JsonDocument json = JsonDocument.Parse(content, default))
             {
@@ -92,25 +94,25 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public static async Task<SettingBatch> ParseBatchAsync(Response response, SettingSelector selector, CancellationToken cancellation)
+        public static async Task<SettingBatch> ParseBatchAsync(Response response, CancellationToken cancellation)
         {
             Stream content = response.ContentStream;
             using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
             {
-                return ParseSettingBatch(response, selector, json);
+                return ParseSettingBatch(response, json);
             }
         }
 
-        public static SettingBatch ParseBatch(Response response, SettingSelector selector, CancellationToken cancellation)
+        public static SettingBatch ParseBatch(Response response)
         {
             Stream content = response.ContentStream;
             using (JsonDocument json = JsonDocument.Parse(content))
             {
-                return ParseSettingBatch(response, selector, json);
+                return ParseSettingBatch(response, json);
             }
         }
 
-        private static SettingBatch ParseSettingBatch(Response response, SettingSelector selector, JsonDocument json)
+        private static SettingBatch ParseSettingBatch(Response response, JsonDocument json)
         {
             TryGetNextAfterValue(ref response, out string nextBatchUri);
 
@@ -127,19 +129,19 @@ namespace Azure.ApplicationModel.Configuration
             return new SettingBatch(settings, nextBatchUri);
         }
 
-        static readonly string s_link = "Link";
-        static readonly string s_after = "after=";
+        private const string Link = "Link";
+        private const string After = "after=";
         static bool TryGetNextAfterValue(ref Response response, out string afterValue)
         {
             afterValue = default;
-            if (!response.Headers.TryGetValue(s_link, out var headerValue)) return false;
+            if (!response.Headers.TryGetValue(Link, out var headerValue)) return false;
 
             // the headers value is something like this: "</kv?after={token}>; rel=\"next\""
-            var afterIndex = headerValue.IndexOf(s_after);
+            var afterIndex = headerValue.IndexOf(After, StringComparison.Ordinal);
             if (afterIndex < 0) return false;
 
-            int beginingToken = afterIndex + s_after.Length;
-            int endToken = headerValue.IndexOf(">");
+            int beginingToken = afterIndex + After.Length;
+            int endToken = headerValue.IndexOf(">", StringComparison.Ordinal);
             int tokenLenght = endToken - beginingToken;
             afterValue = headerValue.Substring(beginingToken, tokenLenght);
             return true;

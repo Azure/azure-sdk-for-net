@@ -11,12 +11,14 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// SSIS package location.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class SSISPackageLocation
     {
         /// <summary>
@@ -32,9 +34,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="packagePath">The SSIS package path. Type: string (or
         /// Expression with resultType string).</param>
-        public SSISPackageLocation(object packagePath)
+        /// <param name="type">The type of SSIS package location. Possible
+        /// values include: 'SSISDB', 'File'</param>
+        /// <param name="packagePassword">Password of the package.</param>
+        /// <param name="accessCredential">The package access
+        /// credential.</param>
+        /// <param name="configurationPath">The configuration file of the
+        /// package execution. Type: string (or Expression with resultType
+        /// string).</param>
+        public SSISPackageLocation(object packagePath, string type = default(string), SecureString packagePassword = default(SecureString), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object))
         {
             PackagePath = packagePath;
+            Type = type;
+            PackagePassword = packagePassword;
+            AccessCredential = accessCredential;
+            ConfigurationPath = configurationPath;
             CustomInit();
         }
 
@@ -51,6 +65,32 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object PackagePath { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of SSIS package location. Possible values
+        /// include: 'SSISDB', 'File'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets password of the package.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.packagePassword")]
+        public SecureString PackagePassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets the package access credential.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.accessCredential")]
+        public SSISAccessCredential AccessCredential { get; set; }
+
+        /// <summary>
+        /// Gets or sets the configuration file of the package execution. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.configurationPath")]
+        public object ConfigurationPath { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -61,6 +101,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (PackagePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PackagePath");
+            }
+            if (PackagePassword != null)
+            {
+                PackagePassword.Validate();
+            }
+            if (AccessCredential != null)
+            {
+                AccessCredential.Validate();
             }
         }
     }

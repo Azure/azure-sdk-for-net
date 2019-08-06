@@ -9,15 +9,18 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal struct KeyAttributes
     {
+        /// <summary>
+        /// Specifies whether the key is enabled and useable for cryptographic operations.
+        /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets not before date in UTC.
+        /// Identifies the time (in UTC) before which the key must not be used for cryptographic operations.
         /// </summary>
         public System.DateTimeOffset? NotBefore { get; set; }
 
         /// <summary>
-        /// Gets or sets expiry date in UTC.
+        /// Identifies the expiration time (in UTC) on or after which the key must not be used.
         /// </summary>
         public System.DateTimeOffset? Expires { get; set; }
 

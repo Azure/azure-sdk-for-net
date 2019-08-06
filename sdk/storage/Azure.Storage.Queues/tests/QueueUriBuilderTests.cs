@@ -3,18 +3,16 @@
 // license information.
 
 using System;
-using Azure.Core.Testing;
-using Azure.Storage.Common;
 using Azure.Storage.Queues.Tests;
+using Azure.Storage.Sas;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
-    [TestFixture]
     public class QueueUriBuilderTests : QueueTestBase
     {
-        public QueueUriBuilderTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public QueueUriBuilderTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

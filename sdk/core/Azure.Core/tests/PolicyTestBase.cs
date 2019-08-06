@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -17,7 +18,7 @@ namespace Azure.Core.Tests
 
             using (Request request = transport.CreateRequest())
             {
-                request.Method = HttpPipelineMethod.Get;
+                request.Method = RequestMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");
                 var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
                 return pipeline.SendRequestAsync(request, CancellationToken.None);

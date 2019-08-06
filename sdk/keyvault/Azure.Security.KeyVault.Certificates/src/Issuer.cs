@@ -6,8 +6,8 @@ namespace Azure.Security.KeyVault.Certificates
 {
     public class Issuer : IssuerBase
     {
-        public readonly string Self = "self";
-        public readonly string Unknown = "unknown";
+        public static string Self => "self";
+        public static string Unknown => "unknown";
 
         public string AccountId { get; set; }
         public string Password { get; set; }

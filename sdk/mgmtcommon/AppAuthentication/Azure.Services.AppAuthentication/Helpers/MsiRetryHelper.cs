@@ -12,7 +12,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
     internal static class MsiRetryHelper
     {
         internal const int MaxRetries = 5;
-        internal const int DeltaBackOffInSecs = 2;
+        internal const int DeltaBackOffInSeconds = 2;
+        internal const string RetryTimeoutError = "Reached retry timeout limit set by MsiRetryTimeout parameter in connection string.";
 
         // for unit test purposes
         internal static bool WaitBeforeRetry = true;
@@ -26,40 +27,62 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <summary>
         /// Implements recommended retry guidance here: https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#retry-guidance
         /// </summary>
-        internal static async Task<HttpResponseMessage> SendAsyncWithRetry(this HttpClient httpClient, Func<HttpRequestMessage> getRequest, CancellationToken cancellationToken)
+        internal static async Task<HttpResponseMessage> SendAsyncWithRetry(this HttpClient httpClient, Func<HttpRequestMessage> getRequest, int retryTimeoutInSeconds, CancellationToken cancellationToken)
         {
-            var attempts = 0;
-            var backoffTimeInSecs = 0;
-            HttpResponseMessage response;
-
-            while (true)
+            using (var timeoutTokenSource = new CancellationTokenSource())
+            using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(timeoutTokenSource.Token, cancellationToken))
             {
-                attempts++;
-
                 try
                 {
-                    response = await httpClient.SendAsync(getRequest(), cancellationToken);
-
-                    if (response.IsSuccessStatusCode || !response.IsRetryableStatusCode() || attempts == MaxRetries)
+                    // if retry timeout is configured, configure cancellation after timeout period elapses
+                    if (retryTimeoutInSeconds > 0)
                     {
-                        break;
+                        timeoutTokenSource.CancelAfter(TimeSpan.FromSeconds(retryTimeoutInSeconds));
                     }
-                }
-                catch (HttpRequestException)
-                {
-                    if (attempts == MaxRetries) throw;
-                }
 
-                if (WaitBeforeRetry)
+                    var attempts = 0;
+                    var backoffTimeInSecs = 0;
+                    HttpResponseMessage response;
+
+                    while (true)
+                    {
+                        attempts++;
+
+                        try
+                        {
+                            response = await httpClient.SendAsync(getRequest(), linkedTokenSource.Token).ConfigureAwait(false);
+
+                            if (response.IsSuccessStatusCode || !response.IsRetryableStatusCode() || attempts == MaxRetries)
+                            {
+                                break;
+                            }
+                        }
+                        catch (HttpRequestException)
+                        {
+                            if (attempts == MaxRetries) throw;
+                        }
+
+                        if (WaitBeforeRetry)
+                        {
+                            // use recommended exponential backoff strategy, and use linked token wait handle so caller or retry timeout is still able to cancel
+                            backoffTimeInSecs = backoffTimeInSecs + (int)Math.Pow(DeltaBackOffInSeconds, attempts);
+                            linkedTokenSource.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(backoffTimeInSecs));
+                            linkedTokenSource.Token.ThrowIfCancellationRequested();
+                        }
+                    }
+
+                    return response;
+                }
+                catch (OperationCanceledException)
                 {
-                    // use recommended exponential backoff strategy, and use cancellation token wait handle so caller is still able to cancel
-                    backoffTimeInSecs = backoffTimeInSecs + (int)Math.Pow(DeltaBackOffInSecs, attempts);
-                    cancellationToken.WaitHandle.WaitOne(TimeSpan.FromSeconds(backoffTimeInSecs));
-                    cancellationToken.ThrowIfCancellationRequested();
+                    if (timeoutTokenSource.IsCancellationRequested)
+                    {
+                        throw new TimeoutException(RetryTimeoutError);
+                    }
+
+                    throw;
                 }
             }
-
-            return response;
         }
     }
 }

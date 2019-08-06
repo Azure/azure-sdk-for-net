@@ -27,8 +27,17 @@ namespace TrackOne
         {
             int count = ValidateEvents(eventDatas);
 
+            if (count == 0)
+            {
+                return;
+            }
+
+            var activePartitionRouting = String.IsNullOrEmpty(partitionKey) ?
+                this.PartitionId :
+                partitionKey;
+
             EventHubsEventSource.Log.EventSendStart(this.ClientId, count, partitionKey);
-            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, count);
+            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, activePartitionRouting, eventDatas, count);
 
             Task sendTask = null;
             try
@@ -41,13 +50,13 @@ namespace TrackOne
             catch (Exception exception)
             {
                 EventHubsEventSource.Log.EventSendException(this.ClientId, exception.ToString());
-                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, exception);
+                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, activePartitionRouting, eventDatas, exception);
                 throw;
             }
             finally
             {
                 EventHubsEventSource.Log.EventSendStop(this.ClientId);
-                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, sendTask);
+                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, activePartitionRouting, eventDatas, sendTask);
             }
         }
 
@@ -55,20 +64,20 @@ namespace TrackOne
 
         internal static int ValidateEvents(IEnumerable<EventData> eventDatas)
         {
-            int count;
-
-            if (eventDatas == null || (count = eventDatas.Count()) == 0)
+            if (eventDatas == null)
             {
                 throw Fx.Exception.Argument(nameof(eventDatas), Resources.EventDataListIsNullOrEmpty);
             }
 
-            return count;
+            return eventDatas.Count();
         }
 
         async Task<EventData> ProcessEvent(EventData eventData)
         {
             if (this.RegisteredPlugins == null || this.RegisteredPlugins.Count == 0)
+            {
                 return eventData;
+            }
 
             var processedEvent = eventData;
             foreach (var plugin in this.RegisteredPlugins.Values)
@@ -111,5 +120,7 @@ namespace TrackOne
         }
 
         internal long MaxMessageSize { get; set; }
+
+        internal virtual ValueTask EnsureLinkAsync() => new ValueTask();
     }
 }

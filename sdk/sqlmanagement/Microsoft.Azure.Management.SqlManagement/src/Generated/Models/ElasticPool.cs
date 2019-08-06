@@ -39,6 +39,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="sku">The elastic pool SKU.
+        ///
+        /// The list of SKUs may vary by region and support offer. To determine
+        /// the SKUs (including the SKU name, tier/edition, family, and
+        /// capacity) that are available to your subscription in an Azure
+        /// region, use the `Capabilities_ListByLocation` REST API or the
+        /// following command:
+        ///
+        /// ```azurecli
+        /// az sql elastic-pool list-editions -l &lt;location&gt; -o table
+        /// ````
+        /// </param>
         /// <param name="kind">Kind of elastic pool. This is metadata used for
         /// the Azure portal experience.</param>
         /// <param name="state">The state of the elastic pool. Possible values
@@ -75,6 +87,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the elastic pool SKU.
+        ///
+        /// The list of SKUs may vary by region and support offer. To determine
+        /// the SKUs (including the SKU name, tier/edition, family, and
+        /// capacity) that are available to your subscription in an Azure
+        /// region, use the `Capabilities_ListByLocation` REST API or the
+        /// following command:
+        ///
+        /// ```azurecli
+        /// az sql elastic-pool list-editions -l &amp;lt;location&amp;gt; -o
+        /// table
+        /// ````
+        ///
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }

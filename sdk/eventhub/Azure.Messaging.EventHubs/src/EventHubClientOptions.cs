@@ -14,14 +14,8 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubClientOptions
     {
-        /// <summary>The value to use as the default for the <see cref="DefaultTimeout" /> property.</summary>
-        private static readonly TimeSpan DefaultTimeoutValue = TimeSpan.FromMinutes(1);
-
-        /// <summary>The retry policy to apply to operations.</summary>
-        private Retry _retry = Retry.Default;
-
-        /// <summary>the timeout that will be used by default for operations.</summary>
-        private TimeSpan _defaultTimeout = DefaultTimeoutValue;
+        /// <summary>The set of options to apply for retrying failed operations.</summary>
+        private RetryOptions _retryOptions = new RetryOptions();
 
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Event Hubs
@@ -43,46 +37,23 @@ namespace Azure.Messaging.EventHubs
         public IWebProxy Proxy { get; set; } = null;
 
         /// <summary>
-        ///   The policy to use for determining whether a failed operation should be retried and,
+        ///   The set of options to use for determining whether a failed operation should be retried and,
         ///   if so, the amount of time to wait between retry attempts.
         /// </summary>
         ///
-        public Retry Retry
+        public RetryOptions RetryOptions
         {
-            get => _retry;
+            get => _retryOptions;
 
             set
             {
-                ValidateRetry(value);
-                _retry = value;
+                ValidateRetryOptions(value);
+                _retryOptions = value;
             }
         }
 
         /// <summary>
-        ///   Gets or sets the timeout that will be used by default for operations associated with
-        ///   the requested Event Hub.
-        /// </summary>
-        ///
-        public TimeSpan DefaultTimeout
-        {
-            get => _defaultTimeout;
-
-            set
-            {
-                ValidateDefaultTimeout(value);
-                _defaultTimeout = value;
-            }
-        }
-
-        /// <summary>
-        ///   Normalizes the specified timeout value, returning the timeout period or the
-        ///   a <c>null</c> value if no timeout was specified.
-        /// </summary>
-        ///
-        internal TimeSpan? TimeoutOrDefault => (_defaultTimeout == TimeSpan.Zero) ? DefaultTimeoutValue : _defaultTimeout;
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -119,38 +90,29 @@ namespace Azure.Messaging.EventHubs
         internal EventHubClientOptions Clone() =>
             new EventHubClientOptions
             {
-                Retry = this.Retry.Clone(),
                 TransportType = this.TransportType,
-                DefaultTimeout = this.DefaultTimeout,
-                Proxy = this.Proxy
+                Proxy = this.Proxy,
+                _retryOptions = this.RetryOptions.Clone()
             };
 
         /// <summary>
-        ///   Validates the time period specified as the default operation timeout, throwing an <see cref="ArgumentException" /> if
-        ///   it is not valid.
+        ///   Clears the retry options to allow for bypassing them in the
+        ///   case where a custom retry policy is used.
         /// </summary>
         ///
-        /// <param name="timeout">The time period to validate.</param>
-        ///
-        private void ValidateDefaultTimeout(TimeSpan timeout)
-        {
-            if (timeout < TimeSpan.Zero)
-            {
-                throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(DefaultTimeout));
-            }
-        }
+        internal void ClearRetryOptions() => _retryOptions = null;
 
         /// <summary>
-        ///   Validates the retry policy specified, throwing an <see cref="ArgumentException" /> if it is not valid.
+        ///   Validates the retry options are specified, throwing an <see cref="ArgumentException" /> if it is not valid.
         /// </summary>
         ///
-        /// <param name="retry">The time period to validae.</param>
+        /// <param name="retryOptions">The set of retry options to validae.</param>
         ///
-        private void ValidateRetry(Retry retry)
+        private void ValidateRetryOptions(RetryOptions retryOptions)
         {
-            if (retry == null)
+            if (retryOptions == null)
             {
-                throw new ArgumentException(Resources.RetryMustBeSet, nameof(Retry));
+                throw new ArgumentException(Resources.RetryOptionsMustBeSet, nameof(RetryOptions));
             }
         }
     }

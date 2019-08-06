@@ -86,13 +86,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the name of the primary  port.
+        /// Gets the name of the primary port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryAzurePort")]
         public string PrimaryAzurePort { get; private set; }
 
         /// <summary>
-        /// Gets the name of the secondary  port.
+        /// Gets the name of the secondary port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryAzurePort")]
         public string SecondaryAzurePort { get; private set; }

@@ -1,0 +1,86 @@
+trigger:
+  - master
+jobs:
+  - job: CreateDocs
+    variables:
+      skipComponentGovernanceDetection: true
+    pool:
+      vmImage: vs2017-win2016
+    steps:
+      - pwsh: |
+          Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
+          -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
+        workingDirectory: $(Build.BinariesDirectory)
+        displayName: Download and Extract DocFX
+      - task: CmdLine@2
+        displayName: Provision DocFX Directory
+        inputs:
+          script: $(Build.BinariesDirectory)/docfx/docfx.exe init -q
+          workingDirectory: $(Build.SourcesDirectory)
+          failOnStderr: true
+      - pwsh: ls
+        workingDirectory: $(Build.SourcesDirectory)/docfx_project/
+      - pwsh: |
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
+        displayName: Copy over docfx.json
+      - task: CmdLine@2
+        displayName: Generate MetaData
+        inputs:
+          script: $(Build.BinariesDirectory)/docfx/docfx.exe metadata
+          workingDirectory: $(Build.SourcesDirectory)/docfx_project/
+          failOnStderr: true
+      - task: PythonScript@0
+        displayName: "Arrange Yaml files into Folders"
+        inputs:
+          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/MoveYmlFiles.py"
+          arguments: $(Build.SourcesDirectory)
+          failOnStderr: true
+      - task: PythonScript@0
+        displayName: "Create Toc.yml for each service directory"
+        inputs:
+          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CreateTocYml.py"
+          arguments: $(Build.SourcesDirectory)
+      - pwsh: |
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/api/*" -Destination "$(Build.SourcesDirectory)/docfx_project/api/" -Force
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/api/index.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/intro.md" -Force
+          Copy-Item "$(Build.SourcesDirectory)/Documentation/*" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/index/*" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
+          Copy-Item "$(Build.SourcesDirectory)/CONTRIBUTING.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
+          Copy-Item "$(Build.SourcesDirectory)/packages.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
+        displayName: Copy over Yaml and Md files
+      - task: PythonScript@0
+        displayName: "Copy Over all ReadMes in the Repo"
+        inputs:
+          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CopyReadMes.py"
+          arguments: $(Build.SourcesDirectory)
+          failOnStderr: true
+      - task: PythonScript@0
+        displayName: "Create Toc.yml for articles"
+        inputs:
+          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CreateTocYmlForArticles.py"
+          arguments: $(Build.SourcesDirectory)
+          failOnStderr: true
+      - pwsh: ls
+        workingDirectory: $(Build.SourcesDirectory)/docfx_project/articles
+      - task: CmdLine@2
+        displayName: Build Doc Content
+        inputs:
+          script: $(Build.BinariesDirectory)/docfx/docfx.exe build
+          workingDirectory: $(Build.SourcesDirectory)/docfx_project/
+          failOnStderr: true
+      - pwsh: |
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/*" -Destination "$(Build.SourcesDirectory)/docfx_project/_site/" -Force
+        displayName: Replace site assets
+      - task: CopyFiles@2
+        displayName: Copy HTML to Artifacts Directory
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/docfx_project/
+          content: '**\*'
+          targetFolder: $(Build.ArtifactStagingDirectory)/docfx_project
+          overWrite: true
+      - task: PublishPipelineArtifact@0
+        condition: succeeded()
+        inputs:
+          artifactName: docfx_project
+          targetPath: $(Build.ArtifactStagingDirectory)/docfx_project/_site

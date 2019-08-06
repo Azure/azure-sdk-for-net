@@ -51,12 +51,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        /// <param name="tableName">The table name. Type: string (or Expression
-        /// with resultType string).</param>
-        public PhoenixObjectDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object))
+        /// <param name="tableName">This property will be retired. Please
+        /// consider using schema + table properties instead.</param>
+        /// <param name="table">The table name of the Phoenix. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="phoenixObjectDatasetSchema">The schema name of the
+        /// Phoenix. Type: string (or Expression with resultType
+        /// string).</param>
+        public PhoenixObjectDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object), object table = default(object), object phoenixObjectDatasetSchema = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             TableName = tableName;
+            Table = table;
+            PhoenixObjectDatasetSchema = phoenixObjectDatasetSchema;
             CustomInit();
         }
 
@@ -66,11 +73,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the table name. Type: string (or Expression with
-        /// resultType string).
+        /// Gets or sets this property will be retired. Please consider using
+        /// schema + table properties instead.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.tableName")]
         public object TableName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the table name of the Phoenix. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.table")]
+        public object Table { get; set; }
+
+        /// <summary>
+        /// Gets or sets the schema name of the Phoenix. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.schema")]
+        public object PhoenixObjectDatasetSchema { get; set; }
 
         /// <summary>
         /// Validate the object.

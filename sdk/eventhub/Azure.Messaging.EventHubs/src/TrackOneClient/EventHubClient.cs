@@ -5,12 +5,11 @@ namespace TrackOne
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Net;
     using System.Threading.Tasks;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using TrackOne.Amqp;
     using TrackOne.Primitives;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
     /// <summary>
     /// Anchor class - all EventHub client operations start here.
