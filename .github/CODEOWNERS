@@ -22,7 +22,7 @@
 
 /sdk/eventgrid/ @kalyanaj 
 
-/sdk/eventhub/ @serkantkaraca 
+/sdk/eventhub/ @serkantkaraca @jsquire @kinelski
 /sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
 
 /sdk/identity/azure.identity/ @schaabs
@@ -31,7 +31,7 @@
 /sdk/keyvault/azure.*/ @schaabs @shahabhijeet 
 
 /sdk/search/ @brjohnstmsft
-/sdk/servicebus/ @nemakam 
+/sdk/servicebus/ @nemakam @jsquire
 /sdk/storage/ @kfarmer-msft @seanmcc-msft @tg-msft
 # Management Plane
 /**/*Management*/ @erich-wang
