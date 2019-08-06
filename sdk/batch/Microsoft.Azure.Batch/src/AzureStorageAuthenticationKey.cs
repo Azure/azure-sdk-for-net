@@ -10,17 +10,17 @@
         /// <summary>
         /// Gets the Azure Storage Account key.
         /// </summary>
-        public string StorageAccountKey { get; }
+        public string AccountKey { get; }
 
         /// <summary>
         /// Gets the Azure Storage SAS key.
         /// </summary>
-        public string StorageSasKey { get; }
+        public string SasKey { get; }
 
         private AzureStorageAuthenticationKey(string accountKey = null, string sasKey = null)
         {
-            StorageAccountKey = accountKey;
-            StorageSasKey = sasKey;
+            AccountKey = accountKey;
+            SasKey = sasKey;
         }
 
         /// <summary>
@@ -28,13 +28,13 @@
         /// </summary>
         /// <param name="key">The Storage Account key.</param>
         /// <returns>A new <see cref="AzureStorageAuthenticationKey"/> referencing the Azure Storage Account key.</returns>
-        public AzureStorageAuthenticationKey AccountKey(string key) => new AzureStorageAuthenticationKey(accountKey: key);
+        public static AzureStorageAuthenticationKey FromAccountKey(string key) => new AzureStorageAuthenticationKey(accountKey: key);
 
         /// <summary>
         /// Creates a new <see cref="AzureStorageAuthenticationKey"/> referencing an Azure Storage SAS key.
         /// </summary>
         /// <param name="key">The Storage SAS key.</param>
         /// <returns>A new <see cref="AzureStorageAuthenticationKey"/> referencing the Azure Storage SAS key.</returns>
-        public AzureStorageAuthenticationKey SasKey(string key) => new AzureStorageAuthenticationKey(sasKey: key);
+        public static AzureStorageAuthenticationKey FromSasKey(string key) => new AzureStorageAuthenticationKey(sasKey: key);
     }
 }

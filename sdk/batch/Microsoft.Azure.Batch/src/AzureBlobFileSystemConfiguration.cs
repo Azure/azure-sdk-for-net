@@ -22,8 +22,8 @@
             AzureStorageAuthenticationKey key,
             string blobfuseOptions = default(string)) : this(accountName, containerName, relativeMountPath, blobfuseOptions: blobfuseOptions)
         {
-            SasKey = key.StorageSasKey;
-            AccountKey = key.StorageAccountKey;
+            SasKey = key.SasKey;
+            AccountKey = key.AccountKey;
         }
     }
 }
