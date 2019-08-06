@@ -23,10 +23,6 @@ namespace Azure.Security.KeyVault.Cryptography
     /// </summary>
     internal class RsaCryptographyProvider : BaseCryptographyProvider
     {
-        #region const
-        const string RSA_CRYPTO_DEFAULT_NAME = "RSAProviderDefaults";
-        #endregion
-
         #region Properties
 
         #region private properties

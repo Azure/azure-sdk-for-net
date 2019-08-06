@@ -5,7 +5,6 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
 {
     using Azure.Core.Testing;
     using Azure.Identity;
-    using Azure.Security.KeyVault.Cryptography.Client;
     using Azure.Security.KeyVault.Cryptography.Tests.Utilities;
     using Azure.Security.KeyVault.Keys;
     using Azure.Security.KeyVault.Keys.Tests;
@@ -52,24 +51,6 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
                 return Client;
             }
         }
-
-        //public KeyClient KVKeyClient
-        //{
-        //    get
-        //    {
-        //        if(_kvKeyClient == null)
-        //        {
-        //            //Creds = Recording.GetCredential(new DefaultAzureCredential());
-        //            KeyClientOptions opts = Recording.InstrumentClientOptions<KeyClientOptions>(new KeyClientOptions());
-        //            var kc = new KeyClient(KVVaultUri, Creds, opts);
-        //            _kvKeyClient = InstrumentClient<KeyClient>(kc);
-        //            //CheckUtility.NotNull(_kvKeyClient, nameof(_kvKeyClient));
-        //            Assert.IsNotNull(_kvKeyClient);
-        //        }
-
-        //        return _kvKeyClient;
-        //    }
-        //}
 
         public CryptographyClient KVCryptoClient { get; set; }
         
