@@ -20,7 +20,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task HostReregisterShouldFail()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var eventProcessorHost = new EventProcessorHost(
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task NonexsistentEntity()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Rebuild connection string with a nonexistent entity.

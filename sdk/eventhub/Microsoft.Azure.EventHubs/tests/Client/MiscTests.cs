@@ -17,7 +17,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task PartitionKeyValidation()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var NumberOfMessagesToSend = 100;
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task SendAndReceiveLargeMessage()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var bodySize = 250 * 1024;

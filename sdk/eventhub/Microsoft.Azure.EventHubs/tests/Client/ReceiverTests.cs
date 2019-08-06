@@ -11,7 +11,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Threading.Tasks;
     using Xunit;
 
-
     public class ReceiverTests : ClientTestBase
     {
         [Fact]
@@ -21,6 +20,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var partitionId = "1";
             var payloadString = "Hello EventHub!";
+
             await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
@@ -51,10 +51,12 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var receiver = default(PartitionReceiver);
             var partitionSender = default(PartitionSender);
-            await using (var scope = await EventHubScope.CreateAsync(2))
+
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+
                 try
                 {
                     // Randomly pick one of the available partitons.
@@ -75,7 +77,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     // Create a new receiver which will start reading from the end of the stream.
                     TestUtility.Log($"Creating a new receiver with offset EndOFStream");
                     receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromEnd());
-
 
                     // Attemp to receive the message. This should return only 1 message.
                     var receiveTask = receiver.ReceiveAsync(100);
@@ -121,7 +122,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var receiver = default(PartitionReceiver);
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -176,7 +177,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var receiver = default(PartitionReceiver);
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -225,7 +226,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var receiver = default(PartitionReceiver);
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -280,10 +281,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var receiver = default(PartitionReceiver);
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+
                 try
                 {
                     // Randomly pick one of the available partitons.
@@ -334,10 +336,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var receiver = default(PartitionReceiver);
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+
                 try
                 {
                     // Randomly pick one of the available partitons.
@@ -384,7 +387,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             TestUtility.Log("Receiving Events via PartitionReceiver.ReceiveAsync(BatchSize)");
             const string partitionId = "0";
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -497,7 +500,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task CreateNonEpochReceiverAfterEpochReceiver()
         {
-
             await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
@@ -538,7 +540,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task CreateEpochReceiverAfterNonEpochReceiver()
         {
-
             await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
@@ -584,8 +585,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task CloseReceiverClient()
         {
-
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -623,7 +623,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task ReceiverIdentifier()
         {
-
             await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);

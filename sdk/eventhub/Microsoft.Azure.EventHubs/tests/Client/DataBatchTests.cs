@@ -75,7 +75,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task SendingPartitionKeyBatchOnPartitionSenderShouldFail()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task CreatingPartitionKeyBatchOnPartitionSenderShouldFail()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             int maxPayloadSize = 1024,
             int minimumNumberOfMessagesToSend = 1000)
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);

@@ -11,7 +11,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Threading.Tasks;
     using Xunit;
 
-
     public class SendTests : ClientTestBase
     {
         [Fact]
@@ -21,7 +20,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             var targetPartition = "0";
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -50,7 +49,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             TestUtility.Log("Sending single Event via EventHubClient.SendAsync(EventData, string)");
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -76,7 +75,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             TestUtility.Log("Sending multiple Events via EventHubClient.SendAsync(IEnumerable<EventData>)");
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -133,11 +132,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             TestUtility.Log("Sending single Event via PartitionSender.SendAsync(IEnumerable<EventData>)");
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
-                var partitionSender1 = ehClient.CreatePartitionSender("1");
+                var partitionSender1 = ehClient.CreatePartitionSender("0");
 
                 try
                 {
@@ -165,7 +164,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             var targetPartition = "0";
             var byteArr = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -197,9 +196,10 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
             TestUtility.Log($"Starting {maxNumberOfClients} SendAsync tasks in parallel.");
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var tasks = new List<Task>();
+
                 for (var i = 0; i < maxNumberOfClients; i++)
                 {
                     var task = Task.Run(async () =>
@@ -221,11 +221,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     tasks.Add(task);
                 }
 
-
                 await Task.Delay(10000);
                 startGate.TrySetResult(true);
                 await Task.WhenAll(tasks);
             }
+
             TestUtility.Log("All Send tasks have completed.");
         }
 
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task CloseSenderClient()
         {
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         {
             string targetPartitionKey = "this is the partition key";
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);

@@ -80,7 +80,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task SendFiresEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var partitionKey = "SomePartitionKeyHere";
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task SendDoesNotInjectContextWhenNoListeners()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var partitionKey = "SomePartitionKeyHere";
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task SendFiresExceptionEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var partitionKey = "SomePartitionKeyHere";
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task PartitionSenderSendFiresEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var partitionKey = "1";
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task PartitionSenderSendDoesNotInjectContextWhenNoListeners()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var partitionKey = "1";
@@ -371,7 +371,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task PartitionSenderSendFiresExceptionEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var partitionKey = "1";
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task PartitionReceiverReceiveFiresEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(3))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var partitionKey = "2";

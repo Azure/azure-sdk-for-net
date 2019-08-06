@@ -10,7 +10,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Xunit;
 
-
     public class TokenProviderTests : ClientTestBase
     {
         [Fact]
@@ -18,8 +17,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task UseSharedAccessSignature()
         {
-
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var csb = new EventHubsConnectionStringBuilder(connectionString);
@@ -73,7 +71,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task UseITokenProviderWithSas()
         {
             // Generate SAS token provider.
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var csb = new EventHubsConnectionStringBuilder(connectionString);
@@ -138,7 +136,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, appAuthority);
 
             // Create new client with updated connection string.
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var csb = new EventHubsConnectionStringBuilder(connectionString);
@@ -189,7 +187,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 };
 
             // Create new client with updated connection string.
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var csb = new EventHubsConnectionStringBuilder(connectionString);

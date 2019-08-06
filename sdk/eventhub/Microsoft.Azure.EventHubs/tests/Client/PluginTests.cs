@@ -9,7 +9,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using Microsoft.Azure.EventHubs.Core;
     using Xunit;
 
-
     public class PluginTests
     {
         protected EventHubClient EventHubClient;
@@ -19,7 +18,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Registering_plugin_multiple_times_should_throw()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Unregistering_plugin_should_complete_with_plugin_set()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -54,7 +53,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Unregistering_plugin_should_complete_without_plugin_set()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -68,10 +67,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Plugin_without_ShouldContinueOnException_should_throw()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
+
                 try
                 {
                     var plugin = new ExceptionPlugin();
@@ -92,10 +92,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task Plugin_with_ShouldContinueOnException_should_continue()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 this.EventHubClient = EventHubClient.CreateFromConnectionString(connectionString);
+
                 try
                 {
                     var plugin = new ShouldCompleteAnywayExceptionPlugin();

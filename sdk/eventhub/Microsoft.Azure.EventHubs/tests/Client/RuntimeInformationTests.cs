@@ -10,7 +10,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Threading.Tasks;
     using Xunit;
 
-
     public class RuntimeInformationTests : ClientTestBase
     {
         [Fact]
@@ -18,8 +17,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task GetEventHubRuntimeInformation()
         {
-
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
@@ -51,11 +49,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task GetEventHubPartitionRuntimeInformation()
         {
-
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
-
                 var csb = new EventHubsConnectionStringBuilder(connectionString);
                 var ehClient = EventHubClient.CreateFromConnectionString(csb.ToString());
                 var partitions = await this.GetPartitionsAsync(ehClient);
@@ -116,9 +112,10 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
             TestUtility.Log($"Starting {maxNumberOfClients} GetRuntimeInformationAsync tasks in parallel.");
 
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var tasks = new List<Task>();
+
                 for (var i = 0; i < maxNumberOfClients; i++)
                 {
                     var task = Task.Run(async () =>
