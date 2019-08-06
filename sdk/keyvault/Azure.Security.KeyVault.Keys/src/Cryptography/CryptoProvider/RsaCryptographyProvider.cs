@@ -21,6 +21,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
     using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
+    using Azure.Security.KeyVault.Keys.Cryptography.ExtensionMethods;
 
     /// <summary>
     /// 
@@ -98,34 +99,36 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public override async Response<KeyOperationResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        public override async Task<Response<CryptographyOperationResult>> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
-            Response<KeyOperationResult> result = null;
+            Task<Response<CryptographyOperationResult>> result = null;
             if (ServerCryptoProvider != null)
             {
                 result = ServerCryptoProvider.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
             }
             else if (LocalCryptoProvider != null)
             {
-                result =  LocalCryptoProvider.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
+                //result =  LocalCryptoProvider.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
             }
 
             return await result.ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="plaintext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public override Response<KeyOperationResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        public override async Task<Response<CryptographyOperationResult>> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
-            return base.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
+            Task<Response<CryptographyOperationResult>> result = null;
+            if (ServerCryptoProvider != null)
+            {
+                result = ServerCryptoProvider.DecryptAsync(ciphertext, iv, authenticationData, authenticationTag, algorithmKind, token);
+            }
+            else if (LocalCryptoProvider != null)
+            {
+                //result =  LocalCryptoProvider.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
+            }
+
+            return await result.ConfigureAwait(false);
         }
+
         #endregion
 
         #endregion
@@ -160,33 +163,6 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         #endregion
 
         #region Public Functions
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="plaintext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public override Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="plaintext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public override Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            return base.EncryptAsync(plaintext, iv, authenticationData, algorithmKind, token);
-        }
 
         #region Virtual Overrides
         /// <summary>
@@ -230,7 +206,7 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         #region Public Functions
 
         #region ICryptoProvider
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -240,22 +216,25 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
         /// <param name="algorithmKind"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public override Response<KeyOperationResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        public override async Task<Response<CryptographyOperationResult>> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
-            //keys/{key-name}/{key-version}/encrypt
-            //List<KeyOperations> keyOperationList = new List<KeyOperations>() { KeyOperations.Encrypt };
-            //KeyRequestParameters keyReqParam = new KeyRequestParameters(CryptoClient.KeyVaultKey, keyOperationList);
-
             KeyOperationsParameters keyOp = new KeyOperationsParameters(algorithmKind, plaintext);
-            Request req = CreateEncryptRequest();
+            //Request req = CreateEncryptRequest();
+            Request req = CreateCryptoOperationRequest(CryptoOperationKind.Encrypt);
             req.Content = HttpPipelineRequestContent.Create(keyOp.Serialize());
-
             Response response = SendRequest(req, token);
+            Response<CryptographyOperationResult> result = CreateResponse<CryptographyOperationResult>(response);
+            return await Task.FromResult<Response<CryptographyOperationResult>>(result).ConfigureAwait(false);
+        }
 
-            Response<KeyOperationResult> result = CreateResponse<KeyOperationResult>(response);
-
-            return result;
-            //{{"kid":"https://netsdkcryptokvtest.vault.azure.net/keys/1907704304/e7576b04e9b04734998ac46356f4674e","value":"avxsc1BQuDHggfcNR5Va7RYjiyFtmKti1jaj3Jc73SV1w1gBDsqm8s81Jy_jYretDi057N5gaQ_ZqkS-nn9NO4_anzltDm20zadzps7uGeDSK-Ad8ske3EasG_SobCnI71hIWWSBXFXVsqL3kLBGyHS-WnA51vW85_uyN5sYN3EUJ6St9rNfDffwMBX3Y3vBuX6Mih387De9smcb_WdalfSXk1dl-3uk9Vqw5r-qOdHk7XZ3_-9FJm98BtbBuModHJweB9hs-oDp52Ci6qSUNcdrs8WEOL2EsmwoQCOSjDXjUWHAD2SGfu8ie7JJS676R6fhlU_ZO2vUwjs4Vv2k7A"}}
+        public override async Task<Response<CryptographyOperationResult>> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            KeyOperationsParameters keyOp = new KeyOperationsParameters(algorithmKind, ciphertext);
+            Request req = CreateCryptoOperationRequest(CryptoOperationKind.Decrypt);
+            req.Content = HttpPipelineRequestContent.Create(keyOp.Serialize());
+            Response response = SendRequest(req, token);
+            Response<CryptographyOperationResult> result = CreateResponse<CryptographyOperationResult>(response);
+            return await Task.FromResult<Response<CryptographyOperationResult>>(result).ConfigureAwait(false);
         }
 
         #endregion
@@ -276,23 +255,40 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
 
         #region private functions
 
-        Request CreateEncryptRequest()
-        {
-            Request commonRequest = CreateEncryptDecryptRequest();
-            commonRequest.UriBuilder.AppendPath(@"/encrypt");
-            return commonRequest;
-        }
+        //Request CreateEncryptRequest()
+        //{
+        //    Request commonRequest = CreateEncryptDecryptRequest();
+        //    commonRequest.UriBuilder.AppendPath(@"/encrypt");
+        //    return commonRequest;
+        //}
 
-        Request CreateDecryptRequest()
-        {
-            Request commonRequest = CreateEncryptDecryptRequest();
-            commonRequest.UriBuilder.AppendPath(@"/decrypt");
-            return commonRequest;
-        }
+        //Request CreateDecryptRequest()
+        //{
+        //    Request commonRequest = CreateEncryptDecryptRequest();
+        //    commonRequest.UriBuilder.AppendPath(@"/decrypt");
+        //    return commonRequest;
+        //}
 
-        Request CreateEncryptDecryptRequest()
+        //Request CreateEncryptDecryptRequest()
+        //{
+        //    //{vaultUri}/keys/{key-name}/{key-version}/encrypt
+
+        //    string keyReqPath = string.Format(CultureInfo.CurrentCulture, "{0}/keys/{1}/{2}", CryptoClient.KeyId.KeyVaultUri, CryptoClient.KeyId.KeyName, CryptoClient.KeyId.KeyVersion);
+        //    Request request = CryptoClient.Pipeline.CreateRequest();
+
+        //    request.Headers.Add(HttpHeader.Common.JsonContentType);
+        //    request.Headers.Add(HttpHeader.Common.JsonAccept);
+        //    request.Method = RequestMethod.Post;
+        //    request.UriBuilder.Uri = new Uri(keyReqPath);
+
+        //    request.UriBuilder.AppendQuery("api-version", CryptoClient.CryptoClientOptions.GetVersionString());
+
+        //    return request;
+        //}
+
+        Request CreateCryptoOperationRequest(CryptoOperationKind operationKind)
         {
-            //{vaultUri}/keys/{key-name}/{key-version}/encrypt
+            //{vaultUri}/keys/{key-name}/{key-version}/{CryptoOperationKind}
 
             string keyReqPath = string.Format(CultureInfo.CurrentCulture, "{0}/keys/{1}/{2}", CryptoClient.KeyId.KeyVaultUri, CryptoClient.KeyId.KeyName, CryptoClient.KeyId.KeyVersion);
             Request request = CryptoClient.Pipeline.CreateRequest();
@@ -301,14 +297,14 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = RequestMethod.Post;
             request.UriBuilder.Uri = new Uri(keyReqPath);
-            //request.UriBuilder.AppendPath(keyReqPath);
+            request.UriBuilder.AppendPath(operationKind.GetDescriptionAttributeValue());
 
             request.UriBuilder.AppendQuery("api-version", CryptoClient.CryptoClientOptions.GetVersionString());
 
             return request;
         }
 
-        private Response SendRequest(Request request, CancellationToken cancellationToken)
+        Response SendRequest(Request request, CancellationToken cancellationToken)
         {
             var response = CryptoClient.Pipeline.SendRequest(request, cancellationToken);
 
@@ -323,16 +319,14 @@ namespace Azure.Security.KeyVault.Cryptography.CryptoProvider
             }
         }
 
-        private Response<T> CreateResponse<T>(Response response)
-            where T : Model
+        Response<T> CreateResponse<T>(Response response)
+            where T : Model, new()
         {
-            T result = default(T);
+            T result = new T();
             result.Deserialize(response.ContentStream);
-
             return new Response<T>(response, result);
         }
         #endregion
 
     }
 }
-;

@@ -73,7 +73,6 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
 
         public CryptographyClient KVCryptoClient { get; set; }
         
-
         public Uri KVVaultUri
         {
             get
@@ -90,7 +89,12 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
         }
         #endregion
 
-        #region Constructor
+        #region Constructor        
+        //protected CryptoTestBase()
+        //{
+        //    TestcaseKeysQueue = new Queue<(KeyBase key, bool deleteKey)>();
+        //}
+
         public CryptoTestBase(bool isAsync) : base(isAsync)
         {
             TestcaseKeysQueue = new Queue<(KeyBase key, bool deleteKey)>();

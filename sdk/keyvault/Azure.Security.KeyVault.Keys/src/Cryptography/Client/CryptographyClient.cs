@@ -10,6 +10,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
     using Azure.Security.KeyVault.Cryptography.Interface;
     using Azure.Security.KeyVault.Cryptography.Utilities;
     using Azure.Security.KeyVault.Keys;
+    using Azure.Security.KeyVault.Keys.Cryptography.Interface;
     using System;
 
     /// <summary>
@@ -41,13 +42,12 @@ namespace Azure.Security.KeyVault.Cryptography.Client
         /// HttpPipeline
         /// </summary>
         internal HttpPipeline Pipeline {get;}
+        #endregion
 
         /// <summary>
         /// 
         /// </summary>
-        internal ICryptographyProvider CryptoProvider { get; set; }
-        #endregion
-
+        public ICryptographyOperations CryptographyOperations { get; set; }
         /// <summary>
         /// KeyVault Uri
         /// </summary>
@@ -197,7 +197,7 @@ namespace Azure.Security.KeyVault.Cryptography.Client
                     }
                 case KeyType.Rsa:
                     {
-                        CryptoProvider = new RsaCryptographyProvider(this);
+                        CryptographyOperations = new RsaCryptographyProvider(this);
                         break;
                     }
                 case KeyType.RsaHsm:

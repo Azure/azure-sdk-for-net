@@ -1,12 +1,14 @@
 ﻿using Azure.Security.KeyVault.Cryptography.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Cryptography.Base
 {
+    #region AlgorithmKind Enum
     /// <summary>
     /// 
     /// </summary>
@@ -132,4 +134,26 @@ namespace Azure.Security.KeyVault.Cryptography.Base
             RFCUrlInfo = rfcInfo;
         }
     }
+
+    #endregion
+
+    #region CryptoOpertaionKind Enum
+
+    internal enum CryptoOperationKind
+    {
+        [DescriptionAttribute("/encrypt")]
+        Encrypt,
+        [DescriptionAttribute("/decrypt")]
+        Decrypt,
+        [DescriptionAttribute("/wrapkey")]
+        WrapKey,
+        [DescriptionAttribute("/unwrapkey")]
+        UnWrapKey,
+        [DescriptionAttribute("/sign")]
+        Sign,
+        [DescriptionAttribute("/verify")]
+        Verify
+    }
+
+    #endregion
 }

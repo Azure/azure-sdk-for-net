@@ -6,6 +6,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
     using Azure.Security.KeyVault.Cryptography.Client;
     using Azure.Security.KeyVault.Cryptography.Interface;
     using Azure.Security.KeyVault.Cryptography.Models;
+    using Azure.Security.KeyVault.Keys.Cryptography.Interface;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -18,7 +19,7 @@ namespace Azure.Security.KeyVault.Cryptography.Base
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BaseCryptographyProvider<T> : ICryptographyProvider
+    internal class BaseCryptographyProvider<T> : ICryptographyOperations
         where T : IKeyVaultDefault
     {
         #region const
@@ -68,155 +69,15 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="options"></param>
-        BaseCryptographyProvider(CryptographyClientOptions options)
-        {
-            CryptoClientOptions = options;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="cryptoClient"></param>
         public BaseCryptographyProvider(CryptographyClient cryptoClient)
         {
             CryptoClient = cryptoClient;
+            CryptoClientOptions = CryptoClient.CryptoClientOptions;
         }
         #endregion
 
         #region Public Functions
-
-        #region ICryptoProvider
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ciphertext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="authenticationTag"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public virtual Task<byte[]> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ciphertext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="authenticationTag"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public virtual Task<byte[]> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="plaintext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public virtual Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="plaintext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public virtual Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public virtual Task<Tuple<byte[], string>> SignAsync(byte[] digest, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="encryptedKey"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public virtual Task<byte[]> UnwrapKeyAsync(byte[] encryptedKey, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="digest"></param>
-        /// <param name="signature"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public virtual Task<bool> VerifyAsync(byte[] digest, byte[] signature, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public virtual Task<Tuple<byte[], string>> WrapKeyAsync(byte[] key, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region LocalCrypto
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ciphertext"></param>
-        /// <param name="iv"></param>
-        /// <param name="authenticationData"></param>
-        /// <param name="authenticationTag"></param>
-        /// <param name="algorithmKind"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        protected virtual Task<byte[]> LocalDecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
-        #region ServerCrypto
-
-        #endregion
 
         #region virtual functions
 
@@ -226,6 +87,48 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <param name="algorithmKind"></param>
         /// <returns></returns>
         protected virtual bool IsAlgorithmKindSupported(EncryptionAlgorithmKind algorithmKind)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region ICryptographyOperations
+        public virtual Task<Response<CryptographyOperationResult>> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Response<CryptographyOperationResult>> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Task<Response<CryptographyOperationResult>> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Response<CryptographyOperationResult>> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Tuple<byte[], string>> WrapKeyAsync(byte[] key, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<byte[]> UnwrapKeyAsync(byte[] encryptedKey, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Tuple<byte[], string>> SignAsync(byte[] digest, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> VerifyAsync(byte[] digest, byte[] signature, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
