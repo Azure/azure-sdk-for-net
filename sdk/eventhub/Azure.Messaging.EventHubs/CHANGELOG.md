@@ -14,7 +14,7 @@
 
 - Ongoing minor tweaks to formatting, wording, and spelling of documentation and XML document comments.
 
-#### Publishing events
+### Publishing events
 
 - Reintroduced the `EventDataBatch`, allowing for publication of a batch of events with known size constraint.  This is intended to ensure that publishers can build batches without the potential for an error when sending and to allow publishers with bandwidth concerns to control the size of each batch published.
 
