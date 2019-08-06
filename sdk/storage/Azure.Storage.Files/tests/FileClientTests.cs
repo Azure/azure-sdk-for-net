@@ -767,7 +767,7 @@ namespace Azure.Storage.Files.Test
                 var currentTime = this.Recording.Now;
                 if (status == CopyStatus.Failed || currentTime.AddMinutes(-1) > start)
                 {
-                    throw new Exception("Copy failed or took too long");
+                    throw Errors.Timeout("Copy");
                 }
                 await this.Delay(milliWait);
             }

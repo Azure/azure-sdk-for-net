@@ -45,7 +45,7 @@ namespace Azure.Storage
             {
                 return item;
             }
-            throw new InvalidOperationException();
+            throw Errors.InvalidOperation();
         }
     }
 }
