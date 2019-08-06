@@ -17,71 +17,6 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <summary>
         /// 
         /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        Aes128CbcHmacSha256,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        Aes192CbcHmacSha384,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        Aes256CbcHmacSha512,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        AesCbc,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        AesCbcHmacSha2,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        AesKw,
-
-        /// <summary>g
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        AesKw128,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        AesKw192,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        AesKw256,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        Ecdsa,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        Es256,
-        /// <summary>
-        /// 
-        /// </summary>
         [AlgorithmKindMetadata(algorithmNameOnTheWire: "RSA-OAEP")]
         RsaOaep,
 
@@ -94,14 +29,99 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         /// <summary>
         /// 
         /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
-        Rsa256,
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "RSA-OAEP-256", rfcInfo: @"https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms")]
+        RsaOaep256,
 
         /// <summary>
         /// 
         /// </summary>
-        [AlgorithmKindMetadata(algorithmNameOnTheWire: "RSA-OAEP-256",rfcInfo: @"https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms")]
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        NotSupported
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public enum KeyWrapAlogirthmKind
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "RSA-OAEP")]
+        RsaOaep,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "RSA1_5")]
+        Rsa15,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "RSA-OAEP-256", rfcInfo: @"https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms")]
         RsaOaep256,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        NotSupported
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public enum SignatureAlgorithmKind
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        RS256,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        RS384,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        RS512,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        PS256,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        PS384,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        PS512,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        ES256,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        ES384,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        ES512,
+        /// <summary>
+        /// 
+        /// </summary>
+        [AlgorithmKindMetadata(algorithmNameOnTheWire: "")]
+        ES256K,
 
         /// <summary>
         /// 
@@ -141,17 +161,17 @@ namespace Azure.Security.KeyVault.Cryptography.Base
 
     internal enum CryptoOperationKind
     {
-        [DescriptionAttribute("/encrypt")]
+        [Description("/encrypt")]
         Encrypt,
-        [DescriptionAttribute("/decrypt")]
+        [Description("/decrypt")]
         Decrypt,
-        [DescriptionAttribute("/wrapkey")]
+        [Description("/wrapkey")]
         WrapKey,
-        [DescriptionAttribute("/unwrapkey")]
+        [Description("/unwrapkey")]
         UnWrapKey,
-        [DescriptionAttribute("/sign")]
+        [Description("/sign")]
         Sign,
-        [DescriptionAttribute("/verify")]
+        [Description("/verify")]
         Verify
     }
 

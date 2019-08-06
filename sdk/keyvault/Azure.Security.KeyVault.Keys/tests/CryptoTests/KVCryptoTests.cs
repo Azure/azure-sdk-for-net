@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
     using System.Threading;
     using System.Threading.Tasks;
     using System.Linq;
+    using System.Security.Cryptography;
 
     public class KVCryptoTests: CryptoTestBase
     {
@@ -31,27 +32,38 @@ namespace Azure.Security.KeyVault.Cryptography.Tests
         //}
 
         [Test]
-        void EncryptKey()
+        public async Task EncryptRsa15Key()
         {
-
+            Key key = await GetKeyAsync(KeyType.Rsa, verifyCreatedKey: false);
+            InitCryptoClient(key);
+            EncryptResult encryptedData = await KVCryptoClient.CryptographyOperations.EncryptAsync(CEK, null, null, Base.EncryptionAlgorithmKind.Rsa15, default(CancellationToken)).ConfigureAwait(false);
+            Assert.NotNull(encryptedData);
+            Assert.AreEqual(encryptedData.Algorithm, Base.EncryptionAlgorithmKind.Rsa15);
         }
 
         [Test]
-        public async Task InstantiateCryptoClient()
+        public async Task DecryptRsa15Key()
         {
-
             Key key = await GetKeyAsync(KeyType.Rsa, verifyCreatedKey: false);
-            //key = null;
+            InitCryptoClient(key);
+            EncryptResult encryptedData = await KVCryptoClient.CryptographyOperations.EncryptAsync(CEK, null, null, Base.EncryptionAlgorithmKind.Rsa15, default(CancellationToken)).ConfigureAwait(false);
+            Assert.NotNull(encryptedData);
+            Assert.AreEqual(encryptedData.Algorithm, Base.EncryptionAlgorithmKind.Rsa15);
+
+            DecryptResult decryptedData = await KVCryptoClient.CryptographyOperations.DecryptAsync(encryptedData.CipherText, null, null, null, Base.EncryptionAlgorithmKind.Rsa15, default(CancellationToken)).ConfigureAwait(false);
+            Assert.True(decryptedData.DecryptedData.SequenceEqual(CEK));
+        }
+
+        [Test]
+        public async Task WrapRsa15Key()
+        {
+            Key key = await GetKeyAsync(KeyType.Rsa, verifyCreatedKey: false);
+            Assert.AreEqual(key.KeyMaterial.KeyType, KeyType.Rsa);
             InitCryptoClient(key);
 
-            CryptographyOperationResult encryptedData = await KVCryptoClient.CryptographyOperations.EncryptAsync(CEK, null, null, Base.EncryptionAlgorithmKind.Rsa15, default(CancellationToken)).ConfigureAwait(false);
-
-            Assert.NotNull(encryptedData);
-
-            CryptographyOperationResult decryptedData = await KVCryptoClient.CryptographyOperations.DecryptAsync(encryptedData.CipherText, null, null, null, Base.EncryptionAlgorithmKind.Rsa15, default(CancellationToken)).ConfigureAwait(false);
-
-            Assert.True(decryptedData.CipherText.SequenceEqual(CEK));
-
+            Aes aesProvider = Aes.Create();
+            byte[] keyData = aesProvider.Key;
+            WrapKeyResult wkr = await KVCryptoClient.CryptographyOperations.WrapKeyAsync(keyData, Base.EncryptionAlgorithmKind.Rsa15, default(CancellationToken)).ConfigureAwait(false);
         }
 
         #region private functions

@@ -171,6 +171,9 @@ namespace Azure.Security.KeyVault.Cryptography.Client
 
         #region Public Functions
 
+
+
+
         #endregion
 
         #region private functions

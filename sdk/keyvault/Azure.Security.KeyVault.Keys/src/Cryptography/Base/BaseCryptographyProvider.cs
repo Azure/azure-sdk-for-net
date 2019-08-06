@@ -93,36 +93,45 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         #endregion
 
         #region ICryptographyOperations
-        public virtual Task<Response<CryptographyOperationResult>> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+
+        #region Decrypt
+        public virtual Task<DecryptResult> DecryptAsync(byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<CryptographyOperationResult>> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        public Task<DecryptResult> DecryptAsync(Stream ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Encrypt
+        public virtual Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<Response<CryptographyOperationResult>> EncryptAsync(byte[] plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        public Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Wrap/UnWrap
+        public virtual Task<WrapKeyResult> WrapKeyAsync(byte[] key, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response<CryptographyOperationResult>> EncryptAsync(Stream plaintext, byte[] iv, byte[] authenticationData, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
+        public virtual Task<UnWrapKeyResult> UnwrapKeyAsync(byte[] encryptedKey, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Tuple<byte[], string>> WrapKeyAsync(byte[] key, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
-        public Task<byte[]> UnwrapKeyAsync(byte[] encryptedKey, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
+        #region Sign/Verify
         public Task<Tuple<byte[], string>> SignAsync(byte[] digest, EncryptionAlgorithmKind algorithmKind, CancellationToken token)
         {
             throw new NotImplementedException();
@@ -135,8 +144,6 @@ namespace Azure.Security.KeyVault.Cryptography.Base
         #endregion
 
         #endregion
-
-        #region private functions
 
         #endregion
     }
