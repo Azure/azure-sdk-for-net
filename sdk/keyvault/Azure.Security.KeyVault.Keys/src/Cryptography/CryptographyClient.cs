@@ -14,27 +14,46 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public class CryptographyClient
     {
+        private object _initLock;
+        private JsonWebKey _key;
+        private Uri _keyId;
+
+        /// <summary>
+        /// Protected cosntructor for mocking
+        /// </summary>
         protected CryptographyClient()
         {
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyId"></param>
+        /// <param name="credential"></param>
         public CryptographyClient(Uri keyId, TokenCredential credential)
+            : this(keyId, credential, null)
         {
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyId"></param>
+        /// <param name="credential"></param>
+        /// <param name="options"></param>
         public CryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
-
+            _keyId = keyId ?? throw new ArgumentNullException(nameof(keyId));
         }
 
-        public CryptographyClient(Key key, TokenCredential credential)
+        public CryptographyClient(JsonWebKey key, TokenCredential credential)
         {
 
         }
 
-        public CryptographyClient(Key key, TokenCredential credential, CryptographyClientOptions options)
+        public CryptographyClient(JsonWebKey key, TokenCredential credential, CryptographyClientOptions options)
         {
 
         }
@@ -44,106 +63,81 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public virtual async ValueTask<Key> GetKeyAsync(CancellationToken cancellationToken = default)
         {
-            // if the key hasn't already been fetched and cached locally this method fetches and caches the key
-            // this method is ultimately what other methods which require local key data will call
+
         }
 
-        public virtual async Task<EncryptResult> EncryptAsync(byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, EncryptionAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual JsonWebKey GetKey(CancellationToken cancellationToken = default)
         {
-            // plaintext is required
-            // iv is required for some algorithms, for instance AESCBC
-            // authenticationData is never required but it only makes sense in the case of authenticated encryption algorithms, for instance AES-GCM AESCBC-HMAC
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
 
-            // this method **could** be performed locally in the case that the public portion of the key is available locally for asymmetric keys, or all the key data in the case of symmetric
         }
 
-        public virtual async Task<byte[]> DecryptAsync(byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, EncryptionAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
-            // ciphertext is required
-            // iv is required for some algorithms, for instance AES
-            // authenticationData is never required but it only makes sense in the case of authenticated encryption algorithms, for instance AES-GCM AES-HMAC
-            // if authenticationData is specified authenticationTag must also be specified
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
 
-            // this method **could** be performed locally only is private portion of the key is available locally for asymmetric keys, or all the key data in the case of symmetric
         }
 
-        public virtual async Task<EncryptResult> EncryptAsync(Stream plaintext, byte[] iv = default, byte[] authenticationData = default, EncryptionAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<byte[]> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
 
-            // this method would need local crypto support as it might require multi-block encryption
-            // in the case that someone specified a stream which is within the service limited size for value we **could** read the entire stream and send the request to the service
         }
 
-        public virtual async Task<byte[]> DecryptAsync(Stream ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, EncryptionAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, Stream plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
-            // this method would need local crypto support as it might require multi-block encryption
-            // in the case that someone specified a stream which is within the service limited size for value we **could** read the entire stream and send the request to the service
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual async Task<WrapKeyResult> WrapKeyAsync(byte[] key, KeyWrapAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, Stream ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, EncryptionAlgorithm algorithm = default, CancellationToken cancellationToken = default)
         {
-            // this method **could** be performed locally in the case that the public portion of the key is available locally for asymmetric keys, or all the key data in the case of symmetric
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual async Task<byte[]> UnwrapKeyAsync(byte[] encryptedKey, KeyWrapAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
-            // this method **could** be performed locally only if the private portion of the key is available locally for asymmetric keys, or all the key data in the case of symmetric
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual async Task<SignResult> SignAsync(byte[] digest, SignatureAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
-            // this method **could** be performed locally only is private portion of the key is available locally for asymmetric keys, or all the key data in the case of symmetric
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual async Task<bool> VerifyAsync(byte[] digest, byte[] signature, SignatureAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
-            // this method **could** be performed locally in the case that the public portion of the key is available locally for asymmetric keys, or all the key data in the case of symmetric
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual async Task<SignResult> SignDataAsync(byte[] data, SignatureAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
-            // this method would need local crypto support as requires hashing the supplied data with the appropriate hash algorithm
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual async Task<bool> VerifyDataAsync(byte[] data, byte[] signature, SignatureAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
-            // this method would need local crypto support as requires hashing the supplied data with the appropriate hash algorithm
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual async Task<SignResult> SignDataAsync(Stream data, SignatureAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            // this method would need local crypto support as requires hashing the supplied data with the appropriate hash algorithm
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual async Task<bool> VerifyDataAsync(Stream data, byte[] signature, SignatureAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
-            // this method would need local crypto support as requires hashing the supplied data with the appropriate hash algorithm
 
-            // algorithm is not required in the case that we have the key locally and know the keytype (in which case we can use the best available algorithm for the keytype), otherwise it would be required
         }
 
-        public virtual Key GetKey(CancellationToken cancellationToken = default)
-        {
 
+
+
+
+
+
+
+
+
+
+        public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, Stream data, byte[] signature, SignatureAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        {
         }
 
         public virtual EncryptResult Encrypt(byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, EncryptionAlgorithm algorithm = default, CancellationToken cancellationToken = default)
@@ -156,7 +150,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         }
 
-        public virtual WrapKeyResult WrapKey(byte[] key, KeyWrapAlgorithm algorithm = default, CancellationToken cancellationToken = default)
+        public virtual WrapResult WrapKey(byte[] key, KeyWrapAlgorithm algorithm = default, CancellationToken cancellationToken = default)
         {
 
         }
