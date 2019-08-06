@@ -190,7 +190,7 @@ namespace Azure.Storage.Common
                 {
                     if (String.Compare(sharedKeyCredentials.AccountName, accountName, System.StringComparison.Ordinal) != 0)
                     {
-                        throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, "Account Name Mismatch: {0} != {1}", sharedKeyCredentials.AccountName, accountName));
+                        throw Errors.AccountMismatch(sharedKeyCredentials.AccountName, accountName);
                     }
                 }
             }
@@ -320,7 +320,7 @@ namespace Azure.Storage.Common
 
             if (String.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentNullException(nameof(connectionString));
+                throw Errors.ArgumentNull(nameof(connectionString));
             }
 
             if (ParseImpl(connectionString, out var ret, err => { throw new FormatException(err); }))
@@ -328,7 +328,7 @@ namespace Azure.Storage.Common
                 return ret;
             }
 
-            throw new ArgumentException("Connection string parsing error");
+            throw Errors.ParseConnectionStringError();
         }
 
         /// <summary>
@@ -1004,12 +1004,12 @@ namespace Azure.Storage.Common
         {
             if (String.IsNullOrEmpty(scheme))
             {
-                throw new ArgumentNullException(nameof(scheme));
+                throw Errors.ArgumentNull(nameof(scheme));
             }
 
             if (String.IsNullOrEmpty(accountName))
             {
-                throw new ArgumentNullException(nameof(accountName));
+                throw Errors.ArgumentNull(nameof(accountName));
             }
 
             if (String.IsNullOrEmpty(endpointSuffix))
@@ -1058,12 +1058,12 @@ namespace Azure.Storage.Common
         {
             if (String.IsNullOrEmpty(scheme))
             {
-                throw new ArgumentNullException(nameof(scheme));
+                throw Errors.ArgumentNull(nameof(scheme));
             }
 
             if (String.IsNullOrEmpty(accountName))
             {
-                throw new ArgumentNullException(nameof(accountName));
+                throw Errors.ArgumentNull(nameof(accountName));
             }
 
             if (String.IsNullOrEmpty(endpointSuffix))
@@ -1112,12 +1112,12 @@ namespace Azure.Storage.Common
         {
             if (String.IsNullOrEmpty(scheme))
             {
-                throw new ArgumentNullException(nameof(scheme));
+                throw Errors.ArgumentNull(nameof(scheme));
             }
 
             if (String.IsNullOrEmpty(accountName))
             {
-                throw new ArgumentNullException(nameof(accountName));
+                throw Errors.ArgumentNull(nameof(accountName));
             }
 
             if (String.IsNullOrEmpty(endpointSuffix))
@@ -1166,12 +1166,12 @@ namespace Azure.Storage.Common
         {
             if (String.IsNullOrEmpty(scheme))
             {
-                throw new ArgumentNullException(nameof(scheme));
+                throw Errors.ArgumentNull(nameof(scheme));
             }
 
             if (String.IsNullOrEmpty(accountName))
             {
-                throw new ArgumentNullException(nameof(accountName));
+                throw Errors.ArgumentNull(nameof(accountName));
             }
 
             if (String.IsNullOrEmpty(endpointSuffix))
