@@ -45,6 +45,31 @@ namespace Microsoft.Azure.Search.Models
                 });
 
         /// <summary>
+        /// Creates a field mapping function that performs a simple URL-safe encoding of the input string.
+        /// It uses UTF-8 encoding and utilizes HttpUtility's UrlEncode method.
+        /// See <see cref="https://docs.microsoft.com/dotnet/api/system.web.httputility.urlencode"/> for more details.
+        /// </summary>
+        /// <remarks>
+        /// Sample use case: This field mapping function can be used as an alternative to Base64Encode if only the URL
+        /// unsafe characters of a key field need to be safely converted, while other characters are to remain as is.
+        /// </remarks>
+        /// <returns>A new field mapping function</returns>
+        public static FieldMappingFunction UrlEncode() => new FieldMappingFunction("urlEncode");
+
+        /// <summary>
+        /// Creates a field mapping function that performs url decoding of the input string. It assumes that the input
+        /// string has been url decoded with UTF-8 encoding. 
+        /// See <see cref="https://docs.microsoft.com/dotnet/api/system.web.httputility.urldecode"/> for more details.
+        /// </summary>
+        /// <remarks>
+        /// Sample use case: Some clients that try to update blob custom metadata (which need to be ASCII-encoded) might
+        /// choose to URL encode the data. To ingest that custom metadata and make search meaningful, the URL decode
+        /// field mapping function can be used while populating the search index.
+        /// </remarks>
+        /// <returns>A new field mapping function</returns>
+        public static FieldMappingFunction UrlDecode() => new FieldMappingFunction("urlDecode");
+
+        /// <summary>
         /// Creates a field mapping function that performs Base64 decoding of the input string. The input is assumed
         /// to a URL-safe Base64-encoded string. 
         /// </summary>
