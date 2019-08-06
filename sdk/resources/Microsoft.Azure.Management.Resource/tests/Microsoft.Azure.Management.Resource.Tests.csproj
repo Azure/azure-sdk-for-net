@@ -38,6 +38,9 @@
     <None Update="ScenarioTests\management_group_level_template.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="ScenarioTests\tenant_level_template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="ScenarioTests\subscription_level_template.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
