@@ -10,6 +10,7 @@ namespace ContainerRegistry.Tests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Net;
     using System.Threading.Tasks;
+    using System;
 
     public static class ACRTestUtil
     {
@@ -57,7 +58,7 @@ namespace ContainerRegistry.Tests
             string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
 
             /* Addresses issues from pipeline having no credentials to obtain AAD token. */
-            if (tenantId == null || authClientId == null || authSecret == null) {
+            if (String.IsNullOrEmpty(tenantId) || String.IsNullOrEmpty(authClientId) || String.IsNullOrEmpty(authSecret)) {
                 return "standintokenforpipeline";
             }
 
