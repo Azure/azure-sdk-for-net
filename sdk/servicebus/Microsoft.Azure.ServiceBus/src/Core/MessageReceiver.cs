@@ -555,39 +555,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        public async Task AbandonAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
+        public Task AbandonAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
         {
-            this.ThrowIfClosed();
-            this.ThrowIfNotPeekLockMode();
-
-            MessagingEventSource.Log.MessageAbandonStart(this.ClientId, 1, lockToken);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.DisposeStart("Abandon", lockToken) : null;
-            Task abandonTask = null;
-
-            try
-            {
-                abandonTask = this.RetryPolicy.RunOperation(() => this.OnAbandonAsync(new[] { lockToken }, propertiesToModify),
-                    this.OperationTimeout);
-                await abandonTask.ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                if (isDiagnosticSourceEnabled)
-                {
-                    this.diagnosticSource.ReportException(exception);
-                }
-
-                MessagingEventSource.Log.MessageAbandonException(this.ClientId, exception);
-                throw;
-            }
-            finally
-            {
-                this.diagnosticSource.DisposeStop(activity, lockToken, abandonTask?.Status);
-            }
-
-
-            MessagingEventSource.Log.MessageAbandonStop(this.ClientId);
+            return this.AbandonAsync(new[] { lockToken }, propertiesToModify);
         }
 
         /// <summary>
@@ -793,7 +763,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </remarks>
         public Task RenewLockAsync(Message message)
         {
-            return RenewLockAsync(new[] { message });
+            return this.RenewLockAsync(new[] { message });
         }
 
         /// <summary>
@@ -810,7 +780,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             var messageList = messages.ToList();
             var lockTokens = messageList.Select(m => m.SystemProperties.LockToken);
 
-            var lockedUntilUtcTimes = await RenewLockAsync(lockTokens).ConfigureAwait(false);
+            var lockedUntilUtcTimes = await this.RenewLockAsync(lockTokens).ConfigureAwait(false);
 
             // BLOCKER:  Ensure code owners are okay with use of Zip like this.
             messageList.Zip(lockedUntilUtcTimes, (message, lockedUntilUtc) => message.SystemProperties.LockedUntilUtc = lockedUntilUtc);
@@ -829,7 +799,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </remarks>
         public async Task<DateTime> RenewLockAsync(string lockToken)
         {
-            var lockedUntilUtcTimes = await RenewLockAsync(new[] { lockToken }).ConfigureAwait(false);
+            var lockedUntilUtcTimes = await this.RenewLockAsync(new[] { lockToken }).ConfigureAwait(false);
 
             return lockedUntilUtcTimes.First();
         }
@@ -1359,7 +1329,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return this.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription));
         }
 
-        protected virtual async Task<IEnumerable<DateTime>> OnRenewLockAsync(IEnumerable<string> lockToken)
+        protected virtual async Task<IEnumerable<DateTime>> OnRenewLockAsync(IEnumerable<string> lockTokens)
         {
             IEnumerable<DateTime> lockedUntilUtcTimes;
             try
@@ -1371,7 +1341,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
-                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockToken.Select(t => new Guid(t)).ToArray();
+                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockTokens.Select(t => new Guid(t)).ToArray();
 
                 var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 

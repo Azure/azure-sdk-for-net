@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+// BLOCKER:  Potential breaking changes
+
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
@@ -426,7 +428,6 @@ namespace Microsoft.Azure.ServiceBus
 
         #region RenewLock
 
-        // BLOCKER:  Potential breaking changes
         internal Activity RenewLockStart(IEnumerable<string> lockTokens)
         {
             return Start("RenewLock", () => new

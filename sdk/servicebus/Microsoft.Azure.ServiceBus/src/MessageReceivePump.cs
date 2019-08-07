@@ -79,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus
                                 {
                                     if (ServiceBusDiagnosticSource.IsEnabled())
                                     {
-                                        return this.MessageDispatchTaskInstrumented(messages, this.registerHandlerOptions.MaxBatchSize);
+                                        return this.MessageDispatchTaskInstrumented(messages);
                                     }
                                     else
                                     {
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.ServiceBus
                         }
                         finally
                         {
-                            // Either an exception or for some reason message was null, release semaphore and retry.
+                            // Either an exception or for some reason messages was null, release semaphore and retry.
                             if (messages == null)
                             {
                                 this.maxConcurrentCallsSemaphoreSlim.Release();
@@ -120,11 +120,12 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task MessageDispatchTaskInstrumented(IList<Message> messages, int batchSize)
+        async Task MessageDispatchTaskInstrumented(IList<Message> messages)
         {
             Activity activity;
+            var maxBatchSize = this.registerHandlerOptions.MaxBatchSize;
 
-            if (batchSize == 1)
+            if (maxBatchSize == 1)
             {
                 activity = this.diagnosticSource.ProcessStart(messages.First());
             }
@@ -147,7 +148,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             finally
             {
-                if (batchSize == 1)
+                if (maxBatchSize == 1)
                 {
                     this.diagnosticSource.ProcessStop(activity, messages.First(), processTask?.Status);
                 }

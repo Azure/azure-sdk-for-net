@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+// BLOCKER:  Potential breaking changes
+
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
@@ -190,12 +192,9 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [Event(16, Level = EventLevel.Informational, Message = "{0}: AbandonAsync start. MessageCount = {1}, LockTokens = {2}")]
-        public void MessageAbandonStart(string clientId, int messageCount, string lockTokens)
+        void MessageAbandonStart(string clientId, int messageCount, string lockTokens)
         {
-            if (this.IsEnabled())
-            {
-                this.WriteEvent(16, clientId, messageCount, lockTokens);
-            }
+            this.WriteEvent(16, clientId, messageCount, lockTokens);
         }
 
         [Event(17, Level = EventLevel.Informational, Message = "{0}: AbandonAsync done.")]
@@ -287,7 +286,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             this.WriteEvent(24, clientId, exception);
         }
-        // BLOCKER:  Potential breaking change
+
         [NonEvent]
         public void MessageRenewLockStart(string clientId, int messageCount, IEnumerable<string> lockTokens)
         {
@@ -301,12 +300,9 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [Event(25, Level = EventLevel.Informational, Message = "{0}: RenewLockAsync start. MessageCount = {1}, LockTokens = {2}")]
-        public void MessageRenewLockStart(string clientId, int messageCount, string lockTokens)
+        void MessageRenewLockStart(string clientId, int messageCount, string lockTokens)
         {
-            if (this.IsEnabled())
-            {
-                this.WriteEvent(25, clientId, messageCount, lockTokens);
-            }
+            this.WriteEvent(25, clientId, messageCount, lockTokens);
         }
 
         [Event(26, Level = EventLevel.Informational, Message = "{0}: RenewLockAsync done.")]
