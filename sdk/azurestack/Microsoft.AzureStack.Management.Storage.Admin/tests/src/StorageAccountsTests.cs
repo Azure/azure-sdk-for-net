@@ -19,10 +19,6 @@ namespace Storage.Tests
                 Assert.Equal(expected.AccountId, found.AccountId);
                 Assert.Equal(expected.AccountStatus, found.AccountStatus);
                 Assert.Equal(expected.AccountType, found.AccountType);
-                Assert.Equal(expected.AcquisitionOperationCount, found.AcquisitionOperationCount);
-                Assert.Equal(expected.AlternateName, found.AlternateName);
-                Assert.Equal(expected.CurrentOperation, found.CurrentOperation);
-                Assert.Equal(expected.CustomDomain, found.CustomDomain);
             }
         }
 
@@ -31,10 +27,8 @@ namespace Storage.Tests
             // Assert.NotNull(account.AccountId);
             Assert.NotNull(account.AccountStatus);
             Assert.NotNull(account.AccountType);
-            Assert.NotNull(account.AcquisitionOperationCount);
             //Assert.NotNull(account.AlternateName);
             Assert.NotNull(account.CreationTime);
-            Assert.NotNull(account.CurrentOperation);
             //Assert.NotNull(account.CustomDomain);
             //Assert.NotNull(account.DeletedTime);
             Assert.NotNull(account.Id);
@@ -59,31 +53,21 @@ namespace Storage.Tests
         [Fact]
         public void ListAllStorageAccounts() {
             RunTest((client) => {
-                var farms = client.Farms.List(ResourceGroupName);
-                foreach (var farm in farms)
-                {
-                    var fName = ExtractName(farm.Name);
-                    var storageAccounts = client.StorageAccounts.List(ResourceGroupName, fName, false);
-                    storageAccounts.ForEach(ValidateStorageAccount);
-                }
+                var storageAccounts = client.StorageAccounts.List(ResourceGroupName, summary: false);
+                storageAccounts.ForEach(ValidateStorageAccount);
             });
         }
 
         [Fact]
         public void GetStorageAccount() {
             RunTest((client) => {
-                var farms = client.Farms.List(ResourceGroupName);
-                foreach (var farm in farms)
+                var storageAccounts = client.StorageAccounts.List(ResourceGroupName, summary: false);
+                foreach (var storageAccount in storageAccounts)
                 {
-                    var fName = ExtractName(farm.Name);
-                    var storageAccounts = client.StorageAccounts.List(ResourceGroupName, fName, false);
-                    foreach (var storageAccount in storageAccounts)
-                    {
-                        var sName = ExtractName(storageAccount.Name);
-                        var account = client.StorageAccounts.Get(ResourceGroupName, fName, sName);
-                        AssertAreEqual(storageAccount, account);
-                        return;
-                    }
+                    var sName = ExtractName(storageAccount.Name);
+                    var account = client.StorageAccounts.Get(ResourceGroupName, sName);
+                    AssertAreEqual(storageAccount, account);
+                    return;
                 }
             });
         }
@@ -91,24 +75,25 @@ namespace Storage.Tests
         [Fact]
         public void GetAllStorageAccounts() {
             RunTest((client) => {
-                var farms = client.Farms.List(ResourceGroupName);
-                foreach (var farm in farms)
+                var storageAccounts = client.StorageAccounts.List(ResourceGroupName, summary: false);
+                foreach (var storageAccount in storageAccounts)
                 {
-                    var fName = ExtractName(farm.Name);
-                    var storageAccounts = client.StorageAccounts.List(ResourceGroupName, fName, false);
-                    foreach (var storageAccount in storageAccounts)
-                    {
-                        var sName = ExtractName(storageAccount.Name);
-                        var account = client.StorageAccounts.Get(ResourceGroupName, fName, sName);
-                        AssertAreEqual(storageAccount, account);
-                    }
+                    var sName = ExtractName(storageAccount.Name);
+                    var account = client.StorageAccounts.Get(ResourceGroupName, sName);
+                    AssertAreEqual(storageAccount, account);
                 }
             });
         }
 
-
         [Fact(Skip = "Don't know how I would test this for now.")]
         public void UnDeleteStorageAccount() {
+            RunTest((client) => {
+                // TODO
+            });
+        }
+
+        [Fact(Skip = "Don't know how I would test this for now.")]
+        public void OndemandGCAccounts() {
             RunTest((client) => {
                 // TODO
             });

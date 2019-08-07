@@ -11,17 +11,16 @@
 namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Storage quota.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageQuota : Resource
+    public partial class StorageQuota : IResource
     {
         /// <summary>
         /// Initializes a new instance of the StorageQuota class.
@@ -34,19 +33,21 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the StorageQuota class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="location">Resource location.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="numberOfStorageAccounts">Total number of storage
         /// accounts.</param>
-        /// <param name="capacityInGb">Maxium capacity (GB).</param>
-        public StorageQuota(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? numberOfStorageAccounts = default(int?), int? capacityInGb = default(int?))
-            : base(id, name, type, location, tags)
+        /// <param name="capacityInGb">Maximum capacity (GB).</param>
+        /// <param name="name">quota name</param>
+        /// <param name="location">location for the quota</param>
+        /// <param name="id">id for the storage quota</param>
+        /// <param name="type">resource type for storage quota</param>
+        public StorageQuota(int? numberOfStorageAccounts = default(int?), int? capacityInGb = default(int?), string name = default(string), string location = default(string), string id = default(string), string type = default(string))
         {
             NumberOfStorageAccounts = numberOfStorageAccounts;
             CapacityInGb = capacityInGb;
+            Name = name;
+            Location = location;
+            Id = id;
+            Type = type;
             CustomInit();
         }
 
@@ -62,10 +63,34 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public int? NumberOfStorageAccounts { get; set; }
 
         /// <summary>
-        /// Gets or sets maxium capacity (GB).
+        /// Gets or sets maximum capacity (GB).
         /// </summary>
         [JsonProperty(PropertyName = "properties.capacityInGb")]
         public int? CapacityInGb { get; set; }
+
+        /// <summary>
+        /// Gets quota name
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets location for the quota
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; private set; }
+
+        /// <summary>
+        /// Gets id for the storage quota
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets resource type for storage quota
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }

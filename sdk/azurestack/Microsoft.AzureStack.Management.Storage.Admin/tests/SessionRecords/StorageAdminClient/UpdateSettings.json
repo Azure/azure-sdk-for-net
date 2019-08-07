@@ -1,0 +1,146 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/resourcegroups/System.local/providers/Microsoft.Storage.Admin/settings?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWYwZGYyMTEtNGIzOC00NWNjLTliOTUtNTRiNTkyNTg2OTg0L3Jlc291cmNlZ3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2UuQWRtaW4vc2V0dGluZ3M/YXBpLXZlcnNpb249MjAxOS0wOC0wOC1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "16eb7b67-8986-4b2c-b314-7b157d09ae26"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "bfee976a-12a2-4133-b6d5-dc68316f52cc"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvbl9XQf6Eyp9UK/N/rNRuBRjc9kqciR4FsmvvG+C85wDadtKD7SNTMEc8uX83HR4cy0xJ0DYMhPntIKHzKBhRbD+OWXrO9Osjmbiord/AuDL1T/AQqHWQQtdrMICdQ+Fw8fQSb/0HSmyv4xo8VCYq"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14783"
+        ],
+        "x-ms-request-id": [
+          "bfee976a-12a2-4133-b6d5-dc68316f52cc"
+        ],
+        "x-ms-routing-request-id": [
+          "REDMOND:20190807T041007Z:bfee976a-12a2-4133-b6d5-dc68316f52cc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 04:10:06 GMT"
+        ],
+        "Content-Length": [
+          "59"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"retentionPeriodForDeletedStorageAccountsInDays\": 2\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/resourcegroups/System.local/providers/Microsoft.Storage.Admin/settings?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWYwZGYyMTEtNGIzOC00NWNjLTliOTUtNTRiNTkyNTg2OTg0L3Jlc291cmNlZ3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2UuQWRtaW4vc2V0dGluZ3M/YXBpLXZlcnNpb249MjAxOS0wOC0wOC1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"retentionPeriodForDeletedStorageAccountsInDays\": 3\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a1659d4f-9446-4a27-9acc-fa425cfe0b58"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/0.1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "59"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "0f21f4a2-7925-4e48-ae84-825959c2c7d9"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvY/QWkto4PNvdaMyiMDuDuf0FLeXASy+DQYTiExUsfqV4eRSIfakRyhOLcoSjQur49o7OsXIZDBtA6gkfT1QDpc4dknDoCuVljEgr8ubL7n56qNt4J5RJ6qu3Mx2+QPccdhVqsz8RTaTisN8fdyzU"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-request-id": [
+          "0f21f4a2-7925-4e48-ae84-825959c2c7d9"
+        ],
+        "x-ms-routing-request-id": [
+          "REDMOND:20190807T041008Z:0f21f4a2-7925-4e48-ae84-825959c2c7d9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 04:10:08 GMT"
+        ],
+        "Content-Length": [
+          "59"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"retentionPeriodForDeletedStorageAccountsInDays\": 3\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "af0df211-4b38-45cc-9b95-54b592586984"
+  }
+}

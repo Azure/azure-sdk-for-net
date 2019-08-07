@@ -1,72 +1,74 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/9ad61516-995c-4873-a21f-7e44904f0ed2/providers/Microsoft.Storage.Admin/locations/local/quotas?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWFkNjE1MTYtOTk1Yy00ODczLWEyMWYtN2U0NDkwNGYwZWQyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWYwZGYyMTEtNGIzOC00NWNjLTliOTUtNTRiNTkyNTg2OTg0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvcmVkbW9uZC9xdW90YXM/YXBpLXZlcnNpb249MjAxOS0wOC0wOC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c599589e-e1bf-4a37-8dec-cdd9b5cba2ed"
+          "4c6c7397-7582-499b-b309-88fb80ae134d"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/1.0.0.0"
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9ad61516-995c-4873-a21f-7e44904f0ed2/providers/Microsoft.Storage.Admin/locations/local/quotas/Default Quota\",\r\n      \"name\": \"local/Default Quota\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 2048\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "403"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Tue, 30 Jan 2018 19:31:26 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-correlation-request-id": [
+          "efd69d97-3e53-4873-8e92-cf84ba2e4318"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv33O/XDvIxItQoGvX3v3r+Lt0r05SGebhPEYAYvkBo8voc2iB3qlUGE8MNUQerB9b+YIWtdCxY4BP163zWb50K7YwP/T2R9cxZSLmcnxXIZqj/uosd6/8zYLe6ouPDXOQbb1/Ed+kDD3amyIpkSWq"
-        ],
-        "x-ms-request-id": [
-          "4dd30df4-dd4f-401e-8b97-864e571c8229"
-        ],
-        "x-ms-correlation-request-id": [
-          "01cf2931-a98c-46ad-be34-1a4ac4ccb8bf"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvAXefWA6xKxEdJRkOlqPdHv4HtnLZl4pFvmyJoB8NRon+Es3yajvxIos8+NW3QgXdTu4az6MGh28x/LHmk3NOmkXzDGaghtUztNlOa1LHyCPTENfVbN/QJ31nx/x8qT+8BVU7CDK73wLYvCa3Hq9T"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14809"
+          "14992"
+        ],
+        "x-ms-request-id": [
+          "efd69d97-3e53-4873-8e92-cf84ba2e4318"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20180130T193126Z:01cf2931-a98c-46ad-be34-1a4ac4ccb8bf"
+          "REDMOND:20190807T040905Z:efd69d97-3e53-4873-8e92-cf84ba2e4318"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 04:09:04 GMT"
+        ],
+        "Content-Length": [
+          "3672"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/ascanstorquota10\",\r\n      \"name\": \"redmond/ascanstorquota10\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 200,\r\n        \"capacityInGb\": 1000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/AzMonQuota\",\r\n      \"name\": \"redmond/AzMonQuota\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 10000,\r\n        \"capacityInGb\": 500000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Basic\",\r\n      \"name\": \"redmond/Basic\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 2,\r\n        \"capacityInGb\": 2\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Default Quota\",\r\n      \"name\": \"redmond/Default Quota\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 2048\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/EventRPBVTTenantSubscriptionQuota\",\r\n      \"name\": \"redmond/EventRPBVTTenantSubscriptionQuota\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 10000,\r\n        \"capacityInGb\": 500000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/NewStorageQuota1\",\r\n      \"name\": \"redmond/NewStorageQuota1\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 10000,\r\n        \"capacityInGb\": 200000\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Quota_0a5b1ea3-22dc-4b0e-a260-cbcbc398acca\",\r\n      \"name\": \"redmond/Quota_0a5b1ea3-22dc-4b0e-a260-cbcbc398acca\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 500\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Quota_2af714f0-0989-4c8a-8e98-d9135ed29b74\",\r\n      \"name\": \"redmond/Quota_2af714f0-0989-4c8a-8e98-d9135ed29b74\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 20,\r\n        \"capacityInGb\": 500\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/af0df211-4b38-45cc-9b95-54b592586984/providers/Microsoft.Storage.Admin/locations/redmond/quotas/srppstestquotavj8c\",\r\n      \"name\": \"redmond/srppstestquotavj8c\",\r\n      \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"numberOfStorageAccounts\": 100,\r\n        \"capacityInGb\": 1000\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "9ad61516-995c-4873-a21f-7e44904f0ed2"
+    "SubscriptionId": "af0df211-4b38-45cc-9b95-54b592586984"
   }
 }

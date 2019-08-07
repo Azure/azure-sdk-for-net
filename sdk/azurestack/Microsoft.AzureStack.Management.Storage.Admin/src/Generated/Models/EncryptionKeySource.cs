@@ -12,15 +12,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 {
 
     /// <summary>
-    /// Defines values for AggregateType.
+    /// Defines values for EncryptionKeySource.
     /// </summary>
-    public static class AggregateType
+    public static class EncryptionKeySource
     {
-        public const string None = "None";
-        public const string Average = "Average";
-        public const string Total = "Total";
-        public const string Minimum = "Minimum";
-        public const string Maximum = "Maximum";
-        public const string Last = "Last";
+        public const string MicrosoftStorage = "Microsoft.Storage";
     }
 }

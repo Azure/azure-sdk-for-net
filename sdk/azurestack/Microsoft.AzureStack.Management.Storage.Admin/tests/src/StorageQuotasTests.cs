@@ -28,7 +28,6 @@ namespace Storage.Tests
             Assert.NotNull(quota.Location);
             Assert.NotNull(quota.Name);
             Assert.NotNull(quota.Type);
-            //Assert.NotNull(quota.Tags);
         }
 
         [Fact]
@@ -68,11 +67,10 @@ namespace Storage.Tests
             RunTest((client) => {
                 var name = "TestCreateQuota";
                 IgnoreExceptions(() => client.StorageQuotas.Delete(Location, name));
-
                 var parameters = new StorageQuota()
                 {
-                    CapacityInGb = -100000000,
-                    NumberOfStorageAccounts = -1000000000
+                    CapacityInGb = 100000000,
+                    NumberOfStorageAccounts = 1000000000
                 };
                 var retrieved = client.StorageQuotas.CreateOrUpdate(Location, name, parameters);
 

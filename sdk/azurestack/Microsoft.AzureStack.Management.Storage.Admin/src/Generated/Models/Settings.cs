@@ -14,27 +14,26 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
     using System.Linq;
 
     /// <summary>
-    /// Metric availability.
+    /// Storage resource provider settings
     /// </summary>
-    public partial class MetricAvailability
+    public partial class Settings
     {
         /// <summary>
-        /// Initializes a new instance of the MetricAvailability class.
+        /// Initializes a new instance of the Settings class.
         /// </summary>
-        public MetricAvailability()
+        public Settings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MetricAvailability class.
+        /// Initializes a new instance of the Settings class.
         /// </summary>
-        /// <param name="timeGrain">Time grain.</param>
-        /// <param name="retention">Retention of metric.</param>
-        public MetricAvailability(string timeGrain = default(string), string retention = default(string))
+        /// <param name="retentionPeriodForDeletedStorageAccountsInDays">Set
+        /// the retention days for deleted storage accounts.</param>
+        public Settings(int? retentionPeriodForDeletedStorageAccountsInDays = default(int?))
         {
-            TimeGrain = timeGrain;
-            Retention = retention;
+            RetentionPeriodForDeletedStorageAccountsInDays = retentionPeriodForDeletedStorageAccountsInDays;
             CustomInit();
         }
 
@@ -44,16 +43,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets time grain.
+        /// Gets or sets set the retention days for deleted storage accounts.
         /// </summary>
-        [JsonProperty(PropertyName = "timeGrain")]
-        public string TimeGrain { get; set; }
-
-        /// <summary>
-        /// Gets or sets retention of metric.
-        /// </summary>
-        [JsonProperty(PropertyName = "retention")]
-        public string Retention { get; set; }
+        [JsonProperty(PropertyName = "retentionPeriodForDeletedStorageAccountsInDays")]
+        public int? RetentionPeriodForDeletedStorageAccountsInDays { get; set; }
 
     }
 }
