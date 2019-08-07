@@ -149,6 +149,19 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionTextTranslation()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage.Es));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage.Es, defaultFromLanguageCode: TextTranslationSkillLanguage.En));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage.Es, suggestedFrom: TextTranslationSkillLanguage.En));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage.Es, TextTranslationSkillLanguage.En, TextTranslationSkillLanguage.En));
+            });
+        }
+
+        [Fact]
         public void CreateOrUpdateCreatesWhenSkillsetDoesNotExist()
         {
             Run(() =>
@@ -912,6 +925,43 @@ namespace Microsoft.Azure.Search.Tests
                 TextSplitMode = textSplitMode,
                 DefaultLanguageCode = splitLanguageCode
             });
+
+            return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage defaultToLanguageCode, TextTranslationSkillLanguage? defaultFromLanguageCode = null, TextTranslationSkillLanguage? suggestedFrom = null)
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/text"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "translatedText",
+                    TargetName = "translatedText"
+                },
+                new OutputFieldMappingEntry
+                {
+                    Name = "translatedFromLanguageCode",
+                    TargetName = "translatedFromLanguageCode"
+                },
+                new OutputFieldMappingEntry
+                {
+                    Name = "translatedToLanguageCode",
+                    TargetName = "translatedToLanguageCode"
+                }
+            };
+
+            skills.Add(new TextTranslationSkill(inputs, outputs, defaultToLanguageCode, defaultFromLanguageCode: defaultFromLanguageCode, suggestedFrom: suggestedFrom));
 
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
