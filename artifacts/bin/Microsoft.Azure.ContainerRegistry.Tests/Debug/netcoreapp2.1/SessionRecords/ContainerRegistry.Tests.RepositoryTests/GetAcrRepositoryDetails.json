@@ -1,0 +1,192 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGZiNjNjOGMtN2M4OS00ZWY4LWFmMTMtNzVjMWQ4NzNjODk1L3Jlc291cmNlR3JvdXBzL2VyZXlUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvcmVnaXN0cmllcy9henVyZXNka3VuaXR0ZXN0P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3c138c58-b094-42a2-b24d-de0ecc8b2402"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "56465f09-eb1b-4b77-861c-8f5d68cb59e1"
+        ],
+        "x-ms-correlation-request-id": [
+          "56465f09-eb1b-4b77-861c-8f5d68cb59e1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190807T214801Z:56465f09-eb1b-4b77-861c-8f5d68cb59e1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:48:01 GMT"
+        ],
+        "Content-Length": [
+          "459"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest\",\r\n  \"name\": \"azuresdkunittest\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"loginServer\": \"azuresdkunittest.azurecr.io\",\r\n    \"creationDate\": \"2019-08-01T22:42:31.7178676Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": true\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittest/listCredentials?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGZiNjNjOGMtN2M4OS00ZWY4LWFmMTMtNzVjMWQ4NzNjODk1L3Jlc291cmNlR3JvdXBzL2VyZXlUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvcmVnaXN0cmllcy9henVyZXNka3VuaXR0ZXN0L2xpc3RDcmVkZW50aWFscz9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8aef70df-1ed6-472c-8d4d-cf6b7da65505"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "9f14402c-0944-465f-a3cb-c28a8c3c013d"
+        ],
+        "x-ms-correlation-request-id": [
+          "9f14402c-0944-465f-a3cb-c28a8c3c013d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190807T214801Z:9f14402c-0944-465f-a3cb-c28a8c3c013d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:48:01 GMT"
+        ],
+        "Content-Length": [
+          "172"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"username\": \"azuresdkunittest\",\r\n  \"passwords\": [\r\n    {\r\n      \"name\": \"password\",\r\n      \"value\": \"mol5=P3r5PMe1JmClINhYM66ve0ev6iO\"\r\n    },\r\n    {\r\n      \"name\": \"password2\",\r\n      \"value\": \"Bxgw5WBC9+VARlXaBPJRFbIeW8fkJXfO\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/acr/v1/prod%2Fbash",
+      "EncodedRequestUri": "L2Fjci92MS9wcm9kJTJGYmFzaA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "144f0df8-8d47-4312-bdc8-c385b7db9866"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:48:01 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "e59a33f2-5fca-4b00-a3af-a372bf808d1e"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "297"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittest.azurecr.io\",\r\n  \"imageName\": \"prod/bash\",\r\n  \"createdTime\": \"2019-08-01T22:49:11.1632015Z\",\r\n  \"lastUpdateTime\": \"2019-08-06T19:25:00.2004303Z\",\r\n  \"manifestCount\": 2,\r\n  \"tagCount\": 2,\r\n  \"changeableAttributes\": {\r\n    \"deleteEnabled\": false,\r\n    \"writeEnabled\": false,\r\n    \"readEnabled\": true,\r\n    \"listEnabled\": true\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "dfb63c8c-7c89-4ef8-af13-75c1d873c895"
+  }
+}

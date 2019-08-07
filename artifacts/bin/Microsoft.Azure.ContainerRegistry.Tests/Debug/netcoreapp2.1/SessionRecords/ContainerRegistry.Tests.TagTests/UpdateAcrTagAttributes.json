@@ -1,0 +1,378 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittestupdateable?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGZiNjNjOGMtN2M4OS00ZWY4LWFmMTMtNzVjMWQ4NzNjODk1L3Jlc291cmNlR3JvdXBzL2VyZXlUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvcmVnaXN0cmllcy9henVyZXNka3VuaXR0ZXN0dXBkYXRlYWJsZT9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7b553c4b-f18c-437f-a7b6-7783c5508e04"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "9fbbb0d8-ff19-46f1-a052-c577d9b12e7f"
+        ],
+        "x-ms-correlation-request-id": [
+          "9fbbb0d8-ff19-46f1-a052-c577d9b12e7f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190807T214740Z:9fbbb0d8-ff19-46f1-a052-c577d9b12e7f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:47:39 GMT"
+        ],
+        "Content-Length": [
+          "489"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittestupdateable\",\r\n  \"name\": \"azuresdkunittestupdateable\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"loginServer\": \"azuresdkunittestupdateable.azurecr.io\",\r\n    \"creationDate\": \"2019-08-06T23:24:57.9977962Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": true\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/dfb63c8c-7c89-4ef8-af13-75c1d873c895/resourceGroups/ereyTest/providers/Microsoft.ContainerRegistry/registries/azuresdkunittestupdateable/listCredentials?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGZiNjNjOGMtN2M4OS00ZWY4LWFmMTMtNzVjMWQ4NzNjODk1L3Jlc291cmNlR3JvdXBzL2VyZXlUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvcmVnaXN0cmllcy9henVyZXNka3VuaXR0ZXN0dXBkYXRlYWJsZS9saXN0Q3JlZGVudGlhbHM/YXBpLXZlcnNpb249MjAxNy0xMC0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "22ba5df0-5009-475e-bd67-892a7518488f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "cadac6a5-dcf5-4879-88b6-8aea113e6b14"
+        ],
+        "x-ms-correlation-request-id": [
+          "cadac6a5-dcf5-4879-88b6-8aea113e6b14"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190807T214740Z:cadac6a5-dcf5-4879-88b6-8aea113e6b14"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:47:39 GMT"
+        ],
+        "Content-Length": [
+          "182"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"username\": \"azuresdkunittestupdateable\",\r\n  \"passwords\": [\r\n    {\r\n      \"name\": \"password\",\r\n      \"value\": \"Rb=6mEUEFfT5CPcNLVaNMBj87DP6QUWa\"\r\n    },\r\n    {\r\n      \"name\": \"password2\",\r\n      \"value\": \"S46LkYK/9QVGo860C4aD/RcfUDhsrCgX\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/acr/v1/doundo%2Fbash/_tags/latest",
+      "EncodedRequestUri": "L2Fjci92MS9kb3VuZG8lMkZiYXNoL190YWdzL2xhdGVzdA==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"deleteEnabled\": true,\r\n  \"writeEnabled\": false,\r\n  \"listEnabled\": true,\r\n  \"readEnabled\": true\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d8087482-3baa-45da-8bb2-62f966d16208"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "103"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:47:40 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "bdd9caa0-7517-4ce4-b905-9110db85a312"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "399"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"tag\": {\r\n    \"name\": \"latest\",\r\n    \"digest\": \"sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8\",\r\n    \"createdTime\": \"2019-08-06T23:27:35.1589403Z\",\r\n    \"lastUpdateTime\": \"2019-08-06T23:27:35.1589403Z\",\r\n    \"signed\": false,\r\n    \"changeableAttributes\": {\r\n      \"deleteEnabled\": true,\r\n      \"writeEnabled\": false,\r\n      \"readEnabled\": true,\r\n      \"listEnabled\": true\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/acr/v1/doundo%2Fbash/_tags/latest",
+      "EncodedRequestUri": "L2Fjci92MS9kb3VuZG8lMkZiYXNoL190YWdzL2xhdGVzdA==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"deleteEnabled\": true,\r\n  \"writeEnabled\": true,\r\n  \"listEnabled\": true,\r\n  \"readEnabled\": true\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "af60499c-4288-438a-8ebc-49ef25c9d0f3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "102"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:47:41 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "15502027-0f8d-4187-98d0-1c0641fe6ca9"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "398"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"tag\": {\r\n    \"name\": \"latest\",\r\n    \"digest\": \"sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8\",\r\n    \"createdTime\": \"2019-08-06T23:27:35.1589403Z\",\r\n    \"lastUpdateTime\": \"2019-08-06T23:27:35.1589403Z\",\r\n    \"signed\": false,\r\n    \"changeableAttributes\": {\r\n      \"deleteEnabled\": true,\r\n      \"writeEnabled\": true,\r\n      \"readEnabled\": true,\r\n      \"listEnabled\": true\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/acr/v1/doundo%2Fbash/_tags/latest",
+      "EncodedRequestUri": "L2Fjci92MS9kb3VuZG8lMkZiYXNoL190YWdzL2xhdGVzdA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9140ef45-c1a7-43b6-84b3-a077e7650fc8"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:47:41 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "0e0b9cc3-9b8b-4f01-93c7-b06d69d01d64"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "399"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"tag\": {\r\n    \"name\": \"latest\",\r\n    \"digest\": \"sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8\",\r\n    \"createdTime\": \"2019-08-06T23:27:35.1589403Z\",\r\n    \"lastUpdateTime\": \"2019-08-06T23:27:35.1589403Z\",\r\n    \"signed\": false,\r\n    \"changeableAttributes\": {\r\n      \"deleteEnabled\": true,\r\n      \"writeEnabled\": false,\r\n      \"readEnabled\": true,\r\n      \"listEnabled\": true\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/acr/v1/doundo%2Fbash/_tags/latest",
+      "EncodedRequestUri": "L2Fjci92MS9kb3VuZG8lMkZiYXNoL190YWdzL2xhdGVzdA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1c6fa7d4-742b-4707-afcc-28f3db579a22"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "openresty"
+        ],
+        "Date": [
+          "Wed, 07 Aug 2019 21:47:41 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Docker-Distribution-Api-Version": [
+          "registry/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Ms-Correlation-Request-Id": [
+          "df55d777-da1a-4308-8992-b65ca754fc7c"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "398"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"tag\": {\r\n    \"name\": \"latest\",\r\n    \"digest\": \"sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8\",\r\n    \"createdTime\": \"2019-08-06T23:27:35.1589403Z\",\r\n    \"lastUpdateTime\": \"2019-08-06T23:27:35.1589403Z\",\r\n    \"signed\": false,\r\n    \"changeableAttributes\": {\r\n      \"deleteEnabled\": true,\r\n      \"writeEnabled\": true,\r\n      \"readEnabled\": true,\r\n      \"listEnabled\": true\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "dfb63c8c-7c89-4ef8-af13-75c1d873c895"
+  }
+}
