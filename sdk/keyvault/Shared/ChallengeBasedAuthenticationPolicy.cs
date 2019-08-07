@@ -14,7 +14,6 @@ namespace Azure.Security.KeyVault
     internal class ChallengeBasedAuthenticationPolicy : HttpPipelinePolicy
     {
         private const string BearerChallengePrefix = "Bearer ";
-        private const string NoChallengeErrorMessage = "Failed to read WWW-Authenticate header from response";
         private readonly TokenCredential _credential;
 
         private AuthenticationChallenge _challenge = null;
@@ -75,23 +74,11 @@ namespace Azure.Security.KeyVault
                 // update the cached challenge
                 var challenge = AuthenticationChallenge.GetChallenge(message);
 
-                if (_challenge == null || challenge != _challenge)
+                // if a challenge was returned and it's different from the cached _challenge
+                if (challenge != null && !challenge.Equals(_challenge))
                 {
                     // update the cached challenge
                     _challenge = challenge;
-
-                    // if no auth challenge was returned raise an exception since we don't know scopes to authenticate
-                    if (_challenge == null)
-                    {
-                        if (async)
-                        {
-                            await message.Response.CreateRequestFailedExceptionAsync(NoChallengeErrorMessage).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            message.Response.CreateRequestFailedException(NoChallengeErrorMessage);
-                        }
-                    }
 
                     // authenticate the request and resend
                     await AuthenticateRequestAsync(message, async).ConfigureAwait(false);
@@ -224,9 +211,9 @@ namespace Azure.Security.KeyVault
                 // quotation characters that are stripped here.
                 String[] pairs = trimmedChallenge.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-                if (pairs != null && pairs.Length > 0)
+                if (pairs.Length > 0)
                 {
-                    // Process the name=value strings
+                    // Process the name=value string
                     for (int i = 0; i < pairs.Length; i++)
                     {
                         String[] pair = pairs[i].Split('=');

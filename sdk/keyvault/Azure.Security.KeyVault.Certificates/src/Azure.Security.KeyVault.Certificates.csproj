@@ -25,6 +25,9 @@
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Shared\ChallengeBasedAuthenticationPolicy.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\..\Shared\ChallengeBasedAuthenticationPolicy.cs" />
   </ItemGroup>
 </Project>
