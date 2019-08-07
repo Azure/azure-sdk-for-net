@@ -4,7 +4,9 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Primitives;
@@ -75,9 +77,10 @@ namespace Microsoft.Azure.ServiceBus
                 this.sessionHandlerOptions.AutoRenewLock;
         }
 
-        Task RaiseExceptionReceived(Exception e, Message message, string action)
+        Task RaiseExceptionReceived(Exception e, IEnumerable<Message> messages, string action)
         {
-            var eventArgs = new ExceptionReceivedEventArgs(e, message, action, this.endpoint, this.entityPath, this.clientId);
+            var messageArray = messages?.ToArray();
+            var eventArgs = new ExceptionReceivedEventArgs(e, messageArray, action, this.endpoint, this.entityPath, this.clientId);
             return this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
@@ -93,7 +96,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                await this.RaiseExceptionReceived(exception, message, ExceptionReceivedEventArgsAction.Complete).ConfigureAwait(false);
+                await this.RaiseExceptionReceived(exception, new[] { message }, ExceptionReceivedEventArgsAction.Complete).ConfigureAwait(false);
             }
         }
 
@@ -108,7 +111,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                await this.RaiseExceptionReceived(exception, message, ExceptionReceivedEventArgsAction.Abandon).ConfigureAwait(false);
+                await this.RaiseExceptionReceived(exception, new[] { message }, ExceptionReceivedEventArgsAction.Abandon).ConfigureAwait(false);
             }
         }
 
@@ -240,7 +243,7 @@ namespace Microsoft.Azure.ServiceBus
                             }
 
                             MessagingEventSource.Log.MessageReceivePumpTaskException(this.clientId, session.SessionId, exception);
-                            await this.RaiseExceptionReceived(exception, message, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
+                            await this.RaiseExceptionReceived(exception, new[] { message }, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
                             callbackExceptionOccurred = true;
                             if (!(exception is MessageLockLostException || exception is SessionLockLostException))
                             {

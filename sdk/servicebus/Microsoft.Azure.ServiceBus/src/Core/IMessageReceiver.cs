@@ -109,6 +109,18 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// This operation can only be performed on messages that were received by this receiver.
         Task CompleteAsync(IEnumerable<string> lockTokens);
 
+        /// <summary>
+        /// Abandons a series of <see cref="Message"/> using a list of lock tokens. This will make the messages available again for processing.
+        /// </summary>
+        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to abandon.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while abandoning the messages.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
+        /// Abandoning a message will increase the delivery count on the message.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
+        Task AbandonAsync(IEnumerable<string> lockTokens, IDictionary<string, object> propertiesToModify = null);
+
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
         /// <param name="lockToken">The lock token of the <see cref="Message" />.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
@@ -134,6 +146,17 @@ namespace Microsoft.Azure.ServiceBus.Core
         Task RenewLockAsync(Message message);
 
         /// <summary>
+        /// Renews the locks on the messages specified by the lock tokens. The locks will be renewed based on the setting specified on the queue.
+        /// </summary>
+        /// <remarks>
+        /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
+        /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
+        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
+        /// </remarks>
+        Task RenewLockAsync(IEnumerable<Message> messages);
+
+        /// <summary>
         /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
         /// <returns>New lock token expiry date and time in UTC format.</returns>
         /// </summary>
@@ -145,6 +168,19 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
         Task<DateTime> RenewLockAsync(string lockToken);
+
+        /// <summary>
+        /// Renews the locks on the messages. The locks will be renewed based on the setting specified on the queue.
+        /// <returns>A list of new lock token expiry date and times in UTC format.</returns>
+        /// </summary>
+        /// <param name="lockToken">Lock tokens associated with the messages.</param>
+        /// <remarks>
+        /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
+        /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
+        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
+        /// </remarks>
+        Task<IEnumerable<DateTime>> RenewLockAsync(IEnumerable<string> lockTokens);
 
         /// <summary>
         /// Fetches the next active message without changing the state of the receiver or the message source.

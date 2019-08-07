@@ -6,6 +6,7 @@ using Microsoft.Azure.ServiceBus.Core;
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>Provides data for the <see cref="MessageHandlerOptions.ExceptionReceivedHandler" /> event.</summary>
     public sealed class ExceptionReceivedEventArgs : EventArgs
@@ -14,15 +15,15 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Initializes a new instance of the <see cref="ExceptionReceivedEventArgs" /> class.</summary>
         /// <param name="exception">The exception that this event data belongs to.</param>
-        /// <param name="message">The message associated with the event, if applicable.</param>
+        /// <param name="messages">The messages associated with the event, if applicable.</param>
         /// <param name="action">The action associated with the event.</param>
         /// <param name="endpoint">The endpoint used when this exception occurred.</param>
         /// <param name="entityName">The entity path used when this exception occurred.</param>
         /// <param name="clientId">The Client Id can be used to associate with the <see cref="QueueClient"/>, <see cref="SubscriptionClient"/>, <see cref="MessageSender"/> or <see cref="MessageReceiver"/>that encountered the exception.</param>
-        public ExceptionReceivedEventArgs(Exception exception, Message message, string action, string endpoint, string entityName, string clientId)
+        public ExceptionReceivedEventArgs(Exception exception, Message[] messages, string action, string endpoint, string entityName, string clientId)
         {
             this.Exception = exception;
-            this.ExceptionReceivedContext = new ExceptionReceivedContext(message, action, endpoint, entityName, clientId);
+            this.ExceptionReceivedContext = new ExceptionReceivedContext(messages, action, endpoint, entityName, clientId);
         }
 
         /// <summary>Gets the parent class exception to which this event data belongs.</summary>

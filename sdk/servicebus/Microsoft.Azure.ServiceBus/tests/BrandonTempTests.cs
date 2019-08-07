@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -81,37 +82,39 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         public async Task BrandonTestProcessingSpeed()
         {
-            async Task AddMessages(int count)
-            {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+            //async Task AddMessages(int count)
+            //{
+            //    var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
 
-                var messages = Enumerable.Range(1, count)
-                    .Select(i => new Message(Encoding.UTF8.GetBytes($"test " + i)))
-                    .ToList();
+            //    var messages = Enumerable.Range(1, count)
+            //        .Select(i => new Message(Encoding.UTF8.GetBytes($"test " + i)))
+            //        .ToList();
 
-                await sender.SendAsync(messages);
-            }
+            //    await sender.SendAsync(messages);
+            //}
 
 
             // Single
             {
-                for (int x = 0; x < 15; ++x)
-                    await AddMessages(1000);
+                //for (int x = 0; x < 15; ++x)
+                //    await AddMessages(2500);
 
 
                 var messagesReceived = 0;
 
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock, prefetchCount: 800);
 
                 var stopwatch = Stopwatch.StartNew();
 
                 receiver.RegisterMessageHandler(
-                    (message, cancellationToken) => {
-                        messagesReceived += 1;
+                    async (message, cancellationToken) => {
+                        Interlocked.Add(ref messagesReceived, 1);
 
-                        return Task.CompletedTask;
+                        await Task.Delay(5);
                     }, 
-                    (args) => Task.CompletedTask);
+                    new MessageHandlerOptions((args) => Task.CompletedTask) {
+                        MaxConcurrentCalls = 8
+                    });
 
 
                 await Task.Delay(TimeSpan.FromSeconds(30));
@@ -126,25 +129,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             // Batch
             {
-                for (int x = 0; x < 15; ++x)
-                    await AddMessages(1000);
+                //for (int x = 0; x < 15; ++x)
+                //    await AddMessages(2500);
 
 
                 var batchesReceived = 0;
                 var messagesReceived = 0;
 
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock, prefetchCount: 800);
 
                 var stopwatch = Stopwatch.StartNew();
 
                 receiver.RegisterMessageBatchHandler(
-                    (messages, cancellationToken) => {
-                        batchesReceived += 1;
-                        messagesReceived += messages.Count;
+                    async (messages, cancellationToken) => {
+                        Interlocked.Add(ref batchesReceived, 1);
+                        Interlocked.Add(ref messagesReceived, messages.Count);
 
-                        return Task.CompletedTask;
+                        await Task.Delay(500);
                     },
-                    (args) => Task.CompletedTask);
+                    new MessageBatchHandlerOptions((args) => Task.CompletedTask) {
+                        MaxConcurrentCalls = 8
+                    });
 
 
                 await Task.Delay(TimeSpan.FromSeconds(30));

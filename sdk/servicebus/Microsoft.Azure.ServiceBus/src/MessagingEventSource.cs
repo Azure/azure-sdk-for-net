@@ -6,6 +6,7 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Tracing;
+    using System.Linq;
     using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
@@ -286,13 +287,25 @@ namespace Microsoft.Azure.ServiceBus
         {
             this.WriteEvent(24, clientId, exception);
         }
+        // BLOCKER:  Potential breaking change
+        [NonEvent]
+        public void MessageRenewLockStart(string clientId, int messageCount, IEnumerable<string> lockTokens)
+        {
 
-        [Event(25, Level = EventLevel.Informational, Message = "{0}: RenewLockAsync start. MessageCount = {1}, LockToken = {2}")]
-        public void MessageRenewLockStart(string clientId, int messageCount, string lockToken)
+            if (this.IsEnabled())
+            {
+                var formattedLockTokens = StringUtility.GetFormattedLockTokens(lockTokens);
+
+                MessageRenewLockStart(clientId, messageCount, formattedLockTokens);
+            }
+        }
+
+        [Event(25, Level = EventLevel.Informational, Message = "{0}: RenewLockAsync start. MessageCount = {1}, LockTokens = {2}")]
+        public void MessageRenewLockStart(string clientId, int messageCount, string lockTokens)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(25, clientId, messageCount, lockToken);
+                this.WriteEvent(25, clientId, messageCount, lockTokens);
             }
         }
 
@@ -702,18 +715,20 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpTaskStart(string clientId, Message message, int currentSemaphoreCount)
+        public void MessageReceiverPumpTaskStart(string clientId, IEnumerable<Message> messages, int currentSemaphoreCount)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpTaskStart(clientId, message?.SystemProperties.SequenceNumber ?? -1, currentSemaphoreCount);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+
+                this.MessageReceiverPumpTaskStart(clientId, formattedSequenceNumbers, currentSemaphoreCount);
             }
         }
 
-        [Event(66, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump PumpTask Started: Message: SequenceNumber: {1}, Available Semaphore Count: {2}")]
-        void MessageReceiverPumpTaskStart(string clientId, long sequenceNumber, int currentSemaphoreCount)
+        [Event(66, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump PumpTask Started: Message: SequenceNumbers: {1}, Available Semaphore Count: {2}")]
+        void MessageReceiverPumpTaskStart(string clientId, string sequenceNumbers, int currentSemaphoreCount)
         {
-            this.WriteEvent(66, clientId, sequenceNumber, currentSemaphoreCount);
+            this.WriteEvent(66, clientId, sequenceNumbers, currentSemaphoreCount);
         }
 
         [Event(67, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump PumpTask done: Available Semaphore Count: {1}")]
@@ -741,123 +756,139 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpDispatchTaskStart(string clientId, Message message)
+        public void MessageReceiverPumpDispatchTaskStart(string clientId, IEnumerable<Message> messages)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpDispatchTaskStart(clientId, message?.SystemProperties.SequenceNumber ?? -1);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+
+                this.MessageReceiverPumpDispatchTaskStart(clientId, formattedSequenceNumbers);
             }
         }
 
-        [Event(69, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump DispatchTask start: Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpDispatchTaskStart(string clientId, long sequenceNumber)
+        [Event(69, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump DispatchTask start: Message: SequenceNumbers: {1}")]
+        void MessageReceiverPumpDispatchTaskStart(string clientId, string sequenceNumbers)
         {
-            this.WriteEvent(69, clientId, sequenceNumber);
+            this.WriteEvent(69, clientId, sequenceNumbers);
         }
 
         [NonEvent]
-        public void MessageReceiverPumpDispatchTaskStop(string clientId, Message message, int currentSemaphoreCount)
+        public void MessageReceiverPumpDispatchTaskStop(string clientId, IEnumerable<Message> messages, int currentSemaphoreCount)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpDispatchTaskStop(clientId, message?.SystemProperties.SequenceNumber ?? -1, currentSemaphoreCount);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+
+                this.MessageReceiverPumpDispatchTaskStop(clientId, formattedSequenceNumbers, currentSemaphoreCount);
             }
         }
 
-        [Event(70, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump DispatchTask done: Message: SequenceNumber: {1}, Current Semaphore Count: {2}")]
-        void MessageReceiverPumpDispatchTaskStop(string clientId, long sequenceNumber, int currentSemaphoreCount)
+        [Event(70, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump DispatchTask done: Message: SequenceNumbers: {1}, Current Semaphore Count: {2}")]
+        void MessageReceiverPumpDispatchTaskStop(string clientId, string sequenceNumbers, int currentSemaphoreCount)
         {
-            this.WriteEvent(70, clientId, sequenceNumber, currentSemaphoreCount);
+            this.WriteEvent(70, clientId, sequenceNumbers, currentSemaphoreCount);
         }
 
         [NonEvent]
-        public void MessageReceiverPumpUserCallbackStart(string clientId, Message message)
+        public void MessageReceiverPumpUserCallbackStart(string clientId, IEnumerable<Message> messages)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackStart(clientId, message?.SystemProperties.SequenceNumber ?? -1);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+
+                this.MessageReceiverPumpUserCallbackStart(clientId, formattedSequenceNumbers);
             }
         }
 
-        [Event(71, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump UserCallback start: Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpUserCallbackStart(string clientId, long sequenceNumber)
+        [Event(71, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump UserCallback start: Message: SequenceNumbers: {1}")]
+        void MessageReceiverPumpUserCallbackStart(string clientId, string sequenceNumbers)
         {
-            this.WriteEvent(71, clientId, sequenceNumber);
+            this.WriteEvent(71, clientId, sequenceNumbers);
         }
 
         [NonEvent]
-        public void MessageReceiverPumpUserCallbackStop(string clientId, Message message)
+        public void MessageReceiverPumpUserCallbackStop(string clientId, IEnumerable<Message> messages)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackStop(clientId, message?.SystemProperties.SequenceNumber ?? -1);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+
+                this.MessageReceiverPumpUserCallbackStop(clientId, formattedSequenceNumbers);
             }
         }
 
-        [Event(72, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump UserCallback done: Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpUserCallbackStop(string clientId, long sequenceNumber)
+        [Event(72, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump UserCallback done: Message: SequenceNumbers: {1}")]
+        void MessageReceiverPumpUserCallbackStop(string clientId, string sequenceNumbers)
         {
-            this.WriteEvent(72, clientId, sequenceNumber);
+            this.WriteEvent(72, clientId, sequenceNumbers);
         }
 
         [NonEvent]
-        public void MessageReceiverPumpUserCallbackException(string clientId, Message message, Exception exception)
+        public void MessageReceiverPumpUserCallbackException(string clientId, IEnumerable<Message> messages, Exception exception)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackException(clientId, message?.SystemProperties.SequenceNumber ?? -1, exception.ToString());
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+
+                this.MessageReceiverPumpUserCallbackException(clientId, formattedSequenceNumbers, exception.ToString());
             }
         }
 
-        [Event(73, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump UserCallback Exception: Message: SequenceNumber: {1}, Exception: {2}")]
-        void MessageReceiverPumpUserCallbackException(string clientId, long sequenceNumber, string exception)
+        [Event(73, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump UserCallback Exception: Message: SequenceNumbers: {1}, Exception: {2}")]
+        void MessageReceiverPumpUserCallbackException(string clientId, string sequenceNumbers, string exception)
         {
-            this.WriteEvent(73, clientId, sequenceNumber, exception);
+            this.WriteEvent(73, clientId, sequenceNumbers, exception);
         }
 
         [NonEvent]
-        public void MessageReceiverPumpRenewMessageStart(string clientId, Message message, TimeSpan renewAfterTimeSpan)
+        public void MessageReceiverPumpRenewMessageStart(string clientId, IEnumerable<Message> messages, TimeSpan renewAfterTimeSpan)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageStart(clientId, message?.SystemProperties.SequenceNumber ?? -1, (long)renewAfterTimeSpan.TotalSeconds);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+                
+                this.MessageReceiverPumpRenewMessageStart(clientId, formattedSequenceNumbers, (long)renewAfterTimeSpan.TotalSeconds);
             }
         }
 
-        [Event(74, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump RenewMessage start: Message: SequenceNumber: {1}, RenewAfterTimeInSeconds: {2}")]
-        void MessageReceiverPumpRenewMessageStart(string clientId, long sequenceNumber, long renewAfterTimeSpanInSeconds)
+        [Event(74, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump RenewMessage start: Message: SequenceNumbers: {1}, RenewAfterTimeInSeconds: {2}")]
+        void MessageReceiverPumpRenewMessageStart(string clientId, string sequenceNumbers, long renewAfterTimeSpanInSeconds)
         {
-            this.WriteEvent(74, clientId, sequenceNumber, renewAfterTimeSpanInSeconds);
+            this.WriteEvent(74, clientId, sequenceNumbers, renewAfterTimeSpanInSeconds);
         }
 
         [NonEvent]
-        public void MessageReceiverPumpRenewMessageStop(string clientId, Message message)
+        public void MessageReceiverPumpRenewMessageStop(string clientId, IEnumerable<Message> messages)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageStop(clientId, message?.SystemProperties.SequenceNumber ?? -1);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+
+                this.MessageReceiverPumpRenewMessageStop(clientId, formattedSequenceNumbers);
             }
         }
 
-        [Event(75, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump RenewMessage done: Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpRenewMessageStop(string clientId, long sequenceNumber)
+        [Event(75, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump RenewMessage done: Message: SequenceNumbers: {1}")]
+        void MessageReceiverPumpRenewMessageStop(string clientId, string sequenceNumbers)
         {
-            this.WriteEvent(75, clientId, sequenceNumber);
+            this.WriteEvent(75, clientId, sequenceNumbers);
         }
 
         [NonEvent]
-        public void MessageReceiverPumpRenewMessageException(string clientId, Message message, Exception exception)
+        public void MessageReceiverPumpRenewMessageException(string clientId, IEnumerable<Message> messages, Exception exception)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageException(clientId, message?.SystemProperties.SequenceNumber ?? -1, exception.ToString());
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(messages.Select(m => m.SystemProperties.SequenceNumber));
+
+                this.MessageReceiverPumpRenewMessageException(clientId, formattedSequenceNumbers, exception.ToString());
             }
         }
 
-        [Event(76, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump RenewMessage Exception: Message: SequenceNumber: {1}, Exception: {2}")]
-        void MessageReceiverPumpRenewMessageException(string clientId, long sequenceNumber, string exception)
+        [Event(76, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump RenewMessage Exception: Message: SequenceNumbers: {1}, Exception: {2}")]
+        void MessageReceiverPumpRenewMessageException(string clientId, string sequenceNumbers, string exception)
         {
-            this.WriteEvent(76, clientId, sequenceNumber, exception);
+            this.WriteEvent(76, clientId, sequenceNumbers, exception);
         }
 
         [NonEvent]

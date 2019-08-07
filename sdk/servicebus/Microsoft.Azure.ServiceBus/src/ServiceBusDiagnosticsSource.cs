@@ -426,28 +426,29 @@ namespace Microsoft.Azure.ServiceBus
 
         #region RenewLock
 
-        internal Activity RenewLockStart(string lockToken)
+        // BLOCKER:  Potential breaking changes
+        internal Activity RenewLockStart(IEnumerable<string> lockTokens)
         {
             return Start("RenewLock", () => new
             {
-                LockToken = lockToken,
+                LockTokens = lockTokens,
                 Entity = this.entityPath,
                 Endpoint = this.endpoint
             },
             null);
         }
 
-        internal void RenewLockStop(Activity activity, string lockToken, TaskStatus? status, DateTime lockedUntilUtc)
+        internal void RenewLockStop(Activity activity, IEnumerable<string> lockTokens, TaskStatus? status, IEnumerable<DateTime> lockedUntilUtcTimes)
         {
             if (activity != null)
             {
                 DiagnosticListener.StopActivity(activity, new
                 {
-                    LockToken = lockToken,
+                    LockTokens = lockTokens,
                     Entity = this.entityPath,
                     Endpoint = this.endpoint,
                     Status = status ?? TaskStatus.Faulted,
-                    LockedUntilUtc = lockedUntilUtc
+                    LockedUntilUtcTimes = lockedUntilUtcTimes
                 });
             }
         }

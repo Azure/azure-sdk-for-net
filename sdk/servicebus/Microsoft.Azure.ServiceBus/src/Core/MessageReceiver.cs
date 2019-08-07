@@ -791,9 +791,29 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
-        public async Task RenewLockAsync(Message message)
+        public Task RenewLockAsync(Message message)
         {
-            message.SystemProperties.LockedUntilUtc = await RenewLockAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+            return RenewLockAsync(new[] { message });
+        }
+
+        /// <summary>
+        /// Renews the locks on the messages specified by the lock tokens. The locks will be renewed based on the setting specified on the queue.
+        /// </summary>
+        /// <remarks>
+        /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
+        /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
+        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
+        /// </remarks>
+        public async Task RenewLockAsync(IEnumerable<Message> messages)
+        {
+            var messageList = messages.ToList();
+            var lockTokens = messageList.Select(m => m.SystemProperties.LockToken);
+
+            var lockedUntilUtcTimes = await RenewLockAsync(lockTokens).ConfigureAwait(false);
+
+            // BLOCKER:  Ensure code owners are okay with use of Zip like this.
+            messageList.Zip(lockedUntilUtcTimes, (message, lockedUntilUtc) => message.SystemProperties.LockedUntilUtc = lockedUntilUtc);
         }
 
         /// <summary>
@@ -809,20 +829,47 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </remarks>
         public async Task<DateTime> RenewLockAsync(string lockToken)
         {
+            var lockedUntilUtcTimes = await RenewLockAsync(new[] { lockToken }).ConfigureAwait(false);
+
+            return lockedUntilUtcTimes.First();
+        }
+
+        /// <summary>
+        /// Renews the locks on the messages. The locks will be renewed based on the setting specified on the queue.
+        /// <returns>A list of new lock token expiry date and times in UTC format.</returns>
+        /// </summary>
+        /// <param name="lockToken">Lock tokens associated with the messages.</param>
+        /// <remarks>
+        /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
+        /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
+        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
+        /// </remarks>
+        public async Task<IEnumerable<DateTime>> RenewLockAsync(IEnumerable<string> lockTokens)
+        {
             this.ThrowIfClosed();
             this.ThrowIfNotPeekLockMode();
+            if (lockTokens == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(lockTokens));
+            }
+            var lockTokenList = lockTokens.ToList();
+            if (lockTokenList.Count == 0)
+            {
+                throw Fx.Exception.Argument(nameof(lockTokens), Resources.ListOfLockTokensCannotBeEmpty);
+            }
 
-            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, lockToken);
+            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, lockTokenList.Count, lockTokenList);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.RenewLockStart(lockToken) : null;
+            Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.RenewLockStart(lockTokenList) : null;
             Task renewTask = null;
 
-            var lockedUntilUtc = DateTime.MinValue;
+            IEnumerable<DateTime> lockedUntilUtcTimes = null;
 
             try
             {
                 renewTask = this.RetryPolicy.RunOperation(
-                    async () => lockedUntilUtc = await this.OnRenewLockAsync(lockToken).ConfigureAwait(false),
+                    async () => lockedUntilUtcTimes = await this.OnRenewLockAsync(lockTokenList).ConfigureAwait(false),
                     this.OperationTimeout);
                 await renewTask.ConfigureAwait(false);
             }
@@ -838,11 +885,11 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                this.diagnosticSource.RenewLockStop(activity, lockToken, renewTask?.Status, lockedUntilUtc);
+                this.diagnosticSource.RenewLockStop(activity, lockTokenList, renewTask?.Status, lockedUntilUtcTimes);
             }
             MessagingEventSource.Log.MessageRenewLockStop(this.ClientId);
 
-            return lockedUntilUtc;
+            return lockedUntilUtcTimes;
         }
 
         /// <summary>
@@ -1272,15 +1319,15 @@ namespace Microsoft.Azure.ServiceBus.Core
             return this.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome);
         }
 
-        protected virtual Task OnAbandonAsync(IEnumerable<string> lockToken, IDictionary<string, object> propertiesToModify = null)
+        protected virtual Task OnAbandonAsync(IEnumerable<string> lockTokens, IDictionary<string, object> propertiesToModify = null)
         {
-            var lockTokenArray = lockToken.Select(lt => new Guid(lt)).ToArray();
+            var lockTokenGuids = lockTokens.Select(lt => new Guid(lt)).ToArray();
 
-            if (lockTokenArray.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
+            if (lockTokenGuids.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
-                return this.DisposeMessageRequestResponseAsync(lockTokenArray, DispositionStatus.Abandoned, propertiesToModify);
+                return this.DisposeMessageRequestResponseAsync(lockTokenGuids, DispositionStatus.Abandoned, propertiesToModify);
             }
-            return this.DisposeMessagesAsync(lockTokenArray, GetAbandonOutcome(propertiesToModify));
+            return this.DisposeMessagesAsync(lockTokenGuids, GetAbandonOutcome(propertiesToModify));
         }
 
         protected virtual Task OnDeferAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
@@ -1314,9 +1361,9 @@ namespace Microsoft.Azure.ServiceBus.Core
             return this.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription));
         }
 
-        protected virtual async Task<DateTime> OnRenewLockAsync(string lockToken)
+        protected virtual async Task<IEnumerable<DateTime>> OnRenewLockAsync(IEnumerable<string> lockToken)
         {
-            DateTime lockedUntilUtc;
+            IEnumerable<DateTime> lockedUntilUtcTimes;
             try
             {
                 // Create an AmqpRequest Message to renew  lock
@@ -1326,14 +1373,13 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
-                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new[] { new Guid(lockToken) };
+                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockToken.Select(t => new Guid(t)).ToArray();
 
                 var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
-                    var lockedUntilUtcTimes = amqpResponseMessage.GetValue<IEnumerable<DateTime>>(ManagementConstants.Properties.Expirations);
-                    lockedUntilUtc = lockedUntilUtcTimes.First();
+                    lockedUntilUtcTimes = amqpResponseMessage.GetValue<IEnumerable<DateTime>>(ManagementConstants.Properties.Expirations);
                 }
                 else
                 {
@@ -1345,7 +1391,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 throw AmqpExceptionHelper.GetClientException(exception);
             }
 
-            return lockedUntilUtc;
+            return lockedUntilUtcTimes;
         }
 
         /// <summary> </summary>

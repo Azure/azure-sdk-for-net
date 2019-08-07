@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.ServiceBus
             throw new InvalidOperationException($"{nameof(RegisterMessageHandler)} is not supported for Sessions.");
         }
 
-        protected override Task<DateTime> OnRenewLockAsync(string lockToken)
+        protected override Task<IEnumerable<DateTime>> OnRenewLockAsync(IEnumerable<string> lockTokens)
         {
             throw new InvalidOperationException($"{nameof(RenewLockAsync)} is not supported for Session. Use {nameof(RenewSessionLockAsync)} to renew sessions instead");
         }
