@@ -383,11 +383,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISensitivityLabelsOperations SensitivityLabels { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedInstanceAdministratorsOperations.
-        /// </summary>
-        public virtual IManagedInstanceAdministratorsOperations ManagedInstanceAdministrators { get; private set; }
-
-        /// <summary>
         /// Gets the IDatabaseOperations.
         /// </summary>
         public virtual IDatabaseOperations DatabaseOperations { get; private set; }
@@ -790,7 +785,6 @@ namespace Microsoft.Azure.Management.Sql
             ManagedDatabaseSecurityAlertPolicies = new ManagedDatabaseSecurityAlertPoliciesOperations(this);
             ManagedServerSecurityAlertPolicies = new ManagedServerSecurityAlertPoliciesOperations(this);
             SensitivityLabels = new SensitivityLabelsOperations(this);
-            ManagedInstanceAdministrators = new ManagedInstanceAdministratorsOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
