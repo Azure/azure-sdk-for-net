@@ -26,8 +26,8 @@ namespace ContainerRegistry.Tests
                 LastUpdateTime = "8/1/2019 10:49:11 PM",
                 Architecture = "amd64",
                 Os = "linux",
-                MediaType = "application/vnd.docker.distribution.manifest.v2+json",
-                ConfigMediaType = "application/vnd.docker.container.image.v1+json",
+                MediaType = ACRTestUtil.MediatypeV2Manifest,
+                ConfigMediaType = ACRTestUtil.MediatypeV1Manifest,
                 Tags = new List<string> {
                     "latest"
                 },
@@ -44,10 +44,10 @@ namespace ContainerRegistry.Tests
         private static readonly Manifest ExpectedV2ManifestProd = new Manifest()
         {
             SchemaVersion = 2,
-            MediaType = "application/vnd.docker.distribution.manifest.v2+json",
+            MediaType = ACRTestUtil.MediatypeV2Manifest,
             Config = new V2Descriptor
             {
-                MediaType = "application/vnd.docker.container.image.v1+json",
+                MediaType = ACRTestUtil.MediatypeV1Manifest,
                 Size = 5635,
                 Digest = "sha256:16463e0c481e161aabb735437d30b3c9c7391c2747cc564bb927e843b73dcb39"
             },
@@ -209,8 +209,8 @@ namespace ContainerRegistry.Tests
                 LastUpdateTime = "8/6/2019 11:27:35 PM",
                 Architecture = "amd64",
                 Os = "linux",
-                MediaType = "application/vnd.docker.distribution.manifest.v2+json",
-                ConfigMediaType = "application/vnd.docker.container.image.v1+json",
+                MediaType = ACRTestUtil.MediatypeV2Manifest,
+                ConfigMediaType = ACRTestUtil.MediatypeV1Manifest,
                 Tags = new List<string>
                 {
                     "latest"
@@ -277,7 +277,7 @@ namespace ContainerRegistry.Tests
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var manifest = await client.GetManifestAsync(ACRTestUtil.TestRepository, tag, "application/vnd.docker.distribution.manifest.v2+json");
+                var manifest = await client.GetManifestAsync(ACRTestUtil.TestRepository, tag, ACRTestUtil.MediatypeV2Manifest);
                 verifyManifest(ExpectedV2ManifestProd, manifest);
             }
         }
@@ -316,7 +316,7 @@ namespace ContainerRegistry.Tests
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
                 await client.CreateManifestAsync(ACRTestUtil.changeableRepository, "temporary", ExpectedV2ManifestProd);
-                var newManifest = await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", "application/vnd.docker.distribution.manifest.v2+json");
+                var newManifest = await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", ACRTestUtil.MediatypeV2Manifest);
                 var tag = await client.GetAcrTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
 
                 verifyManifest(ExpectedV2ManifestProd, newManifest);

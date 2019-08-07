@@ -26,11 +26,18 @@ namespace ContainerRegistry.Tests
         //Repository with multiple hello-world# tags for deletion testing
         public static readonly string deleteableRepository = "deleteable";
 
+        //Prod Test registry
         public static readonly string ManagedTestRegistry = "azuresdkunittest";
         public static readonly string ManagedTestRegistryFullName = "azuresdkunittest.azurecr.io";
+
+        //Prod Test registry for updates and deletions (contains many hello-world# images)
         public static readonly string ManagedTestRegistryForChanges = "azuresdkunittestupdateable";
         public static readonly string ManagedTestRegistryForChangesFullName = "azuresdkunittestupdateable.azurecr.io";
+
         public static readonly string Scope = "registry:catalog:*";
+        public static readonly string MediatypeV2Manifest = "application/vnd.docker.distribution.manifest.v2+json";
+        public static readonly string MediatypeV1Manifest = "application/vnd.docker.container.image.v1+json";
+
 
         /* Acquires an ACR client setup for the testing network. Note acquisition of credentials from registry
          * must be possible for this to work in this way. */
