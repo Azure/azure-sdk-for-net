@@ -378,6 +378,11 @@ namespace Microsoft.Azure.Management.Sql
         ISensitivityLabelsOperations SensitivityLabels { get; }
 
         /// <summary>
+        /// Gets the IManagedInstanceAdministratorsOperations.
+        /// </summary>
+        IManagedInstanceAdministratorsOperations ManagedInstanceAdministrators { get; }
+
+        /// <summary>
         /// Gets the IDatabaseOperations.
         /// </summary>
         IDatabaseOperations DatabaseOperations { get; }
