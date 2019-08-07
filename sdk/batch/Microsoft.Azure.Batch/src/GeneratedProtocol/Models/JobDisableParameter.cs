@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Options when disabling a job.
+    /// Options when disabling a Job.
     /// </summary>
     public partial class JobDisableParameter
     {
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobDisableParameter class.
         /// </summary>
-        /// <param name="disableTasks">What to do with active tasks associated
-        /// with the job.</param>
+        /// <param name="disableTasks">What to do with active Tasks associated
+        /// with the Job.</param>
         public JobDisableParameter(DisableJobOption disableTasks)
         {
             DisableTasks = disableTasks;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets what to do with active tasks associated with the job.
+        /// Gets or sets what to do with active Tasks associated with the Job.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'requeue', 'terminate', 'wait'

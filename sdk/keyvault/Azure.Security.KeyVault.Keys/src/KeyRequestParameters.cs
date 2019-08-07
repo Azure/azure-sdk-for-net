@@ -150,6 +150,5 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         internal override void ReadProperties(JsonElement json) { }
-        
     }
 }

@@ -81,6 +81,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListContainersSegmentAsync_MaxResults()
         {
             var service = this.GetServiceClient_SharedKey();
@@ -117,7 +118,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNotNull(items.Single(c => c.Value.Name == containerName));
             }
         }
-        
+
         [Test]
         public async Task ListContainersSegmentAsync_Metadata()
         {
@@ -138,6 +139,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListContainersSegmentAsync_Error()
         {
             // Arrange
@@ -266,7 +268,7 @@ namespace Azure.Storage.Blobs.Test
             // "-secondary" is required by the server
             var service = this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceSecondaryEndpoint),
+                    new Uri(this.TestConfigDefault.BlobServiceSecondaryEndpoint),
                     this.GetNewSharedKeyCredentials(),
                     this.GetOptions()));
 

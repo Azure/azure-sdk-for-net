@@ -5,6 +5,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace Azure.Storage
 {
@@ -20,9 +21,18 @@ namespace Azure.Storage
         public string AccountName { get; }
 
         /// <summary>
+        /// The value of a Storage Account access key.
+        /// </summary>
+        private byte[] _accountKeyValue;
+
+        /// <summary>
         /// Gets the value of a Storage Account access key.
         /// </summary>
-        internal byte[] AccountKeyValue { get; }
+        internal byte[] AccountKeyValue
+        {
+            get => Volatile.Read(ref this._accountKeyValue);
+            private set => Volatile.Write(ref this._accountKeyValue, value);
+        }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -35,8 +45,17 @@ namespace Azure.Storage
             string accountKey)
         {
             this.AccountName = accountName;
-            this.AccountKeyValue = Convert.FromBase64String(accountKey);
+            this.SetAccountKey(accountKey);
         }
+
+        /// <summary>
+        /// Update the Storage Account's access key.  This intended to be used
+        /// when you've regenerated your Storage Account's access keys and want
+        /// to update long lived clients.
+        /// </summary>
+        /// <param name="accountKey">A Storage Account access key.</param>
+        public void SetAccountKey(string accountKey) =>
+            this.AccountKeyValue = Convert.FromBase64String(accountKey);
 
         /// <summary>
         /// Exports the value of the account's key to a Base64-encoded string.

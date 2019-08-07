@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Http
 {

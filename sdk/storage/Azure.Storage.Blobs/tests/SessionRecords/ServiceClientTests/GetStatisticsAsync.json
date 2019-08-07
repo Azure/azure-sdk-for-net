@@ -1,36 +1,38 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting-secondary.blob.core.windows.net/?restype=service\u0026comp=stats",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f?restype=service\u0026comp=stats",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329cf0-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "0abc272ef9e0787c51b9fe2aead4ceb7",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:30 GMT",
+        "x-ms-client-request-id": "341a3674d05034dfcbfd07f66022c18b",
+        "x-ms-date": "Fri, 19 Jul 2019 22:31:06 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:58:31 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:31:05 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "e57e9db8-b01e-006c-3a4f-2599d3000000",
+        "x-ms-request-id": "8d39f133-601e-0021-5d81-3e5f31000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceStats\u003e\u003cGeoReplication\u003e\u003cStatus\u003elive\u003c/Status\u003e\u003cLastSyncTime\u003eMon, 17 Jun 2019 20:54:34 GMT\u003c/LastSyncTime\u003e\u003c/GeoReplication\u003e\u003c/StorageServiceStats\u003e"
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceStats\u003e\u003cGeoReplication\u003e\u003cStatus\u003elive\u003c\u002fStatus\u003e\u003cLastSyncTime\u003eFri, 19 Jul 2019 22:29:01 GMT\u003c\u002fLastSyncTime\u003e\u003c\u002fGeoReplication\u003e\u003c\u002fStorageServiceStats\u003e"
     }
   ],
   "Variables": {
-    "RandomSeed": "1144385790"
+    "RandomSeed": "1607904525",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

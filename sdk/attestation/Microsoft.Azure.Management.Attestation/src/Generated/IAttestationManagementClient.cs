@@ -42,16 +42,14 @@ namespace Microsoft.Azure.Management.Attestation
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Subscription credentials that uniquely identify the Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every
-        /// service call.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// Client API version.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.

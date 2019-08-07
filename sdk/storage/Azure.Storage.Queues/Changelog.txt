@@ -1,6 +1,11 @@
 Release History
 ===============
 
+12.0.0-preview.2 (2019-08)
+--------------------------
+- Distributed Tracing
+- Bug fixes
+
 12.0.0-preview.1 (2019-07)
 --------------------------
 This preview is the first release of a ground-up rewrite of our client

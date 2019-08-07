@@ -25,7 +25,7 @@ namespace Azure.Storage.Queues
         /// The Uri endpoint used by the object.
         /// </summary>
         private readonly Uri _uri;
-        
+
         /// <summary>
         /// Gets the Uri endpoint used by the object.
         /// </summary>
@@ -52,21 +52,15 @@ namespace Azure.Storage.Queues
         protected virtual HttpPipeline Pipeline => this._pipeline;
 
         /// <summary>
-        /// QueueMaxMessagesDequeue indicates the maximum number of messages
-        /// you can retrieve with each call to Dequeue.
-        /// </summary>
-        public const int MaxMessagesDequeue = 32;
-
-        /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
         /// you can retrieve with each call to Peek.
         /// </summary>
-        public const int MaxMessagesPeek = MaxMessagesDequeue;
+        public const int MaxMessagesPeek = Constants.Queue.MaxMessagesDequeue;
 
         /// <summary>
         /// QueueMessageMaxBytes indicates the maximum number of bytes allowed for a message's UTF-8 text.
         /// </summary>
-        public const int MessageMaxBytes = 64 * Constants.KB;
+        public const int MessageMaxBytes = Constants.Queue.QueueMessageMaxBytes;
 
         #region ctors
         /// <summary>
@@ -85,7 +79,7 @@ namespace Azure.Storage.Queues
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="queueName">
@@ -104,7 +98,7 @@ namespace Azure.Storage.Queues
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="queueName">
@@ -124,7 +118,7 @@ namespace Azure.Storage.Queues
                     QueueName = queueName
                 };
             this._uri = builder.ToUri();
-            this._messagesUri = this._uri.AppendToPath("messages");
+            this._messagesUri = this._uri.AppendToPath(Constants.Queue.messagesUri);
             this._pipeline = (options ?? new QueueClientOptions()).Build(conn.Credentials);
         }
 
@@ -207,7 +201,7 @@ namespace Azure.Storage.Queues
         internal QueueClient(Uri queueUri, HttpPipelinePolicy authentication, QueueClientOptions options)
         {
             this._uri = queueUri;
-            this._messagesUri = queueUri.AppendToPath("messages");
+            this._messagesUri = queueUri.AppendToPath(Constants.Queue.messagesUri);
             this._pipeline = (options ?? new QueueClientOptions()).Build(authentication);
         }
 
@@ -225,7 +219,7 @@ namespace Azure.Storage.Queues
         internal QueueClient(Uri queueUri, HttpPipeline pipeline)
         {
             this._uri = queueUri;
-            this._messagesUri = queueUri.AppendToPath("messages");
+            this._messagesUri = queueUri.AppendToPath(Constants.Queue.messagesUri);
             this._pipeline = pipeline;
         }
         #endregion ctors
@@ -233,7 +227,7 @@ namespace Azure.Storage.Queues
         #region Create
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="metadata">
@@ -256,7 +250,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="metadata">
@@ -279,7 +273,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="metadata">
@@ -821,6 +815,7 @@ namespace Azure.Storage.Queues
                         this.Pipeline,
                         this.MessagesUri,
                         async: async,
+                        operationName: Constants.Queue.ClearMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -952,6 +947,7 @@ namespace Azure.Storage.Queues
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
+                            operationName: Constants.Queue.EnqueueMessageOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -979,7 +975,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
         /// If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.
         /// </param>
         /// <param name="visibilityTimeout">
@@ -1007,7 +1003,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
         /// If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.
         /// </param>
         /// <param name="visibilityTimeout">
@@ -1035,7 +1031,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
         /// If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.
         /// </param>
         /// <param name="visibilityTimeout">
@@ -1072,6 +1068,7 @@ namespace Azure.Storage.Queues
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
+                        operationName: Constants.Queue.DequeueMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1094,7 +1091,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
         /// <param name="cancellationToken">
@@ -1117,7 +1114,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
         /// <param name="cancellationToken">
@@ -1140,7 +1137,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
         /// <param name="async">
@@ -1171,6 +1168,7 @@ namespace Azure.Storage.Queues
                         this.MessagesUri,
                         numberOfMessages: maxMessages,
                         async: async,
+                        operationName: Constants.Queue.PeekMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1284,6 +1282,7 @@ namespace Azure.Storage.Queues
                         uri,
                         popReceipt: popReceipt,
                         async: async,
+                        operationName: Constants.Queue.DeleteMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1313,8 +1312,8 @@ namespace Azure.Storage.Queues
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
         /// </param>
         /// <param name="visibilityTimeout">
-        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than 
-        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
         /// expiry time. A message can be updated until it has been deleted or has expired.
         /// </param>
         /// <param name="cancellationToken">
@@ -1350,8 +1349,8 @@ namespace Azure.Storage.Queues
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
         /// </param>
         /// <param name="visibilityTimeout">
-        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than 
-        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
         /// expiry time. A message can be updated until it has been deleted or has expired.
         /// </param>
         /// <param name="cancellationToken">
@@ -1387,8 +1386,8 @@ namespace Azure.Storage.Queues
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
         /// </param>
         /// <param name="visibilityTimeout">
-        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than 
-        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
         /// expiry time. A message can be updated until it has been deleted or has expired.
         /// </param>
         /// <param name="async">
@@ -1426,6 +1425,7 @@ namespace Azure.Storage.Queues
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         async: async,
+                        operationName: Constants.Queue.UpdateMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

@@ -13,9 +13,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
-    <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
-    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +26,6 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
-    <Compile Include="$(AzureCoreSharedSources)PageResponse.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
   </ItemGroup>
 

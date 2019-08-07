@@ -58,7 +58,7 @@ namespace Azure.Storage.Sas
         /// <returns>The parsed <see cref="QueueSasPermissions"/>.</returns>
         public static QueueSasPermissions Parse(string s)
         {
-            var p = new QueueSasPermissions(); 
+            var p = new QueueSasPermissions();
             foreach (var c in s)
             {
                 switch (c)

@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs
         public long SequenceNumber => SystemProperties.SequenceNumber;
 
         /// <summary>
-        ///   The offset of the the event when it was received from the associated Event Hub partition.
+        ///   The offset of the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
         public long Offset => SystemProperties.Offset;
@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventHubs
         internal SystemEventProperties SystemProperties { get; set; }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -141,7 +141,7 @@ namespace Azure.Messaging.EventHubs
             /// <param name="sequenceNumber">The logical sequence number of the event within the partition stream of the Event Hub.</param>
             /// <param name="enqueuedTime">The date and time, in UTC, that the event was received by the partition.</param>
             /// <param name="offset">The offset of the event relative to the Event Hub partition stream.</param>
-            /// <param name="partitionKey">The partition hashing key associated with the batch that the event was grouped with when sent.</param>
+            /// <param name="partitionKey">The partition hashing key associate with the batch that the event was grouped with when sent.</param>
             ///
             internal SystemEventProperties(long sequenceNumber,
                                            DateTimeOffset enqueuedTime,
@@ -236,7 +236,7 @@ namespace Azure.Messaging.EventHubs
             }
 
             /// <summary>
-            ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+            ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
             /// </summary>
             ///
             /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>

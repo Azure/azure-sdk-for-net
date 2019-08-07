@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -5,15 +5,17 @@ jobs:
     pool:
       vmImage: vs2017-win2016
     steps:
-      - powershell: |
+      - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
-        displayName: 'Tag scheduled builds'
+        displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
       - task: DotNetCoreInstaller@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}} /p:PublicSign=false ${{ parameters.VersioningProperties }}"
+      - script: >-
+          dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}}
+          /p:PublicSign=false ${{ parameters.VersioningProperties }} /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -49,9 +51,9 @@ jobs:
           path: $(Pipeline.Workspace)/packages
           patterns: "*.nupkg"
       - task: PowerShell@2
-        displayName: 'Analyze dependencies'
+        displayName: "Analyze dependencies"
         inputs:
-          filePath: 'tools/AnalyzeDeps/AnalyzeDeps.ps1'
+          filePath: "tools/AnalyzeDeps/AnalyzeDeps.ps1"
           arguments: '-PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" -OutPath "$(Build.ArtifactStagingDirectory)/dependencies.html"'
           pwsh: true
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -63,7 +65,7 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - task: PublishPipelineArtifact@1
         condition: succeededOrFailed()
-        displayName: 'Publish Report Artifacts'
+        displayName: "Publish Report Artifacts"
         inputs:
           artifactName: reports
           path: $(Build.ArtifactStagingDirectory)/dependencies.html
@@ -92,8 +94,8 @@ jobs:
     pool:
       vmImage: "$(OSVmImage)"
     steps:
-      - powershell: |
-          Invoke-WebRequest -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
+      - pwsh: |
+          Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
           -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"
         workingDirectory: "$(Build.BinariesDirectory)"
         displayName: "Download Tools Archive From Github Release and Extract it"
@@ -112,7 +114,9 @@ jobs:
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
-      - script: dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false
+      - script: >-
+          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" 
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:Configuration=$(BuildConfiguration)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

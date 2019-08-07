@@ -128,7 +128,7 @@ namespace TrackOne
                 WriteEvent(12, clientId, details ?? string.Empty);
             }
         }
-        
+
         [Event(13, Level = EventLevel.Informational, Message = "{0}: closing.")]
         public void ClientCloseStart(string clientId)
         {
@@ -137,7 +137,7 @@ namespace TrackOne
                 WriteEvent(13, clientId);
             }
         }
-        
+
         [Event(14, Level = EventLevel.Informational, Message = "{0}: closed.")]
         public void ClientCloseStop(string clientId)
         {

@@ -136,7 +136,7 @@ namespace Azure.Security.KeyVault.Test
 
             SecretBase setSecret = await Client.SetAsync(secretName, "value");
             RegisterForCleanup(setSecret);
-            
+
             Secret secret = await Client.GetAsync(secretName);
 
             AssertSecretsEqual(setSecret, secret);
@@ -161,7 +161,7 @@ namespace Azure.Security.KeyVault.Test
         public async Task GetSecretVersionsNonExisting()
         {
             List<Response<SecretBase>> allSecrets = await Client.GetSecretVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-            
+
             Assert.AreEqual(0, allSecrets.Count);
         }
 

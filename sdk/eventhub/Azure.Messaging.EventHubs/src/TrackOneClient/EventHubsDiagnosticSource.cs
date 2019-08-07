@@ -14,7 +14,7 @@ namespace TrackOne
     /// </summary>
     internal static class EventHubsDiagnosticSource
     {
-        public const string DiagnosticSourceName = "TrackOne";
+        public const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
 
         public const string ActivityIdPropertyName = "Diagnostic-Id";
         public const string CorrelationContextPropertyName = "Correlation-Context";
@@ -32,7 +32,7 @@ namespace TrackOne
 
         internal static readonly DiagnosticListener DiagnosticListener = new DiagnosticListener(DiagnosticSourceName);
 
-        internal static Activity StartSendActivity(string clientId, EventHubsConnectionStringBuilder csb, string partitionKey, IEnumerable<EventData> eventDatas, int count)
+        internal static Activity StartSendActivity(string clientId, EventHubsConnectionStringBuilder csb, string activePartitionRouting, IEnumerable<EventData> eventDatas, int count)
         {
             // skip if diagnostic source not enabled
             if (!DiagnosticListener.IsEnabled())
@@ -50,7 +50,7 @@ namespace TrackOne
 
             activity.AddTag("peer.hostname", csb.Endpoint.Host);
             activity.AddTag("eh.event_hub_name", csb.EntityPath);
-            activity.AddTag("eh.partition_key", partitionKey);
+            activity.AddTag("eh.active_partition_routing", activePartitionRouting);
             activity.AddTag("eh.event_count", count.ToString());
             activity.AddTag("eh.client_id", clientId);
 
@@ -63,8 +63,8 @@ namespace TrackOne
                     {
                         csb.Endpoint,
                         Entity = csb.EntityPath,
-                        PartitionKey = partitionKey,
-                        EventDatas = eventDatas
+                        ActivePartitionRouting = activePartitionRouting,
+                        EventDatas = eventDatas.Select(TransformEvent)
                     });
             }
             else
@@ -77,7 +77,7 @@ namespace TrackOne
             return activity;
         }
 
-        internal static void FailSendActivity(Activity activity, EventHubsConnectionStringBuilder csb, string partitionKey, IEnumerable<EventData> eventDatas, Exception ex)
+        internal static void FailSendActivity(Activity activity, EventHubsConnectionStringBuilder csb, string activePartitionRouting, IEnumerable<EventData> eventDatas, Exception ex)
         {
             if (!DiagnosticListener.IsEnabled() || !DiagnosticListener.IsEnabled(SendActivityExceptionName))
             {
@@ -89,13 +89,13 @@ namespace TrackOne
                 {
                     csb.Endpoint,
                     Entity = csb.EntityPath,
-                    PartitionKey = partitionKey,
-                    EventDatas = eventDatas,
+                    ActivePartitionRouting = activePartitionRouting,
+                    EventDatas = eventDatas.Select(TransformEvent),
                     Exception = ex
                 });
         }
 
-        internal static void StopSendActivity(Activity activity, EventHubsConnectionStringBuilder csb, string partitionKey, IEnumerable<EventData> eventDatas, Task sendTask)
+        internal static void StopSendActivity(Activity activity, EventHubsConnectionStringBuilder csb, string activePartitionRouting, IEnumerable<EventData> eventDatas, Task sendTask)
         {
             if (activity == null)
             {
@@ -107,8 +107,8 @@ namespace TrackOne
                 {
                     csb.Endpoint,
                     Entity = csb.EntityPath,
-                    PartitionKey = partitionKey,
-                    EventDatas = eventDatas,
+                    ActivePartitionRouting = activePartitionRouting,
+                    EventDatas = eventDatas.Select(TransformEvent),
                     sendTask?.Status
                 });
         }
@@ -116,7 +116,7 @@ namespace TrackOne
         internal static Activity StartReceiveActivity(
             string clientId,
             EventHubsConnectionStringBuilder csb,
-            string partitionKey,
+            string activePartitionRouting,
             string consumerGroup,
             EventPosition eventPosition)
         {
@@ -137,7 +137,7 @@ namespace TrackOne
             // extract activity tags from input
             activity.AddTag("peer.hostname", csb.Endpoint.Host);
             activity.AddTag("eh.event_hub_name", csb.EntityPath);
-            activity.AddTag("eh.partition_key", partitionKey);
+            activity.AddTag("eh.active_partition_routing", activePartitionRouting);
             activity.AddTag("eh.consumer_group", consumerGroup);
             activity.AddTag("eh.start_offset", eventPosition.Offset);
             activity.AddTag("eh.start_sequence_number", eventPosition.SequenceNumber?.ToString());
@@ -153,7 +153,7 @@ namespace TrackOne
                     {
                         Endpoint = csb.Endpoint,
                         Entity = csb.EntityPath,
-                        PartitionKey = partitionKey,
+                        ActivePartitionRouting = activePartitionRouting,
                         ConsumerGroup = consumerGroup
                     });
             }
@@ -165,7 +165,7 @@ namespace TrackOne
             return activity;
         }
 
-        internal static void FailReceiveActivity(Activity activity, EventHubsConnectionStringBuilder csb, string partitionKey, string consumerGroup, Exception ex)
+        internal static void FailReceiveActivity(Activity activity, EventHubsConnectionStringBuilder csb, string activePartitionRouting, string consumerGroup, Exception ex)
         {
             // TODO consider enriching activity with data from exception
             if (!DiagnosticListener.IsEnabled() || !DiagnosticListener.IsEnabled(ReceiveActivityExceptionName))
@@ -178,13 +178,13 @@ namespace TrackOne
                 {
                     csb.Endpoint,
                     Entity = csb.EntityPath,
-                    PartitionKey = partitionKey,
+                    ActivePartitionRouting = activePartitionRouting,
                     ConsumerGroup = consumerGroup,
                     Exception = ex
                 });
         }
 
-        internal static void StopReceiveActivity(Activity activity, EventHubsConnectionStringBuilder csb, string partitionKey, string consumerGroup, IList<EventData> events, Task receiveTask)
+        internal static void StopReceiveActivity(Activity activity, EventHubsConnectionStringBuilder csb, string activePartitionRouting, string consumerGroup, IList<EventData> events, Task receiveTask)
         {
             if (activity == null)
             {
@@ -199,9 +199,9 @@ namespace TrackOne
                 {
                     csb.Endpoint,
                     Entity = csb.EntityPath,
-                    PartitionKey = partitionKey,
+                    ActivePartitionRouting = activePartitionRouting,
                     ConsumerGroup = consumerGroup,
-                    EventDatas = events,
+                    EventDatas = events.Select(TransformEvent),
                     receiveTask?.Status
                 });
         }
@@ -262,5 +262,11 @@ namespace TrackOne
         }
 
         #endregion Diagnostic Context Injection
+
+        private static Azure.Messaging.EventHubs.EventData TransformEvent(EventData eventData) =>
+            new Azure.Messaging.EventHubs.EventData(eventData.Body.ToArray())
+            {
+                Properties = eventData.Properties
+            };
     }
 }

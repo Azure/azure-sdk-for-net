@@ -22,14 +22,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum TaskExecutionResult
     {
         /// <summary>
-        /// The task ran successfully.
+        /// The Task ran successfully.
         /// </summary>
         [EnumMember(Value = "success")]
         Success,
         /// <summary>
-        /// There was an error during processing of the task. The failure may
-        /// have occurred before the task process was launched, while the task
-        /// process was executing, or after the task process exited.
+        /// There was an error during processing of the Task. The failure may
+        /// have occurred before the Task process was launched, while the Task
+        /// process was executing, or after the Task process exited.
         /// </summary>
         [EnumMember(Value = "failure")]
         Failure

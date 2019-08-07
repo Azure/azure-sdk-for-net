@@ -16,7 +16,7 @@ definition, such as text or binary data.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.1
+dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.2
 ```
 
 ### Prerequisites
@@ -168,6 +168,9 @@ Get started with our [Blob samples][samples]:
 
 ## Contributing
 
+See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
+testing, and contributing to this library.
+
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
@@ -199,6 +202,7 @@ additional questions or comments.
 [StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-error-codes
 [samples]: samples/
+[storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

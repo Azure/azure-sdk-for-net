@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class TrackOneExceptionExtensionsTests
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             exception = new TrackOne.EventHubsCommunicationException("One");
             exception.EventHubsNamespace = "test_thing";
-            yield return new object[] {exception, typeof(Errors.EventHubsCommunicationException) };
+            yield return new object[] { exception, typeof(Errors.EventHubsCommunicationException) };
 
             exception = new TrackOne.EventHubsTimeoutException("Two");
             exception.EventHubsNamespace = "OMG!-Thing!";

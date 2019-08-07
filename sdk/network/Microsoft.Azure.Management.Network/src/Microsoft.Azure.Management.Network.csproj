@@ -7,15 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.12.0-preview</Version>
+		<Version>19.13.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added ApplicationGatewayBackendHealthOnDemand operation
-            - Added UpdateTags for DDoS protection plan
-            - Added NatGateway resource with operations
-            - Removed "Alert" value from AzureFirewallRCActionType
-            - OutputBlobSasUrl parameter in VirtualWAN changed to required
+            - Added VpnSiteLink and VpnSiteLinkConnection operations
+            - Added UpdateTags operation for AzureFirewall
+            - Update operations for PrivateEndpoint and PrivateLinkService
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

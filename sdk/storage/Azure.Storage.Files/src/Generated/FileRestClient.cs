@@ -27,6 +27,7 @@ namespace Azure.Storage.Files
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
@@ -35,22 +36,38 @@ namespace Azure.Storage.Files
                 Azure.Storage.Files.Models.FileServiceProperties properties,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    properties,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        properties,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -93,7 +110,7 @@ namespace Azure.Storage.Files
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Files.Models.FileServiceProperties.ToXml(properties, "StorageServiceProperties", "");
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
@@ -136,6 +153,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage service properties.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FileServiceProperties>> GetPropertiesAsync(
@@ -143,21 +161,37 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -244,6 +278,7 @@ namespace Azure.Storage.Files
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of shares.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.SharesSegment>> ListSharesSegmentAsync(
@@ -255,25 +290,41 @@ namespace Azure.Storage.Files
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.ListSharesIncludeType> include = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ServiceClient.ListSharesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = ListSharesSegmentAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    prefix,
-                    marker,
-                    maxresults,
-                    include,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return ListSharesSegmentAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = ListSharesSegmentAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        prefix,
+                        marker,
+                        maxresults,
+                        include,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ListSharesSegmentAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -377,6 +428,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> CreateAsync(
@@ -386,23 +438,39 @@ namespace Azure.Storage.Files
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 int? quota = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    metadata,
-                    quota))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return CreateAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        metadata,
+                        quota))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return CreateAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -470,7 +538,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -506,6 +574,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareProperties>> GetPropertiesAsync(
@@ -514,22 +583,38 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    sharesnapshot,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        sharesnapshot,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -588,7 +673,7 @@ namespace Azure.Storage.Files
                         // Get response headers
                         string _header;
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -597,7 +682,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -638,6 +723,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="deleteSnapshots">Specifies the option include to delete the base share and all of its snapshots.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
@@ -647,23 +733,39 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 Azure.Storage.Files.Models.DeleteSnapshotsOptionType? deleteSnapshots = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    sharesnapshot,
-                    timeout,
-                    deleteSnapshots))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return DeleteAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        sharesnapshot,
+                        timeout,
+                        deleteSnapshots))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return DeleteAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -742,6 +844,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareSnapshotInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>> CreateSnapshotAsync(
@@ -750,22 +853,38 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = CreateSnapshotAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    metadata))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return CreateSnapshotAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = CreateSnapshotAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        metadata))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return CreateSnapshotAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -835,7 +954,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -871,6 +990,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetQuotaAsync(
@@ -879,22 +999,38 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 int? quota = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.SetQuota",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetQuotaAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    quota))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetQuotaAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetQuotaAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        quota))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetQuotaAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -955,7 +1091,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -991,6 +1127,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetMetadataAsync(
@@ -999,22 +1136,38 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    metadata))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetMetadataAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        metadata))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetMetadataAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1080,7 +1233,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1115,6 +1268,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A collection of signed identifiers.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>> GetAccessPolicyAsync(
@@ -1122,21 +1276,37 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetAccessPolicyAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetAccessPolicyAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1224,6 +1394,7 @@ namespace Azure.Storage.Files
             /// <param name="permissions">The ACL for the share.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetAccessPolicyAsync(
@@ -1232,22 +1403,38 @@ namespace Azure.Storage.Files
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    permissions,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetAccessPolicyAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        permissions,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetAccessPolicyAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1293,7 +1480,7 @@ namespace Azure.Storage.Files
                         _body.Add(Azure.Storage.Files.Models.SignedIdentifier.ToXml(_child));
                     }
                 }
-                string _text = _body.ToString();
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
                 _request.Headers.SetValue("Content-Type", "application/xml");
                 _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
@@ -1321,7 +1508,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1356,6 +1543,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Stats for the share.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareStatistics>> GetStatisticsAsync(
@@ -1363,21 +1551,37 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetStatisticsAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetStatisticsAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1469,6 +1673,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> CreateAsync(
@@ -1477,22 +1682,38 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    metadata))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return CreateAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        metadata))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return CreateAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1557,7 +1778,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1593,6 +1814,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryProperties>> GetPropertiesAsync(
@@ -1601,22 +1823,38 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    sharesnapshot,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        sharesnapshot,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1675,7 +1913,7 @@ namespace Azure.Storage.Files
                         // Get response headers
                         string _header;
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -1684,7 +1922,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1723,6 +1961,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
@@ -1730,21 +1969,37 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return DeleteAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return DeleteAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1817,6 +2072,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> SetMetadataAsync(
@@ -1825,22 +2081,38 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    metadata))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetMetadataAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        metadata))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetMetadataAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1906,7 +2178,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -1945,6 +2217,7 @@ namespace Azure.Storage.Files
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of directories and files.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
@@ -1956,25 +2229,41 @@ namespace Azure.Storage.Files
                 int? maxresults = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.ListFilesAndDirectoriesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = ListFilesAndDirectoriesSegmentAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    prefix,
-                    sharesnapshot,
-                    marker,
-                    maxresults,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return ListFilesAndDirectoriesSegmentAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = ListFilesAndDirectoriesSegmentAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        prefix,
+                        sharesnapshot,
+                        marker,
+                        maxresults,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ListFilesAndDirectoriesSegmentAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -2073,6 +2362,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
@@ -2084,25 +2374,41 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 bool? recursive = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = ListHandlesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    marker,
-                    maxresults,
-                    timeout,
-                    sharesnapshot,
-                    recursive))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return ListHandlesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = ListHandlesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        marker,
+                        maxresults,
+                        timeout,
+                        sharesnapshot,
+                        recursive))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ListHandlesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -2204,6 +2510,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
@@ -2215,25 +2522,41 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 bool? recursive = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = ForceCloseHandlesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    handleId,
-                    timeout,
-                    marker,
-                    sharesnapshot,
-                    recursive))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return ForceCloseHandlesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = ForceCloseHandlesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        handleId,
+                        timeout,
+                        marker,
+                        sharesnapshot,
+                        recursive))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ForceCloseHandlesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -2361,6 +2684,7 @@ namespace Azure.Storage.Files
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> CreateAsync(
@@ -2376,29 +2700,45 @@ namespace Azure.Storage.Files
                 string fileContentDisposition = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    fileContentLength,
-                    timeout,
-                    fileContentType,
-                    fileContentEncoding,
-                    fileContentLanguage,
-                    fileCacheControl,
-                    fileContentHash,
-                    fileContentDisposition,
-                    metadata))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return CreateAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        fileContentLength,
+                        timeout,
+                        fileContentType,
+                        fileContentEncoding,
+                        fileContentLanguage,
+                        fileCacheControl,
+                        fileContentHash,
+                        fileContentDisposition,
+                        metadata))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return CreateAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -2494,7 +2834,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -2535,6 +2875,7 @@ namespace Azure.Storage.Files
             /// <param name="range">Return file data only from the specified byte range.</param>
             /// <param name="rangeGetContentHash">When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.FlattenedStorageFileProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>> DownloadAsync(
@@ -2544,23 +2885,39 @@ namespace Azure.Storage.Files
                 string range = default,
                 bool? rangeGetContentHash = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = DownloadAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    range,
-                    rangeGetContentHash))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return DownloadAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = DownloadAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        range,
+                        rangeGetContentHash))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return DownloadAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -2630,7 +2987,7 @@ namespace Azure.Storage.Files
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -2651,7 +3008,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -2743,7 +3100,7 @@ namespace Azure.Storage.Files
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -2764,7 +3121,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -2864,6 +3221,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileProperties>> GetPropertiesAsync(
@@ -2872,22 +3230,38 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    sharesnapshot,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        sharesnapshot,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -2949,7 +3323,7 @@ namespace Azure.Storage.Files
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-                        foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
+                        foreach (Azure.Core.Http.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
                             {
@@ -2970,7 +3344,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
@@ -3055,6 +3429,7 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
@@ -3062,21 +3437,37 @@ namespace Azure.Storage.Files
                 System.Uri resourceUri,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return DeleteAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return DeleteAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -3154,6 +3545,7 @@ namespace Azure.Storage.Files
             /// <param name="fileContentHash">Sets the file's MD5 hash.</param>
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetPropertiesAsync(
@@ -3168,28 +3560,44 @@ namespace Azure.Storage.Files
                 byte[] fileContentHash = default,
                 string fileContentDisposition = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    fileContentLength,
-                    fileContentType,
-                    fileContentEncoding,
-                    fileContentLanguage,
-                    fileCacheControl,
-                    fileContentHash,
-                    fileContentDisposition))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        fileContentLength,
+                        fileContentType,
+                        fileContentEncoding,
+                        fileContentLanguage,
+                        fileCacheControl,
+                        fileContentHash,
+                        fileContentDisposition))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -3277,7 +3685,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -3317,6 +3725,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetMetadataAsync(
@@ -3325,22 +3734,38 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    metadata))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetMetadataAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        metadata))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetMetadataAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -3405,7 +3830,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -3449,6 +3874,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileUploadInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>> UploadRangeAsync(
@@ -3461,26 +3887,42 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 byte[] contentHash = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.UploadRange",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = UploadRangeAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    range,
-                    fileRangeWrite,
-                    contentLength,
-                    optionalbody,
-                    timeout,
-                    contentHash))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return UploadRangeAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = UploadRangeAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        range,
+                        fileRangeWrite,
+                        contentLength,
+                        optionalbody,
+                        timeout,
+                        contentHash))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return UploadRangeAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -3558,7 +4000,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -3603,6 +4045,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileRangeInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>> GetRangeListAsync(
@@ -3612,23 +4055,39 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 string range = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.GetRangeList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetRangeListAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    sharesnapshot,
-                    timeout,
-                    range))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetRangeListAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetRangeListAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        sharesnapshot,
+                        timeout,
+                        range))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetRangeListAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -3701,7 +4160,7 @@ namespace Azure.Storage.Files
                         }
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-content-length", out _header))
                         {
@@ -3738,6 +4197,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>> StartCopyAsync(
@@ -3747,23 +4207,39 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.StartCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = StartCopyAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    copySource,
-                    timeout,
-                    metadata))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return StartCopyAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = StartCopyAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        copySource,
+                        timeout,
+                        metadata))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return StartCopyAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -3834,7 +4310,7 @@ namespace Azure.Storage.Files
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
                         {
-                            _value.ETag = new Azure.ETag(_header);
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
@@ -3878,6 +4354,7 @@ namespace Azure.Storage.Files
             /// <param name="copyId">The copy identifier provided in the x-ms-copy-id header of the original Copy File operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> AbortCopyAsync(
@@ -3886,22 +4363,38 @@ namespace Azure.Storage.Files
                 string copyId,
                 int? timeout = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.AbortCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = AbortCopyAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    copyId,
-                    timeout))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return AbortCopyAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = AbortCopyAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        copyId,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return AbortCopyAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -3984,6 +4477,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
@@ -3994,24 +4488,40 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 string sharesnapshot = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = ListHandlesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    marker,
-                    maxresults,
-                    timeout,
-                    sharesnapshot))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return ListHandlesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = ListHandlesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        marker,
+                        maxresults,
+                        timeout,
+                        sharesnapshot))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ListHandlesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -4105,6 +4615,7 @@ namespace Azure.Storage.Files
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
@@ -4115,24 +4626,40 @@ namespace Azure.Storage.Files
                 string marker = default,
                 string sharesnapshot = default,
                 bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = ForceCloseHandlesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    handleId,
-                    timeout,
-                    marker,
-                    sharesnapshot))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return ForceCloseHandlesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = ForceCloseHandlesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        handleId,
+                        timeout,
+                        marker,
+                        sharesnapshot))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ForceCloseHandlesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -5745,7 +6272,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Etag
         /// </summary>
-        public Azure.ETag? Etag { get; internal set; }
+        public Azure.Core.Http.ETag? Etag { get; internal set; }
 
         /// <summary>
         /// Quota
@@ -5770,7 +6297,7 @@ namespace Azure.Storage.Files.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
-                _value.Etag = new Azure.ETag(_child.Value);
+                _value.Etag = new Azure.Core.Http.ETag(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
@@ -5794,7 +6321,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static ShareItemProperties ShareItemProperties(
             System.DateTimeOffset? lastModified = default,
-            Azure.ETag? etag = default,
+            Azure.Core.Http.ETag? etag = default,
             int? quota = default)
         {
             var _model = new ShareItemProperties();
@@ -6184,7 +6711,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the share, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
@@ -6201,7 +6728,7 @@ namespace Azure.Storage.Files.Models
         /// Creates a new ShareInfo instance for mocking.
         /// </summary>
         public static ShareInfo ShareInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
             var _model = new ShareInfo();
@@ -6229,7 +6756,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties updates the last modified time. Operations on files do not affect the last modified time of the share.
@@ -6260,7 +6787,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static ShareProperties ShareProperties(
             System.Collections.Generic.IDictionary<string, string> metadata,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             int quota)
         {
@@ -6291,7 +6818,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the share snapshot, in quotes. A share snapshot cannot be modified, so the ETag of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the ETag of the share snapshot differs from that of the base share. If no metadata was specified with the request, the ETag of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. A share snapshot cannot be modified, so the last modified time of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the last modified time of the share snapshot differs from that of the base share. If no metadata was specified with the request, the last modified time of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
@@ -6309,7 +6836,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static ShareSnapshotInfo ShareSnapshotInfo(
             string snapshot,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
             var _model = new ShareSnapshotInfo();
@@ -6333,7 +6860,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the directory, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
@@ -6350,7 +6877,7 @@ namespace Azure.Storage.Files.Models
         /// Creates a new StorageDirectoryInfo instance for mocking.
         /// </summary>
         public static StorageDirectoryInfo StorageDirectoryInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified)
         {
             var _model = new StorageDirectoryInfo();
@@ -6378,7 +6905,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the Directory was last modified. Operations on files within the directory do not affect the last modified time of the directory.
@@ -6409,7 +6936,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static StorageDirectoryProperties StorageDirectoryProperties(
             System.Collections.Generic.IDictionary<string, string> metadata,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             bool isServerEncrypted)
         {
@@ -6475,7 +7002,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
@@ -6497,7 +7024,7 @@ namespace Azure.Storage.Files.Models
         /// Creates a new StorageFileInfo instance for mocking.
         /// </summary>
         public static StorageFileInfo StorageFileInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             bool isServerEncrypted)
         {
@@ -6623,7 +7150,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// If the file has an MD5 hash and the request is to read the full file, this response header is returned so that the client can check for message content integrity. If the request is to read a specified range and the 'x-ms-range-get-content-md5' is set to true, then the request returns an MD5 hash for the range, as long as the range size is less than or equal to 4 MB. If neither of these sets of conditions is true, then no value is returned for the 'Content-MD5' header.
@@ -6798,7 +7325,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// If the Content-MD5 header has been set for the file, the Content-MD5 response header is returned so that the client can check for message content integrity.
@@ -6883,7 +7410,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static StorageFileProperties StorageFileProperties(
             System.DateTimeOffset lastModified,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             byte[] contentHash,
             System.Collections.Generic.IEnumerable<string> contentEncoding,
             string cacheControl,
@@ -6993,7 +7520,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the directory was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
@@ -7022,7 +7549,7 @@ namespace Azure.Storage.Files.Models
         /// Creates a new StorageFileUploadInfo instance for mocking.
         /// </summary>
         public static StorageFileUploadInfo StorageFileUploadInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             bool isServerEncrypted)
@@ -7054,7 +7581,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// The size of the file in bytes.
@@ -7085,7 +7612,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static StorageFileRangeInfo StorageFileRangeInfo(
             System.DateTimeOffset lastModified,
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             long fileContentLength,
             System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.Range> ranges)
         {
@@ -7111,7 +7638,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// If the copy is completed, contains the ETag of the destination file. If the copy is not complete, contains the ETag of the empty file created at the start of the copy.
         /// </summary>
-        public Azure.ETag ETag { get; internal set; }
+        public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date/time that the copy operation to the destination file completed.
@@ -7138,7 +7665,7 @@ namespace Azure.Storage.Files.Models
         /// Creates a new StorageFileCopyInfo instance for mocking.
         /// </summary>
         public static StorageFileCopyInfo StorageFileCopyInfo(
-            Azure.ETag eTag,
+            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
             string copyId,
             Azure.Storage.Files.Models.CopyStatus copyStatus)
