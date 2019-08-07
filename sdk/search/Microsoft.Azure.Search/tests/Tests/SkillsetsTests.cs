@@ -162,6 +162,16 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionConditional()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetConditional());
+            });
+        }
+
+        [Fact]
         public void CreateOrUpdateCreatesWhenSkillsetDoesNotExist()
         {
             Run(() =>
@@ -964,6 +974,43 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new TextTranslationSkill(inputs, outputs, defaultToLanguageCode, defaultFromLanguageCode: defaultFromLanguageCode, suggestedFrom: suggestedFrom));
 
             return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateTestSkillsetConditional()
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "condition",
+                    Source = "= $(/document/language) == null"
+                },
+                new InputFieldMappingEntry
+                {
+                    Name = "whenTrue",
+                    Source = "= 'es'"
+                },
+                new InputFieldMappingEntry
+                {
+                    Name = "whenFalse",
+                    Source = "= $(/document/language)"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "output",
+                    TargetName = "myLanguageCode"
+                }
+            };
+
+            skills.Add(new ConditionalSkill(inputs, outputs, "Tested Conditional skill", RootPathString));
+
+            return new Skillset("testskillset3", "Skillset for testing", skills);
         }
 
         private static Skillset CreateTestSkillsetWebApiSkill(bool includeHeader = true)
