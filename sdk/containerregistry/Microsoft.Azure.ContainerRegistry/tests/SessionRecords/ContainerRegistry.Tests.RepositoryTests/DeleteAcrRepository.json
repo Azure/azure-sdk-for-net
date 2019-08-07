@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2f4f5b6f-21ed-42ae-8a75-003551a85a98"
+          "7eacc969-519b-48c4-bc63-6c6246d8acba"
         ],
         "Accept-Language": [
           "en-US"
@@ -33,22 +33,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11997"
         ],
         "x-ms-request-id": [
-          "1be42a41-e410-4b63-8721-69575abf580d"
+          "22e9a28e-2357-41e9-b3e4-fe77f9f31489"
         ],
         "x-ms-correlation-request-id": [
-          "1be42a41-e410-4b63-8721-69575abf580d"
+          "22e9a28e-2357-41e9-b3e4-fe77f9f31489"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T182557Z:1be42a41-e410-4b63-8721-69575abf580d"
+          "WESTUS:20190807T224816Z:22e9a28e-2357-41e9-b3e4-fe77f9f31489"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:56 GMT"
+          "Wed, 07 Aug 2019 22:48:15 GMT"
         ],
         "Content-Length": [
           "489"
@@ -70,7 +70,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "89f473ad-db4e-4db5-9c54-ac776e761992"
+          "5384798d-b8f1-4556-a17e-90b6204bcac2"
         ],
         "Accept-Language": [
           "en-US"
@@ -99,19 +99,19 @@
           "1197"
         ],
         "x-ms-request-id": [
-          "1340e555-8830-46ea-b871-6545cfeb38b2"
+          "3bcf7722-2f21-4c81-a3dc-40167d8ddd44"
         ],
         "x-ms-correlation-request-id": [
-          "1340e555-8830-46ea-b871-6545cfeb38b2"
+          "3bcf7722-2f21-4c81-a3dc-40167d8ddd44"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T182557Z:1340e555-8830-46ea-b871-6545cfeb38b2"
+          "WESTUS:20190807T224816Z:3bcf7722-2f21-4c81-a3dc-40167d8ddd44"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:56 GMT"
+          "Wed, 07 Aug 2019 22:48:16 GMT"
         ],
         "Content-Length": [
           "182"
@@ -133,7 +133,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9001e30b-6164-46df-a18a-9168d9c1daff"
+          "bc81b905-31ea-4359-8143-6f42818c890f"
         ],
         "Accept-Language": [
           "en-US"
@@ -150,7 +150,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:57 GMT"
+          "Wed, 07 Aug 2019 22:48:16 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -172,26 +172,26 @@
           "nosniff"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "d6e5d675-9512-4bfa-a742-851f29db6ea0"
+          "5e764801-3cf1-4fd4-bde3-940ee5469471"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "634"
+          "523"
         ]
       },
-      "ResponseBody": "{\r\n  \"repositories\": [\r\n    \"deleteable\",\r\n    \"doundo/bash\",\r\n    \"hello-world1\",\r\n    \"hello-world10\",\r\n    \"hello-world11\",\r\n    \"hello-world12\",\r\n    \"hello-world13\",\r\n    \"hello-world14\",\r\n    \"hello-world15\",\r\n    \"hello-world16\",\r\n    \"hello-world17\",\r\n    \"hello-world18\",\r\n    \"hello-world19\",\r\n    \"hello-world2\",\r\n    \"hello-world20\",\r\n    \"hello-world21\",\r\n    \"hello-world22\",\r\n    \"hello-world23\",\r\n    \"hello-world24\",\r\n    \"hello-world25\",\r\n    \"hello-world26\",\r\n    \"hello-world27\",\r\n    \"hello-world28\",\r\n    \"hello-world29\",\r\n    \"hello-world3\",\r\n    \"hello-world30\",\r\n    \"hello-world31\",\r\n    \"hello-world32\",\r\n    \"hello-world33\",\r\n    \"hello-world34\",\r\n    \"hello-world35\",\r\n    \"hello-world36\",\r\n    \"hello-world37\",\r\n    \"hello-world38\",\r\n    \"hello-world39\",\r\n    \"hello-world4\",\r\n    \"hello-world40\",\r\n    \"hello-world41\",\r\n    \"hello-world42\"\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"repositories\": [\r\n    \"deleteable\",\r\n    \"doundo/bash\",\r\n    \"hello-world1\",\r\n    \"hello-world10\",\r\n    \"hello-world11\",\r\n    \"hello-world12\",\r\n    \"hello-world13\",\r\n    \"hello-world14\",\r\n    \"hello-world15\",\r\n    \"hello-world16\",\r\n    \"hello-world17\",\r\n    \"hello-world18\",\r\n    \"hello-world19\",\r\n    \"hello-world2\",\r\n    \"hello-world20\",\r\n    \"hello-world21\",\r\n    \"hello-world22\",\r\n    \"hello-world23\",\r\n    \"hello-world24\",\r\n    \"hello-world25\",\r\n    \"hello-world26\",\r\n    \"hello-world27\",\r\n    \"hello-world28\",\r\n    \"hello-world29\",\r\n    \"hello-world3\",\r\n    \"hello-world30\",\r\n    \"hello-world31\",\r\n    \"hello-world32\",\r\n    \"hello-world33\",\r\n    \"hello-world34\",\r\n    \"hello-world35\",\r\n    \"hello-world36\"\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/acr/v1/hello-world42",
-      "EncodedRequestUri": "L2Fjci92MS9oZWxsby13b3JsZDQy",
+      "RequestUri": "/acr/v1/hello-world36",
+      "EncodedRequestUri": "L2Fjci92MS9oZWxsby13b3JsZDM2",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "aa262386-f509-4b73-97ac-5f5e1d7f2a96"
+          "4b10994b-dc5c-4615-b1f5-f498ab918d40"
         ],
         "Accept-Language": [
           "en-US"
@@ -208,7 +208,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:26:00 GMT"
+          "Wed, 07 Aug 2019 22:48:17 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -230,13 +230,13 @@
           "nosniff"
         ],
         "X-Ms-Client-Request-Id": [
-          "aa262386-f509-4b73-97ac-5f5e1d7f2a96"
+          "4b10994b-dc5c-4615-b1f5-f498ab918d40"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "74ad147e-538d-4ea1-ae4f-c9c42a055f8c"
+          "a5d0a006-1f95-49c0-8923-800f18c027eb"
         ],
         "X-Ms-Request-Id": [
-          "cac58d34-93dc-4433-8f0c-2f103736b27d"
+          "28cbc1e3-ea3e-456b-a2b7-b4c065cb7912"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

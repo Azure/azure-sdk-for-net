@@ -7,9 +7,7 @@ namespace ContainerRegistry.Tests
     using Microsoft.Azure.ContainerRegistry;
     using Microsoft.Azure.ContainerRegistry.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -18,8 +16,8 @@ namespace ContainerRegistry.Tests
         #region Test Values
         private static readonly AcrManifestAttributes ExpectedAttributesOfProdRepository = new AcrManifestAttributes()
         {
-            Registry = "azuresdkunittest.azurecr.io",
-            ImageName = "prod/bash",
+            Registry = ACRTestUtil.ManagedTestRegistryFullName,
+            ImageName = ACRTestUtil.ProdRepository,
             ManifestAttributes = new AcrManifestAttributesBase
             {
                 Digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8",
@@ -80,15 +78,16 @@ namespace ContainerRegistry.Tests
             FsLayers = null,
             History = null,
             Signatures = null
-        }; 
+        };
 
-        private static readonly Manifest ExpectedV1ManifestProd = new Manifest() {
+        private static readonly Manifest ExpectedV1ManifestProd = new Manifest()
+        {
             SchemaVersion = 1,
             MediaType = null,
             Config = null,
             Layers = null,
             Architecture = "amd64",
-            Name = "test/bash",
+            Name = ACRTestUtil.TestRepository,
             Tag = "latest",
             FsLayers = new List<FsLayer>
             {
@@ -200,8 +199,8 @@ namespace ContainerRegistry.Tests
 
         private static readonly AcrManifestAttributes ExpectedAttributesChangeableRepository = new AcrManifestAttributes()
         {
-            Registry = "azuresdkunittestupdateable.azurecr.io",
-            ImageName = "doundo/bash",
+            Registry = ACRTestUtil.ManagedTestRegistryForChangesFullName,
+            ImageName = ACRTestUtil.changeableRepository,
             ManifestAttributes = new AcrManifestAttributesBase
             {
                 Digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8",
@@ -227,7 +226,7 @@ namespace ContainerRegistry.Tests
         };
         #endregion
 
-        [Fact]        
+        [Fact]
         public async Task GetAcrManifestAttributes()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributes)))
@@ -240,10 +239,10 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, repositoryAttributes.Registry);
                 VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, repositoryAttributes.ManifestAttributes);
             }
-            
+
 
         }
-        
+
         [Fact]
         public async Task GetAcrManifests()
         {
@@ -311,17 +310,17 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public async Task CreateAndDeletecrManifest()
+        public async Task CreateAndDeleteManifest()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(CreateAndDeletecrManifest)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(CreateAndDeleteManifest)))
             {
-                    var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
-                    await client.CreateManifestAsync(ACRTestUtil.changeableRepository, "temporary", ExpectedV2ManifestProd);
-                    var newManifest = await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", "application/vnd.docker.distribution.manifest.v2+json");
-                    var tag = await client.GetAcrTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
+                await client.CreateManifestAsync(ACRTestUtil.changeableRepository, "temporary", ExpectedV2ManifestProd);
+                var newManifest = await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", "application/vnd.docker.distribution.manifest.v2+json");
+                var tag = await client.GetAcrTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
 
-                    verifyManifest(ExpectedV2ManifestProd, newManifest);
-                    await client.DeleteManifestAsync(ACRTestUtil.changeableRepository, tag.TagAttributes.Digest);
+                verifyManifest(ExpectedV2ManifestProd, newManifest);
+                await client.DeleteManifestAsync(ACRTestUtil.changeableRepository, tag.TagAttributes.Digest);
             }
         }
 
@@ -350,7 +349,8 @@ namespace ContainerRegistry.Tests
             Assert.Equal(baseManifest.Tag, actualManifest.Tag);
 
             //Nested Properties
-            if (baseManifest.Config != null && actualManifest.Config != null) {
+            if (baseManifest.Config != null && actualManifest.Config != null)
+            {
                 Assert.Equal(baseManifest.Config.Digest, actualManifest.Config.Digest);
                 Assert.Equal(baseManifest.Config.MediaType, actualManifest.Config.MediaType);
                 Assert.Equal(baseManifest.Config.Size, actualManifest.Config.Size);
@@ -360,7 +360,8 @@ namespace ContainerRegistry.Tests
             {
                 Assert.Equal(baseManifest.FsLayers.Count, actualManifest.FsLayers.Count);
 
-                for (int i = 0; i < baseManifest.FsLayers.Count; i++) {
+                for (int i = 0; i < baseManifest.FsLayers.Count; i++)
+                {
                     Assert.Equal(baseManifest.FsLayers[i].BlobSum, actualManifest.FsLayers[i].BlobSum);
                 }
             }

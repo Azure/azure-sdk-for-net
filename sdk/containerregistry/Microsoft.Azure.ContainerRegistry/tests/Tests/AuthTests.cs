@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-namespace ContainerRegistry.Tests
+﻿namespace ContainerRegistry.Tests
 {
     using Microsoft.Azure.ContainerRegistry;
-    using Microsoft.Azure.ContainerRegistry.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
-    using System.IdentityModel.Tokens.Jwt;
 
     public class AuthTests
     {
@@ -48,7 +45,8 @@ namespace ContainerRegistry.Tests
 
         #region Validation Helpers
 
-        private void validateAccessToken(string accessToken) {
+        private void validateAccessToken(string accessToken)
+        {
             JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
             JwtSecurityToken fields = JwtSecurityClient.ReadToken(accessToken) as JwtSecurityToken;
             commonTokenValidation(fields);
@@ -63,7 +61,8 @@ namespace ContainerRegistry.Tests
             Assert.Equal("refresh_token", fields.Payload["grant_type"]);
         }
 
-        private void commonTokenValidation(JwtSecurityToken fields) {
+        private void commonTokenValidation(JwtSecurityToken fields)
+        {
             Assert.Equal("azuresdkunittest.azurecr.io", fields.Audiences.ToList<string>()[0]);
             Assert.Equal("Azure Container Registry", fields.Issuer);
             Assert.Equal("RS256", fields.Header.Alg);

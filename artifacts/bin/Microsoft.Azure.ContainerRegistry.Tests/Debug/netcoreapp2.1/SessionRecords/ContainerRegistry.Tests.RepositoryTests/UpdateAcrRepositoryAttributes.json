@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c8e5a5a8-f62d-4169-b733-cbd9eae6bbd3"
+          "8835a47d-b2be-4273-b852-9ccf377d9558"
         ],
         "Accept-Language": [
           "en-US"
@@ -33,22 +33,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11998"
         ],
         "x-ms-request-id": [
-          "b0d2fea8-ec77-4b2d-a30f-5eeaa12d2965"
+          "5132faa9-d81e-411f-a09c-484299521ac9"
         ],
         "x-ms-correlation-request-id": [
-          "b0d2fea8-ec77-4b2d-a30f-5eeaa12d2965"
+          "5132faa9-d81e-411f-a09c-484299521ac9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T214756Z:b0d2fea8-ec77-4b2d-a30f-5eeaa12d2965"
+          "WESTUS:20190807T224813Z:5132faa9-d81e-411f-a09c-484299521ac9"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 21:47:56 GMT"
+          "Wed, 07 Aug 2019 22:48:13 GMT"
         ],
         "Content-Length": [
           "489"
@@ -70,7 +70,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ce8b7b03-ec30-40d4-aea9-3ad331f7cd41"
+          "c7e8b4e6-c4ed-4ffa-b2c6-33c09ed705a7"
         ],
         "Accept-Language": [
           "en-US"
@@ -96,22 +96,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-request-id": [
-          "853fc99d-13cc-4845-937a-d5709273d65f"
+          "299c31d0-df49-4564-beb7-055d5a32c2ab"
         ],
         "x-ms-correlation-request-id": [
-          "853fc99d-13cc-4845-937a-d5709273d65f"
+          "299c31d0-df49-4564-beb7-055d5a32c2ab"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T214757Z:853fc99d-13cc-4845-937a-d5709273d65f"
+          "WESTUS:20190807T224814Z:299c31d0-df49-4564-beb7-055d5a32c2ab"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 21:47:56 GMT"
+          "Wed, 07 Aug 2019 22:48:13 GMT"
         ],
         "Content-Length": [
           "182"
@@ -133,7 +133,7 @@
       "RequestBody": "{\r\n  \"deleteEnabled\": false,\r\n  \"writeEnabled\": false,\r\n  \"listEnabled\": true,\r\n  \"readEnabled\": true\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b9bca246-e635-4d93-8591-1b41f9d74756"
+          "15e05cbe-cef5-4331-bcc4-7d56418d6670"
         ],
         "Accept-Language": [
           "en-US"
@@ -156,7 +156,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 21:47:57 GMT"
+          "Wed, 07 Aug 2019 22:48:14 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -178,7 +178,7 @@
           "nosniff"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "8bffe360-4d6f-442b-b430-6e3647b07232"
+          "141e6b5e-e5de-4659-8a2d-571255963a8f"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -187,7 +187,7 @@
           "309"
         ]
       },
-      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"createdTime\": \"2019-08-06T23:27:34.9885675Z\",\r\n  \"lastUpdateTime\": \"2019-08-07T21:47:52.4501818Z\",\r\n  \"manifestCount\": 1,\r\n  \"tagCount\": 1,\r\n  \"changeableAttributes\": {\r\n    \"deleteEnabled\": false,\r\n    \"writeEnabled\": false,\r\n    \"readEnabled\": true,\r\n    \"listEnabled\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"createdTime\": \"2019-08-06T23:27:34.9885675Z\",\r\n  \"lastUpdateTime\": \"2019-08-07T22:48:09.1192398Z\",\r\n  \"manifestCount\": 1,\r\n  \"tagCount\": 1,\r\n  \"changeableAttributes\": {\r\n    \"deleteEnabled\": false,\r\n    \"writeEnabled\": false,\r\n    \"readEnabled\": true,\r\n    \"listEnabled\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -197,7 +197,7 @@
       "RequestBody": "{\r\n  \"deleteEnabled\": true,\r\n  \"writeEnabled\": true,\r\n  \"listEnabled\": true,\r\n  \"readEnabled\": true\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0490fa8b-c9d2-432f-a831-17e1f42b053c"
+          "da5397d4-bf8c-4e0e-ba1a-18f8dd3c9095"
         ],
         "Accept-Language": [
           "en-US"
@@ -220,7 +220,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 21:47:57 GMT"
+          "Wed, 07 Aug 2019 22:48:14 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -242,7 +242,7 @@
           "nosniff"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "0af8e8eb-e94d-4440-a534-200a470ac9bc"
+          "c7f67180-ca51-4b9b-9d54-562afb556e02"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -251,7 +251,7 @@
           "307"
         ]
       },
-      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"createdTime\": \"2019-08-06T23:27:34.9885675Z\",\r\n  \"lastUpdateTime\": \"2019-08-07T21:47:52.4501818Z\",\r\n  \"manifestCount\": 1,\r\n  \"tagCount\": 1,\r\n  \"changeableAttributes\": {\r\n    \"deleteEnabled\": true,\r\n    \"writeEnabled\": true,\r\n    \"readEnabled\": true,\r\n    \"listEnabled\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"createdTime\": \"2019-08-06T23:27:34.9885675Z\",\r\n  \"lastUpdateTime\": \"2019-08-07T22:48:09.1192398Z\",\r\n  \"manifestCount\": 1,\r\n  \"tagCount\": 1,\r\n  \"changeableAttributes\": {\r\n    \"deleteEnabled\": true,\r\n    \"writeEnabled\": true,\r\n    \"readEnabled\": true,\r\n    \"listEnabled\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -261,7 +261,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0d6987c0-4134-4161-92bb-13b1b3030ffb"
+          "7edc5adc-5751-4645-9358-82a28a2b5447"
         ],
         "Accept-Language": [
           "en-US"
@@ -278,7 +278,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 21:47:57 GMT"
+          "Wed, 07 Aug 2019 22:48:14 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -300,7 +300,7 @@
           "nosniff"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "90c4b502-4d22-471b-9480-86174907d2cc"
+          "013a46d2-cb41-4090-a7b7-44e11e9208e7"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -309,7 +309,7 @@
           "309"
         ]
       },
-      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"createdTime\": \"2019-08-06T23:27:34.9885675Z\",\r\n  \"lastUpdateTime\": \"2019-08-07T21:47:52.4501818Z\",\r\n  \"manifestCount\": 1,\r\n  \"tagCount\": 1,\r\n  \"changeableAttributes\": {\r\n    \"deleteEnabled\": false,\r\n    \"writeEnabled\": false,\r\n    \"readEnabled\": true,\r\n    \"listEnabled\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"createdTime\": \"2019-08-06T23:27:34.9885675Z\",\r\n  \"lastUpdateTime\": \"2019-08-07T22:48:09.1192398Z\",\r\n  \"manifestCount\": 1,\r\n  \"tagCount\": 1,\r\n  \"changeableAttributes\": {\r\n    \"deleteEnabled\": false,\r\n    \"writeEnabled\": false,\r\n    \"readEnabled\": true,\r\n    \"listEnabled\": true\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

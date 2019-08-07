@@ -6,7 +6,6 @@ namespace ContainerRegistry.Tests
 {
     using Microsoft.Azure.ContainerRegistry;
     using Microsoft.Azure.ContainerRegistry.Models;
-    using Microsoft.Rest;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Threading.Tasks;
     using Xunit;
@@ -34,7 +33,7 @@ namespace ContainerRegistry.Tests
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
-                
+
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, repositoryDetails.Registry);
                 Assert.Equal(2, repositoryDetails.TagCount);
                 Assert.Equal(2, repositoryDetails.ManifestCount);
@@ -71,8 +70,10 @@ namespace ContainerRegistry.Tests
 
                 //Selects one of the previously stored hello-world repositories for deletion
                 string deletableRepo = "";
-                foreach (var repo in repositories.Names) {
-                    if (repo.StartsWith("hello-world")) {
+                foreach (var repo in repositories.Names)
+                {
+                    if (repo.StartsWith("hello-world"))
+                    {
                         deletableRepo = repo;
                         continue;
                     }
@@ -95,7 +96,7 @@ namespace ContainerRegistry.Tests
 
                 //Changeable attributes
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = false, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
-                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes); 
+                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
 
                 //Check success
                 var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository);

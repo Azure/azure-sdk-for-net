@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f5694067-894f-41d7-a608-ed5b1f117aea"
+          "acd9f3a2-0ca3-446e-8592-71f917fdb42b"
         ],
         "Accept-Language": [
           "en-US"
@@ -33,22 +33,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-request-id": [
-          "9e784939-fd99-47b2-9975-8613c4f63f15"
+          "47ddb67f-1558-4835-b2f2-10cd356784ff"
         ],
         "x-ms-correlation-request-id": [
-          "9e784939-fd99-47b2-9975-8613c4f63f15"
+          "47ddb67f-1558-4835-b2f2-10cd356784ff"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T182547Z:9e784939-fd99-47b2-9975-8613c4f63f15"
+          "WESTUS:20190807T214750Z:47ddb67f-1558-4835-b2f2-10cd356784ff"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:46 GMT"
+          "Wed, 07 Aug 2019 21:47:50 GMT"
         ],
         "Content-Length": [
           "489"
@@ -70,7 +70,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8db8d35d-8d25-4203-9cde-e1086f5e6da6"
+          "dbff00c3-bb99-43be-bf7b-969054a38ce7"
         ],
         "Accept-Language": [
           "en-US"
@@ -96,22 +96,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "x-ms-request-id": [
-          "91eaf116-3797-42d7-a5bd-290841693178"
+          "bef83bd4-b96e-457e-af42-1b208697bc87"
         ],
         "x-ms-correlation-request-id": [
-          "91eaf116-3797-42d7-a5bd-290841693178"
+          "bef83bd4-b96e-457e-af42-1b208697bc87"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T182547Z:91eaf116-3797-42d7-a5bd-290841693178"
+          "WESTUS:20190807T214750Z:bef83bd4-b96e-457e-af42-1b208697bc87"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:46 GMT"
+          "Wed, 07 Aug 2019 21:47:50 GMT"
         ],
         "Content-Length": [
           "182"
@@ -133,7 +133,7 @@
       "RequestBody": "{\r\n  \"schemaVersion\": 2,\r\n  \"mediaType\": \"application/vnd.docker.distribution.manifest.v2+json\",\r\n  \"config\": {\r\n    \"mediaType\": \"application/vnd.docker.container.image.v1+json\",\r\n    \"size\": 5635,\r\n    \"digest\": \"sha256:16463e0c481e161aabb735437d30b3c9c7391c2747cc564bb927e843b73dcb39\"\r\n  },\r\n  \"layers\": [\r\n    {\r\n      \"mediaType\": \"application/vnd.docker.image.rootfs.diff.tar.gzip\",\r\n      \"size\": 2789742,\r\n      \"digest\": \"sha256:0503825856099e6adb39c8297af09547f69684b7016b7f3680ed801aa310baaa\"\r\n    },\r\n    {\r\n      \"mediaType\": \"application/vnd.docker.image.rootfs.diff.tar.gzip\",\r\n      \"size\": 3174556,\r\n      \"digest\": \"sha256:7bf5420b55e6bbefb64ddb4fbb98ef094866f3a3facda638a155715ab6002d9b\"\r\n    },\r\n    {\r\n      \"mediaType\": \"application/vnd.docker.image.rootfs.diff.tar.gzip\",\r\n      \"size\": 344,\r\n      \"digest\": \"sha256:1beb2aaf8cf93eacf658fa7f7f10f89ccec1838d1ac643a273345d4d0bc813a8\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0b60ce19-12b6-4456-a59d-d209af5c454f"
+          "c1c95ea5-4319-4416-a534-f730f559d40d"
         ],
         "Accept-Language": [
           "en-US"
@@ -156,7 +156,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:47 GMT"
+          "Wed, 07 Aug 2019 21:47:51 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -184,13 +184,13 @@
           "nosniff"
         ],
         "X-Ms-Client-Request-Id": [
-          "0b60ce19-12b6-4456-a59d-d209af5c454f"
+          "c1c95ea5-4319-4416-a534-f730f559d40d"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "a0ee1803-64ea-4d09-94ae-0df6c1009886"
+          "7bc2d338-cfa3-496d-8d09-77f37c5f4b01"
         ],
         "X-Ms-Request-Id": [
-          "094956cc-6e16-4c89-8044-8cf0b6ecfd6c"
+          "c110697e-acdd-4c64-9721-f1a4d41a9f90"
         ],
         "Content-Length": [
           "0"
@@ -206,7 +206,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d2511f96-f442-48de-9000-efd0c0ce3b4b"
+          "c2d9f104-f48e-427f-8ca0-1a9f13327432"
         ],
         "Accept": [
           "application/vnd.docker.distribution.manifest.v2+json"
@@ -226,7 +226,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:47 GMT"
+          "Wed, 07 Aug 2019 21:47:52 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -254,13 +254,13 @@
           "nosniff"
         ],
         "X-Ms-Client-Request-Id": [
-          "d2511f96-f442-48de-9000-efd0c0ce3b4b"
+          "c2d9f104-f48e-427f-8ca0-1a9f13327432"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "61c9147d-1d77-42e0-9564-8590fed1d62c"
+          "fee77508-6259-4c16-bd6d-a82c7ae5da89"
         ],
         "X-Ms-Request-Id": [
-          "c37e1c41-322d-4adc-9513-e88ad3194968"
+          "3e010396-7024-4338-a926-f87e9b22dd65"
         ],
         "Content-Type": [
           "application/vnd.docker.distribution.manifest.v2+json"
@@ -279,7 +279,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cb20270e-1e8c-4b3d-9713-2b456e4d2560"
+          "77c911a2-f22b-4d57-97ec-b3edd45c57af"
         ],
         "Accept-Language": [
           "en-US"
@@ -296,7 +296,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:47 GMT"
+          "Wed, 07 Aug 2019 21:47:52 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -318,16 +318,16 @@
           "nosniff"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "940fcfd3-3392-4287-b0fd-5cb7f172e46d"
+          "9406e20e-cef3-467c-837e-36e38b8e3037"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "401"
+          "399"
         ]
       },
-      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"tag\": {\r\n    \"name\": \"temporary\",\r\n    \"digest\": \"sha256:965f815d42370936c51d9c8b2d315d2f763375f6b7cd02902bfcb61b228b1354\",\r\n    \"createdTime\": \"2019-08-07T18:25:47.7410798Z\",\r\n    \"lastUpdateTime\": \"2019-08-07T18:25:47.7410798Z\",\r\n    \"signed\": false,\r\n    \"changeableAttributes\": {\r\n      \"deleteEnabled\": true,\r\n      \"writeEnabled\": true,\r\n      \"readEnabled\": true,\r\n      \"listEnabled\": true\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"registry\": \"azuresdkunittestupdateable.azurecr.io\",\r\n  \"imageName\": \"doundo/bash\",\r\n  \"tag\": {\r\n    \"name\": \"temporary\",\r\n    \"digest\": \"sha256:965f815d42370936c51d9c8b2d315d2f763375f6b7cd02902bfcb61b228b1354\",\r\n    \"createdTime\": \"2019-08-07T21:47:51.962725Z\",\r\n    \"lastUpdateTime\": \"2019-08-07T21:47:51.962725Z\",\r\n    \"signed\": false,\r\n    \"changeableAttributes\": {\r\n      \"deleteEnabled\": true,\r\n      \"writeEnabled\": true,\r\n      \"readEnabled\": true,\r\n      \"listEnabled\": true\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -337,7 +337,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a618e32d-d82e-4945-b6db-c0f9f1ac0f63"
+          "a1db827d-962c-49b6-a8f9-095de36a1b02"
         ],
         "Accept-Language": [
           "en-US"
@@ -354,7 +354,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 18:25:48 GMT"
+          "Wed, 07 Aug 2019 21:47:52 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -376,13 +376,13 @@
           "nosniff"
         ],
         "X-Ms-Client-Request-Id": [
-          "a618e32d-d82e-4945-b6db-c0f9f1ac0f63"
+          "a1db827d-962c-49b6-a8f9-095de36a1b02"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "f92e3b73-baea-4614-bc5e-f43e5e448000"
+          "5fb6325a-6802-405d-8d27-ef2ae0ad322f"
         ],
         "X-Ms-Request-Id": [
-          "ebf9b34b-5d37-4e4b-bb39-a69598de031b"
+          "651f302c-7295-42af-bc26-cd9dffff6243"
         ],
         "Content-Length": [
           "0"

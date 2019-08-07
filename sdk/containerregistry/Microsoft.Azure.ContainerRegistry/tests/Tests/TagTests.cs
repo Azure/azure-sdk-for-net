@@ -8,17 +8,16 @@ namespace ContainerRegistry.Tests
     using Microsoft.Azure.ContainerRegistry.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
 
-  public class TagTests
+    public class TagTests
     {
         #region Test Values
         private static AcrRepositoryTags prodTags = new AcrRepositoryTags()
         {
-            Registry = "azuresdkunittest.azurecr.io",
-            ImageName = "prod/bash",
+            Registry = ACRTestUtil.ManagedTestRegistry,
+            ImageName = ACRTestUtil.ProdRepository,
             TagsAttributes = new List<AcrTagAttributesBase>{
                new AcrTagAttributesBase
                {
@@ -61,7 +60,7 @@ namespace ContainerRegistry.Tests
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var tags = await client.GetAcrTagsAsync(ACRTestUtil.ProdRepository);
-                
+
                 Assert.Equal(ACRTestUtil.ProdRepository, tags.ImageName);
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, tags.Registry);
                 Assert.Equal(2, tags.TagsAttributes.Count);
@@ -134,7 +133,8 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        private void validateTagAttributesBase(AcrTagAttributesBase toCheck, AcrTagAttributesBase expected) {
+        private void validateTagAttributesBase(AcrTagAttributesBase toCheck, AcrTagAttributesBase expected)
+        {
             Assert.Equal(toCheck.Name, expected.Name);
             Assert.Equal(toCheck.Digest, expected.Digest);
             Assert.Equal(toCheck.CreatedTime, expected.CreatedTime);

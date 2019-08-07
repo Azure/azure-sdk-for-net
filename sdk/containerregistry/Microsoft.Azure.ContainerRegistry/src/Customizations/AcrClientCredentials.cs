@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.Rest;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Rest;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Azure.ContainerRegistry
 {
@@ -55,7 +55,8 @@ namespace Microsoft.Azure.ContainerRegistry
 
         private static readonly JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
 
-        public static Token MakeToken(string token) {
+        public static Token MakeToken(string token)
+        {
             Token tok = new Token();
             tok.TokenStr = token;
             SecurityToken fields = JwtSecurityClient.ReadToken(token);
@@ -159,7 +160,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 AcrRefresh = MakeToken(authClient.GetAcrRefreshTokenFromExchangeAsync("access_token", LoginUrl, Tenant, null, AadAccess.TokenStr).GetAwaiter().GetResult().RefreshTokenProperty);
             }
         }
-        
+
         /*Handles all requests of the SDK providing the required authentication along the way.*/
         public override async Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
@@ -209,7 +210,7 @@ namespace Microsoft.Azure.ContainerRegistry
             if (AcrAccessTokens.ContainsKey(scope) && AcrAccessTokens[scope].Expiration > DateTime.UtcNow.AddMinutes(LATENCY_SAFETY))
             {
                 return AcrAccessTokens[scope].TokenStr;
-            } 
+            }
 
             if (Mode == LoginMode.TokenAad)
             {
@@ -227,20 +228,24 @@ namespace Microsoft.Azure.ContainerRegistry
             return AcrAccessTokens[scope].TokenStr;
         }
 
-        private void validateOrUpdateRefreshToken() {
+        private void validateOrUpdateRefreshToken()
+        {
 
             // Token is still valid, no change necessary
             if (AcrRefresh.Expiration > DateTime.UtcNow.AddMinutes(LATENCY_SAFETY)) return;
 
             // Need to refresh AAD access token to obtain a new ACR refresh token
-            if (AadAccess.Expiration < DateTime.UtcNow.AddMinutes(LATENCY_SAFETY)) {
-                if (acquireNewAADToken == null) {
+            if (AadAccess.Expiration < DateTime.UtcNow.AddMinutes(LATENCY_SAFETY))
+            {
+                if (acquireNewAADToken == null)
+                {
                     throw new Exception("The Provided AAD token has expired and no callback was provided. ACR Refresh token cannot be updated.");
                 }
                 AadAccess = acquireNewAADToken();
             }
 
-            if (AadAccess.Expiration < DateTime.UtcNow.AddMinutes(LATENCY_SAFETY)) {
+            if (AadAccess.Expiration < DateTime.UtcNow.AddMinutes(LATENCY_SAFETY))
+            {
                 throw new Exception("The newly provided AAD token is expired.");
             }
 
@@ -322,7 +327,8 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /*Provides cleanup in case Cache is getting large. */
-        public void clearCache() {
+        public void clearCache()
+        {
             AcrAccessTokens.Clear();
             AcrScopes.Clear();
         }

@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7906040c-7fc5-4adc-bfaf-9a531acce882"
+          "96c594ce-fdae-46bf-afe6-f08356e20b20"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,19 +36,19 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "6db5bfbe-b0e9-4bca-9a5d-b16947705292"
+          "10d3d141-4ce9-43cc-8497-7f2375d36a96"
         ],
         "x-ms-correlation-request-id": [
-          "6db5bfbe-b0e9-4bca-9a5d-b16947705292"
+          "10d3d141-4ce9-43cc-8497-7f2375d36a96"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T214745Z:6db5bfbe-b0e9-4bca-9a5d-b16947705292"
+          "WESTUS:20190807T224807Z:10d3d141-4ce9-43cc-8497-7f2375d36a96"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 21:47:45 GMT"
+          "Wed, 07 Aug 2019 22:48:07 GMT"
         ],
         "Content-Length": [
           "459"
@@ -70,7 +70,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d4451188-61c2-4846-98ac-1ae3af7edd07"
+          "a416644e-2903-43af-8fd2-f28f5f3267e8"
         ],
         "Accept-Language": [
           "en-US"
@@ -99,19 +99,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "704250a9-669d-4710-bb21-650e25bd9ecc"
+          "885a8540-ae43-4163-8083-cb79fdf10ac0"
         ],
         "x-ms-correlation-request-id": [
-          "704250a9-669d-4710-bb21-650e25bd9ecc"
+          "885a8540-ae43-4163-8083-cb79fdf10ac0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190807T214745Z:704250a9-669d-4710-bb21-650e25bd9ecc"
+          "WESTUS:20190807T224807Z:885a8540-ae43-4163-8083-cb79fdf10ac0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 21:47:45 GMT"
+          "Wed, 07 Aug 2019 22:48:07 GMT"
         ],
         "Content-Length": [
           "172"
@@ -133,7 +133,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3e28d20f-a2bc-4d98-9407-b63bb6e5af17"
+          "9326917e-f2f9-4891-8d55-cd7e0db532d4"
         ],
         "Accept": [
           "application/vnd.docker.distribution.manifest.v2+json"
@@ -153,7 +153,7 @@
           "openresty"
         ],
         "Date": [
-          "Wed, 07 Aug 2019 21:47:46 GMT"
+          "Wed, 07 Aug 2019 22:48:07 GMT"
         ],
         "Connection": [
           "keep-alive"
@@ -181,13 +181,13 @@
           "nosniff"
         ],
         "X-Ms-Client-Request-Id": [
-          "3e28d20f-a2bc-4d98-9407-b63bb6e5af17"
+          "9326917e-f2f9-4891-8d55-cd7e0db532d4"
         ],
         "X-Ms-Correlation-Request-Id": [
-          "0f99fb3e-7f4b-43d7-84f6-42f13688157e"
+          "bba9383d-b6fa-4c4d-9ef3-86407d44ea6b"
         ],
         "X-Ms-Request-Id": [
-          "a3e01e25-bc09-459c-a72c-2f4a28dfab46"
+          "4aac224f-2a6d-47c6-9068-3e903d16bf79"
         ],
         "Content-Type": [
           "application/vnd.docker.distribution.manifest.v2+json"
