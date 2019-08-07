@@ -6,7 +6,6 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <AssemblyOriginatorKeyFile>C:\Users\t-esre\Documents\GitHub\azure-cr\azure-sdk-for-net\eng\AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Tests\ACRTestUtil.cs" />
