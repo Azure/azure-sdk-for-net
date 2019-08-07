@@ -215,10 +215,10 @@ namespace Azure.Storage.Common.Test
             public override long Position
             {
                 get => base.Position;
-                set => throw Errors.InvalidOperation();
+                set => throw new InvalidOperationException();
             }
 
-            public override long Seek(long offset, SeekOrigin loc) => throw Errors.InvalidOperation();
+            public override long Seek(long offset, SeekOrigin loc) => throw new InvalidOperationException();
         }
 
         class MockNonSeekableStream : Stream
@@ -252,7 +252,7 @@ namespace Azure.Storage.Common.Test
             public override long Position
             {
                 get => this.position;
-                set => throw Errors.InvalidOperation();
+                set => throw new InvalidOperationException();
             }
 
             public override void Flush()
@@ -289,11 +289,11 @@ namespace Azure.Storage.Common.Test
                 }
             }
 
-            public override long Seek(long offset, SeekOrigin origin) => throw Errors.InvalidOperation();
+            public override long Seek(long offset, SeekOrigin origin) => throw new InvalidOperationException();
 
-            public override void SetLength(long value) => throw Errors.InvalidOperation();
+            public override void SetLength(long value) => throw new InvalidOperationException();
 
-            public override void Write(byte[] buffer, int offset, int count) => throw Errors.InvalidOperation();
+            public override void Write(byte[] buffer, int offset, int count) => throw new InvalidOperationException();
         }
     }
 }

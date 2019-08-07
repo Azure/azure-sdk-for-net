@@ -123,7 +123,7 @@ namespace Azure.Storage.Test
             var values = text?.Split('\n');
             if (values == null || values.Length != 21)
             {
-                throw Errors.InvalidArgumentParsing();
+                throw new ArgumentException();
             }
 
             return new TenantConfiguration

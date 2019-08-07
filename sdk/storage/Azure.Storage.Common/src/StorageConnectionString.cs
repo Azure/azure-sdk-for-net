@@ -323,12 +323,12 @@ namespace Azure.Storage.Common
                 throw Errors.ArgumentNull(nameof(connectionString));
             }
 
-            if (ParseImpl(connectionString, out var ret, err => { throw new FormatException(err); }))
+            if (ParseImpl(connectionString, out var ret, err => { throw Errors.InvalidFormat(err); }))
             {
                 return ret;
             }
 
-            throw Errors.ParseConnectionStringError();
+            throw Errors.ParsingConnectionStringFailed();
         }
 
         /// <summary>

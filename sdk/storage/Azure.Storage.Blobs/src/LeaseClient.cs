@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (this.BlobClient == null && this.ContainerClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
-                throw Errors.BlobOrContainerMissing(nameof(LeaseClient), nameof(BlobBaseClient), nameof(BlobContainerClient));
+                throw BlobErrors.BlobOrContainerMissing(nameof(LeaseClient), nameof(BlobBaseClient), nameof(BlobContainerClient));
             }
         }
 

@@ -901,12 +901,12 @@ namespace Azure.Storage.Blobs
                 {
                     if (start.HasValue && start.Value.Offset != TimeSpan.Zero)
                     {
-                        throw Errors.InvalidDateTimeUTC(nameof(start));
+                        throw BlobErrors.InvalidDateTimeUtc(nameof(start));
                     }
 
                     if (expiry.Offset != TimeSpan.Zero)
                     {
-                        throw Errors.InvalidDateTimeUTC(nameof(expiry));
+                        throw BlobErrors.InvalidDateTimeUtc(nameof(expiry));
                     }
 
                     var keyInfo = new KeyInfo { Start = start, Expiry = expiry };

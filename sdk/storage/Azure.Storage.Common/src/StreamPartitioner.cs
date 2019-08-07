@@ -122,7 +122,7 @@ namespace Azure.Storage.Common
 
         private bool disposedValue = false; // To detect redundant calls
 
-        public override void Flush() => throw Errors.NotImplementedError();
+        public override void Flush() => throw Errors.NotImplemented();
 
         public int Read(out ReadOnlyMemory<byte> buffer, int count)
         {
@@ -164,8 +164,8 @@ namespace Azure.Storage.Common
             return this.Position;
         }
 
-        public override void SetLength(long value) => throw Errors.NotImplementedError();
+        public override void SetLength(long value) => throw Errors.NotImplemented();
 
-        public override void Write(byte[] buffer, int offset, int count) => throw Errors.NotImplementedError();
+        public override void Write(byte[] buffer, int offset, int count) => throw Errors.NotImplemented();
     }
 }

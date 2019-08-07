@@ -19,7 +19,9 @@ namespace Azure.Storage
         public static ArgumentOutOfRangeException MustBeGreaterThanOrEqualTo(string paramName, long value) =>
             new ArgumentOutOfRangeException(paramName, $"Value must be greater than or equal to {value}");
 
-        public static ArgumentOutOfRangeException MustBeGreaterThanValueOrEqualToOtherValue(string paramName, long value0, long value1) =>
+        public static ArgumentOutOfRangeException MustBeGreaterThanValueOrEqualToOtherValue(string paramName,
+            long value0,
+            long value1) =>
             new ArgumentOutOfRangeException(paramName, $"Value must be greater than {value0} or equal to {value1}");
 
         public static ArgumentOutOfRangeException InvalidSasProtocol(string protocol, string sasProtocol) =>
@@ -37,11 +39,6 @@ namespace Azure.Storage
         public static InvalidOperationException AccountSasMissingData() =>
             new InvalidOperationException($"Account SAS is missing at least one of these: ExpiryTime, Permissions, Service, or ResourceType");
 
-        public static InvalidOperationException BlobOrContainerMissing(string leaseClient,
-            string blobBaseClient,
-            string blobContainerClient) =>
-            new InvalidOperationException($"{leaseClient} requires either a {blobBaseClient} or {blobContainerClient}");
-
         public static InvalidOperationException TaskIncomplete() =>
             new InvalidOperationException("Task is not completed");
 
@@ -54,36 +51,25 @@ namespace Azure.Storage
         public static ArgumentException InvalidResourceType(char s) =>
             new ArgumentException($"Invalid resource type: '{s}'");
 
-        public static ArgumentException InvalidDateTimeUTC(string dateTime) =>
-            new ArgumentException($"{dateTime} must be UTC");
-
         public static ArgumentException AccountMismatch(string accountNameCredential, string accountNameValue) =>
-            new ArgumentException(String.Format(CultureInfo.CurrentCulture, "Account Name Mismatch: {0} != {1}",
+            new ArgumentException(String.Format(CultureInfo.CurrentCulture,
+                "Account Name Mismatch: {0} != {1}",
                 accountNameCredential,
                 accountNameValue));
 
-        public static ArgumentException ParseConnectionStringError() =>
+        public static ArgumentException ParsingConnectionStringFailed() =>
             new ArgumentException("Connection string parsing error");
 
-        public static ArgumentException InvalidArgumentParsing() =>
-            new ArgumentException("Invalid argument for parsing");
-
-        public static FormatException FormatError(string err) =>
+        public static FormatException InvalidFormat(string err) =>
             new FormatException(err);
 
         public static AccessViolationException UnableAccessArray() =>
             new AccessViolationException("Unable to get array from memory pool");
 
-        public static NotImplementedException NotImplementedError() =>
+        public static NotImplementedException NotImplemented() =>
             new NotImplementedException();
 
         public static AuthenticationException InvalidCredentials(string fullName) =>
             new AuthenticationException($"Cannot authenticate credentials with {fullName}");
-
-        public static InvalidOperationException InvalidOperation() =>
-            new InvalidOperationException();
-
-        public static TimeoutException Timeout(string s) =>
-            new TimeoutException($"{s} failed too took too long");
     }
 }
