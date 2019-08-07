@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An error encountered by the Batch service when scheduling a job.
+    /// An error encountered by the Batch service when scheduling a Job.
     /// </summary>
     public partial class JobSchedulingError
     {
@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobSchedulingError class.
         /// </summary>
-        /// <param name="category">The category of the job scheduling
+        /// <param name="category">The category of the Job scheduling
         /// error.</param>
-        /// <param name="code">An identifier for the job scheduling error.
+        /// <param name="code">An identifier for the Job scheduling error.
         /// Codes are invariant and are intended to be consumed
         /// programmatically.</param>
-        /// <param name="message">A message describing the job scheduling
+        /// <param name="message">A message describing the Job scheduling
         /// error, intended to be suitable for display in a user
         /// interface.</param>
         /// <param name="details">A list of additional error details related to
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the category of the job scheduling error.
+        /// Gets or sets the category of the Job scheduling error.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'userError', 'serverError'
@@ -65,14 +65,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public ErrorCategory Category { get; set; }
 
         /// <summary>
-        /// Gets or sets an identifier for the job scheduling error. Codes are
+        /// Gets or sets an identifier for the Job scheduling error. Codes are
         /// invariant and are intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a message describing the job scheduling error,
+        /// Gets or sets a message describing the Job scheduling error,
         /// intended to be suitable for display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A pool in the Azure Batch service.
+    /// A Pool in the Azure Batch service.
     /// </summary>
     public partial class CloudPool
     {
@@ -31,71 +31,73 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CloudPool class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the pool within
-        /// the account.</param>
-        /// <param name="displayName">The display name for the pool.</param>
-        /// <param name="url">The URL of the pool.</param>
-        /// <param name="eTag">The ETag of the pool.</param>
+        /// <param name="id">A string that uniquely identifies the Pool within
+        /// the Account.</param>
+        /// <param name="displayName">The display name for the Pool.</param>
+        /// <param name="url">The URL of the Pool.</param>
+        /// <param name="eTag">The ETag of the Pool.</param>
         /// <param name="lastModified">The last modified time of the
-        /// pool.</param>
-        /// <param name="creationTime">The creation time of the pool.</param>
-        /// <param name="state">The current state of the pool.</param>
-        /// <param name="stateTransitionTime">The time at which the pool
+        /// Pool.</param>
+        /// <param name="creationTime">The creation time of the Pool.</param>
+        /// <param name="state">The current state of the Pool.</param>
+        /// <param name="stateTransitionTime">The time at which the Pool
         /// entered its current state.</param>
-        /// <param name="allocationState">Whether the pool is resizing.</param>
+        /// <param name="allocationState">Whether the Pool is resizing.</param>
         /// <param name="allocationStateTransitionTime">The time at which the
-        /// pool entered its current allocation state.</param>
-        /// <param name="vmSize">The size of virtual machines in the pool. All
-        /// virtual machines in a pool are the same size.</param>
+        /// Pool entered its current allocation state.</param>
+        /// <param name="vmSize">The size of virtual machines in the Pool. All
+        /// virtual machines in a Pool are the same size.</param>
         /// <param name="cloudServiceConfiguration">The cloud service
-        /// configuration for the pool.</param>
+        /// configuration for the Pool.</param>
         /// <param name="virtualMachineConfiguration">The virtual machine
-        /// configuration for the pool.</param>
-        /// <param name="resizeTimeout">The timeout for allocation of compute
-        /// nodes to the pool.</param>
+        /// configuration for the Pool.</param>
+        /// <param name="resizeTimeout">The timeout for allocation of Compute
+        /// Nodes to the Pool.</param>
         /// <param name="resizeErrors">A list of errors encountered while
-        /// performing the last resize on the pool.</param>
-        /// <param name="currentDedicatedNodes">The number of dedicated compute
-        /// nodes currently in the pool.</param>
+        /// performing the last resize on the Pool.</param>
+        /// <param name="currentDedicatedNodes">The number of dedicated Compute
+        /// Nodes currently in the Pool.</param>
         /// <param name="currentLowPriorityNodes">The number of low-priority
-        /// compute nodes currently in the pool.</param>
+        /// Compute Nodes currently in the Pool.</param>
         /// <param name="targetDedicatedNodes">The desired number of dedicated
-        /// compute nodes in the pool.</param>
+        /// Compute Nodes in the Pool.</param>
         /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority compute nodes in the pool.</param>
-        /// <param name="enableAutoScale">Whether the pool size should
+        /// low-priority Compute Nodes in the Pool.</param>
+        /// <param name="enableAutoScale">Whether the Pool size should
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">A formula for the desired number of
-        /// compute nodes in the pool.</param>
+        /// Compute Nodes in the Pool.</param>
         /// <param name="autoScaleEvaluationInterval">The time interval at
-        /// which to automatically adjust the pool size according to the
+        /// which to automatically adjust the Pool size according to the
         /// autoscale formula.</param>
         /// <param name="autoScaleRun">The results and errors from the last
         /// execution of the autoscale formula.</param>
-        /// <param name="enableInterNodeCommunication">Whether the pool permits
-        /// direct communication between nodes.</param>
+        /// <param name="enableInterNodeCommunication">Whether the Pool permits
+        /// direct communication between Compute Nodes.</param>
         /// <param name="networkConfiguration">The network configuration for
-        /// the pool.</param>
-        /// <param name="startTask">A task specified to run on each compute
-        /// node as it joins the pool.</param>
-        /// <param name="certificateReferences">The list of certificates to be
-        /// installed on each compute node in the pool.</param>
-        /// <param name="applicationPackageReferences">The list of application
-        /// packages to be installed on each compute node in the pool.</param>
+        /// the Pool.</param>
+        /// <param name="startTask">A Task specified to run on each Compute
+        /// Node as it joins the Pool.</param>
+        /// <param name="certificateReferences">The list of Certificates to be
+        /// installed on each Compute Node in the Pool.</param>
+        /// <param name="applicationPackageReferences">The list of Packages to
+        /// be installed on each Compute Node in the Pool.</param>
         /// <param name="applicationLicenses">The list of application licenses
-        /// the Batch service will make available on each compute node in the
-        /// pool.</param>
-        /// <param name="maxTasksPerNode">The maximum number of tasks that can
-        /// run concurrently on a single compute node in the pool.</param>
-        /// <param name="taskSchedulingPolicy">How tasks are distributed across
-        /// compute nodes in a pool.</param>
-        /// <param name="userAccounts">The list of user accounts to be created
-        /// on each node in the pool.</param>
+        /// the Batch service will make available on each Compute Node in the
+        /// Pool.</param>
+        /// <param name="maxTasksPerNode">The maximum number of Tasks that can
+        /// run concurrently on a single Compute Node in the Pool.</param>
+        /// <param name="taskSchedulingPolicy">How Tasks are distributed across
+        /// Compute Nodes in a Pool.</param>
+        /// <param name="userAccounts">The list of user Accounts to be created
+        /// on each Compute Node in the Pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
-        /// the pool as metadata.</param>
+        /// the Pool as metadata.</param>
         /// <param name="stats">Utilization and resource usage statistics for
-        /// the entire lifetime of the pool.</param>
-        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
+        /// the entire lifetime of the Pool.</param>
+        /// <param name="mountConfiguration">A list of file systems to mount on
+        /// each node in the pool.</param>
+        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
         {
             Id = id;
             DisplayName = displayName;
@@ -131,6 +133,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             UserAccounts = userAccounts;
             Metadata = metadata;
             Stats = stats;
+            MountConfiguration = mountConfiguration;
             CustomInit();
         }
 
@@ -140,21 +143,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the pool within the
-        /// account.
+        /// Gets or sets a string that uniquely identifies the Pool within the
+        /// Account.
         /// </summary>
         /// <remarks>
         /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores, and cannot contain more than 64
         /// characters. The ID is case-preserving and case-insensitive (that
-        /// is, you may not have two IDs within an account that differ only by
+        /// is, you may not have two IDs within an Account that differ only by
         /// case).
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name for the pool.
+        /// Gets or sets the display name for the Pool.
         /// </summary>
         /// <remarks>
         /// The display name need not be unique and can contain any Unicode
@@ -164,43 +167,43 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL of the pool.
+        /// Gets or sets the URL of the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the ETag of the pool.
+        /// Gets or sets the ETag of the Pool.
         /// </summary>
         /// <remarks>
-        /// This is an opaque string. You can use it to detect whether the pool
+        /// This is an opaque string. You can use it to detect whether the Pool
         /// has changed between requests. In particular, you can be pass the
-        /// ETag when updating a pool to specify that your changes should take
-        /// effect only if nobody else has modified the pool in the meantime.
+        /// ETag when updating a Pool to specify that your changes should take
+        /// effect only if nobody else has modified the Pool in the meantime.
         /// </remarks>
         [JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
-        /// Gets or sets the last modified time of the pool.
+        /// Gets or sets the last modified time of the Pool.
         /// </summary>
         /// <remarks>
-        /// This is the last time at which the pool level data, such as the
+        /// This is the last time at which the Pool level data, such as the
         /// targetDedicatedNodes or enableAutoscale settings, changed. It does
-        /// not factor in node-level changes such as a compute node changing
+        /// not factor in node-level changes such as a Compute Node changing
         /// state.
         /// </remarks>
         [JsonProperty(PropertyName = "lastModified")]
         public System.DateTime? LastModified { get; set; }
 
         /// <summary>
-        /// Gets or sets the creation time of the pool.
+        /// Gets or sets the creation time of the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public System.DateTime? CreationTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the pool.
+        /// Gets or sets the current state of the Pool.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'active', 'deleting'
@@ -209,13 +212,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public PoolState? State { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the pool entered its current state.
+        /// Gets or sets the time at which the Pool entered its current state.
         /// </summary>
         [JsonProperty(PropertyName = "stateTransitionTime")]
         public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the pool is resizing.
+        /// Gets or sets whether the Pool is resizing.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'steady', 'resizing', 'stopping'
@@ -224,38 +227,38 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public AllocationState? AllocationState { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the pool entered its current
+        /// Gets or sets the time at which the Pool entered its current
         /// allocation state.
         /// </summary>
         [JsonProperty(PropertyName = "allocationStateTransitionTime")]
         public System.DateTime? AllocationStateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of virtual machines in the pool. All virtual
-        /// machines in a pool are the same size.
+        /// Gets or sets the size of virtual machines in the Pool. All virtual
+        /// machines in a Pool are the same size.
         /// </summary>
         /// <remarks>
-        /// For information about available sizes of virtual machines in pools,
-        /// see Choose a VM size for compute nodes in an Azure Batch pool
+        /// For information about available sizes of virtual machines in Pools,
+        /// see Choose a VM size for Compute Nodes in an Azure Batch Pool
         /// (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
         /// </remarks>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the cloud service configuration for the pool.
+        /// Gets or sets the cloud service configuration for the Pool.
         /// </summary>
         /// <remarks>
         /// This property and virtualMachineConfiguration are mutually
         /// exclusive and one of the properties must be specified. This
-        /// property cannot be specified if the Batch account was created with
+        /// property cannot be specified if the Batch Account was created with
         /// its poolAllocationMode property set to 'UserSubscription'.
         /// </remarks>
         [JsonProperty(PropertyName = "cloudServiceConfiguration")]
         public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine configuration for the pool.
+        /// Gets or sets the virtual machine configuration for the Pool.
         /// </summary>
         /// <remarks>
         /// This property and cloudServiceConfiguration are mutually exclusive
@@ -265,12 +268,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the timeout for allocation of compute nodes to the
-        /// pool.
+        /// Gets or sets the timeout for allocation of Compute Nodes to the
+        /// Pool.
         /// </summary>
         /// <remarks>
         /// This is the timeout for the most recent resize operation. (The
-        /// initial sizing when the pool is created counts as a resize.) The
+        /// initial sizing when the Pool is created counts as a resize.) The
         /// default value is 15 minutes.
         /// </remarks>
         [JsonProperty(PropertyName = "resizeTimeout")]
@@ -278,66 +281,66 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of errors encountered while performing the last
-        /// resize on the pool.
+        /// resize on the Pool.
         /// </summary>
         /// <remarks>
         /// This property is set only if one or more errors occurred during the
-        /// last pool resize, and only when the pool allocationState is Steady.
+        /// last Pool resize, and only when the Pool allocationState is Steady.
         /// </remarks>
         [JsonProperty(PropertyName = "resizeErrors")]
         public IList<ResizeError> ResizeErrors { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of dedicated compute nodes currently in the
-        /// pool.
+        /// Gets or sets the number of dedicated Compute Nodes currently in the
+        /// Pool.
         /// </summary>
         [JsonProperty(PropertyName = "currentDedicatedNodes")]
         public int? CurrentDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of low-priority compute nodes currently in
-        /// the pool.
+        /// Gets or sets the number of low-priority Compute Nodes currently in
+        /// the Pool.
         /// </summary>
         /// <remarks>
-        /// Low-priority compute nodes which have been preempted are included
+        /// Low-priority Compute Nodes which have been preempted are included
         /// in this count.
         /// </remarks>
         [JsonProperty(PropertyName = "currentLowPriorityNodes")]
         public int? CurrentLowPriorityNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of dedicated compute nodes in the
-        /// pool.
+        /// Gets or sets the desired number of dedicated Compute Nodes in the
+        /// Pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetDedicatedNodes")]
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority compute nodes in
-        /// the pool.
+        /// Gets or sets the desired number of low-priority Compute Nodes in
+        /// the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetLowPriorityNodes")]
         public int? TargetLowPriorityNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the pool size should automatically adjust over
+        /// Gets or sets whether the Pool size should automatically adjust over
         /// time.
         /// </summary>
         /// <remarks>
         /// If false, at least one of targetDedicateNodes and
         /// targetLowPriorityNodes must be specified. If true, the
-        /// autoScaleFormula property is required and the pool automatically
+        /// autoScaleFormula property is required and the Pool automatically
         /// resizes according to the formula. The default value is false.
         /// </remarks>
         [JsonProperty(PropertyName = "enableAutoScale")]
         public bool? EnableAutoScale { get; set; }
 
         /// <summary>
-        /// Gets or sets a formula for the desired number of compute nodes in
-        /// the pool.
+        /// Gets or sets a formula for the desired number of Compute Nodes in
+        /// the Pool.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the pool automatically scales, i.e.
+        /// This property is set only if the Pool automatically scales, i.e.
         /// enableAutoScale is true.
         /// </remarks>
         [JsonProperty(PropertyName = "autoScaleFormula")]
@@ -345,10 +348,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the time interval at which to automatically adjust the
-        /// pool size according to the autoscale formula.
+        /// Pool size according to the autoscale formula.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the pool automatically scales, i.e.
+        /// This property is set only if the Pool automatically scales, i.e.
         /// enableAutoScale is true.
         /// </remarks>
         [JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
@@ -359,107 +362,110 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// autoscale formula.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the pool automatically scales, i.e.
+        /// This property is set only if the Pool automatically scales, i.e.
         /// enableAutoScale is true.
         /// </remarks>
         [JsonProperty(PropertyName = "autoScaleRun")]
         public AutoScaleRun AutoScaleRun { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the pool permits direct communication between
-        /// nodes.
+        /// Gets or sets whether the Pool permits direct communication between
+        /// Compute Nodes.
         /// </summary>
         /// <remarks>
-        /// This imposes restrictions on which nodes can be assigned to the
-        /// pool. Specifying this value can reduce the chance of the requested
-        /// number of nodes to be allocated in the pool.
+        /// This imposes restrictions on which Compute Nodes can be assigned to
+        /// the Pool. Specifying this value can reduce the chance of the
+        /// requested number of Compute Nodes to be allocated in the Pool.
         /// </remarks>
         [JsonProperty(PropertyName = "enableInterNodeCommunication")]
         public bool? EnableInterNodeCommunication { get; set; }
 
         /// <summary>
-        /// Gets or sets the network configuration for the pool.
+        /// Gets or sets the network configuration for the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "networkConfiguration")]
         public NetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets a task specified to run on each compute node as it
-        /// joins the pool.
+        /// Gets or sets a Task specified to run on each Compute Node as it
+        /// joins the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of certificates to be installed on each
-        /// compute node in the pool.
+        /// Gets or sets the list of Certificates to be installed on each
+        /// Compute Node in the Pool.
         /// </summary>
         /// <remarks>
-        /// For Windows compute nodes, the Batch service installs the
-        /// certificates to the specified certificate store and location. For
-        /// Linux compute nodes, the certificates are stored in a directory
-        /// inside the task working directory and an environment variable
-        /// AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this
-        /// location. For certificates with visibility of 'remoteUser', a
+        /// For Windows Nodes, the Batch service installs the Certificates to
+        /// the specified Certificate store and location. For Linux Compute
+        /// Nodes, the Certificates are stored in a directory inside the Task
+        /// working directory and an environment variable
+        /// AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this
+        /// location. For Certificates with visibility of 'remoteUser', a
         /// 'certs' directory is created in the user's home directory (e.g.,
-        /// /home/{user-name}/certs) and certificates are placed in that
+        /// /home/{user-name}/certs) and Certificates are placed in that
         /// directory.
         /// </remarks>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of application packages to be installed on
-        /// each compute node in the pool.
+        /// Gets or sets the list of Packages to be installed on each Compute
+        /// Node in the Pool.
         /// </summary>
         /// <remarks>
-        /// Changes to application package references affect all new compute
-        /// nodes joining the pool, but do not affect compute nodes that are
-        /// already in the pool until they are rebooted or reimaged. There is a
-        /// maximum of 10 application package references on any given pool.
+        /// Changes to Package references affect all new Nodes joining the
+        /// Pool, but do not affect Compute Nodes that are already in the Pool
+        /// until they are rebooted or reimaged. There is a maximum of 10
+        /// Package references on any given Pool.
         /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the list of application licenses the Batch service
-        /// will make available on each compute node in the pool.
+        /// will make available on each Compute Node in the Pool.
         /// </summary>
         /// <remarks>
         /// The list of application licenses must be a subset of available
         /// Batch service application licenses. If a license is requested which
-        /// is not supported, pool creation will fail.
+        /// is not supported, Pool creation will fail.
         /// </remarks>
         [JsonProperty(PropertyName = "applicationLicenses")]
         public IList<string> ApplicationLicenses { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of tasks that can run concurrently
-        /// on a single compute node in the pool.
+        /// Gets or sets the maximum number of Tasks that can run concurrently
+        /// on a single Compute Node in the Pool.
         /// </summary>
         /// <remarks>
         /// The default value is 1. The maximum value is the smaller of 4 times
-        /// the number of cores of the vmSize of the pool or 256.
+        /// the number of cores of the vmSize of the Pool or 256.
         /// </remarks>
         [JsonProperty(PropertyName = "maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
 
         /// <summary>
-        /// Gets or sets how tasks are distributed across compute nodes in a
-        /// pool.
+        /// Gets or sets how Tasks are distributed across Compute Nodes in a
+        /// Pool.
         /// </summary>
+        /// <remarks>
+        /// If not specified, the default is spread.
+        /// </remarks>
         [JsonProperty(PropertyName = "taskSchedulingPolicy")]
         public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of user accounts to be created on each node
-        /// in the pool.
+        /// Gets or sets the list of user Accounts to be created on each
+        /// Compute Node in the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "userAccounts")]
         public IList<UserAccount> UserAccounts { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the pool as
+        /// Gets or sets a list of name-value pairs associated with the Pool as
         /// metadata.
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
@@ -467,7 +473,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets utilization and resource usage statistics for the
-        /// entire lifetime of the pool.
+        /// entire lifetime of the Pool.
         /// </summary>
         /// <remarks>
         /// This property is populated only if the CloudPool was retrieved with
@@ -478,6 +484,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "stats")]
         public PoolStatistics Stats { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of file systems to mount on each node in the
+        /// pool.
+        /// </summary>
+        /// <remarks>
+        /// This supports Azure Files, NFS, CIFS/SMB, and Blobfuse.
+        /// </remarks>
+        [JsonProperty(PropertyName = "mountConfiguration")]
+        public IList<MountConfiguration> MountConfiguration { get; set; }
 
     }
 }

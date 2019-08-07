@@ -7,6 +7,10 @@
     <PackageTags>Microsoft Azure Identity</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
+      Adding user authentication credential types:
+        - UsernamePasswordCredential
+        - DeviceCodeCredential
+        - InteractiveBrowserCredential
       ]]>
     </PackageReleaseNotes>
 

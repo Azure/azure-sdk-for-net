@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The entity tag needed to update this ownership.
         /// </summary>
         ///
-        public string ETag { get; }
+        public string ETag { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionOwnership"/> class.

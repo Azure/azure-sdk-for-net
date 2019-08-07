@@ -5,6 +5,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
@@ -228,7 +229,7 @@
         private static Models.CertificateAddParameter CreateAddCertificateEntity(byte[] rawData, X509Certificate2 certificate)
         {
             Models.CertificateAddParameter cert = new Models.CertificateAddParameter();
-            cert.Thumbprint = certificate.Thumbprint.ToLower();
+            cert.Thumbprint = certificate.Thumbprint.ToLowerInvariant();
 
             //ThumbprintAlgorithm is always SHA1 since thumbprint is dynamically generated from the cert body
             cert.ThumbprintAlgorithm = KnownCertificateAlgorithm;

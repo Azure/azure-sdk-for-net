@@ -22,20 +22,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum CertificateVisibility
     {
         /// <summary>
-        /// The certificate should be visible to the user account under which
-        /// the start task is run.
+        /// The Certificate should be visible to the user account under which
+        /// the StartTask is run. Note that if AutoUser Scope is Pool for both
+        /// the StartTask and a Task, this certificate will be visible to the
+        /// Task as well.
         /// </summary>
         [EnumMember(Value = "starttask")]
         StartTask,
         /// <summary>
-        /// The certificate should be visible to the user accounts under which
-        /// job tasks are run.
+        /// The Certificate should be visible to the user accounts under which
+        /// Job Tasks are run.
         /// </summary>
         [EnumMember(Value = "task")]
         Task,
         /// <summary>
-        /// The certificate should be visible to the user accounts under which
-        /// users remotely access the node.
+        /// The Certificate should be visible to the user accounts under which
+        /// users remotely access the Compute Node.
         /// </summary>
         [EnumMember(Value = "remoteuser")]
         RemoteUser

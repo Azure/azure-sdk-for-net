@@ -4,6 +4,7 @@
 ﻿namespace Microsoft.Azure.Batch
 {
     using System;
+    using System.Globalization;
     
     /// <summary>
     /// Controls access to a set of properties.  All reads/writes pass through here.
@@ -38,7 +39,7 @@
         {
             if (!this.IsAccessAllowed(BindingAccess.Read, allowedAccess))
             {
-                throw new InvalidOperationException(string.Format(BatchErrorMessages.PropertiesReadAccessViolation, propertyName, this.bindingState.ToString()));
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.PropertiesReadAccessViolation, propertyName, this.bindingState.ToString()));
             }
 
             return propertyReadAction();
@@ -54,7 +55,7 @@
         {
             if (!this.IsAccessAllowed(BindingAccess.Write, allowedAccess))
             {
-                throw new InvalidOperationException(string.Format(BatchErrorMessages.PropertiesWriteAccessViolation, propertyName, this.bindingState.ToString()));
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.PropertiesWriteAccessViolation, propertyName, this.bindingState.ToString()));
             }
 
             propertyWriteAction();

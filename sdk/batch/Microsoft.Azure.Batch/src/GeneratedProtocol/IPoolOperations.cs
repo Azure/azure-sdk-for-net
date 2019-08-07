@@ -24,12 +24,12 @@ namespace Microsoft.Azure.Batch.Protocol
     public partial interface IPoolOperations
     {
         /// <summary>
-        /// Lists the usage metrics, aggregated by pool across individual time
-        /// intervals, for the specified account.
+        /// Lists the usage metrics, aggregated by Pool across individual time
+        /// intervals, for the specified Account.
         /// </summary>
         /// <remarks>
         /// If you do not specify a $filter clause including a poolId, the
-        /// response includes all pools that existed in the account in the time
+        /// response includes all Pools that existed in the Account in the time
         /// range of the returned aggregation intervals. If you do not specify
         /// a $filter clause including a startTime or endTime these filters
         /// default to the start and end times of the last aggregation interval
@@ -56,12 +56,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>> ListUsageMetricsWithHttpMessagesAsync(PoolListUsageMetricsOptions poolListUsageMetricsOptions = default(PoolListUsageMetricsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets lifetime summary statistics for all of the pools in the
-        /// specified account.
+        /// Gets lifetime summary statistics for all of the Pools in the
+        /// specified Account.
         /// </summary>
         /// <remarks>
-        /// Statistics are aggregated across all pools that have ever existed
-        /// in the account, from account creation to the last update time of
+        /// Statistics are aggregated across all Pools that have ever existed
+        /// in the Account, from Account creation to the last update time of
         /// the statistics. The statistics may not be immediately available.
         /// The Batch service performs periodic roll-up of statistics. The
         /// typical delay is about 30 minutes.
@@ -86,15 +86,15 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<PoolStatistics,PoolGetAllLifetimeStatisticsHeaders>> GetAllLifetimeStatisticsWithHttpMessagesAsync(PoolGetAllLifetimeStatisticsOptions poolGetAllLifetimeStatisticsOptions = default(PoolGetAllLifetimeStatisticsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a pool to the specified account.
+        /// Adds a Pool to the specified Account.
         /// </summary>
         /// <remarks>
-        /// When naming pools, avoid including sensitive information such as
+        /// When naming Pools, avoid including sensitive information such as
         /// user names or secret project names. This information may appear in
         /// telemetry logs accessible to Microsoft Support engineers.
         /// </remarks>
         /// <param name='pool'>
-        /// The pool to be added.
+        /// The Pool to be added.
         /// </param>
         /// <param name='poolAddOptions'>
         /// Additional parameters for the operation
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolAddHeaders>> AddWithHttpMessagesAsync(PoolAddParameter pool, PoolAddOptions poolAddOptions = default(PoolAddOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the pools in the specified account.
+        /// Lists all of the Pools in the specified Account.
         /// </summary>
         /// <param name='poolListOptions'>
         /// Additional parameters for the operation
@@ -135,26 +135,26 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<IPage<CloudPool>,PoolListHeaders>> ListWithHttpMessagesAsync(PoolListOptions poolListOptions = default(PoolListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a pool from the specified account.
+        /// Deletes a Pool from the specified Account.
         /// </summary>
         /// <remarks>
-        /// When you request that a pool be deleted, the following actions
-        /// occur: the pool state is set to deleting; any ongoing resize
-        /// operation on the pool are stopped; the Batch service starts
-        /// resizing the pool to zero nodes; any tasks running on existing
-        /// nodes are terminated and requeued (as if a resize pool operation
-        /// had been requested with the default requeue option); finally, the
-        /// pool is removed from the system. Because running tasks are
-        /// requeued, the user can rerun these tasks by updating their job to
-        /// target a different pool. The tasks can then run on the new pool. If
-        /// you want to override the requeue behavior, then you should call
-        /// resize pool explicitly to shrink the pool to zero size before
-        /// deleting the pool. If you call an Update, Patch or Delete API on a
-        /// pool in the deleting state, it will fail with HTTP status code 409
+        /// When you request that a Pool be deleted, the following actions
+        /// occur: the Pool state is set to deleting; any ongoing resize
+        /// operation on the Pool are stopped; the Batch service starts
+        /// resizing the Pool to zero Compute Nodes; any Tasks running on
+        /// existing Compute Nodes are terminated and requeued (as if a resize
+        /// Pool operation had been requested with the default requeue option);
+        /// finally, the Pool is removed from the system. Because running Tasks
+        /// are requeued, the user can rerun these Tasks by updating their Job
+        /// to target a different Pool. The Tasks can then run on the new Pool.
+        /// If you want to override the requeue behavior, then you should call
+        /// resize Pool explicitly to shrink the Pool to zero size before
+        /// deleting the Pool. If you call an Update, Patch or Delete API on a
+        /// Pool in the deleting state, it will fail with HTTP status code 409
         /// with error code PoolBeingDeleted.
         /// </remarks>
         /// <param name='poolId'>
-        /// The ID of the pool to delete.
+        /// The ID of the Pool to delete.
         /// </param>
         /// <param name='poolDeleteOptions'>
         /// Additional parameters for the operation
@@ -173,10 +173,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolDeleteHeaders>> DeleteWithHttpMessagesAsync(string poolId, PoolDeleteOptions poolDeleteOptions = default(PoolDeleteOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets basic properties of a pool.
+        /// Gets basic properties of a Pool.
         /// </summary>
         /// <param name='poolId'>
-        /// The ID of the pool to get.
+        /// The ID of the Pool to get.
         /// </param>
         /// <param name='poolExistsOptions'>
         /// Additional parameters for the operation
@@ -195,10 +195,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<bool,PoolExistsHeaders>> ExistsWithHttpMessagesAsync(string poolId, PoolExistsOptions poolExistsOptions = default(PoolExistsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the specified pool.
+        /// Gets information about the specified Pool.
         /// </summary>
         /// <param name='poolId'>
-        /// The ID of the pool to get.
+        /// The ID of the Pool to get.
         /// </param>
         /// <param name='poolGetOptions'>
         /// Additional parameters for the operation
@@ -220,16 +220,16 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<CloudPool,PoolGetHeaders>> GetWithHttpMessagesAsync(string poolId, PoolGetOptions poolGetOptions = default(PoolGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the properties of the specified pool.
+        /// Updates the properties of the specified Pool.
         /// </summary>
         /// <remarks>
-        /// This only replaces the pool properties specified in the request.
-        /// For example, if the pool has a start task associated with it, and a
-        /// request does not specify a start task element, then the pool keeps
-        /// the existing start task.
+        /// This only replaces the Pool properties specified in the request.
+        /// For example, if the Pool has a StartTask associated with it, and a
+        /// request does not specify a StartTask element, then the Pool keeps
+        /// the existing StartTask.
         /// </remarks>
         /// <param name='poolId'>
-        /// The ID of the pool to update.
+        /// The ID of the Pool to update.
         /// </param>
         /// <param name='poolPatchParameter'>
         /// The parameters for the request.
@@ -251,10 +251,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolPatchHeaders>> PatchWithHttpMessagesAsync(string poolId, PoolPatchParameter poolPatchParameter, PoolPatchOptions poolPatchOptions = default(PoolPatchOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Disables automatic scaling for a pool.
+        /// Disables automatic scaling for a Pool.
         /// </summary>
         /// <param name='poolId'>
-        /// The ID of the pool on which to disable automatic scaling.
+        /// The ID of the Pool on which to disable automatic scaling.
         /// </param>
         /// <param name='poolDisableAutoScaleOptions'>
         /// Additional parameters for the operation
@@ -273,19 +273,19 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolDisableAutoScaleHeaders>> DisableAutoScaleWithHttpMessagesAsync(string poolId, PoolDisableAutoScaleOptions poolDisableAutoScaleOptions = default(PoolDisableAutoScaleOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Enables automatic scaling for a pool.
+        /// Enables automatic scaling for a Pool.
         /// </summary>
         /// <remarks>
-        /// You cannot enable automatic scaling on a pool if a resize operation
-        /// is in progress on the pool. If automatic scaling of the pool is
+        /// You cannot enable automatic scaling on a Pool if a resize operation
+        /// is in progress on the Pool. If automatic scaling of the Pool is
         /// currently disabled, you must specify a valid autoscale formula as
-        /// part of the request. If automatic scaling of the pool is already
+        /// part of the request. If automatic scaling of the Pool is already
         /// enabled, you may specify a new autoscale formula and/or a new
-        /// evaluation interval. You cannot call this API for the same pool
+        /// evaluation interval. You cannot call this API for the same Pool
         /// more than once every 30 seconds.
         /// </remarks>
         /// <param name='poolId'>
-        /// The ID of the pool on which to enable automatic scaling.
+        /// The ID of the Pool on which to enable automatic scaling.
         /// </param>
         /// <param name='poolEnableAutoScaleParameter'>
         /// The parameters for the request.
@@ -308,25 +308,25 @@ namespace Microsoft.Azure.Batch.Protocol
         Task<AzureOperationHeaderResponse<PoolEnableAutoScaleHeaders>> EnableAutoScaleWithHttpMessagesAsync(string poolId, PoolEnableAutoScaleParameter poolEnableAutoScaleParameter, PoolEnableAutoScaleOptions poolEnableAutoScaleOptions = default(PoolEnableAutoScaleOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the result of evaluating an automatic scaling formula on the
-        /// pool.
+        /// Pool.
         /// </summary>
         /// <remarks>
         /// This API is primarily for validating an autoscale formula, as it
-        /// simply returns the result without applying the formula to the pool.
-        /// The pool must have auto scaling enabled in order to evaluate a
+        /// simply returns the result without applying the formula to the Pool.
+        /// The Pool must have auto scaling enabled in order to evaluate a
         /// formula.
         /// </remarks>
         /// <param name='poolId'>
-        /// The ID of the pool on which to evaluate the automatic scaling
+        /// The ID of the Pool on which to evaluate the automatic scaling
         /// formula.
         /// </param>
         /// <param name='autoScaleFormula'>
-        /// The formula for the desired number of compute nodes in the pool.
+        /// The formula for the desired number of Compute Nodes in the Pool.
         /// The formula is validated and its results calculated, but it is not
-        /// applied to the pool. To apply the formula to the pool, 'Enable
-        /// automatic scaling on a pool'. For more information about specifying
-        /// this formula, see Automatically scale compute nodes in an Azure
-        /// Batch pool
+        /// applied to the Pool. To apply the formula to the Pool, 'Enable
+        /// automatic scaling on a Pool'. For more information about specifying
+        /// this formula, see Automatically scale Compute Nodes in an Azure
+        /// Batch Pool
         /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
         /// </param>
         /// <param name='poolEvaluateAutoScaleOptions'>
@@ -349,20 +349,21 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<AutoScaleRun,PoolEvaluateAutoScaleHeaders>> EvaluateAutoScaleWithHttpMessagesAsync(string poolId, string autoScaleFormula, PoolEvaluateAutoScaleOptions poolEvaluateAutoScaleOptions = default(PoolEvaluateAutoScaleOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Changes the number of compute nodes that are assigned to a pool.
+        /// Changes the number of Compute Nodes that are assigned to a Pool.
         /// </summary>
         /// <remarks>
-        /// You can only resize a pool when its allocation state is steady. If
-        /// the pool is already resizing, the request fails with status code
-        /// 409. When you resize a pool, the pool's allocation state changes
-        /// from steady to resizing. You cannot resize pools which are
+        /// You can only resize a Pool when its allocation state is steady. If
+        /// the Pool is already resizing, the request fails with status code
+        /// 409. When you resize a Pool, the Pool's allocation state changes
+        /// from steady to resizing. You cannot resize Pools which are
         /// configured for automatic scaling. If you try to do this, the Batch
-        /// service returns an error 409. If you resize a pool downwards, the
-        /// Batch service chooses which nodes to remove. To remove specific
-        /// nodes, use the pool remove nodes API instead.
+        /// service returns an error 409. If you resize a Pool downwards, the
+        /// Batch service chooses which Compute Nodes to remove. To remove
+        /// specific Compute Nodes, use the Pool remove Compute Nodes API
+        /// instead.
         /// </remarks>
         /// <param name='poolId'>
-        /// The ID of the pool to resize.
+        /// The ID of the Pool to resize.
         /// </param>
         /// <param name='poolResizeParameter'>
         /// The parameters for the request.
@@ -384,20 +385,21 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolResizeHeaders>> ResizeWithHttpMessagesAsync(string poolId, PoolResizeParameter poolResizeParameter, PoolResizeOptions poolResizeOptions = default(PoolResizeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Stops an ongoing resize operation on the pool.
+        /// Stops an ongoing resize operation on the Pool.
         /// </summary>
         /// <remarks>
-        /// This does not restore the pool to its previous state before the
+        /// This does not restore the Pool to its previous state before the
         /// resize operation: it only stops any further changes being made, and
-        /// the pool maintains its current state. After stopping, the pool
-        /// stabilizes at the number of nodes it was at when the stop operation
-        /// was done. During the stop operation, the pool allocation state
-        /// changes first to stopping and then to steady. A resize operation
-        /// need not be an explicit resize pool request; this API can also be
-        /// used to halt the initial sizing of the pool when it is created.
+        /// the Pool maintains its current state. After stopping, the Pool
+        /// stabilizes at the number of Compute Nodes it was at when the stop
+        /// operation was done. During the stop operation, the Pool allocation
+        /// state changes first to stopping and then to steady. A resize
+        /// operation need not be an explicit resize Pool request; this API can
+        /// also be used to halt the initial sizing of the Pool when it is
+        /// created.
         /// </remarks>
         /// <param name='poolId'>
-        /// The ID of the pool whose resizing you want to stop.
+        /// The ID of the Pool whose resizing you want to stop.
         /// </param>
         /// <param name='poolStopResizeOptions'>
         /// Additional parameters for the operation
@@ -416,16 +418,16 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolStopResizeHeaders>> StopResizeWithHttpMessagesAsync(string poolId, PoolStopResizeOptions poolStopResizeOptions = default(PoolStopResizeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the properties of the specified pool.
+        /// Updates the properties of the specified Pool.
         /// </summary>
         /// <remarks>
-        /// This fully replaces all the updatable properties of the pool. For
-        /// example, if the pool has a start task associated with it and if
-        /// start task is not specified with this request, then the Batch
-        /// service will remove the existing start task.
+        /// This fully replaces all the updatable properties of the Pool. For
+        /// example, if the Pool has a StartTask associated with it and if
+        /// StartTask is not specified with this request, then the Batch
+        /// service will remove the existing StartTask.
         /// </remarks>
         /// <param name='poolId'>
-        /// The ID of the pool to update.
+        /// The ID of the Pool to update.
         /// </param>
         /// <param name='poolUpdatePropertiesParameter'>
         /// The parameters for the request.
@@ -447,15 +449,15 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolUpdatePropertiesHeaders>> UpdatePropertiesWithHttpMessagesAsync(string poolId, PoolUpdatePropertiesParameter poolUpdatePropertiesParameter, PoolUpdatePropertiesOptions poolUpdatePropertiesOptions = default(PoolUpdatePropertiesOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Removes compute nodes from the specified pool.
+        /// Removes Compute Nodes from the specified Pool.
         /// </summary>
         /// <remarks>
-        /// This operation can only run when the allocation state of the pool
+        /// This operation can only run when the allocation state of the Pool
         /// is steady. When this operation runs, the allocation state changes
         /// from steady to resizing.
         /// </remarks>
         /// <param name='poolId'>
-        /// The ID of the pool from which you want to remove nodes.
+        /// The ID of the Pool from which you want to remove Compute Nodes.
         /// </param>
         /// <param name='nodeRemoveParameter'>
         /// The parameters for the request.
@@ -477,12 +479,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolRemoveNodesHeaders>> RemoveNodesWithHttpMessagesAsync(string poolId, NodeRemoveParameter nodeRemoveParameter, PoolRemoveNodesOptions poolRemoveNodesOptions = default(PoolRemoveNodesOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the usage metrics, aggregated by pool across individual time
-        /// intervals, for the specified account.
+        /// Lists the usage metrics, aggregated by Pool across individual time
+        /// intervals, for the specified Account.
         /// </summary>
         /// <remarks>
         /// If you do not specify a $filter clause including a poolId, the
-        /// response includes all pools that existed in the account in the time
+        /// response includes all Pools that existed in the Account in the time
         /// range of the returned aggregation intervals. If you do not specify
         /// a $filter clause including a startTime or endTime these filters
         /// default to the start and end times of the last aggregation interval
@@ -512,7 +514,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>> ListUsageMetricsNextWithHttpMessagesAsync(string nextPageLink, PoolListUsageMetricsNextOptions poolListUsageMetricsNextOptions = default(PoolListUsageMetricsNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the pools in the specified account.
+        /// Lists all of the Pools in the specified Account.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

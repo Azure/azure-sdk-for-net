@@ -12,13 +12,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to Event Hubs, illustrating how to connect and query the service.
     /// </summary>
     ///
-    public class Sample1_HelloWorld : IEventHubsSample
+    public class Sample01_HelloWorld : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample1_HelloWorld);
+        public string Name { get; } = nameof(Sample01_HelloWorld);
 
         /// <summary>
         ///   A short description of the sample.
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Samples
         {
             // To interact with Event Hubs, a client is needed.  The client manages resources and should be
             // explicitly closed or disposed, but it is not necessary to do both.  In our case, we will take
-            // advantage of the new asynchonous dispose to ensure that we clean up our client when we are
+            // advantage of the new asynchronous dispose to ensure that we clean up our client when we are
             // done or when an exception is encountered.
 
             await using (var client = new EventHubClient(connectionString, eventHubName))
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 {
                     PartitionProperties partitionProperties = await client.GetPartitionPropertiesAsync(partitionId);
 
-                    Console.WriteLine($"\tPartiton: { partitionProperties.Id }");
+                    Console.WriteLine($"\tPartition: { partitionProperties.Id }");
                     Console.WriteLine($"\t\tThe partition contains no events: { partitionProperties.IsEmpty }");
                     Console.WriteLine($"\t\tThe first sequence number of an event in the partition is: { partitionProperties.BeginningSequenceNumber }");
                     Console.WriteLine($"\t\tThe last sequence number of an event in the partition is: { partitionProperties.LastEnqueuedSequenceNumber }");

@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
         ///
-        /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+        /// <returns>An enumerable containing the successfully claimed ownership instances.</returns>
         ///
         public abstract Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership);
 

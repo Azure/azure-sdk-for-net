@@ -12,13 +12,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of publishing events, extending the event data with custom metadata.
     /// </summary>
     ///
-    public class Sample6_PublishEventsWithCustomMetadata : IEventHubsSample
+    public class Sample07_PublishEventsWithCustomMetadata : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample6_PublishEventsWithCustomMetadata);
+        public string Name { get; } = nameof(Sample07_PublishEventsWithCustomMetadata);
 
         /// <summary>
         ///   A short description of the sample.

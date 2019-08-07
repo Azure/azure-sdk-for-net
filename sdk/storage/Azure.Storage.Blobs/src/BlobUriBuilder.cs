@@ -17,10 +17,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal struct BlobUriBuilder : IEquatable<BlobUriBuilder>
     {
-        const string SnapshotParameterName = "snapshot";
-        //const string VersionIdParameterName = "versionid";
-        const string SasVersionKey = "sv";
-
         /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
@@ -146,12 +142,12 @@ namespace Azure.Storage.Blobs
             // Convert the query parameters to a case-sensitive map & trim whitespace
             var paramsMap = new UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
             {
                 this.Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(SnapshotParameterName);
+                paramsMap.Remove(Constants.SnapshotParameterName);
             }
 
             //if(paramsMap.TryGetValue(VersionIdParameterName, out var versionId))
@@ -162,7 +158,7 @@ namespace Azure.Storage.Blobs
             //    paramsMap.Remove(VersionIdParameterName);
             //}
 
-            if (paramsMap.ContainsKey(SasVersionKey))
+            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
                 this.Sas = new BlobSasQueryParameters(paramsMap);
             }
@@ -205,7 +201,7 @@ namespace Azure.Storage.Blobs
                     rawQuery += "&";
                 }
 
-                rawQuery += SnapshotParameterName + "=" + this.Snapshot;
+                rawQuery += Constants.SnapshotParameterName + "=" + this.Snapshot;
             }
 
             //// Concatenate blob version query parameter (if it exists)
