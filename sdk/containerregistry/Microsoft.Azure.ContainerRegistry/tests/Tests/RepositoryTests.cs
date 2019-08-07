@@ -101,15 +101,16 @@ namespace ContainerRegistry.Tests
                 var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository);
                 Assert.Equal(1, repositoryDetails.TagCount);
                 Assert.Equal(1, repositoryDetails.ManifestCount);
-                Assert.Equal(ACRTestUtil.ProdRepository, repositoryDetails.ImageName);
-                Assert.True(repositoryDetails.ChangeableAttributes.DeleteEnabled);
+                Assert.Equal(ACRTestUtil.changeableRepository, repositoryDetails.ImageName);
+                Assert.False(repositoryDetails.ChangeableAttributes.DeleteEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ListEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ReadEnabled);
                 Assert.False(repositoryDetails.ChangeableAttributes.WriteEnabled);
 
                 //Undo change
                 updateAttributes.WriteEnabled = true;
-                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository, updateAttributes);
+                updateAttributes.DeleteEnabled = true;
+                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
             }
         }
 

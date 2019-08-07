@@ -20,10 +20,15 @@ namespace ContainerRegistry.Tests
     public static class ACRTestUtil
     {
         private static readonly string _testResourceGroup = "ereyTest";
-
-        public static readonly string ProdRepository = "prod/bash";
-        public static readonly string TestRepository = "test/bash";
+        
+        // Sample Repos for fetching
+        public static readonly string ProdRepository = "prod/bash"; 
+        public static readonly string TestRepository = "test/bash"; 
+        
+        //Repo for update or create-delete operations
         public static readonly string changeableRepository = "doundo/bash";
+        
+        //Repository with multiple hello-world# tags for deletion testing
         public static readonly string deleteableRepository = "deleteable";
 
         public static readonly string ManagedTestRegistry = "azuresdkunittest";
@@ -31,44 +36,34 @@ namespace ContainerRegistry.Tests
         public static readonly string ManagedTestRegistryForChanges = "azuresdkunittestupdateable";
         public static readonly string Scope = "registry:catalog:*";
 
-        private class TokenCredentials : ServiceClientCredentials
-        {
-            /*To be used for exchanging AAD Tokens for ACR Tokens*/
-            public TokenCredentials() {}
-            public override async Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                await base.ProcessHttpRequestAsync(request, cancellationToken);
-            }
-        }
-
+        /* Acquires an ACR client setup for the testing network. Note acquisition of credentials from registry
+         * must be possible for this to work in this way. */
         public static async Task<AzureContainerRegistryClient> GetACRClientAsync(MockContext context, string registryName)
         {
             var registryManagementClient = context.GetServiceClient<ContainerRegistryManagementClient>(handlers: CreateNewRecordedDelegatingHandler());
             var registry = await registryManagementClient.Registries.GetAsync(_testResourceGroup, registryName);
             var registryCredentials = await registryManagementClient.Registries.ListCredentialsAsync(_testResourceGroup, registryName);
+
             string username = registryCredentials.Username;
             string password = registryCredentials.Passwords[0].Value;
+
             AcrClientCredentials credential = new AcrClientCredentials(AcrClientCredentials.LoginMode.Basic, registry.LoginServer, username, password);
             var acrClient = context.GetServiceClientWithCredentials<AzureContainerRegistryClient>(credential, CreateNewRecordedDelegatingHandler());
             acrClient.LoginUri = "https://" + registry.LoginServer;
-
             return acrClient;
         }
 
+        /* Acquires an AAD access token from the connection string setup in the environment variables. */
         public static async Task<string> getAADaccessToken() {
-                TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-                var context = new AuthenticationContext("https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/v2.0/token");
-                string authClientId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
-                string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
-                var clientCredential = new ClientCredential(authClientId, authSecret);
-                var result = await context.AcquireTokenAsync(authClientId, clientCredential).ConfigureAwait(false);
-                return result.AccessToken;
-        }
+            TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+            string tenantId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.AADTenantKey];
+            var context = new AuthenticationContext("https://login.microsoftonline.com/"+ tenantId +"/oauth2/v2.0/token");
 
-        public static ContainerRegistryManagementClient GetACRManagementClient(MockContext context, string registryName)
-        {
-            var registryManagementClient = context.GetServiceClient<ContainerRegistryManagementClient>(handlers: CreateNewRecordedDelegatingHandler());
-            return registryManagementClient;
+            string authClientId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
+            string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
+            var clientCredential = new ClientCredential(authClientId, authSecret);
+            var result = await context.AcquireTokenAsync("https://management.core.windows.net", clientCredential).ConfigureAwait(false);
+            return result.AccessToken;
         }
 
         private static RecordedDelegatingHandler CreateNewRecordedDelegatingHandler()

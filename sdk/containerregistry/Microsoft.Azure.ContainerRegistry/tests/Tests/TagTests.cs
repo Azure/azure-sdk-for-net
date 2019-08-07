@@ -14,7 +14,8 @@ namespace ContainerRegistry.Tests
 
   public class TagTests
     {
-        AcrRepositoryTags prodTags = new AcrRepositoryTags()
+        #region Test Values
+        private static AcrRepositoryTags prodTags = new AcrRepositoryTags()
         {
             Registry = "azuresdkunittest.azurecr.io",
             ImageName = "prod/bash",
@@ -51,7 +52,8 @@ namespace ContainerRegistry.Tests
                }
            }
         };
-       
+        #endregion
+
         [Fact]
         public async Task GetAcrTags()
         {

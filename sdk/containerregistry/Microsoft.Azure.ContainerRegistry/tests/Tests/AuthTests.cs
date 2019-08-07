@@ -9,9 +9,6 @@ namespace ContainerRegistry.Tests
     using System.Threading.Tasks;
     using Xunit;
     using System.IdentityModel.Tokens.Jwt;
-    using Microsoft.IdentityModel.Tokens;
-    using Xunit.Sdk;
-    using System.Reflection;
 
     public class AuthTests
     {
@@ -29,27 +26,19 @@ namespace ContainerRegistry.Tests
         [Fact]
         public async Task GetAcrAccessToken()
         {
-            try
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrAccessToken)))
             {
-                using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrAccessToken)))
-                {
-                    AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                    var refreshToken = await client.GetAcrRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
-                    var accessToken = await client.GetAcrAccessTokenAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope, refreshToken.RefreshTokenProperty);
-                    validateAccessToken(accessToken.AccessTokenProperty);
-                }
+                AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                var refreshToken = await client.GetAcrRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
+                var accessToken = await client.GetAcrAccessTokenAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope, refreshToken.RefreshTokenProperty);
+                validateAccessToken(accessToken.AccessTokenProperty);
             }
-            catch (Exception e) {
-                Console.WriteLine(e);
-                    
-            }
-            
         }
 
         [Fact]
         public async Task GetAcrAccessTokenFromLogin()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrAccessToken)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrAccessTokenFromLogin)))
             {
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var accessToken = await client.GetAcrAccessTokenFromLoginAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope);
@@ -57,12 +46,12 @@ namespace ContainerRegistry.Tests
             }
         }
 
+        #region Validation Helpers
+
         private void validateAccessToken(string accessToken) {
             JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
             JwtSecurityToken fields = JwtSecurityClient.ReadToken(accessToken) as JwtSecurityToken;
             commonTokenValidation(fields);
-
-            //Assert.True((fields.ValidTo - fields.ValidFrom).TotalSeconds == 3600); // 1hr
             Assert.Equal("access_token", fields.Payload["grant_type"]);
         }
 
@@ -71,9 +60,7 @@ namespace ContainerRegistry.Tests
             JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
             JwtSecurityToken fields = JwtSecurityClient.ReadToken(refreshToken) as JwtSecurityToken;
             commonTokenValidation(fields);
-
             Assert.Equal("refresh_token", fields.Payload["grant_type"]);
-            //Assert.True((fields.ValidTo - fields.ValidFrom).TotalSeconds == 10800); // 1hr
         }
 
         private void commonTokenValidation(JwtSecurityToken fields) {
@@ -85,5 +72,6 @@ namespace ContainerRegistry.Tests
             //Custom
             Assert.Equal("1.0", fields.Payload["version"]);
         }
+        #endregion
     }
 }

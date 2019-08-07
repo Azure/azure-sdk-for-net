@@ -15,6 +15,7 @@ namespace ContainerRegistry.Tests
 
     public class ManifestTests
     {
+        #region Test Values
         private static readonly AcrManifestAttributes ExpectedAttributesOfProdRepository = new AcrManifestAttributes()
         {
             Registry = "azuresdkunittest.azurecr.io",
@@ -224,6 +225,7 @@ namespace ContainerRegistry.Tests
                 }
             }
         };
+        #endregion
 
         [Fact]        
         public async Task GetAcrManifestAttributes()
@@ -323,6 +325,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
+        #region Validation Helpers
         private void VerifyAcrManifestAttributesBase(AcrManifestAttributesBase expectedManifestBase, AcrManifestAttributesBase actualManifestBase)
         {
             Assert.Equal(expectedManifestBase.Architecture, actualManifestBase.Architecture);
@@ -382,5 +385,7 @@ namespace ContainerRegistry.Tests
                 }
             }
         }
+        #endregion
     }
+
 }
