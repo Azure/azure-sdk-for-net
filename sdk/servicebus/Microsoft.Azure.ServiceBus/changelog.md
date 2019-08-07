@@ -1,5 +1,5 @@
 # 4.0.0
-## Breaking Change
+## Breaking Changes
 - Allow clients to report if they own or share the underlying connection string [PR 6037](https://github.com/Azure/azure-sdk-for-net/pull/6037)
 - RBAC support - Allow more flexible ways to provide authentication [PR 6393](https://github.com/Azure/azure-sdk-for-net/pull/6393)
 - Updating RBAC API signatures [PR 6578](https://github.com/Azure/azure-sdk-for-net/pull/6578)
