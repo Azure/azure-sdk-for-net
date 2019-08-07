@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskContainerSettings class.
         /// </summary>
-        /// <param name="imageName">The image to use to create the container in
-        /// which the task will run.</param>
+        /// <param name="imageName">The Image to use to create the container in
+        /// which the Task will run.</param>
         /// <param name="containerRunOptions">Additional options to the
         /// container create command.</param>
         /// <param name="registry">The private registry which contains the
-        /// container image.</param>
-        /// <param name="workingDirectory">The location of the container task
+        /// container Image.</param>
+        /// <param name="workingDirectory">The location of the container Task
         /// working directory.</param>
         public TaskContainerSettings(string imageName, string containerRunOptions = default(string), ContainerRegistry registry = default(ContainerRegistry), ContainerWorkingDirectory? workingDirectory = default(ContainerWorkingDirectory?))
         {
@@ -63,12 +63,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string ContainerRunOptions { get; set; }
 
         /// <summary>
-        /// Gets or sets the image to use to create the container in which the
-        /// task will run.
+        /// Gets or sets the Image to use to create the container in which the
+        /// Task will run.
         /// </summary>
         /// <remarks>
-        /// This is the full image reference, as would be specified to "docker
-        /// pull". If no tag is provided as part of the image name, the tag
+        /// This is the full Image reference, as would be specified to "docker
+        /// pull". If no tag is provided as part of the Image name, the tag
         /// ":latest" is used as a default.
         /// </remarks>
         [JsonProperty(PropertyName = "imageName")]
@@ -76,17 +76,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the private registry which contains the container
-        /// image.
+        /// Image.
         /// </summary>
         /// <remarks>
-        /// This setting can be omitted if was already provided at pool
+        /// This setting can be omitted if was already provided at Pool
         /// creation.
         /// </remarks>
         [JsonProperty(PropertyName = "registry")]
         public ContainerRegistry Registry { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the container task working directory.
+        /// Gets or sets the location of the container Task working directory.
         /// </summary>
         /// <remarks>
         /// The default is 'taskWorkingDirectory'. Possible values include:

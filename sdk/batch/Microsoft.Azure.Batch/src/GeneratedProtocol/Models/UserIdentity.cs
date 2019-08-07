@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The definition of the user identity under which the task is run.
+    /// The definition of the user identity under which the Task is run.
     /// </summary>
     /// <remarks>
     /// Specify either the userName or autoUser property, but not both.
@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the UserIdentity class.
         /// </summary>
         /// <param name="userName">The name of the user identity under which
-        /// the task is run.</param>
-        /// <param name="autoUser">The auto user under which the task is
+        /// the Task is run.</param>
+        /// <param name="autoUser">The auto user under which the Task is
         /// run.</param>
         public UserIdentity(string userName = default(string), AutoUserSpecification autoUser = default(AutoUserSpecification))
         {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the user identity under which the task is
+        /// Gets or sets the name of the user identity under which the Task is
         /// run.
         /// </summary>
         /// <remarks>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets the auto user under which the task is run.
+        /// Gets or sets the auto user under which the Task is run.
         /// </summary>
         /// <remarks>
         /// The userName and autoUser properties are mutually exclusive; you

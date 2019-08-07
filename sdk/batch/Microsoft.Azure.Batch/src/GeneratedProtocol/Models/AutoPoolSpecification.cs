@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
     /// <summary>
     /// Specifies characteristics for a temporary 'auto pool'. The Batch
-    /// service will create this auto pool when the job is submitted.
+    /// service will create this auto Pool when the Job is submitted.
     /// </summary>
     public partial class AutoPoolSpecification
     {
@@ -31,14 +31,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the AutoPoolSpecification class.
         /// </summary>
         /// <param name="poolLifetimeOption">The minimum lifetime of created
-        /// auto pools, and how multiple jobs on a schedule are assigned to
-        /// pools.</param>
+        /// auto Pools, and how multiple Jobs on a schedule are assigned to
+        /// Pools.</param>
         /// <param name="autoPoolIdPrefix">A prefix to be added to the unique
-        /// identifier when a pool is automatically created.</param>
-        /// <param name="keepAlive">Whether to keep an auto pool alive after
+        /// identifier when a Pool is automatically created.</param>
+        /// <param name="keepAlive">Whether to keep an auto Pool alive after
         /// its lifetime expires.</param>
-        /// <param name="pool">The pool specification for the auto
-        /// pool.</param>
+        /// <param name="pool">The Pool specification for the auto
+        /// Pool.</param>
         public AutoPoolSpecification(PoolLifetimeOption poolLifetimeOption, string autoPoolIdPrefix = default(string), bool? keepAlive = default(bool?), PoolSpecification pool = default(PoolSpecification))
         {
             AutoPoolIdPrefix = autoPoolIdPrefix;
@@ -55,11 +55,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a prefix to be added to the unique identifier when a
-        /// pool is automatically created.
+        /// Pool is automatically created.
         /// </summary>
         /// <remarks>
-        /// The Batch service assigns each auto pool a unique identifier on
-        /// creation. To distinguish between pools created for different
+        /// The Batch service assigns each auto Pool a unique identifier on
+        /// creation. To distinguish between Pools created for different
         /// purposes, you can specify this element to add a prefix to the ID
         /// that is assigned. The prefix can be up to 20 characters long.
         /// </remarks>
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string AutoPoolIdPrefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum lifetime of created auto pools, and how
-        /// multiple jobs on a schedule are assigned to pools.
+        /// Gets or sets the minimum lifetime of created auto Pools, and how
+        /// multiple Jobs on a schedule are assigned to Pools.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'jobSchedule', 'job'
@@ -77,21 +77,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public PoolLifetimeOption PoolLifetimeOption { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to keep an auto pool alive after its lifetime
+        /// Gets or sets whether to keep an auto Pool alive after its lifetime
         /// expires.
         /// </summary>
         /// <remarks>
-        /// If false, the Batch service deletes the pool once its lifetime (as
+        /// If false, the Batch service deletes the Pool once its lifetime (as
         /// determined by the poolLifetimeOption setting) expires; that is,
-        /// when the job or job schedule completes. If true, the Batch service
-        /// does not delete the pool automatically. It is up to the user to
-        /// delete auto pools created with this option.
+        /// when the Job or Job Schedule completes. If true, the Batch service
+        /// does not delete the Pool automatically. It is up to the user to
+        /// delete auto Pools created with this option.
         /// </remarks>
         [JsonProperty(PropertyName = "keepAlive")]
         public bool? KeepAlive { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool specification for the auto pool.
+        /// Gets or sets the Pool specification for the auto Pool.
         /// </summary>
         [JsonProperty(PropertyName = "pool")]
         public PoolSpecification Pool { get; set; }

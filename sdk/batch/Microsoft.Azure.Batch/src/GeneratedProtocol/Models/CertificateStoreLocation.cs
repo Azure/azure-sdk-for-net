@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum CertificateStoreLocation
     {
         /// <summary>
-        /// Certificates should be installed to the CurrentUser certificate
+        /// Certificates should be installed to the CurrentUser Certificate
         /// store.
         /// </summary>
         [EnumMember(Value = "currentuser")]
         CurrentUser,
         /// <summary>
-        /// Certificates should be installed to the LocalMachine certificate
+        /// Certificates should be installed to the LocalMachine Certificate
         /// store.
         /// </summary>
         [EnumMember(Value = "localmachine")]

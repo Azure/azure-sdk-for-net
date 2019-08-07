@@ -340,7 +340,7 @@ namespace Azure.Storage.Files
                         metadata: metadata,
                         quota: quotaInBytes,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.Create",
+                        operationName: Constants.File.Share.CreateOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -456,7 +456,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.CreateSnapshot",
+                        operationName: Constants.File.Share.CreateSnapshotOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -580,7 +580,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.Delete",
+                        operationName: Constants.File.Share.DeleteOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -704,7 +704,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.GetProperties",
+                        operationName: Constants.File.Share.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -935,7 +935,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.SetMetadata",
+                        operationName: Constants.File.Share.SetMetadataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1042,7 +1042,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.GetAccessPolicy",
+                        operationName: Constants.File.Share.GetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1167,7 +1167,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         permissions: permissions,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.SetAccessPolicy",
+                        operationName: Constants.File.Share.SetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.GetStatistics",
+                        operationName: Constants.File.Share.GetStatisticsOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

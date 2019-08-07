@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// and you have verified that the request is properly formulated, you
         /// may use this value to report the error to Microsoft. In your
         /// report, include the value of this request ID, the approximate time
-        /// that the request was made, the Batch account against which the
-        /// request was made, and the region that account resides in.</param>
+        /// that the request was made, the Batch Account against which the
+        /// request was made, and the region that Account resides in.</param>
         /// <param name="eTag">The ETag HTTP response header. This is an opaque
         /// string. You can use it to detect whether the resource has changed
         /// between requests. In particular, you can pass the ETag to one of
@@ -76,8 +76,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// have verified that the request is properly formulated, you may use
         /// this value to report the error to Microsoft. In your report,
         /// include the value of this request ID, the approximate time that the
-        /// request was made, the Batch account against which the request was
-        /// made, and the region that account resides in.
+        /// request was made, the Batch Account against which the request was
+        /// made, and the region that Account resides in.
         /// </summary>
         [JsonProperty(PropertyName = "request-id")]
         public System.Guid? RequestId { get; set; }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch
 
         internal string GetOcpRangeHeader()
         {
-            return string.Format(OcpRangeFormat, this.StartRange, this.EndRange);
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, OcpRangeFormat, this.StartRange, this.EndRange);
         }
     }
 }

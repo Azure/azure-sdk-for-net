@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// and you have verified that the request is properly formulated, you
         /// may use this value to report the error to Microsoft. In your
         /// report, include the value of this request ID, the approximate time
-        /// that the request was made, the Batch account against which the
-        /// request was made, and the region that account resides in.</param>
+        /// that the request was made, the Batch Account against which the
+        /// request was made, and the region that Account resides in.</param>
         public TaskAddCollectionHeaders(string clientRequestId = default(string), string requestId = default(string))
         {
             ClientRequestId = clientRequestId;
@@ -65,8 +65,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// have verified that the request is properly formulated, you may use
         /// this value to report the error to Microsoft. In your report,
         /// include the value of this request ID, the approximate time that the
-        /// request was made, the Batch account against which the request was
-        /// made, and the region that account resides in.
+        /// request was made, the Batch Account against which the request was
+        /// made, and the region that Account resides in.
         /// </summary>
         [JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// How the Batch service should respond if a task exits with a particular
+    /// How the Batch service should respond if a Task exits with a particular
     /// exit code.
     /// </summary>
     public partial class ExitCodeMapping
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="code">A process exit code.</param>
         /// <param name="exitOptions">How the Batch service should respond if
-        /// the task exits with this exit code.</param>
+        /// the Task exits with this exit code.</param>
         public ExitCodeMapping(int code, ExitOptions exitOptions)
         {
             Code = code;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int Code { get; set; }
 
         /// <summary>
-        /// Gets or sets how the Batch service should respond if the task exits
+        /// Gets or sets how the Batch service should respond if the Task exits
         /// with this exit code.
         /// </summary>
         [JsonProperty(PropertyName = "exitOptions")]
