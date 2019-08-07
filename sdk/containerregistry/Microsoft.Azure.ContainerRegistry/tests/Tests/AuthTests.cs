@@ -29,12 +29,19 @@ namespace ContainerRegistry.Tests
         [Fact]
         public async Task GetAcrAccessToken()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrAccessToken)))
+            try
             {
-                AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var refreshToken = await client.GetAcrRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
-                var accessToken = await client.GetAcrAccessTokenAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope, refreshToken.RefreshTokenProperty);
-                validateAccessToken(accessToken.AccessTokenProperty);
+                using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrAccessToken)))
+                {
+                    AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                    var refreshToken = await client.GetAcrRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
+                    var accessToken = await client.GetAcrAccessTokenAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope, refreshToken.RefreshTokenProperty);
+                    validateAccessToken(accessToken.AccessTokenProperty);
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e);
+                    
             }
             
         }

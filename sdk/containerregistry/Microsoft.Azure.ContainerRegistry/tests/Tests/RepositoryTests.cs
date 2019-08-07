@@ -92,24 +92,24 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrRepositoryAttributes)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
+
+                //Changeable attributes
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = false, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
                 await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes); 
+
+                //Check success
                 var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository);
-                /*
-                Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, repositoryDetails.Registry);
                 Assert.Equal(1, repositoryDetails.TagCount);
                 Assert.Equal(1, repositoryDetails.ManifestCount);
-                Assert.Equal("2018-09-28T23:37:52.0356217Z", repositoryDetails.LastUpdateTime);
-                Assert.Equal("2018-09-28T23:37:51.9668212Z", repositoryDetails.CreatedTime);
                 Assert.Equal(ACRTestUtil.ProdRepository, repositoryDetails.ImageName);
                 Assert.True(repositoryDetails.ChangeableAttributes.DeleteEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ListEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ReadEnabled);
                 Assert.False(repositoryDetails.ChangeableAttributes.WriteEnabled);
 
+                //Undo change
                 updateAttributes.WriteEnabled = true;
                 await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository, updateAttributes);
-                */
             }
         }
 

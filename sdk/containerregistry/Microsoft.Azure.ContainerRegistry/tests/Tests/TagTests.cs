@@ -88,9 +88,12 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrTag)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
-                await client.DeleteAcrTagAsync(ACRTestUtil.TestRepository, "deleteabletag");
-                var tags = await client.GetTagListAsync(ACRTestUtil.TestRepository);
-                Assert.DoesNotContain(tags.Tags, tag => { return tag.Equals("deletabletag"); });
+                var tags = await client.GetTagListAsync(ACRTestUtil.deleteableRepository);
+
+                await client.DeleteAcrTagAsync(ACRTestUtil.deleteableRepository, tags.Tags[0]);
+
+                var newTags = await client.GetTagListAsync(ACRTestUtil.deleteableRepository);
+                Assert.DoesNotContain(newTags.Tags, tag => { return tag.Equals(tags.Tags[0]); });
             }
         }
 
@@ -101,15 +104,15 @@ namespace ContainerRegistry.Tests
             {
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
                 var tag = "latest";
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                await client.UpdateAcrTagAttributesAsync(ACRTestUtil.ProdRepository, tag, updateAttributes);
-                var tagAttributes = await client.GetAcrTagAttributesAsync(ACRTestUtil.ProdRepository, tag);
-                
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
+                await client.UpdateAcrTagAttributesAsync(ACRTestUtil.changeableRepository, tag, updateAttributes);
+
+                var tagAttributes = await client.GetAcrTagAttributesAsync(ACRTestUtil.changeableRepository, tag);
                 Assert.False(tagAttributes.TagAttributes.ChangeableAttributes.WriteEnabled);
 
                 updateAttributes.WriteEnabled = true;
-                await client.UpdateAcrTagAttributesAsync(ACRTestUtil.ProdRepository, tag, updateAttributes);
-                tagAttributes = await client.GetAcrTagAttributesAsync(ACRTestUtil.ProdRepository, tag);
+                await client.UpdateAcrTagAttributesAsync(ACRTestUtil.changeableRepository, tag, updateAttributes);
+                tagAttributes = await client.GetAcrTagAttributesAsync(ACRTestUtil.changeableRepository, tag);
 
                 Assert.True(tagAttributes.TagAttributes.ChangeableAttributes.WriteEnabled);
             }
