@@ -22,12 +22,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum DependencyAction
     {
         /// <summary>
-        /// Satisfy the task's dependencies.
+        /// Satisfy tasks waiting on this task; once all dependencies are
+        /// satisfied, the task will be scheduled to run.
         /// </summary>
         [EnumMember(Value = "satisfy")]
         Satisfy,
         /// <summary>
-        /// Block the task's dependencies.
+        /// Blocks tasks waiting on this task, preventing them from being
+        /// scheduled.
         /// </summary>
         [EnumMember(Value = "block")]
         Block

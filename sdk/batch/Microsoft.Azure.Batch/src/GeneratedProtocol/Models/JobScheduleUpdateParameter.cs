@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The set of changes to be made to a job schedule.
+    /// The set of changes to be made to a Job Schedule.
     /// </summary>
     public partial class JobScheduleUpdateParameter
     {
@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobScheduleUpdateParameter class.
         /// </summary>
-        /// <param name="schedule">The schedule according to which jobs will be
+        /// <param name="schedule">The schedule according to which Jobs will be
         /// created.</param>
-        /// <param name="jobSpecification">Details of the jobs to be created on
+        /// <param name="jobSpecification">Details of the Jobs to be created on
         /// this schedule.</param>
         /// <param name="metadata">A list of name-value pairs associated with
-        /// the job schedule as metadata.</param>
+        /// the Job Schedule as metadata.</param>
         public JobScheduleUpdateParameter(Schedule schedule, JobSpecification jobSpecification, IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Schedule = schedule;
@@ -52,30 +52,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the schedule according to which jobs will be created.
+        /// Gets or sets the schedule according to which Jobs will be created.
         /// </summary>
         /// <remarks>
         /// If you do not specify this element, it is equivalent to passing the
-        /// default schedule: that is, a single job scheduled to run
+        /// default schedule: that is, a single Job scheduled to run
         /// immediately.
         /// </remarks>
         [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
-        /// Gets or sets details of the jobs to be created on this schedule.
+        /// Gets or sets details of the Jobs to be created on this schedule.
         /// </summary>
         /// <remarks>
-        /// Updates affect only jobs that are started after the update has
-        /// taken place. Any currently active job continues with the older
+        /// Updates affect only Jobs that are started after the update has
+        /// taken place. Any currently active Job continues with the older
         /// specification.
         /// </remarks>
         [JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the job
-        /// schedule as metadata.
+        /// Gets or sets a list of name-value pairs associated with the Job
+        /// Schedule as metadata.
         /// </summary>
         /// <remarks>
         /// If you do not specify this element, it takes the default value of

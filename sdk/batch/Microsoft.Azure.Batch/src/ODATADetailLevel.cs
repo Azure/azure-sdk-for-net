@@ -5,6 +5,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using Protocol.Models;
 
     /// <summary>
@@ -143,6 +144,7 @@
             base.ModificationInterceptHandler = SetODATAPredicates;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2208:VariableNamesShouldNotMatchFieldNames")]
         private void SetODATAPredicates(Protocol.IBatchRequest request)
         {
             IODataFilter filterOptions = request.Options as IODataFilter;
@@ -156,7 +158,7 @@
             else if (!string.IsNullOrEmpty(this._details.FilterClause))
             {
                 //Note: We explicitly set this to be "detailLevel" for clarity for the customer even though at this scope there is no detailLevel param
-                throw new ArgumentException(string.Format(BatchErrorMessages.TypeDoesNotSupportFilterClause, request.GetType()), "detailLevel");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.TypeDoesNotSupportFilterClause, request.GetType()), "detailLevel");
             }
 
             if (expandOptions != null)
@@ -166,7 +168,7 @@
             else if (!string.IsNullOrEmpty(this._details.ExpandClause))
             {
                 //Note: We explicitly set this to be "detailLevel" for clarity for the customer even though at this scope there is no detailLevel param
-                throw new ArgumentException(string.Format(BatchErrorMessages.TypeDoesNotSupportExpandClause, request.GetType()), "detailLevel");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.TypeDoesNotSupportExpandClause, request.GetType()), "detailLevel");
             }
 
             if (selectOptions != null)
@@ -176,7 +178,7 @@
             else if (!string.IsNullOrEmpty(this._details.SelectClause))
             {
                 //Note: We explicitly set this to be "detailLevel" for clarity for the customer even though at this scope there is no detailLevel param
-                throw new ArgumentException(string.Format(BatchErrorMessages.TypeDoesNotSupportSelectClause, request.GetType()), "detailLevel");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.TypeDoesNotSupportSelectClause, request.GetType()), "detailLevel");
             }
         }
     }

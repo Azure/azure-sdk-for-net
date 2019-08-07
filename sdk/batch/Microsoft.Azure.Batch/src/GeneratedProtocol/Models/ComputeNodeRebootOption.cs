@@ -22,30 +22,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum ComputeNodeRebootOption
     {
         /// <summary>
-        /// Terminate running task processes and requeue the tasks. The tasks
-        /// will run again when a node is available. Restart the node as soon
-        /// as tasks have been terminated.
+        /// Terminate running Task processes and requeue the Tasks. The Tasks
+        /// will run again when a Compute Node is available. Restart the
+        /// Compute Node as soon as Tasks have been terminated.
         /// </summary>
         [EnumMember(Value = "requeue")]
         Requeue,
         /// <summary>
-        /// Terminate running tasks. The tasks will be completed with
+        /// Terminate running Tasks. The Tasks will be completed with
         /// failureInfo indicating that they were terminated, and will not run
-        /// again. Restart the node as soon as tasks have been terminated.
+        /// again. Restart the Compute Node as soon as Tasks have been
+        /// terminated.
         /// </summary>
         [EnumMember(Value = "terminate")]
         Terminate,
         /// <summary>
-        /// Allow currently running tasks to complete. Schedule no new tasks
-        /// while waiting. Restart the node when all tasks have completed.
+        /// Allow currently running Tasks to complete. Schedule no new Tasks
+        /// while waiting. Restart the Compute Node when all Tasks have
+        /// completed.
         /// </summary>
         [EnumMember(Value = "taskcompletion")]
         TaskCompletion,
         /// <summary>
-        /// Allow currently running tasks to complete, then wait for all task
-        /// data retention periods to expire. Schedule no new tasks while
-        /// waiting. Restart the node when all task retention periods have
-        /// expired.
+        /// Allow currently running Tasks to complete, then wait for all Task
+        /// data retention periods to expire. Schedule no new Tasks while
+        /// waiting. Restart the Compute Node when all Task retention periods
+        /// have expired.
         /// </summary>
         [EnumMember(Value = "retaineddata")]
         RetainedData

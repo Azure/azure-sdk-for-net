@@ -136,14 +136,14 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual ITriggersOperations Triggers { get; private set; }
 
         /// <summary>
-        /// Gets the IRerunTriggersOperations.
-        /// </summary>
-        public virtual IRerunTriggersOperations RerunTriggers { get; private set; }
-
-        /// <summary>
         /// Gets the ITriggerRunsOperations.
         /// </summary>
         public virtual ITriggerRunsOperations TriggerRuns { get; private set; }
+
+        /// <summary>
+        /// Gets the IRerunTriggersOperations.
+        /// </summary>
+        public virtual IRerunTriggersOperations RerunTriggers { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
@@ -398,8 +398,8 @@ namespace Microsoft.Azure.Management.DataFactory
             PipelineRuns = new PipelineRunsOperations(this);
             ActivityRuns = new ActivityRunsOperations(this);
             Triggers = new TriggersOperations(this);
-            RerunTriggers = new RerunTriggersOperations(this);
             TriggerRuns = new TriggerRunsOperations(this);
+            RerunTriggers = new RerunTriggersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";

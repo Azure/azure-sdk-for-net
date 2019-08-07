@@ -252,6 +252,20 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<MountConfiguration>",
+            "Name": "MountConfiguration",
+            "SummaryComment": "A list of file systems to mount on each node in the pool.",
+            "RemarksComment": "This supports Azure Files, NFS, CIFS/SMB, and Blobfuse.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.MountConfiguration>",
+            "Name": "MountConfiguration"
+          }
         }
       ]
     }

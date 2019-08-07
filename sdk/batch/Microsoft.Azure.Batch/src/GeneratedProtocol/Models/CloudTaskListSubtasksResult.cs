@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The result of listing the subtasks of a task.
+    /// The result of listing the subtasks of a Task.
     /// </summary>
     public partial class CloudTaskListSubtasksResult
     {
