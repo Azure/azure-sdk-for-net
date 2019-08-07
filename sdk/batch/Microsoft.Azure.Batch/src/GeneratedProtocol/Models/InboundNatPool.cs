@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A inbound NAT pool that can be used to address specific ports on
-    /// compute nodes in a Batch pool externally.
+    /// A inbound NAT Pool that can be used to address specific ports on
+    /// Compute Nodes in a Batch Pool externally.
     /// </summary>
     public partial class InboundNATPool
     {
@@ -34,14 +34,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="name">The name of the endpoint.</param>
         /// <param name="protocol">The protocol of the endpoint.</param>
-        /// <param name="backendPort">The port number on the compute
-        /// node.</param>
+        /// <param name="backendPort">The port number on the Compute
+        /// Node.</param>
         /// <param name="frontendPortRangeStart">The first port number in the
         /// range of external ports that will be used to provide inbound access
-        /// to the backendPort on individual compute nodes.</param>
+        /// to the backendPort on individual Compute Nodes.</param>
         /// <param name="frontendPortRangeEnd">The last port number in the
         /// range of external ports that will be used to provide inbound access
-        /// to the backendPort on individual compute nodes.</param>
+        /// to the backendPort on individual Compute Nodes.</param>
         /// <param name="networkSecurityGroupRules">A list of network security
         /// group rules that will be applied to the endpoint.</param>
         public InboundNATPool(string name, InboundEndpointProtocol protocol, int backendPort, int frontendPortRangeStart, int frontendPortRangeEnd, IList<NetworkSecurityGroupRule> networkSecurityGroupRules = default(IList<NetworkSecurityGroupRule>))
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the name of the endpoint.
         /// </summary>
         /// <remarks>
-        /// The name must be unique within a Batch pool, can contain letters,
+        /// The name must be unique within a Batch Pool, can contain letters,
         /// numbers, underscores, periods, and hyphens. Names must start with a
         /// letter or number, must end with a letter, number, or underscore,
         /// and cannot exceed 77 characters.  If any invalid values are
@@ -83,10 +83,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public InboundEndpointProtocol Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the port number on the compute node.
+        /// Gets or sets the port number on the Compute Node.
         /// </summary>
         /// <remarks>
-        /// This must be unique within a Batch pool. Acceptable values are
+        /// This must be unique within a Batch Pool. Acceptable values are
         /// between 1 and 65535 except for 22, 3389, 29876 and 29877 as these
         /// are reserved. If any reserved values are provided the request fails
         /// with HTTP status code 400.
@@ -97,11 +97,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the first port number in the range of external ports
         /// that will be used to provide inbound access to the backendPort on
-        /// individual compute nodes.
+        /// individual Compute Nodes.
         /// </summary>
         /// <remarks>
         /// Acceptable values range between 1 and 65534 except ports from 50000
-        /// to 55000 which are reserved. All ranges within a pool must be
+        /// to 55000 which are reserved. All ranges within a Pool must be
         /// distinct and cannot overlap. Each range must contain at least 40
         /// ports. If any reserved or overlapping values are provided the
         /// request fails with HTTP status code 400.
@@ -112,12 +112,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the last port number in the range of external ports
         /// that will be used to provide inbound access to the backendPort on
-        /// individual compute nodes.
+        /// individual Compute Nodes.
         /// </summary>
         /// <remarks>
         /// Acceptable values range between 1 and 65534 except ports from 50000
         /// to 55000 which are reserved by the Batch service. All ranges within
-        /// a pool must be distinct and cannot overlap. Each range must contain
+        /// a Pool must be distinct and cannot overlap. Each range must contain
         /// at least 40 ports. If any reserved or overlapping values are
         /// provided the request fails with HTTP status code 400.
         /// </remarks>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// The maximum number of rules that can be specified across all the
-        /// endpoints on a Batch pool is 25. If no network security group rules
+        /// endpoints on a Batch Pool is 25. If no network security group rules
         /// are specified, a default rule will be created to allow inbound
         /// access to the specified backendPort. If the maximum number of
         /// network security group rules is exceeded the request fails with

@@ -1,7 +1,6 @@
 ﻿// 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 // 
 
 namespace Microsoft.Azure.Batch.Protocol
@@ -9,6 +8,7 @@ namespace Microsoft.Azure.Batch.Protocol
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.Globalization;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol
             //First set ocp-date always
             if (!httpRequest.Headers.Contains(OCPDateHeaderString))
             {
-                httpRequest.Headers.TryAddWithoutValidation(OCPDateHeaderString, string.Format("{0:R}", DateTime.UtcNow));
+                httpRequest.Headers.TryAddWithoutValidation(OCPDateHeaderString, string.Format(CultureInfo.InvariantCulture, "{0:R}", DateTime.UtcNow));
             }
 
             // Set Headers

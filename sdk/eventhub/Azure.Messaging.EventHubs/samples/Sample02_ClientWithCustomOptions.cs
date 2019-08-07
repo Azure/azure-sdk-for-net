@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to Event Hubs, exploring additional options for creating an <see cref="EventHubClient" />.
     /// </summary>
     ///
-    public class Sample2_ClientWithCustomOptions : IEventHubsSample
+    public class Sample02_ClientWithCustomOptions : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample2_ClientWithCustomOptions);
+        public string Name { get; } = nameof(Sample02_ClientWithCustomOptions);
 
         /// <summary>
         ///   A short description of the sample.
@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Samples
             // The Event Hub client also allows you to customize how it connects to the service by specifying the specific transport that it
             // should communicate over and whether it should make use of a proxy for network communication.
             //
-            // Please note that the proxy is only supported when using Websockets as a transport; it isn't compatibile with raw TCP or other
+            // Please note that the proxy is only supported when using WebSockets as a transport; it isn't compatible with raw TCP or other
             // transport channels.
 
             var clientOptions = new EventHubClientOptions

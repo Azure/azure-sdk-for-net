@@ -21,16 +21,6 @@ namespace Azure.Storage
 #pragma warning restore CA1032 // Implement standard exception constructors
     {
         /// <summary>
-        /// Name of the x-ms-error-code header.
-        /// </summary>
-        private const string ErrorCodeHeaderName = "x-ms-error-code";
-
-        /// <summary>
-        /// Name of the x-ms-request-id header.
-        /// </summary>
-        private const string RequestIdHeaderName = "x-ms-request-id";
-
-        /// <summary>
         /// Well known error codes for common failure conditions
         /// </summary>
         public string ErrorCode { get; private set; }
@@ -89,7 +79,7 @@ namespace Azure.Storage
             // Get the error code, if it wasn't provided
             if (String.IsNullOrEmpty(errorCode))
             {
-                response.Headers.TryGetValue(ErrorCodeHeaderName, out errorCode);
+                response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode);
             }
             this.ErrorCode = errorCode;
 
@@ -99,7 +89,7 @@ namespace Azure.Storage
             }
 
             // Include the RequestId
-            this.RequestId = response.Headers.TryGetValue(RequestIdHeaderName, out var value) ? value : null;
+            this.RequestId = response.Headers.TryGetValue(Constants.HeaderNames.RequestId, out var value) ? value : null;
         }
 
         /// <summary>
@@ -127,7 +117,7 @@ namespace Azure.Storage
 
             // Make the Storage ErrorCode especially prominent
             if (!String.IsNullOrEmpty(errorCode) ||
-                response.Headers.TryGetValue(ErrorCodeHeaderName, out errorCode))
+                response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode))
             {
                 messageBuilder
                     .AppendLine()

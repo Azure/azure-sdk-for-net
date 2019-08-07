@@ -1,5 +1,20 @@
 # Microsoft.Azure.Batch release notes
 
+## Changes in 12.0.0
+### Features
+- Added ability to specify a collection of public IPs on `NetworkConfiguration` via the new `PublicIPs` property. This guarantees nodes in the Pool will have an 
+  IP from the list user provided IPs.
+- Added ability to mount remote file-systems on each node of a pool via the `MountConfiguration` property on `CloudPool`.
+- Shared Image Gallery images can now be specified on the `VirtualMachineImageId` property of `ImageReference` by referencing the image via its ARM ID.
+- **[Breaking]** When not specified, the default value for `WaitForSuccess` on `StartTask` is now `true` (was `false`).
+- **[Breaking]** When not specified, the default value for `Scope` on `AutoUserSpecification` is now always `Pool` (was `Task` on Windows nodes, `Pool` on Linux nodes).
+
+### Bug fixes
+ - Improved various confusing or incomplete documentation.
+
+### REST API version
+This version of the Batch .NET client library targets version 2019-08-01.10.0 of the Azure Batch REST API.
+
 ## Changes in 11.0.0
 ### Features
  - Added `maxBackoff` parameter to `RetryPolicyProvider.ExponentialRetryProvider`. This option was already available on the `ExponentialRetry` constructor, 

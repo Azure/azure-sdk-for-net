@@ -26,12 +26,14 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<Common.DynamicVNetAssignmentScope?> DynamicVNetAssignmentScopeProperty;
             public readonly PropertyAccessor<PoolEndpointConfiguration> EndpointConfigurationProperty;
+            public readonly PropertyAccessor<IList<string>> PublicIPsProperty;
             public readonly PropertyAccessor<string> SubnetIdProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.DynamicVNetAssignmentScopeProperty = this.CreatePropertyAccessor<Common.DynamicVNetAssignmentScope?>(nameof(DynamicVNetAssignmentScope), BindingAccess.Read | BindingAccess.Write);
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor<PoolEndpointConfiguration>(nameof(EndpointConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.PublicIPsProperty = this.CreatePropertyAccessor<IList<string>>(nameof(PublicIPs), BindingAccess.Read | BindingAccess.Write);
                 this.SubnetIdProperty = this.CreatePropertyAccessor<string>(nameof(SubnetId), BindingAccess.Read | BindingAccess.Write);
             }
 
@@ -44,6 +46,10 @@ namespace Microsoft.Azure.Batch
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new PoolEndpointConfiguration(o).Freeze()),
                     nameof(EndpointConfiguration),
+                    BindingAccess.Read);
+                this.PublicIPsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CollectionToThreadSafeCollection(protocolObject.PublicIPs, o => o),
+                    nameof(PublicIPs),
                     BindingAccess.Read);
                 this.SubnetIdProperty = this.CreatePropertyAccessor(
                     protocolObject.SubnetId,
@@ -95,6 +101,23 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.EndpointConfigurationProperty.Value; }
             set { this.propertyContainer.EndpointConfigurationProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the list of public IPs which the Batch service will use when provisioning Compute Nodes.
+        /// </summary>
+        /// <remarks>
+        /// The number of IPs specified here limits the maximum size of the Pool - 50 dedicated nodes or 20 low-priority 
+        /// nodes can be allocated for each public IP. For example, a pool needing 150 dedicated VMs would need at least 
+        /// 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}.
+        /// </remarks>
+        public IList<string> PublicIPs
+        {
+            get { return this.propertyContainer.PublicIPsProperty.Value; }
+            set
+            {
+                this.propertyContainer.PublicIPsProperty.Value = ConcurrentChangeTrackedList<string>.TransformEnumerableToConcurrentList(value);
+            }
         }
 
         /// <summary>
@@ -152,6 +175,7 @@ namespace Microsoft.Azure.Batch
             {
                 DynamicVNetAssignmentScope = UtilitiesInternal.MapNullableEnum<Common.DynamicVNetAssignmentScope, Models.DynamicVNetAssignmentScope>(this.DynamicVNetAssignmentScope),
                 EndpointConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.EndpointConfiguration, (o) => o.GetTransportObject()),
+                PublicIPs = this.PublicIPs,
                 SubnetId = this.SubnetId,
             };
 

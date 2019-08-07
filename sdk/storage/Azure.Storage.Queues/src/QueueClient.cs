@@ -52,21 +52,15 @@ namespace Azure.Storage.Queues
         protected virtual HttpPipeline Pipeline => this._pipeline;
 
         /// <summary>
-        /// QueueMaxMessagesDequeue indicates the maximum number of messages
-        /// you can retrieve with each call to Dequeue.
-        /// </summary>
-        public const int MaxMessagesDequeue = 32;
-
-        /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
         /// you can retrieve with each call to Peek.
         /// </summary>
-        public const int MaxMessagesPeek = MaxMessagesDequeue;
+        public const int MaxMessagesPeek = Constants.Queue.MaxMessagesDequeue;
 
         /// <summary>
         /// QueueMessageMaxBytes indicates the maximum number of bytes allowed for a message's UTF-8 text.
         /// </summary>
-        public const int MessageMaxBytes = 64 * Constants.KB;
+        public const int MessageMaxBytes = Constants.Queue.QueueMessageMaxBytes;
 
         #region ctors
         /// <summary>
@@ -124,7 +118,7 @@ namespace Azure.Storage.Queues
                     QueueName = queueName
                 };
             this._uri = builder.ToUri();
-            this._messagesUri = this._uri.AppendToPath("messages");
+            this._messagesUri = this._uri.AppendToPath(Constants.Queue.messagesUri);
             this._pipeline = (options ?? new QueueClientOptions()).Build(conn.Credentials);
         }
 
@@ -207,7 +201,7 @@ namespace Azure.Storage.Queues
         internal QueueClient(Uri queueUri, HttpPipelinePolicy authentication, QueueClientOptions options)
         {
             this._uri = queueUri;
-            this._messagesUri = queueUri.AppendToPath("messages");
+            this._messagesUri = queueUri.AppendToPath(Constants.Queue.messagesUri);
             this._pipeline = (options ?? new QueueClientOptions()).Build(authentication);
         }
 
@@ -225,7 +219,7 @@ namespace Azure.Storage.Queues
         internal QueueClient(Uri queueUri, HttpPipeline pipeline)
         {
             this._uri = queueUri;
-            this._messagesUri = queueUri.AppendToPath("messages");
+            this._messagesUri = queueUri.AppendToPath(Constants.Queue.messagesUri);
             this._pipeline = pipeline;
         }
         #endregion ctors
@@ -821,7 +815,7 @@ namespace Azure.Storage.Queues
                         this.Pipeline,
                         this.MessagesUri,
                         async: async,
-                        operationName: "Azure.Storage.Queues.QueueClient.ClearMessages",
+                        operationName: Constants.Queue.ClearMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -953,7 +947,7 @@ namespace Azure.Storage.Queues
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
-                            operationName: "Azure.Storage.Queues.QueueClient.EnqueueMessage",
+                            operationName: Constants.Queue.EnqueueMessageOperationName,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -1074,7 +1068,7 @@ namespace Azure.Storage.Queues
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
-                        operationName: "Azure.Storage.Queues.QueueClient.DequeueMessages",
+                        operationName: Constants.Queue.DequeueMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1174,7 +1168,7 @@ namespace Azure.Storage.Queues
                         this.MessagesUri,
                         numberOfMessages: maxMessages,
                         async: async,
-                        operationName: "Azure.Storage.Queues.QueueClient.PeekMessages",
+                        operationName: Constants.Queue.PeekMessagesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1288,7 +1282,7 @@ namespace Azure.Storage.Queues
                         uri,
                         popReceipt: popReceipt,
                         async: async,
-                        operationName: "Azure.Storage.Queues.QueueClient.DeleteMessage",
+                        operationName: Constants.Queue.DeleteMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1431,7 +1425,7 @@ namespace Azure.Storage.Queues
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         async: async,
-                        operationName: "Azure.Storage.Queues.QueueClient.UpdateMessage",
+                        operationName: Constants.Queue.UpdateMessageOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

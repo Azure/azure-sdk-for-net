@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
@@ -15,13 +16,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to consuming events, using a simple <see cref="EventHubConsumer" />.
     /// </summary>
     ///
-    public class Sample7_ConsumeEvents : IEventHubsSample
+    public class Sample08_ConsumeEvents : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample7_ConsumeEvents);
+        public string Name { get; } = nameof(Sample08_ConsumeEvents);
 
         /// <summary>
         ///   A short description of the sample.
@@ -78,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // because it opens its connection only when it needs to.  The first receive that we ask of it will not see
                     // any events, but will allow the consumer to start watching the partition.
                     //
-                    // Because the maximum wait time is specivied as zero, this call will return immediately and will not
+                    // Because the maximum wait time is specified as zero, this call will return immediately and will not
                     // have consumed any events.
 
                     await consumer.ReceiveAsync(1, TimeSpan.Zero);
@@ -89,40 +90,35 @@ namespace Azure.Messaging.EventHubs.Samples
                     await producer.SendAsync(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
                     Console.WriteLine("The event batch has been published.");
 
-                    // Because publishing and receving events is asynchronous, the events that we published may not
+                    // Because publishing and receiving events is asynchronous, the events that we published may not
                     // be immediately available for our consumer to see.
                     //
-                    // Each receive specifies the maximum amount of events that we would like in the batch and the maximum
-                    // amount of time that we would like to wait for them.  If there are enough events available to meet the
-                    // requested amount, they'll be returned immediately.  If not, the consumer will wait and collect events
-                    // as they become available in an attempt to reach the requested amount.  If the maximum time that we've
-                    // allowed it to wait passes, the consumer will return the events that it has collected so far.
-                    //
-                    // Each Receive call may return between zero and the number of events that we requested, depending on the
-                    // state of events in the partition.  Likewise, it may return immediately or take up to the maximum wait
-                    // time that we've allowed.
-                    //
-                    // We will ask for just our event, but allow a fairly long wait period to ensure that we're able to receive it.
-                    // If you observe the time that the call takes, it is extremely likely that the request to receive will complete
-                    // long before the maximum wait time.
+                    // We will iterate over the available events in the partition, which should be just the event that we published.  Because
+                    // we're expecting only the one event, we will exit the loop when we receive it.  To be sure that we do not block forever
+                    // waiting on an event that is not published, we will specify a fairly long time to wait and then cancel waiting.
 
+                    CancellationTokenSource cancellationSource = new CancellationTokenSource();
+                    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                    EventData receivedEvent = null;
                     Stopwatch watch = Stopwatch.StartNew();
-                    IEnumerable<EventData> receivedBatch = await consumer.ReceiveAsync(1, TimeSpan.FromSeconds(2.5));
-                    watch.Stop();
+
+                    await foreach(EventData currentEvent in consumer.SubscribeToEvents(cancellationSource.Token))
+                    {
+                        receivedEvent = currentEvent;
+                        watch.Stop();
+                        break;
+                    }
 
                     // Print out the events that we received.
 
                     Console.WriteLine();
-                    Console.WriteLine($"The following events were consumed in { watch.ElapsedMilliseconds } milliseconds:");
+                    Console.WriteLine($"The following event was consumed in { watch.ElapsedMilliseconds } milliseconds:");
 
-                    foreach (EventData eventData in receivedBatch)
-                    {
-                        // The body of our event was an encoded string; we'll recover the
-                        // message by reversing the encoding process.
+                    // The body of our event was an encoded string; we'll recover the message by reversing the encoding process.
 
-                        string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
-                        Console.WriteLine($"\tMessage: \"{ message }\"");
-                    }
+                    string message = (receivedEvent == null) ? "No event was received." : Encoding.UTF8.GetString(receivedEvent.Body.ToArray());
+                    Console.WriteLine($"\tMessage: \"{ message }\"");
                 }
             }
 

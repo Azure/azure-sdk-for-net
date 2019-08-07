@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An environment variable to be set on a task process.
+    /// An environment variable to be set on a Task process.
     /// </summary>
     public partial class EnvironmentSetting
     {

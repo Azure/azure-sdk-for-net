@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             set
             {
-                Guard.ArgumentInRange(nameof(MaximumMessageCount), _maximumMessageCount, 1, Int32.MaxValue);
+                Guard.ArgumentInRange(nameof(MaximumMessageCount), value, 1, Int32.MaxValue);
                 _maximumMessageCount = value;
             }
         }
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 if (value.HasValue)
                 {
-                    Guard.ArgumentNotNegative(nameof(MaximumReceiveWaitTime), _maximumReceiveWaitTime.Value);
+                    Guard.ArgumentNotNegative(nameof(MaximumReceiveWaitTime), value.Value);
                 }
 
                 _maximumReceiveWaitTime = value;
