@@ -40,7 +40,7 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(2, repositoryDetails.ManifestCount);
                 Assert.Equal("2019-08-01T22:49:11.1632015Z", repositoryDetails.CreatedTime);
                 Assert.Equal(ACRTestUtil.ProdRepository, repositoryDetails.ImageName);
-                Assert.True(repositoryDetails.ChangeableAttributes.DeleteEnabled);
+                Assert.False(repositoryDetails.ChangeableAttributes.DeleteEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ListEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ReadEnabled);
                 Assert.False(repositoryDetails.ChangeableAttributes.WriteEnabled);
@@ -67,13 +67,22 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepository)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
-                var deletedRepo = await client.DeleteAcrRepositoryAsync(ACRTestUtil.TestRepository);
+                var repositories = await client.GetAcrRepositoriesAsync();
+
+                //Selects one of the previously stored hello-world repositories for deletion
+                string deletableRepo = "";
+                foreach (var repo in repositories.Names) {
+                    if (repo.StartsWith("hello-world")) {
+                        deletableRepo = repo;
+                        continue;
+                    }
+                }
+                var deletedRepo = await client.DeleteAcrRepositoryAsync(deletableRepo);
 
                 Assert.Equal(1, deletedRepo.ManifestsDeleted.Count);
-                Assert.Equal("sha256:eabe547f78d4c18c708dd97ec3166cf7464cc651f1cbb67e70d407405b7ad7b6", deletedRepo.ManifestsDeleted[0]);
-                Assert.Equal(2, deletedRepo.TagsDeleted.Count);
-                Assert.Collection(deletedRepo.TagsDeleted, tag => Assert.Equal("01", tag), 
-                                                           tag => Assert.Equal("latest", tag));
+                Assert.Equal("sha256:92c7f9c92844bbbb5d0a101b22f7c2a7949e40f8ea90c8b3bc396879d95e899a", deletedRepo.ManifestsDeleted[0]);
+                Assert.Equal(1, deletedRepo.TagsDeleted.Count);
+                Assert.Collection(deletedRepo.TagsDeleted, tag => Assert.Equal("latest", tag));
             }
         }
 
@@ -83,10 +92,10 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrRepositoryAttributes)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
-                var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
-                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository, updateAttributes);
-                var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
-
+                var updateAttributes = new ChangeableAttributes() { DeleteEnabled = false, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
+                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes); 
+                var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository);
+                /*
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, repositoryDetails.Registry);
                 Assert.Equal(1, repositoryDetails.TagCount);
                 Assert.Equal(1, repositoryDetails.ManifestCount);
@@ -100,6 +109,7 @@ namespace ContainerRegistry.Tests
 
                 updateAttributes.WriteEnabled = true;
                 await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository, updateAttributes);
+                */
             }
         }
 

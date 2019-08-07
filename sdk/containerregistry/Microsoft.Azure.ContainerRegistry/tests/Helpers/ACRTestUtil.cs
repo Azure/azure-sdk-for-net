@@ -23,10 +23,10 @@ namespace ContainerRegistry.Tests
 
         public static readonly string ProdRepository = "prod/bash";
         public static readonly string TestRepository = "test/bash";
-
+        public static readonly string changeableRepository = "doundo/bash";
         public static readonly string ManagedTestRegistry = "azuresdkunittest";
         public static readonly string ManagedTestRegistryFullName = "azuresdkunittest.azurecr.io";
-        public static readonly string ManagedTestRegistryForChanges = "managedtestregistryfordel";
+        public static readonly string ManagedTestRegistryForChanges = "azuresdkunittestupdateable";
         public static readonly string Scope = "registry:catalog:*";
 
         private class TokenCredentials : ServiceClientCredentials

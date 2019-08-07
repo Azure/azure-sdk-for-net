@@ -196,7 +196,34 @@ namespace ContainerRegistry.Tests
                 }
             }
         };
-                
+
+        private static readonly AcrManifestAttributes ExpectedAttributesChangeableRepository = new AcrManifestAttributes()
+        {
+            Registry = "azuresdkunittestupdateable.azurecr.io",
+            ImageName = "doundo/bash",
+            ManifestAttributes = new AcrManifestAttributesBase
+            {
+                Digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8",
+                ImageSize = 5964642,
+                CreatedTime = "8/6/2019 11:27:35 PM",
+                LastUpdateTime = "8/6/2019 11:27:35 PM",
+                Architecture = "amd64",
+                Os = "linux",
+                MediaType = "application/vnd.docker.distribution.manifest.v2+json",
+                ConfigMediaType = "application/vnd.docker.container.image.v1+json",
+                Tags = new List<string>
+                {
+                    "latest"
+                },
+                ChangeableAttributes = new ChangeableAttributes
+                {
+                    DeleteEnabled = true,
+                    WriteEnabled = true,
+                    ListEnabled = true,
+                    ReadEnabled = true
+                }
+            }
+        };
 
         [Fact]        
         public async Task GetAcrManifestAttributes()
@@ -259,46 +286,40 @@ namespace ContainerRegistry.Tests
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrManifestAttributes)))
             {
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
+
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
                 var digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8";
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                await client.UpdateAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, digest, updateAttributes);
-                var updatedManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, digest);
+
+                //Update attributes
+                await client.UpdateAcrManifestAttributesAsync(ACRTestUtil.changeableRepository, digest, updateAttributes);
+                var updatedManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
+
+                //Check for success
                 Assert.False(updatedManifest.ManifestAttributes.ChangeableAttributes.WriteEnabled);
 
+                //Return attibutes to original
                 updateAttributes.WriteEnabled = true;
-                await client.UpdateAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, digest, updateAttributes);
-                updatedManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, digest);
-                Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, updatedManifest.ImageName);
-                Assert.Equal(ExpectedAttributesOfProdRepository.Registry, updatedManifest.Registry);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, updatedManifest.ManifestAttributes);
+                await client.UpdateAcrManifestAttributesAsync(ACRTestUtil.changeableRepository, digest, updateAttributes);
+                updatedManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
+                Assert.Equal(ExpectedAttributesChangeableRepository.ImageName, updatedManifest.ImageName);
+                Assert.Equal(ExpectedAttributesChangeableRepository.Registry, updatedManifest.Registry);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesChangeableRepository.ManifestAttributes, updatedManifest.ManifestAttributes);
             }
         }
 
         [Fact]
-        public async Task CreateAcrManifest()
+        public async Task CreateAndDeletecrManifest()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(CreateAcrManifest)))
+            using (var context = MockContext.Start(GetType().FullName, nameof(CreateAndDeletecrManifest)))
             {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                await client.CreateManifestAsync(ACRTestUtil.ProdRepository, "brandnew", ExpectedV2ManifestProd);
-                var newManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, "brandnew");
+                    var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
+                    await client.CreateManifestAsync(ACRTestUtil.changeableRepository, "temporary", ExpectedV2ManifestProd);
+                    var newManifest = await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", "application/vnd.docker.distribution.manifest.v2+json");
+                    var tag = await client.GetAcrTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
 
-                Assert.Equal(ExpectedAttributesOfProdRepository.Registry, newManifest.Registry);
-                Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, newManifest.ImageName);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, newManifest.ManifestAttributes);
-
-            }
-        }
-
-        [Fact]
-        public async Task DeleteAcrManifest()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrManifest)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                await client.DeleteManifestAsync(ACRTestUtil.ProdRepository, "deleteable");
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetManifestAsync(ACRTestUtil.TestRepository, "deleteable"));
+                    verifyManifest(ExpectedV2ManifestProd, newManifest);
+                    await client.DeleteManifestAsync(ACRTestUtil.changeableRepository, tag.TagAttributes.Digest);
             }
         }
 
