@@ -14,7 +14,7 @@ namespace Microsoft.Azure.EventHubs
     /// </summary>
     public class AsyncLock : IDisposable
     {
-        readonly SemaphoreSlim asyncSemaphore = new SemaphoreSlim(1);
+        readonly SemaphoreSlim asyncSemaphore = new SemaphoreSlim(1, 1);
         readonly Task<LockRelease> lockRelease;
         bool disposed;
 
