@@ -136,6 +136,28 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionShaperWithNestedInputs()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWithNestedInputs());
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetThrowsExceptionWithNonShaperSkillWithNestedInputs()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                Skillset skillset = CreateTestSkillsetWithNestedInputs(isShaper: false);
+                CloudException exception = Assert.Throws<CloudException>(() => searchClient.Skillsets.Create(skillset));
+                Assert.Contains("Skill '#1' is not allowed to have recursively defined inputs", exception.Message);
+            });
+        }
+
+        [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrSplitText()
         {
             Run(() =>
@@ -938,6 +960,55 @@ namespace Microsoft.Azure.Search.Tests
 
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
+
+        private static Skillset CreateTestSkillsetWithNestedInputs(bool isShaper = true)
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "doc",
+                    SourceContext = "/document",
+                    Inputs = new List<InputFieldMappingEntry>
+                    {
+                        new InputFieldMappingEntry
+                        {
+                            Name = "text",
+                            Source = "/document/content"
+                        },
+                        new InputFieldMappingEntry
+                        {
+                            Name = "images",
+                            Source = "/document/normalized_images/*"
+                        }
+                    }
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "output",
+                    TargetName = "myOutput"
+                }
+            };
+
+            if (isShaper)
+            {
+                skills.Add(new ShaperSkill(inputs, outputs, "Tested Shaper skill", RootPathString));
+            }
+            else
+            {
+                // Used for testing skill that shouldn't allow nested inputs
+                skills.Add(new WebApiSkill(inputs, outputs, "Invalid skill with nested inputed", RootPathString));
+            }
+
+            return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
 
         private static Skillset CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage defaultToLanguageCode, TextTranslationSkillLanguage? defaultFromLanguageCode = null, TextTranslationSkillLanguage? suggestedFrom = null)
         {
