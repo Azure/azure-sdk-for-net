@@ -83,7 +83,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             Assert.True(csbNew.EntityPath == csb.EntityPath, $"Original and New CSB mismatch at EntityPath. Original: {csb.EntityPath} New: {csbNew.EntityPath}");
         }
 
-        [Fact]   
+        [Fact]
         [DisplayTestMethodName]
         public void InvalidConnectionStrings()
         {
