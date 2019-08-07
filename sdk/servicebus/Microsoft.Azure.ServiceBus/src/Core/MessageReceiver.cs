@@ -1000,7 +1000,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.OnMessageHandler(messageHandlerOptions, handler);
         }
 
-
         /// <summary>
         /// Receive message batches continuously from the entity. Registers a message handler and begins a new thread to receive message batches.
         /// This handler(<see cref="Func{IList{Message}, CancellationToken, Task}"/>) is awaited on every time a new message batch is received by the receiver.
@@ -1027,7 +1026,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.ThrowIfClosed();
             this.OnMessageBatchHandler(messageBatchHandlerOptions, handler);
         }
-
 
         /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
@@ -1409,7 +1407,6 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
 
                 var messageBatchHandlerOptions = new MessageBatchHandlerOptions(registerHandlerOptions);
-                // BLOCKER: First() or Single()?
                 Func<IList<Message>, CancellationToken, Task> callbackWrapper = (messages, cancellationToken) => callback(messages.First(), cancellationToken);
 
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
@@ -1438,7 +1435,6 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.RegisterOnMessageHandlerStop(this.ClientId);
         }
-
         
         /// <summary> </summary>
         protected virtual void OnMessageBatchHandler(
