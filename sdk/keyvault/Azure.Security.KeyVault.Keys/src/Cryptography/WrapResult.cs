@@ -8,6 +8,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     public struct WrapResult
     {
+        public string KeyId { get; private set; }
+
         public byte[] EncryptedKey { get; set; }
 
         public KeyWrapAlgorithm Algorithm { get; set; }

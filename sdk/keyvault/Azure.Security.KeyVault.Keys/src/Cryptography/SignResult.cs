@@ -8,8 +8,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     public struct SignResult 
     {
-        public byte[] Signature { get; set; }
+        public string KeyId { get; private set; }
 
-        public SignatureAlgorithm Algorithm { get; set; }
+        public byte[] Signature { get; private set; }
+
+        public SignatureAlgorithm Algorithm { get; private set; }
     }
 }

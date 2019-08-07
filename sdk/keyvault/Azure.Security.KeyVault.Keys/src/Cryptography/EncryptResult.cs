@@ -8,10 +8,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     public struct EncryptResult
     {
-        public byte[] Ciphertext { get; set; }
+        public string KeyId { get; private set; }
 
-        public byte[] AuthenticationTag { get; set; }
+        public byte[] Ciphertext { get; private set; }
 
-        public EncryptionAlgorithm Algorithm { get; set; }
+        public byte[] AuthenticationTag { get; private set; }
+
+        public EncryptionAlgorithm Algorithm { get; private set; }
     }
 }

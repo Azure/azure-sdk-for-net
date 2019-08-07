@@ -10,17 +10,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     public class RemoteCryptographyClient
     {
-        protected CryptographyClient()
+        protected RemoteCryptographyClient()
         {
 
         }
 
-        public CryptographyClient(TokenCredential credential)
+        public RemoteCryptographyClient(TokenCredential credential)
         {
 
         }
 
-        public CryptographyClient(TokenCredential credential, CryptographyClientOptions options)
+        public RemoteCryptographyClient(TokenCredential credential, CryptographyClientOptions options)
         {
         }
 
