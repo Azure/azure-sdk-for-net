@@ -18,23 +18,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// The PostgreSQL table dataset.
+    /// The Amazon Redshift table dataset.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("PostgreSqlTable")]
+    [Newtonsoft.Json.JsonObject("AmazonRedshiftTable")]
     [Rest.Serialization.JsonTransformation]
-    public partial class PostgreSqlTableDataset : Dataset
+    public partial class AmazonRedshiftTableDataset : Dataset
     {
         /// <summary>
-        /// Initializes a new instance of the PostgreSqlTableDataset class.
+        /// Initializes a new instance of the AmazonRedshiftTableDataset class.
         /// </summary>
-        public PostgreSqlTableDataset()
+        public AmazonRedshiftTableDataset()
         {
             LinkedServiceName = new LinkedServiceReference();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PostgreSqlTableDataset class.
+        /// Initializes a new instance of the AmazonRedshiftTableDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -53,16 +53,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// specified, Dataset will appear at the root level.</param>
         /// <param name="tableName">This property will be retired. Please
         /// consider using schema + table properties instead.</param>
-        /// <param name="table">The PostgreSQL table name. Type: string (or
-        /// Expression with resultType string).</param>
-        /// <param name="postgreSqlTableDatasetSchema">The PostgreSQL schema
-        /// name. Type: string (or Expression with resultType string).</param>
-        public PostgreSqlTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object), object table = default(object), object postgreSqlTableDatasetSchema = default(object))
+        /// <param name="table">The Amazon Redshift table name. Type: string
+        /// (or Expression with resultType string).</param>
+        /// <param name="amazonRedshiftTableDatasetSchema">The Amazon Redshift
+        /// schema name. Type: string (or Expression with resultType
+        /// string).</param>
+        public AmazonRedshiftTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object), object table = default(object), object amazonRedshiftTableDatasetSchema = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             TableName = tableName;
             Table = table;
-            PostgreSqlTableDatasetSchema = postgreSqlTableDatasetSchema;
+            AmazonRedshiftTableDatasetSchema = amazonRedshiftTableDatasetSchema;
             CustomInit();
         }
 
@@ -79,18 +80,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object TableName { get; set; }
 
         /// <summary>
-        /// Gets or sets the PostgreSQL table name. Type: string (or Expression
-        /// with resultType string).
+        /// Gets or sets the Amazon Redshift table name. Type: string (or
+        /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.table")]
         public object Table { get; set; }
 
         /// <summary>
-        /// Gets or sets the PostgreSQL schema name. Type: string (or
+        /// Gets or sets the Amazon Redshift schema name. Type: string (or
         /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.schema")]
-        public object PostgreSqlTableDatasetSchema { get; set; }
+        public object AmazonRedshiftTableDatasetSchema { get; set; }
 
         /// <summary>
         /// Validate the object.

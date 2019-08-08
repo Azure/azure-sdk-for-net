@@ -18,23 +18,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// The PostgreSQL table dataset.
+    /// The Db2 table dataset.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("PostgreSqlTable")]
+    [Newtonsoft.Json.JsonObject("Db2Table")]
     [Rest.Serialization.JsonTransformation]
-    public partial class PostgreSqlTableDataset : Dataset
+    public partial class Db2TableDataset : Dataset
     {
         /// <summary>
-        /// Initializes a new instance of the PostgreSqlTableDataset class.
+        /// Initializes a new instance of the Db2TableDataset class.
         /// </summary>
-        public PostgreSqlTableDataset()
+        public Db2TableDataset()
         {
             LinkedServiceName = new LinkedServiceReference();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PostgreSqlTableDataset class.
+        /// Initializes a new instance of the Db2TableDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -53,16 +53,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// specified, Dataset will appear at the root level.</param>
         /// <param name="tableName">This property will be retired. Please
         /// consider using schema + table properties instead.</param>
-        /// <param name="table">The PostgreSQL table name. Type: string (or
-        /// Expression with resultType string).</param>
-        /// <param name="postgreSqlTableDatasetSchema">The PostgreSQL schema
-        /// name. Type: string (or Expression with resultType string).</param>
-        public PostgreSqlTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object), object table = default(object), object postgreSqlTableDatasetSchema = default(object))
+        /// <param name="db2TableDatasetSchema">The Db2 schema name. Type:
+        /// string (or Expression with resultType string).</param>
+        /// <param name="table">The Db2 table name. Type: string (or Expression
+        /// with resultType string).</param>
+        public Db2TableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object), object db2TableDatasetSchema = default(object), object table = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             TableName = tableName;
+            Db2TableDatasetSchema = db2TableDatasetSchema;
             Table = table;
-            PostgreSqlTableDatasetSchema = postgreSqlTableDatasetSchema;
             CustomInit();
         }
 
@@ -79,18 +79,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object TableName { get; set; }
 
         /// <summary>
-        /// Gets or sets the PostgreSQL table name. Type: string (or Expression
-        /// with resultType string).
+        /// Gets or sets the Db2 schema name. Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.schema")]
+        public object Db2TableDatasetSchema { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Db2 table name. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.table")]
         public object Table { get; set; }
-
-        /// <summary>
-        /// Gets or sets the PostgreSQL schema name. Type: string (or
-        /// Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.schema")]
-        public object PostgreSqlTableDatasetSchema { get; set; }
 
         /// <summary>
         /// Validate the object.
