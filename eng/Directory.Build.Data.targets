@@ -19,7 +19,7 @@
       <CurrentCsprojPath>$(MSBuildProjectDirectory)</CurrentCsprojPath>
       <DirectoryPartofPath>$(CurrentCsprojPath.Substring($(CurrentCsprojPath.LastIndexOf("\sdk\"))))</DirectoryPartofPath>
       <DirectoryPartofPath>$(DirectoryPartofPath.Remove($(DirectoryPartofPath.LastIndexOf("\src"))))</DirectoryPartofPath>
-      <PackageProjectUrl>$(RepositoryUrl)/blob/$(CommitSHA)$(DirectoryPartofPath)/README.md</PackageProjectUrl>
+      <PackageProjectUrl>$(RepositoryUrl)/blob/master$(DirectoryPartofPath)/README.md</PackageProjectUrl>
     </PropertyGroup>
   </Target>
 
