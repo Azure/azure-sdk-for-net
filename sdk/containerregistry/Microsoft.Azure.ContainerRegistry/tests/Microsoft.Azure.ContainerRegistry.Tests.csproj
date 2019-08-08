@@ -31,13 +31,4 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="1.13.3" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.6" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-  </ItemGroup>
 </Project>
