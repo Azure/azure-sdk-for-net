@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.11.0-preview
+
+- Removed id validation on `groups`, `apis`, `products`, `users` and `backend` to unblock existing customers to onboard to new sdks
+
 ### Changes in 4.10.0-preview
 
 - Fixed support for creating, updating Swagger, WSDL and Open Api Schema.

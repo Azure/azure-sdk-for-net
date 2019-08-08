@@ -388,32 +388,17 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.NotNull(response.Facets);
 
-            RangeFacetResult<double>[] baseRateFacets = GetRangeFacetsForField<double>(response.Facets, "rooms/baseRate", 4);
-                
-            Assert.False(baseRateFacets[0].From.HasValue);
-            Assert.Equal(5.0, baseRateFacets[0].To);
-            Assert.Equal(5.0, baseRateFacets[1].From);
-            Assert.Equal(8.0, baseRateFacets[1].To);
-            Assert.Equal(8.0, baseRateFacets[2].From);
-            Assert.Equal(10.0, baseRateFacets[2].To);
-            Assert.Equal(10.0, baseRateFacets[3].From);
-            Assert.False(baseRateFacets[3].To.HasValue);
+            AssertRangeFacetsEqual(
+                GetRangeFacetsForField<double>(response.Facets, "rooms/baseRate", 4),
+                new RangeFacetResult<double>(count: 1, from: null, to: 5.0),
+                new RangeFacetResult<double>(count: 1, from: 5.0, to: 8.0),
+                new RangeFacetResult<double>(count: 1, from: 8.0, to: 10.0),
+                new RangeFacetResult<double>(count: 0, from: 10.0, to: null));
 
-            Assert.Equal(1, baseRateFacets[0].Count);
-            Assert.Equal(1, baseRateFacets[1].Count);
-            Assert.Equal(1, baseRateFacets[2].Count);
-            Assert.Equal(0, baseRateFacets[3].Count);
-
-            RangeFacetResult<DateTimeOffset>[] lastRenovationDateFacets =
-                GetRangeFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 2);
-
-            Assert.False(lastRenovationDateFacets[0].From.HasValue);
-            Assert.Equal(new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero), lastRenovationDateFacets[0].To);
-            Assert.Equal(new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero), lastRenovationDateFacets[1].From);
-            Assert.False(lastRenovationDateFacets[1].To.HasValue);
-
-            Assert.Equal(5, lastRenovationDateFacets[0].Count);
-            Assert.Equal(2, lastRenovationDateFacets[1].Count);
+            AssertRangeFacetsEqual(
+                GetRangeFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 2),
+                new RangeFacetResult<DateTimeOffset>(count: 5, from: null, to: new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero)),
+                new RangeFacetResult<DateTimeOffset>(count: 2, from: new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero), to: null));
         }
 
         protected void TestCanSearchWithValueFacets()
@@ -889,6 +874,19 @@ namespace Microsoft.Azure.Search.Tests
             for (int i = 0; i < actualFacets.Length; i++)
             {
                 Assert.Equal(expectedFacets[i].Value, actualFacets[i].Value);
+                Assert.Equal(expectedFacets[i].Count, actualFacets[i].Count);
+            }
+        }
+
+        private void AssertRangeFacetsEqual<T>(RangeFacetResult<T>[] actualFacets, params RangeFacetResult<T>[] expectedFacets)
+            where T : struct
+        {
+            Assert.Equal(actualFacets.Length, expectedFacets.Length);
+
+            for (int i = 0; i < actualFacets.Length; i++)
+            {
+                Assert.Equal(expectedFacets[i].To, actualFacets[i].To);
+                Assert.Equal(expectedFacets[i].From, actualFacets[i].From);
                 Assert.Equal(expectedFacets[i].Count, actualFacets[i].Count);
             }
         }

@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Http
 {
@@ -46,6 +45,7 @@ namespace Azure.Core.Http
 
         /// <summary>
         /// Converts the specified range to a string.
+        /// </summary>
         /// <returns>String representation of the range.</returns>
         /// <remarks>For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-the-range-header-for-file-service-operations. </remarks>
         public override string ToString()

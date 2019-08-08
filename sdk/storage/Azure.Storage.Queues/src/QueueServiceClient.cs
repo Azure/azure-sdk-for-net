@@ -18,23 +18,27 @@ namespace Azure.Storage.Queues
     /// </summary>
     public class QueueServiceClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
         private readonly Uri _uri;
-        #pragma warning restore IDE0032 // Use auto property
 
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
-        public Uri Uri => this._uri;
+        public virtual Uri Uri => this._uri;
 
         /// <summary>
         /// The HttpPipeline used to send REST requests.
         /// </summary>
         private readonly HttpPipeline _pipeline;
 
+        /// <summary>
+        /// Gets the HttpPipeline used to send REST requests.
+        /// </summary>
+        protected virtual HttpPipeline Pipeline => this._pipeline;
+
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueServiceClient"/>
         /// class for mocking.
@@ -51,7 +55,7 @@ namespace Azure.Storage.Queues
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         public QueueServiceClient(string connectionString)
@@ -67,7 +71,7 @@ namespace Azure.Storage.Queues
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="options">
@@ -175,6 +179,7 @@ namespace Azure.Storage.Queues
             this._uri = serviceUri;
             this._pipeline = pipeline;
         }
+        #endregion ctors
 
         /// <summary>
         /// Create a new <see cref="QueueClient"/> object by appending
@@ -189,79 +194,69 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(this.Uri.AppendToPath(queueName), this._pipeline);
+            => new QueueClient(this.Uri.AppendToPath(queueName), this.Pipeline);
 
+        #region GetQueues
         /// <summary>
-        /// Returns a single segment of containers starting from the specified marker.
+        /// The <see cref="GetQueues"/> operation returns an async
+        /// sequence of queues in the storage account.  Enumerating the
+        /// queues may make multiple requests to the service while fetching
+        /// all the values.  Queue names are returned in lexicographic order.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
         /// <param name="options">
-        /// <see cref="QueuesSegmentOptions"/>
-        /// </param>
-        /// <param name="marker">
-        /// Marker from the previous request.
+        /// <see cref="GetQueuesOptions"/>
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// A single segment of containers starting from the specified marker, including the next marker if appropriate.
+        /// The queues in the storage account.
         /// </returns>
-        /// <remarks>
-        /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
-        /// After getting a segment, process it, and then call ListQueuesSegment again (passing in the next marker) to get the next segment. 
-        /// </remarks>
-        public virtual Response<QueuesSegment> ListQueuesSegment(
-            QueuesSegmentOptions? options = default,
-            string marker = default,
+        public virtual IEnumerable<Response<QueueItem>> GetQueues(
+            GetQueuesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            this.ListQueuesSegmentAsync(
-                options,
-                marker,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            new GetQueuesAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// Returns a single segment of containers starting from the specified marker.
+        /// The <see cref="GetQueuesAsync"/> operation returns an async
+        /// collection of queues in the storage account.  Enumerating the
+        /// queues may make multiple requests to the service while fetching
+        /// all the values.  Queue names are returned in lexicographic order.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
         /// <param name="options">
-        /// <see cref="QueuesSegmentOptions"/>
-        /// </param>
-        /// <param name="marker">
-        /// Marker from the previous request.
+        /// <see cref="GetQueuesOptions"/>
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// A single segment of containers starting from the specified marker, including the next marker if appropriate.
+        /// The queues in the storage account.
         /// </returns>
         /// <remarks>
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
-        /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment. 
+        /// After getting a segment, process it, and then call ListQueuesSegment again (passing in the next marker) to get the next segment.
         /// </remarks>
-        public virtual async Task<Response<QueuesSegment>> ListQueuesSegmentAsync(
-            QueuesSegmentOptions? options = default,
-            string marker = default,
+        public virtual AsyncCollection<QueueItem> GetQueuesAsync(
+            GetQueuesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            await this.ListQueuesSegmentAsync(
-                options,
-                marker,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            new GetQueuesAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
         /// Returns a single segment of containers starting from the specified marker.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
         /// <param name="options">
-        /// <see cref="QueuesSegmentOptions"/>
+        /// <see cref="GetQueuesOptions"/>
         /// </param>
         /// <param name="marker">
         /// Marker from the previous request.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Optional hint to specify the desired size of the page returned.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -274,17 +269,18 @@ namespace Azure.Storage.Queues
         /// </returns>
         /// <remarks>
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
-        /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment. 
+        /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment.
         /// </remarks>
-        private async Task<Response<QueuesSegment>> ListQueuesSegmentAsync(
-            QueuesSegmentOptions? options,
+        internal async Task<Response<QueuesSegment>> GetQueuesInternal(
             string marker,
+            GetQueuesOptions? options,
+            int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -293,28 +289,30 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.ListQueuesSegmentAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         marker: marker,
                         prefix: options?.Prefix,
-                        maxresults: options?.MaxResults,
-                        include: options?.Detail.AsIncludeType(),
+                        maxresults: pageSizeHint,
+                        include: options?.AsIncludeTypes(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueServiceClient));
                 }
             }
         }
+        #endregion GetQueues
 
+        #region GetProperties
         /// <summary>
         /// Gets the properties of the queue service.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-properties"/>.
@@ -327,7 +325,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public virtual Response<QueueServiceProperties> GetProperties(
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesAsync(
+            this.GetPropertiesInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -340,11 +338,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueServiceProperties}}"/>
+        /// <see cref="Response{QueueServiceProperties}"/>
         /// </returns>
         public virtual async Task<Response<QueueServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesAsync(
+            await this.GetPropertiesInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -360,21 +358,21 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueServiceProperties}}"/>
+        /// <see cref="Response{QueueServiceProperties}"/>
         /// </returns>
-        private async Task<Response<QueueServiceProperties>> GetPropertiesAsync(
+        private async Task<Response<QueueServiceProperties>> GetPropertiesInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await QueueRestClient.Service.GetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -382,16 +380,18 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueServiceClient));
                 }
             }
         }
+        #endregion GetProperties
 
+        #region SetProperties
         /// <summary>
         /// Sets the properties of the queue service.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-service-properties"/>.
@@ -408,7 +408,7 @@ namespace Azure.Storage.Queues
         public virtual Response SetProperties(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            this.SetPropertiesAsync(
+            this.SetPropertiesInternal(
                 properties,
                 false, // async
                 cancellationToken)
@@ -425,12 +425,12 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> SetPropertiesAsync(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            await this.SetPropertiesAsync(
+            await this.SetPropertiesInternal(
                 properties,
                 true, // async
                 cancellationToken)
@@ -450,16 +450,16 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
-        private async Task<Response> SetPropertiesAsync(
+        private async Task<Response> SetPropertiesInternal(
             QueueServiceProperties properties,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -467,7 +467,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.Service.SetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         properties: properties,
                         async: async,
@@ -476,16 +476,18 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueServiceClient));
                 }
             }
         }
+        #endregion SetProperties
 
+        #region GetStatistics
         /// <summary>
         /// Retrieves statistics related to replication for the Blob service. It is
         /// only available on the secondary location endpoint when read-access
@@ -500,7 +502,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public virtual Response<QueueServiceStatistics> GetStatistics(
             CancellationToken cancellationToken = default) =>
-            this.GetStatisticsAsync(
+            this.GetStatisticsInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -515,11 +517,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueServiceStatistics}}"/>
+        /// <see cref="Response{QueueServiceStatistics}"/>
         /// </returns>
         public virtual async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetStatisticsAsync(
+            await this.GetStatisticsInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -537,21 +539,21 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueServiceStatistics}}"/>
+        /// <see cref="Response{QueueServiceStatistics}"/>
         /// </returns>
-        private async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(
+        private async Task<Response<QueueServiceStatistics>> GetStatisticsInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueServiceClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}\n");
                 try
                 {
                     return await QueueRestClient.Service.GetStatisticsAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -559,26 +561,28 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueServiceClient));
                 }
             }
         }
+        #endregion GetStatistics
 
+        #region CreateQueue
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="queueName">
         /// The name of the queue to create.
         /// </param>
         /// <param name="metadata">
-        /// Optional <see cref="Metadata"/>.
+        /// Optional <see cref="IDictionary{String, String}"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -586,6 +590,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A newly created <see cref="Response{QueueClient}"/>.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual Response<QueueClient> CreateQueue(
             string queueName,
             IDictionary<string, string> metadata = default,
@@ -598,14 +603,14 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="queueName">
         /// The name of the queue to create.
         /// </param>
         /// <param name="metadata">
-        /// Optional <see cref="Metadata"/>.
+        /// Optional <see cref="IDictionary{String, String}"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -613,6 +618,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A newly created <see cref="Response{QueueClient}"/>.
         /// </returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response<QueueClient>> CreateQueueAsync(
             string queueName,
             IDictionary<string, string> metadata = default,
@@ -622,10 +628,12 @@ namespace Azure.Storage.Queues
             var response = await queue.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
             return new Response<QueueClient>(response, queue);
         }
+        #endregion CreateQueue
 
+        #region DeleteQueue
         /// <summary>
         /// Deletes a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
         /// </summary>
         /// <param name="queueName">
@@ -637,6 +645,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
+        [ForwardsClientCalls]
         public virtual Response DeleteQueue(
             string queueName,
             CancellationToken cancellationToken = default) =>
@@ -644,7 +653,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
         /// </summary>
         /// <param name="queueName">
@@ -654,124 +663,15 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteQueueAsync(
             string queueName,
             CancellationToken cancellationToken = default) =>
             await this.GetQueueClient(queueName)
                 .DeleteAsync(cancellationToken)
                 .ConfigureAwait(false);
-    }
-}
-
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// QueuesSegmentOptions defines options available when calling ListQueues.
-    /// </summary>
-    public struct QueuesSegmentOptions : IEquatable<QueuesSegmentOptions>
-    {
-        public ListQueuesSegmentDetail Detail { get; set; }
-        public string Prefix { get; set; }
-        public int? MaxResults { get; set; }
-
-        public override bool Equals(object obj)
-            => obj is QueuesSegmentOptions other
-            && this.Equals(other)
-            ;
-
-        /// <summary>
-        /// Get a hash code for the QueuesSegmentOptions.
-        /// </summary>
-        /// <returns>Hash code for the QueuesSegmentOptions.</returns>
-        public override int GetHashCode()
-            => this.Detail.GetHashCode()
-            ^ this.Prefix.GetHashCode()
-            ^ this.MaxResults.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two QueuesSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(QueuesSegmentOptions left, QueuesSegmentOptions right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two QueuesSegmentOptions instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(QueuesSegmentOptions left, QueuesSegmentOptions right) => !(left == right);
-
-        /// <summary>
-        /// Check if two QueuesSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(QueuesSegmentOptions other)
-            => this.Detail == other.Detail
-            && this.Prefix == other.Prefix
-            && this.MaxResults == other.MaxResults
-            ;
-    }
-
-    /// <summary>
-    /// ListQueuesSegmentDetail indicates what additional information the service should return with each queue.
-    /// </summary>
-    public struct ListQueuesSegmentDetail : IEquatable<ListQueuesSegmentDetail>
-    {
-        public bool Metadata { get; set; }
-
-        internal IEnumerable<ListQueuesIncludeType> AsIncludeType()
-            => this.Metadata ?
-                new ListQueuesIncludeType[] { ListQueuesIncludeType.Metadata } :
-                Array.Empty<ListQueuesIncludeType>();
-
-        /// <summary>
-        /// Check if two ListQueuesSegmentDetail instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is ListQueuesSegmentDetail other
-            && this.Equals(other)
-            ;
-
-        /// <summary>
-        /// Get a hash code for the ListQueuesSegmentDetail.
-        /// </summary>
-        /// <returns>Hash code for the ListQueuesSegmentDetail.</returns>
-        public override int GetHashCode()
-            => this.Metadata.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two ListQueuesSegmentDetail instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(ListQueuesSegmentDetail left, ListQueuesSegmentDetail right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two ListQueuesSegmentDetail instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(ListQueuesSegmentDetail left, ListQueuesSegmentDetail right) => !(left == right);
-
-        /// <summary>
-        /// Check if two ListQueuesSegmentDetail instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(ListQueuesSegmentDetail other)
-            => this.Metadata == other.Metadata
-            ;
+        #endregion DeleteQueue
     }
 }

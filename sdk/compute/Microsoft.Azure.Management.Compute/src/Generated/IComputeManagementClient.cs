@@ -82,6 +82,16 @@ namespace Microsoft.Azure.Management.Compute
         IProximityPlacementGroupsOperations ProximityPlacementGroups { get; }
 
         /// <summary>
+        /// Gets the IDedicatedHostGroupsOperations.
+        /// </summary>
+        IDedicatedHostGroupsOperations DedicatedHostGroups { get; }
+
+        /// <summary>
+        /// Gets the IDedicatedHostsOperations.
+        /// </summary>
+        IDedicatedHostsOperations DedicatedHosts { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; }

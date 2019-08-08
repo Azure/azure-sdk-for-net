@@ -46,13 +46,13 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   as events reach the age limit for retention and are no longer visible within the stream.
         /// </remarks>
         ///
-        public string LastEnqueuedOffset { get; }
+        public long LastEnqueuedOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued in the partition.
         /// </summary>
         ///
-        public DateTime LastEnqueuedTimeUtc { get; }
+        public DateTimeOffset LastEnqueuedTime { get; }
 
         /// <summary>
         ///   Indicates whether or not the partition is currently empty.
@@ -73,23 +73,23 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
-        /// <param name="lastEnqueueUtc">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         ///
         internal PartitionProperties(string path,
-                                      string partitionId,
-                                      long beginningSequenceNumber,
-                                      long lastSequenceNumber,
-                                      string lastOffset,
-                                      DateTime lastEnqueueUtc,
-                                      bool isEmpty)
+                                     string partitionId,
+                                     long beginningSequenceNumber,
+                                     long lastSequenceNumber,
+                                     long lastOffset,
+                                     DateTimeOffset lastEnqueuedTime,
+                                     bool isEmpty)
         {
             EventHubPath = path;
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
             LastEnqueuedOffset = lastOffset;
-            LastEnqueuedTimeUtc = lastEnqueueUtc;
+            LastEnqueuedTime = lastEnqueuedTime;
             IsEmpty = isEmpty;
         }
     }

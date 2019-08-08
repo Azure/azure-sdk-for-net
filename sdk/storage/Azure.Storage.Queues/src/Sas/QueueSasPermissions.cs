@@ -12,6 +12,7 @@ namespace Azure.Storage.Sas
     /// <see cref="QueueSasPermissions"/> supports reading and writing
     /// permissions string for a queue's access policy.  Use <see cref="ToString"/>
     /// to generate a permissions string you can provide to
+    /// </summary>
     /// <see cref="QueueSasBuilder.Permissions"/>.
     public struct QueueSasPermissions : IEquatable<QueueSasPermissions>
     {
@@ -57,7 +58,7 @@ namespace Azure.Storage.Sas
         /// <returns>The parsed <see cref="QueueSasPermissions"/>.</returns>
         public static QueueSasPermissions Parse(string s)
         {
-            var p = new QueueSasPermissions(); 
+            var p = new QueueSasPermissions();
             foreach (var c in s)
             {
                 switch (c)

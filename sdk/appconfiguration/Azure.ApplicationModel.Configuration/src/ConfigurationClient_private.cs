@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration
@@ -86,10 +87,10 @@ namespace Azure.ApplicationModel.Configuration
             };
         }
 
-        void BuildUriForKvRoute(HttpPipelineUriBuilder builder, ConfigurationSetting keyValue)
+        void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
             => BuildUriForKvRoute(builder, keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
 
-        void BuildUriForKvRoute(HttpPipelineUriBuilder builder, string key, string label)
+        void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(KvRoute);
@@ -118,7 +119,7 @@ namespace Azure.ApplicationModel.Configuration
             return resp;
         }
 
-        internal static void BuildBatchQuery(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
+        internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             if (selector.Keys.Count > 0)
             {
@@ -168,14 +169,14 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        void BuildUriForGetBatch(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
+        void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(KvRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
-        void BuildUriForRevisions(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
+        void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(RevisionsRoute);
@@ -189,12 +190,22 @@ namespace Azure.ApplicationModel.Configuration
             return writer.WrittenMemory;
         }
         #region nobody wants to see these
+        /// <summary>
+        /// Check if two ConfigurationSetting instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
+        /// <summary>
+        /// Get a hash code for the ConfigurationSetting
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
+        /// <summary>
+        /// Creates a Key Value string in reference to the ConfigurationSetting.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
         #endregion

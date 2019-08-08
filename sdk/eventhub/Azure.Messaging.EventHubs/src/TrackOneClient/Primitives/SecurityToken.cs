@@ -19,7 +19,7 @@ namespace TrackOne
         /// Expiry date-time
         /// </summary>
         readonly DateTime expiresAtUtc;
-        
+
         /// <summary>
         /// Token audience
         /// </summary>

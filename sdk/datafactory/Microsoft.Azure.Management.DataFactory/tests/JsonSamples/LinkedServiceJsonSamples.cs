@@ -139,6 +139,29 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureSqlMILinkedService = @"
+{
+    name: ""Test-Windows-Azure-SQL-MI-LinkedService"",
+    properties:
+    {
+        type: ""AzureSqlMI"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            servicePrincipalId: ""fakeSPID"",
+            servicePrincipalKey: {
+                value: ""fakeSPKey"",
+                type: ""SecureString""
+            },
+            tenant: ""fakeTenant""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureSqlLinkedServiceWithPasswordInAKV = @"
 {
     name: ""Test-Windows-Azure-SQL-LinkedService-with-Password-in-AKV"",
@@ -531,6 +554,28 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string TeradataOdbcLinkedService = @"
+{
+    name: ""Test-Teradata-linkedService"",
+    properties:
+    {
+        type: ""Teradata"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: ""fakedConnectionString"",
+            username: ""microsoft"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string HDInsightBYOCLinkedService = @"
 {
     name: ""Test-BYOC-HDInsight-linkedService"",
@@ -554,7 +599,6 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
-
         [JsonSample]
         public const string OdbcLinkedService = @"
 {
@@ -562,6 +606,68 @@ namespace DataFactory.Tests.JsonSamples
     properties:
     {
         type: ""Odbc"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            credential: {
+                value : ""fakeCredential"",
+                type : ""SecureString""
+            },
+            userName: ""microsoft"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            authenticationType: ""Basic"",
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string InformixLinkedService = @"
+{
+    name: ""Test-Informix-linkedService"",
+    properties:
+    {
+        type: ""Informix"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            credential: {
+                value : ""fakeCredential"",
+                type : ""SecureString""
+            },
+            userName: ""microsoft"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            authenticationType: ""Basic"",
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string MicrosoftAccessLinkedService = @"
+{
+    name: ""Test-MicrosoftAccess-linkedService"",
+    properties:
+    {
+        type: ""MicrosoftAccess"",
         connectVia: {
             referenceName : ""MSourceDemoIR"",
             type : ""IntegrationRuntimeReference""
@@ -751,6 +857,52 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string DynamicsCrmLinkedService = @"
+{
+    name: ""LinkedService-DynamicsCrm"",
+    properties:
+    {
+        type: ""DynamicsCrm"",
+        typeProperties: {
+            deploymentType: ""Online"",
+            authenticationType: ""Office365"",
+            hostName: ""hostname.com"",
+            port: 12345,
+            organizationName: ""contoso"",
+            username: ""fakeuser@contoso.com"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            encryptedCredential : ""fake credential""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string CommonDataServiceForAppsLinkedService = @"
+{
+    name: ""LinkedService-CommonDataServiceForApps"",
+    properties:
+    {
+        type: ""CommonDataServiceForApps"",
+        typeProperties: {
+            deploymentType: ""Online"",
+            authenticationType: ""Office365"",
+            hostName: ""hostname.com"",
+            port: 12345,
+            organizationName: ""contoso"",
+            username: ""fakeuser@contoso.com"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            encryptedCredential : ""fake credential""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string SalesforceLinkedService = @"
 {
     name: ""SalesforceLinkedService"",
@@ -801,6 +953,30 @@ namespace DataFactory.Tests.JsonSamples
                     type : ""LinkedServiceReference"",
                     referenceName : ""fakeAKVLinkedService""
                 }
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SalesforceServiceCloudLinkedService = @"
+{
+    name: ""SalesforceServiceCloudLinkedService"",
+    properties:
+    {
+        type: ""SalesforceServiceCloud"",
+        description: ""test description"",
+        typeProperties:
+        {
+            environmentUrl: ""url"",
+            username: ""admin"",
+            password : {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            securityToken: {
+                value : ""fakeToken"",
+                type : ""SecureString""
             }
         }
     }
@@ -2030,6 +2206,44 @@ namespace DataFactory.Tests.JsonSamples
                 ""type"": ""SecureString"",
                 ""value"": ""fakepsw""
             }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SapTableLinkedService = @"
+{
+    ""name"": ""SapTableLinkedService"",
+    ""properties"": {
+        ""type"": ""SapTable"",
+        ""typeProperties"": {
+            ""server"": ""fakeserver"",
+            ""systemNumber"" : ""00"",
+            ""clientId"" : ""000"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureDataExplorerLinkedService = @"
+{
+    ""name"": ""AzureDataExplorerLinkedService"",
+    ""properties"": {
+        ""type"": ""AzureDataExplorer"",
+        ""typeProperties"": {
+            ""endpoint"": ""https://fakecluster.eastus2.kusto.windows.net"",
+            ""servicePrincipalId"": ""fakeSPID"",
+            ""servicePrincipalKey"": {
+                ""value"": ""fakeSPKey"",
+                ""type"": ""SecureString""
+            },
+            ""database"": ""MyDatabase"",
+            ""tenant"": ""fakeTenant""
         }
     }
 }";

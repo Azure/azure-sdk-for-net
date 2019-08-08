@@ -87,6 +87,16 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IProximityPlacementGroupsOperations ProximityPlacementGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IDedicatedHostGroupsOperations.
+        /// </summary>
+        public virtual IDedicatedHostGroupsOperations DedicatedHostGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IDedicatedHostsOperations.
+        /// </summary>
+        public virtual IDedicatedHostsOperations DedicatedHosts { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
@@ -430,6 +440,8 @@ namespace Microsoft.Azure.Management.Compute
             Operations = new Operations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
             ProximityPlacementGroups = new ProximityPlacementGroupsOperations(this);
+            DedicatedHostGroups = new DedicatedHostGroupsOperations(this);
+            DedicatedHosts = new DedicatedHostsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);

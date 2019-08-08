@@ -220,7 +220,6 @@ namespace Azure.Core
         public static uint RotateLeft(uint value, int offset)
             => (value << offset) | (value >> (64 - offset));
 
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static uint Round(uint hash, uint input)
         {

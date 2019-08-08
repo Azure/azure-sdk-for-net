@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.InteropServices;
 
-namespace Azure.Core.Pipeline
+namespace Azure.Core.Http
 {
     public readonly struct HttpHeader : IEquatable<HttpHeader>
     {

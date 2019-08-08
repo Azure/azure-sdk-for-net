@@ -15,6 +15,7 @@
       <![CDATA[
     1) Change: ARM PUT now also takes Kind as a  input paramteter. Valid values of Kind are fhir, fhir-Stu3, fhir-R4. This is an optional parameter. If not specified, fhir-R4 will be the default parameter.
     ]]></PackageReleaseNotes>
+    <PackageReleaseNotes>Management SDK for Healthcare APIs.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

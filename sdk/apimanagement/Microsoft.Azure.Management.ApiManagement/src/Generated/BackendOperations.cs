@@ -340,10 +340,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
-                }
             }
             if (Client.ApiVersion == null)
             {
@@ -565,10 +561,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (backendId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -816,10 +808,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (backendId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1108,10 +1096,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
-                }
             }
             if (parameters == null)
             {
@@ -1347,10 +1331,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
-                }
             }
             if (ifMatch == null)
             {
@@ -1574,10 +1554,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (backendId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)

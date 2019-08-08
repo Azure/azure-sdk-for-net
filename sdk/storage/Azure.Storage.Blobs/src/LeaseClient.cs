@@ -20,7 +20,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="BlobClient"/> to manage leases for.
         /// </summary>
-        private readonly BlobClient _blob;
+        private readonly BlobBaseClient _blob;
+
+        /// <summary>
+        /// Gets the <see cref="BlobClient"/> to manage leases for.
+        /// </summary>
+        protected virtual BlobBaseClient BlobClient => this._blob;
 
         /// <summary>
         /// The <see cref="BlobContainerClient"/> to manage leases for.
@@ -28,20 +33,25 @@ namespace Azure.Storage.Blobs.Specialized
         private readonly BlobContainerClient _container;
 
         /// <summary>
+        /// Gets the <see cref="BlobContainerClient"/> to manage leases for.
+        /// </summary>
+        protected virtual BlobContainerClient ContainerClient => this._container;
+
+        /// <summary>
         /// Gets the URI of the object being leased.
         /// </summary>
-        public Uri Uri => this._blob?.Uri ?? this._container?.Uri;
+        public Uri Uri => this.BlobClient?.Uri ?? this.ContainerClient?.Uri;
 
         /// <summary>
         /// Gets the Lease ID for this lease.
         /// </summary>
-        public string LeaseId { get; private set; }
+        public virtual string LeaseId { get; private set; }
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        private HttpPipeline Pipeline => this._blob?.Pipeline ?? this._container._pipeline;
+        private HttpPipeline Pipeline => this.BlobClient?.Pipeline ?? this.ContainerClient.Pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LeaseClient"/> class
@@ -63,11 +73,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public LeaseClient(BlobClient client, string leaseId = null)
+        public LeaseClient(BlobBaseClient client, string leaseId = null)
         {
             this._blob = client ?? throw new ArgumentNullException(nameof(client));
             this._container = null;
-            this.LeaseId = leaseId ?? GetRandomLeaseId();
+            this.LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
 
         /// <summary>
@@ -85,39 +95,40 @@ namespace Azure.Storage.Blobs.Specialized
         {
             this._blob = null;
             this._container = client ?? throw new ArgumentNullException(nameof(client));
-            this.LeaseId = leaseId ?? GetRandomLeaseId();
+            this.LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
 
         /// <summary>
         /// Gets a unique lease ID.
         /// </summary>
         /// <returns>A unique lease ID.</returns>
-        private static string GetRandomLeaseId() => Guid.NewGuid().ToString();
+        private static string CreateUniqueLeaseId() => Guid.NewGuid().ToString();
 
         /// <summary>
         /// Ensure either the Blob or Container is present.
         /// </summary>
         private void EnsureClient()
         {
-            if (this._blob == null && this._container == null)
+            if (this.BlobClient == null && this.ContainerClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
                 throw new InvalidOperationException(
-                    $"{nameof(LeaseClient)} requires either a ${nameof(BlobClient)} or ${nameof(BlobContainerClient)}");
+                    $"{nameof(LeaseClient)} requires either a ${nameof(BlobBaseClient)} or ${nameof(BlobContainerClient)}");
             }
         }
 
+        #region Acquire
         /// <summary>
         /// The <see cref="Acquire"/> operation acquires a lease on
         /// the blob or container.  The lease <paramref name="duration"/> must
         /// be between 15 to 60 seconds, or infinite (-1).
-        /// 
+        ///
         /// If the container does not have an active lease, the Blob service
         /// creates a lease on the blob or container and returns it.  If the
         /// container has an active lease, you can only request a new lease
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
@@ -126,7 +137,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 60 seconds. A lease duration cannot be changed using
         /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
@@ -135,7 +146,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the lease.
+        /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -145,7 +156,7 @@ namespace Azure.Storage.Blobs.Specialized
             int duration,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.AcquireAsync(
+            this.AcquireInternal(
                 duration,
                 httpAccessConditions,
                 false, // async
@@ -156,13 +167,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="AcquireAsync"/> operation acquires a lease on
         /// the blob or container.  The lease <paramref name="duration"/> must
         /// be between 15 to 60 seconds, or infinite (-1).
-        /// 
+        ///
         /// If the container does not have an active lease, the Blob service
         /// creates a lease on the blob or container and returns it.  If the
         /// container has an active lease, you can only request a new lease
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
@@ -171,7 +182,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 60 seconds. A lease duration cannot be changed using
         /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
@@ -180,7 +191,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the lease.
+        /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -190,7 +201,7 @@ namespace Azure.Storage.Blobs.Specialized
             int duration,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.AcquireAsync(
+            await this.AcquireInternal(
                 duration,
                 httpAccessConditions,
                 true, // async
@@ -198,16 +209,16 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="AcquireAsync"/> operation acquires a lease on
+        /// The <see cref="AcquireInternal"/> operation acquires a lease on
         /// the blob or container.  The lease <paramref name="duration"/> must
         /// be between 15 to 60 seconds, or infinite (-1).
-        /// 
+        ///
         /// If the container does not have an active lease, the Blob service
         /// creates a lease on the blob or container and returns it.  If the
         /// container has an active lease, you can only request a new lease
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
@@ -216,7 +227,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 60 seconds. A lease duration cannot be changed using
         /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
@@ -228,13 +239,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the lease.
+        /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<Lease>> AcquireAsync(
+        private async Task<Response<Lease>> AcquireInternal(
             int duration,
             HttpAccessConditions? httpAccessConditions,
             bool async,
@@ -251,7 +262,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(duration)}: {duration}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.AcquireLeaseAsync(
                             this.Pipeline,
@@ -263,6 +274,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: httpAccessConditions?.IfMatch,
                             ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Acquire",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -270,7 +282,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -297,20 +309,22 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Acquire
 
+        #region Renew
         /// <summary>
         /// The <see cref="Renew"/> operation renews the blob or
         /// container's previously-acquired lease.
-        /// 
-        /// The lease can be renewed if the <paramref name="leaseId"/> 
+        ///
+        /// The lease can be renewed if the leaseId
         /// matches that associated with the blob or container.  Note that the]
-        /// lease may be renewed even if it has expired as long as the blob or 
+        /// lease may be renewed even if it has expired as long as the blob or
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
@@ -319,7 +333,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the lease.
+        /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -328,7 +342,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<Lease> Renew(
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.RenewAsync(
+            this.RenewInternal(
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
@@ -337,16 +351,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="RenewAsync"/> operation renews the blob or
         /// container's previously-acquired lease.
-        /// 
-        /// The lease can be renewed if the <paramref name="leaseId"/> 
+        ///
+        /// The lease can be renewed if the leaseId
         /// matches that associated with the blob or container.  Note that the]
-        /// lease may be renewed even if it has expired as long as the blob or 
+        /// lease may be renewed even if it has expired as long as the blob or
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
@@ -355,7 +369,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the lease.
+        /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -364,25 +378,25 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<Lease>> RenewAsync(
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.RenewAsync(
+            await this.RenewInternal(
                 httpAccessConditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="RenewAsync"/> operation renews the blob or
+        /// The <see cref="RenewInternal"/> operation renews the blob or
         /// container's previously-acquired lease.
-        /// 
-        /// The lease can be renewed if the <paramref name="leaseId"/> 
+        ///
+        /// The lease can be renewed if the leaseId
         /// matches that associated with the blob or container.  Note that the]
-        /// lease may be renewed even if it has expired as long as the blob or 
+        /// lease may be renewed even if it has expired as long as the blob or
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
@@ -394,13 +408,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the lease.
+        /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<Lease>> RenewAsync(
+        private async Task<Response<Lease>> RenewInternal(
             HttpAccessConditions? httpAccessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -415,7 +429,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.RenewLeaseAsync(
                             this.Pipeline,
@@ -426,6 +440,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: httpAccessConditions?.IfMatch,
                             ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Renew",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -433,7 +448,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -459,19 +474,21 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Renew
 
+        #region Release
         /// <summary>
-        /// The <see cref="Release"/> operation releases the 
+        /// The <see cref="Release"/> operation releases the
         /// container or blob's previously-acquired lease.
-        /// 
+        ///
         /// The lease may be released if the <see cref="LeaseId"/>
         /// matches that associated with the container or blob.  Releasing the
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
@@ -490,24 +507,24 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<ReleasedObjectInfo> Release(
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.ReleaseAsync(
+            this.ReleaseInternal(
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="ReleaseAsync"/> operation releases the 
+        /// The <see cref="ReleaseAsync"/> operation releases the
         /// container or blob's previously-acquired lease.
-        /// 
+        ///
         /// The lease may be released if the <see cref="LeaseId"/>
         /// matches that associated with the container or blob.  Releasing the
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
@@ -516,7 +533,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ReleasedObjectInfo}}"/> describing the
+        /// A <see cref="Response{ReleasedObjectInfo}"/> describing the
         /// updated blob or container.
         /// </returns>
         /// <remarks>
@@ -526,24 +543,24 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.ReleaseAsync(
+            await this.ReleaseInternal(
                 httpAccessConditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="ReleaseAsync"/> operation releases the 
+        /// The <see cref="ReleaseInternal"/> operation releases the
         /// container or blob's previously-acquired lease.
-        /// 
+        ///
         /// The lease may be released if the <see cref="LeaseId"/>
         /// matches that associated with the container or blob.  Releasing the
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
@@ -555,14 +572,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ReleasedObjectInfo}}"/> describing the
+        /// A <see cref="Response{ReleasedObjectInfo}"/> describing the
         /// updated blob or container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
+        public virtual async Task<Response<ReleasedObjectInfo>> ReleaseInternal(
             HttpAccessConditions? httpAccessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -578,7 +595,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         var response =
                             await BlobRestClient.Blob.ReleaseLeaseAsync(
@@ -590,6 +607,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 ifMatch: httpAccessConditions?.IfMatch,
                                 ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                                 async: async,
+                                operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Release",
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         return new Response<ReleasedObjectInfo>(
@@ -600,11 +618,11 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
-                        var response = 
+                        var response =
                             await BlobRestClient.Container.ReleaseLeaseAsync(
                                 this.Pipeline,
                                 this.Uri,
@@ -630,12 +648,14 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Release
 
+        #region Change
         /// <summary>
-        /// The <see cref="Change"/> operation changes the lease 
+        /// The <see cref="Change"/> operation changes the lease
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="proposedId">
@@ -643,7 +663,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StorageRequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
@@ -662,7 +682,7 @@ namespace Azure.Storage.Blobs.Specialized
             string proposedId,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.ChangeAsync(
+            this.ChangeInternal(
                 proposedId,
                 httpAccessConditions,
                 false, // async
@@ -670,10 +690,10 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="ChangeAsync"/> operation changes the lease 
+        /// The <see cref="ChangeAsync"/> operation changes the lease
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="proposedId">
@@ -681,7 +701,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StorageRequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
@@ -690,7 +710,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the lease.
+        /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -700,7 +720,7 @@ namespace Azure.Storage.Blobs.Specialized
             string proposedId,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.ChangeAsync(
+            await this.ChangeInternal(
                 proposedId,
                 httpAccessConditions,
                 true, // async
@@ -708,10 +728,10 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="ChangeAsync"/> operation changes the lease 
+        /// The <see cref="ChangeInternal"/> operation changes the lease
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="proposedId">
@@ -719,22 +739,25 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StorageRequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on changing a lease.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the lease.
+        /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<Lease>> ChangeAsync(
+        private async Task<Response<Lease>> ChangeInternal(
             string proposedId,
             HttpAccessConditions? httpAccessConditions,
             bool async,
@@ -752,7 +775,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.ChangeLeaseAsync(
                             this.Pipeline,
@@ -764,6 +787,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: httpAccessConditions?.IfMatch,
                             ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Change",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -771,7 +795,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -783,6 +807,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                             ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Change",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -798,11 +823,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Change
 
+        #region Break
         /// <summary>
         /// The <see cref="Break"/> operation breaks the blob or
         /// container's previously-acquired lease (if it exists).
-        /// 
+        ///
         /// Once a lease is broken, it cannot be renewed.  Any authorized
         /// request can break the lease; the request is not required to
         /// specify a matching lease ID.  When a lease is broken, the lease
@@ -812,11 +839,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
-        /// 
+        ///
         /// A lease that has been broken can also be released.  A client can
         /// immediately acquire a blob or container lease that has been
         /// released.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="breakPeriodInSeconds">
@@ -829,7 +856,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is not provided, a fixed-duration lease breaks after the remaining
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
@@ -848,7 +875,7 @@ namespace Azure.Storage.Blobs.Specialized
             int? breakPeriodInSeconds = default,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.BreakAsync(
+            this.BreakInternal(
                 breakPeriodInSeconds,
                 httpAccessConditions,
                 false, // async
@@ -858,7 +885,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="BreakAsync"/> operation breaks the blob or
         /// container's previously-acquired lease (if it exists).
-        /// 
+        ///
         /// Once a lease is broken, it cannot be renewed.  Any authorized
         /// request can break the lease; the request is not required to
         /// specify a matching lease ID.  When a lease is broken, the lease
@@ -868,11 +895,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
-        /// 
+        ///
         /// A lease that has been broken can also be released.  A client can
         /// immediately acquire a blob or container lease that has been
         /// released.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="breakPeriodInSeconds">
@@ -885,7 +912,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is not provided, a fixed-duration lease breaks after the remaining
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
@@ -894,7 +921,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the broken lease.
+        /// A <see cref="Response{Lease}"/> describing the broken lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -904,7 +931,7 @@ namespace Azure.Storage.Blobs.Specialized
             int? breakPeriodInSeconds = default,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.BreakAsync(
+            await this.BreakInternal(
                 breakPeriodInSeconds,
                 httpAccessConditions,
                 true, // async
@@ -912,9 +939,9 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="BreakAsync"/> operation breaks the blob or
+        /// The <see cref="BreakInternal"/> operation breaks the blob or
         /// container's previously-acquired lease (if it exists).
-        /// 
+        ///
         /// Once a lease is broken, it cannot be renewed.  Any authorized
         /// request can break the lease; the request is not required to
         /// specify a matching lease ID.  When a lease is broken, the lease
@@ -924,11 +951,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
-        /// 
+        ///
         /// A lease that has been broken can also be released.  A client can
         /// immediately acquire a blob or container lease that has been
         /// released.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="breakPeriodInSeconds">
@@ -941,7 +968,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is not provided, a fixed-duration lease breaks after the remaining
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
@@ -953,13 +980,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{Lease}}"/> describing the broken lease.
+        /// A <see cref="Response{Lease}"/> describing the broken lease.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<Lease>> BreakAsync(
+        private async Task<Response<Lease>> BreakInternal(
             int? breakPeriodInSeconds,
             HttpAccessConditions? httpAccessConditions,
             bool async,
@@ -976,7 +1003,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return (await BlobRestClient.Blob.BreakLeaseAsync(
                             this.Pipeline,
@@ -987,6 +1014,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: httpAccessConditions?.IfMatch,
                             ifNoneMatch: httpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.LeaseClient.Break",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false))
                             .ToLease();
@@ -995,7 +1023,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -1022,6 +1050,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Break
     }
 
     /// <summary>
@@ -1042,7 +1071,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// ID will be created.
         /// </param>
         public static LeaseClient GetLeaseClient(
-            this BlobClient client,
+            this BlobBaseClient client,
             string leaseId = null) =>
             new LeaseClient(client, leaseId);
 

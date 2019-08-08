@@ -9,7 +9,7 @@ namespace Azure.Storage
     /// <summary>
     /// Create exceptions for common error cases.
     /// </summary>
-    internal static class Errors
+    internal class Errors
     {
         public static ArgumentNullException ArgumentNull(string paramName) =>
             new ArgumentNullException(paramName);
@@ -40,8 +40,5 @@ namespace Azure.Storage
 
         public static ArgumentException InvalidResourceType(char s) =>
             new ArgumentException($"Invalid resource type: '{s}'");
-
-        public static ArgumentOutOfRangeException BlobConditionsMustBeDefault(params string[] conditions) =>
-            new ArgumentOutOfRangeException($"The {String.Join(" and ", conditions)} conditions must have their default values because they are ignored by the blob service");        
     }
 }

@@ -35,8 +35,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the TeradataLinkedService class.
         /// </summary>
-        /// <param name="server">Server name for connection. Type: string (or
-        /// Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -44,6 +42,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
+        /// <param name="connectionString">Teradata ODBC connection string.
+        /// Type: string, SecureString or AzureKeyVaultSecretReference.</param>
+        /// <param name="server">Server name for connection. Type: string (or
+        /// Expression with resultType string).</param>
         /// <param name="authenticationType">AuthenticationType to be used for
         /// connection. Possible values include: 'Basic', 'Windows'</param>
         /// <param name="username">Username for authentication. Type: string
@@ -53,9 +55,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public TeradataLinkedService(object server, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), string authenticationType = default(string), object username = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public TeradataLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object server = default(object), string authenticationType = default(string), object username = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
+            ConnectionString = connectionString;
             Server = server;
             AuthenticationType = authenticationType;
             Username = username;
@@ -68,6 +71,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets teradata ODBC connection string. Type: string,
+        /// SecureString or AzureKeyVaultSecretReference.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectionString")]
+        public object ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets server name for connection. Type: string (or
@@ -113,10 +123,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Server == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Server");
-            }
         }
     }
 }

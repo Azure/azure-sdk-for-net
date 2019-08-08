@@ -21,12 +21,15 @@ namespace Azure.Storage.Queues
     /// </summary>
     public class QueueClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
         private readonly Uri _uri;
-        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// Gets the Uri endpoint used by the object.
+        /// </summary>
+        public virtual Uri Uri => this._uri;
 
         /// <summary>
         /// The Uri endpoint used by the object's messages.
@@ -34,14 +37,19 @@ namespace Azure.Storage.Queues
         private readonly Uri _messagesUri;
 
         /// <summary>
-        /// The Uri endpoint used by the object.
+        /// Gets the Uri endpoint used by the object's messages.
         /// </summary>
-        public Uri Uri => this._uri;
+        protected virtual Uri MessagesUri => this._messagesUri;
 
         /// <summary>
         /// The HttpPipeline used to send REST requests.
         /// </summary>
         private readonly HttpPipeline _pipeline;
+
+        /// <summary>
+        /// Gets the HttpPipeline used to send REST requests.
+        /// </summary>
+        protected virtual HttpPipeline Pipeline => this._pipeline;
 
         /// <summary>
         /// QueueMaxMessagesDequeue indicates the maximum number of messages
@@ -60,6 +68,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         public const int MessageMaxBytes = 64 * Constants.KB;
 
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueClient"/>
         /// class for mocking.
@@ -76,7 +85,7 @@ namespace Azure.Storage.Queues
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="queueName">
@@ -95,7 +104,7 @@ namespace Azure.Storage.Queues
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="queueName">
@@ -219,10 +228,12 @@ namespace Azure.Storage.Queues
             this._messagesUri = queueUri.AppendToPath("messages");
             this._pipeline = pipeline;
         }
+        #endregion ctors
 
+        #region Create
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="metadata">
@@ -237,7 +248,7 @@ namespace Azure.Storage.Queues
         public virtual Response Create(
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateAsync(
+            this.CreateInternal(
                 metadata,
                 false, // async
                 cancellationToken)
@@ -245,7 +256,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="metadata">
@@ -255,12 +266,12 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> CreateAsync(
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateAsync(
+            await this.CreateInternal(
                 metadata,
                 true, // async
                 cancellationToken)
@@ -268,7 +279,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Creates a queue.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
         /// </summary>
         /// <param name="metadata">
@@ -281,22 +292,22 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
-        private async Task<Response> CreateAsync(
+        private async Task<Response> CreateInternal(
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await QueueRestClient.Queue.CreateAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
@@ -305,16 +316,18 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion Create
 
+        #region Delete
         /// <summary>
         /// Deletes a queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
@@ -327,7 +340,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public virtual Response Delete(
             CancellationToken cancellationToken = default) =>
-            this.DeleteAsync(
+            this.DeleteInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -340,11 +353,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> DeleteAsync(
             CancellationToken cancellationToken = default) =>
-            await this.DeleteAsync(
+            await this.DeleteInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -360,21 +373,21 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
-        private async Task<Response> DeleteAsync(
+        private async Task<Response> DeleteInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await QueueRestClient.Queue.DeleteAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -382,16 +395,18 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion Delete
 
+        #region GetProperties
         /// <summary>
         /// Retrieves queue properties and user-defined metadata and properties on the specified queue.
         /// Metadata is associated with the queue as name-values pairs.
@@ -405,7 +420,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public virtual Response<QueueProperties> GetProperties(
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesAsync(
+            this.GetPropertiesInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -419,11 +434,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueProperties}}"/>
+        /// <see cref="Response{QueueProperties}"/>
         /// </returns>
         public virtual async Task<Response<QueueProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesAsync(
+            await this.GetPropertiesInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -440,21 +455,21 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueProperties}}"/>
+        /// <see cref="Response{QueueProperties}"/>
         /// </returns>
-        private async Task<Response<QueueProperties>> GetPropertiesAsync(
+        private async Task<Response<QueueProperties>> GetPropertiesInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await QueueRestClient.Queue.GetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -462,16 +477,18 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion GetProperties
 
+        #region SetMetadata
         /// <summary>
         /// Sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-metadata"/>.
@@ -488,7 +505,7 @@ namespace Azure.Storage.Queues
         public virtual Response SetMetadata(
             Metadata metadata,
             CancellationToken cancellationToken = default) =>
-            this.SetMetadataAsync(
+            this.SetMetadataInternal(
                 metadata,
                 false, // async
                 cancellationToken)
@@ -505,12 +522,12 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> SetMetadataAsync(
             Metadata metadata,
             CancellationToken cancellationToken = default) =>
-            await this.SetMetadataAsync(
+            await this.SetMetadataInternal(
                 metadata,
                 true, // async
                 cancellationToken)
@@ -530,22 +547,22 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
-        private async Task<Response> SetMetadataAsync(
+        private async Task<Response> SetMetadataInternal(
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await QueueRestClient.Queue.SetMetadataAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
@@ -554,16 +571,18 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion SetMetadata
 
+        #region GetAccessPolicy
         /// <summary>
         /// Returns details about any stored access policies specified on the queue that may be used with
         /// Shared Access Signatures.
@@ -573,11 +592,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Response{IEnumerable{SignedIdentifier}}"/>
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}" />
         /// </returns>
         public virtual Response<IEnumerable<SignedIdentifier>> GetAccessPolicy(
             CancellationToken cancellationToken = default) =>
-            this.GetAccessPolicyAsync(
+            this.GetAccessPolicyInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -591,11 +610,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Task{Response{IEnumerable{SignedIdentifier}}}"/>
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}" />
         /// </returns>
         public virtual async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetAccessPolicyAsync(
+            await this.GetAccessPolicyInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -612,21 +631,21 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Task{Response{IEnumerable{SignedIdentifier}}}"/>
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{SignedIdentifier}" />
         /// </returns>
-        private async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
+        private async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await QueueRestClient.Queue.GetAccessPolicyAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -634,16 +653,18 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion GetAccessPolicy
 
+        #region SetAccessPolicy
         /// <summary>
         /// SetAccessPolicyAsync sets stored access policies for the queue that may be used with Shared Access Signatures.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
@@ -660,7 +681,7 @@ namespace Azure.Storage.Queues
         public virtual Response SetAccessPolicy(
             IEnumerable<SignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
-            this.SetAccessPolicyAsync(
+            this.SetAccessPolicyInternal(
                 permissions,
                 false, // async
                 cancellationToken)
@@ -677,19 +698,19 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> SetAccessPolicyAsync(
             IEnumerable<SignedIdentifier> permissions,
             CancellationToken cancellationToken = default) =>
-            await this.SetAccessPolicyAsync(
+            await this.SetAccessPolicyInternal(
                 permissions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// SetAccessPolicyAsync sets stored access policies for the queue that may be used with Shared Access Signatures.
+        /// SetAccessPolicyInternal sets stored access policies for the queue that may be used with Shared Access Signatures.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
         /// </summary>
         /// <param name="permissions">
@@ -702,22 +723,22 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
-        private async Task<Response> SetAccessPolicyAsync(
+        private async Task<Response> SetAccessPolicyInternal(
             IEnumerable<SignedIdentifier> permissions,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await QueueRestClient.Queue.SetAccessPolicyAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         permissions: permissions,
                         async: async,
@@ -726,16 +747,18 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion SetAccessPolicy
 
+        #region ClearMessages
         /// <summary>
         /// Clear deletes all messages from a queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
@@ -748,7 +771,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public virtual Response ClearMessages(
             CancellationToken cancellationToken = default) =>
-            this.ClearMessagesAsync(
+            this.ClearMessagesInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -761,11 +784,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> ClearMessagesAsync(
             CancellationToken cancellationToken = default) =>
-            await this.ClearMessagesAsync(
+            await this.ClearMessagesInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -781,42 +804,45 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
-        private async Task<Response> ClearMessagesAsync(
+        private async Task<Response> ClearMessagesInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
-                    message: $"Uri: {this._messagesUri}");
+                    message: $"Uri: {this.MessagesUri}");
                 try
                 {
                     return await QueueRestClient.Messages.ClearAsync(
-                        this._pipeline,
-                        this._messagesUri,
+                        this.Pipeline,
+                        this.MessagesUri,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.ClearMessages",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion ClearMessages
 
+        #region EnqueueMessage
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -838,7 +864,7 @@ namespace Azure.Storage.Queues
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
-            this.EnqueueMessageAsync(
+            this.EnqueueMessageInternal(
                 messageText,
                 visibilityTimeout,
                 timeToLive,
@@ -849,7 +875,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -864,14 +890,14 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{EnqueuedMessage}}"/>
+        /// <see cref="Response{EnqueuedMessage}"/>
         /// </returns>
         public virtual async Task<Response<EnqueuedMessage>> EnqueueMessageAsync(
             string messageText,
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
-            await this.EnqueueMessageAsync(
+            await this.EnqueueMessageInternal(
                 messageText,
                 visibilityTimeout,
                 timeToLive,
@@ -882,7 +908,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -900,33 +926,34 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{EnqueuedMessage}}"/>
+        /// <see cref="Response{EnqueuedMessage}"/>
         /// </returns>
-        private async Task<Response<EnqueuedMessage>> EnqueueMessageAsync(
+        private async Task<Response<EnqueuedMessage>> EnqueueMessageInternal(
             string messageText,
             TimeSpan? visibilityTimeout,
             TimeSpan? timeToLive,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
-                    $"Uri: {this._messagesUri}\n" +
+                    $"Uri: {this.MessagesUri}\n" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}\n" +
                     $"{nameof(timeToLive)}: {timeToLive}");
                 try
                 {
                     var messages =
                         await QueueRestClient.Messages.EnqueueAsync(
-                            this._pipeline,
-                            this._messagesUri,
+                            this.Pipeline,
+                            this.MessagesUri,
                             message: new QueueMessage { MessageText = messageText },
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
+                            operationName: "Azure.Storage.Queues.QueueClient.EnqueueMessage",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -937,22 +964,24 @@ namespace Azure.Storage.Queues
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion EnqueueMessage
 
+        #region DequeueMessages
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
         /// If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.
         /// </param>
         /// <param name="visibilityTimeout">
@@ -962,13 +991,13 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Response{IEnumerable{DequeuedMessage}}"/>.
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
         /// </returns>
         public virtual Response<IEnumerable<DequeuedMessage>> DequeueMessages(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
-            this.DequeueMessagesAsync(
+            this.DequeueMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
                 false, // async
@@ -980,7 +1009,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
         /// If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.
         /// </param>
         /// <param name="visibilityTimeout">
@@ -990,13 +1019,13 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Task{Response{IEnumerable{DequeuedMessage}}}"/>.
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
         /// </returns>
         public virtual async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesAsync(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
-            await this.DequeueMessagesAsync(
+            await this.DequeueMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
                 true, // async
@@ -1008,7 +1037,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
         /// If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.
         /// </param>
         /// <param name="visibilityTimeout">
@@ -1021,63 +1050,66 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Task{Response{IEnumerable{DequeuedMessage}}}"/>.
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{DequeuedMessage}"/>
         /// </returns>
-        private async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesAsync(
+        private async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesInternal(
             int? maxMessages,
             TimeSpan? visibilityTimeout,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
-                    $"Uri: {this._messagesUri}\n" +
+                    $"Uri: {this.MessagesUri}\n" +
                     $"{nameof(maxMessages)}: {maxMessages}\n" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
                     return await QueueRestClient.Messages.DequeueAsync(
-                        this._pipeline,
-                        this._messagesUri,
+                        this.Pipeline,
+                        this.MessagesUri,
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.DequeueMessages",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion DequeueMessages
 
+        #region PeekMessages
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Response{IEnumerable{PeekedMessage}}"/>.
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
         /// </returns>
         public virtual Response<IEnumerable<PeekedMessage>> PeekMessages(
             int? maxMessages = default,
             CancellationToken cancellationToken = default) =>
-            this.PeekMessagesAsync(
+            this.PeekMessagesInternal(
                 maxMessages,
                 false, // async
                 cancellationToken)
@@ -1088,19 +1120,19 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Task{Response{IEnumerable{PeekedMessage}}}"/>.
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
         /// </returns>
         public virtual async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesAsync(
             int? maxMessages = default,
             CancellationToken cancellationToken = default) =>
-            await this.PeekMessagesAsync(
+            await this.PeekMessagesInternal(
                 maxMessages,
                 true, // async
                 cancellationToken)
@@ -1111,7 +1143,7 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
         /// </summary>
         /// <param name="maxMessages">
-        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
+        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
         /// <param name="async">
@@ -1121,41 +1153,43 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// IEnumerable of <see cref="Task{Response{IEnumerable{PeekedMessage}}}"/>.
+        /// <see cref="Response{T}"/> of <see cref="IEnumerable{PeekedMessage}"/>
         /// </returns>
-        private async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesAsync(
+        private async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesInternal(
             int? maxMessages,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
-                    $"Uri: {this._messagesUri}\n" +
+                    $"Uri: {this.MessagesUri}\n" +
                     $"{nameof(maxMessages)}: {maxMessages}");
                 try
                 {
                     return await QueueRestClient.Messages.PeekAsync(
-                        this._pipeline,
-                        this._messagesUri,
+                        this.Pipeline,
+                        this.MessagesUri,
                         numberOfMessages: maxMessages,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.PeekMessages",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion PeekMessages
 
         /// <summary>
         /// Get the URI to a specific message given its ID.
@@ -1163,8 +1197,9 @@ namespace Azure.Storage.Queues
         /// <param name="messageId">ID of the message.</param>
         /// <returns>URI to the given message.</returns>
         private Uri GetMessageUri(string messageId) =>
-            this._messagesUri.AppendToPath(messageId.ToString(CultureInfo.InvariantCulture));
+            this.MessagesUri.AppendToPath(messageId.ToString(CultureInfo.InvariantCulture));
 
+        #region DeleteMessage
         /// <summary>
         /// Permanently removes the specified message from its queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
@@ -1183,7 +1218,7 @@ namespace Azure.Storage.Queues
             string messageId,
             string popReceipt,
             CancellationToken cancellationToken = default) =>
-            this.DeleteMessageAsync(
+            this.DeleteMessageInternal(
                 messageId,
                 popReceipt,
                 false, // async
@@ -1202,13 +1237,13 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>.
+        /// <see cref="Response"/>.
         /// </returns>
         public virtual async Task<Response> DeleteMessageAsync(
             string messageId,
             string popReceipt,
             CancellationToken cancellationToken = default) =>
-            await this.DeleteMessageAsync(
+            await this.DeleteMessageInternal(
                 messageId,
                 popReceipt,
                 true, // async
@@ -1230,18 +1265,18 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>.
+        /// <see cref="Response"/>.
         /// </returns>
-        private async Task<Response> DeleteMessageAsync(
+        private async Task<Response> DeleteMessageInternal(
             string messageId,
             string popReceipt,
             bool async,
             CancellationToken cancellationToken)
         {
             var uri = this.GetMessageUri(messageId);
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"Uri: {uri}\n" +
@@ -1249,25 +1284,28 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.MessageId.DeleteAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         uri,
                         popReceipt: popReceipt,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.DeleteMessage",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+        #endregion DeleteMessage
 
+        #region UpdateMessage
         /// <summary>
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
@@ -1280,8 +1318,8 @@ namespace Azure.Storage.Queues
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
         /// </param>
         /// <param name="visibilityTimeout">
-        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than 
-        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
         /// expiry time. A message can be updated until it has been deleted or has expired.
         /// </param>
         /// <param name="cancellationToken">
@@ -1296,7 +1334,7 @@ namespace Azure.Storage.Queues
             string popReceipt,
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
-            this.UpdateMessageAsync(
+            this.UpdateMessageInternal(
                 messageText,
                 messageId,
                 popReceipt,
@@ -1317,15 +1355,15 @@ namespace Azure.Storage.Queues
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
         /// </param>
         /// <param name="visibilityTimeout">
-        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than 
-        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
         /// expiry time. A message can be updated until it has been deleted or has expired.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{UpdatedMessage}}"/>.
+        /// <see cref="Response{UpdatedMessage}"/>.
         /// </returns>
         public virtual async Task<Response<UpdatedMessage>> UpdateMessageAsync(
             string messageText,
@@ -1333,7 +1371,7 @@ namespace Azure.Storage.Queues
             string popReceipt,
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
-            await this.UpdateMessageAsync(
+            await this.UpdateMessageInternal(
                 messageText,
                 messageId,
                 popReceipt,
@@ -1354,8 +1392,8 @@ namespace Azure.Storage.Queues
         /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
         /// </param>
         /// <param name="visibilityTimeout">
-        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than 
-        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
         /// expiry time. A message can be updated until it has been deleted or has expired.
         /// </param>
         /// <param name="async">
@@ -1365,9 +1403,9 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{UpdatedMessage}}"/>.
+        /// <see cref="Response{UpdatedMessage}"/>.
         /// </returns>
-        private async Task<Response<UpdatedMessage>> UpdateMessageAsync(
+        private async Task<Response<UpdatedMessage>> UpdateMessageInternal(
             string messageText,
             string messageId,
             string popReceipt,
@@ -1376,9 +1414,9 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken)
         {
             var uri = this.GetMessageUri(messageId);
-            using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(QueueClient),
                     message:
                     $"Uri: {uri}\n" +
@@ -1387,52 +1425,27 @@ namespace Azure.Storage.Queues
                 try
                 {
                     return await QueueRestClient.MessageId.UpdateAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         uri,
                         message: new QueueMessage { MessageText = messageText },
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         async: async,
+                        operationName: "Azure.Storage.Queues.QueueClient.UpdateMessage",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(QueueClient));
+                    this.Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
-    }
-}
-
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// The object returned in the QueueMessageList array when calling Get
-    /// Messages on a Queue.
-    /// </summary>
-    public partial class DequeuedMessage
-    {
-        /// <summary>
-        /// Update a <see cref="DequeuedMessage"/> after calling
-        /// <see cref="QueueClient.UpdateMessageAsync"/> with the resulting
-        /// <see cref="UpdatedMessage"/>
-        /// </summary>
-        /// <param name="updated">The message details.</param>
-        /// <returns>The updated <see cref="DequeuedMessage"/>.</returns>
-        public DequeuedMessage Update(UpdatedMessage updated) =>
-            QueuesModelFactory.DequeuedMessage(
-                this.MessageId,
-                this.InsertionTime,
-                this.ExpirationTime,
-                updated.PopReceipt,
-                updated.TimeNextVisible,
-                this.DequeueCount,
-                this.MessageText);
+        #endregion UpdateMessage
     }
 }

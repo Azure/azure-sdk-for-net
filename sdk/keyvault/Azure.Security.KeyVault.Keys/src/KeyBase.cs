@@ -121,7 +121,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         internal override void WriteProperties(Utf8JsonWriter json) { }
-        
+
         internal override void ReadProperties(JsonElement json)
         {
             foreach(JsonProperty prop in json.EnumerateObject())

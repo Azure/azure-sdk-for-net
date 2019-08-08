@@ -5,7 +5,6 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Storage.Common;
 
 namespace Azure.Storage
@@ -31,16 +30,16 @@ namespace Azure.Storage
             // which errors are retriable, but may extend this in the future.
 
             // We'll use the standard RetryPolicy with a few more retries
-            options.RetryPolicy = new RetryPolicy() { MaxRetries = Constants.MaxReliabilityRetries };
+            options.Retry.MaxRetries = Constants.MaxReliabilityRetries;
 
             // Disable logging until we fully support redaction
-            options.LoggingPolicy = default;
+            options.Diagnostics.IsLoggingEnabled = false;
         }
 
         /// <summary>
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
-        /// <param name="credentials">Credential to use.</param>
+        /// <param name="credential">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this StorageSharedKeyCredential credential) =>
             new StorageSharedKeyPipelinePolicy(
@@ -49,7 +48,7 @@ namespace Azure.Storage
         /// <summary>
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
-        /// <param name="credentials">Credential to use.</param>
+        /// <param name="credential">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
             new BearerTokenAuthenticationPolicy(
@@ -87,20 +86,13 @@ namespace Azure.Storage
         /// <param name="authentication">Optional authentication policy.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null) =>
-            authentication == null ?
-                HttpPipelineBuilder.Build(
-                    options,
-                    // TODO: PageBlob's UploadPagesAsync test currently fails
-                    // without buffered responses, so I'm leaving this on for now.
-                    // It'd be a great perf win to remove it soon.
-                    bufferResponse: true) :
-                HttpPipelineBuilder.Build(
-                    options,
-                    // TODO: PageBlob's UploadPagesAsync test currently fails
-                    // without buffered responses, so I'm leaving this on for now.
-                    // It'd be a great perf win to remove it soon.
-                    bufferResponse: true,
-                    authentication);
+            HttpPipelineBuilder.Build(
+                options,
+                // TODO: PageBlob's UploadPagesAsync test currently fails
+                // without buffered responses, so I'm leaving this on for now.
+                // It'd be a great perf win to remove it soon.
+                bufferResponse: true,
+                authentication);
 
         /// <summary>
         /// Create an HttpPipeline from Storage ClientOptions.

@@ -259,7 +259,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         private class CommandLineArguments
         {
-            /// <summary>The sequence of characters that prefix a command-line argument./summary>
+            /// <summary>The sequence of characters that prefix a command-line argument.</summary>
             public const string ArgumentPrefix = "--";
 
             /// <summary>The connection string to the Azure Event Hubs namespace for samples.</summary>

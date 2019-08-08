@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class TrackOneGenericTokenProviderTests
     {
         /// <summary>
@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
             var resource = "amqps://my.eventhubs.com/someHub";
             var jwtToken = "somevalue";
-            var expiration = DateTime.Parse("2017-10-27T12:00:00Z");
+            var expiration = DateTimeOffset.Parse("2017-10-27T12:00:00Z");
             var accessToken = new AccessToken(jwtToken, expiration);
             var eventHubCredential = new EventHubTokenCredential(mockCredential.Object, resource);
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
             var resource = "amqps://my.eventhubs.com/someHub";
             var jwtToken = "somevalue";
-            var expiration = DateTime.Parse("2017-10-27T12:00:00Z");
+            var expiration = DateTimeOffset.Parse("2017-10-27T12:00:00Z");
             var accessToken = new AccessToken(jwtToken, expiration);
             var eventHubCredential = new EventHubTokenCredential(mockCredential.Object, resource);
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
             var resource = "amqps://my.eventhubs.com/someHub";
             var jwtToken = "somevalue";
-            var expiration = DateTime.Parse("2017-10-27T12:00:00Z");
+            var expiration = DateTimeOffset.Parse("2017-10-27T12:00:00Z");
             var accessToken = new AccessToken(jwtToken, expiration);
             var eventHubCredential = new EventHubTokenCredential(mockCredential.Object, resource);
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
@@ -152,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
             var resource = "amqps://my.eventhubs.com/someHub";
             var jwtToken = "somevalue";
-            var expiration = DateTime.Parse("2017-10-27T12:00:00Z");
+            var expiration = DateTimeOffset.Parse("2017-10-27T12:00:00Z");
             var accessToken = new AccessToken(jwtToken, expiration);
             var eventHubCredential = new EventHubTokenCredential(mockCredential.Object, resource);
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(token, Is.Not.Null, "A token should have been produced.");
             Assert.That(token.TokenValue, Is.EqualTo(jwtToken), "The JWT token should match.");
             Assert.That(token.Audience, Is.EqualTo(resource), "The audience should match the resource.");
-            Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration), "The token expiration should match.");
+            Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration.UtcDateTime), "The token expiration should match.");
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
             var resource = "amqps://my.eventhubs.com/someHub";
             var jwtToken = "somevalue";
-            var expiration = DateTime.Parse("2017-10-27T12:00:00Z");
+            var expiration = DateTimeOffset.Parse("2017-10-27T12:00:00Z");
             var accessToken = new AccessToken(jwtToken, expiration);
             var eventHubCredential = new EventHubTokenCredential(mockCredential.Object, resource);
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);

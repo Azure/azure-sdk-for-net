@@ -64,8 +64,8 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     InvalidUri,
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act
@@ -112,8 +112,8 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act
@@ -129,21 +129,13 @@ namespace Azure.Storage.Files.Test
             var service = this.GetServiceClient_SharedKey();
 
             // Ensure at least one share
-            using (this.GetNewShare(out var share, service: service)) 
+            using (this.GetNewShare(out var share, service: service))
             {
-                var marker = default(string);
-                SharesSegment sharesSegment;
-
                 var shares = new List<ShareItem>();
-
-                do
+                await foreach (var page in service.GetSharesAsync().ByPage())
                 {
-                    // Act
-                    sharesSegment = await service.ListSharesSegmentAsync(marker: marker);
-                    shares.AddRange(sharesSegment.ShareItems);
-                    marker = sharesSegment.NextMarker;
+                    shares.AddRange(page.Values);
                 }
-                while (!String.IsNullOrWhiteSpace(marker));
 
                 // Assert
                 Assert.AreNotEqual(0, shares.Count);
@@ -160,13 +152,13 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.ListSharesSegmentAsync(),
+                service.GetSharesAsync().ToListAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
 

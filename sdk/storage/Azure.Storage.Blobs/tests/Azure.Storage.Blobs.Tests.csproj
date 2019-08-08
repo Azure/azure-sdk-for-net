@@ -9,15 +9,11 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
-    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <None Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\*.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Samples\SampleSource.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

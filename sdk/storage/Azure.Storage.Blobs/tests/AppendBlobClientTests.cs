@@ -95,10 +95,9 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
-                var listResponse = await container.ListBlobsFlatSegmentAsync();
-                Assert.AreEqual(1, listResponse.Value.BlobItems.Count());
-                Assert.AreEqual(blobName, listResponse.Value.BlobItems.First().Name);
-                Assert.IsNull(listResponse.Value.Marker);
+                var blobs = await container.GetBlobsAsync().ToListAsync();
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Value.Name);
             }
         }
 
@@ -404,8 +403,8 @@ namespace Azure.Storage.Blobs.Test
                     new BlobContainerClient(
                         container.Uri,
                         new StorageSharedKeyCredential(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey),
+                            this.TestConfigDefault.AccountName,
+                            this.TestConfigDefault.AccountKey),
                         this.GetFaultyBlobConnectionOptions()));
 
                 // Arrange
@@ -423,14 +422,10 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
                 {
                     await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
-
-                    await this.Delay(1000, 50); // wait 1s to allow lingering progress events to execute
-
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-
-                    var lastProgress = progressList.Last();
-
-                    Assert.AreEqual(data.LongLength, lastProgress.BytesTransferred, "Final progress has unexpected value");
+                    // Changing from Assert.AreEqual because these don't always update fast enough
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
                 }
 
                 // Assert
@@ -520,7 +515,7 @@ namespace Azure.Storage.Blobs.Test
 
                     // Act
                     await destBlob.AppendBlockFromUriAsync(
-                        sourceUri: sourceBlob.Uri, 
+                        sourceUri: sourceBlob.Uri,
                         sourceContentHash: MD5.Create().ComputeHash(data));
                 }
             }

@@ -18,8 +18,8 @@ namespace Azure.Storage.Sas
     public struct BlobSasBuilder : IEquatable<BlobSasBuilder>
     {
         /// <summary>
-        /// The storage service version to use to authenticate requests made 
-        /// with this shared access signature, and the service version to use 
+        /// The storage service version to use to authenticate requests made
+        /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
         public string Version { get; set; }
@@ -43,7 +43,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
-        /// This field must be omitted if it has been specified in an 
+        /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
         public DateTimeOffset ExpiryTime { get; set; }
@@ -52,7 +52,7 @@ namespace Azure.Storage.Sas
         /// The permissions associated with the shared access signature. The
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
-        /// stored access policy.  The <see cref="BlobSasPermissions"/>, 
+        /// stored access policy.  The <see cref="BlobSasPermissions"/>,
         /// <see cref="ContainerSasPermissions"/>, and
         /// <see cref="SnapshotSasPermissions"/> can be used to create the
         /// permissions string.
@@ -61,10 +61,10 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
-        /// accept requests. If the IP address from which the request 
-        /// originates does not match the IP address or address range 
+        /// accept requests. If the IP address from which the request
+        /// originates does not match the IP address or address range
         /// specified on the SAS token, the request is not authenticated.
-        /// When specifying a range of IP addresses, note that the range is 
+        /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
         public IPRange IPRange { get; set; }
@@ -73,7 +73,7 @@ namespace Azure.Storage.Sas
         /// An optional unique value up to 64 characters in length that
         /// correlates to an access policy specified for the container.
         /// </summary>
-        public string Identifier { get; set; } 
+        public string Identifier { get; set; }
 
         /// <summary>
         /// The name of the container being made accessible.
@@ -95,17 +95,17 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Specifies which resources are accessible via the shared access
         /// signature.
-        /// 
+        ///
         /// Specify b if the shared resource is a blob. This grants access to
         /// the content and metadata of the blob.
-        /// 
-        /// Specify c if the shared resource is a container. This grants 
-        /// access to the content and metadata of any blob in the container, 
+        ///
+        /// Specify c if the shared resource is a container. This grants
+        /// access to the content and metadata of any blob in the container,
         /// and to the list of blobs in the container.
-        /// 
+        ///
         /// Beginning in version 2018-11-09, specify bs if the shared resource
-        /// is a blob snapshot.  This grants access to the content and 
-        /// metadata of the specific snapshot, but not the corresponding root 
+        /// is a blob snapshot.  This grants access to the content and
+        /// metadata of the specific snapshot, but not the corresponding root
         /// blob.
         /// </summary>
         public string Resource { get; set; }
@@ -137,7 +137,7 @@ namespace Azure.Storage.Sas
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this 
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>
@@ -169,25 +169,25 @@ namespace Azure.Storage.Sas
                 this.Version,
                 this.Resource,
                 this.Snapshot,
-                this.CacheControl,      
-                this.ContentDisposition, 
-                this.ContentEncoding,    
-                this.ContentLanguage,    
-                this.ContentType);       
+                this.CacheControl,
+                this.ContentDisposition,
+                this.ContentEncoding,
+                this.ContentLanguage,
+                this.ContentType);
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
 
             var p = new BlobSasQueryParameters(
-                version: this.Version, 
-                services: null, 
-                resourceTypes: null, 
-                protocol: this.Protocol, 
-                startTime: this.StartTime, 
-                expiryTime: this.ExpiryTime, 
-                ipRange: this.IPRange, 
-                identifier: this.Identifier, 
-                resource: this.Resource, 
-                permissions: this.Permissions, 
+                version: this.Version,
+                services: null,
+                resourceTypes: null,
+                protocol: this.Protocol,
+                startTime: this.StartTime,
+                expiryTime: this.ExpiryTime,
+                ipRange: this.IPRange,
+                identifier: this.Identifier,
+                resource: this.Resource,
+                permissions: this.Permissions,
                 signature: signature);
             return p;
         }
@@ -199,7 +199,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -390,7 +390,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Check if two BlobSasBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(BlobSasBuilder other) =>
             this.BlobName == other.BlobName &&

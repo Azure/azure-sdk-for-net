@@ -2578,6 +2578,7 @@
       },
       "description": "A listed directory item.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "Name"
       ],
@@ -2593,6 +2594,7 @@
       },
       "description": "A listed file item.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "Name",
         "Properties"
@@ -2609,6 +2611,7 @@
     "FileProperty": {
       "description": "File properties.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "Content-Length"
       ],
@@ -2677,6 +2680,7 @@
       },
       "description": "An enumeration of directories and files.",
       "type": "object",
+      "x-ms-public":  false,
       "required": [
         "ServiceEndpoint",
         "ShareName",
@@ -2748,6 +2752,7 @@
       },
       "description": "An enumeration of handles.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "NextMarker"
       ],
@@ -2773,6 +2778,7 @@
       },
       "description": "An enumeration of shares.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "ServiceEndpoint",
         "NextMarker"
@@ -3300,7 +3306,8 @@
       "required": true,
       "type": "string",
       "format": "url",
-      "x-ms-skip-url-encoding": true
+      "x-ms-skip-url-encoding": true,
+      "x-ms-trace": true
     },
     "ShareAcl": {
       "name": "shareAcl",

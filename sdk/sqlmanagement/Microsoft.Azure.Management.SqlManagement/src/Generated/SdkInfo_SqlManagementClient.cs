@@ -34,11 +34,13 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "DatabaseVulnerabilityAssessments", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Databases", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "Databases", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "Databases", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolDatabaseActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolOperations", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ElasticPools", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ElasticPools", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "ElasticPools", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "EncryptionProtectors", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "ExtendedDatabaseBlobAuditingPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ExtendedServerBlobAuditingPolicies", "2017-03-01-preview"),
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "FirewallRules", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "GeoBackupPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "InstanceFailoverGroups", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "InstancePools", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "JobAgents", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "JobCredentials", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "JobExecutions", "2017-03-01-preview"),
@@ -67,7 +70,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ManagedInstanceKeys", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceTdeCertificates", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceVulnerabilityAssessments", "2018-06-01-preview"),
-                new Tuple<string, string, string>("Sql", "ManagedInstances", "2015-05-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedInstances", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedServerSecurityAlertPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Operations", "2015-05-01-preview"),
@@ -100,10 +103,21 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "TdeCertificates", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "TransparentDataEncryptionActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "TransparentDataEncryptions", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "Usages", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "VirtualClusters", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "VirtualNetworkRules", "2015-05-01-preview"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=.";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "737110f8edd3689144c45d6fd34e7c6143171ab8";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }

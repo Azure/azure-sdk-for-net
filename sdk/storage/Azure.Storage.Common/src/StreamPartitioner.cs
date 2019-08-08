@@ -26,7 +26,7 @@ namespace Azure.Storage.Common
         /// Generate a forward-only sequence of substreams based on bufferSize.
         /// </summary>
         /// <returns>StreamPartition</returns>
-        public async Task<StreamPartition> ReadAsync(int size = Constants.DefaultBufferSize, CancellationToken ct = default)
+        public async Task<StreamPartition> ReadAsync(int size = Constants.DefaultBufferSize, bool async = true, CancellationToken ct = default)
         {
             // TODO these operations should be simplified with Memory- and Span-accepting APIs in future NET Standard
             var buffer = this.memoryPool.Rent(size);
@@ -35,13 +35,15 @@ namespace Azure.Storage.Common
 
             if (MemoryMarshal.TryGetArray<byte>(buffer.Memory, out var segment))
             {
-                var count = await this.stream.ReadAsync(segment.Array, 0, segment.Count, ct).ConfigureAwait(false);
+                var count = async ?
+                    await this.stream.ReadAsync(segment.Array, 0, segment.Count, ct).ConfigureAwait(false) :
+                    this.stream.Read(segment.Array, 0, segment.Count);
 
                 //this.logger?.LogTrace($"Read {count} bytes");
 
                 return new StreamPartition(
                     buffer.Memory,
-                    count, 
+                    count,
                     () =>
                     {
                         buffer.Dispose();
@@ -64,7 +66,7 @@ namespace Azure.Storage.Common
                 if (disposing)
                 {
                 }
-                
+
                 this.stream = default;
                 this.memoryPool = default;
 

@@ -1,18 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-490da102-26f4-15fe-e68e-6a562439690e?comp=lease\u0026restype=container",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-b305a6d5-ee6d-0c34-2492-dc217da83073?comp=lease\u0026restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Request-Id": "|83329434-417105b58f893b74.",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "34f85ec2579e71493c9785c5b58cbbdb",
-        "x-ms-date": "Mon, 17 Jun 2019 20:57:13 GMT",
+        "x-ms-client-request-id": "e7be6834b8f587deff31a0b329841205",
+        "x-ms-date": "Fri, 19 Jul 2019 22:28:19 GMT",
         "x-ms-lease-action": "release",
-        "x-ms-lease-id": "015d65ff-82b1-96bb-f9d4-368f6af9c87b",
+        "x-ms-lease-id": "98f75fbe-9344-cf0d-4361-1ad4909add3a",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -20,24 +21,25 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "225",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:57:13 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 19 Jul 2019 22:28:19 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "a93584a1-b01e-0079-434f-25b12a000000",
+        "x-ms-request-id": "feb66405-501e-0061-2c81-3e6e4d000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eContainerNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified container does not exist.\n",
-        "RequestId:a93584a1-b01e-0079-434f-25b12a000000\n",
-        "Time:2019-06-17T20:57:13.9466040Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eContainerNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified container does not exist.\n",
+        "RequestId:feb66405-501e-0061-2c81-3e6e4d000000\n",
+        "Time:2019-07-19T22:28:19.9643361Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     }
   ],
   "Variables": {
-    "RandomSeed": "457918292"
+    "RandomSeed": "2121085893",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

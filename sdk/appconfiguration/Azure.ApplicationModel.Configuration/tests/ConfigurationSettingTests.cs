@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Http;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
@@ -30,7 +31,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "my_label", "label,label" },
             };
 
-            var builder = new HttpPipelineUriBuilder();
+            var builder = new RequestUriBuilder();
             builder.Uri = new Uri("http://localhost/");
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -47,7 +48,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "*label*" },
             };
 
-            var builder = new HttpPipelineUriBuilder();
+            var builder = new RequestUriBuilder();
             builder.Uri = new Uri("http://localhost/");
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -62,7 +63,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "" },
             };
 
-            var builder = new HttpPipelineUriBuilder();
+            var builder = new RequestUriBuilder();
             builder.Uri = new Uri("http://localhost/");
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -75,7 +76,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var key = "my-key";
             var selector = new SettingSelector(key);
 
-            var builder = new HttpPipelineUriBuilder();
+            var builder = new RequestUriBuilder();
             builder.Uri = new Uri("http://localhost/");
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -88,7 +89,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var label = "my-label";
             var selector = new SettingSelector(null, label);
 
-            var builder = new HttpPipelineUriBuilder();
+            var builder = new RequestUriBuilder();
             builder.Uri = new Uri("http://localhost/");
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -103,7 +104,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Fields = SettingFields.Key | SettingFields.Value
             };
 
-            var builder = new HttpPipelineUriBuilder();
+            var builder = new RequestUriBuilder();
             builder.Uri = new Uri("http://localhost/");
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
@@ -118,7 +119,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Fields = SettingFields.All
             };
 
-            var builder = new HttpPipelineUriBuilder();
+            var builder = new RequestUriBuilder();
             builder.Uri = new Uri("http://localhost/");
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 

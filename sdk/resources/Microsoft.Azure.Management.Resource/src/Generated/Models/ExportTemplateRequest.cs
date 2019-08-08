@@ -31,12 +31,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ExportTemplateRequest class.
         /// </summary>
-        /// <param name="resources">The IDs of the resources. The only
-        /// supported string currently is '*' (all resources). Future updates
-        /// will support exporting specific resources.</param>
-        /// <param name="options">The export template options. Supported values
-        /// include 'IncludeParameterDefaultValue', 'IncludeComments' or
-        /// 'IncludeParameterDefaultValue, IncludeComments</param>
+        /// <param name="resources">The IDs of the resources to filter the
+        /// export by. To export all resources, supply an array with single
+        /// entry '*'.</param>
+        /// <param name="options">The export template options. A CSV-formatted
+        /// list containing zero or more of the following:
+        /// 'IncludeParameterDefaultValue', 'IncludeComments',
+        /// 'SkipResourceNameParameterization',
+        /// 'SkipAllParameterization'</param>
         public ExportTemplateRequest(IList<string> resources = default(IList<string>), string options = default(string))
         {
             Resources = resources;
@@ -50,17 +52,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the IDs of the resources. The only supported string
-        /// currently is '*' (all resources). Future updates will support
-        /// exporting specific resources.
+        /// Gets or sets the IDs of the resources to filter the export by. To
+        /// export all resources, supply an array with single entry '*'.
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
         public IList<string> Resources { get; set; }
 
         /// <summary>
-        /// Gets or sets the export template options. Supported values include
-        /// 'IncludeParameterDefaultValue', 'IncludeComments' or
-        /// 'IncludeParameterDefaultValue, IncludeComments
+        /// Gets or sets the export template options. A CSV-formatted list
+        /// containing zero or more of the following:
+        /// 'IncludeParameterDefaultValue', 'IncludeComments',
+        /// 'SkipResourceNameParameterization', 'SkipAllParameterization'
         /// </summary>
         [JsonProperty(PropertyName = "options")]
         public string Options { get; set; }

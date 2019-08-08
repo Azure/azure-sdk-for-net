@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// <summary>
     /// The <see cref="PageBlobClient"/> allows you to manipulate Azure
     /// Storage page blobs.
-    /// 
+    ///
     /// Page blobs are a collection of 512-byte pages optimized for random
     /// read and write operations. To create a page blob, you initialize the
     /// page blob and specify the maximum size the page blob will grow. To add
@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// in-place and are immediately committed to the blob. The maximum size
     /// for a page blob is 8 TB.
     /// </summary>
-    public class PageBlobClient : BlobClient
+    public class PageBlobClient : BlobBaseClient
     {
         /// <summary>
         /// <see cref="PageBlobPageBytes"/> indicates the number of bytes in a
@@ -44,6 +44,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public const int PageBlobMaxUploadPagesBytes = 4 * Constants.MB; // 4MB
 
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="PageBlobClient"/>
         /// class for mocking.
@@ -60,7 +61,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="containerName">
@@ -82,7 +83,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="containerName">
@@ -180,12 +181,13 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, pipeline)
         {
         }
-        
+        #endregion ctors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PageBlobClient"/>
         /// class with an identical <see cref="Uri"/> source but the specified
-        /// <paramref name="snapshot"/> timestamp.
-        /// 
+        /// snapshot timestamp.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
@@ -199,37 +201,38 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Creates a new instance of the <see cref="PageBlobClient"/> class
         /// with an identical <see cref="Uri"/> source but the specified
-        /// <paramref name="snapshot"/> timestamp.
+        /// snapshot timestamp.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        protected sealed override BlobClient WithSnapshotImpl(string snapshot)
+        protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
         {
             var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
             return new PageBlobClient(builder.ToUri(), this.Pipeline);
         }
 
-        /// <summary>
-        /// Creates a new PageBlobClient object identical to the source but with the specified version ID.
-        /// Pass "" to remove the version ID returning a URL to the base blob.
-        /// </summary>
-        /// <param name="versionId">version ID</param>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Creates a new PageBlobClient object identical to the source but with the specified version ID.
+        ///// Pass "" to remove the version ID returning a URL to the base blob.
+        ///// </summary>
+        ///// <param name="versionId">version ID</param>
+        ///// <returns></returns>
         //public new PageBlobClient WithVersionId(string versionId) => (PageBlobUri)this.WithVersionIdImpl(versionId);
 
-        //protected sealed override BlobClient WithVersionIdImpl(string versionId)
+        //protected sealed override BlobBaseClient WithVersionIdImpl(string versionId)
         //{
         //    var builder = new BlobUriBuilder(this.Uri) { VersionId = versionId };
         //    return new PageBlobClient(builder.ToUri(), this.Pipeline);
         //}
 
+        #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a new page blob of
         /// the specified <paramref name="size"/>.  The content of any
         /// existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
         /// <see cref="UploadPages"/> operation.
-        /// 
+        ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
         /// <param name="size">
@@ -271,7 +274,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateAsync(
+            this.CreateInternal(
                 size,
                 sequenceNumber,
                 httpHeaders,
@@ -287,7 +290,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
         /// <see cref="UploadPagesAsync"/> operation.
-        /// 
+        ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
         /// <param name="size">
@@ -315,7 +318,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// newly created page blob.
         /// </returns>
         /// <remarks>
@@ -329,7 +332,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateAsync(
+            await this.CreateInternal(
                 size,
                 sequenceNumber,
                 httpHeaders,
@@ -340,12 +343,12 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateAsync"/> operation creates a new page blob of
-        /// the specified <paramref name="size"/>.  The content of any
+        /// The <see cref="CreateInternal"/> operation creates a new page blob
+        /// of the specified <paramref name="size"/>.  The content of any
         /// existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
         /// <see cref="UploadPagesAsync"/> operation.
-        /// 
+        ///
         /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
         /// </summary>
         /// <param name="size">
@@ -376,14 +379,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// newly created page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> CreateAsync(
+        private async Task<Response<BlobContentInfo>> CreateInternal(
             long size,
             long? sequenceNumber,
             BlobHttpHeaders? httpHeaders,
@@ -422,6 +425,7 @@ namespace Azure.Storage.Blobs.Specialized
                         blobContentLength: size,
                         blobSequenceNumber: sequenceNumber,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.Create",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -436,12 +440,14 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Create
 
+        #region UploadPages
         /// <summary>
         /// The <see cref="UploadPages"/> operation writes
         /// <paramref name="content"/> to a range of pages in a page blob,
         /// starting at <paramref name="offset"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
         /// </summary>
         /// <param name="content">
@@ -474,21 +480,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContentInfo> UploadPages(
+        public virtual Response<PageInfo> UploadPages(
             Stream content,
             long offset,
             byte[] transactionalContentHash = default,
             PageBlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadPagesAsync(
+            this.UploadPagesInternal(
                 content,
                 offset,
                 transactionalContentHash,
@@ -502,7 +508,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="UploadPagesAsync"/> operation writes
         /// <paramref name="content"/> to a range of pages in a page blob,
         /// starting at <paramref name="offset"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
         /// </summary>
         /// <param name="content">
@@ -535,21 +541,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadPagesAsync(
+        public virtual async Task<Response<PageInfo>> UploadPagesAsync(
             Stream content,
             long offset,
             byte[] transactionalContentHash = default,
             PageBlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadPagesAsync(
+            await this.UploadPagesInternal(
                 content,
                 offset,
                 transactionalContentHash,
@@ -560,10 +566,10 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadPagesAsync"/> operation writes
+        /// The <see cref="UploadPagesInternal"/> operation writes
         /// <paramref name="content"/> to a range of pages in a page blob,
         /// starting at <paramref name="offset"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
         /// </summary>
         /// <param name="content">
@@ -599,14 +605,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> UploadPagesAsync(
+        private async Task<Response<PageInfo>> UploadPagesInternal(
             Stream content,
             long offset,
             byte[] transactionalContentHash,
@@ -628,15 +634,16 @@ namespace Azure.Storage.Blobs.Specialized
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var range = new HttpRange(offset, content.Length);
                     var uploadAttempt = 0;
-                    return await ReliableOperation.DoAsync(
+                    return await ReliableOperation.DoSyncOrAsync(
+                        async,
                         reset: () => content.Seek(0, SeekOrigin.Begin),
                         predicate: e => true,
                         maximumRetries: Constants.MaxReliabilityRetries,
                         operation:
-                            async () =>
+                            () =>
                             {
                                 this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
-                                return await BlobRestClient.PageBlob.UploadPagesAsync(
+                                return BlobRestClient.PageBlob.UploadPagesAsync(
                                     this.Pipeline,
                                     this.Uri,
                                     body: content,
@@ -653,8 +660,8 @@ namespace Azure.Storage.Blobs.Specialized
                                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                                     async: async,
-                                    cancellationToken: cancellationToken)
-                                    .ConfigureAwait(false);
+                                    operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.UploadPages",
+                                    cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
                         .ConfigureAwait(false);
@@ -670,11 +677,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion UploadPages
 
+        #region ClearPages
         /// <summary>
         /// The <see cref="ClearPages"/> operation clears one or more
         /// pages from the page blob, as specificed by the <paramref name="range"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
         /// </summary>
         /// <param name="range">
@@ -695,18 +704,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContentInfo> ClearPages(
+        public virtual Response<PageInfo> ClearPages(
             HttpRange range,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.ClearPagesAsync(
+            this.ClearPagesInternal(
                 range,
                 accessConditions,
                 false, // async
@@ -716,7 +725,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="ClearPagesAsync"/> operation clears one or more
         /// pages from the page blob, as specificed by the <paramref name="range"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
         /// </summary>
         /// <param name="range">
@@ -737,18 +746,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> ClearPagesAsync(
+        public virtual async Task<Response<PageInfo>> ClearPagesAsync(
             HttpRange range,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.ClearPagesAsync(
+            await this.ClearPagesInternal(
                 range,
                 accessConditions,
                 true, // async
@@ -756,9 +765,9 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="ClearPagesAsync"/> operation clears one or more
+        /// The <see cref="ClearPagesInternal"/> operation clears one or more
         /// pages from the page blob, as specificed by the <paramref name="range"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
         /// </summary>
         /// <param name="range">
@@ -782,14 +791,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> ClearPagesAsync(
+        private async Task<Response<PageInfo>> ClearPagesInternal(
             HttpRange range,
             PageBlobAccessConditions? accessConditions,
             bool async,
@@ -818,6 +827,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.ClearPages",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -832,11 +842,13 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion ClearPages
 
+        #region GetPageRanges
         /// <summary>
         /// The <see cref="GetPageRanges"/> operation returns the list of
         /// valid page ranges for a page blob or snapshot of a page blob.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
         /// </summary>
         /// <param name="range">
@@ -869,7 +881,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPageRangesAsync(
+            this.GetPageRangesInternal(
                 range,
                 snapshot,
                 accessConditions,
@@ -880,7 +892,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="GetPageRangesAsync"/> operation returns the list of
         /// valid page ranges for a page blob or snapshot of a page blob.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
         /// </summary>
         /// <param name="range">
@@ -901,7 +913,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{PageRangesInfo}}"/> describing the
+        /// A <see cref="Response{PageRangesInfo}"/> describing the
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
@@ -913,7 +925,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPageRangesAsync(
+            await this.GetPageRangesInternal(
                 range,
                 snapshot,
                 accessConditions,
@@ -922,9 +934,9 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetPageRangesAsync"/> operation returns the list of
-        /// valid page ranges for a page blob or snapshot of a page blob.
-        /// 
+        /// The <see cref="GetPageRangesInternal"/> operation returns the list
+        /// of valid page ranges for a page blob or snapshot of a page blob.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
         /// </summary>
         /// <param name="range">
@@ -948,15 +960,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{PageRangesInfo}}"/> describing the
+        /// A <see cref="Response{PageRangesInfo}"/> describing the
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PageRangesInfo>> GetPageRangesAsync(
-            HttpRange? range, 
+        private async Task<Response<PageRangesInfo>> GetPageRangesInternal(
+            HttpRange? range,
             string snapshot,
             PageBlobAccessConditions? accessConditions,
             bool async,
@@ -983,6 +995,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.GetPageRanges",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -997,13 +1010,15 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion GetPageRanges
 
+        #region GetPageRangesDiff
         /// <summary>
         /// The <see cref="GetPageRangesDiff"/> operation returns the
         /// list of page ranges that differ between a
         /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
-        /// include both updated and cleared pages. 
-        /// 
+        /// include both updated and cleared pages.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
         /// </summary>
         /// <param name="range">
@@ -1019,7 +1034,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
-        /// <paramref name="snapshot"/>, as long as the snapshot specified by
+        /// snapshot, as long as the snapshot specified by
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
@@ -1044,7 +1059,7 @@ namespace Azure.Storage.Blobs.Specialized
             string previousSnapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPageRangesDiffAsync(
+            this.GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot,
@@ -1057,8 +1072,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="GetPageRangesDiffAsync"/> operation returns the
         /// list of page ranges that differ between a
         /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
-        /// include both updated and cleared pages. 
-        /// 
+        /// include both updated and cleared pages.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
         /// </summary>
         /// <param name="range">
@@ -1074,7 +1089,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
-        /// <paramref name="snapshot"/>, as long as the snapshot specified by
+        /// snapshot, as long as the snapshot specified by
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
@@ -1086,7 +1101,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{PageRangesInfo}}"/> describing the
+        /// A <see cref="Response{PageRangesInfo}"/> describing the
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
@@ -1099,7 +1114,7 @@ namespace Azure.Storage.Blobs.Specialized
             string previousSnapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPageRangesDiffAsync(
+            await this.GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot,
@@ -1109,11 +1124,11 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetPageRangesDiffAsync"/> operation returns the
+        /// The <see cref="GetPageRangesDiffInternal"/> operation returns the
         /// list of page ranges that differ between a
         /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
-        /// include both updated and cleared pages. 
-        /// 
+        /// include both updated and cleared pages.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
         /// </summary>
         /// <param name="range">
@@ -1129,7 +1144,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
-        /// <paramref name="snapshot"/>, as long as the snapshot specified by
+        /// snapshot, as long as the snapshot specified by
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
@@ -1144,14 +1159,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{PageRangesInfo}}"/> describing the
+        /// A <see cref="Response{PageRangesInfo}"/> describing the
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
+        private async Task<Response<PageRangesInfo>> GetPageRangesDiffInternal(
             HttpRange? range,
             string snapshot,
             string previousSnapshot,
@@ -1182,6 +1197,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.GetPageRangesDiff",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1196,13 +1212,15 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion GetPageRangesDiff
 
+        #region Resize
         /// <summary>
         /// The <see cref="Resize"/> operation resizes the page blob to
         /// the specified size (which must be a multiple of 512).  If the
         /// specified value is less than the current size of the blob, then
         /// all pages above the specified value are cleared.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
         /// </summary>
         /// <param name="size">
@@ -1220,18 +1238,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the resized
+        /// A <see cref="Response{PageBlobInfo}"/> describing the resized
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobInfo> Resize(
+        public virtual Response<PageBlobInfo> Resize(
             long size,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.ResizeAsync(
+            this.ResizeInternal(
                 size,
                 accessConditions,
                 false, // async
@@ -1243,7 +1261,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the specified size (which must be a multiple of 512).  If the
         /// specified value is less than the current size of the blob, then
         /// all pages above the specified value are cleared.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
         /// </summary>
         /// <param name="size">
@@ -1261,18 +1279,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobInfo}}"/> describing the resized
+        /// A <see cref="Response{PageBlobInfo}"/> describing the resized
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobInfo>> ResizeAsync(
+        public virtual async Task<Response<PageBlobInfo>> ResizeAsync(
             long size,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.ResizeAsync(
+            await this.ResizeInternal(
                 size,
                 accessConditions,
                 true, // async
@@ -1284,7 +1302,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the specified size (which must be a multiple of 512).  If the
         /// specified value is less than the current size of the blob, then
         /// all pages above the specified value are cleared.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
         /// </summary>
         /// <param name="size">
@@ -1305,15 +1323,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobInfo}}"/> describing the resized
+        /// A <see cref="Response{PageBlobInfo}"/> describing the resized
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobInfo>> ResizeAsync(
-            long size, 
+        private async Task<Response<PageBlobInfo>> ResizeInternal(
+            long size,
             PageBlobAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1338,6 +1356,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.Resize",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1352,13 +1371,16 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Resize
 
+        #region UpdateSequenceNumber
         /// <summary>
         /// The <see cref="UpdateSequenceNumber"/> operation changes the
         /// sequence number <paramref name="action"/> and <paramref name="sequenceNumber"/>
         /// for this page blob.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
         /// <see cref="SequenceNumberAction.Max"/> sets the sequence number to
@@ -1375,7 +1397,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An updated sequence number of your choosing, if
         /// <paramref name="action"/> is <see cref="SequenceNumberAction.Max"/>
         /// or <see cref="SequenceNumberAction.Update"/>.  The value should
-        /// not be provided if <paramref name="action"/> is 
+        /// not be provided if <paramref name="action"/> is
         /// <see cref="SequenceNumberAction.Increment"/>.  The sequence number
         /// is a user-controlled property that you can use to track requests
         /// and manage concurrency issues via <see cref="PageBlobAccessConditions"/>.
@@ -1389,19 +1411,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the updated
+        /// A <see cref="Response{PageBlobInfo}"/> describing the updated
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobInfo> UpdateSequenceNumber(
+        public virtual Response<PageBlobInfo> UpdateSequenceNumber(
             SequenceNumberAction action,
             long? sequenceNumber = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.UpdateSequenceNumberAsync(
+            this.UpdateSequenceNumberInternal(
                 action,
                 sequenceNumber,
                 accessConditions,
@@ -1413,8 +1435,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="UpdateSequenceNumberAsync"/> operation changes the
         /// sequence number <paramref name="action"/> and <paramref name="sequenceNumber"/>
         /// for this page blob.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
         /// <see cref="SequenceNumberAction.Max"/> sets the sequence number to
@@ -1431,7 +1454,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An updated sequence number of your choosing, if
         /// <paramref name="action"/> is <see cref="SequenceNumberAction.Max"/>
         /// or <see cref="SequenceNumberAction.Update"/>.  The value should
-        /// not be provided if <paramref name="action"/> is 
+        /// not be provided if <paramref name="action"/> is
         /// <see cref="SequenceNumberAction.Increment"/>.  The sequence number
         /// is a user-controlled property that you can use to track requests
         /// and manage concurrency issues via <see cref="PageBlobAccessConditions"/>.
@@ -1445,19 +1468,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobInfo}}"/> describing the updated
+        /// A <see cref="Response{PageBlobInfo}"/> describing the updated
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobInfo>> UpdateSequenceNumberAsync(
+        public virtual async Task<Response<PageBlobInfo>> UpdateSequenceNumberAsync(
             SequenceNumberAction action,
             long? sequenceNumber = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.UpdateSequenceNumberAsync(
+            await this.UpdateSequenceNumberInternal(
                 action,
                 sequenceNumber,
                 accessConditions,
@@ -1466,11 +1489,12 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UpdateSequenceNumberAsync"/> operation changes the
+        /// The <see cref="UpdateSequenceNumberInternal"/> operation changes the
         /// sequence number <paramref name="action"/> and <paramref name="sequenceNumber"/>
         /// for this page blob.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
         /// <see cref="SequenceNumberAction.Max"/> sets the sequence number to
@@ -1487,7 +1511,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An updated sequence number of your choosing, if
         /// <paramref name="action"/> is <see cref="SequenceNumberAction.Max"/>
         /// or <see cref="SequenceNumberAction.Update"/>.  The value should
-        /// not be provided if <paramref name="action"/> is 
+        /// not be provided if <paramref name="action"/> is
         /// <see cref="SequenceNumberAction.Increment"/>.  The sequence number
         /// is a user-controlled property that you can use to track requests
         /// and manage concurrency issues via <see cref="PageBlobAccessConditions"/>.
@@ -1504,14 +1528,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobInfo}}"/> describing the updated
+        /// A <see cref="Response{PageBlobInfo}"/> describing the updated
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobInfo>> UpdateSequenceNumberAsync(
+        private async Task<Response<PageBlobInfo>> UpdateSequenceNumberInternal(
             SequenceNumberAction action,
             long? sequenceNumber,
             PageBlobAccessConditions? accessConditions,
@@ -1539,6 +1563,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.UpdateSequenceNumber",
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1554,19 +1579,20 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion UpdateSequenceNumber
 
+        #region StartCopyIncremental
         /// <summary>
-        /// The <see cref="StartCopyIncremental"/> operation starts
-        /// copying a <paramref name="snapshot"/> of the 
-        /// <paramref name="sourceUri"/> page blob to this page blob.  The
-        /// snapshot is copied such that only the differential changes between
-        /// the previously copied snapshot are transferred to the destination.
-        /// The copied snapshots are complete copies of the original snapshot 
-        /// and can be read or copied from as usual.  You can check the
-        /// <see cref="BlobProperties.CopyStatus"/> returned from the
-        /// <see cref="BlobClient.GetProperties"/> to determine if the
-        /// copy has completed.
-        /// 
+        /// The <see cref="StartCopyIncremental(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
+        /// operation starts copying a snapshot of the sourceUri page blob to
+        /// this page blob.  The snapshot is copied such that only the
+        /// differential changes between the previously copied snapshot are
+        /// transferred to the destination.  The copied snapshots are complete
+        /// copies of the original snapshot and can be read or copied from as
+        /// usual.  You can check the <see cref="BlobProperties.CopyStatus"/>
+        /// returned from the <see cref="BlobBaseClient.GetProperties"/> to
+        /// determine if the copy has completed.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
         /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
         /// </summary>
@@ -1577,7 +1603,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="snapshot">
         /// The name of a snapshot to start copying from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1588,83 +1614,90 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobCopyInfo}}"/> describing the
-        /// state of the incremental copy operation.
+        /// A <see cref="Operation{Int64}"/> referencing the incremental
+        /// copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// 
+        ///
         /// The destination of an incremental copy must either not exist, or
         /// must have been created with a previous incremental copy from the
         /// same source blob.  Once created, the destination blob is
         /// permanently associated with the source and may only be used for
         /// incremental copies.
-        /// 
-        /// The <see cref="BlobClient.GetProperties"/>,
-        /// <see cref="BlobContainerClient.ListBlobsFlatSegment"/>, and
-        /// <see cref="BlobContainerClient.ListBlobsHierarchySegment"/>
+        ///
+        /// The <see cref="BlobBaseClient.GetProperties"/>,
+        /// <see cref="BlobContainerClient.GetBlobs"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchy"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
-        /// <see cref="BlobClient.GetProperties"/>,
-        /// <see cref="StartCopyIncremental"/>, and 
-        /// <see cref="BlobClient.Delete"/>.  The copied snapshots may be
-        /// read and deleted as usual.
-        /// 
+        /// <see cref="BlobBaseClient.GetProperties"/>,
+        /// <see cref="StartCopyIncremental(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>,
+        /// and <see cref="BlobBaseClient.Delete"/>.  The copied snapshots may
+        /// be read and deleted as usual.
+        ///
         /// An incremental copy is performed asynchronously on the service and
         /// must be polled for completion.  You can poll
-        /// <see cref="BlobClient.GetProperties"/> and check
+        /// <see cref="BlobBaseClient.GetProperties"/> and check
         /// <see cref="BlobProperties.CopyStatus"/> to determine when the copy
         /// has completed.  When the copy completes, the destination blob will
-        /// contain a new snapshot.  The <see cref="BlobClient.GetProperties"/>
+        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetProperties"/>
         /// operation returns the snapshot time of the newly created snapshot.
-        /// 
+        ///
         /// The first time an incremental copy is performed on a destination
         /// blob, a new blob is created with a snapshot that is fully copied
-        /// from the source.  Each subsequent call to <see cref="StartCopyIncremental"/>
+        /// from the source.  Each subsequent call to <see cref="StartCopyIncremental(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
         /// will create a new snapshot by copying only the differential
         /// changes from the previously copied snapshot.  The differential
         /// changes are computed on the server by issuing a <see cref="GetPageRanges"/>
         /// call on the source blob snapshot with prevSnapshot set to the most
         /// recently copied snapshot. Therefore, the same restrictions on
         /// <see cref="GetPageRanges"/> apply to
-        /// <see cref="StartCopyIncremental"/>.  Specifically, snapshots
-        /// must be copied in ascending order and if the source blob is
-        /// recreated using <see cref="UploadPages"/> or 
-        /// <see cref="BlobClient.StartCopyFromUri"/> then 
-        /// <see cref="StartCopyIncremental"/> on new snapshots will fail.
-        /// 
-        /// The additional storage space consumed by the copied snapshot is 
+        /// <see cref="StartCopyIncremental(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>.
+        /// Specifically, snapshots must be copied in ascending order and if
+        /// the source blob is recreated using <see cref="UploadPages"/> or
+        /// <see cref="BlobBaseClient.StartCopyFromUri(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// then  <see cref="StartCopyIncremental(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
+        /// on new snapshots will fail.
+        ///
+        /// The additional storage space consumed by the copied snapshot is
         /// the size of the differential data transferred during the copy.
         /// This can be determined by performing a <see cref="GetPageRangesDiff"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        public virtual Response<BlobCopyInfo> StartCopyIncremental(
+        public virtual Operation<long> StartCopyIncremental(
             Uri sourceUri,
             string snapshot,
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellationToken = default) =>
-            this.StartCopyIncrementalAsync(
+            CancellationToken cancellationToken = default)
+        {
+            var response = this.StartCopyIncrementalInternal(
                 sourceUri,
                 snapshot,
                 accessConditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
+            return new CopyFromUriOperation(
+                this,
+                response.Value.CopyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
 
         /// <summary>
-        /// The <see cref="StartCopyIncrementalAsync"/> operation starts
-        /// copying a <paramref name="snapshot"/> of the 
-        /// <paramref name="sourceUri"/> page blob to this page blob.  The
-        /// snapshot is copied such that only the differential changes between
-        /// the previously copied snapshot are transferred to the destination.
-        /// The copied snapshots are complete copies of the original snapshot 
-        /// and can be read or copied from as usual.  You can check the
-        /// <see cref="BlobProperties.CopyStatus"/> returned from the
-        /// <see cref="BlobClient.GetPropertiesAsync"/> to determine if the
-        /// copy has completed.
-        /// 
+        /// The <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
+        /// operation starts copying a snapshot of the sourceUri page blob to
+        /// this page blob.  The snapshot is copied such that only the
+        /// differential changes between the previously copied snapshot are
+        /// transferred to the destination. The copied snapshots are complete
+        /// copies of the original snapshot and can be read or copied from as
+        /// usual.  You can check the <see cref="BlobProperties.CopyStatus"/>
+        /// returned from the <see cref="BlobBaseClient.GetPropertiesAsync"/>
+        /// to determine if thecopy has completed.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
         /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
         /// </summary>
@@ -1675,7 +1708,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="snapshot">
         /// The name of a snapshot to start copying from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1686,83 +1719,161 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobCopyInfo}}"/> describing the
+        /// A <see cref="Operation{Int64}"/> describing the
         /// state of the incremental copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// 
+        ///
         /// The destination of an incremental copy must either not exist, or
         /// must have been created with a previous incremental copy from the
         /// same source blob.  Once created, the destination blob is
         /// permanently associated with the source and may only be used for
         /// incremental copies.
-        /// 
-        /// The <see cref="BlobClient.GetPropertiesAsync"/>,
-        /// <see cref="BlobContainerClient.ListBlobsFlatSegmentAsync"/>, and
-        /// <see cref="BlobContainerClient.ListBlobsHierarchySegmentAsync"/>
+        ///
+        /// The <see cref="BlobBaseClient.GetPropertiesAsync"/>,
+        /// <see cref="BlobContainerClient.GetBlobsAsync"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
-        /// <see cref="BlobClient.GetPropertiesAsync"/>,
-        /// <see cref="StartCopyIncrementalAsync"/>, and 
-        /// <see cref="BlobClient.DeleteAsync"/>.  The copied snapshots may be
-        /// read and deleted as usual.
-        /// 
+        /// <see cref="BlobBaseClient.GetPropertiesAsync"/>,
+        /// <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>,
+        /// and  <see cref="BlobBaseClient.DeleteAsync"/>.  The copied
+        /// snapshots may be read and deleted as usual.
+        ///
         /// An incremental copy is performed asynchronously on the service and
         /// must be polled for completion.  You can poll
-        /// <see cref="BlobClient.GetPropertiesAsync"/> and check
+        /// <see cref="BlobBaseClient.GetPropertiesAsync"/> and check
         /// <see cref="BlobProperties.CopyStatus"/> to determine when the copy
         /// has completed.  When the copy completes, the destination blob will
-        /// contain a new snapshot.  The <see cref="BlobClient.GetPropertiesAsync"/>
+        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetPropertiesAsync"/>
         /// operation returns the snapshot time of the newly created snapshot.
-        /// 
+        ///
         /// The first time an incremental copy is performed on a destination
         /// blob, a new blob is created with a snapshot that is fully copied
-        /// from the source.  Each subsequent call to <see cref="StartCopyIncrementalAsync"/>
+        /// from the source.  Each subsequent call to <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
         /// will create a new snapshot by copying only the differential
         /// changes from the previously copied snapshot.  The differential
         /// changes are computed on the server by issuing a <see cref="GetPageRangesAsync"/>
         /// call on the source blob snapshot with prevSnapshot set to the most
         /// recently copied snapshot. Therefore, the same restrictions on
         /// <see cref="GetPageRangesAsync"/> apply to
-        /// <see cref="StartCopyIncrementalAsync"/>.  Specifically, snapshots
-        /// must be copied in ascending order and if the source blob is
-        /// recreated using <see cref="UploadPagesAsync"/> or 
-        /// <see cref="BlobClient.StartCopyFromUriAsync"/> then 
-        /// <see cref="StartCopyIncrementalAsync"/> on new snapshots will fail.
-        /// 
-        /// The additional storage space consumed by the copied snapshot is 
+        /// <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>.
+        /// Specifically, snapshots must be copied in ascending order and if
+        /// the source blob is recreated using <see cref="UploadPagesAsync"/> or
+        /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// then <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
+        /// on new snapshots will fail.
+        ///
+        /// The additional storage space consumed by the copied snapshot is
         /// the size of the differential data transferred during the copy.
         /// This can be determined by performing a <see cref="GetPageRangesDiffAsync"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        public virtual async Task<Response<BlobCopyInfo>> StartCopyIncrementalAsync(
+        public virtual async Task<Operation<long>> StartCopyIncrementalAsync(
             Uri sourceUri,
             string snapshot,
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellationToken = default) =>
-            await this.StartCopyIncrementalAsync(
+            CancellationToken cancellationToken = default)
+        {
+            var response = await this.StartCopyIncrementalInternal(
                 sourceUri,
                 snapshot,
                 accessConditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
+            return new CopyFromUriOperation(
+                this,
+                response.Value.CopyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
 
         /// <summary>
-        /// The <see cref="StartCopyIncrementalAsync"/> operation starts
-        /// copying a <paramref name="snapshot"/> of the 
-        /// <paramref name="sourceUri"/> page blob to this page blob.  The
+        /// The <see cref="StartCopyIncremental(String, CancellationToken)"/>
+        /// operation gets the status of an existing copy operation, specified
+        /// by the <paramref name="copyId"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
+        /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
+        /// </summary>
+        /// <param name="copyId">
+        /// The ID of a copy operation that's already beeen started.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Operation{Int64}"/> referencing the incremental
+        /// copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Operation<long> StartCopyIncremental(
+            string copyId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = this.GetProperties(null, cancellationToken);
+            return new CopyFromUriOperation(
+                this,
+                copyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The <see cref="StartCopyIncrementalAsync(String, CancellationToken)"/>
+        /// operation gets the status of an existing copy operation, specified
+        /// by the <paramref name="copyId"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
+        /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
+        /// </summary>
+        /// <param name="copyId">
+        /// The ID of a copy operation that's already beeen started.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Operation{Int64}"/> describing the
+        /// state of the incremental copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Operation<long>> StartCopyIncrementalAsync(
+            string copyId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await this.GetPropertiesAsync(null, cancellationToken).ConfigureAwait(false);
+            return new CopyFromUriOperation(
+                this,
+                copyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The <see cref="StartCopyIncrementalInternal"/> operation starts
+        /// copying a snapshot of the
+        /// sourceUri page blob to this page blob.  The
         /// snapshot is copied such that only the differential changes between
         /// the previously copied snapshot are transferred to the destination.
-        /// The copied snapshots are complete copies of the original snapshot 
+        /// The copied snapshots are complete copies of the original snapshot
         /// and can be read or copied from as usual.  You can check the
         /// <see cref="BlobProperties.CopyStatus"/> returned from the
-        /// <see cref="BlobClient.GetPropertiesAsync"/> to determine if the
+        /// <see cref="BlobBaseClient.GetPropertiesAsync"/> to determine if the
         /// copy has completed.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
         /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
         /// </summary>
@@ -1773,7 +1884,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="snapshot">
         /// The name of a snapshot to start copying from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1787,61 +1898,62 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobCopyInfo}}"/> describing the
+        /// A <see cref="Response{BlobCopyInfo}"/> describing the
         /// state of the incremental copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// 
+        ///
         /// The destination of an incremental copy must either not exist, or
         /// must have been created with a previous incremental copy from the
         /// same source blob.  Once created, the destination blob is
         /// permanently associated with the source and may only be used for
         /// incremental copies.
-        /// 
-        /// The <see cref="BlobClient.GetPropertiesAsync"/>,
-        /// <see cref="BlobContainerClient.ListBlobsFlatSegmentAsync"/>, and
-        /// <see cref="BlobContainerClient.ListBlobsHierarchySegmentAsync"/>
+        ///
+        /// The <see cref="BlobBaseClient.GetPropertiesAsync"/>,
+        /// <see cref="BlobContainerClient.GetBlobsAsync"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
-        /// <see cref="BlobClient.GetPropertiesAsync"/>,
-        /// <see cref="StartCopyIncrementalAsync"/>, and 
-        /// <see cref="BlobClient.DeleteAsync"/>.  The copied snapshots may be
-        /// read and deleted as usual.
-        /// 
+        /// <see cref="BlobBaseClient.GetPropertiesAsync"/>,
+        /// <see cref="StartCopyIncremental(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>,
+        /// and  <see cref="BlobBaseClient.DeleteAsync"/>.  The copied
+        /// snapshots may be read and deleted as usual.
+        ///
         /// An incremental copy is performed asynchronously on the service and
         /// must be polled for completion.  You can poll
-        /// <see cref="BlobClient.GetPropertiesAsync"/> and check
+        /// <see cref="BlobBaseClient.GetPropertiesAsync"/> and check
         /// <see cref="BlobProperties.CopyStatus"/> to determine when the copy
         /// has completed.  When the copy completes, the destination blob will
-        /// contain a new snapshot.  The <see cref="BlobClient.GetPropertiesAsync"/>
+        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetPropertiesAsync"/>
         /// operation returns the snapshot time of the newly created snapshot.
-        /// 
+        ///
         /// The first time an incremental copy is performed on a destination
         /// blob, a new blob is created with a snapshot that is fully copied
-        /// from the source.  Each subsequent call to <see cref="StartCopyIncrementalAsync"/>
+        /// from the source.  Each subsequent call to <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
         /// will create a new snapshot by copying only the differential
         /// changes from the previously copied snapshot.  The differential
         /// changes are computed on the server by issuing a <see cref="GetPageRangesAsync"/>
         /// call on the source blob snapshot with prevSnapshot set to the most
         /// recently copied snapshot. Therefore, the same restrictions on
         /// <see cref="GetPageRangesAsync"/> apply to
-        /// <see cref="StartCopyIncrementalAsync"/>.  Specifically, snapshots
-        /// must be copied in ascending order and if the source blob is
-        /// recreated using <see cref="UploadPagesAsync"/> or 
-        /// <see cref="BlobClient.StartCopyFromUriAsync"/> then 
-        /// <see cref="StartCopyIncrementalAsync"/> on new snapshots will fail.
-        /// 
-        /// The additional storage space consumed by the copied snapshot is 
+        /// <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>.
+        /// Specifically, snapshots must be copied in ascending order and if
+        /// the source blob is recreated using <see cref="UploadPagesAsync"/>
+        /// or  <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// then <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
+        /// on new snapshots will fail.
+        ///
+        /// The additional storage space consumed by the copied snapshot is
         /// the size of the differential data transferred during the copy.
         /// This can be determined by performing a <see cref="GetPageRangesDiffAsync"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        private async Task<Response<BlobCopyInfo>> StartCopyIncrementalAsync(
-            Uri sourceUri, 
-            string snapshot, 
+        private async Task<Response<BlobCopyInfo>> StartCopyIncrementalInternal(
+            Uri sourceUri,
+            string snapshot,
             PageBlobAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1869,6 +1981,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.StartCopyIncremental",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1883,12 +1996,14 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion StartCopyIncremental
 
+        #region UploadPagesFromUri
         /// <summary>
-        /// The <see cref="Task{"/> operation writes a range
+        /// The <see cref="UploadPagesFromUri"/> operation writes a range
         /// of pages to a page blob where the contents are read from
-        /// <paramref name="sourceUri"/>.
-        /// 
+        /// sourceUri.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
         /// </summary>
         /// <param name="sourceUri">
@@ -1900,7 +2015,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceRange">
         /// Optionally only upload the bytes of the blob in the
-        /// <paramref name="sourceUri"/> in the specified range.
+        /// sourceUri in the specified range.
         /// </param>
         /// <param name="range">
         /// Specifies the range to be written as a page. Both the start and
@@ -1912,10 +2027,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceContentHash">
         /// Optional MD5 hash of the page block content from the
-        /// <paramref name="sourceUri"/>.  This hash is used to verify the
+        /// sourceUri.  This hash is used to verify the
         /// integrity of the block during transport of the data from the Uri.
         /// When this hash is specified, the storage service compares the hash
-        /// of the content that has arrived from the <paramref name="sourceUri"/>
+        /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
         /// with a <see cref="StorageRequestFailedException"/>.
@@ -1933,14 +2048,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobAppendInfo}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContentInfo> UploadPagesFromUri(
+        public virtual Response<PageInfo> UploadPagesFromUri(
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
@@ -1948,7 +2063,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             PageBlobAccessConditions? sourceAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadPagesFromUriAsync(
+            this.UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
@@ -1962,8 +2077,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="UploadPagesFromUriAsync"/> operation writes a range
         /// of pages to a page blob where the contents are read from
-        /// <paramref name="sourceUri"/>.
-        /// 
+        /// sourceUri.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
         /// </summary>
         /// <param name="sourceUri">
@@ -1975,7 +2090,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceRange">
         /// Optionally only upload the bytes of the blob in the
-        /// <paramref name="sourceUri"/> in the specified range.
+        /// sourceUri in the specified range.
         /// </param>
         /// <param name="range">
         /// Specifies the range to be written as a page. Both the start and
@@ -1987,10 +2102,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceContentHash">
         /// Optional MD5 hash of the page block content from the
-        /// <paramref name="sourceUri"/>.  This hash is used to verify the
+        /// sourceUri.  This hash is used to verify the
         /// integrity of the block during transport of the data from the Uri.
         /// When this hash is specified, the storage service compares the hash
-        /// of the content that has arrived from the <paramref name="sourceUri"/>
+        /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
         /// with a <see cref="StorageRequestFailedException"/>.
@@ -2008,14 +2123,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadPagesFromUriAsync(
+        public virtual async Task<Response<PageInfo>> UploadPagesFromUriAsync(
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
@@ -2023,7 +2138,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             PageBlobAccessConditions? sourceAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadPagesFromUriAsync(
+            await this.UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
@@ -2035,10 +2150,10 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadPagesFromUriAsync"/> operation writes a range
-        /// of pages to a page blob where the contents are read from
-        /// <paramref name="sourceUri"/>.
-        /// 
+        /// The <see cref="UploadPagesFromUriInternal"/> operation writes a
+        /// range of pages to a page blob where the contents are read from
+        /// sourceUri.
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
         /// </summary>
         /// <param name="sourceUri">
@@ -2050,7 +2165,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceRange">
         /// Optionally only upload the bytes of the blob in the
-        /// <paramref name="sourceUri"/> in the specified range.
+        /// sourceUri in the specified range.
         /// </param>
         /// <param name="range">
         /// Specifies the range to be written as a page. Both the start and
@@ -2062,10 +2177,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceContentHash">
         /// Optional MD5 hash of the page block content from the
-        /// <paramref name="sourceUri"/>.  This hash is used to verify the
+        /// sourceUri.  This hash is used to verify the
         /// integrity of the block during transport of the data from the Uri.
         /// When this hash is specified, the storage service compares the hash
-        /// of the content that has arrived from the <paramref name="sourceUri"/>
+        /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
         /// with a <see cref="StorageRequestFailedException"/>.
@@ -2086,14 +2201,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> UploadPagesFromUriAsync(
+        private async Task<Response<PageInfo>> UploadPagesFromUriInternal(
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
@@ -2134,6 +2249,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceAccessConditions?.HttpAccessConditions?.IfMatch,
                         sourceIfNoneMatch: sourceAccessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.PageBlobClient.UploadPagesFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2148,6 +2264,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion UploadPagesFromUri
     }
 
     /// <summary>
@@ -2171,6 +2288,6 @@ namespace Azure.Storage.Blobs.Specialized
         public static PageBlobClient GetPageBlobClient(
             this BlobContainerClient client,
             string blobName)
-            => new PageBlobClient(client.Uri.AppendToPath(blobName), client._pipeline);
+            => new PageBlobClient(client.Uri.AppendToPath(blobName), client.Pipeline);
     }
 }
