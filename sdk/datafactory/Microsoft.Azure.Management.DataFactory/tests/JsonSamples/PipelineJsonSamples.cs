@@ -4837,6 +4837,42 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample(version: "Copy")]
+        public const string AzureMySqlSinkPipeline = @"
+{
+    name: ""DataPipeline_AzureMySqlSinkSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""Db2ToPostgreSqlCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""Db2Source"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""AzureMySqlSink"",
+                        preCopyScript: ""fake script""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
 
         [JsonSample(version: "Copy")]
         public const string OdbcSourcePipeline = @"

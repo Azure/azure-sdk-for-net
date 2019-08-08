@@ -14,7 +14,6 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   class.
     /// </summary>
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class TrackOneRetryPolicyTests
     {
         /// <summary>

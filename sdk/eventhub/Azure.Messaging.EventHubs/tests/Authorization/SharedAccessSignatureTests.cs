@@ -15,7 +15,6 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class SharedAccessSignatureTests
     {
         /// <summary>A string that is 300 characters long, breaking invariants for argument maximum lengths.</summary>

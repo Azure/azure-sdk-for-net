@@ -8,7 +8,7 @@
     {
         private const string versionId = "0.1";
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPhraseList()
         {
             UseClientFor(async client =>
@@ -29,7 +29,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListPhraseLists()
         {
             UseClientFor(async client =>
@@ -48,7 +48,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPhraseList()
         {
             UseClientFor(async client =>
@@ -69,7 +69,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePhraseList()
         {
             UseClientFor(async client =>
@@ -97,7 +97,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePhraseList()
         {
             UseClientFor(async client =>

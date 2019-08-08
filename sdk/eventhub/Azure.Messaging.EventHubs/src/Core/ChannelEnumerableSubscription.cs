@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -112,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         private static async IAsyncEnumerable<T> EnumerateChannel(ChannelReader<T> reader,
                                                                   TimeSpan? maximumWaitTime,
-                                                                  CancellationToken cancellationToken)
+                                                                  [EnumeratorCancellation]CancellationToken cancellationToken)
         {
             T result;
             int delayMilliseconds;
