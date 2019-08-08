@@ -46,15 +46,14 @@ namespace Azure.Messaging.EventHubs.Samples
             await using (var client = new EventHubClient(connectionString, eventHubName))
             {
                 // An event processor is associated with a specific Event Hub and a consumer group.  It receives events from
-                // all existing partitions in the Event Hub, passing them to the user for processing.
+                // all partitions in the Event Hub, passing them to the user for processing.
                 //
-                // Partition processors are associated with a specific partition and are responsible for processing events
-                // received from the event processor.  Their implementation must be provided by the user by creating a class
-                // that implements the IPartitionProcessor interface.
+                // A partition processor is associated with a specific partition and is responsible for processing events when
+                // requested by the event processor.  An instance is provided to the event processor when requested from a
+                // factory function, and takes the form of a class which implements the IPartitionProcessor interface.
                 //
-                // An event processor must be able to create a partition processor for every partition it is responsible for.
-                // For this reason, a Func-typed factory must be passed to its constructor.  The factory returns a partition
-                // processor created from two arguments:
+                // The factory function is provided to the event processor when it is created.  The factory is responsible for
+                // creating a partition processor based on two arguments:
                 //
                 //   A partition context: contains information about the partition the partition processor will be processing
                 //   events from.  In this sample, we are only interested in its partition id.
@@ -67,10 +66,10 @@ namespace Azure.Messaging.EventHubs.Samples
                 Func<PartitionContext, CheckpointManager, IPartitionProcessor> partitionProcessorFactory =
                     (partitionContext, checkpointManager) => new SamplePartitionProcessor(partitionContext.PartitionId);
 
-                // A partition manager is able to create checkpoints and list/claim partition ownership.  The user can implement
-                // their own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
+                // A partition manager may create checkpoints and list/claim partition ownership.  The user can implement their
+                // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
                 // a new instance of an InMemoryPartitionManager, provided by the Azure.Messaging.EventHubs.Processor namespace.
-                // This won't be relevant to this sample, but it must be passed to the event processor constructor.
+                // This isn't relevant to understanding this sample, but is required by the event processor constructor.
 
                 PartitionManager partitionManager = new InMemoryPartitionManager();
 
@@ -88,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 EventProcessor eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, partitionProcessorFactory, partitionManager, eventProcessorOptions);
 
-                // Once started, the event processor will start to receive events from all existing partitions.
+                // Once started, the event processor will start to receive events from all partitions.
 
                 Console.WriteLine("Starting the event processor.");
                 Console.WriteLine();
