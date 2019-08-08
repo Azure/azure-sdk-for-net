@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Resource group export result.
+    /// The resource management error additional info.
     /// </summary>
-    public partial class ResourceGroupExportResult
+    public partial class ErrorAdditionalInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceGroupExportResult class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        public ResourceGroupExportResult()
+        public ErrorAdditionalInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceGroupExportResult class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        /// <param name="template">The template content.</param>
-        /// <param name="error">The template export error.</param>
-        public ResourceGroupExportResult(object template = default(object), ErrorResponse error = default(ErrorResponse))
+        /// <param name="type">The additional info type.</param>
+        /// <param name="info">The additional info.</param>
+        public ErrorAdditionalInfo(string type = default(string), object info = default(object))
         {
-            Template = template;
-            Error = error;
+            Type = type;
+            Info = info;
             CustomInit();
         }
 
@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the template content.
+        /// Gets the additional info type.
         /// </summary>
-        [JsonProperty(PropertyName = "template")]
-        public object Template { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the template export error.
+        /// Gets the additional info.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        [JsonProperty(PropertyName = "info")]
+        public object Info { get; private set; }
 
     }
 }
