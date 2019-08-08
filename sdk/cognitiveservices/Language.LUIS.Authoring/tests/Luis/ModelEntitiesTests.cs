@@ -9,7 +9,7 @@
     {
         private const string versionId = "0.1";
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListEntities()
         {
             UseClientFor(async client =>
@@ -28,7 +28,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetEntity()
         {
             UseClientFor(async client =>
@@ -48,7 +48,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddEntity()
         {
             UseClientFor(async client =>
@@ -68,7 +68,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateEntity()
         {
             UseClientFor(async client =>
@@ -92,7 +92,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteEntity()
         {
             UseClientFor(async client =>
@@ -110,7 +110,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetEntitySuggestions_ReturnsEmpty()
         {
             UseClientFor(async client =>
