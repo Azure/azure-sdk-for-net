@@ -641,7 +641,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
         protected void AssertSendStart(string name, object payload, Activity activity, Activity parentActivity, string partitionKey, EventHubsConnectionStringBuilder connectionStringBuilder, int eventCount = 1)
         {
-            Assert.Equal("Microsoft.Azure.EventHubs.Send.Start", name);
+            Assert.Equal("Send.Start", name);
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringBuilder);
             var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IList<EventData>>(payload, "EventDatas");
             Assert.Equal(eventCount, eventDatas.Count);
@@ -661,7 +661,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
         protected void AssertSendException(string name, object payload, Activity activity, Activity parentActivity, string partitionKey, EventHubsConnectionStringBuilder connectionStringBuilder)
         {
-            Assert.Equal("Microsoft.Azure.EventHubs.Send.Exception", name);
+            Assert.Equal("Send.Exception", name);
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringBuilder);
 
             GetPropertyValueFromAnonymousTypeInstance<Exception>(payload, "Exception");
@@ -678,7 +678,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
         protected void AssertSendStop(string name, object payload, Activity activity, Activity sendActivity, string partitionKey, EventHubsConnectionStringBuilder connectionStringBuilder, bool isFaulted = false)
         {
-            Assert.Equal("Microsoft.Azure.EventHubs.Send.Stop", name);
+            Assert.Equal("Send.Stop", name);
             AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringBuilder);
 
             if (sendActivity != null)
@@ -696,7 +696,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
         protected void AssertReceiveStart(string name, object payload, Activity activity, string partitionKey, EventHubsConnectionStringBuilder connectionStringBuilder)
         {
-            Assert.Equal("Microsoft.Azure.EventHubs.Receive.Start", name);
+            Assert.Equal("Receive.Start", name);
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringBuilder);
 
             Assert.NotNull(activity);
@@ -716,7 +716,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
         protected void AssertReceiveStop(string name, object payload, Activity activity, Activity receiveActivity, string partitionKey, EventHubsConnectionStringBuilder connectionStringBuilder, bool isFaulted = false, string relatedId = null)
         {
-            Assert.Equal("Microsoft.Azure.EventHubs.Receive.Stop", name);
+            Assert.Equal("Receive.Stop", name);
             AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringBuilder);
 
             if (receiveActivity != null)
