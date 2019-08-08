@@ -143,17 +143,23 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
                                                             IEnumerable<string> consumerGroups,
                                                             [CallerMemberName] string caller = "")
         {
-            var eventHubName = $"{ caller }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
+            caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
+
             var groups = (consumerGroups ?? Enumerable.Empty<string>()).ToList();
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var eventHubNamespace = TestEnvironment.EventHubsNamespace;
             var token = await AquireManagementTokenAsync();
             var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription };
 
+            var eventHubName = default(string);
+            string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+
             try
             {
-                var eventHub = new Eventhub(name: eventHubName, partitionCount: partitionCount);
-                await CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, eventHubName, eventHub));
+                var eventHub = new Eventhub(partitionCount: partitionCount);
+
+                eventHub = await CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
+                eventHubName = eventHub.Name;
 
                 var consumerPolicy = CreateRetryPolicy<ConsumerGroup>();
 
