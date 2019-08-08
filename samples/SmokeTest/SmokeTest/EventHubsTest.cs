@@ -92,7 +92,7 @@ namespace SmokeTest
 
             if (receivedEvents.Count() < eventBatch.Count())
             {
-                throw new Exception(String.Format("Error, expecting " + eventBatch.Count().ToString() + " events, but only got " + receivedEvents.Count().ToString() + "."));
+                throw new Exception(String.Format($"Error, expecting {eventBatch.Count().ToString()} events, but only got {receivedEvents.Count().ToString()}."));
             }
 
             Console.WriteLine("done");
