@@ -11,7 +11,10 @@
     <Version>1.0.0-preview</Version>
     <RootNamespace>Microsoft.Azure.Management.HealthcareApis</RootNamespace>
     <PackageTags>Microsoft Azure Healthcare Apis;HealthcareApis management;HealthcareApis;</PackageTags>
-    <PackageReleaseNotes>Management SDK for Healthcare APIs.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      <![CDATA[
+    1) Change: ARM PUT now also takes Kind as a  input paramteter. Valid values of Kind are fhir, fhir-Stu3, fhir-R4. This is an optional parameter. If not specified, fhir-R4 will be the default parameter.
+    ]]></PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
