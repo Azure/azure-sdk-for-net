@@ -11,9 +11,9 @@ namespace Microsoft.Azure.EventHubs
     public class EventHubsException : Exception
     {
         /// <summary>
-        ///Enumerates the types of error level for the messaging communication.
+        ///Enumerates the types of error sources for the messaging communication.
         /// </summary>
-        public enum ErrorLevelType
+        public enum ErrorSourceType
         {
             /// <summary>
             /// Identifies the exception as a server error and service needs to take an action to address the failure.
@@ -63,12 +63,12 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="isTransient">Specifies whether or not the exception is transient.</param>
         /// <param name="message">The detailed message exception.</param>
         /// <param name="innerException">The inner exception.</param>
-        /// <param name="errorLevel">Error level of exception.</param>
-        public EventHubsException(bool isTransient, string message, Exception innerException, ErrorLevelType errorLevel)
+        /// <param name="errorSource">Error source of exception.</param>
+        public EventHubsException(bool isTransient, string message, Exception innerException, ErrorSourceType errorSource)
             : base(message, innerException)
         {
             this.IsTransient = isTransient;
-            this.ErrorLevel = errorLevel;
+            this.ErrorSource = errorSource;
         }
 
         /// <summary>
@@ -100,8 +100,8 @@ namespace Microsoft.Azure.EventHubs
         public string EventHubsNamespace { get; internal set; }
 
         /// <summary>
-        /// Gets the error level.
+        /// Gets the error source.
         /// </summary>
-        public ErrorLevelType ErrorLevel { get; private set; }
+        public ErrorSourceType ErrorSource { get; private set; }
     }
 }

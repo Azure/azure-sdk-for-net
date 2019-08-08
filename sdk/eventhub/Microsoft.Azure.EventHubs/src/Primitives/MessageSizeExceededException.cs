@@ -16,7 +16,7 @@ namespace Microsoft.Azure.EventHubs
         }
 
         internal MessageSizeExceededException(string message, Exception innerException)
-            : base(false, message, innerException, ErrorLevelType.UserError)
+            : base(false, message, innerException, ErrorSourceType.UserError)
         {
         }
 
