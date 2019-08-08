@@ -24,8 +24,8 @@ These preview libraries can be easily identified by their folder, package, and n
 The libraries released in the July 2019 preview:
 * [Azure.ApplicationModel.Configuration](/sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md)
 * [Azure.Messaging.EventHubs](/sdk/eventhub/Azure.Messaging.EventHubs/README.md)
-* [Azure.Identity.KeyVault.Keys](/sdk/keyvault/Azure.Security.KeyVault.Keys/Readme.md)
-* [Azure.Identity.KeyVault.Secrets](/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
+* [Azure.Security.KeyVault.Keys](/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
+* [Azure.Security.KeyVault.Secrets](/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md)
 * [Azure.Storage.Blobs](/sdk/storage/Azure.Storage.Blobs/README.md)
 * [Azure.Storage.Files](/sdk/storage/Azure.Storage.Files/README.md)
 * [Azure.Storage.Queues](/sdk/storage/Azure.Storage.Queues/README.md)
