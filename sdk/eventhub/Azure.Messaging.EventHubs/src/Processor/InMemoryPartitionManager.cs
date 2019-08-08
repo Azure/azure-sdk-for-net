@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             List<PartitionOwnership> ownershipList;
 
-            lock(OwnershipClaimLock)
+            lock (OwnershipClaimLock)
             {
                 ownershipList = Ownership.Values
                     .Where(ownership => ownership.EventHubName == eventHubName &&
