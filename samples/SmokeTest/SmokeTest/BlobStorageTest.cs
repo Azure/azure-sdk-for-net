@@ -31,7 +31,7 @@ namespace SmokeTest
 
             string connectionString = Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING");
             string containerName = "mycontainer"; //The container must exists, this sample is not creating it.
-            string blobName = "netSmokeTestBlob-"+Guid.NewGuid()+".txt";
+            string blobName = $"netSmokeTestBlob-{Guid.NewGuid()}.txt";
             serviceClient = new BlobServiceClient(connectionString);
             blobClient = serviceClient.GetBlobContainerClient(containerName).GetBlockBlobClient(blobName);
 

@@ -38,7 +38,7 @@ namespace SmokeTest
     class CosmosDBTest
     {
         private static DocumentClient client;
-        private static string DataBaseName = "netSolarSystemDB-" + Guid.NewGuid();
+        private static string DataBaseName = $"netSolarSystemDB-{Guid.NewGuid()}";
         private const string CollectionName = "PlanetsCollection";
         private static List<Planet> planets = new List<Planet>();
 
