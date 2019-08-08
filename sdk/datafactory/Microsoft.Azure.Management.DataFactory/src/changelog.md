@@ -5,6 +5,8 @@
 - AvroDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
 - Added new Copy sources - AvroSource
 - Added new Copy sinks - AvroSink
+- Added support for the following new datasets in ADF - AmazonRedshiftTableDataset, AzureMySqlSink, Db2TableDataset
+- Split tableName to schema and table in NetezzaTableDataset and PostgreSqlTableDataset.
 ###  Feature Additions
 
 ## Version 4.1.2
