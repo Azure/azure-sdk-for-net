@@ -41,6 +41,13 @@ public class ConfigurationLiveTests: ClientTestBase
 }
 ```
 
+In the test explorer async tests would display as `TestClassName(true)` and sync tests as `TestClassName(false)`.
+
+When using sync-async tests with recorded tests two sessions files would get generated async test session would have `Async.json` suffix.
+
+You can disable the sync-forwarding for an individual test by applying the `[AsyncOnly]` attribute to the test method.
+
+
 __Limitation__: all method calls/properties that are being used have to be `virtual`.
 
 # Recorded tests
@@ -92,7 +99,9 @@ public class ConfigurationLiveTests: RecordedTestBase
 
 ## Recording
 
-When tests are run in recording mode session records are being saved to `artifacts/bin/<ProjectName>/<TFM>/SessionRecords` directory. You can copy recordings to the project directory manually or by executing `dotnet msbuild /t:UpdateSessionRecords` in the test project directory.
+When tests are run in recording mode session records are being saved to `artifacts/bin/<ProjectName>/<TargetFramework>/SessionRecords` directory. You can copy recordings to the project directory manually or by executing `dotnet msbuild /t:UpdateSessionRecords` in the test project directory.
+
+__NOTE:__ recordings are copied from `netcoreapp2.1` directory by default, make sure you are running the right target framework.
 
 ## Sanitizing
 
@@ -164,3 +173,19 @@ If test uses `TokenCredential` to construct the client use `Recording.GetCredent
     }
 
 ```
+
+## Misc
+
+You can use `Recording.GenerateId()` to generate repeatable random IDs.
+
+You should only use `Recording.Random` for random values (and you MUST make the same number of random calls in the same order every test run)
+
+You can use `Recording.Now` and `Recording.UtcNow` if you need certain values to capture the time the test was recorded
+
+It's possible to add additional recording variables for advanced scenarios (like custom test configuration, etc.) but using `Recording.GetVariableFromEnvironment`, `Recording.GetVariable` or `Recording.GetConnectionStringFromEnvironment`.
+
+You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for playback only scenarios (in particular to make polling times instantaneous)
+
+You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
+
+
