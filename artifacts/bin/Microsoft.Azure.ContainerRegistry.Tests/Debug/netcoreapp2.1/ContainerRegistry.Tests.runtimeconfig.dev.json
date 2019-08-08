@@ -1,9 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\t-esre\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\t-esre\\Documents\\GitHub\\azure-cr\\azure-sdk-for-net\\restoredPackages",
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-    ]
-  }
-}
