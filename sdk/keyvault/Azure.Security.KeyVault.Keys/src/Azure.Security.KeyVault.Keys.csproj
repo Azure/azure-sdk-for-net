@@ -27,6 +27,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
+    <Compile Include="..\..\Shared\ChallengeBasedAuthenticationPolicy.cs" />
   </ItemGroup>
 
 </Project>
