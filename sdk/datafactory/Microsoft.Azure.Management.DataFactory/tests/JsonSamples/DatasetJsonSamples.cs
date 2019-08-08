@@ -1611,5 +1611,77 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string NetezzaDatasetV2 = @"
+{
+    name: ""NetezzaDataset"",
+    properties: {
+        type: ""NetezzaTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PostgreSqlDataset = @"
+{
+    name: ""PostgreSqlDataset"",
+    properties: {
+        type: ""PostgreSqlTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string AmazonRedshiftTableDataset = @"
+{
+    name: ""AmazonRedshiftTableDataset"",
+    properties: {
+        type: ""AmazonRedshiftTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string Db2TableDataset = @"
+{
+    name: ""Db2TableDataset"",
+    properties: {
+        type: ""Db2Table"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
     }
 }

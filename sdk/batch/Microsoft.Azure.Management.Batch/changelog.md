@@ -1,5 +1,17 @@
 ## Microsoft.Azure.Management.Batch release notes
 
+### Changes in 9.0.0
+#### REST API version
+- This version targets REST API version 2019-08-01.
+
+#### Features
+- Added ability to specify a collection of public IPs on `NetworkConfiguration` via the new `PublicIPs` property. This guarantees nodes in the Pool will have an 
+  IP from the list user provided IPs.
+- Added ability to mount remote file-systems on each node of a pool via the `MountConfiguration` property on `Pool`.
+- Shared Image Gallery images can now be specified on the `VirtualMachineImageId` property of `ImageReference` by referencing the image via its ARM ID.
+- **[Breaking]** When not specified, the default value for `WaitForSuccess` on `StartTask` is now `true` (was `false`).
+- **[Breaking]** When not specified, the default value for `Scope` on `AutoUserSpecification` is now always `Pool` (was `Task` on Windows nodes, `Pool` on Linux nodes).
+
 ### Changes in 8.0.0
 #### REST API version
 - This version targets REST API version 2019-04-01.
@@ -7,7 +19,6 @@
 #### Features
 - Added BatchAccount properties `DedicatedCoreQuotaPerVMFamily` and `DedicatedCoreQuotaPerVMFamilyEnforced` to facilitate the transition to per VM family quota
 - **[Breaking]** Accounts created with `PoolAllocationMode` set to `UserSubscription` will not return core quota properties `DedicatedCoreQuota` or `LowPriorityCoreQuota`
-
 
 ### Changes in 7.0.0
 #### REST API version
