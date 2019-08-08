@@ -12,7 +12,7 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - script: dotnet run -p .\samples\SmokeTest\SmokeTest\SmokeTest.csproj
+      - script: dotnet run -p ./samples/SmokeTest/SmokeTest/SmokeTest.csproj
         displayName: "Run Smoke Tests"
         env:
           KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)
