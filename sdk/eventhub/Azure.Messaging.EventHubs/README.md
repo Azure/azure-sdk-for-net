@@ -31,7 +31,7 @@ To quickly create the needed Event Hubs resources in Azure and to receive a conn
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs -Version 5.0.0-preview.1
+Install-Package Azure.Messaging.EventHubs -Version 5.0.0-preview.2
 ```
 
 ### Obtain a connection string
