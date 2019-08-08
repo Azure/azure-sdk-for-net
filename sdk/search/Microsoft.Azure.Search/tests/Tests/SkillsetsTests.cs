@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Pt, SentimentSkillLanguage.PtPt, TextExtractionAlgorithm.Printed));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Pt, SentimentSkillLanguage.PtPT, TextExtractionAlgorithm.Printed));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi, TextExtractionAlgorithm.Printed));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.En, SentimentSkillLanguage.En, TextExtractionAlgorithm.Handwritten));
             });
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = algorithm,
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = OcrSkillLanguage.En
             });
 
             var inputs1 = new List<InputFieldMappingEntry>()
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new EntityRecognitionSkill(inputs1, outputs1, "Tested Entity Recognition skill", RootPathString)
             {
                 Categories = categories,
-                DefaultLanguageCode = "en",
+                DefaultLanguageCode = EntityRecognitionSkillLanguage.En,
                 MinimumPrecision = 0.5
             });
 
@@ -598,7 +598,7 @@ namespace Microsoft.Azure.Search.Tests
                 {
                     TextExtractionAlgorithm = algorithm,
                     ShouldDetectOrientation = shouldDetectOrientation,
-                    DefaultLanguageCode = "en"
+                    DefaultLanguageCode = OcrSkillLanguage.En
                 });
             }
 
@@ -748,7 +748,7 @@ namespace Microsoft.Azure.Search.Tests
                     ImageDetail.Celebrities,
                     ImageDetail.Landmarks
                 },
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = ImageAnalysisSkillLanguage.En
             });
 
             var inputs1 = new List<InputFieldMappingEntry>()
@@ -771,7 +771,7 @@ namespace Microsoft.Azure.Search.Tests
 
             skills.Add(new KeyPhraseExtractionSkill(inputs1, outputs1, "Tested Key Phrase skill", RootPathString)
             {
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = KeyPhraseExtractionSkillLanguage.En
             });
 
             return new Skillset("testskillset2", "Skillset for testing", skills);
@@ -863,7 +863,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = OcrSkillLanguage.En
             });
 
             var inputs1 = new List<InputFieldMappingEntry>()
@@ -907,7 +907,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = OcrSkillLanguage.En
             });
 
             return new Skillset("testskillset", "Skillset for testing", skills, new DefaultCognitiveServices());
