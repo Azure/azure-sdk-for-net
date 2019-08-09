@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// Represents information about a verify operation
     /// </summary>
-    public struct VerifyResult : IJsonDeserializable
+    public class VerifyResult : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string ValidPropertyName = "value";
@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The key id of the key used to verify
         /// </summary>
-        public string KeyId { get; private set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
         /// The result of the verification

@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// Represents information about a wrap operation
     /// </summary>
-    public struct WrapResult : IJsonDeserializable
+    public class WrapResult : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string EncryptedKeyPropertyName = "value";

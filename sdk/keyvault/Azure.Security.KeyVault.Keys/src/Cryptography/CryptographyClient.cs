@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private Uri _keyId;
         private ICryptographyProvider _cryptoProvider;
+        private HttpPipeline _pipeline;
 
         /// <summary>
         /// Protected cosntructor for mocking
@@ -48,7 +50,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             _keyId = keyId ?? throw new ArgumentNullException(nameof(keyId));
 
-            _cryptoProvider = new DirectCryptographyClient(keyId, credential, options);
+            if (credential == null) throw new ArgumentNullException(nameof(credential));
+
+            var remoteProvider = new RemoteCryptographyClient(keyId, credential, options);
+
+            _pipeline = remoteProvider.Pipeline;
+
+            _cryptoProvider = remoteProvider;
         }
 
         /// <summary>
@@ -61,7 +69,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
-            return await _cryptoProvider.EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Encrypt");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return await _cryptoProvider.EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -74,7 +94,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
-            return _cryptoProvider.Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Encrypt");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return _cryptoProvider.Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -88,7 +120,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
-            return await _cryptoProvider.DecryptAsync(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Decrypt");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return await _cryptoProvider.DecryptAsync(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -103,9 +147,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns></returns>
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
-            return _cryptoProvider.Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
-        }
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Decrypt");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
 
+            try
+            {
+                return _cryptoProvider.Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Encrypts the specified key material.
@@ -115,7 +170,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual async Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
-            return await _cryptoProvider.WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.WrapKey");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return await _cryptoProvider.WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -126,7 +193,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
-            return _cryptoProvider.WrapKey(algorithm, key, cancellationToken);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.WrapKey");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return _cryptoProvider.WrapKey(algorithm, key, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -138,7 +217,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns></returns>
         public virtual async Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
-            return await _cryptoProvider.UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.UnwrapKey");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return await _cryptoProvider.UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -149,9 +240,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
-            return _cryptoProvider.UnwrapKey(algorithm, encryptedKey, cancellationToken);
-        }
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.UnwrapKey");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
 
+            try
+            {
+                return _cryptoProvider.UnwrapKey(algorithm, encryptedKey, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Signs the specified digest.
@@ -161,7 +263,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual async Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
-            return await _cryptoProvider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Sign");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return await _cryptoProvider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -172,7 +286,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
-            return _cryptoProvider.Sign(algorithm, digest, cancellationToken);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Sign");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return _cryptoProvider.Sign(algorithm, digest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -184,7 +310,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual async Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
-            return await _cryptoProvider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Verify");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                return await _cryptoProvider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -196,9 +334,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="cancellationToken">Cancellation token</param>
         public virtual VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
-            return _cryptoProvider.Verify(algorithm, digest, signature, cancellationToken);
-        }
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Verify");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
 
+            try
+            {
+                return _cryptoProvider.Verify(algorithm, digest, signature, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Signs the specified data
@@ -210,9 +359,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            byte[] digest = CreateDigest(algorithm, data);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                byte[] digest = CreateDigest(algorithm, data);
 
             return await _cryptoProvider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -225,9 +386,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            byte[] digest = CreateDigest(algorithm, data);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                byte[] digest = CreateDigest(algorithm, data);
 
             return _cryptoProvider.Sign(algorithm, digest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -240,9 +413,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            byte[] digest = CreateDigest(algorithm, data);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                byte[] digest = CreateDigest(algorithm, data);
 
             return await _cryptoProvider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -255,11 +440,22 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            byte[] digest = CreateDigest(algorithm, data);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                byte[] digest = CreateDigest(algorithm, data);
 
             return _cryptoProvider.Sign(algorithm, digest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-
 
         /// <summary>
         /// Verifies the specified signature
@@ -272,9 +468,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            byte[] digest = CreateDigest(algorithm, data);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                byte[] digest = CreateDigest(algorithm, data);
 
             return await _cryptoProvider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -288,9 +496,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            byte[] digest = CreateDigest(algorithm, data);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                byte[] digest = CreateDigest(algorithm, data);
 
             return _cryptoProvider.Verify(algorithm, digest, signature, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -304,9 +524,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            byte[] digest = CreateDigest(algorithm, data);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                byte[] digest = CreateDigest(algorithm, data);
 
             return await _cryptoProvider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -321,9 +553,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            byte[] digest = CreateDigest(algorithm, data);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
+            scope.AddAttribute("key", _keyId.ToString());
+            scope.Start();
+
+            try
+            {
+                byte[] digest = CreateDigest(algorithm, data);
 
             return _cryptoProvider.Verify(algorithm, digest, signature, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)
@@ -341,6 +585,5 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 return hashAlgo.ComputeHash(data);
             }
         }
-
     }
 }

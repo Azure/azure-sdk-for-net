@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// Represents information about an dencryption operation
     /// </summary>
-    public struct DecryptResult : IJsonDeserializable
+    public class DecryptResult : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string PlaintextPropertyName = "value";

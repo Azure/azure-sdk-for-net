@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// Represents information about a sign operation
     /// </summary>
-    public struct SignResult : IJsonDeserializable
+    public class SignResult : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string SignaturePropertyName = "value";

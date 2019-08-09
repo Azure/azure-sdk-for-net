@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// 
     /// </summary>
-    internal class DirectCryptographyClient : ICryptographyProvider
+    internal class RemoteCryptographyClient : ICryptographyProvider
     {
         private Uri _keyId;
         private HttpPipeline _pipeline;
@@ -23,13 +23,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string DecryptOperation = "decrypt";
         private const string SignOperation = "sign";
         private const string VerifyOperation = "verify";
-        private const string WrapOperation = "wrap";
-        private const string UnwrapOperation = "unwrap";
+        private const string WrapOperation = "wrapKey";
+        private const string UnwrapOperation = "unwrapKey";
 
         /// <summary>
         /// 
         /// </summary>
-        protected DirectCryptographyClient()
+        protected RemoteCryptographyClient()
         {
 
         }
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </summary>
         /// <param name="keyId"></param>
         /// <param name="credential"></param>
-        public DirectCryptographyClient(Uri keyId, TokenCredential credential)
+        public RemoteCryptographyClient(Uri keyId, TokenCredential credential)
             : this(keyId, credential, null)
         {
 
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="keyId"></param>
         /// <param name="credential"></param>
         /// <param name="options"></param>
-        public DirectCryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
+        public RemoteCryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
             _keyId = keyId ?? throw new ArgumentNullException(nameof(keyId));
 
@@ -61,8 +61,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _pipeline = HttpPipelineBuilder.Build(options,
                     bufferResponse: true,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"));
+                    new ChallengeBasedAuthenticationPolicy(credential));
         }
+
+        internal HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// 
@@ -286,7 +288,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Signature = signature
             };
 
-            return await SendRequestAsync(VerifyOperation, parameters, () => new VerifyResult() { Algorithm = algorithm }, cancellationToken).ConfigureAwait(false);
+            return await SendRequestAsync(VerifyOperation, parameters, () => new VerifyResult() { Algorithm = algorithm, KeyId = _keyId.ToString() }, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -306,7 +308,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Signature = signature
             };
 
-            return SendRequest(VerifyOperation, parameters, () => new VerifyResult() { Algorithm = algorithm }, cancellationToken);
+            return SendRequest(VerifyOperation, parameters, () => new VerifyResult() { Algorithm = algorithm, KeyId = _keyId.ToString() }, cancellationToken);
         }
 
         private async Task<Response<TResult>> SendRequestAsync<TContent, TResult>(string operation, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken)
@@ -354,7 +356,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             where TContent : IJsonSerializable
             where TResult : IJsonDeserializable
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope($"Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.{operation}");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope($"Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.{operation}");
             scope.AddAttribute("key", _keyId.ToString());
             scope.Start();
 
@@ -399,7 +401,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = RequestMethod.Post;
             request.UriBuilder.Uri = _keyId;
-            request.UriBuilder.AppendPath(operation);
+            request.UriBuilder.AppendPath("/" + operation);
 
             request.UriBuilder.AppendQuery("api-version", ApiVersion);
 
@@ -428,62 +430,62 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         async Task<EncryptResult> ICryptographyProvider.EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
         {
-            return await ((DirectCryptographyClient)this).EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);
+            return await ((RemoteCryptographyClient)this).EncryptAsync(algorithm, plaintext, iv, authenticationData, cancellationToken).ConfigureAwait(false);
         }
 
         EncryptResult ICryptographyProvider.Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] authenticationData, CancellationToken cancellationToken)
         {
-            return ((DirectCryptographyClient)this).Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
+            return ((RemoteCryptographyClient)this).Encrypt(algorithm, plaintext, iv, authenticationData, cancellationToken);
         }
 
         async Task<DecryptResult> ICryptographyProvider.DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
         {
-            return await ((DirectCryptographyClient)this).DecryptAsync(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken).ConfigureAwait(false);
+            return await ((RemoteCryptographyClient)this).DecryptAsync(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken).ConfigureAwait(false);
         }
 
         DecryptResult ICryptographyProvider.Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationData, byte[] authenticationTag, CancellationToken cancellationToken)
         {
-            return ((DirectCryptographyClient)this).Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
+            return ((RemoteCryptographyClient)this).Decrypt(algorithm, ciphertext, iv, authenticationData, authenticationTag, cancellationToken);
         }
 
         async Task<WrapResult> ICryptographyProvider.WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
         {
-            return await ((DirectCryptographyClient)this).WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
+            return await ((RemoteCryptographyClient)this).WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
         }
 
         WrapResult ICryptographyProvider.WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
         {
-            return ((DirectCryptographyClient)this).WrapKey(algorithm, key, cancellationToken);
+            return ((RemoteCryptographyClient)this).WrapKey(algorithm, key, cancellationToken);
         }
 
         async Task<UnwrapResult> ICryptographyProvider.UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
-            return await ((DirectCryptographyClient)this).UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
+            return await ((RemoteCryptographyClient)this).UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
         }
 
         UnwrapResult ICryptographyProvider.UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
-            return ((DirectCryptographyClient)this).UnwrapKey(algorithm, encryptedKey, cancellationToken);
+            return ((RemoteCryptographyClient)this).UnwrapKey(algorithm, encryptedKey, cancellationToken);
         }
 
         async Task<SignResult> ICryptographyProvider.SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
         {
-            return await ((DirectCryptographyClient)this).SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
+            return await ((RemoteCryptographyClient)this).SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
         }
 
         SignResult ICryptographyProvider.Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
         {
-            return ((DirectCryptographyClient)this).Sign(algorithm, digest, cancellationToken);
+            return ((RemoteCryptographyClient)this).Sign(algorithm, digest, cancellationToken);
         }
 
         async Task<VerifyResult> ICryptographyProvider.VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
         {
-            return await ((DirectCryptographyClient)this).VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
+            return await ((RemoteCryptographyClient)this).VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
         }
 
         VerifyResult ICryptographyProvider.Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
         {
-            return ((DirectCryptographyClient)this).Verify(algorithm, digest, signature, cancellationToken);
+            return ((RemoteCryptographyClient)this).Verify(algorithm, digest, signature, cancellationToken);
         }
     }
 }

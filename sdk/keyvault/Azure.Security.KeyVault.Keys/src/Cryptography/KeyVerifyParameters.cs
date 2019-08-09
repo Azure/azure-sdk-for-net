@@ -11,7 +11,8 @@ namespace Azure.Security.KeyVault.Keys
     internal struct KeyVerifyParameters : IJsonSerializable
     {
         private static readonly JsonEncodedText AlgorithmPropertyNameBytes = JsonEncodedText.Encode("alg");
-        private static readonly JsonEncodedText DigestPropertyNameBytes = JsonEncodedText.Encode("value");
+        private static readonly JsonEncodedText DigestPropertyNameBytes = JsonEncodedText.Encode("digest");
+        private static readonly JsonEncodedText SignaturePropertyNameBytes = JsonEncodedText.Encode("value");
 
         public string Algorithm { get; set; }
 
@@ -31,7 +32,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (Signature != null)
             {
-                json.WriteString(DigestPropertyNameBytes, Base64Url.Encode(Signature));
+                json.WriteString(SignaturePropertyNameBytes, Base64Url.Encode(Signature));
             }
         }
     }
