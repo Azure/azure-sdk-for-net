@@ -19,7 +19,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
     public class EventHubTokenCredentialTests
     {
         /// <summary>
@@ -82,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var tokenResult = credential.GetToken(new[] { resource }, CancellationToken.None);
 
-            Assert.That(tokenResult, Is.EqualTo(accessToken), "The access token should match the return of the delgated call.");
+            Assert.That(tokenResult, Is.EqualTo(accessToken), "The access token should match the return of the delegated call.");
             mockCredential.VerifyAll();
         }
 
@@ -105,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var tokenResult = await credential.GetTokenAsync(new[] { resource }, CancellationToken.None);
 
-            Assert.That(tokenResult, Is.EqualTo(accessToken), "The access token should match the return of the delgated call.");
+            Assert.That(tokenResult, Is.EqualTo(accessToken), "The access token should match the return of the delegated call.");
             mockCredential.VerifyAll();
         }
     }

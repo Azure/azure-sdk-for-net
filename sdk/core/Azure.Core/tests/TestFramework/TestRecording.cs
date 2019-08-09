@@ -13,7 +13,7 @@ namespace Azure.Core.Testing
     public class TestRecording : IDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
-        private const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
+        internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
         public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
         {

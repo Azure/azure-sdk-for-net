@@ -307,6 +307,11 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Equal(IndexerExecutionStatus.InProgress, info.LastResult.Status);
                 Assert.Equal(3, info.ExecutionHistory.Count);
 
+                Assert.NotNull(info.Limits);
+                Assert.Equal(100000, info.Limits.MaxDocumentContentCharactersToExtract);
+                Assert.Equal(1000, info.Limits.MaxDocumentExtractionSize);
+                Assert.Equal(TimeSpan.FromDays(1), info.Limits.MaxRunTime);
+
                 IndexerExecutionResult newestResult = info.ExecutionHistory[0];
                 IndexerExecutionResult middleResult = info.ExecutionHistory[1];
                 IndexerExecutionResult oldestResult = info.ExecutionHistory[2];
@@ -422,7 +427,9 @@ namespace Microsoft.Azure.Search.Tests
                         new FieldMapping("feature_id", "c", FieldMappingFunction.ExtractTokenAtPosition(delimiter: " ", position: 0)),
                         new FieldMapping("feature_id", "d", FieldMappingFunction.Base64Decode()),
                         new FieldMapping("feature_id", "e", FieldMappingFunction.Base64Decode(useHttpServerUtilityUrlTokenDecode: false)),
-                        new FieldMapping("feature_id", "f", FieldMappingFunction.JsonArrayToStringCollection())
+                        new FieldMapping("feature_id", "f", FieldMappingFunction.JsonArrayToStringCollection()),
+                        new FieldMapping("feature_id", "g", FieldMappingFunction.UrlEncode()),
+                        new FieldMapping("feature_id", "h", FieldMappingFunction.UrlDecode()),
                     }
                 };
 
@@ -430,7 +437,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 // We need to add desired fields to the index before those fields can be referenced by the field mappings
                 Index index = searchClient.Indexes.Get(Data.TargetIndexName);
-                string[] fieldNames = new[] { "a", "b", "c", "d", "e", "f" };
+                string[] fieldNames = new[] { "a", "b", "c", "d", "e", "f", "g", "h" };
                 index.Fields = index.Fields.Concat(fieldNames.Select(name => new Field(name, DataType.String))).ToList();
                 searchClient.Indexes.CreateOrUpdate(index);
 

@@ -166,7 +166,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
             catch
             {
                 // Cleanup any session (and thus link) in case of exception.
-                session?.Abort();
+                session?.SafeClose();
                 throw;
             }
         }

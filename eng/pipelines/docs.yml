@@ -7,8 +7,8 @@ jobs:
     pool:
       vmImage: vs2017-win2016
     steps:
-      - powershell: |
-          Invoke-WebRequest -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
+      - pwsh: |
+          Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
           -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
         workingDirectory: $(Build.BinariesDirectory)
         displayName: Download and Extract DocFX
@@ -18,9 +18,9 @@ jobs:
           script: $(Build.BinariesDirectory)/docfx/docfx.exe init -q
           workingDirectory: $(Build.SourcesDirectory)
           failOnStderr: true
-      - powershell: ls
+      - pwsh: ls
         workingDirectory: $(Build.SourcesDirectory)/docfx_project/
-      - powershell: |
+      - pwsh: |
           Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
         displayName: Copy over docfx.json
       - task: CmdLine@2
@@ -40,7 +40,7 @@ jobs:
         inputs:
           scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CreateTocYml.py"
           arguments: $(Build.SourcesDirectory)
-      - powershell: |
+      - pwsh: |
           Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/api/*" -Destination "$(Build.SourcesDirectory)/docfx_project/api/" -Force
           Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/api/index.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/intro.md" -Force
           Copy-Item "$(Build.SourcesDirectory)/Documentation/*" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
@@ -61,7 +61,7 @@ jobs:
           scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CreateTocYmlForArticles.py"
           arguments: $(Build.SourcesDirectory)
           failOnStderr: true
-      - powershell: ls
+      - pwsh: ls
         workingDirectory: $(Build.SourcesDirectory)/docfx_project/articles
       - task: CmdLine@2
         displayName: Build Doc Content
@@ -69,7 +69,7 @@ jobs:
           script: $(Build.BinariesDirectory)/docfx/docfx.exe build
           workingDirectory: $(Build.SourcesDirectory)/docfx_project/
           failOnStderr: true
-      - powershell: |
+      - pwsh: |
           Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/*" -Destination "$(Build.SourcesDirectory)/docfx_project/_site/" -Force
         displayName: Replace site assets
       - task: CopyFiles@2

@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Compatibility;
+using Moq;
 using NUnit.Framework;
 using TrackOne;
 
@@ -19,7 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
     public class TrackOneEventHubConsumerTests
     {
         /// <summary>
@@ -29,7 +30,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheReceiverFactory()
         {
-            Assert.That(() => new TrackOneEventHubConsumer(null), Throws.ArgumentNullException);
+            Assert.That(() => new TrackOneEventHubConsumer(null, Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorValidatesTheRetryPolicy()
+        {
+            Assert.That(() => new TrackOneEventHubConsumer(_ => default(TrackOne.PartitionReceiver), null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -44,8 +55,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var position = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-25T12:00:00Z"));
             var priority = 8765;
             var identifier = "ThisIsAnAwesomeConsumer!";
+            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
             var mock = new ObservableReceiverMock(new ClientMock(), consumerGroup, partition, TrackOne.EventPosition.FromEnqueuedTime(position.EnqueuedTime.Value.UtcDateTime), priority, new ReceiverOptions { Identifier = identifier });
-            var consumer = new TrackOneEventHubConsumer(() => mock);
+            var consumer = new TrackOneEventHubConsumer(_ => mock, retryPolicy);
 
             // Invoke an operation to force the consumer to be lazily instantiated.  Otherwise,
             // construction does not happen.
@@ -57,6 +69,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(mock.ConstructedWith.Position, position), Is.True, "The starting event position should match.");
             Assert.That(mock.ConstructedWith.Priority, Is.EqualTo(priority), "The ownerlevel should match.");
             Assert.That(mock.ConstructedWith.Options.Identifier, Is.EqualTo(identifier), "The consumer identifier should match.");
+
+            var consumerRetry = GetRetryPolicy(consumer);
+            Assert.That(consumerRetry, Is.SameAs(retryPolicy), "The consumer retry instance should match.");
         }
 
         /// <summary>
@@ -69,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var maximumEventCount = 666;
             var maximumWaitTime = TimeSpan.FromMilliseconds(17);
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var consumer = new TrackOneEventHubConsumer(() => mock);
+            var consumer = new TrackOneEventHubConsumer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             await consumer.ReceiveAsync(maximumEventCount, maximumWaitTime, CancellationToken.None);
 
@@ -85,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveAsyncSendsAnEmptyEnumerableWhenThereAreNoEvents()
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var consumer = new TrackOneEventHubConsumer(() => mock);
+            var consumer = new TrackOneEventHubConsumer(_ => mock, Mock.Of<EventHubRetryPolicy>());
             var results = await consumer.ReceiveAsync(10, default, default);
 
             Assert.That(results, Is.Not.Null, "There should have been an enumerable returned.");
@@ -100,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveAsyncTransformsResults()
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var consumer = new TrackOneEventHubConsumer(() => mock);
+            var consumer = new TrackOneEventHubConsumer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             mock.ReceiveResult = new List<TrackOne.EventData>
             {
@@ -134,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncDoesNotDelegateIfTheReceiverWasNotCreated()
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var consumer = new TrackOneEventHubConsumer(() => mock);
+            var consumer = new TrackOneEventHubConsumer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             await consumer.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.False);
@@ -149,7 +164,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncDelegatesToTheReceiver()
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var consumer = new TrackOneEventHubConsumer(() => mock);
+            var consumer = new TrackOneEventHubConsumer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             // Invoke an operation to force the consumer to be lazily instantiated.  Otherwise,
             // Close does not delegate the call.
@@ -160,14 +175,89 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubConsumer.UpdateRetryPolicy" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ProducerUpdatesTheRetryPolicyWhenTheSenderIsNotCreated()
+        {
+            var newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
+            var consumer = new TrackOneEventHubConsumer(_ => mock, newRetryPolicy);
+
+            consumer.UpdateRetryPolicy(newRetryPolicy);
+
+            var consumerRetry = GetRetryPolicy(consumer);
+            Assert.That(consumerRetry, Is.SameAs(newRetryPolicy), "The consumer retry instance should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubConsumer.UpdateRetryPolicy" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProduerUpdatesTheRetryPolicyWhenTheSenderIsCreated()
+        {
+            var newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
+            var consumer = new TrackOneEventHubConsumer(_ => mock, newRetryPolicy);
+
+            // Invoke an operation to force the consumer to be lazily instantiated.  Otherwise,
+            // Close does not delegate the call.
+
+            await consumer.ReceiveAsync(0, TimeSpan.Zero, default);
+            consumer.UpdateRetryPolicy(newRetryPolicy);
+
+            var consumerRetry = GetRetryPolicy(consumer);
+            Assert.That(consumerRetry, Is.SameAs(newRetryPolicy), "The consumer retry instance should match.");
+            Assert.That(mock.RetryPolicy, Is.TypeOf<TrackOneRetryPolicy>(), "The track one client retry policy should be a custom compatibility wrapper.");
+
+            var trackOnePolicy = GetSourcePolicy((TrackOneRetryPolicy)mock.RetryPolicy);
+            Assert.That(trackOnePolicy, Is.SameAs(newRetryPolicy), "The new retry policy should have been used as the source for the compatibility wrapper.");
+        }
+
+        /// <summary>
+        ///   Gets the retry policy from a <see cref="TrackOneEventHubConsumer" />
+        ///   by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="consumer">The consumer to retrieve the retry policy from.</param>
+        ///
+        /// <returns>The retry policy</returns>
+        ///
+        private static EventHubRetryPolicy GetRetryPolicy(TrackOneEventHubConsumer consumer) =>
+            (EventHubRetryPolicy)
+                typeof(TrackOneEventHubConsumer)
+                    .GetField("_retryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(consumer);
+
+        /// <summary>
+        ///   Gets the retry policy used as the source of a <see cref="TrackOneRetryPolicy" />
+        ///   by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="policy">The policy to retrieve the source policy from.</param>
+        ///
+        /// <returns>The retry policy</returns>
+        ///
+        private static EventHubRetryPolicy GetSourcePolicy(TrackOneRetryPolicy policy) =>
+            (EventHubRetryPolicy)
+                typeof(TrackOneRetryPolicy)
+                    .GetField("_sourcePolicy", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(policy);
+
+
+        /// <summary>
         ///   Allows for observation of operations performed by the consumer for testing purposes.
         /// </summary>
         ///
-        private class ObservableReceiverMock : TrackOne.PartitionReceiver
+        private class ObservableReceiverMock : PartitionReceiver
         {
             public bool WasCloseAsyncInvoked;
             public (int MaxCount, TimeSpan WaitTime) ReceiveInvokeWith;
-            public (string ConsumerGroup, string Partition, TrackOne.EventPosition Position, long? Priority, TrackOne.ReceiverOptions Options) ConstructedWith;
+            public (string ConsumerGroup, string Partition, TrackOne.EventPosition Position, long? Priority, ReceiverOptions Options) ConstructedWith;
 
             public IList<TrackOne.EventData> ReceiveResult = null;
 
@@ -176,7 +266,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                           string partitionId,
                                           TrackOne.EventPosition eventPosition,
                                           long? priority,
-                                          TrackOne.ReceiverOptions options) : base(eventHubClient, consumerGroupName, partitionId, eventPosition, priority, options)
+                                          ReceiverOptions options) : base(eventHubClient, consumerGroupName, partitionId, eventPosition, priority, options)
             {
                 ConstructedWith = (consumerGroupName, partitionId, eventPosition, priority, options);
             }

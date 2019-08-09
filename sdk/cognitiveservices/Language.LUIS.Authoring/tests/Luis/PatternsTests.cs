@@ -9,7 +9,7 @@ namespace LUIS.Authoring.Tests.Luis
 
     public class PatternsTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPattern()
         {
             UseClientFor(async client =>
@@ -36,7 +36,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPatterns()
         {
             UseClientFor(async client =>
@@ -71,7 +71,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePattern()
         {
             UseClientFor(async client =>
@@ -102,7 +102,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePatterns()
         {
             UseClientFor(async client =>
@@ -134,7 +134,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPatterns()
         {
             UseClientFor(async client =>
@@ -172,7 +172,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetIntentPatterns()
         {
             UseClientFor(async client =>
@@ -211,7 +211,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePattern()
         {
             UseClientFor(async client =>
@@ -235,7 +235,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePatterns()
         {
             UseClientFor(async client =>

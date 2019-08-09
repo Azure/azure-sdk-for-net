@@ -6,20 +6,40 @@
 ###########
 
 # Catch all
-# /sdk/ @AlexGhiondea
+/sdk/ @AlexGhiondea
 
 # Core
-# /sdk/core/
+/sdk/core/ @pakrym
 
 # Service teams
-# /sdk/eventhub/
-# /sdk/keyvault/
-# /sdk/identity/
-# /sdk/storage/
+/sdk/appconfiguration/ @annelo-msft
+
+/sdk/batch/ @matthchr 
+
+/sdk/cognitiveservices/language.textanalytics/ @assafi 
+/sdk/cognitiveservices/vision.computervision/ @toothache
+/sdk/cognitiveservices/vision.face/ @TFR258 
+
+/sdk/eventgrid/ @kalyanaj 
+
+/sdk/eventhub/ @serkantkaraca @jsquire @kinelski
+/sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
+
+/sdk/identity/azure.identity/ @schaabs
+
+/sdk/keyvault/ @schaabs 
+/sdk/keyvault/azure.*/ @schaabs @shahabhijeet 
+
+/sdk/search/ @brjohnstmsft
+/sdk/servicebus/ @nemakam @jsquire
+/sdk/storage/ @kfarmer-msft @seanmcc-msft @tg-msft
+# Management Plane
+/**/*Management*/ @erich-wang
 
 ###########
 # Eng Sys
 ###########
-/eng/   @weshaggard @chidozieononiwu @mitchdenny @danieljurek
+/eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
+/eng/mgmt/      @erich-wang
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny

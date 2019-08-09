@@ -11,14 +11,14 @@ namespace Azure.Security.KeyVault.Keys
     /// Defines a page in Azure responses.
     /// </summary>
     /// <typeparam name="T">Type of the page content items</typeparam>
-    public class Page<T> : Model
+    internal class KeyVaultPage<T> : Model
         where T : Model
     {
         private T[] _items;
         private Uri _nextLink;
         private Func<T> _itemFactory;
 
-        internal Page(Func<T> itemFactory)
+        internal KeyVaultPage(Func<T> itemFactory)
         {
             _itemFactory = itemFactory;
         }
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Keys
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
-            // serialization is not needed this type is only in responses 
+            // serialization is not needed this type is only in responses
             throw new NotImplementedException();
         }
     }

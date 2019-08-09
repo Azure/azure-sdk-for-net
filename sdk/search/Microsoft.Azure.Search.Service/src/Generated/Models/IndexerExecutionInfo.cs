@@ -37,11 +37,13 @@ namespace Microsoft.Azure.Search.Models
         /// in-progress indexer execution.</param>
         /// <param name="executionHistory">History of the recent indexer
         /// executions, sorted in reverse chronological order.</param>
-        public IndexerExecutionInfo(IndexerStatus status = default(IndexerStatus), IndexerExecutionResult lastResult = default(IndexerExecutionResult), IList<IndexerExecutionResult> executionHistory = default(IList<IndexerExecutionResult>))
+        /// <param name="limits">The execution limits for the indexer.</param>
+        public IndexerExecutionInfo(IndexerStatus status = default(IndexerStatus), IndexerExecutionResult lastResult = default(IndexerExecutionResult), IList<IndexerExecutionResult> executionHistory = default(IList<IndexerExecutionResult>), IndexerLimits limits = default(IndexerLimits))
         {
             Status = status;
             LastResult = lastResult;
             ExecutionHistory = executionHistory;
+            Limits = limits;
             CustomInit();
         }
 
@@ -70,6 +72,12 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "executionHistory")]
         public IList<IndexerExecutionResult> ExecutionHistory { get; private set; }
+
+        /// <summary>
+        /// Gets the execution limits for the indexer.
+        /// </summary>
+        [JsonProperty(PropertyName = "limits")]
+        public IndexerLimits Limits { get; private set; }
 
     }
 }

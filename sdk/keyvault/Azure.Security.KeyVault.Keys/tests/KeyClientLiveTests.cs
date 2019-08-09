@@ -19,6 +19,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
         }
 
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if (this.Mode == RecordedTestMode.Record || this.Mode == RecordedTestMode.Playback)
+            {
+                this.Client = this.GetClient();
+
+                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+            }
+        }
+
         [Test]
         public async Task CreateKey()
         {
@@ -298,7 +311,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             await WaitForPurgedKey(keyName);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
-            
+
             Key restoredResult = await Client.RestoreKeyAsync(backup);
             RegisterForCleanup(restoredResult);
 

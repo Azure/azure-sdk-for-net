@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var response = await blob.DownloadAsync();
-                
+
                 // Assert
                 Assert.AreEqual(data.Length, response.Value.ContentLength);
                 var actual = new MemoryStream();
@@ -82,8 +82,8 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var service = this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint),
-                    new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
+                    new Uri(this.TestConfigDefault.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey),
                     this.GetFaultyBlobConnectionOptions(
                         raiseAt: 256 * Constants.KB,
                         raise: new Exception("Unexpected"))));
@@ -212,7 +212,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var response = await blob.DownloadAsync(
-                    range: new HttpRange(offset, count), 
+                    range: new HttpRange(offset, count),
                     rangeGetContentHash: true);
 
                 // Assert
@@ -517,7 +517,7 @@ namespace Azure.Storage.Blobs.Test
                         await destBlob.UploadAsync(stream);
                     }
 
-                    var duration = -1;
+                    var duration = Constants.Blob.Lease.InfiniteLeaseDuration;
                     var lease = this.InstrumentClient(destBlob.GetLeaseClient(this.Recording.Random.NewGuid().ToString()));
                     var leaseResponse = await lease.AcquireAsync(duration);
 
@@ -1851,7 +1851,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var response = await blob.SetTierAsync(
-                    accessTier: AccessTier.Cool, 
+                    accessTier: AccessTier.Cool,
                     leaseAccessConditions: new LeaseAccessConditions
                     {
                         LeaseId = leaseId

@@ -279,8 +279,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobDownloadInfo> Download() =>
             this.Download(CancellationToken.None);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="DownloadAsync()"/> operation downloads a blob from
@@ -297,8 +299,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync() =>
             await this.DownloadAsync(CancellationToken.None).ConfigureAwait(false);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Download(CancellationToken)"/> operation downloads
@@ -345,12 +349,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
             CancellationToken cancellationToken) =>
             await this.DownloadAsync(
                 accessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Download(HttpRange, BlobAccessConditions?, Boolean, CancellationToken)"/>
@@ -622,6 +628,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                     async: async,
+                    operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -672,14 +679,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="CopyFromUriOperation"/> describing the
+        /// A <see cref="Operation{Int64}"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual CopyFromUriOperation StartCopyFromUri(
+        public virtual Operation<long> StartCopyFromUri(
             Uri source,
             Metadata metadata = default,
             BlobAccessConditions? sourceAccessConditions = default,
@@ -741,14 +748,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="CopyFromUriOperation"/> describing the
+        /// A <see cref="Operation{Int64}"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
+        public virtual async Task<Operation<long>> StartCopyFromUriAsync(
             Uri source,
             Metadata metadata = default,
             BlobAccessConditions? sourceAccessConditions = default,
@@ -783,14 +790,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="CopyFromUriOperation"/> representing the copy
+        /// A <see cref="Operation{Int64}"/> representing the copy
         /// operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual CopyFromUriOperation StartCopyFromUri(
+        public virtual Operation<long> StartCopyFromUri(
             string copyId,
             CancellationToken cancellationToken = default)
         {
@@ -819,14 +826,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="CopyFromUriOperation"/> representing the copy
+        /// A <see cref="Operation{Int64}"/> representing the copy
         /// operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
+        public virtual async Task<Operation<long>> StartCopyFromUriAsync(
             string copyId,
             CancellationToken cancellationToken = default)
         {
@@ -926,6 +933,7 @@ namespace Azure.Storage.Blobs.Specialized
                         leaseId: destinationAccessConditions?.LeaseAccessConditions?.LeaseId,
                         metadata: metadata,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.StartCopyFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1065,6 +1073,7 @@ namespace Azure.Storage.Blobs.Specialized
                         copyId: copyId,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.AbortCopyFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1220,6 +1229,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Delete",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1321,7 +1331,8 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        cancellationToken: cancellationToken)
+                        cancellationToken: cancellationToken,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Undelete")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1454,6 +1465,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1603,6 +1615,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                             ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     return new Response<BlobInfo>(
@@ -1754,6 +1767,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                             ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                             async: async,
+                            operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     return new Response<BlobInfo>(
@@ -1903,6 +1917,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2066,6 +2081,7 @@ namespace Azure.Storage.Blobs.Specialized
                         tier: accessTier,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

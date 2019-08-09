@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static readonly Lazy<string> EventHubsNamespaceInstance =
             new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_NAMESPACE"), LazyThreadSafetyMode.PublicationOnly);
 
-        /// <summary>The environment variable value for the Azure Active Directory tenent that holds the service principal, lazily evaluated.</summary>
+        /// <summary>The environment variable value for the Azure Active Directory tenant that holds the service principal, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsTenantInstance =
             new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_TENANT"), LazyThreadSafetyMode.PublicationOnly);
 

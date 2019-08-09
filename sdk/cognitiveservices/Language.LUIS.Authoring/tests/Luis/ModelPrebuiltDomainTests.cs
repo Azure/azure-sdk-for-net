@@ -8,7 +8,7 @@
 
     public class ModelPrebuiltDomainTests: BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltDomain()
         {
             UseClientFor(async client =>
@@ -31,7 +31,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteCustomPrebuiltDomain()
         {
             UseClientFor(async client =>
@@ -56,7 +56,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListCustomPrebuiltEntities()
         {
             UseClientFor(async client =>
@@ -75,7 +75,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltEntity()
         {
             UseClientFor(async client =>
@@ -95,7 +95,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListCustomPrebuiltIntents()
         {
             UseClientFor(async client =>
@@ -114,7 +114,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltIntent()
         {
             UseClientFor(async client =>
@@ -136,7 +136,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListCustomPrebuiltModels()
         {
             UseClientFor(async client =>

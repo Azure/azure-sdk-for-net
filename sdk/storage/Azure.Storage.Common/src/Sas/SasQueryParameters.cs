@@ -27,10 +27,6 @@ namespace Azure.Storage.Sas
         /// </summary>
         public const string DefaultSasVersion = Constants.DefaultSasVersion;
 
-        // SASTimeFormat represents the format of a SAS start or expiry time. Use it when formatting/parsing a time.Time.
-        // ISO 8601 uses "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
-        const string TimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
-
         /// <summary>
         /// FormatTimesForSASSigning converts a time.Time to a snapshotTimeFormat string suitable for a
         /// SASField's StartTime or ExpiryTime fields. Returns "" if value.IsZero().
@@ -39,7 +35,7 @@ namespace Azure.Storage.Sas
         /// <returns></returns>
         internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
             // "yyyy-MM-ddTHH:mm:ssZ"
-            (time == new DateTimeOffset()) ? "" : time.ToString(TimeFormat, CultureInfo.InvariantCulture);
+            (time == new DateTimeOffset()) ? "" : time.ToString(Constants.TimeFormat, CultureInfo.InvariantCulture);
 
         // All members are immutable or values so copies of this struct are thread safe.
 
@@ -248,8 +244,8 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.Parameters.ServicesUpper: this.services = kv.Value; break;
                     case Constants.Sas.Parameters.ResourceTypesUpper: this.resourceTypes = kv.Value; break;
                     case Constants.Sas.Parameters.ProtocolUpper: this.protocol = SasProtocol.Parse(kv.Value); break;
-                    case Constants.Sas.Parameters.StartTimeUpper: this.startTime = DateTimeOffset.ParseExact(kv.Value, TimeFormat, CultureInfo.InvariantCulture); break;
-                    case Constants.Sas.Parameters.ExpiryTimeUpper: this.expiryTime = DateTimeOffset.ParseExact(kv.Value, TimeFormat, CultureInfo.InvariantCulture); break;
+                    case Constants.Sas.Parameters.StartTimeUpper: this.startTime = DateTimeOffset.ParseExact(kv.Value, Constants.TimeFormat, CultureInfo.InvariantCulture); break;
+                    case Constants.Sas.Parameters.ExpiryTimeUpper: this.expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.TimeFormat, CultureInfo.InvariantCulture); break;
                     case Constants.Sas.Parameters.IPRangeUpper: this.ipRange = IPRange.Parse(kv.Value); break;
                     case Constants.Sas.Parameters.IdentifierUpper: this.identifier = kv.Value; break;
                     case Constants.Sas.Parameters.ResourceUpper: this.resource = kv.Value; break;
@@ -266,11 +262,11 @@ namespace Azure.Storage.Sas
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyStartUpper:
-                        if (includeBlobParameters) { this.keyStart = DateTimeOffset.ParseExact(kv.Value, TimeFormat, CultureInfo.InvariantCulture); }
+                        if (includeBlobParameters) { this.keyStart = DateTimeOffset.ParseExact(kv.Value, Constants.TimeFormat, CultureInfo.InvariantCulture); }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyExpiryUpper:
-                        if (includeBlobParameters) { this.keyExpiry = DateTimeOffset.ParseExact(kv.Value, TimeFormat, CultureInfo.InvariantCulture); }
+                        if (includeBlobParameters) { this.keyExpiry = DateTimeOffset.ParseExact(kv.Value, Constants.TimeFormat, CultureInfo.InvariantCulture); }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyServiceUpper:
@@ -347,12 +343,12 @@ namespace Azure.Storage.Sas
 
             if (this.StartTime != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(this.StartTime.ToString(TimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(this.StartTime.ToString(Constants.TimeFormat, CultureInfo.InvariantCulture)));
             }
 
             if (this.ExpiryTime != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(this.ExpiryTime.ToString(TimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(this.ExpiryTime.ToString(Constants.TimeFormat, CultureInfo.InvariantCulture)));
             }
 
             var ipr = this.IPRange.ToString();
@@ -390,12 +386,12 @@ namespace Azure.Storage.Sas
 
                 if (this.keyStart != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(this.keyStart.ToString(TimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(this.keyStart.ToString(Constants.TimeFormat, CultureInfo.InvariantCulture)));
                 }
 
                 if (this.keyExpiry != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(this.keyExpiry.ToString(TimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(this.keyExpiry.ToString(Constants.TimeFormat, CultureInfo.InvariantCulture)));
                 }
 
                 if (!String.IsNullOrWhiteSpace(this.keyService))

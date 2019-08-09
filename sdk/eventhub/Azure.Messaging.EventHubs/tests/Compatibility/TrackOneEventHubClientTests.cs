@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,7 +23,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
     public class TrackOneEventHubClientTests
     {
         /// <summary>
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorRequiresTheHost(string host)
         {
-            Assert.That(() => new TrackOneEventHubClient(host, "test-path", Mock.Of<TokenCredential>(), new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new TrackOneEventHubClient(host, "test-path", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ConstructorRequiresTheEventHubPath(string path)
+        public void ConstructorRequiresTheEventHubName(string path)
         {
-            Assert.That(() => new TrackOneEventHubClient("my.eventhub.com", path, Mock.Of<TokenCredential>(), new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new TrackOneEventHubClient("my.eventhub.com", path, Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorRequiresTheCredential()
         {
-            Assert.That(() => new TrackOneEventHubClient("my.eventhub.com", "somePath", null, new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new TrackOneEventHubClient("my.eventhub.com", "somePath", null, new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -64,9 +64,19 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorRequiresTheOption()
+        public void ConstructorRequiresTheOptions()
         {
-            Assert.That(() => new TrackOneEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), null), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new TrackOneEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), null, Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorRequiresTheDefaultRetryPolicy()
+        {
+            Assert.That(() => new TrackOneEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), null), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -83,12 +93,13 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
 
-            Assert.That(() => TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetry), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -101,10 +112,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
+            var eventHubName = "some-path";
             var credential = Mock.Of<TokenCredential>();
 
-            Assert.That(() => TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -117,11 +128,12 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var client = TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var client = TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetry);
 
             try
             {
@@ -150,11 +162,12 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetry);
 
             try
             {
@@ -184,11 +197,12 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetry);
 
             try
             {
@@ -212,11 +226,11 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
-            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var credential = new EventHubTokenCredential(Mock.Of<TokenCredential>(), resource);
-            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetry);
 
             try
             {
@@ -240,18 +254,19 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetry);
 
             try
             {
                 var endpoint = client.ConnectionStringBuilder.Endpoint;
                 Assert.That(endpoint.Scheme.ToLowerInvariant(), Contains.Substring(options.TransportType.GetUriScheme().ToLowerInvariant()), "The scheme should be part of the endpoint.");
                 Assert.That(endpoint.Host.ToLowerInvariant(), Contains.Substring(host.ToLowerInvariant()), "The host should be part of the endpoint.");
-                Assert.That(endpoint.AbsolutePath.ToLowerInvariant(), Contains.Substring(eventHubPath.ToLowerInvariant()), "The host should be part of the endpoint.");
+                Assert.That(endpoint.AbsolutePath.ToLowerInvariant(), Contains.Substring(eventHubName.ToLowerInvariant()), "The host should be part of the endpoint.");
             }
             finally
             {
@@ -265,19 +280,20 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CreateClientPopulatesTheEventHubPath()
+        public async Task CreateClientPopulatesTheEventHubName()
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetry);
 
             try
             {
-                Assert.That(client.EventHubName, Is.EqualTo(eventHubPath), "The client should recognize the Event Hub path.");
+                Assert.That(client.EventHubName, Is.EqualTo(eventHubName), "The client should recognize the Event Hub path.");
             }
             finally
             {
@@ -300,11 +316,12 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var host = "my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetry);
 
             try
             {
@@ -313,6 +330,129 @@ namespace Azure.Messaging.EventHubs.Tests
             finally
             {
                 await client?.CloseAsync();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateClient" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateClientUsesClientOptionsForTheRetryPolicy()
+        {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
+            var options = new EventHubClientOptions
+            {
+                TransportType = TransportType.AmqpWebSockets,
+                RetryOptions = retryOptions
+            };
+
+            var host = "my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => Mock.Of<EventHubRetryPolicy>());
+
+            try
+            {
+                Assert.That(client.RetryPolicy, Is.Not.Null, "The client should have a retry policy.");
+
+                var sourcePolicy = GetSourcePolicy((TrackOneRetryPolicy)client.RetryPolicy);
+                Assert.That(sourcePolicy, Is.InstanceOf<BasicRetryPolicy>(), "The source retry policy should be a basic retry policy.");
+
+                var clientPolicy = (BasicRetryPolicy)sourcePolicy;
+                Assert.That(clientPolicy.Options.Delay, Is.EqualTo(retryOptions.Delay), "The delays should match.");
+                Assert.That(clientPolicy.Options.MaximumDelay, Is.EqualTo(retryOptions.MaximumDelay), "The maximum delays should match.");
+                Assert.That(clientPolicy.Options.MaximumRetries, Is.EqualTo(retryOptions.MaximumRetries), "The maximum retries should match.");
+                Assert.That(clientPolicy.Options.TryTimeout, Is.EqualTo(retryOptions.TryTimeout), "The per-try timeouts should match.");
+            }
+            finally
+            {
+                await client?.CloseAsync();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateClient" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateClientUsesDefaultPolicyForTheRetryPolicy()
+        {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
+            var options = new EventHubClientOptions();
+            options.ClearRetryOptions();
+
+            var host = "my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var defaultRetryPolicy = new BasicRetryPolicy(retryOptions);
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubName, credential, options, () => defaultRetryPolicy);
+
+            try
+            {
+                Assert.That(client.RetryPolicy, Is.Not.Null, "The client should have a retry policy.");
+                Assert.That(client.RetryPolicy, Is.InstanceOf<TrackOneRetryPolicy>(), "The client should always use the track one compatibility retry policy.");
+
+                var clientPolicy = GetSourcePolicy((TrackOneRetryPolicy)client.RetryPolicy);
+                Assert.That(clientPolicy, Is.SameAs(defaultRetryPolicy), "The default policy should have been used as the source policy.");
+            }
+            finally
+            {
+                await client?.CloseAsync();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.UpdateRetryPolicy" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateClientSetsTheOperationTimeout()
+        {
+            var retryOptions = new RetryOptions
+            {
+                TryTimeout = TimeSpan.FromMinutes(59)
+            };
+
+            var host = "http://my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var options = new EventHubClientOptions { RetryOptions = retryOptions };
+            var defaultRetryPolicy = new BasicRetryPolicy(retryOptions);
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetryPolicy, (host, path, credential, options, retry) => mock);
+
+            try
+            {
+                await client.GetPropertiesAsync(default);
+
+                var innerClient = GetTrackOneClient(client);
+                Assert.That(innerClient.ConnectionStringBuilder.OperationTimeout, Is.EqualTo(defaultRetryPolicy.CalculateTryTimeout(0)));
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
             }
         }
 
@@ -326,12 +466,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
-            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
 
             await client.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.False);
@@ -347,12 +488,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
-            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
 
             // Invoke an operation to force the client to be lazily instantiated.  Otherwise,
             // Close does not delegate the call.
@@ -372,12 +514,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
-            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
 
             try
             {
@@ -400,12 +543,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
-            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
 
             try
             {
@@ -430,12 +574,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
-            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
 
             try
             {
@@ -444,8 +589,92 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Because the producer is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
                 // producer from within the mock client, that operation will fail with a null reference exception.
 
-                Assert.That(async () => await client.CreateProducer(producerOptions)?.SendAsync(new[] { new EventData(new byte[] { 0x12 }) }), Throws.InstanceOf<NullReferenceException>(), "because the EventDataSender was not populated.");
+                Assert.That(async () => await client.CreateProducer(producerOptions, defaultRetry)?.SendAsync(new[] { new EventData(new byte[] { 0x12 }) }), Throws.InstanceOf<NullReferenceException>(), "because the EventDataSender was not populated.");
                 Assert.That(mock.CreateProducerInvokedWith, Is.EqualTo(producerOptions.PartitionId));
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateProducer" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateProducerUsesRetryOptionsWhenProvided()
+        {
+            var options = new EventHubClientOptions();
+            var host = "http://my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
+
+            try
+            {
+                var retryOptions = new RetryOptions
+                {
+                    Delay = TimeSpan.FromSeconds(1),
+                    MaximumDelay = TimeSpan.FromSeconds(2),
+                    TryTimeout = TimeSpan.FromSeconds(3),
+                    MaximumRetries = 99,
+                };
+
+                var producerOptions = new EventHubProducerOptions
+                {
+                    PartitionId = "45345",
+                    RetryOptions = retryOptions
+                };
+
+                var producer = client.CreateProducer(producerOptions, defaultRetry);
+                Assert.That(producer.RetryPolicy, Is.InstanceOf<BasicRetryPolicy>(), "The consumer should have been created using the options.");
+
+                var producerRetry = (BasicRetryPolicy)producer.RetryPolicy;
+                Assert.That(producerRetry.Options.Delay, Is.EqualTo(retryOptions.Delay), "The delays should match.");
+                Assert.That(producerRetry.Options.MaximumDelay, Is.EqualTo(retryOptions.MaximumDelay), "The maximum delays should match.");
+                Assert.That(producerRetry.Options.MaximumRetries, Is.EqualTo(retryOptions.MaximumRetries), "The maximum retries should match.");
+                Assert.That(producerRetry.Options.TryTimeout, Is.EqualTo(retryOptions.TryTimeout), "The per-try timeouts should match.");
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateProducer" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateProducerUsesDefaultRetryPolicyWhenNoOptionsAreProvided()
+        {
+            var options = new EventHubClientOptions();
+            var host = "http://my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
+
+            try
+            {
+                var producerOptions = new EventHubProducerOptions
+                {
+                    PartitionId = "45345",
+                    RetryOptions = null
+                };
+
+                var producer = client.CreateProducer(producerOptions, defaultRetry);
+                Assert.That(producer.RetryPolicy, Is.SameAs(defaultRetry));
             }
             finally
             {
@@ -463,12 +692,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
-            var eventHubPath = "some-path";
-            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
             var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
-            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
-            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
 
             try
             {
@@ -480,9 +710,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Because the consumer is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
                 // consumer from within the mock client, that operation will fail with a null reference exception.
 
-                Assert.That(async () => await client.CreateConsumer(consumerGroup, partitionId, eventPosition, consumerOptions).ReceiveAsync(10), Throws.InstanceOf<NullReferenceException>(), "because the PartitionReceiver was not populated.");
+                Assert.That(async () => await client.CreateConsumer(consumerGroup, partitionId, eventPosition, consumerOptions, defaultRetry).ReceiveAsync(10), Throws.InstanceOf<NullReferenceException>(), "because the PartitionReceiver was not populated.");
 
-                (var calledConsumerGroup, var calledPartition, var calledPosition, var calledPriority, var calledOptions) = mock.CreateReiverInvokedWith;
+                (var calledConsumerGroup, var calledPartition, var calledPosition, var calledPriority, var calledOptions) = mock.CreateReceiverInvokedWith;
 
                 Assert.That(calledConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should match.");
                 Assert.That(calledPartition, Is.EqualTo(partitionId), "The partition should match.");
@@ -496,6 +726,258 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateConsumer" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateConsumerUsesRetryOptionsWhenProvided()
+        {
+            var options = new EventHubClientOptions();
+            var host = "http://my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
+
+            try
+            {
+                var partitionId = "32234";
+                var consumerGroup = "AGroup";
+                var eventPosition = EventPosition.FromOffset(34);
+
+                var retryOptions = new RetryOptions
+                {
+                    Delay = TimeSpan.FromSeconds(1),
+                    MaximumDelay = TimeSpan.FromSeconds(2),
+                    TryTimeout = TimeSpan.FromSeconds(3),
+                    MaximumRetries = 99,
+                };
+
+                var consumerOptions = new EventHubConsumerOptions
+                {
+                    Identifier = "Test",
+                    RetryOptions = retryOptions
+                };
+
+                var consumer = client.CreateConsumer(consumerGroup, partitionId, eventPosition, consumerOptions, defaultRetry);
+                Assert.That(consumer.RetryPolicy, Is.InstanceOf<BasicRetryPolicy>(), "The consumer should have been created using the options.");
+
+                var consumerRetry = (BasicRetryPolicy)consumer.RetryPolicy;
+                Assert.That(consumerRetry.Options.Delay, Is.EqualTo(retryOptions.Delay), "The delays should match.");
+                Assert.That(consumerRetry.Options.MaximumDelay, Is.EqualTo(retryOptions.MaximumDelay), "The maximum delays should match.");
+                Assert.That(consumerRetry.Options.MaximumRetries, Is.EqualTo(retryOptions.MaximumRetries), "The maximum retries should match.");
+                Assert.That(consumerRetry.Options.TryTimeout, Is.EqualTo(retryOptions.TryTimeout), "The per-try timeouts should match.");
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateConsumer" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateConsumerUsesDefaultRetryPolicyWhenNoOptionsAreProvided()
+        {
+            var options = new EventHubClientOptions();
+            var host = "http://my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var defaultRetry = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetry, (host, path, credential, options, retry) => mock);
+
+            try
+            {
+                var partitionId = "32234";
+                var consumerGroup = "AGroup";
+                var eventPosition = EventPosition.FromOffset(34);
+                var consumerOptions = new EventHubConsumerOptions
+                {
+                    Identifier = "Test",
+                    RetryOptions = null
+                };
+
+                var consumer = client.CreateConsumer(consumerGroup, partitionId, eventPosition, consumerOptions, defaultRetry);
+                Assert.That(consumer.RetryPolicy, Is.SameAs(defaultRetry));
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.UpdateRetryPolicy" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void RetryPolicyIsUpdatedWhenTheClientIsNotCreated()
+        {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
+            var host = "http://my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var options = new EventHubClientOptions();
+            var defaultRetryPolicy = new BasicRetryPolicy(retryOptions);
+            var newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetryPolicy, (host, path, credential, options, retry) => mock);
+
+            client.UpdateRetryPolicy(newRetryPolicy);
+
+            var activePolicy = GetRetryPolicy(client);
+            Assert.That(activePolicy, Is.SameAs(newRetryPolicy));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.UpdateRetryPolicy" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task RetryPolicyIsUpdatedWhenTheClientCreated()
+        {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
+            var host = "http://my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var options = new EventHubClientOptions();
+            var defaultRetryPolicy = new BasicRetryPolicy(retryOptions);
+            var newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetryPolicy, (host, path, credential, options, retry) => mock);
+
+            try
+            {
+                await client.GetPropertiesAsync(default);
+
+                client.UpdateRetryPolicy(newRetryPolicy);
+
+                var activePolicy = GetRetryPolicy(client);
+
+                Assert.That(activePolicy, Is.SameAs(newRetryPolicy), "The client's retry policy should be updated.");
+                Assert.That(mock.RetryPolicy, Is.TypeOf<TrackOneRetryPolicy>(), "The track one client retry policy should be a custom compatibility wrapper.");
+
+                var trackOnePolicy = GetSourcePolicy((TrackOneRetryPolicy)mock.RetryPolicy);
+                Assert.That(trackOnePolicy, Is.SameAs(newRetryPolicy), "The new retry policy should have been used as the source for the compatibility wrapper.");
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.UpdateRetryPolicy" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OperationTimeoutIsUpdatedWhenTheClientCreated()
+        {
+            var retryOptions = new RetryOptions
+            {
+                TryTimeout = TimeSpan.FromMinutes(18)
+            };
+
+            var host = "http://my.eventhub.com";
+            var eventHubName = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubName }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var options = new EventHubClientOptions();
+            var defaultRetryPolicy = new BasicRetryPolicy(new RetryOptions());
+            var newRetryPolicy = new BasicRetryPolicy(retryOptions);
+            var mock = new ObservableClientMock(host, eventHubName, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetryPolicy, (host, path, credential, options, retry) => mock);
+
+            try
+            {
+                await client.GetPropertiesAsync(default);
+                client.UpdateRetryPolicy(newRetryPolicy);
+
+                var innerClient = GetTrackOneClient(client);
+                Assert.That(innerClient.ConnectionStringBuilder.OperationTimeout, Is.EqualTo(newRetryPolicy.CalculateTryTimeout(0)));
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Gets the retry policy from a <see cref="TrackOneEventHubClient" />
+        ///   by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="client">The client to retrieve the retry policy from.</param>
+        ///
+        /// <returns>The retry policy</returns>
+        ///
+        private static EventHubRetryPolicy GetRetryPolicy(TrackOneEventHubClient client) =>
+            (EventHubRetryPolicy)
+                typeof(TrackOneEventHubClient)
+                    .GetField("_retryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(client);
+
+        /// <summary>
+        ///   Gets the retry policy used as the source of a <see cref="TrackOneRetryPolicy" />
+        ///   by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="policy">The policy to retrieve the source policy from.</param>
+        ///
+        /// <returns>The retry policy</returns>
+        ///
+        private static EventHubRetryPolicy GetSourcePolicy(TrackOneRetryPolicy policy) =>
+            (EventHubRetryPolicy)
+                typeof(TrackOneRetryPolicy)
+                    .GetField("_sourcePolicy", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(policy);
+
+        /// <summary>
+        ///   Gets the track one Event Hub client used by a <see cref="TrackOneEventHubClient" />
+        ///   by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="client">The client to retrieve the inner track one client from.</param>
+        ///
+        /// <returns>The track one client</returns>
+        ///
+        private static TrackOne.EventHubClient GetTrackOneClient(TrackOneEventHubClient client) =>
+            (TrackOne.EventHubClient)
+                typeof(TrackOneEventHubClient)
+                    .GetProperty("TrackOneClient", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(client);
+
+        /// <summary>
         ///   Allows for observation of operations performed by the client for testing purposes.
         /// </summary>
         ///
@@ -505,13 +987,13 @@ namespace Azure.Messaging.EventHubs.Tests
             public bool WasGetRuntimeInvoked;
             public string GetPartitionRuntimePartitionInvokedWith;
             public string CreateProducerInvokedWith;
-            public (string ConsumerGroup, string Partition, TrackOne.EventPosition startingPosition, long? priority, TrackOne.ReceiverOptions Options) CreateReiverInvokedWith;
+            public (string ConsumerGroup, string Partition, TrackOne.EventPosition StartingPosition, long? Priority, TrackOne.ReceiverOptions Options) CreateReceiverInvokedWith;
 
 
             public ObservableClientMock(string host,
                                         string path,
                                         TokenCredential credential,
-                                        EventHubClientOptions options) : base(new TrackOne.EventHubsConnectionStringBuilder(new Uri(host), path, "keyName", "KEY!"))
+                                        EventHubClientOptions options) : base(new TrackOne.EventHubsConnectionStringBuilder(new Uri(host), path, "keyName", "KEY!", options.RetryOptions.TryTimeout))
             {
             }
 
@@ -523,7 +1005,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             protected override PartitionReceiver OnCreateReceiver(string consumerGroupName, string partitionId, TrackOne.EventPosition eventPosition, long? epoch, TrackOne.ReceiverOptions consumerOptions)
             {
-                CreateReiverInvokedWith =
+                CreateReceiverInvokedWith =
                 (
                    consumerGroupName,
                    partitionId,

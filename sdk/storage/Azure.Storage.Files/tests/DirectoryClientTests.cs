@@ -253,6 +253,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListHandles()
         {
             // Arrange

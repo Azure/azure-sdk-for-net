@@ -117,5 +117,20 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => _storage.GetOutputAsync(JobOutputKind.JobOutput, ""));
             Assert.Equal("filePath", ex.ParamName);
         }
+
+        [Fact]
+        public void GetJobOutputStoragePathReturnsExpectedValue()
+        {
+            var jobStorage = new JobOutputStorage(new Uri("http://example.test/"));
+
+            var taskLogPath = jobStorage.GetOutputStoragePath(JobOutputKind.JobOutput);
+            Assert.Equal($"${JobOutputKind.JobOutput.ToString()}/", taskLogPath);
+
+            taskLogPath = jobStorage.GetOutputStoragePath(JobOutputKind.JobPreview);
+            Assert.Equal($"${JobOutputKind.JobPreview.ToString()}/", taskLogPath);
+
+            taskLogPath = jobStorage.GetOutputStoragePath(JobOutputKind.Custom("foo"));
+            Assert.Equal($"${JobOutputKind.Custom("foo").ToString()}/", taskLogPath);
+        }
     }
 }

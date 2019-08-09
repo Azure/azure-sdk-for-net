@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-certificates.</param>
         /// <param name="select">An OData $select clause.</param>
         /// <param name="maxResults">The maximum number of items to return in
-        /// the response. A maximum of 1000 certificates can be
+        /// the response. A maximum of 1000 Certificates can be
         /// returned.</param>
         /// <param name="timeout">The maximum time that the server can spend
         /// processing the request, in seconds. The default is 30
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the maximum number of items to return in the response.
-        /// A maximum of 1000 certificates can be returned.
+        /// A maximum of 1000 Certificates can be returned.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public int? MaxResults { get; set; }

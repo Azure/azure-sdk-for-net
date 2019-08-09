@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{A4
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		ci.yml = ci.yml
+		CONTRIBUTING.md = CONTRIBUTING.md
 		Directory.Build.props = Directory.Build.props
 		generate.ps1 = generate.ps1
 		README.md = README.md

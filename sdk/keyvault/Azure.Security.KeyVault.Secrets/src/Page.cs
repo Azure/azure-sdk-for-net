@@ -11,14 +11,14 @@ namespace Azure.Security.KeyVault.Secrets
     /// Defines a page in Azure responses.
     /// </summary>
     /// <typeparam name="T">Type of the page content items</typeparam>
-    public class Page<T> : Model
+    internal class KeyVaultPage<T> : Model
         where T : Model
     {
         private T[] _items;
         private Uri _nextLink;
         private Func<T> _itemFactory;
 
-        internal Page(Func<T> itemFactory)
+        internal KeyVaultPage(Func<T> itemFactory)
         {
             _itemFactory = itemFactory;
         }
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (json.TryGetProperty("value", out JsonElement value))
             {
-                if(value.Type != JsonValueType.Null)
+                if(value.ValueKind != JsonValueKind.Null)
                 {
                     _items = new T[value.GetArrayLength()];
 
@@ -52,7 +52,6 @@ namespace Azure.Security.KeyVault.Secrets
                         i++;
                     }
                 }
-               
             }
 
             if (json.TryGetProperty("nextLink", out JsonElement nextLink))
@@ -68,7 +67,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         internal override void WriteProperties(ref Utf8JsonWriter json)
         {
-            // serialization is not needed this type is only in responses 
+            // serialization is not needed this type is only in responses
             throw new NotImplementedException();
         }
     }

@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Batch
         /// any tasks on the compute node.
         /// </summary>
         /// <remarks>
-        /// If this is not specified, the default is false.
+        /// If this is not specified, the default is true.
         /// </remarks>
         public bool? WaitForSuccess
         {

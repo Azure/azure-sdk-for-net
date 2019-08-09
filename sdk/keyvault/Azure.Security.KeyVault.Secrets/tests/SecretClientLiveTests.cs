@@ -22,6 +22,19 @@ namespace Azure.Security.KeyVault.Test
         {
         }
 
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if(this.Mode == RecordedTestMode.Record || this.Mode == RecordedTestMode.Playback)
+            {
+                this.Client = this.GetClient();
+
+                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+            }
+        }
+
         [Test]
         public async Task SetSecret()
         {
@@ -136,7 +149,7 @@ namespace Azure.Security.KeyVault.Test
 
             SecretBase setSecret = await Client.SetAsync(secretName, "value");
             RegisterForCleanup(setSecret);
-            
+
             Secret secret = await Client.GetAsync(secretName);
 
             AssertSecretsEqual(setSecret, secret);
@@ -161,7 +174,7 @@ namespace Azure.Security.KeyVault.Test
         public async Task GetSecretVersionsNonExisting()
         {
             List<Response<SecretBase>> allSecrets = await Client.GetSecretVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-            
+
             Assert.AreEqual(0, allSecrets.Count);
         }
 

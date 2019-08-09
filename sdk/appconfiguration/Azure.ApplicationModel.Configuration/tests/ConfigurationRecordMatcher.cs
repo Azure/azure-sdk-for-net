@@ -20,7 +20,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         public ConfigurationRecordMatcher(RecordedTestSanitizer sanitizer) : base(sanitizer)
         {
-            ExcludeResponseHeaders.Add("Sync-Token");
+            VolatileResponseHeaders.Add("Sync-Token");
         }
 
         protected override bool IsBodyEquivalent(RecordEntry record, RecordEntry otherRecord)
