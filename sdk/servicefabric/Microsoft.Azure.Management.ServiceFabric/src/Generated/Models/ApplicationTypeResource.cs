@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="id">Azure resource identifier.</param>
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
-        /// <param name="location">Azure resource location.</param>
+        /// <param name="location">It will be deprecated in New API, resource
+        /// location depends on the parent resource.</param>
         /// <param name="tags">Azure resource tags.</param>
         /// <param name="etag">Azure resource etag.</param>
         /// <param name="provisioningState">The current deployment or

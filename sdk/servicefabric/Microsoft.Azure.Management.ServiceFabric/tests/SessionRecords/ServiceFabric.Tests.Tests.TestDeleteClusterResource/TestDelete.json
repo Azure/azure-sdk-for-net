@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "52c1c5f5-e3da-456b-9fb8-55029ff9e872"
+          "fa19f543-ad8e-43c2-9f36-0301f71a7d1f"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 05 Jun 2019 01:06:56 GMT"
+          "Wed, 07 Aug 2019 19:46:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,13 +39,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "b8b7f665-3cc8-429e-b5cc-64c7f853555e"
+          "c31de77c-0ad2-4676-b3bb-3b5a48ab63a9"
         ],
         "x-ms-correlation-request-id": [
-          "b8b7f665-3cc8-429e-b5cc-64c7f853555e"
+          "c31de77c-0ad2-4676-b3bb-3b5a48ab63a9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20190605T010656Z:b8b7f665-3cc8-429e-b5cc-64c7f853555e"
+          "WESTUS:20190807T194640Z:c31de77c-0ad2-4676-b3bb-3b5a48ab63a9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -67,13 +67,13 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"durabilityLevel\": \"Bronze\",\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1000,\r\n          \"endPort\": 3000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 4000,\r\n          \"endPort\": 6000\r\n        },\r\n        \"isPrimary\": true,\r\n        \"vmInstanceCount\": 5\r\n      }\r\n    ],\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"vmImage\": \"Windows\"\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2c056128-6a8e-4dbc-bc43-96bc6c9eeff2"
+          "470a88df-6afe-4d35-a2de-a3aa2a0e7234"
         ],
         "accept-language": [
           "en-US"
@@ -96,7 +96,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 05 Jun 2019 01:06:57 GMT"
+          "Wed, 07 Aug 2019 19:46:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -114,13 +114,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "3ed9be91-74d0-484d-ad0d-1ee4403375e8"
+          "8ade42ca-5d27-4096-a52c-22dc10459d6c"
         ],
         "x-ms-correlation-request-id": [
-          "3ed9be91-74d0-484d-ad0d-1ee4403375e8"
+          "8ade42ca-5d27-4096-a52c-22dc10459d6c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20190605T010658Z:3ed9be91-74d0-484d-ad0d-1ee4403375e8"
+          "WESTUS:20190807T194642Z:8ade42ca-5d27-4096-a52c-22dc10459d6c"
         ],
         "Content-Length": [
           "1638"
@@ -132,17 +132,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636952936178970420\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"7f2a87f2-0067-4468-9d11-5bdf71d70648\",\r\n    \"clusterCodeVersion\": \"6.4.664.9590\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/7f2a87f2-0067-4468-9d11-5bdf71d70648\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1000,\r\n          \"endPort\": 3000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 4000,\r\n          \"endPort\": 6000\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.4.664.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"637008040019610629\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"db594269-73f7-4dec-bcc9-b7df6bf6b926\",\r\n    \"clusterCodeVersion\": \"6.5.658.9590\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/db594269-73f7-4dec-bcc9-b7df6bf6b926\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1000,\r\n          \"endPort\": 3000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 4000,\r\n          \"endPort\": 6000\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.5.658.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "eda648fc-6c77-4421-85a3-784274e1ff98"
+          "be4fa30b-4401-4dd2-a1da-9913820a2017"
         ],
         "accept-language": [
           "en-US"
@@ -159,7 +159,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 05 Jun 2019 01:06:57 GMT"
+          "Wed, 07 Aug 2019 19:46:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -177,13 +177,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "624f9e2d-3def-4477-83a9-dc7bd3b3d8d8"
+          "9cbfba84-d1bb-4f8b-a46a-231bca609f5a"
         ],
         "x-ms-correlation-request-id": [
-          "624f9e2d-3def-4477-83a9-dc7bd3b3d8d8"
+          "9cbfba84-d1bb-4f8b-a46a-231bca609f5a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20190605T010658Z:624f9e2d-3def-4477-83a9-dc7bd3b3d8d8"
+          "WESTUS:20190807T194642Z:9cbfba84-d1bb-4f8b-a46a-231bca609f5a"
         ],
         "Content-Length": [
           "1638"
@@ -195,17 +195,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636952936178970420\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"7f2a87f2-0067-4468-9d11-5bdf71d70648\",\r\n    \"clusterCodeVersion\": \"6.4.664.9590\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/7f2a87f2-0067-4468-9d11-5bdf71d70648\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1000,\r\n          \"endPort\": 3000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 4000,\r\n          \"endPort\": 6000\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.4.664.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"637008040019610629\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"db594269-73f7-4dec-bcc9-b7df6bf6b926\",\r\n    \"clusterCodeVersion\": \"6.5.658.9590\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/db594269-73f7-4dec-bcc9-b7df6bf6b926\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1000,\r\n          \"endPort\": 3000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 4000,\r\n          \"endPort\": 6000\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.5.658.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d87e5460-7440-4812-8a48-08d9d62b46b7"
+          "9f01716d-ad37-4ced-b417-88166a49e973"
         ],
         "accept-language": [
           "en-US"
@@ -222,7 +222,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 05 Jun 2019 01:06:57 GMT"
+          "Wed, 07 Aug 2019 19:46:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -240,13 +240,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "9f303a70-0cf4-460b-b360-0c6b3ceece5d"
+          "3e3309c4-cf97-4b93-8fe5-8b6d50b1c531"
         ],
         "x-ms-correlation-request-id": [
-          "9f303a70-0cf4-460b-b360-0c6b3ceece5d"
+          "3e3309c4-cf97-4b93-8fe5-8b6d50b1c531"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20190605T010658Z:9f303a70-0cf4-460b-b360-0c6b3ceece5d"
+          "WESTUS:20190807T194642Z:3e3309c4-cf97-4b93-8fe5-8b6d50b1c531"
         ],
         "Content-Length": [
           "1638"
@@ -258,17 +258,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636952936178970420\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"7f2a87f2-0067-4468-9d11-5bdf71d70648\",\r\n    \"clusterCodeVersion\": \"6.4.664.9590\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/7f2a87f2-0067-4468-9d11-5bdf71d70648\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1000,\r\n          \"endPort\": 3000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 4000,\r\n          \"endPort\": 6000\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.4.664.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster\",\r\n  \"name\": \"testDeleteCluster\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"637008040019610629\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"db594269-73f7-4dec-bcc9-b7df6bf6b926\",\r\n    \"clusterCodeVersion\": \"6.5.658.9590\",\r\n    \"clusterState\": \"WaitingForNodes\",\r\n    \"managementEndpoint\": \"http://testCluster.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/db594269-73f7-4dec-bcc9-b7df6bf6b926\",\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [],\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"n1\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 1000,\r\n          \"endPort\": 3000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 4000,\r\n          \"endPort\": 6000\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.5.658.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b3d607e6-8868-4da9-8206-2af8907bb22a"
+          "2a215280-e093-49f7-8e2c-659fd114e71c"
         ],
         "accept-language": [
           "en-US"
@@ -285,7 +285,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 05 Jun 2019 01:06:58 GMT"
+          "Wed, 07 Aug 2019 19:46:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -294,13 +294,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "38b3b17e-7d75-44ee-8e74-a83a153731af"
+          "c4fcd8c3-9209-4dc8-856f-dd487a5cc13f"
         ],
         "x-ms-correlation-request-id": [
-          "38b3b17e-7d75-44ee-8e74-a83a153731af"
+          "c4fcd8c3-9209-4dc8-856f-dd487a5cc13f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20190605T010659Z:38b3b17e-7d75-44ee-8e74-a83a153731af"
+          "WESTUS:20190807T194643Z:c4fcd8c3-9209-4dc8-856f-dd487a5cc13f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -322,13 +322,13 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/testDeleteCluster?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvdGVzdERlbGV0ZUNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "084391ee-5d86-47e2-a58a-a9abc6ec0188"
+          "bc0ca70d-f17a-4665-9418-5ae5331b89cd"
         ],
         "accept-language": [
           "en-US"
@@ -345,7 +345,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 05 Jun 2019 01:06:58 GMT"
+          "Wed, 07 Aug 2019 19:46:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -363,13 +363,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "fc6f0cf3-210d-4f79-afa0-4055eb25cb2f"
+          "735f278f-eae2-452f-b582-51e8bf84a6e2"
         ],
         "x-ms-correlation-request-id": [
-          "fc6f0cf3-210d-4f79-afa0-4055eb25cb2f"
+          "735f278f-eae2-452f-b582-51e8bf84a6e2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20190605T010659Z:fc6f0cf3-210d-4f79-afa0-4055eb25cb2f"
+          "WESTUS:20190807T194643Z:735f278f-eae2-452f-b582-51e8bf84a6e2"
         ],
         "Content-Length": [
           "0"
@@ -382,13 +382,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/donotexistcluster?api-version=2019-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvZG9ub3RleGlzdGNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg/providers/Microsoft.ServiceFabric/clusters/donotexistcluster?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL3Rlc3REZWxldGVyZy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMvY2x1c3RlcnMvZG9ub3RleGlzdGNsdXN0ZXI/YXBpLXZlcnNpb249MjAxOS0wMy0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4be4037f-e29f-4b95-95be-3afeaa4740e7"
+          "49203e12-9037-4d26-be70-a014a8c2fdf8"
         ],
         "accept-language": [
           "en-US"
@@ -405,7 +405,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 05 Jun 2019 01:06:58 GMT"
+          "Wed, 07 Aug 2019 19:46:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -414,13 +414,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "ab92a107-98b9-4577-8cce-2160b8bd40c3"
+          "d0493409-9021-4bc5-b035-93b8f550c31f"
         ],
         "x-ms-correlation-request-id": [
-          "ab92a107-98b9-4577-8cce-2160b8bd40c3"
+          "d0493409-9021-4bc5-b035-93b8f550c31f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20190605T010659Z:ab92a107-98b9-4577-8cce-2160b8bd40c3"
+          "WESTUS:20190807T194643Z:d0493409-9021-4bc5-b035-93b8f550c31f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
