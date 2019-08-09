@@ -36,9 +36,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void RecognizeTextInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "RecognizeTextInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "RecognizeTextInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
@@ -64,9 +64,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void RecognizeTextTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "RecognizeTextTest");
+                HttpMockServer.Initialize(this.GetType(), "RecognizeTextTest");
 
                 string imageUrl = GetTestImageUrl("signage.jpg");
 

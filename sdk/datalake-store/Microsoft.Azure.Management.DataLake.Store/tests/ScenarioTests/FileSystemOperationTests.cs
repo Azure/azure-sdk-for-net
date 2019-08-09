@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -39,7 +39,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemValidateDefaultTimeout()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -52,7 +52,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemFolderCreate()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -68,7 +68,7 @@ namespace DataLakeStore.Tests
         public void DataLakeStoreFileSystemSetAndRemoveExpiry()
         {
             const long maxTimeInMilliseconds = 253402300800000;
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -112,7 +112,7 @@ namespace DataLakeStore.Tests
         public void DataLakeStoreFileSystemNegativeExpiry()
         {
             const long maxTimeInMilliseconds = 253402300800000;
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -143,7 +143,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemListFolderContents()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -170,7 +170,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemGetNonExistentFile()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -191,7 +191,7 @@ namespace DataLakeStore.Tests
         [Fact(Skip = "skipping this out until we have a good test for validating access denied within the same tenant")] 
         public void DataLakeStoreFileSystemTestAccessDenied()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -212,7 +212,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemEmptyFileCreate()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -227,7 +227,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemTestFile()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -243,7 +243,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemFileAlreadyExists()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -268,7 +268,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemFileCreateWithContents()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -286,7 +286,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemGetContentSummaryForFileAndFolder()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -332,7 +332,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemAppendToFile()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -354,7 +354,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemAppendToFileWithOffset()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -376,7 +376,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemAppendToFileWithBadOffset()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -403,7 +403,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemConcurrentAppendToFile()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -428,7 +428,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemNegativeConcurrentAppend()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -463,7 +463,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemConcurrentAppendCreateFile()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -486,7 +486,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemConcatenateFiles()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -528,7 +528,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemMsConcatenateFiles()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -570,7 +570,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemMsConcatDeleteDir()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -623,7 +623,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemMoveFileAndFolder()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -684,7 +684,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemDeleteFolder()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -719,7 +719,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemDeleteFile()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -739,7 +739,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemGetAndSetAcl()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -813,7 +813,7 @@ namespace DataLakeStore.Tests
         public void DataLakeStoreFileSystemSetFileProperties()
         {
             // This test simply tests that all bool/empty return actions return successfully
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (
@@ -877,7 +877,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemGetAcl()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -896,7 +896,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemSetAcl()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -934,7 +934,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreFileSystemSetDeleteAclEntry()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -993,7 +993,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void DataLakeStoreDownloadUploadFileAndFolder()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
@@ -1228,3 +1228,4 @@ namespace DataLakeStore.Tests
         #endregion
     }
 }
+

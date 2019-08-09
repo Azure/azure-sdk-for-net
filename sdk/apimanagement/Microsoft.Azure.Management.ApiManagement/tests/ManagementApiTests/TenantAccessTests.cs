@@ -18,14 +18,14 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task EnableGetAndUpdateKeys()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
 
                 // get settings
                 var getResponse = testBase.client.TenantAccess.Get(
-                    testBase.rgName, 
+                    testBase.rgName,
                     testBase.serviceName);
 
                 Assert.NotNull(getResponse);

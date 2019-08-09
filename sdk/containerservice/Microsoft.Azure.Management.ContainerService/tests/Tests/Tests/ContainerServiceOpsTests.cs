@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         [Fact]
         public async Task ContainerServiceListOrchestratorsTest()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         [Fact]
         public async Task ContainerServiceCreateManagedServiceTest()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         [Fact]
         public async Task ContainerServiceUpdateServiceTest()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         [Fact]
         public async Task ContainerServiceDeleteServiceTest()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         [Fact]
         public async Task ContainerListClusterAdminCredentialsTest()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         [Fact]
         public async Task ContainerServiceGetCredentialsTest()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 

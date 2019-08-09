@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) Microsoft.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
         [Fact]
         public void RetrieveVaultUsages()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (RecoveryServicesTestBase _testFixture = new RecoveryServicesTestBase(context))
                 {
@@ -61,3 +61,4 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
         }
     }
 }
+

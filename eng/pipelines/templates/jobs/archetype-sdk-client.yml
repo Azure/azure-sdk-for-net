@@ -5,6 +5,8 @@ jobs:
     pool:
       vmImage: vs2017-win2016
     steps:
+      - checkout: self
+        path: AzureSDKEngSystem/Net/SourceDirectory
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
@@ -34,6 +36,8 @@ jobs:
     pool:
       vmImage: "vs2017-win2016"
     steps:
+      - checkout: self
+        path: AzureSDKEngSystem/Net/SourceDirectory
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
         inputs:
@@ -56,6 +60,15 @@ jobs:
           filePath: "tools/AnalyzeDeps/AnalyzeDeps.ps1"
           arguments: '-PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" -OutPath "$(Build.ArtifactStagingDirectory)/dependencies.html"'
           pwsh: true
+      - pwsh: |
+          $ServiceDir = If ( '${{parameters.ServiceDirectory}}' -eq '*') {'sdk'} Else { '${{parameters.ServiceDirectory}}' }
+          Write-Output "Analyzing Path Lengths..."; $LongestPath = ''; $LongestPathLength = 0
+          Get-ChildItem -Path "$(Build.SourcesDirectory)/$($ServiceDir)" -Recurse -File | ForEach-Object {
+          if ($_.FullName.Length -gt $LongestPathLength) { $LongestPathLength = $_.FullName.Length; $LongestPath = $_.FullName 
+          if ($LongestPathLength -gt 260) { Write-Output "$($LongestPath) : is greater than 260 Character. Reduce path length"; exit 1 }}}
+          Write-Output "The Longest path : $($LongestPath) is $($LongestPathLength) characters long"
+        workingDirectory: $(Build.SourcesDirectory)
+        displayName: Analyze Path Lengths
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
@@ -94,6 +107,8 @@ jobs:
     pool:
       vmImage: "$(OSVmImage)"
     steps:
+      - checkout: self
+        path: AzureSDKEngSystem/Net/SourceDirectory
       - pwsh: |
           Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
           -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"

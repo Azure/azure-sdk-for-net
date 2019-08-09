@@ -20,7 +20,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
         [Fact]
         public void PublishEventsToTopic()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.InitializeClients(context);
 
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
         [Fact]
         public void PublishEventsToDomain()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.InitializeClients(context);
 

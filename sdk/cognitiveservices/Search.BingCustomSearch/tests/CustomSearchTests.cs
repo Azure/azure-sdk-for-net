@@ -15,9 +15,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void CustomSearch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "CustomSearch");
+                HttpMockServer.Initialize(this.GetType(), "CustomSearch");
                 
                 ICustomSearchClient client = new CustomSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
                 var resp = client.CustomInstance.SearchAsync(query: "tom cruise", customConfig: "0").Result;

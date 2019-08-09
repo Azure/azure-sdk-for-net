@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Rest.Azure;
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         [Fact]
         public void ListOperations()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var backupClient = context.GetServiceClient<RecoveryServicesBackupClient>();
                 IPage<ClientDiscoveryValueForSingleApi> operations = backupClient.Operations.List();
@@ -28,3 +28,4 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         }
     }
 }
+
