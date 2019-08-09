@@ -123,8 +123,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id, verifyResult.KeyId);
             Assert.AreEqual(key.Id, verifyDataResult.KeyId);
 
-            Assert.True(verifyResult.Valid);
-            Assert.True(verifyResult.Valid);
+            Assert.True(verifyResult.IsValid);
+            Assert.True(verifyResult.IsValid);
 
             RegisterForCleanup(key);
         }
@@ -169,8 +169,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id, verifyResult.KeyId);
             Assert.AreEqual(key.Id, verifyDataResult.KeyId);
 
-            Assert.True(verifyResult.Valid);
-            Assert.True(verifyResult.Valid);
+            Assert.True(verifyResult.IsValid);
+            Assert.True(verifyResult.IsValid);
 
             RegisterForCleanup(key);
         }

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -19,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string AuthenticationTagPropertyName = "tag";
 
         /// <summary>
-        /// The KeyId of the key used to encrypt
+        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to encrypt. This must be stored alongside the <see cref="Ciphertext"/> as the same key must be used to decrypt it.
         /// </summary>
         public string KeyId { get; internal set; }
 
@@ -29,22 +28,25 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public byte[] Ciphertext { get; internal set; }
 
         /// <summary>
-        /// The initialization vector
+        /// The initialization vector. If none was specified to encrypt the value will be null. If the value is non-null this must
+        /// be stored alongside the <see cref="Ciphertext"/> as this information is needed to decrypt it.
         /// </summary>
         public byte[] Iv { get; internal set; }
 
         /// <summary>
-        /// The authentication data
+        /// The authentication data. If none was specified to encrypt the value will be null. If the value is non-null this must
+        /// be stored alongside the <see cref="Ciphertext"/> as this information is needed to decrypt it.
         /// </summary>
         public byte[] AuthenticationData { get; internal set; }
 
         /// <summary>
-        /// The authentication tag
+        /// The authentication tag. If the algorithm used was not an authenticated encryption algorithm the value will be null. If the value is non-null this must
+        /// be stored alongside the <see cref="Ciphertext"/> as this information is needed to decrypt it.
         /// </summary>
         public byte[] AuthenticationTag { get; internal set; }
 
         /// <summary>
-        /// The algorithm used for encryption
+        /// The algorithm used for encryption. This must be stored alongside the <see cref="Ciphertext"/> as the same algorithm must be used to decrypt it.
         /// </summary>
         public EncryptionAlgorithm Algorithm { get; internal set; }
 

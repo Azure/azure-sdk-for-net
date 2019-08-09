@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -16,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string SignaturePropertyName = "value";
 
         /// <summary>
-        /// The key id of the key used to sign
+        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to sign. This must be stored alongside the <see cref="Signature"/> as the same key must be used to verify it.
         /// </summary>
         public string KeyId { get; private set; }
 
@@ -26,7 +25,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public byte[] Signature { get; private set; }
 
         /// <summary>
-        /// The algorithm used to sign
+        /// The algorithm used to sign. This must be stored alongside the <see cref="Signature"/> as the same algorithm must be used to verify it.
         /// </summary>
         public SignatureAlgorithm Algorithm { get; internal set; }
 

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -16,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string KeyPropertyName = "value";
 
         /// <summary>
-        /// The key id of the key used to unwrap
+        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to uwrap
         /// </summary>
         public string KeyId { get; private set; }
 
