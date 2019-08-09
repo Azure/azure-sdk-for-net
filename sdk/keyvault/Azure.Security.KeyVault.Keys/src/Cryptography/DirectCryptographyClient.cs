@@ -19,8 +19,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     internal class RemoteCryptographyClient : ICryptographyProvider
     {
-        private Uri _keyId;
-        private HttpPipeline _pipeline;
+        private readonly Uri _keyId;
+        private readonly HttpPipeline _pipeline;
         private readonly string ApiVersion;
 
         private const string EncryptOperation = "encrypt";

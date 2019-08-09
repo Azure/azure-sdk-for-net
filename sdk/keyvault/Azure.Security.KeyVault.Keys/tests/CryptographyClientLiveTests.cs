@@ -136,7 +136,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             var cryptoClient = GetCryptoClient(key.Id);
 
-            using FileStream fileData = File.OpenRead(@"TestData\data.bin");
+            using FileStream fileData = File.OpenRead("TestData/data.bin");
 
             using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
 

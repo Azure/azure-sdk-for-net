@@ -21,9 +21,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public class CryptographyClient
     {
-        private Uri _keyId;
-        private ICryptographyProvider _cryptoProvider;
-        private HttpPipeline _pipeline;
+        private readonly Uri _keyId;
+        private readonly ICryptographyProvider _cryptoProvider;
+        private readonly HttpPipeline _pipeline;
 
         /// <summary>
         /// Protected cosntructor for mocking
