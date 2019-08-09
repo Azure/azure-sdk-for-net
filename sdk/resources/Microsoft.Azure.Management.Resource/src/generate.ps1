@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -AutoRestVersion "latest" -AutoRestCodeGenerationFlags "--tag=package-resources-2019-05" -SdkGenerationDirectory "$PSScriptRoot\Generated"
+Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -AutoRestVersion "latest" -AutoRestCodeGenerationFlags "--tag=package-resources-2019-07" -SdkGenerationDirectory "$PSScriptRoot\Generated" -SpecsRepoFork "Tiano2017" -SpecsRepoBranch "tiano-headapi"

@@ -19,18 +19,29 @@ namespace Microsoft.Azure.Management.ResourceManager
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Management", "DeploymentOperations", "2019-05-10"),
-                new Tuple<string, string, string>("Management", "Deployments", "2019-05-10"),
-                new Tuple<string, string, string>("ResourceManagementClient", "DeploymentOperations", "2019-05-10"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Providers", "2019-05-10"),
-                new Tuple<string, string, string>("ResourceManagementClient", "ResourceGroups", "2019-05-10"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Resources", "2019-05-10"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Tags", "2019-05-10"),
-                new Tuple<string, string, string>("Resources", "DeploymentOperations", "2019-05-10"),
-                new Tuple<string, string, string>("Resources", "Deployments", "2019-05-10"),
-                new Tuple<string, string, string>("Resources", "Operations", "2019-05-10"),
+                new Tuple<string, string, string>("Management", "DeploymentOperations", "2019-07-01"),
+                new Tuple<string, string, string>("Management", "Deployments", "2019-07-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "DeploymentOperations", "2019-07-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Providers", "2019-07-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "ResourceGroups", "2019-07-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Resources", "2019-07-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Tags", "2019-07-01"),
+                new Tuple<string, string, string>("Resources", "DeploymentOperations", "2019-07-01"),
+                new Tuple<string, string, string>("Resources", "Deployments", "2019-07-01"),
+                new Tuple<string, string, string>("Resources", "Operations", "2019-07-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Tiano2017/azure-rest-api-specs/blob/tiano-headapi/specification/resources/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-resources-2019-07 --csharp.output-folder=C:\\Users\\yeliu\\isra-fel\\azure-sdk-for-net\\sdk\\resources\\Microsoft.Azure.Management.Resource\\src\\Generated";
+      public static readonly String GithubForkName = "Tiano2017";
+      public static readonly String GithubBranchName = "tiano-headapi";
+      public static readonly String GithubCommidId = "6a776881f4b88fce43ab2de7471e9b9659916ac9";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

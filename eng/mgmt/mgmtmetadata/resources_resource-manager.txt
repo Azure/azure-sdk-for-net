@@ -1,0 +1,14 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Tiano2017/azure-rest-api-specs/blob/tiano-headapi/specification/resources/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-resources-2019-07 --csharp.output-folder=C:\Users\yeliu\isra-fel\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\Generated
+2019-08-09 05:40:59 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Tiano2017
+Branch:      tiano-headapi
+Commit:      6a776881f4b88fce43ab2de7471e9b9659916ac9
+AutoRest information
+Requested version: latest
+Bootstrapper version:    autorest@2.0.4283
