@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id, decResult.KeyId);
             Assert.IsNotNull(decResult.Plaintext);
 
-            AssertArraysEqual(data, decResult.Plaintext);
+            CollectionAssert.AreEqual(data, decResult.Plaintext);
 
             RegisterForCleanup(key);
         }
@@ -81,7 +81,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id, decResult.KeyId);
             Assert.IsNotNull(decResult.Key);
 
-            AssertArraysEqual(data, decResult.Key);
+            CollectionAssert.AreEqual(data, decResult.Key);
 
             RegisterForCleanup(key);
         }
@@ -136,17 +136,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             var cryptoClient = GetCryptoClient(key.Id);
 
-            using FileStream fileData = File.OpenRead("TestData/data.bin");
+            var data = new byte[8000];
+            Recording.Random.NextBytes(data);
+
+            using MemoryStream dataStream = new MemoryStream(data);
 
             using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
 
-            byte[] digest = hashAlgo.ComputeHash(fileData);
+            byte[] digest = hashAlgo.ComputeHash(dataStream);
 
-            fileData.Seek(0, SeekOrigin.Begin);
+            dataStream.Seek(0, SeekOrigin.Begin);
 
             SignResult signResult = await cryptoClient.SignAsync(algorithm, digest);
 
-            SignResult signDataResult = await cryptoClient.SignDataAsync(algorithm, fileData);
+            SignResult signDataResult = await cryptoClient.SignDataAsync(algorithm, dataStream);
 
             Assert.AreEqual(algorithm, signResult.Algorithm);
             Assert.AreEqual(algorithm, signDataResult.Algorithm);
@@ -157,11 +160,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.NotNull(signResult.Signature);
             Assert.NotNull(signDataResult.Signature);
 
-            fileData.Seek(0, SeekOrigin.Begin);
+            dataStream.Seek(0, SeekOrigin.Begin);
 
             VerifyResult verifyResult = await cryptoClient.VerifyAsync(algorithm, digest, signDataResult.Signature);
 
-            VerifyResult verifyDataResult = await cryptoClient.VerifyDataAsync(algorithm, fileData, signResult.Signature);
+            VerifyResult verifyDataResult = await cryptoClient.VerifyDataAsync(algorithm, dataStream, signResult.Signature);
 
             Assert.AreEqual(algorithm, verifyResult.Algorithm);
             Assert.AreEqual(algorithm, verifyDataResult.Algorithm);
@@ -239,16 +242,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P521));
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
-            }
-        }
-
-        private void AssertArraysEqual(byte[] expected, byte[] actual)
-        {
-            Assert.AreEqual(expected.Length, actual.Length);
-
-            for (int i = 0; i < expected.Length; i++)
-            {
-                Assert.AreEqual(expected[i], actual[i]);
             }
         }
     }

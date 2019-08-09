@@ -320,7 +320,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             where TResult : IJsonDeserializable
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope($"Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.{operation}");
-            scope.AddAttribute("key", _keyId.ToString());
+            scope.AddAttribute("key", _keyId);
             scope.Start();
 
             try
@@ -361,7 +361,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             where TResult : IJsonDeserializable
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope($"Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.{operation}");
-            scope.AddAttribute("key", _keyId.ToString());
+            scope.AddAttribute("key", _keyId);
             scope.Start();
 
             try
