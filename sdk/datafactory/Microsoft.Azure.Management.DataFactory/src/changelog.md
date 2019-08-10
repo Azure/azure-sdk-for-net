@@ -1,17 +1,17 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
-- Added support for the follwoing new datasets in ADF - AvroDataset
-- AvroDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
-- Added new Copy sources - AvroSource
-- Added new Copy sinks - AvroSink
-- Added support for the following new datasets in ADF - AmazonRedshiftTableDataset, AzureMySqlSink, Db2TableDataset
-- Split tableName to schema and table in NetezzaTableDataset and PostgreSqlTableDataset.
 ###  Feature Additions
 
 ## Version 4.1.2
 ###  Feature Additions
 - Add SapBwCube and Sybase dataset
+- Added support for the follwoing new datasets in ADF - AvroDataset, along with source and sink for Copy activity
+- AvroDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
+- Added support for the following new datasets in ADF - AmazonRedshiftTableDataset, AzureMySqlSink, Db2TableDataset
+- Split tableName to schema and table in multiple datasets
+- Added new API to rerun a trigger run
+- Added new AzureDataExplorerCommand activity
 
 ## Version 4.1.1
 ###  Feature Additions
