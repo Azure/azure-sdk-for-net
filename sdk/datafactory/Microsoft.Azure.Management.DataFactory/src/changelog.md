@@ -11,7 +11,6 @@
 - Added support for the following new datasets in ADF - AmazonRedshiftTableDataset, AzureMySqlSink, Db2TableDataset
 - Split tableName to schema and table in multiple datasets
 - Added new API to rerun a trigger run
-- Added new AzureDataExplorerCommand activity
 
 ## Version 4.1.1
 ###  Feature Additions
