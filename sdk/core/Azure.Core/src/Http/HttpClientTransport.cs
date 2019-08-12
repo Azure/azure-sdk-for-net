@@ -210,18 +210,17 @@ namespace Azure.Core.Pipeline
                 currentRequest.RequestUri = UriBuilder.Uri;
 
 
-                if (Content != null && _requestContent != null)
+                if (Content != null)
                 {
                     PipelineContentAdapter currentContent;
                     if (_wasSent)
                     {
                         currentContent = new PipelineContentAdapter();
-                        CopyHeaders(_requestContent.Headers, currentContent.Headers);
+                        CopyHeaders(_requestContent!.Headers, currentContent.Headers);
                     }
                     else
                     {
-                        EnsureContentInitialized();
-                        currentContent = _requestContent;
+                        currentContent = EnsureContentInitialized();
                     }
 
                     currentContent.CancellationToken = cancellation;

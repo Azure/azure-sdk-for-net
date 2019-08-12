@@ -42,6 +42,8 @@ namespace Azure.Core.Pipeline
             set => _response = value;
         }
 
+        public bool HasResponse => _response != null;
+
         public ResponseClassifier ResponseClassifier { get; set; }
 
         public bool TryGetProperty(string name, out object? value)
