@@ -1113,7 +1113,8 @@ namespace Microsoft.Azure.Search.Tests
                     description: "A simple web api skill",
                     context: RootPathString)
             {
-                HttpMethod = "POST"
+                HttpMethod = "POST",
+                DegreeOfParallelism = 7
             };
 
             if (includeHeader)
