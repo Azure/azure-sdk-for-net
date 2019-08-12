@@ -1,11 +1,8 @@
 jobs:
   - job: SmokeTest
 
-    # TODO: Use a template
     variables:
-      DotNetCoreSDKVersion: '3.0.100-preview5-011568'
-      DotNetCoreRuntimeVersion: '2.1.10'
-      skipComponentGovernanceDetection: true
+      - template: ./templates/variables/globals.yml    
 
     steps:
       - task: DotNetCoreInstaller@2
