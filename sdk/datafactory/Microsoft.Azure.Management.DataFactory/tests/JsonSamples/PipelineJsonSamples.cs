@@ -1502,7 +1502,8 @@ namespace DataFactory.Tests.JsonSamples
                         type: ""BlobSink"",
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
-                        copyBehavior: ""FlattenHierarchy""                                                
+                        copyBehavior: ""FlattenHierarchy"",
+                        blockSizeInMB: 8
                     }
                 },
                 inputs: 
@@ -1515,6 +1516,53 @@ namespace DataFactory.Tests.JsonSamples
                 [ 
                     {
                         referenceName: ""BlobSink"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyFileSystemSourceToBlobFSSink = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    { 
+        description : ""Copy from File to BlobFS"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""FileSystemSource"",
+                        recursive: true
+                    },
+                    sink: 
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy"",
+                        blockSizeInMB: 8
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""RawFileSource"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""BlobFSSink"", type: ""DatasetReference""
                     }
                 ],
                 linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" }
