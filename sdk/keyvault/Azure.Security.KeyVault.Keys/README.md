@@ -76,7 +76,7 @@ using Azure.Security.KeyVault.Keys;
 var client = new KeyClient(vaultUri: <your-vault-url>, credential: new DefaultAzureCredential());
 
 // Create a new key using the key client
-Key key = await Client.CreateKey("key-name", KeyType.EllipticCurve);
+Key key = await Client.CreateKeyAsync("key-name", KeyType.EllipticCurve);
 ```
 > new DefaultAzureCredential():
 > Uses the environment variables previously set (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, and `AZURE_TENANT_ID`).
@@ -171,7 +171,7 @@ This example lists all the keys in the specified Key Vault.
 ```c#
 IEnumerable<Response<KeyBase>> allKeys = client.GetKeys();
 
-  foreach (Key key in allKeys)
+  foreach (KeyBase key in allKeys)
   {
     Console.WriteLine(key.Name);
   }
@@ -189,7 +189,7 @@ Console.WriteLine(key.KeyMaterial.KeyType);
 
 // Create a software RSA key
 var rsaCreateKey = new RsaKeyCreateOptions("rsa-key-name", hsm: false);
-Key rsaKey = await client.CreateRsaKeyAsync(rsarsaCreateKeyKey);
+Key rsaKey = await client.CreateRsaKeyAsync(rsaCreateKey);
 
 Console.WriteLine(rsaKey.Name);
 Console.WriteLine(rsaKey.KeyMaterial.KeyType);
