@@ -17,10 +17,11 @@ namespace SqlVirtualMachine.Tests
             using (SqlVirtualMachineTestContext context = new SqlVirtualMachineTestContext(this))
             {
                 string groupName = "test-group";
+                string agListenerName = "AGListener";
                 IAvailabilityGroupListenersOperations sqlOperations = context.getSqlClient().AvailabilityGroupListeners;
                 
                 // Create AG listener
-                AvailabilityGroupListener agListener = SqlVirtualMachineTestBase.CreateAGListener(context);
+                AvailabilityGroupListener agListener = SqlVirtualMachineTestBase.CreateAGListener(context, agListenerName, groupName);
 
                 // Recover
                 AvailabilityGroupListener agListener2 = sqlOperations.Get(context.resourceGroup.Name, groupName, agListener.Name);
@@ -37,7 +38,7 @@ namespace SqlVirtualMachine.Tests
                 }
 
                 // Delete AG listener
-                sqlOperations.Delete(context.resourceGroup.Name, groupName, "AGListener");
+                sqlOperations.Delete(context.resourceGroup.Name, groupName, agListenerName);
                 list = sqlOperations.ListByGroup(context.resourceGroup.Name, groupName);
                 Assert.False(list.GetEnumerator().MoveNext());   
             }

@@ -66,6 +66,32 @@ namespace SqlVirtualMachine.Tests
             }
         }
 
+        [Fact]
+        public void TestCreateUpdateGetSqlVirtualMachineGroup()
+        {
+            using (SqlVirtualMachineTestContext context = new SqlVirtualMachineTestContext(this))
+            {
+                // Create SQL VM group
+                ISqlVirtualMachineGroupsOperations sqlOperations = context.getSqlClient().SqlVirtualMachineGroups;
+                StorageAccount storageAccount = VirtualMachineTestBase.CreateStorageAccount(context);
+                SqlVirtualMachineGroup group = SqlVirtualMachineTestBase.CreateSqlVirtualMachineGroup(context, storageAccount, "test-group");
 
+                // Update
+                string key = "test", value = "updateTag";
+                sqlOperations.Update(context.resourceGroup.Name, group.Name, new SqlVirtualMachineGroupUpdate()
+                {
+                    Tags = new Dictionary<string, string>
+                    {
+                        { key, value }
+                    }
+                });
+
+                // Get
+                SqlVirtualMachineGroup group2 = sqlOperations.Get(context.resourceGroup.Name, group.Name);
+                SqlVirtualMachineTestBase.ValidateSqlVirtualMachineGroups(group, group2, false);
+                Assert.Equal(1, group2.Tags.Keys.Count);
+                Assert.Equal(value, group2.Tags[key]);
+            }
+        }
     }
 }

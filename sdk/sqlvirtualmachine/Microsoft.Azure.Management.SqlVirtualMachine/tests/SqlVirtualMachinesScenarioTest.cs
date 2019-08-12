@@ -42,10 +42,8 @@ namespace SqlVirtualMachine.Tests
 
                 // Update
                 string key = "test", value = "updateTag";
-                sqlOperations.CreateOrUpdate(context.resourceGroup.Name, sqlVM.Name, new SqlVirtualMachineModel
+                sqlOperations.Update(context.resourceGroup.Name, sqlVM.Name, new SqlVirtualMachineUpdate
                 {
-                    Location = sqlVM.Location,
-                    VirtualMachineResourceId = sqlVM.VirtualMachineResourceId,
                     Tags = new Dictionary<string, string>
                     {
                         { key, value }

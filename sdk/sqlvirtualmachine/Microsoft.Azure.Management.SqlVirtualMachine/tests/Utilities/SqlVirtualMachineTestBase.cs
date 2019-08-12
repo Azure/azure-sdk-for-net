@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine.Tests.Utilities
             return group;
         }
 
-        public static AvailabilityGroupListener CreateAGListener(SqlVirtualMachineTestContext context)
+        public static AvailabilityGroupListener CreateAGListener(SqlVirtualMachineTestContext context, string agListenerName, string groupName)
         {
             MockClient client = context.client;
 
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine.Tests.Utilities
                 DomainFqdn = domainName + ".com",
                 OuPath = ""
             };
-            SqlVirtualMachineGroup group = CreateSqlVirtualMachineGroup(context, storageAccount, groupName: "test-group", profile: profile);
+            SqlVirtualMachineGroup group = CreateSqlVirtualMachineGroup(context, storageAccount, groupName: groupName, profile: profile);
 
             // Create availability set
             AvailabilitySet availabilitySet = client.computeClient.AvailabilitySets.CreateOrUpdate(context.resourceGroup.Name, context.generateResourceName(), new AvailabilitySet()
@@ -249,13 +249,13 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine.Tests.Utilities
                         "https://agtemplatestorage.blob.core.windows.net/test/sqlvm9.sql",
                         "https://agtemplatestorage.blob.core.windows.net/templates/sqlvm10.sql"
                     }),
-                    CommandToExecute = "powershell -ExecutionPolicy Unrestricted -File Deploy.ps1 " + AgName + " " + vm1.Name + " " + vm2.Name + " sqllogin" + " " + adminPassword + " Domain\\sqlservice",
+                    CommandToExecute = "powershell -ExecutionPolicy Unrestricted -File Deploy.ps1 " + AgName + " " + vm1.Name + " " + vm2.Name + " " + Constants.sqlLogin + " " + adminPassword + " " + domainName + "\\" + Constants.sqlService,
                     ContentVersion = "1.0.0.0"
                 }
             });
             
             // Create availability group listener
-            return context.getSqlClient().AvailabilityGroupListeners.CreateOrUpdate(context.resourceGroup.Name, group.Name, "AGListener", new AvailabilityGroupListener()
+            return context.getSqlClient().AvailabilityGroupListeners.CreateOrUpdate(context.resourceGroup.Name, group.Name, agListenerName, new AvailabilityGroupListener()
             {
                 LoadBalancerConfigurations = new List<LoadBalancerConfiguration>(new LoadBalancerConfiguration[]
                 {
