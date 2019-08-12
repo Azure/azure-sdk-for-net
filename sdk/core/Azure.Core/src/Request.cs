@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
-#nullable enable
-
 namespace Azure.Core.Http
 {
     public abstract class Request : IDisposable
