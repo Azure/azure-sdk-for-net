@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.ComponentModel;
 
 namespace Azure
 {
-    public readonly struct Response<T> : IDisposable
+    public readonly struct Response<T> : IDisposable where T : notnull
     {
         private readonly Response _rawResponse;
 

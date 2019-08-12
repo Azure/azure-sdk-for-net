@@ -59,12 +59,12 @@ namespace Azure.Core.Pipeline
 
             private int _retryCount;
 
-            private List<Exception> _exceptions;
+            private List<Exception>? _exceptions;
 
             public RetriableStreamImpl(Response initialResponse,  Func<long, Response> responseFactory, Func<long, Task<Response>> asyncResponseFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
-                _initialStream = initialResponse.ContentStream;
-                _currentStream = initialResponse.ContentStream;
+                _initialStream = EnsureStream(initialResponse);
+                _currentStream = EnsureStream(initialResponse);
                 _responseFactory = responseFactory;
                 _responseClassifier = responseClassifier;
                 _asyncResponseFactory = asyncResponseFactory;
@@ -114,7 +114,7 @@ namespace Azure.Core.Pipeline
                     throw new AggregateException($"Retry failed after {_retryCount} tries", _exceptions);
                 }
 
-                _currentStream = async ? (await _asyncResponseFactory(_position).ConfigureAwait(false)).ContentStream : _responseFactory(_position).ContentStream;
+                _currentStream = EnsureStream(async ? (await _asyncResponseFactory(_position).ConfigureAwait(false)) : _responseFactory(_position));
             }
 
             public override int Read(byte[] buffer, int offset, int count)
@@ -143,6 +143,16 @@ namespace Azure.Core.Pipeline
             {
                 get => _position;
                 set => throw new NotSupportedException();
+            }
+
+            private static Stream EnsureStream(Response response)
+            {
+                if (response.ContentStream == null)
+                {
+                    throw new InvalidOperationException("The response didn't have content");
+                }
+
+                return response.ContentStream;
             }
         }
     }

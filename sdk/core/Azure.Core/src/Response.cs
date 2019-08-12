@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure
 {
@@ -15,7 +17,7 @@ namespace Azure
 
         public abstract string ReasonPhrase { get; }
 
-        public abstract Stream ContentStream { get; set; }
+        public abstract Stream? ContentStream { get; set; }
 
         public abstract string ClientRequestId { get; set; }
 
@@ -23,7 +25,7 @@ namespace Azure
 
         public abstract void Dispose();
 
-        protected internal abstract bool TryGetHeader(string name, out string value);
+        protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
 
         protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string> values);
 

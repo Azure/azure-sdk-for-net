@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
         private readonly ResponseClassifier _responseClassifier;
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, ClientDiagnostics clientDiagnostics = null)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null, ClientDiagnostics? clientDiagnostics = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _responseClassifier = responseClassifier ?? new ResponseClassifier();
@@ -39,7 +39,7 @@ namespace Azure.Core.Pipeline
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            var message = new HttpPipelineMessage(cancellationToken);
+            var message = new HttpPipelineMessage(request, _responseClassifier, cancellationToken);
             message.Request = request;
             message.ResponseClassifier = _responseClassifier;
             await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
@@ -49,7 +49,7 @@ namespace Azure.Core.Pipeline
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Response SendRequest(Request request, CancellationToken cancellationToken)
         {
-            var message = new HttpPipelineMessage(cancellationToken);
+            var message = new HttpPipelineMessage(request, _responseClassifier, cancellationToken);
             message.Request = request;
             message.ResponseClassifier = _responseClassifier;
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));

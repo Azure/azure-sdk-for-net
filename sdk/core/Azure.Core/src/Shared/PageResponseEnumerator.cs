@@ -2,18 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core
 {
     internal static class PageResponseEnumerator
     {
-        public static IEnumerable<Response<T>> CreateEnumerable<T>(Func<string, Page<T>> pageFunc)
+        public static IEnumerable<Response<T>> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
         {
-            string nextLink = null;
+            string? nextLink = null;
             do
             {
                 Page<T> pageResponse = pageFunc(nextLink);
@@ -25,26 +23,26 @@ namespace Azure.Core
             } while (nextLink != null);
         }
 
-        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string, Task<Page<T>>> pageFunc)
+        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, Task<Page<T>>> pageFunc) where T : notnull
         {
             return new FuncAsyncCollection<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
         }
 
-        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string, int?, Task<Page<T>>> pageFunc)
+        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, int?, Task<Page<T>>> pageFunc) where T : notnull
         {
             return new FuncAsyncCollection<T>(pageFunc);
         }
 
-        internal class FuncAsyncCollection<T>: AsyncCollection<T>
+        internal class FuncAsyncCollection<T>: AsyncCollection<T> where T : notnull
         {
-            private readonly Func<string, int?, Task<Page<T>>> _pageFunc;
+            private readonly Func<string?, int?, Task<Page<T>>> _pageFunc;
 
-            public FuncAsyncCollection(Func<string, int?, Task<Page<T>>> pageFunc)
+            public FuncAsyncCollection(Func<string?, int?, Task<Page<T>>> pageFunc)
             {
                 _pageFunc = pageFunc;
             }
 
-            public override async IAsyncEnumerable<Page<T>> ByPage(string continuationToken = default, int? pageSizeHint = default)
+            public override async IAsyncEnumerable<Page<T>> ByPage(string? continuationToken = default, int? pageSizeHint = default)
             {
                 do
                 {

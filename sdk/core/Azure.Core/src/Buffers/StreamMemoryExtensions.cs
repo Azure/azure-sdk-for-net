@@ -17,7 +17,7 @@ namespace Azure.Core.Buffers
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             if (buffer.Length == 0) return;
-            byte[] array = null;
+            byte[]? array = null;
             try
             {
                 if (MemoryMarshal.TryGetArray(buffer, out var arraySegment))
@@ -47,7 +47,7 @@ namespace Azure.Core.Buffers
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             if (buffer.Length == 0) return;
-            byte[] array = null;
+            byte[]? array = null;
             try
             {
                 foreach (var segment in buffer)
