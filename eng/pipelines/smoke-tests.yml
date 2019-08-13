@@ -3,7 +3,7 @@ jobs:
 
     variables:
       # - template: ./templates/variables/globals.yml
-      DotNetCoreSDKVersion: '3.0.100-preview8-013656'
+      DotNetCoreSDKVersion: '3.0.100-preview5-011568'
 
     steps:
       - task: DotNetCoreInstaller@2
