@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="blockSizeInMB">Indicates the block size(MB) when
         /// writing data to blob. Type: integer (or Expression with resultType
         /// integer).</param>
-        public BlobSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object blobWriterOverwriteFiles = default(object), object blobWriterDateTimeFormat = default(object), object blobWriterAddHeader = default(object), object copyBehavior = default(object), int? blockSizeInMB = default(int?))
+        public BlobSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object blobWriterOverwriteFiles = default(object), object blobWriterDateTimeFormat = default(object), object blobWriterAddHeader = default(object), object copyBehavior = default(object), object blockSizeInMB = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             BlobWriterOverwriteFiles = blobWriterOverwriteFiles;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// blob. Type: integer (or Expression with resultType integer).
         /// </summary>
         [JsonProperty(PropertyName = "blockSizeInMB")]
-        public int? BlockSizeInMB { get; set; }
+        public object BlockSizeInMB { get; set; }
 
     }
 }

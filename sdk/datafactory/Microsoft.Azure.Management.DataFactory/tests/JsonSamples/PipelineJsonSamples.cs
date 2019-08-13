@@ -1546,7 +1546,7 @@ namespace DataFactory.Tests.JsonSamples
                     },
                     sink: 
                     {
-                        type: ""BlobSink"",
+                        type: ""AzureBlobFSSink"",
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
                         copyBehavior: ""FlattenHierarchy"",
@@ -1562,7 +1562,7 @@ namespace DataFactory.Tests.JsonSamples
                 outputs: 
                 [ 
                     {
-                        referenceName: ""BlobFSSink"", type: ""DatasetReference""
+                        referenceName: ""AzureBlobFSSink"", type: ""DatasetReference""
                     }
                 ],
                 linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" }
