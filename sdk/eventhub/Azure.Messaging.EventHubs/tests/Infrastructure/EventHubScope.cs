@@ -28,13 +28,13 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
     public sealed class EventHubScope : IAsyncDisposable
     {
         /// <summary>The maximum number of attempts to retry a management operation.</summary>
-        private const int RetryMaximumAttemps = 8;
+        private const int RetryMaximumAttemps = 12;
 
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
-        private const double RetryExponentialBackoffSeconds = 0.5;
+        private const double RetryExponentialBackoffSeconds = 1.0;
 
         /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
-        private const double RetryBaseJitterSeconds = 3.0;
+        private const double RetryBaseJitterSeconds = 7.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
@@ -188,13 +188,22 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var token = await AquireManagementTokenAsync();
 
-            string CreateName() => $"{ new String((char)RandomNumberGenerator.Value.Next(65, 90), 3) }-{ Guid.NewGuid().ToString("D") }";
+            string CreateName() => $"net-eventhubs-{ Guid.NewGuid().ToString("D") }";
 
             using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
-                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
+                var tags = new Dictionary<string, string>
+                {
+                    { "source", typeof(EventHubScope).Assembly.GetName().Name },
+                    { "platform", System.Runtime.InteropServices.RuntimeInformation.OSDescription },
+                    { "framework", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription },
+                    { "created", $"{ DateTimeOffset.UtcNow.ToString("s") }Z" },
+                    { "cleanup-after", $"{ DateTimeOffset.UtcNow.AddDays(1).ToString("s") }Z" }
+                };
+
+                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: tags, isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
                 eventHubsNamespace = await CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
 
                 var accessKey = await CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, TestEnvironment.EventHubsDefaultSharedAccessKey));
