@@ -4,9 +4,8 @@
 namespace Microsoft.Azure.EventHubs.Tests.Client
 {
     using System;
-    using Xunit;
-    using System.Threading;
     using System.Threading.Tasks;
+    using Xunit;
 
     public class RetryTests
     {

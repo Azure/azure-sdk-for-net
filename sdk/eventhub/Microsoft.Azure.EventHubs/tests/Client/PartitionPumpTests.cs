@@ -118,8 +118,8 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     // Not expecting any errors.
                     handler.ErrorReceived += (s, e) =>
                     {
-                    // SetReceiveHandler will ignore any exception thrown so log here for output.
-                    TestUtility.Log($"TestPartitionReceiveHandler.ProcessError {e.GetType().Name}: {e.Message}");
+                        // SetReceiveHandler will ignore any exception thrown so log here for output.
+                        TestUtility.Log($"TestPartitionReceiveHandler.ProcessError {e.GetType().Name}: {e.Message}");
                         throw new Exception($"TestPartitionReceiveHandler.ProcessError {e.GetType().Name}: {e.Message}");
                     };
 

@@ -13,53 +13,45 @@ namespace Microsoft.Azure.EventHubs.Tests
 
     internal static class TestUtility
     {
-       
-        private static readonly Lazy<string> EventHubsConnectionStringInstance =
-            new Lazy<string>( () => ReadEnvironmentVariable(TestConstants.EventHubsConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-
         private static readonly Lazy<string> StorageConnectionStringInstance =
-            new Lazy<string>( () => ReadEnvironmentVariable(TestConstants.StorageConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-       
+            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.StorageConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+
         private static readonly Lazy<string> EventHubsSubscriptionInstance =
           new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSubscriptionEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-              
+
         private static readonly Lazy<string> EventHubsResourceGroupInstance =
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsResourceGroupEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-       
-        private static readonly Lazy<string> EventHubsNamespaceInstance =
-            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsNamespaceEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-       
+
         private static readonly Lazy<string> EventHubsTenantInstance =
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsTenantEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-        
+
         private static readonly Lazy<string> EventHubsClientInstance =
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsClientEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-        
+
         private static readonly Lazy<string> EventHubsSecretInstance =
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSecretEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
-        internal static string EventHubsConnectionString => EventHubsConnectionStringInstance.Value;
+        private static readonly Lazy<EventHubScope.NamespaceProperties> ActiveEventHubsNamespace =
+            new Lazy<EventHubScope.NamespaceProperties>(() => EventHubScope.CreateNamespaceAsync().GetAwaiter().GetResult(), LazyThreadSafetyMode.ExecutionAndPublication);
+
+        internal static bool WasEventHubsNamespaceCreated => ActiveEventHubsNamespace.IsValueCreated;
+
+        internal static string EventHubsConnectionString => ActiveEventHubsNamespace.Value.ConnectionString;
+
+        internal static string EventHubsNamespace => ActiveEventHubsNamespace.Value.Name;
 
         internal static string StorageConnectionString => StorageConnectionStringInstance.Value;
 
         internal static string EventHubsSubscription => EventHubsSubscriptionInstance.Value;
 
-       
         internal static string EventHubsResourceGroup => EventHubsResourceGroupInstance.Value;
 
-       
-        internal static string EventHubsNamespace => EventHubsNamespaceInstance.Value;
-
-       
         internal static string EventHubsTenant => EventHubsTenantInstance.Value;
 
-      
         internal static string EventHubsClient => EventHubsClientInstance.Value;
 
-       
         internal static string EventHubsSecret => EventHubsSecretInstance.Value;
 
-       
         internal static string GetEntityConnectionString(string entityName) =>
             new EventHubsConnectionStringBuilder(EventHubsConnectionString) { EntityPath = entityName }.ToString();
 
@@ -111,7 +103,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             Debug.WriteLine(formattedMessage);
             Console.WriteLine(formattedMessage);
         }
-               
+
         public static string BuildEventHubsConnectionString(string eventHubName)
         {
             var connectionString = new EventHubsConnectionStringBuilder(EventHubsConnectionString);
@@ -121,7 +113,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             return connectionString.ToString();
         }
-      
+
         private static string ReadEnvironmentVariable(string variableName)
         {
             var environmentVar = Environment.GetEnvironmentVariable(variableName);
