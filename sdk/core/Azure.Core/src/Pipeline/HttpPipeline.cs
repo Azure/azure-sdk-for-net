@@ -36,24 +36,37 @@ namespace Azure.Core.Pipeline
 
         public ClientDiagnostics Diagnostics { get; }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
+        public Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            var message = new HttpPipelineMessage(request, _responseClassifier, cancellationToken);
-            message.Request = request;
-            message.ResponseClassifier = _responseClassifier;
+            return SendRequestAsync(request, true, cancellationToken);
+        }
+
+        public async Task<Response> SendRequestAsync(Request request, bool bufferResponse, CancellationToken cancellationToken)
+        {
+            HttpPipelineMessage message = BuildMessage(request, bufferResponse, cancellationToken);
             await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
             return message.Response;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Response SendRequest(Request request, CancellationToken cancellationToken)
+        {
+            return SendRequest(request, true, cancellationToken);
+        }
+
+        public Response SendRequest(Request request, bool bufferResponse, CancellationToken cancellationToken)
+        {
+            HttpPipelineMessage message = BuildMessage(request, bufferResponse, cancellationToken);
+            _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+            return message.Response;
+        }
+
+        private HttpPipelineMessage BuildMessage(Request request, bool bufferResponse, CancellationToken cancellationToken)
         {
             var message = new HttpPipelineMessage(request, _responseClassifier, cancellationToken);
             message.Request = request;
+            message.BufferResponse = bufferResponse;
             message.ResponseClassifier = _responseClassifier;
-            _pipeline.Span[0].Process(message, _pipeline.Slice(1));
-            return message.Response;
+            return message;
         }
     }
 }

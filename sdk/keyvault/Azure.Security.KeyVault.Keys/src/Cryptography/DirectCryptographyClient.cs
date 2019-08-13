@@ -64,7 +64,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             this.ApiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    bufferResponse: true,
                     new ChallengeBasedAuthenticationPolicy(credential));
         }
 

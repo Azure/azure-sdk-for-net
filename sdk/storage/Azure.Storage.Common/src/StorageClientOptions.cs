@@ -86,10 +86,6 @@ namespace Azure.Storage
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null) =>
             HttpPipelineBuilder.Build(
                 options,
-                // TODO: PageBlob's UploadPagesAsync test currently fails
-                // without buffered responses, so I'm leaving this on for now.
-                // It'd be a great perf win to remove it soon.
-                bufferResponse: true,
                 authentication);
 
         /// <summary>
