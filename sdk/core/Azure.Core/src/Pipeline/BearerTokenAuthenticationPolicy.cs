@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
 
         private readonly string[] _scopes;
 
-        private string _headerValue;
+        private string? _headerValue;
 
         private DateTimeOffset _refreshOn;
 
@@ -61,7 +61,10 @@ namespace Azure.Core.Pipeline
                 _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);
             }
 
-            message.Request.SetHeader(HttpHeader.Names.Authorization, _headerValue);
+            if (_headerValue != null)
+            {
+                message.Request.SetHeader(HttpHeader.Names.Authorization, _headerValue);
+            }
 
             if (async)
             {

@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure
 {
-    public readonly struct Response<T> : IDisposable
+    public readonly struct Response<T> : IDisposable where T : notnull
     {
         private readonly Response _rawResponse;
 

@@ -4,6 +4,8 @@
 
 // Copied from https://raw.githubusercontent.com/dotnet/corefx/master/src/System.Net.Http/src/System/Net/Http/SocketsHttpHandler/HttpEnvironmentProxy.cs
 
+#nullable disable
+
 using System;
 using System.Net;
 using System.Collections.Generic;
@@ -103,7 +105,7 @@ namespace Azure.Core.Pipeline
 
         private Uri _httpProxyUri;      // String URI for HTTP requests
         private Uri _httpsProxyUri;     // String URI for HTTPS requests
-        private string[] _bypass = null;// list of domains not to proxy
+        private string[] _bypass;// list of domains not to proxy
         private ICredentials _credentials;
 
         public static bool TryCreate(out IWebProxy proxy)

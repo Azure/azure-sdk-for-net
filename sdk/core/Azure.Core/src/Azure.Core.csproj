@@ -13,7 +13,7 @@
       Bug fixes.
       ]]>
     </PackageReleaseNotes>
-
+    <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
