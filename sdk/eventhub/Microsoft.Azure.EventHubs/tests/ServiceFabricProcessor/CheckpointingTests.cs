@@ -11,7 +11,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
     public class CheckpointingTests
     {
-        [Fact(Skip="Test not reliable under macOS; to be investigated as art of issue #5451")]
+        [Fact(Skip = "Test not reliable under macOS; to be investigated as art of issue #5451")]
         [DisplayTestMethodName]
         public void CheckpointBatchTest()
         {

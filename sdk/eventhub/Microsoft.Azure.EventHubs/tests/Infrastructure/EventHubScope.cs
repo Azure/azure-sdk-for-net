@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -11,29 +11,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Polly;
 
-
 namespace Microsoft.Azure.EventHubs.Tests
 {
-    
     internal sealed class EventHubScope : IAsyncDisposable
     {
-      
-        private const int RetryMaximumAttemps = 8;
-
-        private const double RetryExponentialBackoffSeconds = 0.5;
-
-        private const double RetryBaseJitterSeconds = 3.0;
+        private const int RetryMaximumAttemps = 12;
+        private const double RetryExponentialBackoffSeconds = 1.5;
+        private const double RetryBaseJitterSeconds = 7.0;
 
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
-
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         private static int s_randomSeed = Environment.TickCount;
-
         private static ManagementToken s_managementToken;
 
         private bool _disposed = false;
@@ -83,17 +77,19 @@ namespace Microsoft.Azure.EventHubs.Tests
                                                             IEnumerable<string> consumerGroups,
                                                             [CallerMemberName] string caller = "")
         {
-            var eventHubName = $"{ caller }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
+            caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
+
             var groups = (consumerGroups ?? Enumerable.Empty<string>()).ToList();
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var eventHubNamespace = TestUtility.EventHubsNamespace;
             var token = await AquireManagementTokenAsync();
-            var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription };
 
-            try
+            string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription })
             {
-                var eventHub = new Eventhub(name: eventHubName, partitionCount: partitionCount);
-                await CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, eventHubName, eventHub));
+                var eventHub = new Eventhub(partitionCount: partitionCount);
+                eventHub = await CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
 
                 var consumerPolicy = CreateRetryPolicy<ConsumerGroup>();
 
@@ -102,16 +98,65 @@ namespace Microsoft.Azure.EventHubs.Tests
                     consumerGroups.Select(groupName =>
                     {
                         var group = new ConsumerGroup(name: groupName);
-                        return consumerPolicy.ExecuteAsync(() => client.ConsumerGroups.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, eventHubName, groupName, group));
+                        return consumerPolicy.ExecuteAsync(() => client.ConsumerGroups.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, eventHub.Name, groupName, group));
                     })
                 );
-            }
-            finally
-            {
-                client?.Dispose();
-            }
 
-            return new EventHubScope(eventHubName, groups);
+                return new EventHubScope(eventHub.Name, groups);
+            }
+        }
+
+        public static async Task<NamespaceProperties> CreateNamespaceAsync()
+        {
+            var subscription = TestUtility.EventHubsSubscription;
+            var resourceGroup = TestUtility.EventHubsResourceGroup;
+            var token = await AquireManagementTokenAsync();
+
+            string CreateName() => $"net-eventhubs-track-one-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
+
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            {
+                var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
+
+                var tags = new Dictionary<string, string>
+                {
+                    { "source", typeof(EventHubScope).Assembly.GetName().Name },
+                    { "platform", System.Runtime.InteropServices.RuntimeInformation.OSDescription },
+                    { "framework", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription },
+                    { "created", $"{ DateTimeOffset.UtcNow.ToString("s") }Z" },
+                    { "cleanup-after", $"{ DateTimeOffset.UtcNow.AddDays(1).ToString("s") }Z" }
+                };
+
+                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: tags, isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
+                eventHubsNamespace = await CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
+
+                var accessKey = await CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, "RootManageSharedAccessKey"));
+                return new NamespaceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
+            }
+        }
+
+        public static async Task DeleteNamespaceAsync(string namespaceName)
+        {
+            var subscription = TestUtility.EventHubsSubscription;
+            var resourceGroup = TestUtility.EventHubsResourceGroup;
+            var token = await AquireManagementTokenAsync();
+
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            {
+                await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
+                ;
+            }
+        }
+
+        private static async Task<string> QueryResourceGroupLocationAsync(string accessToken,
+                                                                          string resourceGroupName,
+                                                                          string subscriptionId)
+        {
+            using (var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
+            {
+                var resourceGroup = await CreateRetryPolicy<Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
+                return resourceGroup.Location;
+            }
         }
 
         private static IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttemps, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
@@ -146,7 +191,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
                 if ((String.IsNullOrEmpty(result?.AccessToken)))
                 {
-                    throw new AuthenticationException("Unable to aquire an Active Directory token for the Event Hubs management client.");
+                    throw new AuthenticationException("Unable to acquire an Active Directory token for the Event Hubs management client.");
                 }
 
                 token = new ManagementToken(result.AccessToken, result.ExpiresOn);
@@ -156,9 +201,21 @@ namespace Microsoft.Azure.EventHubs.Tests
             return token.Token;
         }
 
+        public struct NamespaceProperties
+        {
+            public readonly string Name;
+            public readonly string ConnectionString;
+
+            internal NamespaceProperties(string name,
+                                         string connectionString)
+            {
+                Name = name;
+                ConnectionString = connectionString;
+            }
+        }
+
         private class ManagementToken
         {
-          
             public readonly string Token;
 
             public readonly DateTimeOffset ExpiresOn;

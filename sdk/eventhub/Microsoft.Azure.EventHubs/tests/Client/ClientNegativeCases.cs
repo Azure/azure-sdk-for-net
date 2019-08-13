@@ -225,16 +225,16 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task CreateClientWithoutEntityPathShouldFail()
         {
-           // Remove entity path from connection string.
-           var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-           csb.EntityPath = null;
+            // Remove entity path from connection string.
+            var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
+            csb.EntityPath = null;
 
-           await Assert.ThrowsAsync<ArgumentNullException>(() =>
-           {
-           EventHubClient.CreateFromConnectionString(csb.ToString());
-           throw new Exception("Entity path wasn't provided in the connection string and this new call was supposed to fail");
-           });
-            
+            await Assert.ThrowsAsync<ArgumentNullException>(() =>
+            {
+                EventHubClient.CreateFromConnectionString(csb.ToString());
+                throw new Exception("Entity path wasn't provided in the connection string and this new call was supposed to fail");
+            });
+
         }
 
         [Fact]
