@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Now unwrap the encrypted key. Note that the same algorithm must always be used for both wrap and unwrap
             UnwrapResult unwrapResult = await cryptoClient.UnwrapKeyAsync(KeyWrapAlgorithm.RSAOAEP, wrapResult.EncryptedKey);
-            Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Plaintext)}");
+            Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
 
             // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
             await keyClient.DeleteKeyAsync(rsaKeyName);
