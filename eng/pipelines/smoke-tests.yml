@@ -2,7 +2,8 @@ jobs:
   - job: SmokeTest
 
     variables:
-      - template: ./templates/variables/globals.yml    
+      # - template: ./templates/variables/globals.yml
+      DotNetCoreSDKVersion: '3.0.100-preview8-013656'
 
     steps:
       - task: DotNetCoreInstaller@2
