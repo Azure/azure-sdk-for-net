@@ -112,7 +112,7 @@ namespace Azure.Storage.Sas
                 case HttpsAndHttpName:
                     return HttpsAndHttp;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(s), $"Invalid {nameof(SasProtocol)} value");
+                    throw Errors.InvalidSasProtocol(nameof(s), nameof(SasProtocol));
             }
         }
     }
