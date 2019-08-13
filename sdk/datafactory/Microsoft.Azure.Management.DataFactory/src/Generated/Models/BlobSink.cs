@@ -55,17 +55,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// boolean (or Expression with resultType boolean).</param>
         /// <param name="copyBehavior">The type of copy behavior for copy
         /// sink.</param>
-        /// <param name="blockSizeInMB">Indicates the block size(MB) when
-        /// writing data to blob. Type: integer (or Expression with resultType
-        /// integer).</param>
-        public BlobSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object blobWriterOverwriteFiles = default(object), object blobWriterDateTimeFormat = default(object), object blobWriterAddHeader = default(object), object copyBehavior = default(object), object blockSizeInMB = default(object))
+        public BlobSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object blobWriterOverwriteFiles = default(object), object blobWriterDateTimeFormat = default(object), object blobWriterAddHeader = default(object), object copyBehavior = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             BlobWriterOverwriteFiles = blobWriterOverwriteFiles;
             BlobWriterDateTimeFormat = blobWriterDateTimeFormat;
             BlobWriterAddHeader = blobWriterAddHeader;
             CopyBehavior = copyBehavior;
-            BlockSizeInMB = blockSizeInMB;
             CustomInit();
         }
 
@@ -100,13 +96,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "copyBehavior")]
         public object CopyBehavior { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicates the block size(MB) when writing data to
-        /// blob. Type: integer (or Expression with resultType integer).
-        /// </summary>
-        [JsonProperty(PropertyName = "blockSizeInMB")]
-        public object BlockSizeInMB { get; set; }
 
     }
 }

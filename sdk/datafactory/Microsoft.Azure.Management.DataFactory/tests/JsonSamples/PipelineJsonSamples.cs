@@ -1502,8 +1502,7 @@ namespace DataFactory.Tests.JsonSamples
                         type: ""BlobSink"",
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
-                        copyBehavior: ""FlattenHierarchy"",
-                        blockSizeInMB: 8
+                        copyBehavior: ""FlattenHierarchy""
                     }
                 },
                 inputs: 
@@ -1516,53 +1515,6 @@ namespace DataFactory.Tests.JsonSamples
                 [ 
                     {
                         referenceName: ""BlobSink"", type: ""DatasetReference""
-                    }
-                ],
-                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" }
-            }
-        ]
-    }
-}
-";
-
-        [JsonSample(version: "Copy")]
-        public const string CopyFileSystemSourceToBlobFSSink = @"
-{
-    name: ""MyPipelineName"",
-    properties:
-    { 
-        description : ""Copy from File to BlobFS"",
-        activities:
-        [
-            {
-                type: ""Copy"",
-                name: ""MyActivityName"",
-                typeProperties:
-                {
-                    source: 
-                    {
-                        type: ""FileSystemSource"",
-                        recursive: true
-                    },
-                    sink: 
-                    {
-                        type: ""AzureBlobFSSink"",
-                        writeBatchSize: 1000000,
-                        writeBatchTimeout: ""01:00:00"",
-                        copyBehavior: ""FlattenHierarchy"",
-                        blockSizeInMB: 8
-                    }
-                },
-                inputs: 
-                [ 
-                    {
-                        referenceName: ""RawFileSource"", type: ""DatasetReference""
-                    }
-                ],
-                outputs: 
-                [ 
-                    {
-                        referenceName: ""AzureBlobFSSink"", type: ""DatasetReference""
                     }
                 ],
                 linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" }
@@ -4310,11 +4262,80 @@ namespace DataFactory.Tests.JsonSamples
             ""referenceName"": ""exampleDataset"",
             ""type"": ""DatasetReference""
           }
+        ]
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""BinarySource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            }
+          },
+          ""sink"": {
+            ""type"": ""BinarySink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""blockSizeInMB"": 8
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
         ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""BinarySource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            }
+          },
+          ""sink"": {
+            ""type"": ""BinarySink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobFSWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""blockSizeInMB"": 8
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
       }
     ]
   }
 }";
+
         [JsonSample]
         public const string CopyActivity_Teradata_Binary = @"{
   ""name"": ""MyPipeline"",

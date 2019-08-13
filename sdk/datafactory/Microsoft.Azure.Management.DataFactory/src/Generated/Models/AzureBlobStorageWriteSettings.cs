@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -40,9 +41,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="copyBehavior">The type of copy behavior for copy
         /// sink.</param>
-        public AzureBlobStorageWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
+        /// <param name="blockSizeInMB">Indicates the block size(MB) when
+        /// writing data to blob. Type: integer (or Expression with resultType
+        /// integer).</param>
+        public AzureBlobStorageWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object), object blockSizeInMB = default(object))
             : base(type, additionalProperties, maxConcurrentConnections, copyBehavior)
         {
+            BlockSizeInMB = blockSizeInMB;
             CustomInit();
         }
 
@@ -50,6 +55,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets indicates the block size(MB) when writing data to
+        /// blob. Type: integer (or Expression with resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "blockSizeInMB")]
+        public object BlockSizeInMB { get; set; }
 
         /// <summary>
         /// Validate the object.

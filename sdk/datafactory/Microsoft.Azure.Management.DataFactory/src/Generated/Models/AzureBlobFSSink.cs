@@ -48,14 +48,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="copyBehavior">The type of copy behavior for copy
         /// sink.</param>
-        /// <param name="blockSizeInMB">Indicates the block size(MB) when
-        /// writing data to blobFS. Type: integer (or Expression with
-        /// resultType integer).</param>
-        public AzureBlobFSSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object copyBehavior = default(object), object blockSizeInMB = default(object))
+        public AzureBlobFSSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             CopyBehavior = copyBehavior;
-            BlockSizeInMB = blockSizeInMB;
             CustomInit();
         }
 
@@ -69,13 +65,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "copyBehavior")]
         public object CopyBehavior { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicates the block size(MB) when writing data to
-        /// blobFS. Type: integer (or Expression with resultType integer).
-        /// </summary>
-        [JsonProperty(PropertyName = "blockSizeInMB")]
-        public object BlockSizeInMB { get; set; }
 
     }
 }
