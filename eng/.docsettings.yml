@@ -50,6 +50,7 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Language.TextAnalytics','#5499']
   - ['sdk/cognitiveservices/Search.BingLocalSearch','#5499']
   - ['sdk/cognitiveservices/Search.BingCustomImageSearch','#5499']
+  - ['sdk/cognitiveservices/FormRecognizer','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.FileStaging','#5499']
   - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
   - ['sdk/search','#5499']
