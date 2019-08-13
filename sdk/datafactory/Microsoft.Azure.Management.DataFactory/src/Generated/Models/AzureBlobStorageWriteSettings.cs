@@ -33,7 +33,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the AzureBlobStorageWriteSettings
         /// class.
         /// </summary>
-        /// <param name="type">The write setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="maxConcurrentConnections">The maximum concurrent
@@ -44,8 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="blockSizeInMB">Indicates the block size(MB) when
         /// writing data to blob. Type: integer (or Expression with resultType
         /// integer).</param>
-        public AzureBlobStorageWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object), object blockSizeInMB = default(object))
-            : base(type, additionalProperties, maxConcurrentConnections, copyBehavior)
+        public AzureBlobStorageWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object), object blockSizeInMB = default(object))
+            : base(additionalProperties, maxConcurrentConnections, copyBehavior)
         {
             BlockSizeInMB = blockSizeInMB;
             CustomInit();
@@ -63,15 +62,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "blockSizeInMB")]
         public object BlockSizeInMB { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
