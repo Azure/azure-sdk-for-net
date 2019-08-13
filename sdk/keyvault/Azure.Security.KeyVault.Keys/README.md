@@ -112,7 +112,7 @@ The following section provides several code snippets using the [above created](#
 * [Update an existing Key](#update-an-existing-key)
 * [Delete a Key](#delete-a-key)
 * [List Keys](#list-keys)
-
+* [Encrypt and Decrypt](#encrypt-and-decrypt)
 ### Async examples
 * [Create a Key](#async-create-a-key)
 
@@ -201,7 +201,7 @@ EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RSAOAEP, 
 
 // decrypt the encrypted data.
 DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RSAOAEP, encryptResult.Ciphertext);
-~~~
+```
 
 ### Async create a Key
 Async APIs are identical to their synchronous counterparts. Note that all methods end with `Async`.
@@ -227,8 +227,6 @@ Key ecKey = await client.CreateEcKeyAsync(echsmkey);
 Console.WriteLine(ecKey.Name);
 Console.WriteLine(ecKey.KeyMaterial.KeyType);
 ```
-
-### Encrypt and Decrypt with a RSA key
 
 ## Troubleshooting
 
@@ -300,6 +298,11 @@ Several Key Vault Keys client library samples are available to you in this GitHu
 * [SignVerify.cs][sign_verify_sync] and [SignVerifyAsync.cs][sign_verify_async] - Example code for working with Key Vault keys, including:
   * Sign a precalculated digest and verify the signature with Sign and Verify
   * Sign raw data and verify the signature with SignData and VerifyData
+  
+
+* [WrapUnwrap.cs][wrap_unwrap_sync] and [WrapUnwrapAsync.cs][wrap_unwrap_async] - Example code for working with Key Vault keys, including:
+  * Wrap and Unwrap a symmetric key
+
 
  ###  Additional Documentation
 - For more extensive documentation on Azure Key Vault, see the [API reference documentation][keyvault_rest].
@@ -328,6 +331,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [encrypt_decrypt_sync]: samples/Sample4_EncryptDecrypt.cs
 [sign_verify_async]: samples/Sample5_SignVerifyAsync.cs
 [sign_verify_sync]: samples/Sample5_SignVerify.cs
+[wrap_unwrap_async]: samples/Sample6_WrapUnwrapAsync.cs
+[wrap_unwrap_sync]: samples/Sample6_WrapUnwrap.cs
 [hello_world_async]: samples/Sample1_HelloWorldAsync.cs
 [hello_world_sync]: samples/Sample1_HelloWorld.cs
 [key_client_class]: src/KeyClient.cs
