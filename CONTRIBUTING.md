@@ -9,7 +9,7 @@
 
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 3 preview 5** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
+- Install **.NET Core 3 preview 7** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
 
 > **Client Libraries** are sdks used to interact with azure resources at application run time while **Management Libraries** are those used to manage (create/modify/delete) Azure resources.
 <br/>

@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Azure.Core.Http
@@ -23,9 +24,9 @@ namespace Azure.Core.Http
                 (DateTimeOffset?)DateTimeOffset.Parse(value, CultureInfo.InvariantCulture) :
                 null;
 
-        public string ContentType => TryGetValue(HttpHeader.Names.ContentType, out var value) ? value : null;
+        public string? ContentType => TryGetValue(HttpHeader.Names.ContentType, out var value) ? value : null;
 
-        public string RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out var value) ? value : null;
+        public string? RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out var value) ? value : null;
 
         public IEnumerator<HttpHeader> GetEnumerator()
         {
@@ -37,7 +38,7 @@ namespace Azure.Core.Http
             return _response.EnumerateHeaders().GetEnumerator();
         }
 
-        public bool TryGetValue(string name, out string value)
+        public bool TryGetValue(string name, [NotNullWhen(true)] out string? value)
         {
             return _response.TryGetHeader(name, out value);
         }

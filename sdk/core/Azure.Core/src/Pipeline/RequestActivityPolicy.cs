@@ -40,7 +40,7 @@ namespace Azure.Core.Pipeline
             var activity = new Activity("Azure.Core.Http.Request");
             activity.AddTag("http.method", message.Request.Method.Method);
             activity.AddTag("http.url", message.Request.UriBuilder.ToString());
-            if (message.Request.Headers.TryGetValue("User-Agent", out string userAgent))
+            if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
                 activity.AddTag("http.user_agent", userAgent);
             }

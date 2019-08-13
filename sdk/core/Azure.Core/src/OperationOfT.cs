@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -12,7 +14,7 @@ namespace Azure
     /// Represents a long running operation (LRO).
     /// </summary>
     /// <typeparam name="T">The final result of the LRO.</typeparam>
-    public abstract class Operation<T>
+    public abstract class Operation<T> where T : notnull
     {
         T _value;
         Response _response;

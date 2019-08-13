@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
         private readonly ResponseClassifier _responseClassifier;
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, ClientDiagnostics clientDiagnostics = null)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null, ClientDiagnostics? clientDiagnostics = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _responseClassifier = responseClassifier ?? new ResponseClassifier();
@@ -36,13 +36,11 @@ namespace Azure.Core.Pipeline
 
         public ClientDiagnostics Diagnostics { get; }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            return SendRequestAsync(request, true, cancellationToken);
+            return SendRequestAsync(request, false, cancellationToken);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task<Response> SendRequestAsync(Request request, bool bufferResponse, CancellationToken cancellationToken)
         {
             HttpPipelineMessage message = BuildMessage(request, bufferResponse, cancellationToken);
@@ -50,13 +48,11 @@ namespace Azure.Core.Pipeline
             return message.Response;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Response SendRequest(Request request, CancellationToken cancellationToken)
         {
             return SendRequest(request, true, cancellationToken);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Response SendRequest(Request request, bool bufferResponse, CancellationToken cancellationToken)
         {
             HttpPipelineMessage message = BuildMessage(request, bufferResponse, cancellationToken);
@@ -66,7 +62,7 @@ namespace Azure.Core.Pipeline
 
         private HttpPipelineMessage BuildMessage(Request request, bool bufferResponse, CancellationToken cancellationToken)
         {
-            var message = new HttpPipelineMessage(cancellationToken);
+            var message = new HttpPipelineMessage(request, _responseClassifier, cancellationToken);
             message.Request = request;
             message.BufferResponse = bufferResponse;
             message.ResponseClassifier = _responseClassifier;
