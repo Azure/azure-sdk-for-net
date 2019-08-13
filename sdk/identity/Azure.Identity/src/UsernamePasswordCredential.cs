@@ -66,7 +66,7 @@ namespace Azure.Identity
 
             _options = options ?? new IdentityClientOptions();
 
-            _pipeline = HttpPipelineBuilder.Build(_options, bufferResponse: true);
+            _pipeline = HttpPipelineBuilder.Build(_options);
 
             _pubApp = PublicClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).Build();
         }
