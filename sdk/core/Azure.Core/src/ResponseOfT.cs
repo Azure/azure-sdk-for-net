@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure
 {
-    public readonly struct Response<T>
+    public readonly struct Response<T>: IDisposable
     {
         private readonly Response _rawResponse;
 
@@ -30,5 +30,10 @@ namespace Azure
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        public void Dispose()
+        {
+            GetRawResponse()?.Dispose();
+        }
     }
 }

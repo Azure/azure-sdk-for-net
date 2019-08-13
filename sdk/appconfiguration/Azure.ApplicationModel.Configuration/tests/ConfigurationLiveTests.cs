@@ -64,6 +64,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 var responseGet = await service.GetAsync(batchKey);
                 key = responseGet.Value.Value;
+                responseGet.Dispose();
             }
             catch
             {
@@ -263,6 +264,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Response<ConfigurationSetting> response = await service.SetAsync(testSetting);
                 response.GetRawResponse().Headers.TryGetValue("x-ms-client-request-id", out string requestId);
                 Assert.IsNotEmpty(requestId);
+                response.Dispose();
             }
             finally
             {
