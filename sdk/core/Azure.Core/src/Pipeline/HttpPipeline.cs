@@ -38,7 +38,7 @@ namespace Azure.Core.Pipeline
 
         public Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            return SendRequestAsync(request, false, cancellationToken);
+            return SendRequestAsync(request, true, cancellationToken);
         }
 
         public async Task<Response> SendRequestAsync(Request request, bool bufferResponse, CancellationToken cancellationToken)

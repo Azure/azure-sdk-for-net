@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure
 {
-    public readonly struct Response<T> : IDisposable where T : notnull
+    public readonly struct Response<T>
     {
         private readonly Response _rawResponse;
 
@@ -22,10 +22,6 @@ namespace Azure
 
         public static implicit operator T(Response<T> response) => response.Value;
 
-        public void Dispose()
-        {
-            GetRawResponse()?.Dispose();
-        }
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 

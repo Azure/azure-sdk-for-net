@@ -20,7 +20,7 @@ namespace Azure.Core.Testing
 
         protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
-            return IsAsync ? pipeline.SendRequestAsync(request, bufferResponse, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, cancellationToken));
+            return IsAsync ? pipeline.SendRequestAsync(request, bufferResponse, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, bufferResponse, cancellationToken));
         }
 
         protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Request request, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
