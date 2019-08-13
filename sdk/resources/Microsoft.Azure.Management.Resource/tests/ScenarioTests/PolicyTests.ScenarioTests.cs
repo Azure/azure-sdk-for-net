@@ -863,7 +863,7 @@ namespace Policy.Tests
                 new GenericResource
                 {
                     Location = resourceGroup.Location,
-                    Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}")
+                    Properties = JObject.Parse("{'name':'" + resourceName + "','computeMode':'Shared'}")
                 });
         }
 
