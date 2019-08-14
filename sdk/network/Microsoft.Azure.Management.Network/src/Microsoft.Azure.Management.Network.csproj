@@ -11,9 +11,11 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added VpnSiteLink and VpnSiteLinkConnection operations
-            - Added UpdateTags operation for AzureFirewall
-            - Update operations for PrivateEndpoint and PrivateLinkService
+            - Fixed incorrect properties of ApplicationGatewayOnDemandProbe
+            - Added operation UnprepareNetworkPolicies for Subnets
+            - Added operations for FirewallPolicies and FirewallPolicyRuleGroups
+            - Added read-only property LoadBalancerFrontendIpConfiguration to PublicIPPrefix
+            - Updated models for PrivateEndpoints and PrivateLinks
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
