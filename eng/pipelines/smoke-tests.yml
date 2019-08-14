@@ -1,8 +1,8 @@
+variables:
+  - template: ./templates/variables/globals.yml
+
 jobs:
   - job: SmokeTest
-
-    variables:
-      - template: ./templates/variables/globals.yml    
 
     steps:
       - task: DotNetCoreInstaller@2
