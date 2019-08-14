@@ -13,9 +13,6 @@ namespace Microsoft.Azure.EventHubs.Tests
 
     internal static class TestUtility
     {
-        private static readonly Lazy<string> StorageConnectionStringInstance =
-            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.StorageConnectionStringEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-
         private static readonly Lazy<string> EventHubsSubscriptionInstance =
           new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSubscriptionEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
@@ -31,16 +28,23 @@ namespace Microsoft.Azure.EventHubs.Tests
         private static readonly Lazy<string> EventHubsSecretInstance =
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSecretEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
-        private static readonly Lazy<EventHubScope.NamespaceProperties> ActiveEventHubsNamespace =
-            new Lazy<EventHubScope.NamespaceProperties>(() => EventHubScope.CreateNamespaceAsync().GetAwaiter().GetResult(), LazyThreadSafetyMode.ExecutionAndPublication);
+        private static readonly Lazy<EventHubScope.AzureResourceProperties> ActiveEventHubsNamespace =
+            new Lazy<EventHubScope.AzureResourceProperties>(() => EventHubScope.CreateNamespaceAsync().GetAwaiter().GetResult(), LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private static readonly Lazy<EventHubScope.AzureResourceProperties> ActiveStorageAccount =
+            new Lazy<EventHubScope.AzureResourceProperties>(() => EventHubScope.CreateStorageAsync().GetAwaiter().GetResult(), LazyThreadSafetyMode.ExecutionAndPublication);
 
         internal static bool WasEventHubsNamespaceCreated => ActiveEventHubsNamespace.IsValueCreated;
+
+        internal static bool WasStorageAccountCreated => ActiveStorageAccount.IsValueCreated;
 
         internal static string EventHubsConnectionString => ActiveEventHubsNamespace.Value.ConnectionString;
 
         internal static string EventHubsNamespace => ActiveEventHubsNamespace.Value.Name;
 
-        internal static string StorageConnectionString => StorageConnectionStringInstance.Value;
+        internal static string StorageConnectionString => ActiveStorageAccount.Value.ConnectionString;
+
+        internal static string StorageAccountName => ActiveStorageAccount.Value.Name;
 
         internal static string EventHubsSubscription => EventHubsSubscriptionInstance.Value;
 
