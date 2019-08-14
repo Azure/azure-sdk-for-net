@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 var firstPlugin = new FirstSendPlugin();
                 var secondPlugin = new SecondSendPlugin();
 
-                var options = new ClientOptions()
+                var options = new AmqpClientOptions()
                 {
                     RegisteredPlugins = { firstPlugin, secondPlugin }
                 };
@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var sendReceivePlugin = new SendReceivePlugin();
-                var options = new ClientOptions()
+                var options = new AmqpClientOptions()
                 {
                     RegisteredPlugins = { sendReceivePlugin }
                 };
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var plugin = new ExceptionPlugin();
-                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName, new ClientOptions()
+                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName, new AmqpClientOptions()
                 {
                     RegisteredPlugins = { plugin }
                 });
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var plugin = new ShouldCompleteAnywayExceptionPlugin();
-                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName, new ClientOptions()
+                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName, new AmqpClientOptions()
                 {
                     RegisteredPlugins = { plugin }
                 });
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
                 var sendReceivePlugin = new SendReceivePlugin();
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock, new ClientOptions()
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock, new AmqpClientOptions()
                 {
                     RegisteredPlugins = { sendReceivePlugin }
                 });

@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             var queueDescription = BuildQueueDescription(name, partitioned, sessionEnabled);
 
             configureQueue?.Invoke(queueDescription);
-            await CreateRetryPolicy<QueueDescription>().ExecuteAsync( () => ManagementClient.CreateQueueAsync(queueDescription));
+            await CreateRetryPolicy<Response<QueueDescription>>().ExecuteAsync( () => ManagementClient.CreateQueueAsync(queueDescription));
 
             return new QueueScope(name, async () => 
             {
@@ -78,8 +78,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             configureTopic?.Invoke(topicDescription);
             configureSubscription?.Invoke(subscriptionDescription);
 
-            await CreateRetryPolicy<TopicDescription>().ExecuteAsync( () => ManagementClient.CreateTopicAsync(topicDescription));
-            await CreateRetryPolicy<SubscriptionDescription>().ExecuteAsync( () => ManagementClient.CreateSubscriptionAsync(subscriptionDescription));
+            await CreateRetryPolicy<Response<TopicDescription>>().ExecuteAsync( () => ManagementClient.CreateTopicAsync(topicDescription));
+            await CreateRetryPolicy<Response<SubscriptionDescription>>().ExecuteAsync( () => ManagementClient.CreateSubscriptionAsync(subscriptionDescription));
                              
             return new TopicScope(topicName, subscripionName, async () =>
             {

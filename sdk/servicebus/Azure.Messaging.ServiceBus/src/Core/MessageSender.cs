@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         internal MessageSender(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, options)
         {
         }
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public MessageSender(
             string connectionString,
             string entityPath,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             : this(entityPath, null, null, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), null, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string entityPath,
             TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             : this(entityPath, null, null, new ServiceBusConnection(endpoint, tokenProvider, options), null, options)
         {
             ClientEntity.OwnsConnection = true;
@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public MessageSender(
             ServiceBusConnection serviceBusConnection,
             string entityPath,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             : this(entityPath, null, null, serviceBusConnection, null, options)
         {
             ClientEntity.OwnsConnection = false;
@@ -124,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             string viaEntityPath,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             :this(viaEntityPath, entityPath, null, serviceBusConnection, null, options)
         {
             ClientEntity.OwnsConnection = false;
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Core
             MessagingEntityType? entityType,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
-            ClientOptions options)
+            AmqpClientOptions options)
         {
             this.ClientEntity = new ClientEntity(options, entityPath);
             MessagingEventSource.Log.MessageSenderCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);

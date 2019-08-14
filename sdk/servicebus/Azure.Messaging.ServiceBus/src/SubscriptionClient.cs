@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
-        internal SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+        internal SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, AmqpClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, subscriptionName, receiveMode, options)
         {
         }
@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connectionString">Namespace connection string. Must not contain topic or subscription information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
-        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, AmqpClientOptions options = null)
             : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), topicPath, subscriptionName, receiveMode, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -103,7 +103,7 @@ namespace Azure.Messaging.ServiceBus
             string topicPath,
             string subscriptionName,
             TokenCredential tokenProvider,
-            ClientOptions options,
+            AmqpClientOptions options,
             ReceiveMode receiveMode = ReceiveMode.PeekLock)
             : this(new ServiceBusConnection(endpoint, tokenProvider, options), topicPath, subscriptionName, receiveMode, options)
         {
@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicPath">Topic path.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, ClientOptions options)
+        public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, $"{topicPath}/{subscriptionName}");
             if (string.IsNullOrWhiteSpace(topicPath))

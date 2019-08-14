@@ -9,9 +9,9 @@ using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
-    public class ClientOptions
+    public class AmqpClientOptions
     {
-        public ClientOptions()
+        public AmqpClientOptions()
         {
             this.RetryPolicy = RetryPolicy.Default;
         }

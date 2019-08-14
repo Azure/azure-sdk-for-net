@@ -106,7 +106,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                 var timeout = TimeSpan.FromSeconds(5);
                 var eventQueue = this.CreateEventQueue();
 
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete, new ClientOptions()
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete, new AmqpClientOptions()
                 {
                     OperationTimeout = timeout,
                     RetryPolicy = RetryPolicy.NoRetry,

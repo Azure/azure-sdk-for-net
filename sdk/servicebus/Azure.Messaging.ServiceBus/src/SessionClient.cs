@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnectionStringBuilder connectionStringBuilder,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             int prefetchCount = DefaultPrefetchCount,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, prefetchCount, options)
         {
         }
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             int prefetchCount = DefaultPrefetchCount,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             : this(nameof(SessionClient),
                   entityPath,
                   null,
@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            ClientOptions options = null,
+            AmqpClientOptions options = null,
             int prefetchCount = DefaultPrefetchCount)
             : this(nameof(SessionClient),
                 entityPath,
@@ -143,7 +143,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             ReceiveMode receiveMode,
-            ClientOptions options = null,
+            AmqpClientOptions options = null,
             int prefetchCount = DefaultPrefetchCount)
             : this(nameof(SessionClient),
                 entityPath,
@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus
             int prefetchCount,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
-            ClientOptions options)
+            AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, entityPath);
             if (string.IsNullOrWhiteSpace(entityPath))

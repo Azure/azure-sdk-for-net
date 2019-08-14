@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Core
         internal MessageReceiver(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            ClientOptions options = null,
+            AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, options, prefetchCount)
         {
@@ -90,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string connectionString,
             string entityPath,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            ClientOptions options = null,
+            AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
             : this(entityPath, null, receiveMode, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), null, options, prefetchCount)
         {
@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus.Core
             TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            ClientOptions options = null,
+            AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
             : this(entityPath, null, receiveMode, new ServiceBusConnection(endpoint, tokenProvider, options), null, options, prefetchCount)
         {
@@ -139,7 +139,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            ClientOptions options = null,
+            AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
             : this(entityPath, null, receiveMode, serviceBusConnection, null, options, prefetchCount)
         {
@@ -152,7 +152,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ReceiveMode receiveMode,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
-            ClientOptions options,
+            AmqpClientOptions options,
             int prefetchCount = Constants.DefaultClientPrefetchCount,
             string sessionId = null,
             bool isSessionReceiver = false)

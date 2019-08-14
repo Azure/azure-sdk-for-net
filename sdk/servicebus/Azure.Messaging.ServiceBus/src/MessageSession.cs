@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
             ReceiveMode receiveMode,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
-            ClientOptions options,
+            AmqpClientOptions options,
             int prefetchCount = Constants.DefaultClientPrefetchCount,
             string sessionId = null,
             bool isSessionReceiver = false)

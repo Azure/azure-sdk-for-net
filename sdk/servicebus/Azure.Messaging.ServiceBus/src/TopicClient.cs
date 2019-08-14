@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
-        internal TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ClientOptions options = null)
+        internal TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, AmqpClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, options)
         {
         }
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connectionString">Namespace connection string. Must not contain topic information.</param>
         /// <param name="entityPath">Path to the topic</param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
-        public TopicClient(string connectionString, string entityPath, ClientOptions options = null)
+        public TopicClient(string connectionString, string entityPath, AmqpClientOptions options = null)
             : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), entityPath, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             : this(new ServiceBusConnection(endpoint, tokenProvider, options), entityPath, options)
         {
             ClientEntity.OwnsConnection = true;
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">Topic path.</param>
-        public TopicClient(ServiceBusConnection serviceBusConnection, string entityPath, ClientOptions options)
+        public TopicClient(ServiceBusConnection serviceBusConnection, string entityPath, AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, entityPath);
             MessagingEventSource.Log.TopicClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);

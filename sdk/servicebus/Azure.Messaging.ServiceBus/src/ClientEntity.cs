@@ -19,14 +19,14 @@ namespace Azure.Messaging.ServiceBus
     {
         static int nextId;
 
-        internal ClientOptions Options { get; }
+        internal AmqpClientOptions Options { get; }
 
         readonly object syncLock;
         bool isClosedOrClosing;
 
-        internal ClientEntity(ClientOptions options, string postfix)
+        internal ClientEntity(AmqpClientOptions options, string postfix)
         {
-            options = options ?? new ClientOptions();
+            options = options ?? new AmqpClientOptions();
             this.Options = options;
             this.syncLock = new object();
             this.ClientId = options.ClientId ?? GenerateClientId(this.GetType().Name, options.ClientIdPostfix);

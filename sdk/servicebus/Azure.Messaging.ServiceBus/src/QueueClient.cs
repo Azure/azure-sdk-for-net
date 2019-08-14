@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and queue information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
-        internal QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+        internal QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, AmqpClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, options)
         {
         }
@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityPath">Name of the queue</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
-        public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+        public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, AmqpClientOptions options = null)
             : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), entityPath, receiveMode, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             TokenCredential tokenProvider,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            ClientOptions options = null)
+            AmqpClientOptions options = null)
             : this(new ServiceBusConnection(endpoint, tokenProvider, options), entityPath, receiveMode, options)
         {
             ClientEntity.OwnsConnection = true;
@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">Queue path.</param>
         /// <param name="receiveMode">Mode of receive of messages. Default to <see cref="ReceiveMode"/>.PeekLock.</param>
-        public QueueClient(ServiceBusConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, ClientOptions options)
+        public QueueClient(ServiceBusConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, entityPath);
             MessagingEventSource.Log.QueueClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath, receiveMode.ToString());

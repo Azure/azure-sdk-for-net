@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpSubscriptionClient(
             string path,
             ServiceBusConnection servicebusConnection,
-            ClientOptions options,
+            AmqpClientOptions options,
             ICbsTokenProvider cbsTokenProvider,
             int prefetchCount = 0,
             ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             this.ReceiveMode = mode;
         }
 
-        ClientOptions Options { get; set; }
+        AmqpClientOptions Options { get; set; }
 
         public MessageReceiver InnerReceiver
         {

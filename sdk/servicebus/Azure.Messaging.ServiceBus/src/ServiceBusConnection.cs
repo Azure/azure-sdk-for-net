@@ -24,14 +24,14 @@ namespace Azure.Messaging.ServiceBus
         readonly object syncLock;
         bool isClosedOrClosing;
 
-        private ClientOptions options;
+        private AmqpClientOptions options;
 
         /// <summary>
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace information.</param>
         /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
-        internal ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder, ClientOptions options = null)
+        internal ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder, AmqpClientOptions options = null)
             : this(options)
         {
 
@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
-        public ServiceBusConnection(string endpoint, TokenCredential credential, ClientOptions options = null)
+        public ServiceBusConnection(string endpoint, TokenCredential credential, AmqpClientOptions options = null)
             : this(options)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
@@ -59,9 +59,9 @@ namespace Azure.Messaging.ServiceBus
             this.InitializeConnection(serviceBusConnectionStringBuilder);
         }
 
-        internal ServiceBusConnection(ClientOptions options = null)
+        internal ServiceBusConnection(AmqpClientOptions options = null)
         {
-            options = options ?? new ClientOptions();
+            options = options ?? new AmqpClientOptions();
             this.options = options;
             this.OperationTimeout = options.OperationTimeout;
             this.TransportType = options.TransportType;
