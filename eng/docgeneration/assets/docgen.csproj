@@ -9,6 +9,7 @@
     <PopImportVersion>1.0.0</PopImportVersion>
     <BclAsyncInterfacesVersion>1.0.0-preview8.19405.3</BclAsyncInterfacesVersion>
     <NETStandardVersion>2.0.2</NETStandardVersion>
+    <NuGetPackageRoot>$(UserProfile)\.nuget\packages</NuGetPackageRoot>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DocAsCode.ECMA2Yaml" Version="$(ECMA2YmlVersion)" />

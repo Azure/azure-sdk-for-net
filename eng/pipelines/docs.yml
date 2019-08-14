@@ -19,14 +19,12 @@ jobs:
         displayName: Download and Extract DocFX
       - pwsh: |
           dotnet restore "$(Build.SourcesDirectory)/eng/docgeneration/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
-          dotnet restore "$(Build.SourcesDirectory)/eng/service.proj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
         displayName: Restore Nuget Packages Needed
       - pwsh: |
-          New-Item -Type dir dll-docs/my-api
-          New-Item -Type dir dll-docs/dependencies/my-api
-          New-Item -Type dir dll-xml-output
-          New-Item -Type dir dll-yaml-output
-          New-Item -Type dir docfx-output
+          mkdir dll-docs/my-api
+          mkdir dll-xml-output
+          mkdir dll-yaml-output
+          mkdir docfx-output
         displayName: Create Directories for Doc Generation
         workingDirectory: $(Build.BinariesDirectory)
       - task: DotNetCoreInstaller@2
@@ -49,8 +47,8 @@ jobs:
           script: mdoc.exe fx-bootstrap ../dll-docs
           workingDirectory: $(Build.BinariesDirectory)/mdoc
           failOnStderr: true
-      - pwsh: |
-          & "$(Build.BinariesDirectory)/PopImport/popimport.exe" -f "./dll-docs/"
+      - pwsh: ./popimport.exe -f ../dll-docs/
+        workingDirectory: $(Build.BinariesDirectory)/PopImport
         displayName: Include XML Files
       - task: CmdLine@2
         displayName: Produce ECMAXML
