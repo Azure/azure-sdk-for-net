@@ -16,29 +16,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
     static class TestUtility
     {
         private static readonly Lazy<string> NamespaceConnectionStringInstance =
-            new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString("SERVICE_BUS_CONNECTION_STRING")).ToString(), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()).ToString(), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<string> SocketNamespaceConnectionStringInstance =
-            new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString("SERVICE_BUS_CONNECTION_STRING")){TransportType = TransportType.AmqpWebSockets}.ToString(), LazyThreadSafetyMode.PublicationOnly);
-
-        private static readonly Lazy<string> ClientIdInstance = new Lazy<string>( () => ReadEnvironmentConnectionString("SERVICE_BUS_CLIENT_ID"));
-
-        private static readonly Lazy<string> ClientSecretInstance = new Lazy<string>( () => ReadEnvironmentConnectionString("SERVICE_BUS_CLIENT_SECRET"));
-
-        private static readonly Lazy<string> ClientTenantInstance = new Lazy<string>( () => ReadEnvironmentConnectionString("SERVICE_BUS_CLIENT_TENANT"));
-
-        private static readonly Lazy<string> SubscriptionInstance = new Lazy<string>( () => ReadEnvironmentConnectionString("SERVICE_BUS_SUBSCRIPTION"));
-
-        private static readonly Lazy<string> NamespaceInstance = new Lazy<string>( () => ReadEnvironmentConnectionString("SERVICE_BUS_NAMESPACE"));
-
-        private static readonly Lazy<string> ResourceGroupInstance = new Lazy<string>( () => ReadEnvironmentConnectionString("SERVICE_BUS_RESOURCE_GROUP"));
-
-        internal static string ClientId => ClientIdInstance.Value;
-        internal static string ClientSecret => ClientSecretInstance.Value;
-        internal static string ClientTenant => ClientTenantInstance.Value;
-        internal static string Subscription => SubscriptionInstance.Value;
-        internal static string Namespace => NamespaceInstance.Value;
-        internal static string ResourceGroup => ResourceGroupInstance.Value;
+            new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()){TransportType = TransportType.AmqpWebSockets}.ToString(), LazyThreadSafetyMode.PublicationOnly);
 
         internal static string NamespaceConnectionString => NamespaceConnectionStringInstance.Value;
 
@@ -232,13 +213,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             }
         }
 
-        private static string ReadEnvironmentConnectionString(string name)
+        private static string ReadEnvironmentConnectionString()
         {
-            var envConnectionString = Environment.GetEnvironmentVariable(name);
+            var envConnectionString = Environment.GetEnvironmentVariable(TestConstants.ConnectionStringEnvironmentVariable);
 
             if (string.IsNullOrWhiteSpace(envConnectionString))
             {
-                throw new InvalidOperationException($"'{name}' environment variable was not found!");
+                throw new InvalidOperationException($"'{TestConstants.ConnectionStringEnvironmentVariable}' environment variable was not found!");
             }
 
             return envConnectionString;

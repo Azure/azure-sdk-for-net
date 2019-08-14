@@ -176,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         (session, message, cancellationToken) =>
                         {
                             Assert.Equal(sendMessage.SessionId, session.SessionId);
-                            Assert.Contains(sendReceivePlugin, session.RegisteredPlugins);
+                            Assert.Contains(sendReceivePlugin, session.ClientEntity.RegisteredPlugins);
                             Assert.Equal(sendMessage.Body, message.Body);
 
                             messageReceived = true;

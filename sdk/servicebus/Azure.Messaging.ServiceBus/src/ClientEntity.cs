@@ -15,16 +15,16 @@ namespace Azure.Messaging.ServiceBus
     /// Contract for all client entities with Open-Close/Abort state m/c
     /// main-purpose: closeAll related entities
     /// </summary>
-    public abstract class ClientEntity
+    internal class ClientEntity
     {
         static int nextId;
 
-        public ClientOptions Options { get; }
+        internal ClientOptions Options { get; }
 
         readonly object syncLock;
         bool isClosedOrClosing;
 
-        protected ClientEntity(ClientOptions options, string postfix)
+        internal ClientEntity(ClientOptions options, string postfix)
         {
             options = options ?? new ClientOptions();
             this.Options = options;
@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
             this.RegisteredPlugins = options.RegisteredPlugins.ToArray();
         }
 
-        public IReadOnlyList<ServiceBusPlugin> RegisteredPlugins { get; set; }
+        internal IReadOnlyList<ServiceBusPlugin> RegisteredPlugins { get; set; }
 
         /// <summary>
         /// Returns true if the client is closed or closing.
@@ -61,32 +61,32 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Connection object to the service bus namespace.
         /// </summary>
-        public abstract ServiceBusConnection ServiceBusConnection { get; }
+        internal ServiceBusConnection ServiceBusConnection { get; set; }
 
         /// <summary>
         /// Returns true if connection is owned and false if connection is shared.
         /// </summary>
-        public bool OwnsConnection { get; internal set; }
+        internal bool OwnsConnection { get; set; }
 
         /// <summary>
         /// Gets the name of the entity.
         /// </summary>
-        public abstract string Path { get; }
+        public string Path { get; set; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID (in that process).</remarks>
-        public string ClientId { get; private set; }
+        internal string ClientId { get; private set; }
 
-        public RetryPolicy RetryPolicy { get; }
+        internal RetryPolicy RetryPolicy { get; }
 
-        public TimeSpan OperationTimeout { get; }
+        internal TimeSpan OperationTimeout { get; }
 
         /// <summary>
         /// Closes the Client. Closes the connections opened by it.
         /// </summary>
-        public async Task CloseAsync()
+        public async Task CloseAsync(Func<Task> onClosing)
         {
             var callClose = false;
             lock (this.syncLock)
@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (callClose)
             {
-                await this.OnClosingAsync().ConfigureAwait(false);
+                await onClosing().ConfigureAwait(false);
                 if (OwnsConnection && this.ServiceBusConnection.IsClosedOrClosing == false)
                 {
                     await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        protected static long GetNextId()
+        internal static long GetNextId()
         {
             return Interlocked.Increment(ref nextId);
         }
@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus
         /// Generates a new client id that can be used to identify a specific client in logs and error messages.
         /// </summary>
         /// <param name="postfix">Information that can be appended by the client.</param>
-        protected static string GenerateClientId(string clientTypeName, string postfix = "")
+        internal static string GenerateClientId(string clientTypeName, string postfix = "")
         {
             return $"{clientTypeName}{GetNextId()}{postfix}";
         }
@@ -131,12 +131,10 @@ namespace Azure.Messaging.ServiceBus
             this.ClientId = newClientId;
         }
 
-        protected abstract Task OnClosingAsync();
-
         /// <summary>
         /// Throw an OperationCanceledException if the object is Closing.
         /// </summary>
-        protected virtual void ThrowIfClosed()
+        internal virtual void ThrowIfClosed()
         {
             this.ServiceBusConnection.ThrowIfClosed();
             if (this.IsClosedOrClosing)

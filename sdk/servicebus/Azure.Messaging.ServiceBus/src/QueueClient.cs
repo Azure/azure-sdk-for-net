@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus
     /// </example>
     /// <remarks>Use <see cref="MessageSender"/> or <see cref="MessageReceiver"/> for advanced set of functionality.
     /// It uses AMQP protocol for communicating with servicebus.</remarks>
-    public class QueueClient : ClientEntity
+    public class QueueClient
     {
         readonly object syncLock;
 
@@ -63,6 +63,7 @@ namespace Azure.Messaging.ServiceBus
         MessageReceiver innerReceiver;
         SessionClient sessionClient;
         SessionPumpHost sessionPumpHost;
+        internal ClientEntity ClientEntity { get; set; }
 
         /// <summary>
         /// Instantiates a new <see cref="QueueClient"/> to perform operations on a queue.
@@ -70,7 +71,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and queue information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
-        public QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+        internal QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, options)
         {
         }
@@ -90,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -107,9 +108,9 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential tokenProvider,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             ClientOptions options = null)
-            : this(new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider}, entityPath, receiveMode, options)
+            : this(new ServiceBusConnection(endpoint, tokenProvider, options), entityPath, receiveMode, options)
         {
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -119,8 +120,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityPath">Queue path.</param>
         /// <param name="receiveMode">Mode of receive of messages. Default to <see cref="ReceiveMode"/>.PeekLock.</param>
         public QueueClient(ServiceBusConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, ClientOptions options)
-            : base(options, entityPath)
         {
+            ClientEntity = new ClientEntity(options, entityPath);
             MessagingEventSource.Log.QueueClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath, receiveMode.ToString());
 
             if (string.IsNullOrWhiteSpace(entityPath))
@@ -128,23 +129,23 @@ namespace Azure.Messaging.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
 
-            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
+            ClientEntity.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.QueueName = entityPath;
             this.ReceiveMode = receiveMode;
-            this.OwnsConnection = false;
-            this.ServiceBusConnection.ThrowIfClosed();
+            ClientEntity.OwnsConnection = false;
+            ClientEntity.ServiceBusConnection.ThrowIfClosed();
 
-            if (this.ServiceBusConnection.TokenCredential != null)
+            if (ClientEntity.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
             }
             else
             {
                 throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
             }
 
-            MessagingEventSource.Log.QueueClientCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
+            MessagingEventSource.Log.QueueClientCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, ClientEntity.ClientId);
         }
 
         /// <summary>
@@ -160,7 +161,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the name of the queue.
         /// </summary>
-        public override string Path => this.QueueName;
+        public string Path => this.QueueName;
 
         /// <summary>
         /// Prefetch speeds up the message flow by aiming to have a message readily available for local retrieval when and before the application asks for one using Receive.
@@ -202,11 +203,6 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>
-        /// Connection object to the service bus namespace.
-        /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
-
         internal MessageSender InnerSender
         {
             get
@@ -221,9 +217,9 @@ namespace Azure.Messaging.ServiceBus
                                 this.QueueName,
                                 null,
                                 MessagingEntityType.Queue,
-                                this.ServiceBusConnection,
+                                ClientEntity.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.Options);
+                                ClientEntity.Options);
                         }
                     }
                 }
@@ -246,9 +242,9 @@ namespace Azure.Messaging.ServiceBus
                                 this.QueueName,
                                 MessagingEntityType.Queue,
                                 this.ReceiveMode,
-                                this.ServiceBusConnection,
+                                ClientEntity.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.Options,
+                                ClientEntity.Options,
                                 this.PrefetchCount);
                         }
                     }
@@ -269,14 +265,14 @@ namespace Azure.Messaging.ServiceBus
                         if (this.sessionClient == null)
                         {
                             this.sessionClient = new SessionClient(
-                                this.ClientId,
+                                ClientEntity.ClientId,
                                 this.Path,
                                 MessagingEntityType.Queue,
                                 this.ReceiveMode,
                                 this.PrefetchCount,
-                                this.ServiceBusConnection,
+                                ClientEntity.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.Options);
+                                ClientEntity.Options);
                         }
                     }
                 }
@@ -296,10 +292,10 @@ namespace Azure.Messaging.ServiceBus
                         if (this.sessionPumpHost == null)
                         {
                             this.sessionPumpHost = new SessionPumpHost(
-                                this.ClientId,
+                                ClientEntity.ClientId,
                                 this.ReceiveMode,
                                 this.SessionClient,
-                                this.ServiceBusConnection.Endpoint);
+                                ClientEntity.ServiceBusConnection.Endpoint);
                         }
                     }
                 }
@@ -323,7 +319,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public Task SendAsync(IList<Message> messageList)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
 
             return this.InnerSender.SendAsync(messageList);
         }
@@ -339,7 +335,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public Task CompleteAsync(string lockToken)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerReceiver.CompleteAsync(lockToken);
         }
 
@@ -356,7 +352,7 @@ namespace Azure.Messaging.ServiceBus
         /// This operation can only be performed on messages that were received by this client.
         public Task AbandonAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerReceiver.AbandonAsync(lockToken, propertiesToModify);
         }
 
@@ -374,7 +370,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public Task DeadLetterAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerReceiver.DeadLetterAsync(lockToken, propertiesToModify);
         }
 
@@ -393,7 +389,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerReceiver.DeadLetterAsync(lockToken, deadLetterReason, deadLetterErrorDescription);
         }
 
@@ -420,7 +416,7 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             this.InnerReceiver.RegisterMessageHandler(handler, messageHandlerOptions);
         }
 
@@ -450,7 +446,7 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>Enable prefetch to speed up the receive rate. </remarks>
         public void RegisterSessionHandler(Func<MessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             this.SessionPumpHost.OnSessionHandler(handler, sessionHandlerOptions);
         }
 
@@ -461,7 +457,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
         }
 
@@ -471,11 +467,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
         public Task CancelScheduledMessageAsync(long sequenceNumber)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
         }
+        
+        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
 
-        protected override async Task OnClosingAsync()
+        internal async Task OnClosingAsync()
         {
             if (this.innerSender != null)
             {

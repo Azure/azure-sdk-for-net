@@ -7,6 +7,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
     static class TestConstants
     {
+        // Enviornment Variables
+        internal const string ConnectionStringEnvironmentVariable = "SERVICE_BUS_CONNECTION_STRING";
+
         // General
         internal const string SessionPrefix = "session";
         internal const int MaxAttemptsCount = 5;

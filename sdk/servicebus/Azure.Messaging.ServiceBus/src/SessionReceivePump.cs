@@ -188,7 +188,7 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                while (!this.pumpCancellationToken.IsCancellationRequested && !session.IsClosedOrClosing)
+                while (!this.pumpCancellationToken.IsCancellationRequested && !session.ClientEntity.IsClosedOrClosing)
                 {
                     Message message;
                     try
@@ -256,7 +256,7 @@ namespace Azure.Messaging.ServiceBus
                         {
                             await this.CompleteMessageIfNeededAsync(session, message).ConfigureAwait(false);
                         }
-                        else if (session.IsClosedOrClosing)
+                        else if (session.ClientEntity.IsClosedOrClosing)
                         {
                             // If User closed the session as part of the callback, break out of the loop
                             break;
@@ -281,7 +281,7 @@ namespace Azure.Messaging.ServiceBus
 
         async Task CloseSessionIfNeededAsync(MessageSession session)
         {
-            if (!session.IsClosedOrClosing)
+            if (!session.ClientEntity.IsClosedOrClosing)
             {
                 try
                 {

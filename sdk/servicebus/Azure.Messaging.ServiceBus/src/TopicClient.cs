@@ -31,17 +31,18 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
-    public class TopicClient : ClientEntity
+    public class TopicClient
     {
         readonly object syncLock;
         MessageSender innerSender;
-
+        
+        internal ClientEntity ClientEntity { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="TopicClient"/> to perform operations on a topic.
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
-        public TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ClientOptions options = null)
+        internal TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, options)
         {
         }
@@ -60,7 +61,7 @@ namespace Azure.Messaging.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -77,9 +78,9 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
             ClientOptions options = null)
-            : this(new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider}, entityPath, options)
+            : this(new ServiceBusConnection(endpoint, tokenProvider, options), entityPath, options)
         {
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -88,30 +89,30 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">Topic path.</param>
         public TopicClient(ServiceBusConnection serviceBusConnection, string entityPath, ClientOptions options)
-            : base(options, entityPath)
         {
+            ClientEntity = new ClientEntity(options, entityPath);
             MessagingEventSource.Log.TopicClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
 
             if (string.IsNullOrWhiteSpace(entityPath))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
-            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
+            ClientEntity.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.TopicName = entityPath;
-            this.OwnsConnection = false;
-            this.ServiceBusConnection.ThrowIfClosed();
+            ClientEntity.OwnsConnection = false;
+            ClientEntity.ServiceBusConnection.ThrowIfClosed();
 
-            if (this.ServiceBusConnection.TokenCredential != null)
+            if (ClientEntity.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
             }
             else
             {
                 throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
             }
 
-            MessagingEventSource.Log.TopicClientCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
+            MessagingEventSource.Log.TopicClientCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, ClientEntity.ClientId);
         }
 
         /// <summary>
@@ -122,12 +123,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the name of the topic.
         /// </summary>
-        public override string Path => this.TopicName;
+        public string Path => this.TopicName;
 
-        /// <summary>
-        /// Connection object to the service bus namespace.
-        /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
 
         internal MessageSender InnerSender
         {
@@ -143,9 +140,9 @@ namespace Azure.Messaging.ServiceBus
                                 this.TopicName,
                                 null,
                                 MessagingEntityType.Topic,
-                                this.ServiceBusConnection,
+                                ClientEntity.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.Options);
+                                ClientEntity.Options);
                         }
                     }
                 }
@@ -169,7 +166,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public Task SendAsync(IList<Message> messageList)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSender.SendAsync(messageList);
         }
 
@@ -181,7 +178,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
         }
 
@@ -191,11 +188,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
         public Task CancelScheduledMessageAsync(long sequenceNumber)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
         }
+        
+        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
 
-        protected override async Task OnClosingAsync()
+        internal async Task OnClosingAsync()
         {
             if (this.innerSender != null)
             {

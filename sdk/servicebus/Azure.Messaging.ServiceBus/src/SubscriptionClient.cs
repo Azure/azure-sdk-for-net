@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <remarks>It uses AMQP protocol for communicating with service bus. Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
-    public class SubscriptionClient : ClientEntity
+    public class SubscriptionClient
     {
         int prefetchCount;
         readonly object syncLock;
@@ -59,14 +59,15 @@ namespace Azure.Messaging.ServiceBus
         AmqpSubscriptionClient innerSubscriptionClient;
         SessionClient sessionClient;
         SessionPumpHost sessionPumpHost;
-
+        
+        internal ClientEntity ClientEntity { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="SubscriptionClient"/> to perform operations on a subscription.
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
-        public SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
+        internal SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, ClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, subscriptionName, receiveMode, options)
         {
         }
@@ -85,7 +86,7 @@ namespace Azure.Messaging.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -104,9 +105,9 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential tokenProvider,
             ClientOptions options,
             ReceiveMode receiveMode = ReceiveMode.PeekLock)
-            : this(new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider}, topicPath, subscriptionName, receiveMode, options)
+            : this(new ServiceBusConnection(endpoint, tokenProvider, options), topicPath, subscriptionName, receiveMode, options)
         {
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -117,8 +118,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, ClientOptions options)
-            : base(options, $"{topicPath}/{subscriptionName}")
         {
+            ClientEntity = new ClientEntity(options, $"{topicPath}/{subscriptionName}");
             if (string.IsNullOrWhiteSpace(topicPath))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(topicPath);
@@ -130,26 +131,26 @@ namespace Azure.Messaging.ServiceBus
 
             MessagingEventSource.Log.SubscriptionClientCreateStart(serviceBusConnection?.Endpoint.Authority, topicPath, subscriptionName, receiveMode.ToString());
 
-            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
+            ClientEntity.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.TopicPath = topicPath;
             this.SubscriptionName = subscriptionName;
             this.Path = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.SubscriptionName);
             this.ReceiveMode = receiveMode;
             this.diagnosticSource = new ServiceBusDiagnosticSource(this.Path, serviceBusConnection.Endpoint);
-            this.OwnsConnection = false;
-            this.ServiceBusConnection.ThrowIfClosed();
+            ClientEntity.OwnsConnection = false;
+            ClientEntity.ServiceBusConnection.ThrowIfClosed();
 
-            if (this.ServiceBusConnection.TokenCredential != null)
+            if (ClientEntity.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
             }
             else
             {
                 throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
             }
 
-            MessagingEventSource.Log.SubscriptionClientCreateStop(serviceBusConnection.Endpoint.Authority, topicPath, subscriptionName, this.ClientId);
+            MessagingEventSource.Log.SubscriptionClientCreateStop(serviceBusConnection.Endpoint.Authority, topicPath, subscriptionName, ClientEntity.ClientId);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the formatted path of the subscription client.
         /// </summary>
         /// <seealso cref="EntityNameHelper.FormatSubscriptionPath(string, string)"/>
-        public override string Path { get; }
+        public string Path { get; }
 
         /// <summary>
         /// Gets the name of the subscription.
@@ -213,11 +214,6 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>
-        /// Connection object to the service bus namespace.
-        /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
-
         internal AmqpSubscriptionClient InnerSubscriptionClient
         {
             get
@@ -228,8 +224,8 @@ namespace Azure.Messaging.ServiceBus
                     {
                         this.innerSubscriptionClient = new AmqpSubscriptionClient(
                             this.Path,
-                            this.ServiceBusConnection,
-                            this.Options,
+                            ClientEntity.ServiceBusConnection,
+                            ClientEntity.Options,
                             this.CbsTokenProvider,
                             this.PrefetchCount,
                             this.ReceiveMode);
@@ -251,14 +247,14 @@ namespace Azure.Messaging.ServiceBus
                         if (this.sessionClient == null)
                         {
                             this.sessionClient = new SessionClient(
-                                this.ClientId,
+                                ClientEntity.ClientId,
                                 this.Path,
                                 MessagingEntityType.Subscriber,
                                 this.ReceiveMode,
                                 this.PrefetchCount,
-                                this.ServiceBusConnection,
+                                ClientEntity.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.Options);
+                                ClientEntity.Options);
                         }
                     }
                 }
@@ -278,10 +274,10 @@ namespace Azure.Messaging.ServiceBus
                         if (this.sessionPumpHost == null)
                         {
                             this.sessionPumpHost = new SessionPumpHost(
-                                this.ClientId,
+                                ClientEntity.ClientId,
                                 this.ReceiveMode,
                                 this.SessionClient,
-                                this.ServiceBusConnection.Endpoint);
+                                ClientEntity.ServiceBusConnection.Endpoint);
                         }
                     }
                 }
@@ -303,7 +299,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public Task CompleteAsync(string lockToken)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSubscriptionClient.InnerReceiver.CompleteAsync(lockToken);
         }
 
@@ -319,7 +315,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public Task AbandonAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSubscriptionClient.InnerReceiver.AbandonAsync(lockToken, propertiesToModify);
         }
 
@@ -336,7 +332,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public Task DeadLetterAsync(string lockToken)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken);
         }
 
@@ -354,7 +350,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public Task DeadLetterAsync(string lockToken, IDictionary<string, object> propertiesToModify)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken, propertiesToModify);
         }
 
@@ -373,7 +369,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken, deadLetterReason, deadLetterErrorDescription);
         }
 
@@ -388,7 +384,7 @@ namespace Azure.Messaging.ServiceBus
         /// Use <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, MessageHandlerOptions)"/> to configure the settings of the pump.</remarks>
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, exceptionReceivedHandler);
         }
 
@@ -401,7 +397,7 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, messageHandlerOptions);
         }
 
@@ -431,7 +427,7 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>Enable prefetch to speed up the receive rate. </remarks>
         public void RegisterSessionHandler(Func<MessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             this.SessionPumpHost.OnSessionHandler(handler, sessionHandlerOptions);
         }
 
@@ -465,7 +461,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public async Task AddRuleAsync(RuleDescription description)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
 
             if (description == null)
             {
@@ -473,7 +469,7 @@ namespace Azure.Messaging.ServiceBus
             }
 
             EntityNameHelper.CheckValidRuleName(description.Name);
-            MessagingEventSource.Log.AddRuleStart(this.ClientId, description.Name);
+            MessagingEventSource.Log.AddRuleStart(ClientEntity.ClientId, description.Name);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
             Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.AddRuleStart(description) : null;
@@ -491,7 +487,7 @@ namespace Azure.Messaging.ServiceBus
                     this.diagnosticSource.ReportException(exception);
                 }
 
-                MessagingEventSource.Log.AddRuleException(this.ClientId, exception);
+                MessagingEventSource.Log.AddRuleException(ClientEntity.ClientId, exception);
                 throw;
             }
             finally
@@ -499,7 +495,7 @@ namespace Azure.Messaging.ServiceBus
                 this.diagnosticSource.AddRuleStop(activity, description, addRuleTask?.Status);
             }
 
-            MessagingEventSource.Log.AddRuleStop(this.ClientId);
+            MessagingEventSource.Log.AddRuleStop(ClientEntity.ClientId);
         }
 
         /// <summary>
@@ -508,14 +504,14 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
         public async Task RemoveRuleAsync(string ruleName)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
 
             if (string.IsNullOrWhiteSpace(ruleName))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(ruleName));
             }
 
-            MessagingEventSource.Log.RemoveRuleStart(this.ClientId, ruleName);
+            MessagingEventSource.Log.RemoveRuleStart(ClientEntity.ClientId, ruleName);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
             Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.RemoveRuleStart(ruleName) : null;
             Task removeRuleTask = null;
@@ -532,7 +528,7 @@ namespace Azure.Messaging.ServiceBus
                     this.diagnosticSource.ReportException(exception);
                 }
 
-                MessagingEventSource.Log.RemoveRuleException(this.ClientId, exception);
+                MessagingEventSource.Log.RemoveRuleException(ClientEntity.ClientId, exception);
 
                 throw;
             }
@@ -541,7 +537,7 @@ namespace Azure.Messaging.ServiceBus
                 this.diagnosticSource.RemoveRuleStop(activity, ruleName, removeRuleTask?.Status);
             }
 
-            MessagingEventSource.Log.RemoveRuleStop(this.ClientId);
+            MessagingEventSource.Log.RemoveRuleStop(ClientEntity.ClientId);
         }
 
         /// <summary>
@@ -549,9 +545,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public async Task<IEnumerable<RuleDescription>> GetRulesAsync()
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
 
-            MessagingEventSource.Log.GetRulesStart(this.ClientId);
+            MessagingEventSource.Log.GetRulesStart(ClientEntity.ClientId);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
             Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.GetRulesStart() : null;
             Task<IList<RuleDescription>> getRulesTask = null;
@@ -572,7 +568,7 @@ namespace Azure.Messaging.ServiceBus
                     this.diagnosticSource.ReportException(exception);
                 }
 
-                MessagingEventSource.Log.GetRulesException(this.ClientId, exception);
+                MessagingEventSource.Log.GetRulesException(ClientEntity.ClientId, exception);
 
                 throw;
             }
@@ -581,11 +577,13 @@ namespace Azure.Messaging.ServiceBus
                 this.diagnosticSource.GetRulesStop(activity, rules, getRulesTask?.Status);
             }
 
-            MessagingEventSource.Log.GetRulesStop(this.ClientId);
+            MessagingEventSource.Log.GetRulesStop(ClientEntity.ClientId);
             return rules;
         }
+        
+        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
 
-        protected override async Task OnClosingAsync()
+        internal async Task OnClosingAsync()
         {
             if (this.innerSubscriptionClient != null)
             {

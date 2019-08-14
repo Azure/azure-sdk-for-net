@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// Used to generate Service Bus connection strings.
     /// </summary>
-    public class ServiceBusConnectionStringBuilder
+    internal class ServiceBusConnectionStringBuilder
     {
         const char KeyValueSeparator = '=';
         const char KeyValuePairDelimiter = ';';
@@ -54,6 +54,16 @@ namespace Azure.Messaging.ServiceBus
             {
                 this.ParseConnectionString(connectionString);
             }
+        }
+
+        public ServiceBusConnectionStringBuilder(string endpoint, string entityPath)
+        {
+            if (string.IsNullOrWhiteSpace(endpoint))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(endpoint));
+            }
+            this.Endpoint = endpoint;
+            this.EntityPath = entityPath;
         }
 
         /// <summary>

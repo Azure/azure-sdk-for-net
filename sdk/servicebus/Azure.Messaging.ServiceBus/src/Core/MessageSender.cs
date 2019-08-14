@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// </code>
     /// </example>
     /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
-    public class MessageSender : ClientEntity
+    public class MessageSender
     {
         int deliveryCount;
         readonly ActiveClientLinkManager clientLinkManager;
@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="connectionStringBuilder">The <see cref="ServiceBusConnectionStringBuilder"/> having entity level connection details.</param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
-        public MessageSender(
+        internal MessageSender(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
             ClientOptions options = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, options)
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace Azure.Messaging.ServiceBus.Core
             TokenCredential tokenProvider,
             TransportType transportType = TransportType.Amqp,
             ClientOptions options = null)
-            : this(entityPath, null, null, new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider}, null, options)
+            : this(entityPath, null, null, new ServiceBusConnection(endpoint, tokenProvider, options), null, options)
         {
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ClientOptions options = null)
             : this(entityPath, null, null, serviceBusConnection, null, options)
         {
-            this.OwnsConnection = false;
+            ClientEntity.OwnsConnection = false;
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ClientOptions options = null)
             :this(viaEntityPath, entityPath, null, serviceBusConnection, null, options)
         {
-            this.OwnsConnection = false;
+            ClientEntity.OwnsConnection = false;
         }
 
         internal MessageSender(
@@ -137,8 +137,8 @@ namespace Azure.Messaging.ServiceBus.Core
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
             ClientOptions options)
-            : base(options, entityPath)
         {
+            this.ClientEntity = new ClientEntity(options, entityPath);
             MessagingEventSource.Log.MessageSenderCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
 
             if (string.IsNullOrWhiteSpace(entityPath))
@@ -146,19 +146,19 @@ namespace Azure.Messaging.ServiceBus.Core
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
 
-            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
+            ClientEntity.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.Path = entityPath;
             this.SendingLinkDestination = entityPath;
             this.EntityType = entityType;
-            this.ServiceBusConnection.ThrowIfClosed();
+            ClientEntity.ServiceBusConnection.ThrowIfClosed();
 
             if (cbsTokenProvider != null)
             {
                 this.CbsTokenProvider = cbsTokenProvider;
             }
-            else if (this.ServiceBusConnection.TokenCredential != null)
+            else if (ClientEntity.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
             }
             else
             {
@@ -167,7 +167,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
             this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, CloseSession);
             this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, CloseRequestResponseSession);
-            this.clientLinkManager = new ActiveClientLinkManager(this, this.CbsTokenProvider);
+            this.clientLinkManager = new ActiveClientLinkManager(ClientEntity, this.CbsTokenProvider);
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
 
             if (!string.IsNullOrWhiteSpace(transferDestinationPath))
@@ -177,14 +177,16 @@ namespace Azure.Messaging.ServiceBus.Core
                 this.ViaEntityPath = entityPath;
             }
 
-            MessagingEventSource.Log.MessageSenderCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
+            MessagingEventSource.Log.MessageSenderCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, ClientEntity.ClientId);
         }
+
+        internal ClientEntity ClientEntity { get; set; }
 
         /// <summary>
         /// Gets the entity path of the MessageSender.
         /// In the case of a via-sender, this returns the path of the via entity.
         /// </summary>
-        public override string Path { get; }
+        public string Path { get; }
 
         /// <summary>
         /// In the case of a via-sender, gets the final destination path of the messages; null otherwise.
@@ -195,11 +197,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// In the case of a via-sender, the message is sent to <see cref="TransferDestinationPath"/> via <see cref="ViaEntityPath"/>; null otherwise.
         /// </summary>
         public string ViaEntityPath { get; }
-
-        /// <summary>
-        /// Connection object to the service bus namespace.
-        /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
 
         internal MessagingEntityType? EntityType { get; }
 
@@ -224,7 +221,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         public async Task SendAsync(IList<Message> messageList)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
 
             var count = MessageSender.ValidateMessages(messageList);
             if (count <= 0)
@@ -232,7 +229,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 return;
             }
 
-            MessagingEventSource.Log.MessageSendStart(this.ClientId, count);
+            MessagingEventSource.Log.MessageSendStart(ClientEntity.ClientId, count);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
             Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.SendStart(messageList) : null;
@@ -242,7 +239,7 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 var processedMessages = await this.ProcessMessages(messageList).ConfigureAwait(false);
 
-                sendTask = this.RetryPolicy.RunOperation(() => this.OnSendAsync(processedMessages), this.OperationTimeout);
+                sendTask = ClientEntity.RetryPolicy.RunOperation(() => this.OnSendAsync(processedMessages), ClientEntity.OperationTimeout);
                 await sendTask.ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -252,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Core
                     this.diagnosticSource.ReportException(exception);
                 }
 
-                MessagingEventSource.Log.MessageSendException(this.ClientId, exception);
+                MessagingEventSource.Log.MessageSendException(ClientEntity.ClientId, exception);
                 throw;
             }
             finally
@@ -260,7 +257,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 this.diagnosticSource.SendStop(activity, messageList, sendTask?.Status);
             }
 
-            MessagingEventSource.Log.MessageSendStop(this.ClientId);
+            MessagingEventSource.Log.MessageSendStop(ClientEntity.ClientId);
         }
 
         /// <summary>
@@ -271,7 +268,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public async Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             if (message == null)
             {
                 throw Fx.Exception.ArgumentNull(nameof(message));
@@ -292,7 +289,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
             message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
             MessageSender.ValidateMessage(message);
-            MessagingEventSource.Log.ScheduleMessageStart(this.ClientId, scheduleEnqueueTimeUtc);
+            MessagingEventSource.Log.ScheduleMessageStart(ClientEntity.ClientId, scheduleEnqueueTimeUtc);
             long result = 0;
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
@@ -303,11 +300,11 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 var processedMessage = await this.ProcessMessage(message).ConfigureAwait(false);
 
-                scheduleTask = this.RetryPolicy.RunOperation(
+                scheduleTask = ClientEntity.RetryPolicy.RunOperation(
                     async () =>
                     {
                         result = await this.OnScheduleMessageAsync(processedMessage).ConfigureAwait(false);
-                    }, this.OperationTimeout);
+                    }, ClientEntity.OperationTimeout);
                 await scheduleTask.ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -317,7 +314,7 @@ namespace Azure.Messaging.ServiceBus.Core
                     this.diagnosticSource.ReportException(exception);
                 }
 
-                MessagingEventSource.Log.ScheduleMessageException(this.ClientId, exception);
+                MessagingEventSource.Log.ScheduleMessageException(ClientEntity.ClientId, exception);
                 throw;
             }
             finally
@@ -325,7 +322,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 this.diagnosticSource.ScheduleStop(activity, message, scheduleEnqueueTimeUtc, scheduleTask?.Status, result);
             }
 
-            MessagingEventSource.Log.ScheduleMessageStop(this.ClientId);
+            MessagingEventSource.Log.ScheduleMessageStop(ClientEntity.ClientId);
             return result;
         }
 
@@ -335,13 +332,13 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
         public async Task CancelScheduledMessageAsync(long sequenceNumber)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
             if (Transaction.Current != null)
             {
                 throw new ServiceBusException(false, $"{nameof(CancelScheduledMessageAsync)} method is not supported within a transaction.");
             }
 
-            MessagingEventSource.Log.CancelScheduledMessageStart(this.ClientId, sequenceNumber);
+            MessagingEventSource.Log.CancelScheduledMessageStart(ClientEntity.ClientId, sequenceNumber);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
             Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.CancelStart(sequenceNumber) : null;
@@ -349,8 +346,8 @@ namespace Azure.Messaging.ServiceBus.Core
 
             try
             {
-                cancelTask = this.RetryPolicy.RunOperation(() => this.OnCancelScheduledMessageAsync(sequenceNumber),
-                    this.OperationTimeout);
+                cancelTask = ClientEntity.RetryPolicy.RunOperation(() => this.OnCancelScheduledMessageAsync(sequenceNumber),
+                    ClientEntity.OperationTimeout);
                 await cancelTask.ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -360,26 +357,26 @@ namespace Azure.Messaging.ServiceBus.Core
                     this.diagnosticSource.ReportException(exception);
                 }
 
-                MessagingEventSource.Log.CancelScheduledMessageException(this.ClientId, exception);
+                MessagingEventSource.Log.CancelScheduledMessageException(ClientEntity.ClientId, exception);
                 throw;
             }
             finally
             {
                 this.diagnosticSource.CancelStop(activity, sequenceNumber, cancelTask?.Status);
             }
-            MessagingEventSource.Log.CancelScheduledMessageStop(this.ClientId);
+            MessagingEventSource.Log.CancelScheduledMessageStop(ClientEntity.ClientId);
         }
 
         internal async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage)
         {
             var amqpMessage = amqpRequestMessage.AmqpMessage;
-            var timeoutHelper = new TimeoutHelper(this.OperationTimeout, true);
+            var timeoutHelper = new TimeoutHelper(ClientEntity.OperationTimeout, true);
 
             ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
             var ambientTransaction = Transaction.Current;
             if (ambientTransaction != null)
             {
-                transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
+                transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, ClientEntity.ServiceBusConnection).ConfigureAwait(false);
             }
 
             if (!this.RequestResponseLinkManager.TryGetOpenedObject(out var requestResponseAmqpLink))
@@ -395,8 +392,10 @@ namespace Azure.Messaging.ServiceBus.Core
             return AmqpResponseMessage.CreateResponse(responseAmqpMessage);
         }
 
+        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
+
         /// <summary>Closes the connection.</summary>
-        protected override async Task OnClosingAsync()
+        internal async Task OnClosingAsync()
         {
             this.clientLinkManager.Close();
             await this.SendLinkManager.CloseAsync().ConfigureAwait(false);
@@ -442,7 +441,7 @@ namespace Azure.Messaging.ServiceBus.Core
         async Task<Message> ProcessMessage(Message message)
         {
             var processedMessage = message;
-            foreach (var plugin in this.RegisteredPlugins)
+            foreach (var plugin in ClientEntity.RegisteredPlugins)
             {
                 try
                 {
@@ -464,7 +463,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
         async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
         {
-            if (this.RegisteredPlugins.Count < 1)
+            if (ClientEntity.RegisteredPlugins.Count < 1)
             {
                 return messageList;
             }
@@ -481,7 +480,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
         async Task OnSendAsync(IList<Message> messageList)
         {
-            var timeoutHelper = new TimeoutHelper(this.OperationTimeout, true);
+            var timeoutHelper = new TimeoutHelper(ClientEntity.OperationTimeout, true);
             using (var amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageList))
             {
                 SendingAmqpLink amqpLink = null;
@@ -491,7 +490,7 @@ namespace Azure.Messaging.ServiceBus.Core
                     var ambientTransaction = Transaction.Current;
                     if (ambientTransaction != null)
                     {
-                        transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
+                        transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, ClientEntity.ServiceBusConnection).ConfigureAwait(false);
                     }
 
                     if (!this.SendLinkManager.TryGetOpenedObject(out amqpLink))
@@ -528,7 +527,7 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 var request = AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.ScheduleMessageOperation,
-                        this.OperationTimeout,
+                        ClientEntity.OperationTimeout,
                         null);
 
                 SendingAmqpLink sendLink = null;
@@ -596,7 +595,7 @@ namespace Azure.Messaging.ServiceBus.Core
             var request =
                 AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.CancelScheduledMessageOperation,
-                    this.OperationTimeout,
+                    ClientEntity.OperationTimeout,
                     null);
 
             SendingAmqpLink sendLink = null;
@@ -625,26 +624,26 @@ namespace Azure.Messaging.ServiceBus.Core
 
         async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
-            MessagingEventSource.Log.AmqpSendLinkCreateStart(this.ClientId, this.EntityType, this.SendingLinkDestination);
+            MessagingEventSource.Log.AmqpSendLinkCreateStart(ClientEntity.ClientId, this.EntityType, this.SendingLinkDestination);
 
             var amqpLinkSettings = new AmqpLinkSettings
             {
                 Role = false,
                 InitialDeliveryCount = 0,
                 Target = new Target { Address = this.SendingLinkDestination },
-                Source = new Source { Address = this.ClientId },
+                Source = new Source { Address = ClientEntity.ClientId },
             };
             if (this.EntityType != null)
             {
                 amqpLinkSettings.AddProperty(AmqpClientConstants.EntityTypeName, (int)this.EntityType);
             }
 
-            var endpointUri = new Uri(this.ServiceBusConnection.Endpoint, this.SendingLinkDestination);
+            var endpointUri = new Uri(ClientEntity.ServiceBusConnection.Endpoint, this.SendingLinkDestination);
 
             string[] audience;
             if (this.isViaSender)
             {
-                var transferDestinationEndpointUri = new Uri(this.ServiceBusConnection.Endpoint, this.TransferDestinationPath);
+                var transferDestinationEndpointUri = new Uri(ClientEntity.ServiceBusConnection.Endpoint, this.TransferDestinationPath);
                 audience = new string[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
                 amqpLinkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, this.TransferDestinationPath);
             }
@@ -654,7 +653,7 @@ namespace Azure.Messaging.ServiceBus.Core
             }
 
             string[] claims = {ClaimConstants.Send};
-            var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.SendingLinkDestination, this.ServiceBusConnection, endpointUri, audience, claims, this.CbsTokenProvider, amqpLinkSettings, this.ClientId);
+            var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.SendingLinkDestination, ClientEntity.ServiceBusConnection, endpointUri, audience, claims, this.CbsTokenProvider, amqpLinkSettings, ClientEntity.ClientId);
             Tuple<AmqpObject, DateTime> linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var sendingAmqpLink = (SendingAmqpLink) linkDetails.Item1;
@@ -667,7 +666,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
             this.clientLinkManager.SetActiveSendReceiveLink(activeSendReceiveClientLink);
 
-            MessagingEventSource.Log.AmqpSendLinkCreateStop(this.ClientId);
+            MessagingEventSource.Log.AmqpSendLinkCreateStop(ClientEntity.ClientId);
             return sendingAmqpLink;
         }
 
@@ -677,12 +676,12 @@ namespace Azure.Messaging.ServiceBus.Core
             var amqpLinkSettings = new AmqpLinkSettings();
             amqpLinkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
 
-            var endpointUri = new Uri(this.ServiceBusConnection.Endpoint, entityPath);
+            var endpointUri = new Uri(ClientEntity.ServiceBusConnection.Endpoint, entityPath);
 
             string[] audience;
             if (this.isViaSender)
             {
-                var transferDestinationEndpointUri = new Uri(this.ServiceBusConnection.Endpoint, this.TransferDestinationPath);
+                var transferDestinationEndpointUri = new Uri(ClientEntity.ServiceBusConnection.Endpoint, this.TransferDestinationPath);
                 audience = new string[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
                 amqpLinkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, this.TransferDestinationPath);
             }
@@ -694,13 +693,13 @@ namespace Azure.Messaging.ServiceBus.Core
             string[] claims = { ClaimConstants.Manage, ClaimConstants.Send };
             var amqpRequestResponseLinkCreator = new AmqpRequestResponseLinkCreator(
                 entityPath,
-                this.ServiceBusConnection,
+                ClientEntity.ServiceBusConnection,
                 endpointUri,
                 audience,
                 claims,
                 this.CbsTokenProvider,
                 amqpLinkSettings,
-                this.ClientId);
+                ClientEntity.ClientId);
 
             Tuple<AmqpObject, DateTime> linkDetails =
                 await amqpRequestResponseLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);

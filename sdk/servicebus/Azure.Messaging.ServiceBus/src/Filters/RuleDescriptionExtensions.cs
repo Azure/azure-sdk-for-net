@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         var rules = new List<RuleDescription>();
 
-                        var entryList = xDoc.Elements(XName.Get("entry", ClientConstants.AtomNs));
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
                         foreach (var entry in entryList)
                         {
                             rules.Add(ParseFromEntryElement(entry));
@@ -97,11 +97,11 @@ namespace Azure.Messaging.ServiceBus
 
         private static RuleDescription ParseFromEntryElement(XElement xEntry)
         {
-            var name = xEntry.Element(XName.Get("title", ClientConstants.AtomNs)).Value;
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
             var ruleDescription = new RuleDescription();
 
-            var rdXml = xEntry.Element(XName.Get("content", ClientConstants.AtomNs))?
-                .Element(XName.Get("RuleDescription", ClientConstants.SbNs));
+            var rdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
+                .Element(XName.Get("RuleDescription", ManagementClientConstants.SbNs));
 
             if (rdXml == null)
             {
@@ -133,8 +133,8 @@ namespace Azure.Messaging.ServiceBus
         public static XDocument Serialize(this RuleDescription description)
         {
             XDocument doc = new XDocument(
-                   new XElement(XName.Get("entry", ClientConstants.AtomNs),
-                       new XElement(XName.Get("content", ClientConstants.AtomNs),
+                   new XElement(XName.Get("entry", ManagementClientConstants.AtomNs),
+                       new XElement(XName.Get("content", ManagementClientConstants.AtomNs),
                            new XAttribute("type", "application/xml"),
                            description.SerializeRule())));
 
@@ -144,10 +144,10 @@ namespace Azure.Messaging.ServiceBus
         public static XElement SerializeRule(this RuleDescription description, string elementName = "RuleDescription")
         {
             return new XElement(
-                XName.Get(elementName, ClientConstants.SbNs),
+                XName.Get(elementName, ManagementClientConstants.SbNs),
                 description.Filter?.Serialize(),
                 description.Action?.Serialize(),
-                new XElement(XName.Get("Name", ClientConstants.SbNs), description.Name));
+                new XElement(XName.Get("Name", ManagementClientConstants.SbNs), description.Name));
         }
     }
 }

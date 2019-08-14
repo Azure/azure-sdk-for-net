@@ -44,10 +44,12 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <seealso cref="MessageSession"/>
-    public sealed class SessionClient : ClientEntity
+    public sealed class SessionClient
     {
         const int DefaultPrefetchCount = 0;
         readonly ServiceBusDiagnosticSource diagnosticSource;
+        
+        internal ClientEntity ClientEntity { get; set; }
 
         /// <summary>
         /// Creates a new SessionClient from a <see cref="ServiceBusConnectionStringBuilder"/>
@@ -57,7 +59,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages the session object
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
         /// <remarks>Creates a new connection to the entity, which is used for all the sessions objects accepted using this client.</remarks>
-        public SessionClient(
+        internal SessionClient(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             int prefetchCount = DefaultPrefetchCount,
@@ -95,7 +97,7 @@ namespace Azure.Messaging.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -122,11 +124,11 @@ namespace Azure.Messaging.ServiceBus
                 null,
                 receiveMode,
                 prefetchCount,
-                new ServiceBusConnection(endpoint, options) {TokenCredential = tokenProvider},
+                new ServiceBusConnection(endpoint, tokenProvider, options),
                 null,
                 options)
         {
-            this.OwnsConnection = true;
+            ClientEntity.OwnsConnection = true;
         }
 
         /// <summary>
@@ -152,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
                 null,
                 options)
         {
-            this.OwnsConnection = false;
+            ClientEntity.OwnsConnection = false;
         }
 
         internal SessionClient(
@@ -164,27 +166,27 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
             ClientOptions options)
-            : base(options, entityPath)
         {
+            ClientEntity = new ClientEntity(options, entityPath);
             if (string.IsNullOrWhiteSpace(entityPath))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
 
-            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
+            ClientEntity.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.EntityPath = entityPath;
             this.EntityType = entityType;
             this.ReceiveMode = receiveMode;
             this.PrefetchCount = prefetchCount;
-            this.ServiceBusConnection.ThrowIfClosed();
+            ClientEntity.ServiceBusConnection.ThrowIfClosed();
 
             if (cbsTokenProvider != null)
             {
                 this.CbsTokenProvider = cbsTokenProvider;
             }
-            else if (this.ServiceBusConnection.TokenCredential != null)
+            else if (ClientEntity.ServiceBusConnection.TokenCredential != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
             }
             else
             {
@@ -204,12 +206,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the path of the entity. This is either the name of the queue, or the full path of the subscription.
         /// </summary>
-        public override string Path => this.EntityPath;
-
-        /// <summary>
-        /// Connection object to the service bus namespace.
-        /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
+        public string Path => this.EntityPath;
 
         MessagingEntityType? EntityType { get; }
 
@@ -224,7 +221,7 @@ namespace Azure.Messaging.ServiceBus
         /// Individual sessions can further register additional plugins.</remarks>
         public Task<MessageSession> AcceptMessageSessionAsync()
         {
-            return this.AcceptMessageSessionAsync(this.ServiceBusConnection.OperationTimeout);
+            return this.AcceptMessageSessionAsync(ClientEntity.ServiceBusConnection.OperationTimeout);
         }
 
         /// <summary>
@@ -246,7 +243,7 @@ namespace Azure.Messaging.ServiceBus
         /// Individual sessions can further register additional plugins.</remarks>
         public Task<MessageSession> AcceptMessageSessionAsync(string sessionId)
         {
-            return this.AcceptMessageSessionAsync(sessionId, this.ServiceBusConnection.OperationTimeout);
+            return this.AcceptMessageSessionAsync(sessionId, ClientEntity.ServiceBusConnection.OperationTimeout);
         }
 
         /// <summary>
@@ -258,10 +255,10 @@ namespace Azure.Messaging.ServiceBus
         /// Individual sessions can further register additional plugins.</remarks>
         public async Task<MessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan operationTimeout)
         {
-            this.ThrowIfClosed();
+            ClientEntity.ThrowIfClosed();
 
             MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionStart(
-                this.ClientId,
+                ClientEntity.ClientId,
                 this.EntityPath,
                 this.ReceiveMode,
                 this.PrefetchCount,
@@ -275,16 +272,16 @@ namespace Azure.Messaging.ServiceBus
                 this.EntityPath,
                 this.EntityType,
                 this.ReceiveMode,
-                this.ServiceBusConnection,
+                ClientEntity.ServiceBusConnection,
                 this.CbsTokenProvider,
-                this.Options,
+                ClientEntity.Options,
                 this.PrefetchCount,
                 sessionId,
                 true);
 
             try
             {
-                acceptMessageSessionTask = this.RetryPolicy.RunOperation(
+                acceptMessageSessionTask = ClientEntity.RetryPolicy.RunOperation(
                     () => session.GetSessionReceiverLinkAsync(operationTimeout),
                     operationTimeout);
                 await acceptMessageSessionTask.ConfigureAwait(false);
@@ -297,7 +294,7 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionException(
-                    this.ClientId,
+                    ClientEntity.ClientId,
                     this.EntityPath,
                     exception);
 
@@ -310,16 +307,18 @@ namespace Azure.Messaging.ServiceBus
             }
 
             MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionStop(
-                this.ClientId,
+                ClientEntity.ClientId,
                 this.EntityPath,
                 session.SessionIdInternal);
 
-            session.UpdateClientId(ClientEntity.GenerateClientId(nameof(MessageSession), $"{this.EntityPath}_{session.SessionId}"));
+            session.ClientEntity.UpdateClientId(ClientEntity.GenerateClientId(nameof(MessageSession), $"{this.EntityPath}_{session.SessionId}"));
 
             return session;
         }
+        
+        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
 
-        protected override Task OnClosingAsync()
+        internal Task OnClosingAsync()
         {
             return Task.CompletedTask;
         }

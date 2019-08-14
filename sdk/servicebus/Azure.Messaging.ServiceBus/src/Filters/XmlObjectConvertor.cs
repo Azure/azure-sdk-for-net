@@ -12,13 +12,13 @@ namespace Azure.Messaging.ServiceBus.Filters
     {
         internal static object ParseValueObject(XElement element)
         {
-            var prefix = element.GetPrefixOfNamespace(XNamespace.Get(ClientConstants.XmlSchemaNs));
+            var prefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.XmlSchemaNs));
             if (string.IsNullOrWhiteSpace(prefix))
             {
                 return element.Value;
             }
 
-            var type = element.Attribute(XName.Get("type", ClientConstants.XmlSchemaInstanceNs)).Value;
+            var type = element.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs)).Value;
             switch (type.Substring(prefix.Length + 1))
             {
                 case "string":
@@ -80,9 +80,9 @@ namespace Azure.Messaging.ServiceBus.Filters
                     "Only following types are supported through HTTP: string,int,long,bool,double,DateTime");
             }
 
-            var element = new XElement(XName.Get("Value", ClientConstants.SbNs),
-                new XAttribute(XName.Get("type", ClientConstants.XmlSchemaInstanceNs), type),
-                new XAttribute(XNamespace.Xmlns + prefix, ClientConstants.XmlSchemaNs),
+            var element = new XElement(XName.Get("Value", ManagementClientConstants.SbNs),
+                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs), type),
+                new XAttribute(XNamespace.Xmlns + prefix, ManagementClientConstants.XmlSchemaNs),
                 value);
 
             return element;

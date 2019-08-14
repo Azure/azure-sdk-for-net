@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
         {
             try
             {
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, this.OperationTimeout, null);
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, ClientEntity.OperationTimeout, null);
 
                 if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus
         {
             try
             {
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, this.OperationTimeout, null);
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, ClientEntity.OperationTimeout, null);
 
                 if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus
         {
             try
             {
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, this.OperationTimeout, null);
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, ClientEntity.OperationTimeout, null);
 
                 if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
@@ -177,11 +177,11 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Throw an OperationCanceledException if the object is Closing.
         /// </summary>
-        protected override void ThrowIfClosed()
+        protected void ThrowIfClosed()
         {
-            if (this.IsClosedOrClosing)
+            if (ClientEntity.IsClosedOrClosing)
             {
-                throw new ObjectDisposedException($"MessageSession with Id '{this.ClientId}' has already been closed. Please accept a new MessageSession.");
+                throw new ObjectDisposedException($"MessageSession with Id '{ClientEntity.ClientId}' has already been closed. Please accept a new MessageSession.");
             }
         }
 

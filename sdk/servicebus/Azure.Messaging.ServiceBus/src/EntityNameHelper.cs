@@ -75,22 +75,22 @@ namespace Azure.Messaging.ServiceBus
 
         internal static void CheckValidQueueName(string queueName, string paramName = "queuePath")
         {
-            CheckValidEntityName(queueName, ClientConstants.QueueNameMaximumLength, true, paramName);
+            CheckValidEntityName(queueName, ManagementClientConstants.QueueNameMaximumLength, true, paramName);
         }
 
         internal static void CheckValidTopicName(string topicName, string paramName = "topicPath")
         {
-            CheckValidEntityName(topicName, ClientConstants.TopicNameMaximumLength, true, paramName);
+            CheckValidEntityName(topicName, ManagementClientConstants.TopicNameMaximumLength, true, paramName);
         }
 
         internal static void CheckValidSubscriptionName(string subscriptionName, string paramName = "subscriptionName")
         {
-            CheckValidEntityName(subscriptionName, ClientConstants.SubscriptionNameMaximumLength, false, paramName);
+            CheckValidEntityName(subscriptionName, ManagementClientConstants.SubscriptionNameMaximumLength, false, paramName);
         }
 
         internal static void CheckValidRuleName(string ruleName, string paramName = "ruleName")
         {
-            CheckValidEntityName(ruleName, ClientConstants.RuleNameMaximumLength, false, paramName);
+            CheckValidEntityName(ruleName, ManagementClientConstants.RuleNameMaximumLength, false, paramName);
         }
 
         private static void CheckValidEntityName(string entityName, int maxEntityNameLength, bool allowSeparator, string paramName)
@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus
                 throw new ArgumentException($@"The entity name/path contains an invalid character '{Constants.PathDelimiter}'", paramName);
             }
 
-            foreach (var uriSchemeKey in ClientConstants.InvalidEntityPathCharacters)
+            foreach (var uriSchemeKey in ManagementClientConstants.InvalidEntityPathCharacters)
             {
                 if (entityName.IndexOf(uriSchemeKey) >= 0)
                 {

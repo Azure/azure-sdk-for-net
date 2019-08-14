@@ -565,21 +565,16 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 // The cleanup methods will not throw and are safe to call outside of a try/catch.  They
                 // also have no dependencies on execution order, so allowing them to run in parallel is fine.
                 await Task.WhenAll(
-                    SafeCloseAllAsync(intermediateSender, intermediateReceiver, destination1Sender, destination1ViaSender, destination2ViaSender, destination1Receiver, destination2Receiver),
+                    SafeCloseAllAsync(intermediateSender.CloseAsync, intermediateReceiver.CloseAsync, destination1Sender.CloseAsync, destination1ViaSender.CloseAsync, destination2ViaSender.CloseAsync, destination1Receiver.CloseAsync, destination2Receiver.CloseAsync),
                     intermediateQueue?.CleanupAsync(),
                     destination1?.CleanupAsync(),
                     destination2?.CleanupAsync());
             }
         }
 
-        private Task SafeCloseAllAsync(params ClientEntity[] clientEntities)
+        private Task SafeCloseAllAsync(params Func<Task>[] clientEntities)
         {
-            async Task closeEntity(ClientEntity entity)
-            {
-                try { await entity.CloseAsync(); }  catch {}
-            };
-
-            return Task.WhenAll(clientEntities.Select(entity => closeEntity(entity)));
+            return Task.WhenAll(clientEntities.Select(entity => entity()));
         }
     }
 }

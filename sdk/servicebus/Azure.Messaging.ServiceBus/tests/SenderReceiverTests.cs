@@ -419,7 +419,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
                     Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
 
-                    var connection = sender.ServiceBusConnection;
+                    var connection = sender.ClientEntity.ServiceBusConnection;
                     Assert.Throws<ObjectDisposedException>(() => new MessageSender(connection, queueName));
                 }
                 finally
@@ -494,7 +494,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
                     Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
 
-                    connection = sender.ServiceBusConnection;
+                    connection = sender.ClientEntity.ServiceBusConnection;
                     sender = new MessageSender(connection, queueName);
                     messageBody = Encoding.UTF8.GetBytes("Message 2");
                     message = new Message(messageBody);

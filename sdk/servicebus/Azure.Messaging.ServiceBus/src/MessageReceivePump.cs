@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus
 
         Task RaiseExceptionReceived(Exception e, string action)
         {
-            var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.messageReceiver.Path, this.messageReceiver.ClientId);
+            var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.messageReceiver.Path, this.messageReceiver.ClientEntity.ClientId);
             return this.registerHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus
                             message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);
                             if (message != null)
                             {
-                                MessagingEventSource.Log.MessageReceiverPumpTaskStart(this.messageReceiver.ClientId, message, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
+                                MessagingEventSource.Log.MessageReceiverPumpTaskStart(this.messageReceiver.ClientEntity.ClientId, message, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
 
                                 TaskExtensionHelper.Schedule(() =>
                                 {
@@ -89,7 +89,7 @@ namespace Azure.Messaging.ServiceBus
                             // Not reporting an ObjectDisposedException as we're stopping the pump
                             if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
                             {
-                                MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
+                                MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientEntity.ClientId, string.Empty, exception);
                                 await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                             }
                         }
@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus
                             if (message == null)
                             {
                                 this.maxConcurrentCallsSemaphoreSlim.Release();
-                                MessagingEventSource.Log.MessageReceiverPumpTaskStop(this.messageReceiver.ClientId, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
+                                MessagingEventSource.Log.MessageReceiverPumpTaskStop(this.messageReceiver.ClientEntity.ClientId, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
                             }
                         }
                     });
@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus
                     // Not reporting an ObjectDisposedException as we're stopping the pump
                     if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
                     {
-                        MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
+                        MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientEntity.ClientId, string.Empty, exception);
                         await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                     }
                 }
@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationTokenSource renewLockCancellationTokenSource = null;
             Timer autoRenewLockCancellationTimer = null;
 
-            MessagingEventSource.Log.MessageReceiverPumpDispatchTaskStart(this.messageReceiver.ClientId, message);
+            MessagingEventSource.Log.MessageReceiverPumpDispatchTaskStart(this.messageReceiver.ClientEntity.ClientId, message);
 
             if (this.ShouldRenewLock())
             {
@@ -154,14 +154,14 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                MessagingEventSource.Log.MessageReceiverPumpUserCallbackStart(this.messageReceiver.ClientId, message);
+                MessagingEventSource.Log.MessageReceiverPumpUserCallbackStart(this.messageReceiver.ClientEntity.ClientId, message);
                 await this.onMessageCallback(message, this.pumpCancellationToken).ConfigureAwait(false);
 
-                MessagingEventSource.Log.MessageReceiverPumpUserCallbackStop(this.messageReceiver.ClientId, message);
+                MessagingEventSource.Log.MessageReceiverPumpUserCallbackStop(this.messageReceiver.ClientEntity.ClientId, message);
             }
             catch (Exception exception)
             {
-                MessagingEventSource.Log.MessageReceiverPumpUserCallbackException(this.messageReceiver.ClientId, message, exception);
+                MessagingEventSource.Log.MessageReceiverPumpUserCallbackException(this.messageReceiver.ClientEntity.ClientId, message, exception);
                 await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
 
                 // Nothing much to do if UserCallback throws, Abandon message and Release semaphore.
@@ -190,7 +190,7 @@ namespace Azure.Messaging.ServiceBus
             await this.CompleteMessageIfNeededAsync(message).ConfigureAwait(false);
             this.maxConcurrentCallsSemaphoreSlim.Release();
 
-            MessagingEventSource.Log.MessageReceiverPumpDispatchTaskStop(this.messageReceiver.ClientId, message, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
+            MessagingEventSource.Log.MessageReceiverPumpDispatchTaskStop(this.messageReceiver.ClientEntity.ClientId, message, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
         }
 
         void CancelAutoRenewLock(object state)
@@ -245,7 +245,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     var amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
-                    MessagingEventSource.Log.MessageReceiverPumpRenewMessageStart(this.messageReceiver.ClientId, message, amount);
+                    MessagingEventSource.Log.MessageReceiverPumpRenewMessageStart(this.messageReceiver.ClientEntity.ClientId, message, amount);
 
                     // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
                     // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
@@ -261,7 +261,7 @@ namespace Azure.Messaging.ServiceBus
                         !renewLockCancellationToken.IsCancellationRequested)
                     {
                         await this.messageReceiver.RenewLockAsync(message).ConfigureAwait(false);
-                        MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(this.messageReceiver.ClientId, message);
+                        MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(this.messageReceiver.ClientEntity.ClientId, message);
                     }
                     else
                     {
@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus
                 }
                 catch (Exception exception)
                 {
-                    MessagingEventSource.Log.MessageReceiverPumpRenewMessageException(this.messageReceiver.ClientId, message, exception);
+                    MessagingEventSource.Log.MessageReceiverPumpRenewMessageException(this.messageReceiver.ClientEntity.ClientId, message, exception);
 
                     // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
                     // this renew exception is not relevant anymore. Lets not bother user with this exception.
