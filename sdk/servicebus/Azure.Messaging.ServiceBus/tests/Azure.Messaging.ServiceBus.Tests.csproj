@@ -11,11 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="API\ApiApprovals.ApproveAzureServiceBus.approved.txt" />
-    <None Remove="API\ApiApprovals.ApproveAzureServiceBus.received.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="obj\**" />
     <EmbeddedResource Remove="obj\**" />
     <None Remove="obj\**" />

@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             var amqpMessage = AmqpMessage.Create(data);
 
             var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-            Assert.Equal(messageBody, sbMessage.Body);
+            Assert.True(messageBody.AsSpan().SequenceEqual(sbMessage.Body.Span));
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             var amqpMessage = AmqpMessage.Create(data);
 
             var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-            Assert.Equal(messageBody, sbMessage.Body);
+            Assert.True(messageBody.AsSpan().SequenceEqual(sbMessage.Body.Span));
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
 
             Assert.Equal("SomeUserProperty", convertedSbMessage.UserProperties["UserProperty"]);
-            Assert.Equal(messageBody, convertedSbMessage.Body);
+            Assert.True(messageBody.AsSpan().SequenceEqual(convertedSbMessage.Body.Span));
             Assert.Equal(messageId, convertedSbMessage.MessageId);
             Assert.Equal(partitionKey, convertedSbMessage.PartitionKey);
             Assert.Equal(viaPartitionKey, convertedSbMessage.ViaPartitionKey);

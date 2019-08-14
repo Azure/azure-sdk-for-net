@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Linq;
+
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
     using System;
@@ -40,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     await queueClient.SendAsync(new Message(contentAsBytes));
 
                     var receivedMessage = await tcs.Task.WithTimeout(Timeout);
-                    Assert.Equal(contentAsBytes, receivedMessage.Body);
+                    Assert.True(contentAsBytes.AsSpan().SequenceEqual(receivedMessage.Body.Span));
                 }
                 finally
                 {

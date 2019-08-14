@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.Azure.Management.ServiceBus;
-using Microsoft.Azure.Management.ServiceBus.Models;
-
 namespace Azure.Messaging.ServiceBus.UnitTests
 {
     using System;
@@ -14,41 +11,40 @@ namespace Azure.Messaging.ServiceBus.UnitTests
     using Polly;
 
     internal static class ServiceBusScope
-    {
+    {   
         private static int randomSeed = Environment.TickCount;
 
         private static readonly ThreadLocal<Random> Rng = new ThreadLocal<Random>( () => new Random(Interlocked.Increment(ref randomSeed)), false);
-
-        private static readonly ServiceBusManagementClient ManagementClient = null;// new ServiceBusManagementClient(TestUtility.NamespaceConnectionString);
+        private static readonly ManagementClient ManagementClient = new ManagementClient(TestUtility.NamespaceConnectionString);        
 
         /// <summary>
         ///   Creates a temporary Service Bus queue to be used within a given scope and then removed.
         /// </summary>
-        ///
+        /// 
         /// <param name="partitioned">If <c>true</c>, a partitioned queue will be used.</param>
         /// <param name="sessionEnabled">If <c>true</c>, a session will be enabled on the queue.</param>
         /// <param name="configureQueue">If provided, an action that can override the default properties used for queue creation.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
-        ///
+        /// 
         /// <returns>The queue scope that was created.</returns>
-        ///
-        public static async Task<QueueScope> CreateQueueAsync(bool partitioned,
-                                                              bool sessionEnabled,
-                                                              Action<SBQueue> configureQueue = null,
+        /// 
+        public static async Task<QueueScope> CreateQueueAsync(bool partitioned, 
+                                                              bool sessionEnabled,                                                   
+                                                              Action<QueueDescription> configureQueue = null, 
                                                               [CallerMemberName] string caller = "")
         {
             var name = $"{ caller }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
             var queueDescription = BuildQueueDescription(name, partitioned, sessionEnabled);
 
             configureQueue?.Invoke(queueDescription);
-            await CreateRetryPolicy<SBQueue>().ExecuteAsync( () => ManagementClient.Queues.CreateOrUpdateAsync("RG", "NS", queueDescription.Name, queueDescription));
+            await CreateRetryPolicy<QueueDescription>().ExecuteAsync( () => ManagementClient.CreateQueueAsync(queueDescription));
 
-            return new QueueScope(name, async () =>
+            return new QueueScope(name, async () => 
             {
-                try
-                {
-                    await CreateRetryPolicy().ExecuteAsync( () => ManagementClient.Queues.DeleteAsync("RG", "NS", name));
-                }
+                try 
+                { 
+                    await CreateRetryPolicy().ExecuteAsync( () => ManagementClient.DeleteQueueAsync(name)); 
+                }  
                 catch (Exception ex)
                 {
                     TestUtility.Log($"There was an issue removing the queue: [{ name }].  This is considered non-fatal, but you should remove this manually from the Service Bus namespace. Exception: [{ ex.Message }]");
@@ -59,19 +55,19 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         /// <summary>
         ///   Creates a temporary Service Bus topic, with subscription to be used within a given scope and then removed.
         /// </summary>
-        ///
+        /// 
         /// <param name="partitioned">If <c>true</c>, a partitioned topic will be used.</param>
         /// <param name="sessionEnabled">If <c>true</c>, a session will be enabled  on the subscription.</param>
         /// <param name="configureTopic">If provided, an action that can override the default properties used for topic creation.</param>
         /// <param name="configureSubscription">If provided, an action that can override the default properties used for topic creation.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
-        ///
+        /// 
         /// <returns>The topic scope that was created.</returns>
-        ///
-        public static async Task<TopicScope> CreateTopicAsync(bool partitioned,
-                                                              bool sessionEnabled,
-                                                              Action<SBTopic> configureTopic = null,
-                                                              Action<SBSubscription> configureSubscription = null,
+        /// 
+        public static async Task<TopicScope> CreateTopicAsync(bool partitioned, 
+                                                              bool sessionEnabled,                                                   
+                                                              Action<TopicDescription> configureTopic = null, 
+                                                              Action<SubscriptionDescription> configureSubscription = null, 
                                                               [CallerMemberName] string caller = "")
         {
             var topicName = $"{ caller }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
@@ -82,50 +78,50 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             configureTopic?.Invoke(topicDescription);
             configureSubscription?.Invoke(subscriptionDescription);
 
-            await CreateRetryPolicy<SBTopic>().ExecuteAsync( () => ManagementClient.Topics.CreateOrUpdateAsync("RG", "NS", topicDescription.Name, topicDescription));
-            await CreateRetryPolicy<SBSubscription>().ExecuteAsync( () => ManagementClient.Subscriptions.CreateOrUpdateAsync("RG", "NS", topicName, subscriptionDescription.Name, subscriptionDescription));
-
+            await CreateRetryPolicy<TopicDescription>().ExecuteAsync( () => ManagementClient.CreateTopicAsync(topicDescription));
+            await CreateRetryPolicy<SubscriptionDescription>().ExecuteAsync( () => ManagementClient.CreateSubscriptionAsync(subscriptionDescription));
+                             
             return new TopicScope(topicName, subscripionName, async () =>
             {
-                try
-                {
-                    await CreateRetryPolicy().ExecuteAsync( () => ManagementClient.Topics.DeleteAsync("RG", "NS", topicName));
-                }
+                try 
+                { 
+                    await CreateRetryPolicy().ExecuteAsync( () => ManagementClient.DeleteTopicAsync(topicName)); 
+                }  
                 catch (Exception ex)
                 {
                     TestUtility.Log($"There was an issue removing the topic: [{ topicName }].  This is considered non-fatal, but you should remove this manually from the Service Bus namespace. Exception: [{ ex.Message }]");
                 }
             });
-        }
+        } 
 
         /// <summary>
         ///   Performs an operation within the scope of a temporary Service Bus queue.
         /// </summary>
-        ///
+        /// 
         /// <param name="partitioned">If <c>true</c>, a partitioned queue will be used.</param>
         /// <param name="sessionEnabled">If <c>true</c>, a session will be required on the queue.</param>
         /// <param name="scopedOperationAsync">The asynchronous operation to be performed; the name of the queue will be passed to the operation.</param>
         /// <param name="configureQueue">If provided, an action that can override the default properties used for queue creation.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
-        ///
+        /// 
         /// <returns>The task representing the operation being performed</returns>
-        ///
-        public static async Task UsingQueueAsync(bool partitioned,
-                                                 bool sessionEnabled,
-                                                 Func<string, Task> scopedOperationAsync,
-                                                 Action<SBQueue> configureQueue = null,
+        /// 
+        public static async Task UsingQueueAsync(bool partitioned, 
+                                                 bool sessionEnabled, 
+                                                 Func<string, Task> scopedOperationAsync, 
+                                                 Action<QueueDescription> configureQueue = null, 
                                                  [CallerMemberName] string caller = "")
         {
             if (scopedOperationAsync == null)
             {
                 throw new ArgumentNullException(nameof(scopedOperationAsync));
-            }
-
+            }          
+            
             var scope = default(QueueScope);
 
             try
             {
-                 scope = await CreateQueueAsync(partitioned, sessionEnabled, configureQueue, caller);
+                 scope = await CreateQueueAsync(partitioned, sessionEnabled, configureQueue, caller);                 
                  await scopedOperationAsync(scope.Name);
             }
             finally
@@ -137,21 +133,21 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         /// <summary>
         ///   Performs an operation within the scope of a temporary Service Bus topic, with subscription.
         /// </summary>
-        ///
+        /// 
         /// <param name="partitioned">If <c>true</c>, a partitioned topic will be used.</param>
         /// <param name="sessionEnabled">If <c>true</c>, a session will be required on the subscription.</param>
         /// <param name="scopedOperationAsync">The asynchronous operation to be performed; the name of the topic and subscription will be passed to the operation.</param>
         /// <param name="configureTopic">If provided, an action that can override the default properties used for topic creation.</param>
         /// <param name="configureTSubscription">If provided, an action that can override the default properties used for topic creation.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
-        ///
+        /// 
         /// <returns>The task representing the operation being performed</returns>
-        ///
-        public static async Task UsingTopicAsync(bool partitioned,
-                                                 bool sessionEnabled,
-                                                 Func<string, string, Task> scopedOperationAsync,
-                                                 Action<SBTopic> configureTopic = null,
-                                                 Action<SBSubscription> configureSubscription = null,
+        /// 
+        public static async Task UsingTopicAsync(bool partitioned, 
+                                                 bool sessionEnabled, 
+                                                 Func<string, string, Task> scopedOperationAsync, 
+                                                 Action<TopicDescription> configureTopic = null, 
+                                                 Action<SubscriptionDescription> configureSubscription = null, 
                                                  [CallerMemberName] string caller = "")
         {
             if (scopedOperationAsync == null)
@@ -170,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             {
                 await scope?.CleanupAsync();
             }
-        }
+        } 
 
         private static IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = TestConstants.RetryMaxAttempts, double exponentialBackoffSeconds = TestConstants.RetryExponentialBackoffSeconds, double baseJitterSeconds = TestConstants.RetryBaseJitterSeconds) =>
             Policy<T>
@@ -187,34 +183,36 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
             TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (Rng.Value.NextDouble() * baseJitterSeconds));
 
-        private static SBQueue BuildQueueDescription(string name, bool partitioned, bool sessionEnabled) =>
-            new SBQueue(
-                name,
-                defaultMessageTimeToLive: TestConstants.QueueDefaultMessageTimeToLive,
-                lockDuration: TestConstants.QueueDefaultLockDuration,
-                duplicateDetectionHistoryTimeWindow: TestConstants.QueueDefaultDuplicateDetectionHistory,
-                maxSizeInMegabytes: TestConstants.QueueDefaultMaxSizeMegabytes,
-                enablePartitioning: partitioned,
-                requiresSession: sessionEnabled);
+        private static QueueDescription BuildQueueDescription(string name, bool partitioned, bool sessionEnabled) =>
+            new QueueDescription(name)
+            {
+                DefaultMessageTimeToLive = TestConstants.QueueDefaultMessageTimeToLive,
+                LockDuration = TestConstants.QueueDefaultLockDuration,
+                DuplicateDetectionHistoryTimeWindow = TestConstants.QueueDefaultDuplicateDetectionHistory,
+                MaxSizeInMB = TestConstants.QueueDefaultMaxSizeMegabytes,
+                EnablePartitioning = partitioned,
+                RequiresSession = sessionEnabled
+            };
 
-        private static SBTopic BuildTopicDescription(string name, bool partitioned) =>
-            new SBTopic(
-                name,
-                defaultMessageTimeToLive: TestConstants.TopicDefaultMessageTimeToLive,
-                duplicateDetectionHistoryTimeWindow: TestConstants.TopicDefaultDuplicateDetectionHistory,
-                maxSizeInMegabytes: TestConstants.TopicDefaultMaxSizeMegabytes,
-                enablePartitioning: partitioned);
+        private static TopicDescription BuildTopicDescription(string name, bool partitioned) =>
+            new TopicDescription(name)
+            {
+                DefaultMessageTimeToLive = TestConstants.TopicDefaultMessageTimeToLive,
+                DuplicateDetectionHistoryTimeWindow = TestConstants.TopicDefaultDuplicateDetectionHistory,
+                MaxSizeInMB = TestConstants.TopicDefaultMaxSizeMegabytes,
+                EnablePartitioning = partitioned
+            };
 
-        private static SBSubscription BuildSubscriptionDescription(string subscriptionName, string topicName, bool sessionEnabled) =>
-            new SBSubscription(
-                topicName,
-                subscriptionName,
-                defaultMessageTimeToLive: TestConstants.SubscriptionDefaultMessageTimeToLive,
-                lockDuration: TestConstants.SubscriptionDefaultLockDuration,
-                maxDeliveryCount: TestConstants.SubscriptionMaximumDeliveryCount,
-                deadLetteringOnMessageExpiration: TestConstants.SubscriptionDefaultDeadLetterOnExpire,
-                deadLetteringOnFilterEvaluationExceptions: TestConstants.SubscriptionDefaultDeadLetterOnException,
-                requiresSession: sessionEnabled);
+        private static SubscriptionDescription BuildSubscriptionDescription(string subscriptionName, string topicName, bool sessionEnabled) =>
+            new SubscriptionDescription(topicName, subscriptionName)
+            {
+                DefaultMessageTimeToLive = TestConstants.SubscriptionDefaultMessageTimeToLive,
+                LockDuration = TestConstants.SubscriptionDefaultLockDuration,
+                MaxDeliveryCount = TestConstants.SubscriptionMaximumDeliveryCount,
+                EnableDeadLetteringOnMessageExpiration = TestConstants.SubscriptionDefaultDeadLetterOnExpire,
+                EnableDeadLetteringOnFilterEvaluationExceptions = TestConstants.SubscriptionDefaultDeadLetterOnException,
+                RequiresSession = sessionEnabled
+            };
 
         internal sealed class QueueScope
         {
