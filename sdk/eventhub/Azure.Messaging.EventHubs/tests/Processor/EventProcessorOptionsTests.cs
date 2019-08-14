@@ -1,4 +1,7 @@
-﻿using Azure.Messaging.EventHubs.Processor;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Messaging.EventHubs.Processor;
 using NUnit.Framework;
 using System;
 
