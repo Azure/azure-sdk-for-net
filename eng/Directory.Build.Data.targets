@@ -11,7 +11,7 @@
     <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty something must have messed up property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
-  
+
   <!-- Set PackageProjectUrl to the package README for Client Libraries -->
   <Target Name="SetPackageProjectUrl" BeforeTargets="ValidateTargetFrameworks" Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and
    '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(CommitSHA)' != ''">
@@ -26,7 +26,7 @@
   <!-- This allows us to build .NET Framework targets on non-windows
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true' and '$(OS)' != 'Windows_NT'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
