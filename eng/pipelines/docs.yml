@@ -75,11 +75,7 @@ jobs:
           Copy-Item "$(Build.SourcesDirectory)/README.md" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/index.md" -Recurse -Force
           Copy-Item "$(Build.SourcesDirectory)/README.md" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/api/index.md" -Recurse -Force
           Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/docfx.json" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project" -Recurse -Force
-          Remove-Item -Path "$(Build.BinariesDirectory)/docfx-output/docfx_project/toc.yml" -Force
-          New-Item -Path "$(Build.BinariesDirectory)/docfx-output/docfx_project" -Name "toc.yml"
-          Add-Content -Path "$(Build.BinariesDirectory)/docfx-output/docfx_project/toc.yml" -Value "- name: Api Documentation"
-          Add-Content -Path "$(Build.BinariesDirectory)/docfx-output/docfx_project/toc.yml" -Value "  href: api/"
-          Add-Content -Path "$(Build.BinariesDirectory)/docfx-output/docfx_project/toc.yml" -Value "  homepage: api/index.md"
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/toc.yml" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/toc.yml" -Recurse -Force
         displayName: Copy over Yaml and Md files
       - task: CmdLine@2
         displayName: Build Doc Content
