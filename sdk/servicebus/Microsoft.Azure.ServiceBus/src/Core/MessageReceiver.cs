@@ -1591,6 +1591,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             var receivingAmqpLink = (ReceivingAmqpLink)sender;
             if (receivingAmqpLink != null)
             {
+                receivingAmqpLink.Closed -= this.OnSessionReceiverLinkClosed;
+
                 var exception = receivingAmqpLink.GetInnerException();
                 if (!(exception is SessionLockLostException))
                 {
