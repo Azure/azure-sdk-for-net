@@ -39,11 +39,6 @@ param
   [Parameter(Mandatory=$true, ParameterSetName="Execute")]
   [ValidateNotNullOrEmpty()]
   [ValidateScript({ $_.Length -ge 6})]
-  [string] $StorageAccountName,
-
-  [Parameter(Mandatory=$true, ParameterSetName="Execute")]
-  [ValidateNotNullOrEmpty()]
-  [ValidateScript({ $_.Length -ge 6})]
   [string] $ServicePrincipalName,
 
   [Parameter(Mandatory=$true, ParameterSetName="Execute")]
@@ -83,7 +78,7 @@ function DisplayHelp
   Write-Host "$($indent)for use with the Event Hubs client library Live test suite."
   Write-Host ""
   Write-Host "$($indent)Upon completion, the script will output a set of environment variables with sensitive information which"
-  Write-Host "$($indent)fare used for testing.  When running Live tests, please be sure to have these environment variables available,"
+  Write-Host "$($indent)are used for testing.  When running Live tests, please be sure to have these environment variables available,"
   Write-Host "$($indent)either within Visual Studio or command line environment."
   Write-Host ""
   Write-Host "$($indent)NOTE: Some of these values, such as the client secret, are difficult to recover; please copy them and keep in a"
@@ -103,12 +98,7 @@ function DisplayHelp
   Write-Host "$($indent)`t`t`t`tused for the tests.  This will be created if it does not exist."
   Write-Host ""
 
-  Write-Host "$($indent)-StorageAccountName`t`tThe name of the Azure Storage account that will be used as durable "
-  Write-Host "$($indent)`t`t`t`tstorage for the Event Processor Host series of tests.  This will be created if it does"
-  Write-Host "$($indent)`t`t`t`tnot exist."
-  Write-Host ""
-
-  Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will be"
+  Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will"
   Write-Host "$($indent)`t`t`t`tbe created to manage the Event Hub instances dynamically for the tests.  This"
   Write-Host "$($indent)`t`t`t`tprincipal must not already exist."
   Write-Host ""
@@ -169,39 +159,21 @@ function TearDownResources
 {
     <#
       .SYNOPSIS
-        Cleans up any Azure resoruces created by the script.
+        Cleans up any Azure resources created by the script.
         
       .DESCRIPTION
-        Responsible for cleaning up any Azure resoruces created 
+        Responsible for cleaning up any Azure resources created 
         by the script in case of failure.
     #>
     
     param
     (
         [Parameter(Mandatory=$true)]
-        [bool] $cleanResourceGroup,
-
-        [Parameter(Mandatory=$true)]
-        [bool] $cleanStorage
+        [bool] $cleanResourceGroup
     )
     
     Write-Host("Cleaning up resources that were created:")
     
-    if ($cleanStorage)
-    {
-        try 
-        {
-            Write-Host "`t...Removing Azure Storage account `"$($AzureStorageName)`""
-            Remove-AzStorageAccount -ResourceGroupName "$($ResourceGroupName)" -Name "$($StorageAccountName)" -Force | Out-Null
-        }
-        catch 
-        {
-            Write-Error "The Azure Storage account: $($StorageAccountName) could not be removed.  You will need to delete this manually."
-            Write-Error ""            
-            Write-Error $_.Exception.Message
-        }
-    }
-
     if ($cleanResourceGroup)
     {
         try 
@@ -233,7 +205,7 @@ if ([String]::IsNullOrEmpty($AzureRegion))
     $AzureRegion = "southcentralus"
 }
 
-# Disallow prinicpal names with a space.
+# Disallow principal names with a space.
 
 if ($ServicePrincipalName.Contains(" "))
 {
@@ -282,50 +254,22 @@ if ($resourceGroup -eq $null)
 
 if ($createResourceGroup)
 {
-    Write-Host "`t...Creaating new resource group"
+    Write-Host "`t...Creating new resource group"
     $resourceGroup = (New-AzResourceGroup -Name "$($ResourceGroupName)" -Location "$($AzureRegion)")
 }
 
 if ($resourceGroup -eq $null)
 {
-    Write-Error "Unable to locate or create the resource goup: $($ResourceGroupName)"
+    Write-Error "Unable to locate or create the resource group: $($ResourceGroupName)"
     exit -1
 }
 
 # At this point, we may have created a resource, so be safe and allow for removing any
-# resoruces created should the script fail.
+# resources created should the script fail.
 
 try 
 {
-    # Create the Azure Storage account, if needed.
-
-    Write-Host "`t...Requesting Azure Storage account"
-    $createStorage = $false
-    $storageAccount = (Get-AzStorageAccount  -ResourceGroupName "$($ResourceGroupName)" -Name "$($StorageAccountName)" -ErrorAction SilentlyContinue)
-
-     if ($storageAccount -eq $null)
-    {
-        $createStorage = $true
-    }
-
-     if ($createStorage)
-    {
-        Write-Host "`t...Creating new Azure Storage account"
-        Start-Sleep 1
-
-        $storageAccount = (New-AzStorageAccount -ResourceGroupName "$($ResourceGroupName)" -Name "$($StorageAccountName)" -Location "$($AzureRegion)" -SkuName "Standard_LRS")
-    }
-
-     if ($storageAccount -eq $null)
-    {
-        Write-Error "Unable to locate or create the Azure Storage account: $($StorageAccountName)"
-        TearDownResources $createResourceGroup $createStorage  $false
-        exit -1
-    }
-
-    $storageKey = (Get-AzStorageAccountKey -ResourceGroupName "$($ResourceGroupName)" -Name "$($StorageAccountName)").Value[0]
-
-    # Create the service prinicpal and grant contributor access for management in the resource group.
+    # Create the service principal and grant contributor access for management in the resource group.
 
     Write-Host "`t...Creating new service principal"
     Start-Sleep 1
@@ -357,7 +301,7 @@ try
         New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
     }    
 
-    # Write the environment variables
+    # Write the environment variables.
 
     Write-Host "Done."
     Write-Host ""
@@ -372,12 +316,10 @@ try
     Write-Host ""
     Write-Host "EVENT_HUBS_SECRET=$($credentials.Password)"
     Write-Host ""
-    Write-Host "EVENT_HUBS_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=$($StorageAccountName);AccountKey=$($storageKey);EndpointSuffix=core.windows.net"
-    Write-Host ""
 }
 catch 
 {
     Write-Error $_.Exception.Message
-    TearDownResources $createResourceGroup $createStorage
+    TearDownResources $createResourceGroup
     exit -1
 }

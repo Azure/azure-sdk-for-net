@@ -27,7 +27,7 @@ Tests in the Event Hubs client library are split into two categories:
 
 - **Unit tests** have no special considerations; these are self-contained and execute locally without any reliance on external resources.  Unit tests are considered the default test type in the Event Hubs client library and, thus, have no explicit category trait attached to them.
 
-- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "Live".  Specifically, an Azure resource group and Azure Service Principal with "contributor" rights to that resource group is required.  For each test run, the Live tests will use the service principal to dynamically create an Event Hubs namespace within the resource group and remove it once the test run is complete.
+- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "Live".  To run them, an Azure resource group and Azure Service Principal with "contributor" rights to that resource group are required.  For each test run, the Live tests will use the service principal to dynamically create an Event Hubs namespace within the resource group and remove it once the test run is complete.
 
 The Live tests read information from the following environment variables:
 

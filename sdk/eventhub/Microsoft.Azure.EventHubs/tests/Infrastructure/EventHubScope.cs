@@ -12,9 +12,12 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.Storage;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Polly;
+
+using Storage = Microsoft.Azure.Management.Storage.Models;
 
 namespace Microsoft.Azure.EventHubs.Tests
 {
@@ -106,7 +109,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             }
         }
 
-        public static async Task<NamespaceProperties> CreateNamespaceAsync()
+        public static async Task<AzureResourceProperties> CreateNamespaceAsync()
         {
             var subscription = TestUtility.EventHubsSubscription;
             var resourceGroup = TestUtility.EventHubsResourceGroup;
@@ -118,20 +121,11 @@ namespace Microsoft.Azure.EventHubs.Tests
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
-                var tags = new Dictionary<string, string>
-                {
-                    { "source", typeof(EventHubScope).Assembly.GetName().Name },
-                    { "platform", System.Runtime.InteropServices.RuntimeInformation.OSDescription },
-                    { "framework", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription },
-                    { "created", $"{ DateTimeOffset.UtcNow.ToString("s") }Z" },
-                    { "cleanup-after", $"{ DateTimeOffset.UtcNow.AddDays(1).ToString("s") }Z" }
-                };
-
-                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: tags, isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
+                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: GetResourceTags(), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
                 eventHubsNamespace = await CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
 
                 var accessKey = await CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, "RootManageSharedAccessKey"));
-                return new NamespaceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
+                return new AzureResourceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
             }
         }
 
@@ -148,6 +142,39 @@ namespace Microsoft.Azure.EventHubs.Tests
             }
         }
 
+        public static async Task<AzureResourceProperties> CreateStorageAsync()
+        {
+            var subscription = TestUtility.EventHubsSubscription;
+            var resourceGroup = TestUtility.EventHubsResourceGroup;
+            var token = await AquireManagementTokenAsync();
+
+            string CreateName() => $"neteventhubstrackone{ Guid.NewGuid().ToString("D").Substring(0, 4) }";
+
+            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            {
+                var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
+
+                var sku = new Storage.Sku(Storage.SkuName.StandardLRS, Storage.SkuTier.Standard);
+                var parameters = new Storage.StorageAccountCreateParameters(sku, Storage.Kind.BlobStorage, location: location, tags: GetResourceTags(), accessTier: Storage.AccessTier.Hot);
+                var storageAccount = await CreateRetryPolicy<Storage.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
+
+                var storageKeys = await CreateRetryPolicy<Storage.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
+                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
+            }
+        }
+
+        public static async Task DeleteStorageAsync(string accountName)
+        {
+            var subscription = TestUtility.EventHubsSubscription;
+            var resourceGroup = TestUtility.EventHubsResourceGroup;
+            var token = await AquireManagementTokenAsync();
+
+            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            {
+                await CreateRetryPolicy().ExecuteAsync(() => client.StorageAccounts.DeleteAsync(resourceGroup, accountName));
+            }
+        }
+
         private static async Task<string> QueryResourceGroupLocationAsync(string accessToken,
                                                                           string resourceGroupName,
                                                                           string subscriptionId)
@@ -158,6 +185,16 @@ namespace Microsoft.Azure.EventHubs.Tests
                 return resourceGroup.Location;
             }
         }
+
+        private static Dictionary<string, string> GetResourceTags() =>
+             new Dictionary<string, string>
+                {
+                    { "source", typeof(EventHubScope).Assembly.GetName().Name },
+                    { "platform", System.Runtime.InteropServices.RuntimeInformation.OSDescription },
+                    { "framework", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription },
+                    { "created", $"{ DateTimeOffset.UtcNow.ToString("s") }Z" },
+                    { "cleanup-after", $"{ DateTimeOffset.UtcNow.AddDays(1).ToString("s") }Z" }
+                };
 
         private static IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttemps, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
            Policy<T>
@@ -201,13 +238,13 @@ namespace Microsoft.Azure.EventHubs.Tests
             return token.Token;
         }
 
-        public struct NamespaceProperties
+        public struct AzureResourceProperties
         {
             public readonly string Name;
             public readonly string ConnectionString;
 
-            internal NamespaceProperties(string name,
-                                         string connectionString)
+            internal AzureResourceProperties(string name,
+                                             string connectionString)
             {
                 Name = name;
                 ConnectionString = connectionString;
