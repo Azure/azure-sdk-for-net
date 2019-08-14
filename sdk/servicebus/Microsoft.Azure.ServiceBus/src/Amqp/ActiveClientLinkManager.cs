@@ -35,6 +35,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public void Close()
         {
+            if (this.activeSendReceiveClientLink != null)
+            {
+                this.activeSendReceiveClientLink.Link.Closed -= this.OnSendReceiveLinkClosed;
+            }
+            if (this.activeRequestResponseClientLink != null)
+            {
+                this.activeRequestResponseClientLink.Link.Closed -= this.OnRequestResponseLinkClosed;
+            }
             this.sendReceiveLinkCbsTokenRenewalTimer.Dispose();
             this.sendReceiveLinkCbsTokenRenewalTimer = null;
             this.requestResponseLinkCbsTokenRenewalTimer.Dispose();
