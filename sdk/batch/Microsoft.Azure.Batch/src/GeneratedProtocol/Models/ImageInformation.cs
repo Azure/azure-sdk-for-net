@@ -32,19 +32,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ImageInformation class.
         /// </summary>
-        /// <param name="nodeAgentSKUId">The ID of the node agent SKU which the
-        /// Image supports.</param>
+        /// <param name="nodeAgentSKUId">The ID of the Compute Node agent SKU
+        /// which the Image supports.</param>
         /// <param name="imageReference">The reference to the Azure Virtual
         /// Machine's Marketplace Image.</param>
         /// <param name="osType">The type of operating system (e.g. Windows or
         /// Linux) of the Image.</param>
         /// <param name="verificationType">Whether the Azure Batch service
         /// actively verifies that the Image is compatible with the associated
-        /// node agent SKU.</param>
+        /// Compute Node agent SKU.</param>
         /// <param name="capabilities">The capabilities or features which the
         /// Image supports.</param>
         /// <param name="batchSupportEndOfLife">The time when the Azure Batch
-        /// service will stop accepting create pool requests for the
+        /// service will stop accepting create Pool requests for the
         /// Image.</param>
         public ImageInformation(string nodeAgentSKUId, ImageReference imageReference, OSType osType, VerificationType verificationType, IList<string> capabilities = default(IList<string>), System.DateTime? batchSupportEndOfLife = default(System.DateTime?))
         {
@@ -63,7 +63,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the node agent SKU which the Image supports.
+        /// Gets or sets the ID of the Compute Node agent SKU which the Image
+        /// supports.
         /// </summary>
         [JsonProperty(PropertyName = "nodeAgentSKUId")]
         public string NodeAgentSKUId { get; set; }
@@ -98,14 +99,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the time when the Azure Batch service will stop
-        /// accepting create pool requests for the Image.
+        /// accepting create Pool requests for the Image.
         /// </summary>
         [JsonProperty(PropertyName = "batchSupportEndOfLife")]
         public System.DateTime? BatchSupportEndOfLife { get; set; }
 
         /// <summary>
         /// Gets or sets whether the Azure Batch service actively verifies that
-        /// the Image is compatible with the associated node agent SKU.
+        /// the Image is compatible with the associated Compute Node agent SKU.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'verified', 'unverified'

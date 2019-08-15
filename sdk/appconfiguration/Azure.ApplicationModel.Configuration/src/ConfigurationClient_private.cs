@@ -6,18 +6,19 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration
 {
     public partial class ConfigurationClient
     {
-        const string MediaTypeProblemApplication = "application/problem+json";
-        const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
+        const string AcceptDateTimeFormat = "R";
         const string AcceptDatetimeHeader = "Accept-Datetime";
         const string KvRoute = "/kv/";
         const string RevisionsRoute = "/revisions/";
@@ -36,13 +37,13 @@ namespace Azure.ApplicationModel.Configuration
 
         static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
-            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation);
+            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return new Response<ConfigurationSetting>(response, result);
         }
 
-        static Response<ConfigurationSetting> CreateResponse(Response response, CancellationToken cancellation)
+        static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream, cancellation));
+            return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
         }
 
         static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
@@ -86,10 +87,10 @@ namespace Azure.ApplicationModel.Configuration
             };
         }
 
-        void BuildUriForKvRoute(HttpPipelineUriBuilder builder, ConfigurationSetting keyValue)
+        void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
             => BuildUriForKvRoute(builder, keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
 
-        void BuildUriForKvRoute(HttpPipelineUriBuilder builder, string key, string label)
+        void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(KvRoute);
@@ -101,7 +102,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        private string EscapeReservedCharacters(string input)
+        private static string EscapeReservedCharacters(string input)
         {
             string resp = string.Empty;
             for (int i=0; i<input.Length; i++)
@@ -118,7 +119,7 @@ namespace Azure.ApplicationModel.Configuration
             return resp;
         }
 
-        internal void BuildBatchQuery(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
+        internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             if (selector.Keys.Count > 0)
             {
@@ -143,7 +144,7 @@ namespace Azure.ApplicationModel.Configuration
                 var labelsCopy = new List<string>();
                 foreach (var label in selector.Labels)
                 {
-                    if (label == string.Empty)
+                    if (string.IsNullOrEmpty(label))
                     {
                         labelsCopy.Add("\0");
                     }
@@ -158,7 +159,7 @@ namespace Azure.ApplicationModel.Configuration
 
             if (selector.Fields != SettingFields.All)
             {
-                var filter = (selector.Fields).ToString().ToLower();
+                var filter = selector.Fields.ToString().ToLowerInvariant();
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
 
@@ -168,14 +169,14 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        void BuildUriForGetBatch(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
+        void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(KvRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
-        void BuildUriForRevisions(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
+        void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(RevisionsRoute);
@@ -189,12 +190,22 @@ namespace Azure.ApplicationModel.Configuration
             return writer.WrittenMemory;
         }
         #region nobody wants to see these
+        /// <summary>
+        /// Check if two ConfigurationSetting instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
+        /// <summary>
+        /// Get a hash code for the ConfigurationSetting
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
+        /// <summary>
+        /// Creates a Key Value string in reference to the ConfigurationSetting.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
         #endregion

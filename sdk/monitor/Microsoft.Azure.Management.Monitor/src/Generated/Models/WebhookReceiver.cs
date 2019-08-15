@@ -36,11 +36,23 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// sent.</param>
         /// <param name="useCommonAlertSchema">Indicates whether to use common
         /// alert schema.</param>
-        public WebhookReceiver(string name, string serviceUri, bool useCommonAlertSchema)
+        /// <param name="useAadAuth">Indicates whether or not use AAD
+        /// authentication.</param>
+        /// <param name="objectId">Indicates the webhook app object Id for aad
+        /// auth.</param>
+        /// <param name="identifierUri">Indicates the identifier uri for aad
+        /// auth.</param>
+        /// <param name="tenantId">Indicates the tenant id for aad
+        /// auth.</param>
+        public WebhookReceiver(string name, string serviceUri, bool useCommonAlertSchema, bool? useAadAuth = default(bool?), string objectId = default(string), string identifierUri = default(string), string tenantId = default(string))
         {
             Name = name;
             ServiceUri = serviceUri;
             UseCommonAlertSchema = useCommonAlertSchema;
+            UseAadAuth = useAadAuth;
+            ObjectId = objectId;
+            IdentifierUri = identifierUri;
+            TenantId = tenantId;
             CustomInit();
         }
 
@@ -67,6 +79,30 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "useCommonAlertSchema")]
         public bool UseCommonAlertSchema { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether or not use AAD authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "useAadAuth")]
+        public bool? UseAadAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the webhook app object Id for aad auth.
+        /// </summary>
+        [JsonProperty(PropertyName = "objectId")]
+        public string ObjectId { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the identifier uri for aad auth.
+        /// </summary>
+        [JsonProperty(PropertyName = "identifierUri")]
+        public string IdentifierUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the tenant id for aad auth.
+        /// </summary>
+        [JsonProperty(PropertyName = "tenantId")]
+        public string TenantId { get; set; }
 
         /// <summary>
         /// Validate the object.

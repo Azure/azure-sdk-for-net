@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="storeSettings">DelimitedText store settings.</param>
         /// <param name="formatSettings">DelimitedText format settings.</param>
-        public DelimitedTextSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), ConnectorWriteSetting storeSettings = default(ConnectorWriteSetting), DelimitedTextWriteSetting formatSettings = default(DelimitedTextWriteSetting))
+        public DelimitedTextSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings), DelimitedTextWriteSettings formatSettings = default(DelimitedTextWriteSettings))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
@@ -65,13 +65,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets delimitedText store settings.
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
-        public ConnectorWriteSetting StoreSettings { get; set; }
+        public StoreWriteSettings StoreSettings { get; set; }
 
         /// <summary>
         /// Gets or sets delimitedText format settings.
         /// </summary>
         [JsonProperty(PropertyName = "formatSettings")]
-        public DelimitedTextWriteSetting FormatSettings { get; set; }
+        public DelimitedTextWriteSettings FormatSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

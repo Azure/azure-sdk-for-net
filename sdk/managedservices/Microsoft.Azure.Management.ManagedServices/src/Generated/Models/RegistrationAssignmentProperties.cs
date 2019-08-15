@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// 'Canceled', 'Failed', 'Succeeded', 'Updating'</param>
         /// <param name="registrationDefinition">Registration definition inside
         /// registration assignment.</param>
-        public RegistrationAssignmentProperties(string registrationDefinitionId, ProvisioningState? provisioningState = default(ProvisioningState?), RegistrationAssignmentPropertiesRegistrationDefinition registrationDefinition = default(RegistrationAssignmentPropertiesRegistrationDefinition))
+        public RegistrationAssignmentProperties(string registrationDefinitionId, string provisioningState = default(string), RegistrationAssignmentPropertiesRegistrationDefinition registrationDefinition = default(RegistrationAssignmentPropertiesRegistrationDefinition))
         {
             RegistrationDefinitionId = registrationDefinitionId;
             ProvisioningState = provisioningState;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// 'Succeeded', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public ProvisioningState? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets registration definition inside registration assignment.

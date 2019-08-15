@@ -6,61 +6,83 @@ using System;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
-using Azure.Storage.Common;
+using Azure.Storage.Sas;
+using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Test
 {
-    internal static class Constants
+    internal class Constants
     {
         public const int KB = 1024;
         public const int MB = KB * 1024;
         public const int GB = MB * 1024;
         public const long TB = GB * 1024L;
 
-        static int seed = Environment.TickCount;
+        public string CacheControl { get; private set; }
+        public string ContentDisposition { get; private set; }
+        public string ContentEncoding { get; private set; }
+        public string ContentLanguage { get; private set; }
+        public string ContentType { get; private set; }
+        public byte[] ContentMD5 { get; private set; }
+        public SasConstants Sas { get; private set; }
 
-        static readonly ThreadLocal<Random> random =
-            new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
-
-        public static readonly string CacheControl = TestHelper.GetNewString();
-        public static readonly string ContentDisposition = TestHelper.GetNewString();
-        public static readonly string ContentEncoding = TestHelper.GetNewString();
-        public static readonly string ContentLanguage = TestHelper.GetNewString();
-        public static readonly string ContentType = TestHelper.GetNewString();
-        public static readonly byte[] ContentMD5 = MD5.Create().ComputeHash(TestHelper.GetRandomBuffer(16));
-
-        public static Random Random => random.Value;
-        internal static class Sas
+        internal class SasConstants
         {
-            public static readonly string Version = TestHelper.GetNewString();
-            public static readonly string Account = TestHelper.GetNewString();
-            public static readonly string Identifier = TestHelper.GetNewString();
-            public static readonly string CacheControl = TestHelper.GetNewString();
-            public static readonly string ContentDisposition = TestHelper.GetNewString();
-            public static readonly string ContentEncoding = TestHelper.GetNewString();
-            public static readonly string ContentLanguage = TestHelper.GetNewString();
-            public static readonly string ContentType = TestHelper.GetNewString();
-            public static readonly SasProtocol Protocol = SasProtocol.Https;
-            public static readonly string AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(TestHelper.GetNewString()));
-            public static readonly DateTimeOffset StartTime = DateTimeOffset.UtcNow.AddHours(-1);
-            public static readonly DateTimeOffset ExpiryTime = DateTimeOffset.UtcNow.AddHours(+1);
-            public static readonly IPAddress startAddress = TestHelper.GetIPAddress();
-            public static readonly IPAddress endAddress = TestHelper.GetIPAddress();
-            public static readonly IPRange IPRange = new IPRange
+            public string KeyOid { get; } = "KeyOid";
+            public string KeyTid { get; } = "KeyTid";
+            public string KeyService { get; } = "KeyService";
+            public string KeyVersion { get; } = "KeyVersion";
+            public string KeyValue { get; } = Convert.ToBase64String(Encoding.UTF8.GetBytes("value"));
+            public SasProtocol Protocol { get; } = SasProtocol.Https;
+
+            public string Version { get; protected internal set; }
+            public string Account { get; protected internal set; }
+            public string Identifier { get; protected internal set; }
+            public string CacheControl { get; protected internal set; }
+            public string ContentDisposition { get; protected internal set; }
+            public string ContentEncoding { get; protected internal set; }
+            public string ContentLanguage { get; protected internal set; }
+            public string ContentType { get; protected internal set; }
+            public string AccountKey { get; protected internal set; }
+            public DateTimeOffset StartTime { get; protected internal set; }
+            public DateTimeOffset ExpiryTime { get; protected internal set; }
+            public IPAddress StartAddress { get; protected internal set; }
+            public IPAddress EndAddress { get; protected internal set; }
+            public IPRange IPRange { get; protected internal set; }
+            public DateTimeOffset KeyStart { get; protected internal set; }
+            public DateTimeOffset KeyExpiry { get; protected internal set; }
+            public StorageSharedKeyCredential SharedKeyCredential { get; protected internal set; }
+        }
+
+        public Constants(StorageTestBase test)
+        {
+            this.CacheControl = test.GetNewString();
+            this.ContentDisposition = test.GetNewString();
+            this.ContentEncoding = test.GetNewString();
+            this.ContentLanguage = test.GetNewString();
+            this.ContentType = test.GetNewString();
+            this.ContentMD5 = MD5.Create().ComputeHash(test.GetRandomBuffer(16));
+
+            this.Sas = new SasConstants
             {
-                Start = startAddress,
-                End = endAddress
+                Version = test.GetNewString(),
+                Account = test.GetNewString(),
+                Identifier = test.GetNewString(),
+                CacheControl = test.GetNewString(),
+                ContentDisposition = test.GetNewString(),
+                ContentEncoding = test.GetNewString(),
+                ContentLanguage = test.GetNewString(),
+                ContentType = test.GetNewString(),
+                AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(test.GetNewString())),
+                StartTime = test.GetUtcNow().AddHours(-1),
+                ExpiryTime = test.GetUtcNow().AddHours(+1),
+                StartAddress = test.GetIPAddress(),
+                EndAddress = test.GetIPAddress(),
+                KeyStart = test.GetUtcNow().AddHours(-1),
+                KeyExpiry = test.GetUtcNow().AddHours(+1)
             };
-            public static readonly string KeyOid = "KeyOid";
-            public static readonly string KeyTid = "KeyTid";
-            public static readonly DateTimeOffset KeyStart = DateTimeOffset.UtcNow.AddHours(-1);
-            public static readonly DateTimeOffset KeyExpiry = DateTimeOffset.UtcNow.AddHours(1);
-            public static readonly string KeyService = "KeyService";
-            public static readonly string KeyVersion = "KeyVersion";
-            public static readonly string KeyValue = Convert.ToBase64String(Encoding.UTF8.GetBytes("value"));
-            public static readonly SharedKeyCredentials SharedKeyCredential
-                = new SharedKeyCredentials(Account, AccountKey);
+            this.Sas.IPRange = new IPRange(this.Sas.StartAddress, this.Sas.EndAddress);
+            this.Sas.SharedKeyCredential = new StorageSharedKeyCredential(this.Sas.Account, this.Sas.AccountKey);
         }
     }
 }

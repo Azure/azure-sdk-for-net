@@ -41,6 +41,11 @@ namespace Microsoft.Azure.Management.ManagedServices
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }

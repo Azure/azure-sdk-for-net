@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheSignatureValue()
         {
-            var signature = new SharedAccessSignature("audience", "keyName", "key", null, DateTime.UtcNow);
+            var signature = new SharedAccessSignature("audience", "keyName", "key", null, DateTimeOffset.UtcNow);
             Assert.That(() => new TrackOneSharedAccessSignatureToken(signature), Throws.InstanceOf<ArgumentException>());
         }
 
@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheSignatureResource()
         {
-            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", String.Empty, DateTime.UtcNow);
+            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", String.Empty, DateTimeOffset.UtcNow);
             Assert.That(() => new TrackOneSharedAccessSignatureToken(signature), Throws.InstanceOf<ArgumentException>());
         }
 
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesInitializesProperties()
         {
-            var expiration = DateTime.UtcNow;
+            var expiration = DateTimeOffset.UtcNow;
             var audience = "the-audience";
             var value = "TOkEn!";
             var signature = new SharedAccessSignature(audience, "keyName", "key", value, expiration);
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(token.Audience, Is.EqualTo(audience), "The audience for the token should match the signature resource.");
             Assert.That(token.TokenValue, Is.EqualTo(value), "The value for the token should match the signature value.");
-            Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration), "The expiration for the token should match the signature expiration.");
+            Assert.That(token.ExpiresAtUtc, Is.EqualTo(expiration.UtcDateTime), "The expiration for the token should match the signature expiration.");
             Assert.That(token.TokenType, Is.EqualTo(ClientConstants.SasTokenType), "The type for the token should match the expected constant.");
         }
     }

@@ -16,6 +16,12 @@ namespace Microsoft.Azure.Search.Serialization
     /// <summary>
     /// Deserializes JSON objects and arrays to .NET types instead of JObject and JArray.
     /// </summary>
+    /// <remarks>
+    /// This JSON converter supports reading only. When deserializing JSON to an instance of type <c cref="Document">Document</c>, it will
+    /// recursively deserialize JSON objects to <c cref="Document">Document</c> instances as well. This includes object properties as well
+    /// as arrays of objects. It also makes a best-effort attempt to deserialize JSON arrays to a specific .NET array type. Heterogenous
+    /// arrays are deserialized to arrays of <c cref="System.Object">System.Object</c>.
+    /// </remarks>
     internal class DocumentConverter : JsonConverter
     {
         private static readonly object[] EmptyObjectArray = new object[0];
@@ -59,7 +65,7 @@ namespace Microsoft.Azure.Search.Serialization
             {
                 case JObject obj:
                     var tokenReader = new JTokenReader(obj);
-                    return GeographyPointConverter.IsGeoJson(obj) ?
+                    return obj.IsGeoJsonPoint() ?
                         serializer.Deserialize<GeographyPoint>(tokenReader) :
                         (object)serializer.Deserialize<Document>(tokenReader);
 
@@ -161,7 +167,7 @@ namespace Microsoft.Azure.Search.Serialization
                     return ConvertToArrayOfValueType<DateTimeOffset>();
 
                 case JTokenType.Object:
-                    return GeographyPointConverter.IsGeoJson((JObject)array[0]) ?
+                    return ((JObject)array[0]).IsGeoJsonPoint() ?
                         ConvertToArrayOfReferenceType<GeographyPoint>() :
                         ConvertToArrayOfReferenceType<Document>();
 

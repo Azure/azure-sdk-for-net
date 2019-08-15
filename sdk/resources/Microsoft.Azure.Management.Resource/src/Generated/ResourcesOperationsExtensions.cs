@@ -231,9 +231,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for the operation.
             /// </param>
-            public static bool CheckExistence(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
+            public static void CheckExistence(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
             {
-                return operations.CheckExistenceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion).GetAwaiter().GetResult();
+                operations.CheckExistenceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -264,12 +264,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckExistenceAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CheckExistenceAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -559,9 +556,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for the operation.
             /// </param>
-            public static bool CheckExistenceById(this IResourcesOperations operations, string resourceId, string apiVersion)
+            public static void CheckExistenceById(this IResourcesOperations operations, string resourceId, string apiVersion)
             {
-                return operations.CheckExistenceByIdAsync(resourceId, apiVersion).GetAwaiter().GetResult();
+                operations.CheckExistenceByIdAsync(resourceId, apiVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -581,12 +578,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckExistenceByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CheckExistenceByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckExistenceByIdWithHttpMessagesAsync(resourceId, apiVersion, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.CheckExistenceByIdWithHttpMessagesAsync(resourceId, apiVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

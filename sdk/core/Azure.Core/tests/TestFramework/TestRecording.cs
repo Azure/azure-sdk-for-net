@@ -10,9 +10,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
-    public class TestRecording: IDisposable
+    public class TestRecording : IDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
+        internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
         public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
         {
@@ -97,6 +98,50 @@ namespace Azure.Core.Testing
             }
         }
 
+        /// <summary>
+        /// The moment in time that this test is being run.
+        /// </summary>
+        private DateTimeOffset? _now;
+
+        /// <summary>
+        /// Gets the moment in time that this test is being run.  This is useful
+        /// for any test recordings that capture the current time.
+        /// </summary>
+        public DateTimeOffset Now
+        {
+            get
+            {
+                if (_now == null)
+                {
+                    switch (Mode)
+                    {
+                        case RecordedTestMode.Live:
+                            _now = DateTimeOffset.Now;
+                            break;
+                        case RecordedTestMode.Record:
+                            // While we can cache DateTimeOffset.Now for playing back tests,
+                            // a number of auth mechanisms are time sensitive and will require
+                            // values in the present when re-recording
+                            _now = DateTimeOffset.Now;
+                            _session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("O"); // Use the "Round-Trip Format"
+                            break;
+                        case RecordedTestMode.Playback:
+                            _now = DateTimeOffset.Parse(_session.Variables[DateTimeOffsetNowVariableKey]);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+                return _now.Value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the moment in time that this test is being run in UTC format.
+        /// This is useful for any test recordings that capture the current time.
+        /// </summary>
+        public DateTimeOffset UtcNow => Now.ToUniversalTime();
+
         private RecordSession Load()
         {
             using FileStream fileStream = File.OpenRead(_sessionFile);
@@ -111,12 +156,17 @@ namespace Azure.Core.Testing
                 var directory = Path.GetDirectoryName(_sessionFile);
                 Directory.CreateDirectory(directory);
 
+                _session.Sanitize(_sanitizer);
+                if (_session.IsEquivalent(_previousSession, _matcher))
+                {
+                    return;
+                }
+
                 using FileStream fileStream = File.Create(_sessionFile);
                 var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
                 {
                     Indented = true
                 });
-                _session.Sanitize(_sanitizer);
                 _session.Serialize(utf8JsonWriter);
                 utf8JsonWriter.Flush();
             }
@@ -142,7 +192,7 @@ namespace Azure.Core.Testing
                 case RecordedTestMode.Record:
                     return new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random);
                 case RecordedTestMode.Playback:
-                    return new PlaybackTransport(_session, _matcher);
+                    return new PlaybackTransport(_session, _matcher, Random);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null);
             }

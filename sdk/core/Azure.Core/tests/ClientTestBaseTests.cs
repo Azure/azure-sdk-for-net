@@ -13,6 +13,7 @@ namespace Azure.Core.Tests
     {
         public ClientTestBaseTests(bool isAsync) : base(isAsync)
         {
+            TestDiagnostics = false;
         }
 
         [Test]
@@ -56,7 +57,7 @@ namespace Azure.Core.Tests
             {
                 var client = InstrumentClient(new TestClient());
                 var exception = Assert.Throws<InvalidOperationException>(() => client.Method(123));
-                Assert.AreEqual("Async method call expected", exception.Message);
+                Assert.AreEqual("Async method call expected for Method", exception.Message);
             }
         }
 

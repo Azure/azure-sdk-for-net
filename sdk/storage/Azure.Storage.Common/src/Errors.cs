@@ -3,16 +3,73 @@
 // license information.
 
 using System;
+using System.Globalization;
+using System.Security.Authentication;
 
 namespace Azure.Storage
 {
-    static partial class Errors
+    /// <summary>
+    /// Create exceptions for common error cases.
+    /// </summary>
+    internal class Errors
     {
-        public static InvalidOperationException NonNullMethodFactoryRequiresDecodingPolicy() => new InvalidOperationException("Non-null methodFactory requires DecodingPolicyFactory in the pipeline");
-        public static InvalidOperationException DecodingPolicyCanOnlyAppearOnce() => new InvalidOperationException("DecodingPolicyFactory can only appear once in the pipeline");
-        public static ArgumentNullException ArgumentNull(string paramName) => new ArgumentNullException(paramName);
-        public static ArgumentException StreamMustBeReadable(string paramName) => new ArgumentException("Stream must be readable", paramName);
-        public static ArgumentOutOfRangeException MustBeGreaterThanOrEqualTo(string paramName, long value) => new ArgumentOutOfRangeException(paramName, $"Value must be greater than or equal to {value}");
-        public static InvalidOperationException TokenCredentialsRequireHttps() => new InvalidOperationException("Use of token credentials requires HTTPS");
+        public static ArgumentNullException ArgumentNull(string paramName) =>
+            new ArgumentNullException(paramName);
+
+        public static ArgumentOutOfRangeException MustBeGreaterThanOrEqualTo(string paramName, long value) =>
+            new ArgumentOutOfRangeException(paramName, $"Value must be greater than or equal to {value}");
+
+        public static ArgumentOutOfRangeException MustBeGreaterThanValueOrEqualToOtherValue(string paramName,
+            long value0,
+            long value1) =>
+            new ArgumentOutOfRangeException(paramName, $"Value must be greater than {value0} or equal to {value1}");
+
+        public static ArgumentOutOfRangeException InvalidSasProtocol(string protocol, string sasProtocol) =>
+            new ArgumentOutOfRangeException(protocol, $"Invalid {sasProtocol} value");
+
+        public static ArgumentException StreamMustBeReadable(string paramName) =>
+            new ArgumentException("Stream must be readable", paramName);
+
+        public static InvalidOperationException StreamMustBeAtPosition0() =>
+            new InvalidOperationException("Stream must be set to position 0");
+
+        public static InvalidOperationException TokenCredentialsRequireHttps() =>
+            new InvalidOperationException("Use of token credentials requires HTTPS");
+
+        public static InvalidOperationException AccountSasMissingData() =>
+            new InvalidOperationException($"Account SAS is missing at least one of these: ExpiryTime, Permissions, Service, or ResourceType");
+
+        public static InvalidOperationException TaskIncomplete() =>
+            new InvalidOperationException("Task is not completed");
+
+        public static ArgumentException InvalidService(char s) =>
+            new ArgumentException($"Invalid service: '{s}'");
+
+        public static ArgumentException InvalidPermission(char s) =>
+            new ArgumentException($"Invalid permission: '{s}'");
+
+        public static ArgumentException InvalidResourceType(char s) =>
+            new ArgumentException($"Invalid resource type: '{s}'");
+
+        public static ArgumentException AccountMismatch(string accountNameCredential, string accountNameValue) =>
+            new ArgumentException(String.Format(CultureInfo.CurrentCulture,
+                "Account Name Mismatch: {0} != {1}",
+                accountNameCredential,
+                accountNameValue));
+
+        public static ArgumentException ParsingConnectionStringFailed() =>
+            new ArgumentException("Connection string parsing error");
+
+        public static FormatException InvalidFormat(string err) =>
+            new FormatException(err);
+
+        public static AccessViolationException UnableAccessArray() =>
+            new AccessViolationException("Unable to get array from memory pool");
+
+        public static NotImplementedException NotImplemented() =>
+            new NotImplementedException();
+
+        public static AuthenticationException InvalidCredentials(string fullName) =>
+            new AuthenticationException($"Cannot authenticate credentials with {fullName}");
     }
 }

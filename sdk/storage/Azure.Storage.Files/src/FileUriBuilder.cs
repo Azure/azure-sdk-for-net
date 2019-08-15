@@ -4,6 +4,7 @@
 
 using System;
 using System.Net;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files
 {
@@ -16,9 +17,6 @@ namespace Azure.Storage.Files
     /// </summary>
     internal struct FileUriBuilder : IEquatable<FileUriBuilder>
     {
-        const string SnapshotParameterName = "snapshot";
-        const string SasVersionKey = "sv";
-
         /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
@@ -143,15 +141,15 @@ namespace Azure.Storage.Files
 
             var paramsMap = new UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
             {
                 this.Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(SnapshotParameterName);
+                paramsMap.Remove(Constants.SnapshotParameterName);
             }
 
-            if (paramsMap.ContainsKey(SasVersionKey))
+            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
                 this.Sas = new SasQueryParameters(paramsMap);
             }
@@ -195,7 +193,7 @@ namespace Azure.Storage.Files
                     rawQuery += "&";
                 }
 
-                rawQuery += SnapshotParameterName + "=" + this.Snapshot;
+                rawQuery += Constants.SnapshotParameterName + "=" + this.Snapshot;
             }
 
             if (this.Sas != null)
@@ -268,7 +266,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// Check if two FileUriBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(FileUriBuilder other)
             => this.Scheme == other.Scheme

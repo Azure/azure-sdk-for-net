@@ -21,7 +21,7 @@ namespace Azure.Core.Samples
             var request = pipeline.CreateRequest();
 
             var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/README.md");
-            request.SetRequestLine(HttpPipelineMethod.Get, uri);
+            request.SetRequestLine(RequestMethod.Get, uri);
             request.Headers.Add("Host", uri.Host);
 
             Response response = await pipeline.SendRequestAsync(request, cancellationToken: default).ConfigureAwait(false);

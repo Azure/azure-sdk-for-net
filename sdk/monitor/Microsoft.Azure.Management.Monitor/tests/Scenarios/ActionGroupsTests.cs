@@ -119,7 +119,7 @@ namespace Monitor.Tests.Scenarios
                 tags: new Dictionary<string, string>(),
                 emailReceivers: emailReceivers ?? new List<EmailReceiver>
                     {
-                        new EmailReceiver(name: "emailreceiver", emailAddress: "andyshen@microsoft.com", status: ReceiverStatus.Disabled)
+                        new EmailReceiver(name: "emailreceiver", emailAddress: "andyshen@microsoft.com", useCommonAlertSchema: false , status: ReceiverStatus.Disabled)
                     },
                 smsReceivers: smsReceivers ?? new List<SmsReceiver>
                     {

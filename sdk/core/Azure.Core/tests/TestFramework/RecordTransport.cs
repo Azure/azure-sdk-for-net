@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
@@ -91,6 +93,12 @@ namespace Azure.Core.Testing
                 var gotHeader = request.Headers.TryGetValues(requestHeader.Name, out IEnumerable<string> headerValues);
                 Debug.Assert(gotHeader);
                 entry.RequestHeaders.Add(requestHeader.Name, headerValues.ToArray());
+            }
+
+            // Make sure we record Content-Length even if it's not set explicitly
+            if (!request.Headers.TryGetValue("Content-Length", out _) && request.Content != null && request.Content.TryComputeLength(out long computedLength))
+            {
+                entry.RequestHeaders.Add("Content-Length", new [] { computedLength.ToString(CultureInfo.InvariantCulture) });
             }
 
             foreach (HttpHeader responseHeader in response.Headers)

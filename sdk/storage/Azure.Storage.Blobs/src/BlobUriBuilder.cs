@@ -4,22 +4,19 @@
 
 using System;
 using System.Net;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Blobs
 {
     /// <summary>
-    /// The <see cref="BlobUriBuilder"/> class provides a convenient way to 
+    /// The <see cref="BlobUriBuilder"/> class provides a convenient way to
     /// modify the contents of a <see cref="Uri"/> instance to point to
     /// different Azure Storage resources like an account, container, or blob.
-    /// 
+    ///
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata" />.
     /// </summary>
     internal struct BlobUriBuilder : IEquatable<BlobUriBuilder>
     {
-        const string SnapshotParameterName = "snapshot";
-        //const string VersionIdParameterName = "versionid";
-        const string SasVersionKey = "sv";
-
         /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
@@ -63,16 +60,16 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string Snapshot;
 
-        /// <summary>
-        /// VersionId.  Empty string if not present in URI.
-        /// </summary>
+        ///// <summary>
+        ///// VersionId.  Empty string if not present in URI.
+        ///// </summary>
         //public string VersionId;
 
         /// <summary>
         /// Gets or sets the Shared Access Signature query parameters, or null
         /// if not present in the <see cref="Uri"/>.
         /// </summary>
-        public SasQueryParameters Sas;
+        public BlobSasQueryParameters Sas;
 
         /// <summary>
         /// Gets or sets the query parameters not relevant to addressing
@@ -82,7 +79,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobUriBuilder"/>
-        /// class with the specified <see cref="Uri"/>. 
+        /// class with the specified <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">
         /// The <see cref="Uri"/> to a storage resource.
@@ -119,7 +116,7 @@ namespace Azure.Storage.Blobs
                     // Slash not found; path has account name & no container name
                     if (accountEndIndex == -1)
                     {
-                        this.AccountName = path; 
+                        this.AccountName = path;
                         startIndex = path.Length;
                     }
                     else
@@ -145,12 +142,12 @@ namespace Azure.Storage.Blobs
             // Convert the query parameters to a case-sensitive map & trim whitespace
             var paramsMap = new UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
             {
                 this.Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(SnapshotParameterName);
+                paramsMap.Remove(Constants.SnapshotParameterName);
             }
 
             //if(paramsMap.TryGetValue(VersionIdParameterName, out var versionId))
@@ -161,9 +158,9 @@ namespace Azure.Storage.Blobs
             //    paramsMap.Remove(VersionIdParameterName);
             //}
 
-            if (paramsMap.ContainsKey(SasVersionKey))
+            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                this.Sas = new SasQueryParameters(paramsMap);
+                this.Sas = new BlobSasQueryParameters(paramsMap);
             }
 
             this.UnparsedParams = paramsMap.ToString();
@@ -172,7 +169,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Construct a <see cref="Uri"/> representing the
         /// <see cref="BlobUriBuilder"/>'s fields.   The <see cref="Uri.Query"/>
-        /// property contains the SAS, snapshot, and unparsed query parameters.     
+        /// property contains the SAS, snapshot, and unparsed query parameters.
         /// </summary>
         /// <returns>The constructed <see cref="Uri"/>.</returns>
         public Uri ToUri()
@@ -204,7 +201,7 @@ namespace Azure.Storage.Blobs
                     rawQuery += "&";
                 }
 
-                rawQuery += SnapshotParameterName + "=" + this.Snapshot;
+                rawQuery += Constants.SnapshotParameterName + "=" + this.Snapshot;
             }
 
             //// Concatenate blob version query parameter (if it exists)
@@ -289,7 +286,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Check if two BlobUriBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(BlobUriBuilder other)
             => this.Scheme == other.Scheme

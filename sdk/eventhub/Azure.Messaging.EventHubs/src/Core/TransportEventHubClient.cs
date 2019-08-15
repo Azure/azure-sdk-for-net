@@ -14,6 +14,14 @@ namespace Azure.Messaging.EventHubs.Core
     internal abstract class TransportEventHubClient
     {
         /// <summary>
+        ///   Updates the active retry policy for the client.
+        /// </summary>
+        /// 
+        /// <param name="newRetryPolicy">The retry policy to set as active.</param>
+        /// 
+        public abstract void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy);
+
+        /// <summary>
         ///   Retrieves information about an Event Hub, including the number of partitions present
         ///   and their identifiers.
         /// </summary>
@@ -38,41 +46,49 @@ namespace Azure.Messaging.EventHubs.Core
                                                                               CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Creates an event sender responsible for transmitting <see cref="EventData" /> to the
-        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="senderOptions"/>
-        ///   specified, the sender may be created to allow event data to be automatically routed to an available
+        ///   Creates an Event Hub producer responsible for transmitting <see cref="EventData" /> to the
+        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="producerOptions"/>
+        ///   specified, the producer may be created to allow event data to be automatically routed to an available
         ///   partition or specific to a partition.
         /// </summary>
         ///
-        /// <param name="senderOptions">The set of options to apply when creating the sender.</param>
+        /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
+        /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="producerOptions" />.</param>
         ///
-        /// <returns>An event sender configured in the requested manner.</returns>
+        /// <returns>An Event Hub producer configured in the requested manner.</returns>
         ///
-        public abstract EventSender CreateSender(EventSenderOptions senderOptions);
+        public abstract EventHubProducer CreateProducer(EventHubProducerOptions producerOptions,
+                                                        EventHubRetryPolicy defaultRetryPolicy);
 
         /// <summary>
-        ///   Creates an event receiver responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
+        ///   Creates an Event Hub consumer responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
         ///   and as a member of a specific consumer group.
         ///
-        ///   A receiver may be exclusive, which asserts ownership over the partition for the consumer
-        ///   group to ensure that only one receiver from that group is reading the from the partition.
-        ///   These exclusive receivers are sometimes referred to as "Epoch Receivers."
+        ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
+        ///   group to ensure that only one consumer from that group is reading the from the partition.
+        ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."
         ///
-        ///   A receiver may also be non-exclusive, allowing multiple receivers from the same consumer
-        ///   group to be actively reading events from the partition.  These non-exclusive receivers are
-        ///   sometimes referred to as "Non-epoch Receivers."
+        ///   A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
+        ///   group to be actively reading events from the partition.  These non-exclusive consumers are
+        ///   sometimes referred to as "Non-epoch Consumers."
         ///
-        ///   Designating a receiver as exclusive may be specified in the <paramref name="receiverOptions" />.
-        ///   By default, receivers are created as non-exclusive.
+        ///   Designating a consumer as exclusive may be specified in the <paramref name="consumerOptions" />.
+        ///   By default, consumers are created as non-exclusive.
         /// </summary>
         ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="receiverOptions">The set of options to apply when creating the receiver.</param>
+        /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
+        /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
+        /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="consumerOptions" />.</param>
         ///
-        /// <returns>An event receiver configured in the requested manner.</returns>
+        /// <returns>An Event Hub consumer configured in the requested manner.</returns>
         ///
-        public abstract EventReceiver CreateReceiver(string partitionId,
-                                                     EventReceiverOptions receiverOptions);
+        public abstract EventHubConsumer CreateConsumer(string consumerGroup,
+                                                        string partitionId,
+                                                        EventPosition eventPosition,
+                                                        EventHubConsumerOptions consumerOptions,
+                                                        EventHubRetryPolicy defaultRetryPolicy);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

@@ -22,14 +22,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum JobPreparationTaskState
     {
         /// <summary>
-        /// The task is currently running (including retrying).
+        /// The Task is currently running (including retrying).
         /// </summary>
         [EnumMember(Value = "running")]
         Running,
         /// <summary>
-        /// The task has exited with exit code 0, or the task has exhausted its
-        /// retry limit, or the Batch service was unable to start the task due
-        /// to task preparation errors (such as resource file download
+        /// The Task has exited with exit code 0, or the Task has exhausted its
+        /// retry limit, or the Batch service was unable to start the Task due
+        /// to Task preparation errors (such as resource file download
         /// failures).
         /// </summary>
         [EnumMember(Value = "completed")]

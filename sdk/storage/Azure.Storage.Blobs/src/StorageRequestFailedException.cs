@@ -29,8 +29,8 @@ namespace Azure.Storage.Blobs.Models
             {
                 switch (element.Name.LocalName)
                 {
-                    case "Code":
-                    case "Message":
+                    case Constants.Xml.Code:
+                    case Constants.Xml.Message:
                         continue;
                     default:
                         error.AdditionalInformation[element.Name.LocalName] = element.Value;
@@ -45,11 +45,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A StorageRequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, this.Message)
-                {
-                    ErrorCode = this.Code,
-                    AdditionalInformation = this.AdditionalInformation
-                };
+            => new StorageRequestFailedException(response, this.Message, null, this.Code, this.AdditionalInformation);
     }
 
     /// <summary>
@@ -63,6 +59,6 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A StorageRequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response) { ErrorCode = this.ErrorCode };
+            => new StorageRequestFailedException(response, null, null, this.ErrorCode);
     }
 }

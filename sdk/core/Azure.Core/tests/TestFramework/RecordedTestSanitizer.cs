@@ -7,7 +7,7 @@ namespace Azure.Core.Testing
 {
     public class RecordedTestSanitizer
     {
-        private const string SanitizeValue = "Sanitized";
+        protected const string SanitizeValue = "Sanitized";
         private static readonly string[] SanitizeValueArray = { SanitizeValue };
 
         private static readonly string[] SanitizedHeaders = { "Authorization" };
@@ -28,12 +28,12 @@ namespace Azure.Core.Testing
             }
         }
 
-        public virtual string SanitizeTextBody(string body)
+        public virtual string SanitizeTextBody(string contentType, string body)
         {
             return body;
         }
 
-        public virtual byte[] SanitizeBody(byte[] body)
+        public virtual byte[] SanitizeBody(string contentType, byte[] body)
         {
             return body;
         }

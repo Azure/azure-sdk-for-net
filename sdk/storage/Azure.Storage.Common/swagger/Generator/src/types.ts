@@ -22,9 +22,10 @@ export function getName(model: IModelType, readonly?: boolean, isParam?: boolean
             case 'binary':
             case 'file': return 'System.IO.Stream';
             case 'url': return 'System.Uri';
-            case 'etag': return 'Azure.ETag';
+            case 'etag': return 'Azure.Core.Http.ETag';
             case 'date': return 'System.DateTime';
-            case 'date-time': return 'System.DateTimeOffset';
+            case 'date-time':
+            case 'date-time-8601':
             case 'date-time-rfc1123': return 'System.DateTimeOffset'; // ?
             case 'dictionary': return 'System.Collections.Generic.IDictionary<string, string>';
             case 'array':
@@ -60,6 +61,7 @@ export function isValueType(model: IModelType): boolean {
             case 'etag':
             case 'date':
             case 'date-time':
+            case 'date-time-8601':
             case 'date-time-rfc1123':
                 return true;
         }
@@ -119,6 +121,8 @@ export function convertToString(expr: string, model: IModelType, service: IServi
             return `${expr}.ToString(System.Globalization.CultureInfo.InvariantCulture)`;
         case 'date-time':
             return `${expr}.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)`;
+        case 'date-time-8601':
+            return `${expr}.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)`;
         case 'date-time-rfc1123':
             return `${expr}.ToString("R", System.Globalization.CultureInfo.InvariantCulture)`;
         case 'boolean':
@@ -162,10 +166,11 @@ export function convertFromString(expr: string, model: IModelType, service: ISer
         case 'date':
             return `System.DateTime.Parse(${expr}, System.Globalization.CultureInfo.InvariantCulture)`;
         case 'date-time':
+        case 'date-time-8601':
         case 'date-time-rfc1123':
             return `System.DateTimeOffset.Parse(${expr}, System.Globalization.CultureInfo.InvariantCulture)`;
         case 'etag':
-            return `new Azure.ETag(${expr})`;
+            return `new Azure.Core.Http.ETag(${expr})`;
         case 'url':
             return `new System.Uri(${expr})`;
         case 'byte':

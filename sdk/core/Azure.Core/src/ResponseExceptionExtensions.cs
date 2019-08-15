@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core
 {
@@ -36,7 +35,7 @@ namespace Azure.Core
 
         public static async Task<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
         {
-            message = await CreateRequestFailedMessageAsync(message, response, async);
+            message = await CreateRequestFailedMessageAsync(message, response, async).ConfigureAwait(false);
             return new RequestFailedException(response.Status, message);
         }
 
@@ -45,7 +44,7 @@ namespace Azure.Core
             StringBuilder messageBuilder = new StringBuilder()
                 .AppendLine(message)
                 .Append("Status: ")
-                .Append(response.Status.ToString())
+                .Append(response.Status.ToString(CultureInfo.InvariantCulture))
                 .Append(" (")
                 .Append(response.ReasonPhrase)
                 .AppendLine(")");
@@ -59,7 +58,7 @@ namespace Azure.Core
 
                 using (var streamReader = new StreamReader(response.ContentStream, encoding))
                 {
-                    string content = async ? await streamReader.ReadToEndAsync() : streamReader.ReadToEnd();
+                    string content = async ? await streamReader.ReadToEndAsync().ConfigureAwait(false) : streamReader.ReadToEnd();
 
                     messageBuilder.AppendLine(content);
                 }

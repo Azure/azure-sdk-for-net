@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="TrackOneEventSender" />
+    ///   The suite of tests for the <see cref="TrackOneEventHubProducer" />
     ///   class.
     /// </summary>
     ///
@@ -141,7 +141,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var trackOnePosition = TrackOne.EventPosition.FromOffset("12", false);
             var trackTwoPosition = EventPosition.FromOffset(12);
 
-            Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.False, "The offset for track two is inclusive; even the same base offset with non-inclusive is not equivilent.");
+            Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.False, "The offset for track two is inclusive; even the same base offset with non-inclusive is not equivalent.");
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var trackOnePosition = TrackOne.EventPosition.FromOffset("12", true);
             var trackTwoPosition = EventPosition.FromOffset(12);
 
-            Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True, "The offset for track two is inclusive; the equivilent offset set as inclusive should match.");
+            Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True, "The offset for track two is inclusive; the equivalent offset set as inclusive should match.");
         }
 
         /// <summary>
@@ -194,8 +194,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEventPositionEquivalentDetectsDifferentEnqueueTime()
         {
-            var enqueueTime = DateTime.Parse("2015-10-27T12:00:00Z");
-            var trackOnePosition = TrackOne.EventPosition.FromEnqueuedTime(enqueueTime);
+            var enqueueTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
+            var trackOnePosition = TrackOne.EventPosition.FromEnqueuedTime(enqueueTime.UtcDateTime);
             var trackTwoPosition = EventPosition.FromEnqueuedTime(enqueueTime.AddDays(1));
 
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.False);
@@ -209,8 +209,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEventPositionEquivalentRecognizesSameEnqueueTime()
         {
-            var enqueueTime = DateTime.Parse("2015-10-27T12:00:00Z");
-            var trackOnePosition = TrackOne.EventPosition.FromEnqueuedTime(enqueueTime);
+            var enqueueTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
+            var trackOnePosition = TrackOne.EventPosition.FromEnqueuedTime(enqueueTime.UtcDateTime);
             var trackTwoPosition = EventPosition.FromEnqueuedTime(enqueueTime);
 
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True);
@@ -225,7 +225,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEventPositionEquivalentRecognizesSameBeginning()
         {
             var trackOnePosition = TrackOne.EventPosition.FromStart();
-            var trackTwoPosition = EventPosition.FirstAvailableEvent;
+            var trackTwoPosition = EventPosition.Earliest;
 
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True);
         }
@@ -239,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEventPositionEquivalentRecognizesSameEnding()
         {
             var trackOnePosition = TrackOne.EventPosition.FromEnd();
-            var trackTwoPosition = EventPosition.NewEventsOnly;
+            var trackTwoPosition = EventPosition.Latest;
 
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True);
         }

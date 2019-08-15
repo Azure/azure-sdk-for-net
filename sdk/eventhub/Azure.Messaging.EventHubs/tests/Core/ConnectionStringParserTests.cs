@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.Null, "The Event Hub path was not included in the connection string");
+            Assert.That(parsed.EventHubName, Is.Null, "The Event Hub path was not included in the connection string");
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
             Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
-            Assert.That(parsed.EventHubPath, Is.EqualTo(eventHub), "The Event Hub path should match.");
+            Assert.That(parsed.EventHubName, Is.EqualTo(eventHub), "The Event Hub path should match.");
         }
 
         /// <summary>

@@ -10,6 +10,6 @@ namespace Microsoft.Azure.EventHubs.Tests
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
     public class LiveTestAttribute : Attribute, ITraitAttribute
     {
-        public LiveTestAttribute(string name = "TestCategory", string value = "Live") {}
+        public LiveTestAttribute(string name = "TestCategory", string value = "Live") { }
     }
 }

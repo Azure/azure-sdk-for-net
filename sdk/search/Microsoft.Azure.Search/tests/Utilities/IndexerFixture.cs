@@ -72,9 +72,9 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 {
                     // Try all the field mapping functions (even if they don't make sense in the context of the test DB).
                     new FieldMapping("feature_class", FieldMappingFunction.Base64Encode()),
-                    new FieldMapping("state_alpha", "state"),
+                    new FieldMapping("state_alpha", "state", FieldMappingFunction.UrlEncode()),
                     new FieldMapping("county_name", FieldMappingFunction.ExtractTokenAtPosition(" ", 0)),
-                    new FieldMapping("elev_in_m", "elevation"),
+                    new FieldMapping("elev_in_m", "elevation", FieldMappingFunction.UrlDecode()),
                     new FieldMapping("map_name", FieldMappingFunction.Base64Decode()),
                     new FieldMapping("history", FieldMappingFunction.JsonArrayToStringCollection())
                 }

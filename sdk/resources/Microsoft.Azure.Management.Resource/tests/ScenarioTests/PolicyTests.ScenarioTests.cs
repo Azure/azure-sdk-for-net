@@ -15,6 +15,7 @@ namespace Policy.Tests
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Resource.Tests.Helpers;
     using ResourceGroups.Tests;
@@ -108,7 +109,7 @@ namespace Policy.Tests
                 this.AssertValid(setName, policySet, getResult, false);
                 Assert.Single(getResult.PolicyDefinitions);
                 Assert.Null(getResult.Description);
-                Assert.Null(getResult.Metadata);
+                AssertMetadataValid(getResult.Metadata);
                 Assert.Null(getResult.Parameters);
                 Assert.Equal("Custom", getResult.PolicyType);
 
@@ -204,10 +205,10 @@ namespace Policy.Tests
 
                 // validate results
                 var getResult = client.PolicyAssignments.Get(assignmentScope, assignmentName);
-                this.AssertValid(assignmentName, policyAssignment, result);
+                this.AssertValid(assignmentName, policyAssignment, getResult);
                 Assert.Null(getResult.NotScopes);
                 Assert.Null(getResult.Description);
-                Assert.Null(getResult.Metadata);
+                AssertMetadataValid(getResult.Metadata);
                 Assert.Null(getResult.Parameters);
 
                 var listResult = client.PolicyAssignments.List();
@@ -434,7 +435,7 @@ namespace Policy.Tests
                 this.AssertValid(setName, policySet, getResult, false);
                 Assert.Single(getResult.PolicyDefinitions);
                 Assert.Null(getResult.Description);
-                Assert.Null(getResult.Metadata);
+                AssertMetadataValid(getResult.Metadata);
                 Assert.Null(getResult.Parameters);
                 Assert.Equal("Custom", getResult.PolicyType);
 
@@ -713,7 +714,7 @@ namespace Policy.Tests
 
                     // validate that individual get matches list results
                     var getBuiltIn = client.PolicyDefinitions.GetBuiltIn(builtIn.Name);
-                    this.AssertEqual(builtIn, getBuiltIn);
+                    this.AssertEqual(builtIn, getBuiltIn, true);
                 }
             }
         }
@@ -764,7 +765,7 @@ namespace Policy.Tests
                     // validate that individual get is valid and matches list results
                     var getBuiltIn = client.PolicySetDefinitions.GetBuiltIn(builtIn.Name);
                     this.AssertValid(getBuiltIn, true);
-                    this.AssertEqual(builtIn, getBuiltIn);
+                    this.AssertEqual(builtIn, getBuiltIn, true);
 
                     // validate that each policy reference points to a policy definition that exists and is builtin
                     foreach (var policyReference in builtIn.PolicyDefinitions)
@@ -888,9 +889,9 @@ namespace Policy.Tests
         private void AssertMinimal(PolicyDefinition definition)
         {
             Assert.NotNull(definition);
-            Assert.Null(definition.Mode);
+            Assert.Equal("Indexed", definition.Mode);
             Assert.Null(definition.Description);
-            Assert.Null(definition.Metadata);
+            AssertMetadataValid(definition.Metadata);
             Assert.Null(definition.Parameters);
         }
 
@@ -937,22 +938,22 @@ namespace Policy.Tests
             Assert.Equal(policyName, result.Name);
             Assert.Equal(model.DisplayName, result.DisplayName);
             Assert.Equal(model.PolicyRule.ToString(), result.PolicyRule.ToString());
-            Assert.Equal(model.Mode, result.Mode);
+            AssertModeEqual(model.Mode, result.Mode);
             Assert.Equal(model.Description, result.Description);
-            Assert.Equal(model.Metadata, result.Metadata);
+            AssertMetadataEqual(model.Metadata, result.Metadata, isBuiltin);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
         }
 
         // validate that the given result policy definition is equal to the expected one
-        private void AssertEqual(PolicyDefinition expected, PolicyDefinition result)
+        private void AssertEqual(PolicyDefinition expected, PolicyDefinition result, bool isBuiltin)
         {
             Assert.NotNull(result);
             Assert.NotNull(expected);
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            Assert.Equal(expected.Metadata?.ToString(), result.Metadata?.ToString());
-            Assert.Equal(expected.Mode, result.Mode);
+            AssertMetadataEqual(expected.Metadata, result.Metadata, isBuiltin);
+            AssertModeEqual(expected.Mode, result.Mode);
             Assert.Equal(expected.Name, result.Name);
             Assert.Equal(expected.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(expected.PolicyRule.ToString(), result.PolicyRule.ToString());
@@ -1025,7 +1026,7 @@ namespace Policy.Tests
 
             Assert.Equal(model.DisplayName, result.DisplayName);
             Assert.Equal(model.Description, result.Description);
-            Assert.Equal(model.Metadata, result.Metadata);
+            AssertMetadataEqual(model.Metadata, result.Metadata, isBuiltin);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(model.PolicyDefinitions.Count, result.PolicyDefinitions.Count);  // not always true for update results?
             foreach (var expectedDefinition in model.PolicyDefinitions)
@@ -1035,14 +1036,14 @@ namespace Policy.Tests
         }
 
         // validate that the given result policy definition is equal to the expected one
-        private void AssertEqual(PolicySetDefinition expected, PolicySetDefinition result)
+        private void AssertEqual(PolicySetDefinition expected, PolicySetDefinition result, bool isBuiltin)
         {
             Assert.NotNull(result);
             Assert.NotNull(expected);
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            Assert.Equal(expected.Metadata?.ToString(), result.Metadata?.ToString());
+            AssertMetadataEqual(expected.Metadata, result.Metadata, isBuiltin);
             Assert.Equal(expected.Name, result.Name);
             Assert.Equal(expected.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(expected.PolicyType, result.PolicyType);
@@ -1091,7 +1092,7 @@ namespace Policy.Tests
 
             Assert.Equal(model.DisplayName, result.DisplayName);
             Assert.Equal(model.Description, result.Description);
-            Assert.Equal(model.Metadata, result.Metadata);
+            AssertMetadataValid(result.Metadata);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(model.PolicyDefinitionId, result.PolicyDefinitionId);
             Assert.Equal(model.Sku.Name, result.Sku.Name);
@@ -1117,7 +1118,7 @@ namespace Policy.Tests
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            Assert.Equal(expected.Metadata?.ToString(), result.Metadata?.ToString());
+            AssertMetadataEqual(expected.Metadata, result.Metadata, false);
             Assert.Equal(expected.Name, result.Name);
             if (expected.NotScopes == null)
             {
@@ -1150,6 +1151,50 @@ namespace Policy.Tests
             var assignmentInList = listResult.FirstOrDefault(p => p.Name.Equals(assignmentName));
             Assert.NotNull(assignmentInList);
             this.AssertValid(assignmentName, model, assignmentInList);
+        }
+
+        private void AssertModeEqual(string expected, string actual)
+        {
+            if (expected == null)
+            {
+                Assert.Equal("Indexed", actual);
+            }
+            else
+            {
+                Assert.Equal(expected, actual);
+            }
+        }
+
+        private void AssertMetadataValid(object metaDataObject)
+        {
+            if (metaDataObject != null)
+            {
+                var metaData = (JObject)metaDataObject;
+                var createdBy = metaData["createdBy"];
+                Assert.NotNull(createdBy);
+                var createdOn = metaData["createdOn"];
+                Assert.NotNull(createdOn);
+                var updatedBy = metaData["updatedBy"];
+                Assert.NotNull(updatedBy);
+            }
+        }
+
+        private void AssertMetadataEqual(object expectedObject, object actualObject, bool isBuiltin)
+        {
+            if (!isBuiltin)
+            {
+                AssertMetadataValid(actualObject);
+            }
+
+            var expected = (JObject)expectedObject;
+            if (expected != null)
+            {
+                var actual = (JObject)actualObject;
+                foreach (JProperty property in expected.Properties())
+                {
+                    Assert.Contains(property.Value, actual.PropertyValues());
+                }
+            }
         }
 
         // validate that the given action throws an ErrorResponseException containing the given string

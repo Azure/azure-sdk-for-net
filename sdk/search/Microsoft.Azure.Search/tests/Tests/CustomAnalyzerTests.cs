@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search.Tests.Utilities;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Net;
-    using System.Reflection;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Utilities;
-    using Xunit;
-
     public sealed class CustomAnalyzerTests : SearchTestBase<IndexFixture>
     {
         [Fact]
@@ -715,25 +715,25 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expected.Analyzers?.Count ?? 0, actual.Analyzers?.Count ?? 0);
             for (int i = 0; i < expected.Analyzers?.Count; i++)
             {
-                Assert.Equal(expected.Analyzers[i], actual.Analyzers[i], new ModelComparer<Analyzer>());
+                Assert.Equal(expected.Analyzers[i], actual.Analyzers[i], new DataPlaneModelComparer<Analyzer>());
             }
 
             Assert.Equal(expected.Tokenizers?.Count ?? 0, actual.Tokenizers?.Count ?? 0);
             for (int i = 0; i < expected.Tokenizers?.Count; i++)
             {
-                Assert.Equal(expected.Tokenizers[i], actual.Tokenizers[i], new ModelComparer<Tokenizer>());
+                Assert.Equal(expected.Tokenizers[i], actual.Tokenizers[i], new DataPlaneModelComparer<Tokenizer>());
             }
 
             Assert.Equal(expected.TokenFilters?.Count ?? 0, actual.TokenFilters?.Count ?? 0);
             for (int i = 0; i < expected.TokenFilters?.Count; i++)
             {
-                Assert.Equal(expected.TokenFilters[i], actual.TokenFilters[i], new ModelComparer<TokenFilter>());
+                Assert.Equal(expected.TokenFilters[i], actual.TokenFilters[i], new DataPlaneModelComparer<TokenFilter>());
             }
 
             Assert.Equal(expected.CharFilters?.Count ?? 0, actual.CharFilters?.Count ?? 0);
             for (int i = 0; i < expected.CharFilters?.Count; i++)
             {
-                Assert.Equal(expected.CharFilters[i], actual.CharFilters[i], new ModelComparer<CharFilter>());
+                Assert.Equal(expected.CharFilters[i], actual.CharFilters[i], new DataPlaneModelComparer<CharFilter>());
             }
         }
 

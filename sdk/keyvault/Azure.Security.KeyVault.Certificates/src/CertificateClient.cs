@@ -4,7 +4,6 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -15,7 +14,6 @@ namespace Azure.Security.KeyVault.Certificates
     public class CertificateClient
     {
         private readonly Uri _vaultUri;
-        private const string ApiVersion = "7.0";
         private readonly HttpPipeline _pipeline;
 
         protected CertificateClient()
@@ -34,8 +32,7 @@ namespace Azure.Security.KeyVault.Certificates
             options = options ?? new CertificateClientOptions();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    bufferResponse: true,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"));
+                    new ChallengeBasedAuthenticationPolicy(credential));
         }
 
         // Certificates API
@@ -47,9 +44,8 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         // Uses default policy
-        public virtual async Task<Response<CertificateOperation>> CreateCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<CertificateOperation>> CreateCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -58,9 +54,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<CertificateOperation>> CreateCertificateAsync(Certificate certificate, CancellationToken cancellationToken = default)
+        public virtual Task<Response<CertificateOperation>> CreateCertificateAsync(Certificate certificate, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -69,9 +64,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Certificate>> GetCertificateAsync(string name, string version = default, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Certificate>> GetCertificateAsync(string name, string version = default, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -80,9 +74,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Certificate>> UpdateCertificateAsync(bool enabled = default, Dictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Certificate>> UpdateCertificateAsync(bool enabled = default, Dictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -91,15 +84,13 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<DeletedCertificate>> DeleteCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<DeletedCertificate>> DeleteCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<DeletedCertificate>> GetDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<DeletedCertificate>> GetDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -113,9 +104,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Certificate>> RecoverDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Certificate>> RecoverDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -124,9 +114,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response> PurgeDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response> PurgeDeletedCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -135,9 +124,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<byte[]>> BackupCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<byte[]>> BackupCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -146,9 +134,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Certificate>> RestoreCertificateAsync(byte[] backup, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Certificate>> RestoreCertificateAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -157,9 +144,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Certificate>> ImportCertificateAsync(string name, string value, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Certificate>> ImportCertificateAsync(string name, string value, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -168,9 +154,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Certificate>> ImportCertificateAsync(CertificateImport certificateImport, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Certificate>> ImportCertificateAsync(CertificateImport certificateImport, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -179,9 +164,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<byte[]>> GetPendingCertificateSigningRequestAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<byte[]>> GetPendingCertificateSigningRequestAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -221,9 +205,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<CertificateBase>> GetCertificatePolicyAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<CertificateBase>> GetCertificatePolicyAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -232,9 +215,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<CertificateBase>> UpdateCertificatePolicyAsync(string certificateName, CertificatePolicy policy, CertificateBase certificateBase, CancellationToken cancellationToken = default)
+        public virtual Task<Response<CertificateBase>> UpdateCertificatePolicyAsync(string certificateName, CertificatePolicy policy, CertificateBase certificateBase, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -244,9 +226,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Issuer>> CreateIssuerAsync(string name, string provider, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Issuer>> CreateIssuerAsync(string name, string provider, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -255,9 +236,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Issuer>> CreateIssuerAsync(Issuer issuer, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Issuer>> CreateIssuerAsync(Issuer issuer, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -266,9 +246,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Issuer>> GetIssuerAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Issuer>> GetIssuerAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -277,9 +256,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Issuer>> DeleteIssuerAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Issuer>> DeleteIssuerAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -288,9 +266,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Issuer>> UpdateIssuerAsync(Issuer issuer, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Issuer>> UpdateIssuerAsync(Issuer issuer, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -310,9 +287,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<CertificateOperation>> GetCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<CertificateOperation>> GetCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -321,9 +297,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<CertificateOperation>> DeleteCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<CertificateOperation>> DeleteCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -332,9 +307,8 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<CertificateOperation>> CancelCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<CertificateOperation>> CancelCertificateOperationAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 

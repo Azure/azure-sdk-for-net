@@ -2,26 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
 namespace System
 {
-    using Collections.Generic;
-    using Linq;
-    using Microsoft.Azure.Search.Models;
-    using Reflection;
-
     public static class TypeExtensions
     {
         public static bool CanBeNull(this Type type) => type.IsReferenceType() || type.IsNullable();
 
         public static Type GetIEnumerable(this Type type) =>
             type.IsGenericEnumerable() ? type : type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(IsGenericEnumerable);
-
-        public static Type GetIResourceWithETag(this Type type)
-        {
-            TypeInfo typeInfo = type.GetTypeInfo();
-            Type resourceWithETag = typeof(IResourceWithETag);
-            return type == resourceWithETag ? type : typeInfo.ImplementedInterfaces.FirstOrDefault(t => t == resourceWithETag);
-        }
 
         public static bool ImplementsGenericEquatable(this Type type) =>
             type.IsGenericEquatable() || type.GetTypeInfo().ImplementedInterfaces.Any(IsGenericEquatable);

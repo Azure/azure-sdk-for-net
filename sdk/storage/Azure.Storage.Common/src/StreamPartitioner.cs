@@ -26,7 +26,7 @@ namespace Azure.Storage.Common
         /// Generate a forward-only sequence of substreams based on bufferSize.
         /// </summary>
         /// <returns>StreamPartition</returns>
-        public async Task<StreamPartition> ReadAsync(int size = Constants.DEFAULT_BUFFER_SIZE, CancellationToken ct = default)
+        public async Task<StreamPartition> ReadAsync(int size = Constants.DefaultBufferSize, bool async = true, CancellationToken ct = default)
         {
             // TODO these operations should be simplified with Memory- and Span-accepting APIs in future NET Standard
             var buffer = this.memoryPool.Rent(size);
@@ -35,13 +35,15 @@ namespace Azure.Storage.Common
 
             if (MemoryMarshal.TryGetArray<byte>(buffer.Memory, out var segment))
             {
-                var count = await this.stream.ReadAsync(segment.Array, 0, segment.Count, ct).ConfigureAwait(false);
+                var count = async ?
+                    await this.stream.ReadAsync(segment.Array, 0, segment.Count, ct).ConfigureAwait(false) :
+                    this.stream.Read(segment.Array, 0, segment.Count);
 
                 //this.logger?.LogTrace($"Read {count} bytes");
 
                 return new StreamPartition(
                     buffer.Memory,
-                    count, 
+                    count,
                     () =>
                     {
                         buffer.Dispose();
@@ -51,7 +53,7 @@ namespace Azure.Storage.Common
             }
             else
             {
-                throw new Exception("Unable to get array from memory pool");
+                throw Errors.UnableAccessArray();
             }
         }
 
@@ -64,7 +66,7 @@ namespace Azure.Storage.Common
                 if (disposing)
                 {
                 }
-                
+
                 this.stream = default;
                 this.memoryPool = default;
 
@@ -120,7 +122,7 @@ namespace Azure.Storage.Common
 
         private bool disposedValue = false; // To detect redundant calls
 
-        public override void Flush() => throw new NotImplementedException();
+        public override void Flush() => throw Errors.NotImplemented();
 
         public int Read(out ReadOnlyMemory<byte> buffer, int count)
         {
@@ -162,8 +164,8 @@ namespace Azure.Storage.Common
             return this.Position;
         }
 
-        public override void SetLength(long value) => throw new NotImplementedException();
+        public override void SetLength(long value) => throw Errors.NotImplemented();
 
-        public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
+        public override void Write(byte[] buffer, int offset, int count) => throw Errors.NotImplemented();
     }
 }

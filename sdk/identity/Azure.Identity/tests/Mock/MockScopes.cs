@@ -16,9 +16,9 @@ namespace Azure.Identity.Tests.Mock
             _scopes = scopes;
         }
 
-        public static MockScopes Default = new MockScopes(new string[] { "https://default.mock.auth.scope/,defualt" });
+        public static MockScopes Default = new MockScopes(new string[] { "https://default.mock.auth.scope/.default" });
 
-        public static MockScopes Alternate = new MockScopes(new string[] { "https://alternate.mock.auth.scope/,defualt" });
+        public static MockScopes Alternate = new MockScopes(new string[] { "https://alternate.mock.auth.scope/.default" });
 
         public override string ToString()
         {

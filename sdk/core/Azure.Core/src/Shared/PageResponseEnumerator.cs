@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,32 +11,48 @@ namespace Azure.Core
 {
     internal static class PageResponseEnumerator
     {
-        public static IEnumerable<Response<T>> CreateEnumerable<T>(Func<string, PageResponse<T>> pageFunc)
+        public static IEnumerable<Response<T>> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
         {
-            string nextLink = null;
+            string? nextLink = null;
             do
             {
-                PageResponse<T> pageResponse = pageFunc(nextLink);
+                Page<T> pageResponse = pageFunc(nextLink);
                 foreach (T setting in pageResponse.Values)
                 {
-                    yield return new Response<T>(pageResponse.Response, setting);
+                    yield return new Response<T>(pageResponse.GetRawResponse(), setting);
                 }
-                nextLink = pageResponse.NextLink;
+                nextLink = pageResponse.ContinuationToken;
             } while (nextLink != null);
         }
 
-        public static async IAsyncEnumerable<Response<T>> CreateAsyncEnumerable<T>(Func<string, Task<PageResponse<T>>> pageFunc)
+        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, Task<Page<T>>> pageFunc) where T : notnull
         {
-            string nextLink = null;
-            do
+            return new FuncAsyncCollection<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
+        }
+
+        public static AsyncCollection<T> CreateAsyncEnumerable<T>(Func<string?, int?, Task<Page<T>>> pageFunc) where T : notnull
+        {
+            return new FuncAsyncCollection<T>(pageFunc);
+        }
+
+        internal class FuncAsyncCollection<T>: AsyncCollection<T> where T : notnull
+        {
+            private readonly Func<string?, int?, Task<Page<T>>> _pageFunc;
+
+            public FuncAsyncCollection(Func<string?, int?, Task<Page<T>>> pageFunc)
             {
-                PageResponse<T> pageResponse = await pageFunc(nextLink);
-                foreach (T setting in pageResponse.Values)
+                _pageFunc = pageFunc;
+            }
+
+            public override async IAsyncEnumerable<Page<T>> ByPage(string? continuationToken = default, int? pageSizeHint = default)
+            {
+                do
                 {
-                    yield return new Response<T>(pageResponse.Response, setting);
-                }
-                nextLink = pageResponse.NextLink;
-            } while (nextLink != null);
+                    Page<T> pageResponse = await _pageFunc(continuationToken, pageSizeHint).ConfigureAwait(false);
+                    yield return pageResponse;
+                    continuationToken = pageResponse.ContinuationToken;
+                } while (continuationToken != null);
+            }
         }
     }
 }

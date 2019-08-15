@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Linq;
 
 namespace Microsoft.Azure.KeyVault
 {
@@ -34,6 +36,20 @@ namespace Microsoft.Azure.KeyVault
                 return false;
 
             return true;
+        }
+
+        internal static HttpBearerChallenge GetBearerChallengeFromResponse(HttpResponseMessage response)
+        {
+            if (response == null) return null;
+
+            string challenge = response?.Headers.WwwAuthenticate.FirstOrDefault()?.ToString();
+
+            if (!string.IsNullOrEmpty(challenge) && IsBearerChallenge(challenge))
+            {
+                return new HttpBearerChallenge(response.RequestMessage.RequestUri, challenge);
+            }
+
+            return null;
         }
 
         private Dictionary<string, string> _parameters = null;

@@ -22,35 +22,35 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum TaskState
     {
         /// <summary>
-        /// The task is queued and able to run, but is not currently assigned
-        /// to a compute node. A task enters this state when it is created,
+        /// The Task is queued and able to run, but is not currently assigned
+        /// to a Compute Node. A Task enters this state when it is created,
         /// when it is enabled after being disabled, or when it is awaiting a
         /// retry after a failed run.
         /// </summary>
         [EnumMember(Value = "active")]
         Active,
         /// <summary>
-        /// The task has been assigned to a compute node, but is waiting for a
-        /// required Job Preparation task to complete on the node. If the Job
-        /// Preparation task succeeds, the task will move to running. If the
-        /// Job Preparation task fails, the task will return to active and will
-        /// be eligible to be assigned to a different node.
+        /// The Task has been assigned to a Compute Node, but is waiting for a
+        /// required Job Preparation Task to complete on the Compute Node. If
+        /// the Job Preparation Task succeeds, the Task will move to running.
+        /// If the Job Preparation Task fails, the Task will return to active
+        /// and will be eligible to be assigned to a different Compute Node.
         /// </summary>
         [EnumMember(Value = "preparing")]
         Preparing,
         /// <summary>
-        /// The task is running on a compute node. This includes task-level
+        /// The Task is running on a Compute Node. This includes task-level
         /// preparation such as downloading resource files or deploying
-        /// application packages specified on the task - it does not
-        /// necessarily mean that the task command line has started executing.
+        /// Packages specified on the Task - it does not necessarily mean that
+        /// the Task command line has started executing.
         /// </summary>
         [EnumMember(Value = "running")]
         Running,
         /// <summary>
-        /// The task is no longer eligible to run, usually because the task has
-        /// finished successfully, or the task has finished unsuccessfully and
-        /// has exhausted its retry limit. A task is also marked as completed
-        /// if an error occurred launching the task, or when the task has been
+        /// The Task is no longer eligible to run, usually because the Task has
+        /// finished successfully, or the Task has finished unsuccessfully and
+        /// has exhausted its retry limit. A Task is also marked as completed
+        /// if an error occurred launching the Task, or when the Task has been
         /// terminated.
         /// </summary>
         [EnumMember(Value = "completed")]

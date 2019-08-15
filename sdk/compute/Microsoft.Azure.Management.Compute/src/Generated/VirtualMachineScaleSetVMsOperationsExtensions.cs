@@ -39,7 +39,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The instance ID of the virtual machine.
             /// </param>
             /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false.
+            /// Specifies whether to reimage temp disk. Default value: false. Note: This
+            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
+            /// disk.
             /// </param>
             public static void Reimage(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?))
             {
@@ -63,7 +65,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The instance ID of the virtual machine.
             /// </param>
             /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false.
+            /// Specifies whether to reimage temp disk. Default value: false. Note: This
+            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
+            /// disk.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -279,9 +283,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            public static VirtualMachineScaleSetVM Get(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId)
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. Possible values include:
+            /// 'instanceView'
+            /// </param>
+            public static VirtualMachineScaleSetVM Get(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
-                return operations.GetAsync(resourceGroupName, vmScaleSetName, instanceId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, vmScaleSetName, instanceId, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -299,12 +307,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. Possible values include:
+            /// 'instanceView'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSetVM> GetAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSetVM> GetAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, InstanceViewTypes? expand = default(InstanceViewTypes?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -706,7 +718,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The instance ID of the virtual machine.
             /// </param>
             /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false.
+            /// Specifies whether to reimage temp disk. Default value: false. Note: This
+            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
+            /// disk.
             /// </param>
             public static void BeginReimage(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?))
             {
@@ -730,7 +744,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The instance ID of the virtual machine.
             /// </param>
             /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false.
+            /// Specifies whether to reimage temp disk. Default value: false. Note: This
+            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
+            /// disk.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

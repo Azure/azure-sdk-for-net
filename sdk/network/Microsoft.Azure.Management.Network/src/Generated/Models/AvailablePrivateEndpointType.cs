@@ -31,16 +31,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the AvailablePrivateEndpointType
         /// class.
         /// </summary>
+        /// <param name="name">The name of the service and resource.</param>
         /// <param name="id">A unique identifier of the
         /// AvailablePrivateEndpoint Type resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="serviceName">The name of the service and resource
-        /// </param>
-        public AvailablePrivateEndpointType(string id = default(string), string type = default(string), string serviceName = default(string))
+        /// <param name="resourceName">The name of the service and
+        /// resource.</param>
+        public AvailablePrivateEndpointType(string name = default(string), string id = default(string), string type = default(string), string resourceName = default(string))
         {
+            Name = name;
             Id = id;
             Type = type;
-            ServiceName = serviceName;
+            ResourceName = resourceName;
             CustomInit();
         }
 
@@ -48,6 +50,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the name of the service and resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique identifier of the AvailablePrivateEndpoint
@@ -63,10 +71,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the service and resource
+        /// Gets or sets the name of the service and resource.
         /// </summary>
-        [JsonProperty(PropertyName = "serviceName")]
-        public string ServiceName { get; set; }
+        [JsonProperty(PropertyName = "resourceName")]
+        public string ResourceName { get; set; }
 
     }
 }

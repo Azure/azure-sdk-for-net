@@ -21,7 +21,7 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         public QuotaExceededException(string message, Exception innerException)
-            : base(false, message, innerException)
+            : base(false, message, innerException, ErrorSourceType.ServerError)
         {
         }
     }

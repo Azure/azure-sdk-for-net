@@ -9,15 +9,18 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal struct KeyAttributes
     {
+        /// <summary>
+        /// Specifies whether the key is enabled and useable for cryptographic operations.
+        /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets not before date in UTC.
+        /// Identifies the time (in UTC) before which the key must not be used for cryptographic operations.
         /// </summary>
         public System.DateTimeOffset? NotBefore { get; set; }
 
         /// <summary>
-        /// Gets or sets expiry date in UTC.
+        /// Identifies the expiration time (in UTC) on or after which the key must not be used.
         /// </summary>
         public System.DateTimeOffset? Expires { get; set; }
 
@@ -62,16 +65,16 @@ namespace Azure.Security.KeyVault.Keys
                         Enabled = prop.Value.GetBoolean();
                         break;
                     case NotBeforePropertyName:
-                        NotBefore = DateTimeOffset.Parse(prop.Value.GetString());
+                        NotBefore = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
                         break;
                     case ExpiresPropertyName:
-                        Expires = DateTimeOffset.Parse(prop.Value.GetString());
+                        Expires = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
                         break;
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.Parse(prop.Value.GetString());
+                        Created = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
                         break;
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.Parse(prop.Value.GetString());
+                        Updated = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
                         break;
                     case RecoveryLevelPropertyName:
                         RecoveryLevel = prop.Value.GetString();

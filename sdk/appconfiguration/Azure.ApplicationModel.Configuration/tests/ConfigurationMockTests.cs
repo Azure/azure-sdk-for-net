@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using NUnit.Framework;
 
 namespace Azure.ApplicationModel.Configuration.Tests
@@ -53,7 +54,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Get, request.Method);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key", request.UriBuilder.ToString());
             Assert.AreEqual(s_testSetting, setting);
         }
@@ -72,7 +73,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Get, request.Method);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
             Assert.AreEqual(s_testSetting, setting);
         }
@@ -105,7 +106,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("*", ifNoneMatch);
@@ -126,7 +127,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
@@ -145,7 +146,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
@@ -166,7 +167,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Delete, request.Method);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key", request.UriBuilder.ToString());
         }
 
@@ -183,7 +184,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Delete, request.Method);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
         }
 
@@ -236,12 +237,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(2, mockTransport.Requests.Count);
 
             MockRequest request1 = mockTransport.Requests[0];
-            Assert.AreEqual(HttpPipelineMethod.Get, request1.Method);
+            Assert.AreEqual(RequestMethod.Get, request1.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/?key=*&label=*", request1.UriBuilder.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
-            Assert.AreEqual(HttpPipelineMethod.Get, request2.Method);
+            Assert.AreEqual(RequestMethod.Get, request2.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/?key=*&label=*&after=5", request2.UriBuilder.ToString());
             AssertRequestCommon(request1);
         }
@@ -255,7 +256,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var mockTransport = new MockTransport(new MockResponse(503), response);
 
             var options = new ConfigurationClientOptions();
-            options.TelemetryPolicy.ApplicationId = "test_application";
+            options.Diagnostics.ApplicationId = "test_application";
             options.Transport = mockTransport;
 
             var client = CreateClient<ConfigurationClient>(connectionString, options);
@@ -284,7 +285,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         private void AssertRequestCommon(MockRequest request)
         {
             Assert.True(request.Headers.TryGetValue("User-Agent", out var value));
-            StringAssert.Contains("azsdk-net-config/1.0.0.0", value);
+            StringAssert.Contains("azsdk-net-ApplicationModel.Configuration/1.0.0", value);
         }
 
         private static ConfigurationSetting CreateSetting(int i)

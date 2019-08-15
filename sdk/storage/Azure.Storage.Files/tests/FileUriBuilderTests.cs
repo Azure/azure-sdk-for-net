@@ -4,20 +4,24 @@
 
 using System;
 using System.Net;
-using Azure.Storage.Common;
-using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Azure.Storage.Files.Tests;
+using Azure.Storage.Sas;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestClass]
-    public class FileUriBuilderTests
+    public class FileUriBuilderTests : FileTestBase
     {
+        public FileUriBuilderTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        {
+        }
+
         //TODO address the flakiness of this test.
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_RoundTrip()
         {
-            var serviceUri = TestHelper.GetServiceClient_AccountSas();
+            var serviceUri = this.GetServiceClient_AccountSas();
             var blobUriBuilder = new FileUriBuilder(serviceUri.Uri);
 
             var blobUri = blobUriBuilder.ToUri();
@@ -28,7 +32,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(expectedUri, actualUri, "Flaky test -- potential signature generation issue not properly encoding space and + in the output");
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_AccountTest()
         {
             // Arrange
@@ -51,7 +55,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_ShareTest()
         {
             // Arrange
@@ -74,7 +78,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_PathTest()
         {
             // Arrange
@@ -97,7 +101,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_SnapshotTest()
         {
             // Arrange
@@ -120,7 +124,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_SasTest()
         {
             // Arrange

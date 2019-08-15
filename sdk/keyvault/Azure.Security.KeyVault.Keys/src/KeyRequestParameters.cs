@@ -77,13 +77,19 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(EcKeyCreateOptions ecKey)
             : this(ecKey.KeyType, ecKey)
         {
-            Curve = ecKey.Curve;
+            if(ecKey.Curve.HasValue)
+            {
+                Curve = ecKey.Curve.Value;
+            }
         }
 
         internal KeyRequestParameters(RsaKeyCreateOptions rsaKey)
             : this(rsaKey.KeyType, rsaKey)
         {
-            KeySize = rsaKey.KeySize;
+            if(rsaKey.KeySize.HasValue)
+            {
+                KeySize = rsaKey.KeySize.Value;
+            }
         }
 
         private const string KeyTypePropertyName = "kty";
@@ -92,7 +98,7 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText KeySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
         private const string KeyOpsPropertyName = "key_ops";
         private static readonly JsonEncodedText KeyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
-        private const string CurveNamePropertyName = "curveName";
+        private const string CurveNamePropertyName = "crv";
         private static readonly JsonEncodedText CurveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
         private const string AttributesPropertyName = "attributes";
         private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
@@ -109,7 +115,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 json.WriteNumber(KeySizePropertyNameBytes, KeySize.Value);
             }
-            if (Curve != default)
+            if (Curve.HasValue)
             {
                 json.WriteString(CurveNamePropertyNameBytes, KeyCurveNameExtensions.AsString(Curve.Value));
             }
@@ -144,6 +150,5 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         internal override void ReadProperties(JsonElement json) { }
-        
     }
 }

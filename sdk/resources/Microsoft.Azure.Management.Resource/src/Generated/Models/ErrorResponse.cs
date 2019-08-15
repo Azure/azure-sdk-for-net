@@ -11,11 +11,12 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Error reponse indicates Azure Resource Manager is not able to process
-    /// the incoming request. The reason is provided in the error message.
+    /// The resource management error response.
     /// </summary>
     public partial class ErrorResponse
     {
@@ -30,15 +31,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="httpStatus">Http status code.</param>
-        /// <param name="errorCode">Error code.</param>
-        /// <param name="errorMessage">Error message indicating why the
-        /// operation failed.</param>
-        public ErrorResponse(string httpStatus = default(string), string errorCode = default(string), string errorMessage = default(string))
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="target">The error target.</param>
+        /// <param name="details">The error details.</param>
+        /// <param name="additionalInfo">The error additional info.</param>
+        public ErrorResponse(string code = default(string), string message = default(string), string target = default(string), IList<ErrorResponse> details = default(IList<ErrorResponse>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
         {
-            HttpStatus = httpStatus;
-            ErrorCode = errorCode;
-            ErrorMessage = errorMessage;
+            Code = code;
+            Message = message;
+            Target = target;
+            Details = details;
+            AdditionalInfo = additionalInfo;
             CustomInit();
         }
 
@@ -48,22 +52,34 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets http status code.
+        /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "httpStatus")]
-        public string HttpStatus { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets error code.
+        /// Gets the error message.
         /// </summary>
-        [JsonProperty(PropertyName = "errorCode")]
-        public string ErrorCode { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
+        /// Gets the error target.
         /// </summary>
-        [JsonProperty(PropertyName = "errorMessage")]
-        public string ErrorMessage { get; set; }
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; private set; }
+
+        /// <summary>
+        /// Gets the error details.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public IList<ErrorResponse> Details { get; private set; }
+
+        /// <summary>
+        /// Gets the error additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalInfo")]
+        public IList<ErrorAdditionalInfo> AdditionalInfo { get; private set; }
 
     }
 }

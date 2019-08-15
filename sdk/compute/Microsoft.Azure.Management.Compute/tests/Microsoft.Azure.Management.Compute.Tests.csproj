@@ -7,8 +7,8 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>
   <PropertyGroup>
-    <ExcludeFromBuild>true</ExcludeFromBuild>
-    <ExcludeFromTest>true</ExcludeFromTest>
+    <ExcludeFromBuild>false</ExcludeFromBuild>
+    <ExcludeFromTest>false</ExcludeFromTest>
   </PropertyGroup>
 
   <ItemGroup>

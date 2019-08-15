@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -37,10 +36,29 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="targetRegions">The target regions where the Image
         /// Version is going to be replicated to. This property is
         /// updatable.</param>
-        public GalleryArtifactPublishingProfileBase(GalleryArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>))
+        /// <param name="replicaCount">The number of replicas of the Image
+        /// Version to be created per region. This property would take effect
+        /// for a region when regionalReplicaCount is not specified. This
+        /// property is updatable.</param>
+        /// <param name="excludeFromLatest">If set to true, Virtual Machines
+        /// deployed from the latest version of the Image Definition won't use
+        /// this Image Version.</param>
+        /// <param name="publishedDate">The timestamp for when the gallery
+        /// Image Version is published.</param>
+        /// <param name="endOfLifeDate">The end of life date of the gallery
+        /// Image Version. This property can be used for decommissioning
+        /// purposes. This property is updatable.</param>
+        /// <param name="storageAccountType">Specifies the storage account type
+        /// to be used to store the image. This property is not updatable.
+        /// Possible values include: 'Standard_LRS', 'Standard_ZRS'</param>
+        public GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string))
         {
             TargetRegions = targetRegions;
-            Source = source;
+            ReplicaCount = replicaCount;
+            ExcludeFromLatest = excludeFromLatest;
+            PublishedDate = publishedDate;
+            EndOfLifeDate = endOfLifeDate;
+            StorageAccountType = storageAccountType;
             CustomInit();
         }
 
@@ -57,36 +75,43 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<TargetRegion> TargetRegions { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of replicas of the Image Version to be
+        /// created per region. This property would take effect for a region
+        /// when regionalReplicaCount is not specified. This property is
+        /// updatable.
         /// </summary>
-        [JsonProperty(PropertyName = "source")]
-        public GalleryArtifactSource Source { get; set; }
+        [JsonProperty(PropertyName = "replicaCount")]
+        public int? ReplicaCount { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets if set to true, Virtual Machines deployed from the
+        /// latest version of the Image Definition won't use this Image
+        /// Version.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Source == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Source");
-            }
-            if (TargetRegions != null)
-            {
-                foreach (var element in TargetRegions)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (Source != null)
-            {
-                Source.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "excludeFromLatest")]
+        public bool? ExcludeFromLatest { get; set; }
+
+        /// <summary>
+        /// Gets the timestamp for when the gallery Image Version is published.
+        /// </summary>
+        [JsonProperty(PropertyName = "publishedDate")]
+        public System.DateTime? PublishedDate { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the end of life date of the gallery Image Version.
+        /// This property can be used for decommissioning purposes. This
+        /// property is updatable.
+        /// </summary>
+        [JsonProperty(PropertyName = "endOfLifeDate")]
+        public System.DateTime? EndOfLifeDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the storage account type to be used to store
+        /// the image. This property is not updatable. Possible values include:
+        /// 'Standard_LRS', 'Standard_ZRS'
+        /// </summary>
+        [JsonProperty(PropertyName = "storageAccountType")]
+        public string StorageAccountType { get; set; }
+
     }
 }

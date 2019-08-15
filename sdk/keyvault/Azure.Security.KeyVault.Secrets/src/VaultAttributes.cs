@@ -9,15 +9,18 @@ namespace Azure.Security.KeyVault.Secrets
 {
     internal struct VaultAttributes
     {
+        /// <summary>
+        /// Specifies whether the secret is enabled and useable.
+        /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets not before date in UTC.
+        /// Identifies the time (in UTC) before which the secret data should not be retrieved.
         /// </summary>
         public System.DateTimeOffset? NotBefore { get; set; }
 
         /// <summary>
-        /// Gets or sets expiry date in UTC.
+        /// Identifies the expiration time (in UTC) on or after which the secret data should not be retrieved.
         /// </summary>
         public System.DateTimeOffset? Expires { get; set; }
 

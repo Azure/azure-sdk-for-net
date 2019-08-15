@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -16,8 +18,11 @@ namespace Azure.Core.Testing
 
         private static readonly IInterceptor _useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
         private static readonly IInterceptor _avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
+        private static readonly IInterceptor _diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
 
         public bool IsAsync { get; }
+
+        public bool TestDiagnostics { get; set; } = true;
 
         public ClientTestBase(bool isAsync)
         {
@@ -32,6 +37,8 @@ namespace Azure.Core.Testing
 
         public virtual TClient InstrumentClient<TClient>(TClient client) where TClient: class
         {
+            Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
+
             if (ClientValidation<TClient>.Validated == false)
             {
                 foreach (var methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))
@@ -52,9 +59,16 @@ namespace Azure.Core.Testing
                 throw ClientValidation<TClient>.ValidationException;
             }
 
-            var interceptor = IsAsync ? _avoidSyncInterceptor : _useSyncInterceptor;
+            List<IInterceptor> interceptors = new List<IInterceptor>();
 
-            return _proxyGenerator.CreateClassProxyWithTarget(client, interceptor);
+            if (TestDiagnostics)
+            {
+                interceptors.Add(_diagnosticScopeValidatingInterceptor);
+            }
+
+            interceptors.Add(IsAsync ? _avoidSyncInterceptor : _useSyncInterceptor);
+
+            return _proxyGenerator.CreateClassProxyWithTarget(client, interceptors.ToArray());
         }
 
 
