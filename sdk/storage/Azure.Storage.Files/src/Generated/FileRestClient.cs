@@ -4762,109 +4762,6 @@ namespace Azure.Storage.Files
 #endregion Service
 
 #region Models
-#region enum DeleteSnapshotsOptionType
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Specifies the option include to delete the base share and all of its snapshots.
-    /// </summary>
-    public enum DeleteSnapshotsOptionType
-    {
-        /// <summary>
-        /// include
-        /// </summary>
-        Include
-    }
-}
-
-namespace Azure.Storage.Files
-{
-    internal static partial class FileRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.Models.DeleteSnapshotsOptionType value)
-            {
-                switch (value)
-                {
-                    case Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include:
-                        return "include";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.");
-                }
-            }
-
-            public static Azure.Storage.Files.Models.DeleteSnapshotsOptionType ParseDeleteSnapshotsOptionType(string value)
-            {
-                switch (value)
-                {
-                    case "include":
-                        return Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.");
-                }
-            }
-        }
-    }
-}
-#endregion enum DeleteSnapshotsOptionType
-
-#region enum ListSharesIncludeType
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// ListSharesIncludeType values
-    /// </summary>
-    public enum ListSharesIncludeType
-    {
-        /// <summary>
-        /// snapshots
-        /// </summary>
-        Snapshots,
-
-        /// <summary>
-        /// metadata
-        /// </summary>
-        Metadata
-    }
-}
-
-namespace Azure.Storage.Files
-{
-    internal static partial class FileRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.Models.ListSharesIncludeType value)
-            {
-                switch (value)
-                {
-                    case Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots:
-                        return "snapshots";
-                    case Azure.Storage.Files.Models.ListSharesIncludeType.Metadata:
-                        return "metadata";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.");
-                }
-            }
-
-            public static Azure.Storage.Files.Models.ListSharesIncludeType ParseListSharesIncludeType(string value)
-            {
-                switch (value)
-                {
-                    case "snapshots":
-                        return Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots;
-                    case "metadata":
-                        return Azure.Storage.Files.Models.ListSharesIncludeType.Metadata;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.");
-                }
-            }
-        }
-    }
-}
-#endregion enum ListSharesIncludeType
-
 #region class AccessPolicy
 namespace Azure.Storage.Files.Models
 {
@@ -4954,270 +4851,81 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class AccessPolicy
 
-#region class SignedIdentifier
+#region enum CopyStatus
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
-    /// Signed identifier.
+    /// State of the copy operation identified by 'x-ms-copy-id'.
     /// </summary>
-    public partial class SignedIdentifier
+    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
+    public enum CopyStatus
+    #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {
         /// <summary>
-        /// A unique id.
+        /// pending
         /// </summary>
-        public string Id { get; set; }
+        Pending,
 
         /// <summary>
-        /// The access policy.
+        /// success
         /// </summary>
-        public Azure.Storage.Files.Models.AccessPolicy AccessPolicy { get; set; }
+        Success,
 
         /// <summary>
-        /// Creates a new SignedIdentifier instance
+        /// aborted
         /// </summary>
-        public SignedIdentifier()
-            : this(false)
-        {
-        }
+        Aborted,
 
         /// <summary>
-        /// Creates a new SignedIdentifier instance
+        /// failed
         /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal SignedIdentifier(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                this.AccessPolicy = new Azure.Storage.Files.Models.AccessPolicy();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a SignedIdentifier instance as XML.
-        /// </summary>
-        /// <param name="value">The SignedIdentifier instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.SignedIdentifier value, string name = "SignedIdentifier", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Id", ""),
-                value.Id));
-            if (value.AccessPolicy != null)
-            {
-                _element.Add(Azure.Storage.Files.Models.AccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new SignedIdentifier instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized SignedIdentifier instance.</returns>
-        internal static Azure.Storage.Files.Models.SignedIdentifier FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.SignedIdentifier _value = new Azure.Storage.Files.Models.SignedIdentifier(true);
-            _value.Id = element.Element(System.Xml.Linq.XName.Get("Id", "")).Value;
-            _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
-            if (_child != null)
-            {
-                _value.AccessPolicy = Azure.Storage.Files.Models.AccessPolicy.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.SignedIdentifier value);
+        Failed
     }
 }
-#endregion class SignedIdentifier
 
-#region class RetentionPolicy
-namespace Azure.Storage.Files.Models
+namespace Azure.Storage.Files
 {
-    /// <summary>
-    /// The retention policy.
-    /// </summary>
-    public partial class RetentionPolicy
+    internal static partial class FileRestClient
     {
-        /// <summary>
-        /// Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it.
-        /// </summary>
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// Indicates the number of days that metrics data should be retained. All data older than this value will be deleted. Metrics data is deleted on a best-effort basis after the retention period expires.
-        /// </summary>
-        public int? Days { get; set; }
-
-        /// <summary>
-        /// Serialize a RetentionPolicy instance as XML.
-        /// </summary>
-        /// <param name="value">The RetentionPolicy instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "RetentionPolicy".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.RetentionPolicy value, string name = "RetentionPolicy", string ns = "")
+        public static partial class Serialization
         {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Enabled", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.Days != null)
+            public static string ToString(Azure.Storage.Files.Models.CopyStatus value)
             {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("Days", ""),
-                    value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+                switch (value)
+                {
+                    case Azure.Storage.Files.Models.CopyStatus.Pending:
+                        return "pending";
+                    case Azure.Storage.Files.Models.CopyStatus.Success:
+                        return "success";
+                    case Azure.Storage.Files.Models.CopyStatus.Aborted:
+                        return "aborted";
+                    case Azure.Storage.Files.Models.CopyStatus.Failed:
+                        return "failed";
+                    default:
+                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.");
+                }
             }
-            return _element;
-        }
 
-        /// <summary>
-        /// Deserializes XML into a new RetentionPolicy instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized RetentionPolicy instance.</returns>
-        internal static Azure.Storage.Files.Models.RetentionPolicy FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.RetentionPolicy _value = new Azure.Storage.Files.Models.RetentionPolicy();
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
-            _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
-            if (_child != null)
+            public static Azure.Storage.Files.Models.CopyStatus ParseCopyStatus(string value)
             {
-                _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                switch (value)
+                {
+                    case "pending":
+                        return Azure.Storage.Files.Models.CopyStatus.Pending;
+                    case "success":
+                        return Azure.Storage.Files.Models.CopyStatus.Success;
+                    case "aborted":
+                        return Azure.Storage.Files.Models.CopyStatus.Aborted;
+                    case "failed":
+                        return Azure.Storage.Files.Models.CopyStatus.Failed;
+                    default:
+                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.");
+                }
             }
-            CustomizeFromXml(element, _value);
-            return _value;
         }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.RetentionPolicy value);
     }
 }
-#endregion class RetentionPolicy
-
-#region class Metrics
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Storage Analytics metrics for file service.
-    /// </summary>
-    public partial class Metrics
-    {
-        /// <summary>
-        /// The version of Storage Analytics to configure.
-        /// </summary>
-        public string Version { get; set; }
-
-        /// <summary>
-        /// Indicates whether metrics are enabled for the File service.
-        /// </summary>
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// Indicates whether metrics should generate summary statistics for called API operations.
-        /// </summary>
-        public bool? IncludeAPIs { get; set; }
-
-        /// <summary>
-        /// The retention policy.
-        /// </summary>
-        public Azure.Storage.Files.Models.RetentionPolicy RetentionPolicy { get; set; }
-
-        /// <summary>
-        /// Creates a new Metrics instance
-        /// </summary>
-        public Metrics()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new Metrics instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal Metrics(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                this.RetentionPolicy = new Azure.Storage.Files.Models.RetentionPolicy();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a Metrics instance as XML.
-        /// </summary>
-        /// <param name="value">The Metrics instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "Metrics".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.Metrics value, string name = "Metrics", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Version", ""),
-                value.Version));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Enabled", ""),
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (value.IncludeAPIs != null)
-            {
-                _element.Add(new System.Xml.Linq.XElement(
-                    System.Xml.Linq.XName.Get("IncludeAPIs", ""),
-                    #pragma warning disable CA1308 // Normalize strings to uppercase
-                    value.IncludeAPIs.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
-                    #pragma warning restore CA1308 // Normalize strings to uppercase
-            }
-            if (value.RetentionPolicy != null)
-            {
-                _element.Add(Azure.Storage.Files.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new Metrics instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Metrics instance.</returns>
-        internal static Azure.Storage.Files.Models.Metrics FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.Metrics _value = new Azure.Storage.Files.Models.Metrics(true);
-            _value.Version = element.Element(System.Xml.Linq.XName.Get("Version", "")).Value;
-            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
-            _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
-            if (_child != null)
-            {
-                _value.IncludeAPIs = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
-            if (_child != null)
-            {
-                _value.RetentionPolicy = Azure.Storage.Files.Models.RetentionPolicy.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.Metrics value);
-    }
-}
-#endregion class Metrics
+#endregion enum CopyStatus
 
 #region class CorsRule
 namespace Azure.Storage.Files.Models
@@ -5304,122 +5012,100 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class CorsRule
 
-#region class FileServiceProperties
+#region enum DeleteSnapshotsOptionType
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
-    /// Storage service properties.
+    /// Specifies the option include to delete the base share and all of its snapshots.
     /// </summary>
-    public partial class FileServiceProperties
+    public enum DeleteSnapshotsOptionType
     {
         /// <summary>
-        /// A summary of request statistics grouped by API in hourly aggregates for files.
+        /// include
         /// </summary>
-        public Azure.Storage.Files.Models.Metrics HourMetrics { get; set; }
+        Include
+    }
+}
 
-        /// <summary>
-        /// A summary of request statistics grouped by API in minute aggregates for files.
-        /// </summary>
-        public Azure.Storage.Files.Models.Metrics MinuteMetrics { get; set; }
-
-        /// <summary>
-        /// The set of CORS rules.
-        /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Files.Models.CorsRule> Cors { get; internal set; }
-
-        /// <summary>
-        /// Creates a new FileServiceProperties instance
-        /// </summary>
-        public FileServiceProperties()
-            : this(false)
+namespace Azure.Storage.Files
+{
+    internal static partial class FileRestClient
+    {
+        public static partial class Serialization
         {
-        }
-
-        /// <summary>
-        /// Creates a new FileServiceProperties instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal FileServiceProperties(bool skipInitialization)
-        {
-            if (!skipInitialization)
+            public static string ToString(Azure.Storage.Files.Models.DeleteSnapshotsOptionType value)
             {
-                this.HourMetrics = new Azure.Storage.Files.Models.Metrics();
-                this.MinuteMetrics = new Azure.Storage.Files.Models.Metrics();
-                this.Cors = new System.Collections.Generic.List<Azure.Storage.Files.Models.CorsRule>();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a FileServiceProperties instance as XML.
-        /// </summary>
-        /// <param name="value">The FileServiceProperties instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "StorageServiceProperties".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.FileServiceProperties value, string name = "StorageServiceProperties", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.HourMetrics != null)
-            {
-                _element.Add(Azure.Storage.Files.Models.Metrics.ToXml(value.HourMetrics, "HourMetrics", ""));
-            }
-            if (value.MinuteMetrics != null)
-            {
-                _element.Add(Azure.Storage.Files.Models.Metrics.ToXml(value.MinuteMetrics, "MinuteMetrics", ""));
-            }
-            if (value.Cors != null)
-            {
-                System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("Cors", ""));
-                foreach (Azure.Storage.Files.Models.CorsRule _child in value.Cors)
+                switch (value)
                 {
-                    _elements.Add(Azure.Storage.Files.Models.CorsRule.ToXml(_child));
+                    case Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include:
+                        return "include";
+                    default:
+                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.");
                 }
-                _element.Add(_elements);
             }
-            return _element;
+
+            public static Azure.Storage.Files.Models.DeleteSnapshotsOptionType ParseDeleteSnapshotsOptionType(string value)
+            {
+                switch (value)
+                {
+                    case "include":
+                        return Azure.Storage.Files.Models.DeleteSnapshotsOptionType.Include;
+                    default:
+                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.DeleteSnapshotsOptionType value.");
+                }
+            }
         }
+    }
+}
+#endregion enum DeleteSnapshotsOptionType
+
+#region class DirectoryItem
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// A listed directory item.
+    /// </summary>
+    internal partial class DirectoryItem
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name { get; internal set; }
 
         /// <summary>
-        /// Deserializes XML into a new FileServiceProperties instance.
+        /// Deserializes XML into a new DirectoryItem instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized FileServiceProperties instance.</returns>
-        internal static Azure.Storage.Files.Models.FileServiceProperties FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized DirectoryItem instance.</returns>
+        internal static Azure.Storage.Files.Models.DirectoryItem FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.FileServiceProperties _value = new Azure.Storage.Files.Models.FileServiceProperties(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("HourMetrics", ""));
-            if (_child != null)
-            {
-                _value.HourMetrics = Azure.Storage.Files.Models.Metrics.FromXml(_child);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("MinuteMetrics", ""));
-            if (_child != null)
-            {
-                _value.MinuteMetrics = Azure.Storage.Files.Models.Metrics.FromXml(_child);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Cors", ""));
-            if (_child != null)
-            {
-                _value.Cors = System.Linq.Enumerable.ToList(
-                    System.Linq.Enumerable.Select(
-                        _child.Elements(System.Xml.Linq.XName.Get("CorsRule", "")),
-                        e => Azure.Storage.Files.Models.CorsRule.FromXml(e)));
-            }
-            else
-            {
-                _value.Cors = new System.Collections.Generic.List<Azure.Storage.Files.Models.CorsRule>();
-            }
+            Azure.Storage.Files.Models.DirectoryItem _value = new Azure.Storage.Files.Models.DirectoryItem();
+            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileServiceProperties value);
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.DirectoryItem value);
     }
 }
-#endregion class FileServiceProperties
+#endregion class DirectoryItem
+
+#region class FailureNoContent
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// FailureNoContent
+    /// </summary>
+    internal partial class FailureNoContent
+    {
+        /// <summary>
+        /// x-ms-error-code
+        /// </summary>
+        public string ErrorCode { get; internal set; }
+    }
+}
+#endregion class FailureNoContent
 
 #region enum strings FileErrorCode
 namespace Azure.Storage.Files.Models
@@ -5803,70 +5489,6 @@ namespace Azure.Storage.Files.Models
 }
 #endregion enum strings FileErrorCode
 
-#region class DirectoryItem
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// A listed directory item.
-    /// </summary>
-    internal partial class DirectoryItem
-    {
-        /// <summary>
-        /// Name
-        /// </summary>
-        public string Name { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new DirectoryItem instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized DirectoryItem instance.</returns>
-        internal static Azure.Storage.Files.Models.DirectoryItem FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Files.Models.DirectoryItem _value = new Azure.Storage.Files.Models.DirectoryItem();
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.DirectoryItem value);
-    }
-}
-#endregion class DirectoryItem
-
-#region class FileProperty
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// File properties.
-    /// </summary>
-    internal partial class FileProperty
-    {
-        /// <summary>
-        /// Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties.
-        /// </summary>
-        public long ContentLength { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new FileProperty instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized FileProperty instance.</returns>
-        internal static Azure.Storage.Files.Models.FileProperty FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Files.Models.FileProperty _value = new Azure.Storage.Files.Models.FileProperty();
-            _value.ContentLength = long.Parse(element.Element(System.Xml.Linq.XName.Get("Content-Length", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileProperty value);
-    }
-}
-#endregion class FileProperty
-
 #region class FileItem
 namespace Azure.Storage.Files.Models
 {
@@ -5925,119 +5547,210 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class FileItem
 
-#region class StorageHandle
+#region class FileProperty
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
-    /// A listed Azure Storage handle item.
+    /// File properties.
     /// </summary>
-    public partial class StorageHandle
+    internal partial class FileProperty
     {
         /// <summary>
-        /// XSMB service handle ID
+        /// Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties.
         /// </summary>
-        public string HandleId { get; internal set; }
+        public long ContentLength { get; internal set; }
 
         /// <summary>
-        /// File or directory name including full path starting from share root
-        /// </summary>
-        public string Path { get; internal set; }
-
-        /// <summary>
-        /// FileId uniquely identifies the file or directory.
-        /// </summary>
-        public string FileId { get; internal set; }
-
-        /// <summary>
-        /// ParentId uniquely identifies the parent directory of the object.
-        /// </summary>
-        public string ParentId { get; internal set; }
-
-        /// <summary>
-        /// SMB session ID in context of which the file handle was opened
-        /// </summary>
-        public string SessionId { get; internal set; }
-
-        /// <summary>
-        /// Client IP that opened the handle
-        /// </summary>
-        public string ClientIp { get; internal set; }
-
-        /// <summary>
-        /// Time when the session that previously opened the handle has last been reconnected. (UTC)
-        /// </summary>
-        public System.DateTimeOffset OpenTime { get; internal set; }
-
-        /// <summary>
-        /// Time handle was last connected to (UTC)
-        /// </summary>
-        public System.DateTimeOffset? LastReconnectTime { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new StorageHandle instance.
+        /// Deserializes XML into a new FileProperty instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized StorageHandle instance.</returns>
-        internal static Azure.Storage.Files.Models.StorageHandle FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized FileProperty instance.</returns>
+        internal static Azure.Storage.Files.Models.FileProperty FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Files.Models.FileProperty _value = new Azure.Storage.Files.Models.FileProperty();
+            _value.ContentLength = long.Parse(element.Element(System.Xml.Linq.XName.Get("Content-Length", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileProperty value);
+    }
+}
+#endregion class FileProperty
+
+#region enum FileRangeWriteType
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size.
+    /// </summary>
+    public enum FileRangeWriteType
+    {
+        /// <summary>
+        /// update
+        /// </summary>
+        Update,
+
+        /// <summary>
+        /// clear
+        /// </summary>
+        Clear
+    }
+}
+
+namespace Azure.Storage.Files
+{
+    internal static partial class FileRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Files.Models.FileRangeWriteType value)
+            {
+                switch (value)
+                {
+                    case Azure.Storage.Files.Models.FileRangeWriteType.Update:
+                        return "update";
+                    case Azure.Storage.Files.Models.FileRangeWriteType.Clear:
+                        return "clear";
+                    default:
+                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.");
+                }
+            }
+
+            public static Azure.Storage.Files.Models.FileRangeWriteType ParseFileRangeWriteType(string value)
+            {
+                switch (value)
+                {
+                    case "update":
+                        return Azure.Storage.Files.Models.FileRangeWriteType.Update;
+                    case "clear":
+                        return Azure.Storage.Files.Models.FileRangeWriteType.Clear;
+                    default:
+                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.");
+                }
+            }
+        }
+    }
+}
+#endregion enum FileRangeWriteType
+
+#region class FileServiceProperties
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Storage service properties.
+    /// </summary>
+    public partial class FileServiceProperties
+    {
+        /// <summary>
+        /// A summary of request statistics grouped by API in hourly aggregates for files.
+        /// </summary>
+        public Azure.Storage.Files.Models.Metrics HourMetrics { get; set; }
+
+        /// <summary>
+        /// A summary of request statistics grouped by API in minute aggregates for files.
+        /// </summary>
+        public Azure.Storage.Files.Models.Metrics MinuteMetrics { get; set; }
+
+        /// <summary>
+        /// The set of CORS rules.
+        /// </summary>
+        public System.Collections.Generic.IList<Azure.Storage.Files.Models.CorsRule> Cors { get; internal set; }
+
+        /// <summary>
+        /// Creates a new FileServiceProperties instance
+        /// </summary>
+        public FileServiceProperties()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new FileServiceProperties instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal FileServiceProperties(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                this.HourMetrics = new Azure.Storage.Files.Models.Metrics();
+                this.MinuteMetrics = new Azure.Storage.Files.Models.Metrics();
+                this.Cors = new System.Collections.Generic.List<Azure.Storage.Files.Models.CorsRule>();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a FileServiceProperties instance as XML.
+        /// </summary>
+        /// <param name="value">The FileServiceProperties instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "StorageServiceProperties".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.FileServiceProperties value, string name = "StorageServiceProperties", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.HourMetrics != null)
+            {
+                _element.Add(Azure.Storage.Files.Models.Metrics.ToXml(value.HourMetrics, "HourMetrics", ""));
+            }
+            if (value.MinuteMetrics != null)
+            {
+                _element.Add(Azure.Storage.Files.Models.Metrics.ToXml(value.MinuteMetrics, "MinuteMetrics", ""));
+            }
+            if (value.Cors != null)
+            {
+                System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("Cors", ""));
+                foreach (Azure.Storage.Files.Models.CorsRule _child in value.Cors)
+                {
+                    _elements.Add(Azure.Storage.Files.Models.CorsRule.ToXml(_child));
+                }
+                _element.Add(_elements);
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new FileServiceProperties instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized FileServiceProperties instance.</returns>
+        internal static Azure.Storage.Files.Models.FileServiceProperties FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.StorageHandle _value = new Azure.Storage.Files.Models.StorageHandle();
-            _value.HandleId = element.Element(System.Xml.Linq.XName.Get("HandleId", "")).Value;
-            _value.Path = element.Element(System.Xml.Linq.XName.Get("Path", "")).Value;
-            _value.FileId = element.Element(System.Xml.Linq.XName.Get("FileId", "")).Value;
-            _child = element.Element(System.Xml.Linq.XName.Get("ParentId", ""));
+            Azure.Storage.Files.Models.FileServiceProperties _value = new Azure.Storage.Files.Models.FileServiceProperties(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("HourMetrics", ""));
             if (_child != null)
             {
-                _value.ParentId = _child.Value;
+                _value.HourMetrics = Azure.Storage.Files.Models.Metrics.FromXml(_child);
             }
-            _value.SessionId = element.Element(System.Xml.Linq.XName.Get("SessionId", "")).Value;
-            _value.ClientIp = element.Element(System.Xml.Linq.XName.Get("ClientIp", "")).Value;
-            _value.OpenTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("OpenTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _child = element.Element(System.Xml.Linq.XName.Get("LastReconnectTime", ""));
+            _child = element.Element(System.Xml.Linq.XName.Get("MinuteMetrics", ""));
             if (_child != null)
             {
-                _value.LastReconnectTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.MinuteMetrics = Azure.Storage.Files.Models.Metrics.FromXml(_child);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Cors", ""));
+            if (_child != null)
+            {
+                _value.Cors = System.Linq.Enumerable.ToList(
+                    System.Linq.Enumerable.Select(
+                        _child.Elements(System.Xml.Linq.XName.Get("CorsRule", "")),
+                        e => Azure.Storage.Files.Models.CorsRule.FromXml(e)));
+            }
+            else
+            {
+                _value.Cors = new System.Collections.Generic.List<Azure.Storage.Files.Models.CorsRule>();
             }
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageHandle value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new StorageHandle instance for mocking.
-        /// </summary>
-        public static StorageHandle StorageHandle(
-            string handleId,
-            string path,
-            string fileId,
-            string sessionId,
-            string clientIp,
-            System.DateTimeOffset openTime,
-            string parentId = default,
-            System.DateTimeOffset? lastReconnectTime = default)
-        {
-            var _model = new StorageHandle();
-            _model.HandleId = handleId;
-            _model.Path = path;
-            _model.FileId = fileId;
-            _model.SessionId = sessionId;
-            _model.ClientIp = clientIp;
-            _model.OpenTime = openTime;
-            _model.ParentId = parentId;
-            _model.LastReconnectTime = lastReconnectTime;
-            return _model;
-        }
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileServiceProperties value);
     }
 }
-#endregion class StorageHandle
+#endregion class FileServiceProperties
 
 #region class FilesAndDirectoriesSegment
 namespace Azure.Storage.Files.Models
@@ -6186,934 +5899,6 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class FilesAndDirectoriesSegment
 
-#region class StorageHandlesSegment
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// An enumeration of handles.
-    /// </summary>
-    internal partial class StorageHandlesSegment
-    {
-        /// <summary>
-        /// Handles
-        /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.StorageHandle> Handles { get; internal set; }
-
-        /// <summary>
-        /// NextMarker
-        /// </summary>
-        public string NextMarker { get; internal set; }
-
-        /// <summary>
-        /// Creates a new StorageHandlesSegment instance
-        /// </summary>
-        public StorageHandlesSegment()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new StorageHandlesSegment instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal StorageHandlesSegment(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                this.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
-            }
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new StorageHandlesSegment instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized StorageHandlesSegment instance.</returns>
-        internal static Azure.Storage.Files.Models.StorageHandlesSegment FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.StorageHandlesSegment _value = new Azure.Storage.Files.Models.StorageHandlesSegment(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("Entries", ""));
-            if (_child != null)
-            {
-                _value.Handles = System.Linq.Enumerable.ToList(
-                    System.Linq.Enumerable.Select(
-                        _child.Elements(System.Xml.Linq.XName.Get("Handle", "")),
-                        e => Azure.Storage.Files.Models.StorageHandle.FromXml(e)));
-            }
-            else
-            {
-                _value.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
-            }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageHandlesSegment value);
-    }
-}
-#endregion class StorageHandlesSegment
-
-#region class ShareItemProperties
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Properties of a share.
-    /// </summary>
-    public partial class ShareItemProperties
-    {
-        /// <summary>
-        /// Last-Modified
-        /// </summary>
-        public System.DateTimeOffset? LastModified { get; internal set; }
-
-        /// <summary>
-        /// Etag
-        /// </summary>
-        public Azure.Core.Http.ETag? Etag { get; internal set; }
-
-        /// <summary>
-        /// Quota
-        /// </summary>
-        public int? Quota { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new ShareItemProperties instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized ShareItemProperties instance.</returns>
-        internal static Azure.Storage.Files.Models.ShareItemProperties FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.ShareItemProperties _value = new Azure.Storage.Files.Models.ShareItemProperties();
-            _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
-            if (_child != null)
-            {
-                _value.LastModified = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
-            if (_child != null)
-            {
-                _value.Etag = new Azure.Core.Http.ETag(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
-            if (_child != null)
-            {
-                _value.Quota = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareItemProperties value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareItemProperties instance for mocking.
-        /// </summary>
-        public static ShareItemProperties ShareItemProperties(
-            System.DateTimeOffset? lastModified = default,
-            Azure.Core.Http.ETag? etag = default,
-            int? quota = default)
-        {
-            var _model = new ShareItemProperties();
-            _model.LastModified = lastModified;
-            _model.Etag = etag;
-            _model.Quota = quota;
-            return _model;
-        }
-    }
-}
-#endregion class ShareItemProperties
-
-#region class ShareItem
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// A listed Azure Storage share item.
-    /// </summary>
-    public partial class ShareItem
-    {
-        /// <summary>
-        /// Name
-        /// </summary>
-        public string Name { get; internal set; }
-
-        /// <summary>
-        /// Snapshot
-        /// </summary>
-        public string Snapshot { get; internal set; }
-
-        /// <summary>
-        /// Properties of a share.
-        /// </summary>
-        public Azure.Storage.Files.Models.ShareItemProperties Properties { get; internal set; }
-
-        /// <summary>
-        /// Metadata
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
-
-        /// <summary>
-        /// Creates a new ShareItem instance
-        /// </summary>
-        public ShareItem()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new ShareItem instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal ShareItem(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                this.Properties = new Azure.Storage.Files.Models.ShareItemProperties();
-                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            }
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new ShareItem instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized ShareItem instance.</returns>
-        internal static Azure.Storage.Files.Models.ShareItem FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.ShareItem _value = new Azure.Storage.Files.Models.ShareItem(true);
-            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
-            _child = element.Element(System.Xml.Linq.XName.Get("Snapshot", ""));
-            if (_child != null)
-            {
-                _value.Snapshot = _child.Value;
-            }
-            _value.Properties = Azure.Storage.Files.Models.ShareItemProperties.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
-            if (_child != null)
-            {
-                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
-                {
-                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
-                }
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareItem value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareItem instance for mocking.
-        /// </summary>
-        public static ShareItem ShareItem(
-            string name,
-            Azure.Storage.Files.Models.ShareItemProperties properties,
-            string snapshot = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
-        {
-            var _model = new ShareItem();
-            _model.Name = name;
-            _model.Properties = properties;
-            _model.Snapshot = snapshot;
-            _model.Metadata = metadata;
-            return _model;
-        }
-    }
-}
-#endregion class ShareItem
-
-#region class SharesSegment
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// An enumeration of shares.
-    /// </summary>
-    internal partial class SharesSegment
-    {
-        /// <summary>
-        /// ServiceEndpoint
-        /// </summary>
-        public string ServiceEndpoint { get; internal set; }
-
-        /// <summary>
-        /// Prefix
-        /// </summary>
-        public string Prefix { get; internal set; }
-
-        /// <summary>
-        /// Marker
-        /// </summary>
-        public string Marker { get; internal set; }
-
-        /// <summary>
-        /// MaxResults
-        /// </summary>
-        public int? MaxResults { get; internal set; }
-
-        /// <summary>
-        /// ShareItems
-        /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.ShareItem> ShareItems { get; internal set; }
-
-        /// <summary>
-        /// NextMarker
-        /// </summary>
-        public string NextMarker { get; internal set; }
-
-        /// <summary>
-        /// Creates a new SharesSegment instance
-        /// </summary>
-        public SharesSegment()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new SharesSegment instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal SharesSegment(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                this.ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
-            }
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new SharesSegment instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized SharesSegment instance.</returns>
-        internal static Azure.Storage.Files.Models.SharesSegment FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.SharesSegment _value = new Azure.Storage.Files.Models.SharesSegment(true);
-            _value.ServiceEndpoint = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", "")).Value;
-            _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
-            if (_child != null)
-            {
-                _value.Prefix = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Marker", ""));
-            if (_child != null)
-            {
-                _value.Marker = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("MaxResults", ""));
-            if (_child != null)
-            {
-                _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Shares", ""));
-            if (_child != null)
-            {
-                _value.ShareItems = System.Linq.Enumerable.ToList(
-                    System.Linq.Enumerable.Select(
-                        _child.Elements(System.Xml.Linq.XName.Get("Share", "")),
-                        e => Azure.Storage.Files.Models.ShareItem.FromXml(e)));
-            }
-            else
-            {
-                _value.ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
-            }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.SharesSegment value);
-    }
-}
-#endregion class SharesSegment
-
-#region class Range
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// An Azure Storage file range.
-    /// </summary>
-    public partial class Range
-    {
-        /// <summary>
-        /// Start of the range.
-        /// </summary>
-        public long Start { get; internal set; }
-
-        /// <summary>
-        /// End of the range.
-        /// </summary>
-        public long End { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new Range instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Range instance.</returns>
-        internal static Azure.Storage.Files.Models.Range FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Files.Models.Range _value = new Azure.Storage.Files.Models.Range();
-            _value.Start = long.Parse(element.Element(System.Xml.Linq.XName.Get("Start", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.End = long.Parse(element.Element(System.Xml.Linq.XName.Get("End", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.Range value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new Range instance for mocking.
-        /// </summary>
-        public static Range Range(
-            long start,
-            long end)
-        {
-            var _model = new Range();
-            _model.Start = start;
-            _model.End = end;
-            return _model;
-        }
-    }
-}
-#endregion class Range
-
-#region class StorageError
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// StorageError
-    /// </summary>
-    internal partial class StorageError
-    {
-        /// <summary>
-        /// Code
-        /// </summary>
-        public string Code { get; internal set; }
-
-        /// <summary>
-        /// Message
-        /// </summary>
-        public string Message { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new StorageError instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized StorageError instance.</returns>
-        internal static Azure.Storage.Files.Models.StorageError FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Models.StorageError _value = new Azure.Storage.Files.Models.StorageError();
-            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
-            if (_child != null)
-            {
-                _value.Code = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
-            if (_child != null)
-            {
-                _value.Message = _child.Value;
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageError value);
-    }
-}
-#endregion class StorageError
-
-#region class ShareStatistics
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Stats for the share.
-    /// </summary>
-    public partial class ShareStatistics
-    {
-        /// <summary>
-        /// The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.
-        /// </summary>
-        public int ShareUsageBytes { get; internal set; }
-
-        /// <summary>
-        /// Deserializes XML into a new ShareStatistics instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized ShareStatistics instance.</returns>
-        internal static Azure.Storage.Files.Models.ShareStatistics FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Files.Models.ShareStatistics _value = new Azure.Storage.Files.Models.ShareStatistics();
-            _value.ShareUsageBytes = int.Parse(element.Element(System.Xml.Linq.XName.Get("ShareUsageBytes", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareStatistics value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareStatistics instance for mocking.
-        /// </summary>
-        public static ShareStatistics ShareStatistics(
-            int shareUsageBytes)
-        {
-            var _model = new ShareStatistics();
-            _model.ShareUsageBytes = shareUsageBytes;
-            return _model;
-        }
-    }
-}
-#endregion class ShareStatistics
-
-#region class ShareInfo
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// ShareInfo
-    /// </summary>
-    public partial class ShareInfo
-    {
-        /// <summary>
-        /// The ETag contains a value which represents the version of the share, in quotes.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareInfo instance for mocking.
-        /// </summary>
-        public static ShareInfo ShareInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            var _model = new ShareInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            return _model;
-        }
-    }
-}
-#endregion class ShareInfo
-
-#region class ShareProperties
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// ShareProperties
-    /// </summary>
-    public partial class ShareProperties
-    {
-        /// <summary>
-        /// A set of name-value pairs that contain the user-defined metadata of the share.
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
-
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties updates the last modified time. Operations on files do not affect the last modified time of the share.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// Returns the current share quota in GB.
-        /// </summary>
-        public int Quota { get; internal set; }
-
-        /// <summary>
-        /// Creates a new ShareProperties instance
-        /// </summary>
-        public ShareProperties()
-        {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-        }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareProperties instance for mocking.
-        /// </summary>
-        public static ShareProperties ShareProperties(
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            int quota)
-        {
-            var _model = new ShareProperties();
-            _model.Metadata = metadata;
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.Quota = quota;
-            return _model;
-        }
-    }
-}
-#endregion class ShareProperties
-
-#region class ShareSnapshotInfo
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// ShareSnapshotInfo
-    /// </summary>
-    public partial class ShareSnapshotInfo
-    {
-        /// <summary>
-        /// This header is a DateTime value that uniquely identifies the share snapshot. The value of this header may be used in subsequent requests to access the share snapshot. This value is opaque.
-        /// </summary>
-        public string Snapshot { get; internal set; }
-
-        /// <summary>
-        /// The ETag contains a value which represents the version of the share snapshot, in quotes. A share snapshot cannot be modified, so the ETag of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the ETag of the share snapshot differs from that of the base share. If no metadata was specified with the request, the ETag of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the share was last modified. A share snapshot cannot be modified, so the last modified time of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the last modified time of the share snapshot differs from that of the base share. If no metadata was specified with the request, the last modified time of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareSnapshotInfo instance for mocking.
-        /// </summary>
-        public static ShareSnapshotInfo ShareSnapshotInfo(
-            string snapshot,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            var _model = new ShareSnapshotInfo();
-            _model.Snapshot = snapshot;
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            return _model;
-        }
-    }
-}
-#endregion class ShareSnapshotInfo
-
-#region class StorageDirectoryInfo
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// StorageDirectoryInfo
-    /// </summary>
-    public partial class StorageDirectoryInfo
-    {
-        /// <summary>
-        /// The ETag contains a value which represents the version of the directory, in quotes.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new StorageDirectoryInfo instance for mocking.
-        /// </summary>
-        public static StorageDirectoryInfo StorageDirectoryInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            var _model = new StorageDirectoryInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            return _model;
-        }
-    }
-}
-#endregion class StorageDirectoryInfo
-
-#region class StorageDirectoryProperties
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// StorageDirectoryProperties
-    /// </summary>
-    public partial class StorageDirectoryProperties
-    {
-        /// <summary>
-        /// A set of name-value pairs that contain metadata for the directory.
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
-
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the Directory was last modified. Operations on files within the directory do not affect the last modified time of the directory.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// The value of this header is set to true if the directory metadata is completely encrypted using the specified algorithm. Otherwise, the value is set to false.
-        /// </summary>
-        public bool IsServerEncrypted { get; internal set; }
-
-        /// <summary>
-        /// Creates a new StorageDirectoryProperties instance
-        /// </summary>
-        public StorageDirectoryProperties()
-        {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-        }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new StorageDirectoryProperties instance for mocking.
-        /// </summary>
-        public static StorageDirectoryProperties StorageDirectoryProperties(
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            bool isServerEncrypted)
-        {
-            var _model = new StorageDirectoryProperties();
-            _model.Metadata = metadata;
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.IsServerEncrypted = isServerEncrypted;
-            return _model;
-        }
-    }
-}
-#endregion class StorageDirectoryProperties
-
-#region class StorageClosedHandlesSegment
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// StorageClosedHandlesSegment
-    /// </summary>
-    public partial class StorageClosedHandlesSegment
-    {
-        /// <summary>
-        /// A string describing next handle to be closed. It is returned when more handles need to be closed to complete the request.
-        /// </summary>
-        public string Marker { get; internal set; }
-
-        /// <summary>
-        /// Contains count of number of handles closed.
-        /// </summary>
-        public int NumberOfHandlesClosed { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new StorageClosedHandlesSegment instance for mocking.
-        /// </summary>
-        public static StorageClosedHandlesSegment StorageClosedHandlesSegment(
-            string marker,
-            int numberOfHandlesClosed)
-        {
-            var _model = new StorageClosedHandlesSegment();
-            _model.Marker = marker;
-            _model.NumberOfHandlesClosed = numberOfHandlesClosed;
-            return _model;
-        }
-    }
-}
-#endregion class StorageClosedHandlesSegment
-
-#region class StorageFileInfo
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// StorageFileInfo
-    /// </summary>
-    public partial class StorageFileInfo
-    {
-        /// <summary>
-        /// The ETag contains a value which represents the version of the file, in quotes.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
-        /// </summary>
-        public bool IsServerEncrypted { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new StorageFileInfo instance for mocking.
-        /// </summary>
-        public static StorageFileInfo StorageFileInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            bool isServerEncrypted)
-        {
-            var _model = new StorageFileInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.IsServerEncrypted = isServerEncrypted;
-            return _model;
-        }
-    }
-}
-#endregion class StorageFileInfo
-
-#region enum CopyStatus
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// State of the copy operation identified by 'x-ms-copy-id'.
-    /// </summary>
-    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
-    public enum CopyStatus
-    #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
-    {
-        /// <summary>
-        /// pending
-        /// </summary>
-        Pending,
-
-        /// <summary>
-        /// success
-        /// </summary>
-        Success,
-
-        /// <summary>
-        /// aborted
-        /// </summary>
-        Aborted,
-
-        /// <summary>
-        /// failed
-        /// </summary>
-        Failed
-    }
-}
-
-namespace Azure.Storage.Files
-{
-    internal static partial class FileRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.Models.CopyStatus value)
-            {
-                switch (value)
-                {
-                    case Azure.Storage.Files.Models.CopyStatus.Pending:
-                        return "pending";
-                    case Azure.Storage.Files.Models.CopyStatus.Success:
-                        return "success";
-                    case Azure.Storage.Files.Models.CopyStatus.Aborted:
-                        return "aborted";
-                    case Azure.Storage.Files.Models.CopyStatus.Failed:
-                        return "failed";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.");
-                }
-            }
-
-            public static Azure.Storage.Files.Models.CopyStatus ParseCopyStatus(string value)
-            {
-                switch (value)
-                {
-                    case "pending":
-                        return Azure.Storage.Files.Models.CopyStatus.Pending;
-                    case "success":
-                        return Azure.Storage.Files.Models.CopyStatus.Success;
-                    case "aborted":
-                        return Azure.Storage.Files.Models.CopyStatus.Aborted;
-                    case "failed":
-                        return Azure.Storage.Files.Models.CopyStatus.Failed;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.CopyStatus value.");
-                }
-            }
-        }
-    }
-}
-#endregion enum CopyStatus
-
 #region class FlattenedStorageFileProperties
 namespace Azure.Storage.Files.Models
 {
@@ -7257,37 +6042,1162 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class FlattenedStorageFileProperties
 
-#region enum Header
+#region enum ListSharesIncludeType
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
-    /// Returns the type File. Reserved for future use.
+    /// ListSharesIncludeType values
     /// </summary>
-    public enum Header
+    public enum ListSharesIncludeType
     {
         /// <summary>
-        /// File
+        /// snapshots
         /// </summary>
-        File
-    }
-}
-#endregion enum Header
+        Snapshots,
 
-#region class FailureNoContent
+        /// <summary>
+        /// metadata
+        /// </summary>
+        Metadata
+    }
+}
+
+namespace Azure.Storage.Files
+{
+    internal static partial class FileRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Files.Models.ListSharesIncludeType value)
+            {
+                switch (value)
+                {
+                    case Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots:
+                        return "snapshots";
+                    case Azure.Storage.Files.Models.ListSharesIncludeType.Metadata:
+                        return "metadata";
+                    default:
+                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.");
+                }
+            }
+
+            public static Azure.Storage.Files.Models.ListSharesIncludeType ParseListSharesIncludeType(string value)
+            {
+                switch (value)
+                {
+                    case "snapshots":
+                        return Azure.Storage.Files.Models.ListSharesIncludeType.Snapshots;
+                    case "metadata":
+                        return Azure.Storage.Files.Models.ListSharesIncludeType.Metadata;
+                    default:
+                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.ListSharesIncludeType value.");
+                }
+            }
+        }
+    }
+}
+#endregion enum ListSharesIncludeType
+
+#region class Metrics
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
-    /// FailureNoContent
+    /// Storage Analytics metrics for file service.
     /// </summary>
-    internal partial class FailureNoContent
+    public partial class Metrics
     {
         /// <summary>
-        /// x-ms-error-code
+        /// The version of Storage Analytics to configure.
         /// </summary>
-        public string ErrorCode { get; internal set; }
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Indicates whether metrics are enabled for the File service.
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// Indicates whether metrics should generate summary statistics for called API operations.
+        /// </summary>
+        public bool? IncludeAPIs { get; set; }
+
+        /// <summary>
+        /// The retention policy.
+        /// </summary>
+        public Azure.Storage.Files.Models.RetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new Metrics instance
+        /// </summary>
+        public Metrics()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new Metrics instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal Metrics(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                this.RetentionPolicy = new Azure.Storage.Files.Models.RetentionPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a Metrics instance as XML.
+        /// </summary>
+        /// <param name="value">The Metrics instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Metrics".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.Metrics value, string name = "Metrics", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Version", ""),
+                value.Version));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Enabled", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            if (value.IncludeAPIs != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("IncludeAPIs", ""),
+                    #pragma warning disable CA1308 // Normalize strings to uppercase
+                    value.IncludeAPIs.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                    #pragma warning restore CA1308 // Normalize strings to uppercase
+            }
+            if (value.RetentionPolicy != null)
+            {
+                _element.Add(Azure.Storage.Files.Models.RetentionPolicy.ToXml(value.RetentionPolicy, "RetentionPolicy", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new Metrics instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized Metrics instance.</returns>
+        internal static Azure.Storage.Files.Models.Metrics FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.Metrics _value = new Azure.Storage.Files.Models.Metrics(true);
+            _value.Version = element.Element(System.Xml.Linq.XName.Get("Version", "")).Value;
+            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("IncludeAPIs", ""));
+            if (_child != null)
+            {
+                _value.IncludeAPIs = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RetentionPolicy", ""));
+            if (_child != null)
+            {
+                _value.RetentionPolicy = Azure.Storage.Files.Models.RetentionPolicy.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.Metrics value);
     }
 }
-#endregion class FailureNoContent
+#endregion class Metrics
+
+#region class Range
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// An Azure Storage file range.
+    /// </summary>
+    public partial class Range
+    {
+        /// <summary>
+        /// Start of the range.
+        /// </summary>
+        public long Start { get; internal set; }
+
+        /// <summary>
+        /// End of the range.
+        /// </summary>
+        public long End { get; internal set; }
+
+        /// <summary>
+        /// Deserializes XML into a new Range instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized Range instance.</returns>
+        internal static Azure.Storage.Files.Models.Range FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Files.Models.Range _value = new Azure.Storage.Files.Models.Range();
+            _value.Start = long.Parse(element.Element(System.Xml.Linq.XName.Get("Start", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _value.End = long.Parse(element.Element(System.Xml.Linq.XName.Get("End", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.Range value);
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new Range instance for mocking.
+        /// </summary>
+        public static Range Range(
+            long start,
+            long end)
+        {
+            var _model = new Range();
+            _model.Start = start;
+            _model.End = end;
+            return _model;
+        }
+    }
+}
+#endregion class Range
+
+#region class RetentionPolicy
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// The retention policy.
+    /// </summary>
+    public partial class RetentionPolicy
+    {
+        /// <summary>
+        /// Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it.
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// Indicates the number of days that metrics data should be retained. All data older than this value will be deleted. Metrics data is deleted on a best-effort basis after the retention period expires.
+        /// </summary>
+        public int? Days { get; set; }
+
+        /// <summary>
+        /// Serialize a RetentionPolicy instance as XML.
+        /// </summary>
+        /// <param name="value">The RetentionPolicy instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "RetentionPolicy".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.RetentionPolicy value, string name = "RetentionPolicy", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Enabled", ""),
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.Enabled.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+            if (value.Days != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Days", ""),
+                    value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new RetentionPolicy instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized RetentionPolicy instance.</returns>
+        internal static Azure.Storage.Files.Models.RetentionPolicy FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.RetentionPolicy _value = new Azure.Storage.Files.Models.RetentionPolicy();
+            _value.Enabled = bool.Parse(element.Element(System.Xml.Linq.XName.Get("Enabled", "")).Value);
+            _child = element.Element(System.Xml.Linq.XName.Get("Days", ""));
+            if (_child != null)
+            {
+                _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.RetentionPolicy value);
+    }
+}
+#endregion class RetentionPolicy
+
+#region class ShareInfo
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// ShareInfo
+    /// </summary>
+    public partial class ShareInfo
+    {
+        /// <summary>
+        /// The ETag contains a value which represents the version of the share, in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareInfo instance for mocking.
+        /// </summary>
+        public static ShareInfo ShareInfo(
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new ShareInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
+    }
+}
+#endregion class ShareInfo
+
+#region class ShareItem
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// A listed Azure Storage share item.
+    /// </summary>
+    public partial class ShareItem
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// Snapshot
+        /// </summary>
+        public string Snapshot { get; internal set; }
+
+        /// <summary>
+        /// Properties of a share.
+        /// </summary>
+        public Azure.Storage.Files.Models.ShareItemProperties Properties { get; internal set; }
+
+        /// <summary>
+        /// Metadata
+        /// </summary>
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// Creates a new ShareItem instance
+        /// </summary>
+        public ShareItem()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareItem instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareItem(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                this.Properties = new Azure.Storage.Files.Models.ShareItemProperties();
+                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareItem instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ShareItem instance.</returns>
+        internal static Azure.Storage.Files.Models.ShareItem FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.ShareItem _value = new Azure.Storage.Files.Models.ShareItem(true);
+            _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Snapshot", ""));
+            if (_child != null)
+            {
+                _value.Snapshot = _child.Value;
+            }
+            _value.Properties = Azure.Storage.Files.Models.ShareItemProperties.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
+            if (_child != null)
+            {
+                foreach (System.Xml.Linq.XElement _pair in _child.Elements())
+                {
+                    _value.Metadata[_pair.Name.LocalName] = _pair.Value;
+                }
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareItem value);
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareItem instance for mocking.
+        /// </summary>
+        public static ShareItem ShareItem(
+            string name,
+            Azure.Storage.Files.Models.ShareItemProperties properties,
+            string snapshot = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            var _model = new ShareItem();
+            _model.Name = name;
+            _model.Properties = properties;
+            _model.Snapshot = snapshot;
+            _model.Metadata = metadata;
+            return _model;
+        }
+    }
+}
+#endregion class ShareItem
+
+#region class ShareItemProperties
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Properties of a share.
+    /// </summary>
+    public partial class ShareItemProperties
+    {
+        /// <summary>
+        /// Last-Modified
+        /// </summary>
+        public System.DateTimeOffset? LastModified { get; internal set; }
+
+        /// <summary>
+        /// Etag
+        /// </summary>
+        public Azure.Core.Http.ETag? Etag { get; internal set; }
+
+        /// <summary>
+        /// Quota
+        /// </summary>
+        public int? Quota { get; internal set; }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareItemProperties instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ShareItemProperties instance.</returns>
+        internal static Azure.Storage.Files.Models.ShareItemProperties FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.ShareItemProperties _value = new Azure.Storage.Files.Models.ShareItemProperties();
+            _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
+            if (_child != null)
+            {
+                _value.LastModified = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
+            if (_child != null)
+            {
+                _value.Etag = new Azure.Core.Http.ETag(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
+            if (_child != null)
+            {
+                _value.Quota = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareItemProperties value);
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareItemProperties instance for mocking.
+        /// </summary>
+        public static ShareItemProperties ShareItemProperties(
+            System.DateTimeOffset? lastModified = default,
+            Azure.Core.Http.ETag? etag = default,
+            int? quota = default)
+        {
+            var _model = new ShareItemProperties();
+            _model.LastModified = lastModified;
+            _model.Etag = etag;
+            _model.Quota = quota;
+            return _model;
+        }
+    }
+}
+#endregion class ShareItemProperties
+
+#region class ShareProperties
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// ShareProperties
+    /// </summary>
+    public partial class ShareProperties
+    {
+        /// <summary>
+        /// A set of name-value pairs that contain the user-defined metadata of the share.
+        /// </summary>
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties updates the last modified time. Operations on files do not affect the last modified time of the share.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Returns the current share quota in GB.
+        /// </summary>
+        public int Quota { get; internal set; }
+
+        /// <summary>
+        /// Creates a new ShareProperties instance
+        /// </summary>
+        public ShareProperties()
+        {
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+        }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        public static ShareProperties ShareProperties(
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified,
+            int quota)
+        {
+            var _model = new ShareProperties();
+            _model.Metadata = metadata;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.Quota = quota;
+            return _model;
+        }
+    }
+}
+#endregion class ShareProperties
+
+#region class ShareSnapshotInfo
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// ShareSnapshotInfo
+    /// </summary>
+    public partial class ShareSnapshotInfo
+    {
+        /// <summary>
+        /// This header is a DateTime value that uniquely identifies the share snapshot. The value of this header may be used in subsequent requests to access the share snapshot. This value is opaque.
+        /// </summary>
+        public string Snapshot { get; internal set; }
+
+        /// <summary>
+        /// The ETag contains a value which represents the version of the share snapshot, in quotes. A share snapshot cannot be modified, so the ETag of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the ETag of the share snapshot differs from that of the base share. If no metadata was specified with the request, the ETag of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the share was last modified. A share snapshot cannot be modified, so the last modified time of a given share snapshot never changes. However, if new metadata was supplied with the Snapshot Share request then the last modified time of the share snapshot differs from that of the base share. If no metadata was specified with the request, the last modified time of the share snapshot is identical to that of the base share at the time the share snapshot was taken.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareSnapshotInfo instance for mocking.
+        /// </summary>
+        public static ShareSnapshotInfo ShareSnapshotInfo(
+            string snapshot,
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new ShareSnapshotInfo();
+            _model.Snapshot = snapshot;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
+    }
+}
+#endregion class ShareSnapshotInfo
+
+#region class ShareStatistics
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Stats for the share.
+    /// </summary>
+    public partial class ShareStatistics
+    {
+        /// <summary>
+        /// The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.
+        /// </summary>
+        public int ShareUsageBytes { get; internal set; }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareStatistics instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ShareStatistics instance.</returns>
+        internal static Azure.Storage.Files.Models.ShareStatistics FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Files.Models.ShareStatistics _value = new Azure.Storage.Files.Models.ShareStatistics();
+            _value.ShareUsageBytes = int.Parse(element.Element(System.Xml.Linq.XName.Get("ShareUsageBytes", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareStatistics value);
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareStatistics instance for mocking.
+        /// </summary>
+        public static ShareStatistics ShareStatistics(
+            int shareUsageBytes)
+        {
+            var _model = new ShareStatistics();
+            _model.ShareUsageBytes = shareUsageBytes;
+            return _model;
+        }
+    }
+}
+#endregion class ShareStatistics
+
+#region class SharesSegment
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// An enumeration of shares.
+    /// </summary>
+    internal partial class SharesSegment
+    {
+        /// <summary>
+        /// ServiceEndpoint
+        /// </summary>
+        public string ServiceEndpoint { get; internal set; }
+
+        /// <summary>
+        /// Prefix
+        /// </summary>
+        public string Prefix { get; internal set; }
+
+        /// <summary>
+        /// Marker
+        /// </summary>
+        public string Marker { get; internal set; }
+
+        /// <summary>
+        /// MaxResults
+        /// </summary>
+        public int? MaxResults { get; internal set; }
+
+        /// <summary>
+        /// ShareItems
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.ShareItem> ShareItems { get; internal set; }
+
+        /// <summary>
+        /// NextMarker
+        /// </summary>
+        public string NextMarker { get; internal set; }
+
+        /// <summary>
+        /// Creates a new SharesSegment instance
+        /// </summary>
+        public SharesSegment()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new SharesSegment instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal SharesSegment(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                this.ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new SharesSegment instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized SharesSegment instance.</returns>
+        internal static Azure.Storage.Files.Models.SharesSegment FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.SharesSegment _value = new Azure.Storage.Files.Models.SharesSegment(true);
+            _value.ServiceEndpoint = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
+            if (_child != null)
+            {
+                _value.Prefix = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Marker", ""));
+            if (_child != null)
+            {
+                _value.Marker = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MaxResults", ""));
+            if (_child != null)
+            {
+                _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Shares", ""));
+            if (_child != null)
+            {
+                _value.ShareItems = System.Linq.Enumerable.ToList(
+                    System.Linq.Enumerable.Select(
+                        _child.Elements(System.Xml.Linq.XName.Get("Share", "")),
+                        e => Azure.Storage.Files.Models.ShareItem.FromXml(e)));
+            }
+            else
+            {
+                _value.ShareItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.ShareItem>();
+            }
+            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.SharesSegment value);
+    }
+}
+#endregion class SharesSegment
+
+#region class SignedIdentifier
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Signed identifier.
+    /// </summary>
+    public partial class SignedIdentifier
+    {
+        /// <summary>
+        /// A unique id.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// The access policy.
+        /// </summary>
+        public Azure.Storage.Files.Models.AccessPolicy AccessPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new SignedIdentifier instance
+        /// </summary>
+        public SignedIdentifier()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new SignedIdentifier instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal SignedIdentifier(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                this.AccessPolicy = new Azure.Storage.Files.Models.AccessPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a SignedIdentifier instance as XML.
+        /// </summary>
+        /// <param name="value">The SignedIdentifier instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Models.SignedIdentifier value, string name = "SignedIdentifier", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Id", ""),
+                value.Id));
+            if (value.AccessPolicy != null)
+            {
+                _element.Add(Azure.Storage.Files.Models.AccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new SignedIdentifier instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized SignedIdentifier instance.</returns>
+        internal static Azure.Storage.Files.Models.SignedIdentifier FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.SignedIdentifier _value = new Azure.Storage.Files.Models.SignedIdentifier(true);
+            _value.Id = element.Element(System.Xml.Linq.XName.Get("Id", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessPolicy", ""));
+            if (_child != null)
+            {
+                _value.AccessPolicy = Azure.Storage.Files.Models.AccessPolicy.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.SignedIdentifier value);
+    }
+}
+#endregion class SignedIdentifier
+
+#region class StorageClosedHandlesSegment
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// StorageClosedHandlesSegment
+    /// </summary>
+    public partial class StorageClosedHandlesSegment
+    {
+        /// <summary>
+        /// A string describing next handle to be closed. It is returned when more handles need to be closed to complete the request.
+        /// </summary>
+        public string Marker { get; internal set; }
+
+        /// <summary>
+        /// Contains count of number of handles closed.
+        /// </summary>
+        public int NumberOfHandlesClosed { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageClosedHandlesSegment instance for mocking.
+        /// </summary>
+        public static StorageClosedHandlesSegment StorageClosedHandlesSegment(
+            string marker,
+            int numberOfHandlesClosed)
+        {
+            var _model = new StorageClosedHandlesSegment();
+            _model.Marker = marker;
+            _model.NumberOfHandlesClosed = numberOfHandlesClosed;
+            return _model;
+        }
+    }
+}
+#endregion class StorageClosedHandlesSegment
+
+#region class StorageDirectoryInfo
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// StorageDirectoryInfo
+    /// </summary>
+    public partial class StorageDirectoryInfo
+    {
+        /// <summary>
+        /// The ETag contains a value which represents the version of the directory, in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageDirectoryInfo instance for mocking.
+        /// </summary>
+        public static StorageDirectoryInfo StorageDirectoryInfo(
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new StorageDirectoryInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
+    }
+}
+#endregion class StorageDirectoryInfo
+
+#region class StorageDirectoryProperties
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// StorageDirectoryProperties
+    /// </summary>
+    public partial class StorageDirectoryProperties
+    {
+        /// <summary>
+        /// A set of name-value pairs that contain metadata for the directory.
+        /// </summary>
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the Directory was last modified. Operations on files within the directory do not affect the last modified time of the directory.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// The value of this header is set to true if the directory metadata is completely encrypted using the specified algorithm. Otherwise, the value is set to false.
+        /// </summary>
+        public bool IsServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// Creates a new StorageDirectoryProperties instance
+        /// </summary>
+        public StorageDirectoryProperties()
+        {
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+        }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageDirectoryProperties instance for mocking.
+        /// </summary>
+        public static StorageDirectoryProperties StorageDirectoryProperties(
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified,
+            bool isServerEncrypted)
+        {
+            var _model = new StorageDirectoryProperties();
+            _model.Metadata = metadata;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.IsServerEncrypted = isServerEncrypted;
+            return _model;
+        }
+    }
+}
+#endregion class StorageDirectoryProperties
+
+#region class StorageError
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// StorageError
+    /// </summary>
+    internal partial class StorageError
+    {
+        /// <summary>
+        /// Code
+        /// </summary>
+        public string Code { get; internal set; }
+
+        /// <summary>
+        /// Message
+        /// </summary>
+        public string Message { get; internal set; }
+
+        /// <summary>
+        /// Deserializes XML into a new StorageError instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized StorageError instance.</returns>
+        internal static Azure.Storage.Files.Models.StorageError FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.StorageError _value = new Azure.Storage.Files.Models.StorageError();
+            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
+            if (_child != null)
+            {
+                _value.Code = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
+            if (_child != null)
+            {
+                _value.Message = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageError value);
+    }
+}
+#endregion class StorageError
+
+#region class StorageFileCopyInfo
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// StorageFileCopyInfo
+    /// </summary>
+    public partial class StorageFileCopyInfo
+    {
+        /// <summary>
+        /// If the copy is completed, contains the ETag of the destination file. If the copy is not complete, contains the ETag of the empty file created at the start of the copy.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date/time that the copy operation to the destination file completed.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// String identifier for this copy operation. Use with Get File or Get File Properties to check the status of this copy operation, or pass to Abort Copy File to abort a pending copy.
+        /// </summary>
+        public string CopyId { get; internal set; }
+
+        /// <summary>
+        /// State of the copy operation identified by x-ms-copy-id.
+        /// </summary>
+        public Azure.Storage.Files.Models.CopyStatus CopyStatus { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileCopyInfo instance for mocking.
+        /// </summary>
+        public static StorageFileCopyInfo StorageFileCopyInfo(
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string copyId,
+            Azure.Storage.Files.Models.CopyStatus copyStatus)
+        {
+            var _model = new StorageFileCopyInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.CopyId = copyId;
+            _model.CopyStatus = copyStatus;
+            return _model;
+        }
+    }
+}
+#endregion class StorageFileCopyInfo
+
+#region class StorageFileInfo
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// StorageFileInfo
+    /// </summary>
+    public partial class StorageFileInfo
+    {
+        /// <summary>
+        /// The ETag contains a value which represents the version of the file, in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
+        /// </summary>
+        public bool IsServerEncrypted { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileInfo instance for mocking.
+        /// </summary>
+        public static StorageFileInfo StorageFileInfo(
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified,
+            bool isServerEncrypted)
+        {
+            var _model = new StorageFileInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.IsServerEncrypted = isServerEncrypted;
+            return _model;
+        }
+    }
+}
+#endregion class StorageFileInfo
 
 #region class StorageFileProperties
 namespace Azure.Storage.Files.Models
@@ -7453,118 +7363,6 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class StorageFileProperties
 
-#region enum FileRangeWriteType
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size.
-    /// </summary>
-    public enum FileRangeWriteType
-    {
-        /// <summary>
-        /// update
-        /// </summary>
-        Update,
-
-        /// <summary>
-        /// clear
-        /// </summary>
-        Clear
-    }
-}
-
-namespace Azure.Storage.Files
-{
-    internal static partial class FileRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.Models.FileRangeWriteType value)
-            {
-                switch (value)
-                {
-                    case Azure.Storage.Files.Models.FileRangeWriteType.Update:
-                        return "update";
-                    case Azure.Storage.Files.Models.FileRangeWriteType.Clear:
-                        return "clear";
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.");
-                }
-            }
-
-            public static Azure.Storage.Files.Models.FileRangeWriteType ParseFileRangeWriteType(string value)
-            {
-                switch (value)
-                {
-                    case "update":
-                        return Azure.Storage.Files.Models.FileRangeWriteType.Update;
-                    case "clear":
-                        return Azure.Storage.Files.Models.FileRangeWriteType.Clear;
-                    default:
-                        throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Models.FileRangeWriteType value.");
-                }
-            }
-        }
-    }
-}
-#endregion enum FileRangeWriteType
-
-#region class StorageFileUploadInfo
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// StorageFileUploadInfo
-    /// </summary>
-    public partial class StorageFileUploadInfo
-    {
-        /// <summary>
-        /// The ETag contains a value which represents the version of the file, in quotes.
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the directory was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the File service; it is not necessarily the same value as may have been specified in the request headers.
-        /// </summary>
-        #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash { get; internal set; }
-        #pragma warning restore CA1819 // Properties should not return arrays
-
-        /// <summary>
-        /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
-        /// </summary>
-        public bool IsServerEncrypted { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new StorageFileUploadInfo instance for mocking.
-        /// </summary>
-        public static StorageFileUploadInfo StorageFileUploadInfo(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            byte[] contentHash,
-            bool isServerEncrypted)
-        {
-            var _model = new StorageFileUploadInfo();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.ContentHash = contentHash;
-            _model.IsServerEncrypted = isServerEncrypted;
-            return _model;
-        }
-    }
-}
-#endregion class StorageFileUploadInfo
-
 #region class StorageFileRangeInfo
 namespace Azure.Storage.Files.Models
 {
@@ -7627,33 +7425,35 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class StorageFileRangeInfo
 
-#region class StorageFileCopyInfo
+#region class StorageFileUploadInfo
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
-    /// StorageFileCopyInfo
+    /// StorageFileUploadInfo
     /// </summary>
-    public partial class StorageFileCopyInfo
+    public partial class StorageFileUploadInfo
     {
         /// <summary>
-        /// If the copy is completed, contains the ETag of the destination file. If the copy is not complete, contains the ETag of the empty file created at the start of the copy.
+        /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
         public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date/time that the copy operation to the destination file completed.
+        /// Returns the date and time the directory was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// String identifier for this copy operation. Use with Get File or Get File Properties to check the status of this copy operation, or pass to Abort Copy File to abort a pending copy.
+        /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the File service; it is not necessarily the same value as may have been specified in the request headers.
         /// </summary>
-        public string CopyId { get; internal set; }
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentHash { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
-        /// State of the copy operation identified by x-ms-copy-id.
+        /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
-        public Azure.Storage.Files.Models.CopyStatus CopyStatus { get; internal set; }
+        public bool IsServerEncrypted { get; internal set; }
     }
 
     /// <summary>
@@ -7662,23 +7462,223 @@ namespace Azure.Storage.Files.Models
     public static partial class FilesModelFactory
     {
         /// <summary>
-        /// Creates a new StorageFileCopyInfo instance for mocking.
+        /// Creates a new StorageFileUploadInfo instance for mocking.
         /// </summary>
-        public static StorageFileCopyInfo StorageFileCopyInfo(
+        public static StorageFileUploadInfo StorageFileUploadInfo(
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
-            string copyId,
-            Azure.Storage.Files.Models.CopyStatus copyStatus)
+            byte[] contentHash,
+            bool isServerEncrypted)
         {
-            var _model = new StorageFileCopyInfo();
+            var _model = new StorageFileUploadInfo();
             _model.ETag = eTag;
             _model.LastModified = lastModified;
-            _model.CopyId = copyId;
-            _model.CopyStatus = copyStatus;
+            _model.ContentHash = contentHash;
+            _model.IsServerEncrypted = isServerEncrypted;
             return _model;
         }
     }
 }
-#endregion class StorageFileCopyInfo
+#endregion class StorageFileUploadInfo
+
+#region class StorageHandle
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// A listed Azure Storage handle item.
+    /// </summary>
+    public partial class StorageHandle
+    {
+        /// <summary>
+        /// XSMB service handle ID
+        /// </summary>
+        public string HandleId { get; internal set; }
+
+        /// <summary>
+        /// File or directory name including full path starting from share root
+        /// </summary>
+        public string Path { get; internal set; }
+
+        /// <summary>
+        /// FileId uniquely identifies the file or directory.
+        /// </summary>
+        public string FileId { get; internal set; }
+
+        /// <summary>
+        /// ParentId uniquely identifies the parent directory of the object.
+        /// </summary>
+        public string ParentId { get; internal set; }
+
+        /// <summary>
+        /// SMB session ID in context of which the file handle was opened
+        /// </summary>
+        public string SessionId { get; internal set; }
+
+        /// <summary>
+        /// Client IP that opened the handle
+        /// </summary>
+        public string ClientIp { get; internal set; }
+
+        /// <summary>
+        /// Time when the session that previously opened the handle has last been reconnected. (UTC)
+        /// </summary>
+        public System.DateTimeOffset OpenTime { get; internal set; }
+
+        /// <summary>
+        /// Time handle was last connected to (UTC)
+        /// </summary>
+        public System.DateTimeOffset? LastReconnectTime { get; internal set; }
+
+        /// <summary>
+        /// Deserializes XML into a new StorageHandle instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized StorageHandle instance.</returns>
+        internal static Azure.Storage.Files.Models.StorageHandle FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.StorageHandle _value = new Azure.Storage.Files.Models.StorageHandle();
+            _value.HandleId = element.Element(System.Xml.Linq.XName.Get("HandleId", "")).Value;
+            _value.Path = element.Element(System.Xml.Linq.XName.Get("Path", "")).Value;
+            _value.FileId = element.Element(System.Xml.Linq.XName.Get("FileId", "")).Value;
+            _child = element.Element(System.Xml.Linq.XName.Get("ParentId", ""));
+            if (_child != null)
+            {
+                _value.ParentId = _child.Value;
+            }
+            _value.SessionId = element.Element(System.Xml.Linq.XName.Get("SessionId", "")).Value;
+            _value.ClientIp = element.Element(System.Xml.Linq.XName.Get("ClientIp", "")).Value;
+            _value.OpenTime = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("OpenTime", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
+            _child = element.Element(System.Xml.Linq.XName.Get("LastReconnectTime", ""));
+            if (_child != null)
+            {
+                _value.LastReconnectTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageHandle value);
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageHandle instance for mocking.
+        /// </summary>
+        public static StorageHandle StorageHandle(
+            string handleId,
+            string path,
+            string fileId,
+            string sessionId,
+            string clientIp,
+            System.DateTimeOffset openTime,
+            string parentId = default,
+            System.DateTimeOffset? lastReconnectTime = default)
+        {
+            var _model = new StorageHandle();
+            _model.HandleId = handleId;
+            _model.Path = path;
+            _model.FileId = fileId;
+            _model.SessionId = sessionId;
+            _model.ClientIp = clientIp;
+            _model.OpenTime = openTime;
+            _model.ParentId = parentId;
+            _model.LastReconnectTime = lastReconnectTime;
+            return _model;
+        }
+    }
+}
+#endregion class StorageHandle
+
+#region class StorageHandlesSegment
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// An enumeration of handles.
+    /// </summary>
+    internal partial class StorageHandlesSegment
+    {
+        /// <summary>
+        /// Handles
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.StorageHandle> Handles { get; internal set; }
+
+        /// <summary>
+        /// NextMarker
+        /// </summary>
+        public string NextMarker { get; internal set; }
+
+        /// <summary>
+        /// Creates a new StorageHandlesSegment instance
+        /// </summary>
+        public StorageHandlesSegment()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new StorageHandlesSegment instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal StorageHandlesSegment(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                this.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new StorageHandlesSegment instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized StorageHandlesSegment instance.</returns>
+        internal static Azure.Storage.Files.Models.StorageHandlesSegment FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Models.StorageHandlesSegment _value = new Azure.Storage.Files.Models.StorageHandlesSegment(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Entries", ""));
+            if (_child != null)
+            {
+                _value.Handles = System.Linq.Enumerable.ToList(
+                    System.Linq.Enumerable.Select(
+                        _child.Elements(System.Xml.Linq.XName.Get("Handle", "")),
+                        e => Azure.Storage.Files.Models.StorageHandle.FromXml(e)));
+            }
+            else
+            {
+                _value.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
+            }
+            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageHandlesSegment value);
+    }
+}
+#endregion class StorageHandlesSegment
+
+#region enum Header
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Returns the type File. Reserved for future use.
+    /// </summary>
+    public enum Header
+    {
+        /// <summary>
+        /// File
+        /// </summary>
+        File
+    }
+}
+#endregion enum Header
 #endregion Models
 
