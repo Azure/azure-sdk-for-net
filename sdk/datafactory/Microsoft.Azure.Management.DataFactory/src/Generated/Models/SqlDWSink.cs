@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="tableOption">The option to handle sink table, such as
+        /// autoCreate. For now only 'autoCreate' value is supported. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="preCopyScript">SQL pre-copy script. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="allowPolyBase">Indicates to use PolyBase to copy data
@@ -53,8 +56,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType boolean).</param>
         /// <param name="polyBaseSettings">Specifies PolyBase-related settings
         /// when allowPolyBase is true.</param>
-        public SqlDWSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object preCopyScript = default(object), object allowPolyBase = default(object), PolybaseSettings polyBaseSettings = default(PolybaseSettings))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
+        public SqlDWSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), object preCopyScript = default(object), object allowPolyBase = default(object), PolybaseSettings polyBaseSettings = default(PolybaseSettings))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
         {
             PreCopyScript = preCopyScript;
             AllowPolyBase = allowPolyBase;

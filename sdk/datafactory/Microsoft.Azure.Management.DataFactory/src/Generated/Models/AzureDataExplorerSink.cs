@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="tableOption">The option to handle sink table, such as
+        /// autoCreate. For now only 'autoCreate' value is supported. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="ingestionMappingName">A name of a pre-created csv
         /// mapping that was defined on the target Kusto table. Type:
         /// string.</param>
@@ -53,8 +56,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// description provided in a json format. Type: string.</param>
         /// <param name="flushImmediately">If set to true, any aggregation will
         /// be skipped. Default is false. Type: boolean.</param>
-        public AzureDataExplorerSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object ingestionMappingName = default(object), object ingestionMappingAsJson = default(object), object flushImmediately = default(object))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
+        public AzureDataExplorerSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), object ingestionMappingName = default(object), object ingestionMappingAsJson = default(object), object flushImmediately = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
         {
             IngestionMappingName = ingestionMappingName;
             IngestionMappingAsJson = ingestionMappingAsJson;

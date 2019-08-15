@@ -46,12 +46,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="tableOption">The option to handle sink table, such as
+        /// autoCreate. For now only 'autoCreate' value is supported. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="ignoreNullValues">The flag indicating whether to
         /// ignore null values from input dataset (except key fields) during
         /// write operation. Default is false. Type: boolean (or Expression
         /// with resultType boolean).</param>
-        public DynamicsCrmSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object ignoreNullValues = default(object))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
+        public DynamicsCrmSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), object ignoreNullValues = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
         {
             IgnoreNullValues = ignoreNullValues;
             CustomInit();

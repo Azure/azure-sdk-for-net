@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="tableOption">The option to handle sink table, such as
+        /// autoCreate. For now only 'autoCreate' value is supported. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="azureTableDefaultPartitionKeyValue">Azure Table
         /// default partition key value. Type: string (or Expression with
         /// resultType string).</param>
@@ -55,8 +58,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="azureTableInsertType">Azure Table insert type. Type:
         /// string (or Expression with resultType string).</param>
-        public AzureTableSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object azureTableDefaultPartitionKeyValue = default(object), object azureTablePartitionKeyName = default(object), object azureTableRowKeyName = default(object), object azureTableInsertType = default(object))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
+        public AzureTableSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), object azureTableDefaultPartitionKeyValue = default(object), object azureTablePartitionKeyName = default(object), object azureTableRowKeyName = default(object), object azureTableInsertType = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
         {
             AzureTableDefaultPartitionKeyValue = azureTableDefaultPartitionKeyValue;
             AzureTablePartitionKeyName = azureTablePartitionKeyName;
