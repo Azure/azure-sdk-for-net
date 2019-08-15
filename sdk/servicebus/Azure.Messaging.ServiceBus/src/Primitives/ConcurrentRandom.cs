@@ -8,11 +8,9 @@ namespace Azure.Messaging.ServiceBus.Primitives
     internal static class ConcurrentRandom
     {
         // We lock on this when generating a seed for a threadLocalRandom
-        [Fx.Tag.SynchronizationObject]
-        static readonly Random SeedGenerator = new Random();
+        [Fx.Tag.SynchronizationObject] private static readonly Random SeedGenerator = new Random();
 
-        [ThreadStatic]
-        static Random threadLocalRandom;
+        [ThreadStatic] private static Random threadLocalRandom;
 
         public static int Next(int minValue, int maxValue)
         {
@@ -30,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             return Math.Abs(ulongValue);
         }
 
-        static Random GetThreadLocalRandom()
+        private static Random GetThreadLocalRandom()
         {
             if (threadLocalRandom == null)
             {

@@ -13,9 +13,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using Microsoft.Azure.Amqp.Encoding;
     using Microsoft.Azure.Amqp.Framing;
 
-    static class AmqpExceptionHelper
+    internal static class AmqpExceptionHelper
     {
-        static readonly Dictionary<string, AmqpResponseStatusCode> ConditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>
+        private static readonly Dictionary<string, AmqpResponseStatusCode> ConditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>
         {
             { AmqpClientConstants.TimeoutError.Value, AmqpResponseStatusCode.RequestTimeout },
             { AmqpErrorCode.NotFound.Value, AmqpResponseStatusCode.NotFound },
@@ -89,7 +89,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return ToMessagingContractException(error.Condition.Value, error.Description, connectionError);
         }
 
-        static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
+        private static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
         {
             if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value))
             {

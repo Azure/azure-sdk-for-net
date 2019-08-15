@@ -5,7 +5,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
 {
     using System;
 
-    static class Ticks
+    internal static class Ticks
     {
         public static long Now => DateTime.UtcNow.ToFileTimeUtc();
 

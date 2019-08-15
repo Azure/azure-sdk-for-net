@@ -9,20 +9,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using System.Threading;
     using System.Threading.Tasks;
 
-    sealed class ActiveClientLinkManager
+    internal sealed class ActiveClientLinkManager
     {
-        static readonly TimeSpan SendTokenTimeout = TimeSpan.FromMinutes(1);
-        static readonly TimeSpan TokenRefreshBuffer = TimeSpan.FromSeconds(10);
-        static readonly TimeSpan MaxTokenRefreshTime = TimeSpan.FromDays(30);
+        private static readonly TimeSpan SendTokenTimeout = TimeSpan.FromMinutes(1);
 
-        readonly string clientId;
-        readonly RetryPolicy retryPolicy;
-        readonly ICbsTokenProvider cbsTokenProvider;
-        Timer sendReceiveLinkCbsTokenRenewalTimer;
-        Timer requestResponseLinkCbsTokenRenewalTimer;
+        private static readonly TimeSpan TokenRefreshBuffer = TimeSpan.FromSeconds(10);
 
-        ActiveSendReceiveClientLink activeSendReceiveClientLink;
-        ActiveRequestResponseLink activeRequestResponseClientLink;
+        private static readonly TimeSpan MaxTokenRefreshTime = TimeSpan.FromDays(30);
+
+        private readonly string clientId;
+
+        private readonly RetryPolicy retryPolicy;
+
+        private readonly ICbsTokenProvider cbsTokenProvider;
+
+        private Timer sendReceiveLinkCbsTokenRenewalTimer;
+
+        private Timer requestResponseLinkCbsTokenRenewalTimer;
+
+        private ActiveSendReceiveClientLink activeSendReceiveClientLink;
+
+        private ActiveRequestResponseLink activeRequestResponseClientLink;
 
         public ActiveClientLinkManager(ClientEntity client, ICbsTokenProvider tokenProvider)
         {
@@ -51,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        void OnSendReceiveLinkClosed(object sender, EventArgs e)
+        private void OnSendReceiveLinkClosed(object sender, EventArgs e)
         {
             this.ChangeRenewTimer(this.activeSendReceiveClientLink, Timeout.InfiniteTimeSpan);
         }
@@ -66,19 +73,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        static async void OnRenewSendReceiveCbsToken(object state)
+        private static async void OnRenewSendReceiveCbsToken(object state)
         {
             var activeClientLinkManager = (ActiveClientLinkManager)state;
             await activeClientLinkManager.RenewCbsTokenAsync(activeClientLinkManager.activeSendReceiveClientLink).ConfigureAwait(false);
         }
 
-        static async void OnRenewRequestResponseCbsToken(object state)
+        private static async void OnRenewRequestResponseCbsToken(object state)
         {
             var activeClientLinkManager = (ActiveClientLinkManager)state;
             await activeClientLinkManager.RenewCbsTokenAsync(activeClientLinkManager.activeRequestResponseClientLink).ConfigureAwait(false);
         }
 
-        async Task RenewCbsTokenAsync(ActiveClientLinkObject activeClientLinkObject)
+        private async Task RenewCbsTokenAsync(ActiveClientLinkObject activeClientLinkObject)
         {
             try
             {
@@ -118,12 +125,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        void OnRequestResponseLinkClosed(object sender, EventArgs e)
+        private void OnRequestResponseLinkClosed(object sender, EventArgs e)
         {
             this.ChangeRenewTimer(this.activeRequestResponseClientLink, Timeout.InfiniteTimeSpan);
         }
 
-        void SetRenewCbsTokenTimer(ActiveClientLinkObject activeClientLinkObject)
+        private void SetRenewCbsTokenTimer(ActiveClientLinkObject activeClientLinkObject)
         {
             if (activeClientLinkObject.AuthorizationValidUntilUtc < DateTime.UtcNow)
             {
@@ -136,7 +143,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             this.ChangeRenewTimer(activeClientLinkObject, interval);
         }
 
-        void ChangeRenewTimer(ActiveClientLinkObject activeClientLinkObject, TimeSpan dueTime)
+        private void ChangeRenewTimer(ActiveClientLinkObject activeClientLinkObject, TimeSpan dueTime)
         {
             if (activeClientLinkObject is ActiveSendReceiveClientLink)
             {

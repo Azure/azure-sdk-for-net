@@ -3,7 +3,7 @@
 
 namespace Azure.Messaging.ServiceBus
 {
-    static class WebSocketConstants
+    internal static class WebSocketConstants
     {
         internal const string WebSocketSecureScheme = "wss";
         internal const int WebSocketSecurePort = 443;

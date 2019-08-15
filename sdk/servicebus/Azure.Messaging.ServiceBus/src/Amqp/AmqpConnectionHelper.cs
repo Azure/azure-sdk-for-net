@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
     internal class AmqpConnectionHelper
     {
-        const string CbsSaslMechanismName = "MSSBCBS";
+        private const string CbsSaslMechanismName = "MSSBCBS";
 
         public static AmqpSettings CreateAmqpSettings(
             Version amqpVersion,

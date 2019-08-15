@@ -20,9 +20,11 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusConnection
     {
-        static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
-        readonly object syncLock;
-        bool isClosedOrClosing;
+        private static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
+
+        private readonly object syncLock;
+
+        private bool isClosedOrClosing;
 
         private AmqpClientOptions options;
 
@@ -31,7 +33,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace information.</param>
         /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
-        internal ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder, AmqpClientOptions options)
+        internal ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder, AmqpClientOptions options = null)
             : this(options)
         {
 
@@ -42,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
-        public ServiceBusConnection(string endpoint, TokenCredential credential, AmqpClientOptions options)
+        public ServiceBusConnection(string endpoint, TokenCredential credential, AmqpClientOptions options = null)
             : this(options)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
@@ -153,7 +155,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        void InitializeConnection(ServiceBusConnectionStringBuilder builder)
+        private void InitializeConnection(ServiceBusConnectionStringBuilder builder)
         {
             this.Endpoint = new Uri(builder.Endpoint);
 
@@ -176,18 +178,18 @@ namespace Azure.Messaging.ServiceBus
             this.TransactionController = new FaultTolerantAmqpObject<Controller>(this.CreateControllerAsync, CloseController);
         }
 
-        static void CloseConnection(AmqpConnection connection)
+        private static void CloseConnection(AmqpConnection connection)
         {
             MessagingEventSource.Log.AmqpConnectionClosed(connection);
             connection.SafeClose();
         }
 
-        static void CloseController(Controller controller)
+        private static void CloseController(Controller controller)
         {
             controller.Close();
         }
 
-        async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
+        private async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
         {
             var hostName = this.Endpoint.Host;
 
@@ -219,7 +221,7 @@ namespace Azure.Messaging.ServiceBus
             return connection;
         }
 
-        async Task<Controller> CreateControllerAsync(TimeSpan timeout)
+        private async Task<Controller> CreateControllerAsync(TimeSpan timeout)
         {
             var timeoutHelper = new TimeoutHelper(timeout, true);
             var connection = await this.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
@@ -250,7 +252,7 @@ namespace Azure.Messaging.ServiceBus
             return controller;
         }
 
-        TransportSettings CreateTransportSettings()
+        private TransportSettings CreateTransportSettings()
         {
             var hostName = this.Endpoint.Host;
             var networkHost = this.Endpoint.Host;

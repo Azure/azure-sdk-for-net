@@ -11,13 +11,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
     internal abstract class AmqpLinkCreator
     {
-        readonly string entityPath;
-        readonly ServiceBusConnection serviceBusConnection;
-        readonly Uri endpointAddress;
-        readonly string[] audience;
-        readonly string[] requiredClaims;
-        readonly ICbsTokenProvider cbsTokenProvider;
-        readonly AmqpLinkSettings amqpLinkSettings;
+        private readonly string entityPath;
+
+        private readonly ServiceBusConnection serviceBusConnection;
+
+        private readonly Uri endpointAddress;
+
+        private readonly string[] audience;
+
+        private readonly string[] requiredClaims;
+
+        private readonly ICbsTokenProvider cbsTokenProvider;
+
+        private readonly AmqpLinkSettings amqpLinkSettings;
 
         protected AmqpLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] audience, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings amqpLinkSettings, string clientId)
         {

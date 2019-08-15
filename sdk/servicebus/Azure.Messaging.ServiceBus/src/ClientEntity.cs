@@ -17,12 +17,13 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     internal class ClientEntity
     {
-        static int nextId;
+        private static int nextId;
 
         internal AmqpClientOptions Options { get; }
 
-        readonly object syncLock;
-        bool isClosedOrClosing;
+        private readonly object syncLock;
+
+        private bool isClosedOrClosing;
 
         internal ClientEntity(AmqpClientOptions options, string postfix)
         {

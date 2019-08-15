@@ -12,9 +12,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
     internal sealed class AmqpResponseMessage
     {
-        readonly AmqpMessage responseMessage;
+        private readonly AmqpMessage responseMessage;
 
-        AmqpResponseMessage(AmqpMessage responseMessage)
+        private AmqpResponseMessage(AmqpMessage responseMessage)
         {
             this.responseMessage = responseMessage;
             this.StatusCode = this.responseMessage.GetResponseStatusCode();

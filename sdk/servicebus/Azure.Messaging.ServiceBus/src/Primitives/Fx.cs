@@ -6,9 +6,9 @@ namespace Azure.Messaging.ServiceBus.Primitives
     using System;
     using System.Diagnostics;
 
-    static class Fx
+    internal static class Fx
     {
-        static ExceptionUtility exceptionUtility;
+        private static ExceptionUtility exceptionUtility;
 
         public static ExceptionUtility Exception
         {
@@ -103,8 +103,9 @@ namespace Azure.Messaging.ServiceBus.Primitives
             [Conditional("CODE_ANALYSIS")]
             public sealed class ExternalResourceAttribute : Attribute
             {
-                readonly Location location;
-                readonly string description;
+                private readonly Location location;
+
+                private readonly string description;
 
                 public ExternalResourceAttribute(Location location, string description)
                 {
@@ -121,8 +122,9 @@ namespace Azure.Messaging.ServiceBus.Primitives
             [Conditional("CODE_ANALYSIS")]
             public sealed class CacheAttribute : Attribute
             {
-                readonly Type elementType;
-                readonly CacheAttrition cacheAttrition;
+                private readonly Type elementType;
+
+                private readonly CacheAttrition cacheAttrition;
 
                 public CacheAttribute(Type elementType, CacheAttrition cacheAttrition)
                 {
@@ -154,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             [Conditional("CODE_ANALYSIS")]
             public sealed class QueueAttribute : Attribute
             {
-                readonly Type elementType;
+                private readonly Type elementType;
 
                 public QueueAttribute(Type elementType)
                 {
@@ -204,7 +206,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             [Conditional("CODE_ANALYSIS")]
             public sealed class SynchronizationPrimitiveAttribute : Attribute
             {
-                readonly BlocksUsing blocksUsing;
+                private readonly BlocksUsing blocksUsing;
 
                 public SynchronizationPrimitiveAttribute(BlocksUsing blocksUsing)
                 {
@@ -252,8 +254,9 @@ namespace Azure.Messaging.ServiceBus.Primitives
                 [Conditional("CODE_ANALYSIS")]
                 public class ThrowsAttribute : Attribute
                 {
-                    readonly Type exceptionType;
-                    readonly string diagnosis;
+                    private readonly Type exceptionType;
+
+                    private readonly string diagnosis;
 
                     public ThrowsAttribute(Type exceptionType, string diagnosis)
                     {

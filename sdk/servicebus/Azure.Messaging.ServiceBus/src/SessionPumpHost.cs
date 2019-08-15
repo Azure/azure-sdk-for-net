@@ -9,10 +9,13 @@ namespace Azure.Messaging.ServiceBus
 
     internal sealed class SessionPumpHost
     {
-        readonly object syncLock;
-        SessionReceivePump sessionReceivePump;
-        CancellationTokenSource sessionPumpCancellationTokenSource;
-        readonly Uri endpoint;
+        private readonly object syncLock;
+
+        private SessionReceivePump sessionReceivePump;
+
+        private CancellationTokenSource sessionPumpCancellationTokenSource;
+
+        private readonly Uri endpoint;
 
         public SessionPumpHost(string clientId, ReceiveMode receiveMode, SessionClient sessionClient, Uri endpoint)
         {
@@ -23,11 +26,11 @@ namespace Azure.Messaging.ServiceBus
             this.endpoint = endpoint;
         }
 
-        ReceiveMode ReceiveMode { get; }
+        private ReceiveMode ReceiveMode { get; }
 
-        SessionClient SessionClient { get; }
+        private SessionClient SessionClient { get; }
 
-        string ClientId { get; }
+        private string ClientId { get; }
 
         public void Close()
         {

@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new MessagingEntityNotFoundException("Topic was not found");
         }
 
-        static TopicRuntimeInfo ParseFromEntryElement(XElement xEntry)
+        private static TopicRuntimeInfo ParseFromEntryElement(XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
             var topicRuntimeInfo = new TopicRuntimeInfo(name);

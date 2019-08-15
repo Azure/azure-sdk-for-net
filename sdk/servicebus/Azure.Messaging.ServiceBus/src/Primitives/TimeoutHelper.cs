@@ -7,11 +7,13 @@ namespace Azure.Messaging.ServiceBus.Primitives
     using System.Diagnostics;
 
     [DebuggerStepThrough]
-    struct TimeoutHelper
+    internal struct TimeoutHelper
     {
-        DateTime deadline;
-        bool deadlineSet;
-        TimeSpan originalTimeout;
+        private DateTime deadline;
+
+        private bool deadlineSet;
+
+        private TimeSpan originalTimeout;
 
         public TimeoutHelper(TimeSpan timeout, bool startTimeout)
         {
@@ -128,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             return this.originalTimeout - this.RemainingTime();
         }
 
-        void SetDeadline()
+        private void SetDeadline()
         {
             Debug.Assert(!this.deadlineSet, "TimeoutHelper deadline set twice.");
             this.deadline = DateTime.UtcNow + this.originalTimeout;

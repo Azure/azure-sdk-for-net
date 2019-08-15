@@ -15,10 +15,11 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// Provides an adapter from TokenCredential to ICbsTokenProvider for AMQP CBS usage.
     /// </summary>
-    sealed class TokenProviderAdapter : ICbsTokenProvider
+    internal sealed class TokenProviderAdapter : ICbsTokenProvider
     {
-        readonly TokenCredential tokenProvider;
-        readonly TimeSpan operationTimeout;
+        private readonly TokenCredential tokenProvider;
+
+        private readonly TimeSpan operationTimeout;
 
         public TokenProviderAdapter(TokenCredential tokenProvider, TimeSpan operationTimeout)
         {

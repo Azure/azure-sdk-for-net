@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(9, Level = EventLevel.Error, Message = "{0}: SendAsync Exception: {1}.")]
-        void MessageSendException(string clientId, string exception)
+        private void MessageSendException(string clientId, string exception)
         {
             this.WriteEvent(9, clientId, exception);
         }
@@ -133,7 +133,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(12, Level = EventLevel.Error, Message = "{0}: ReceiveAsync Exception: {1}.")]
-        void MessageReceiveException(string clientId, string exception)
+        private void MessageReceiveException(string clientId, string exception)
         {
             this.WriteEvent(12, clientId, exception);
         }
@@ -149,7 +149,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(13, Level = EventLevel.Informational, Message = "{0}: CompleteAsync start. MessageCount = {1}, LockTokens = {2}")]
-        void MessageCompleteStart(string clientId, int messageCount, string lockTokens)
+        private void MessageCompleteStart(string clientId, int messageCount, string lockTokens)
         {
             this.WriteEvent(13, clientId, messageCount, lockTokens);
         }
@@ -173,7 +173,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(15, Level = EventLevel.Error, Message = "{0}: CompleteAsync Exception: {1}.")]
-        void MessageCompleteException(string clientId, string exception)
+        private void MessageCompleteException(string clientId, string exception)
         {
             this.WriteEvent(15, clientId, exception);
         }
@@ -206,7 +206,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(18, Level = EventLevel.Error, Message = "{0}: AbandonAsync Exception: {1}.")]
-        void MessageAbandonException(string clientId, string exception)
+        private void MessageAbandonException(string clientId, string exception)
         {
             this.WriteEvent(18, clientId, exception);
         }
@@ -239,7 +239,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(21, Level = EventLevel.Error, Message = "{0}: DeferAsync Exception: {1}.")]
-        void MessageDeferException(string clientId, string exception)
+        private void MessageDeferException(string clientId, string exception)
         {
                 this.WriteEvent(21, clientId, exception);
         }
@@ -272,7 +272,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(24, Level = EventLevel.Error, Message = "{0}: DeadLetterAsync Exception: {1}.")]
-        void MessageDeadLetterException(string clientId, string exception)
+        private void MessageDeadLetterException(string clientId, string exception)
         {
             this.WriteEvent(24, clientId, exception);
         }
@@ -305,7 +305,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(27, Level = EventLevel.Error, Message = "{0}: RenewLockAsync Exception: {1}.")]
-        void MessageRenewLockException(string clientId, string exception)
+        private void MessageRenewLockException(string clientId, string exception)
         {
             this.WriteEvent(27, clientId, exception);
         }
@@ -321,7 +321,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(28, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync start. MessageCount = {1}, LockTokens = {2}")]
-        void MessageReceiveDeferredMessageStart(string clientId, int messageCount, string sequenceNumbers)
+        private void MessageReceiveDeferredMessageStart(string clientId, int messageCount, string sequenceNumbers)
         {
             this.WriteEvent(28, clientId, messageCount, sequenceNumbers);
         }
@@ -345,7 +345,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(30, Level = EventLevel.Error, Message = "{0}: ReceiveDeferredMessageAsync Exception: {1}.")]
-        void MessageReceiveDeferredMessageException(string clientId, string exception)
+        private void MessageReceiveDeferredMessageException(string clientId, string exception)
         {
             this.WriteEvent(30, clientId, exception);
         }
@@ -362,7 +362,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(34, Level = EventLevel.Informational, Message = "{0}: AmqpSendLinkCreate started. EntityType: {1}, EntityPath: {2}")]
-        void AmqpSendLinkCreateStart(string clientId, string entityType, string entityPath)
+        private void AmqpSendLinkCreateStart(string clientId, string entityType, string entityPath)
         {
             this.WriteEvent(34, clientId, entityType, entityPath);
         }
@@ -386,7 +386,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(36, Level = EventLevel.Informational, Message = "{0}: AmqpReceiveLinkCreate started. IsRequestResponseLink: {1},  EntityType: {1}, EntityPath: {2}")]
-        void AmqpReceiveLinkCreateStart(string clientId, string isRequestResponseLink, string entityType, string entityPath)
+        private void AmqpReceiveLinkCreateStart(string clientId, string isRequestResponseLink, string entityType, string entityPath)
         {
             this.WriteEvent(36, clientId, isRequestResponseLink, entityType, entityPath);
         }
@@ -428,7 +428,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(40, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticanToken started. Address: {0}, Audience: {1}, Resource: {2}, Claims: {3}")]
-        void AmqpSendAuthenticationTokenStart(string address, string audience, string resource, string claims)
+        private void AmqpSendAuthenticationTokenStart(string address, string audience, string resource, string claims)
         {
             this.WriteEvent(40, address, audience, resource, claims);
         }
@@ -470,7 +470,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(44, Level = EventLevel.Error, Message = "{0}: MessagePeekAsync Exception: {1}.")]
-        void MessagePeekException(string clientId, string exception)
+        private void MessagePeekException(string clientId, string exception)
         {
             this.WriteEvent(44, clientId, exception);
         }
@@ -521,7 +521,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(49, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. ScheduleTimeUtc = {1}")]
-        void ScheduleMessageStart(string clientId, string scheduleEnqueueTimeUtc)
+        private void ScheduleMessageStart(string clientId, string scheduleEnqueueTimeUtc)
         {
             if (this.IsEnabled())
             {
@@ -548,7 +548,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(51, Level = EventLevel.Error, Message = "{0}: ScheduleMessageAsync Exception: {1}.")]
-        void ScheduleMessageException(string clientId, string exception)
+        private void ScheduleMessageException(string clientId, string exception)
         {
             this.WriteEvent(51, clientId, exception);
         }
@@ -581,7 +581,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(54, Level = EventLevel.Error, Message = "{0}: CancelScheduledMessageAsync Exception: {1}.")]
-        void CancelScheduledMessageException(string clientId, string exception)
+        private void CancelScheduledMessageException(string clientId, string exception)
         {
             this.WriteEvent(54, clientId, exception);
         }
@@ -614,7 +614,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(57, Level = EventLevel.Error, Message = "{0}: AddRuleAsync Exception: {1}.")]
-        void AddRuleException(string clientId, string exception)
+        private void AddRuleException(string clientId, string exception)
         {
             this.WriteEvent(57, clientId, exception);
         }
@@ -647,7 +647,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(60, Level = EventLevel.Error, Message = "{0}: RemoveRuleAsync Exception: {1}.")]
-        void RemoveRuleException(string clientId, string exception)
+        private void RemoveRuleException(string clientId, string exception)
         {
             this.WriteEvent(60, clientId, exception);
         }
@@ -662,7 +662,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(61, Level = EventLevel.Informational, Message = "{0}: Register OnMessageHandler start: OnMessage Options: AutoComplete: {1}, AutoRenewLock: {2}, MaxConcurrentCalls: {3}, AutoRenewTimeout: {4}")]
-        void RegisterOnMessageHandlerStart(string clientId, bool autoComplete, bool autorenewLock, int maxConcurrentCalls, long autorenewTimeoutInSeconds)
+        private void RegisterOnMessageHandlerStart(string clientId, bool autoComplete, bool autorenewLock, int maxConcurrentCalls, long autorenewTimeoutInSeconds)
         {
             this.WriteEvent(61, clientId, autoComplete, autorenewLock, maxConcurrentCalls, autorenewTimeoutInSeconds);
         }
@@ -686,7 +686,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(63, Level = EventLevel.Error, Message = "{0}: Register OnMessageHandler Exception: {1}")]
-        void RegisterOnMessageHandlerException(string clientId, string exception)
+        private void RegisterOnMessageHandlerException(string clientId, string exception)
         {
             this.WriteEvent(63, clientId, exception);
         }
@@ -701,7 +701,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(66, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump PumpTask Started: Message: SequenceNumber: {1}, Available Semaphore Count: {2}")]
-        void MessageReceiverPumpTaskStart(string clientId, long sequenceNumber, int currentSemaphoreCount)
+        private void MessageReceiverPumpTaskStart(string clientId, long sequenceNumber, int currentSemaphoreCount)
         {
             this.WriteEvent(66, clientId, sequenceNumber, currentSemaphoreCount);
         }
@@ -725,7 +725,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(68, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump PumpTask Exception: SessionId: {1}, Exception: {2}")]
-        void MessageReceivePumpTaskException(string clientId, string sessionId, string exception)
+        private void MessageReceivePumpTaskException(string clientId, string sessionId, string exception)
         {
             this.WriteEvent(68, clientId, sessionId, exception);
         }
@@ -740,7 +740,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(69, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump DispatchTask start: Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpDispatchTaskStart(string clientId, long sequenceNumber)
+        private void MessageReceiverPumpDispatchTaskStart(string clientId, long sequenceNumber)
         {
             this.WriteEvent(69, clientId, sequenceNumber);
         }
@@ -755,7 +755,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(70, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump DispatchTask done: Message: SequenceNumber: {1}, Current Semaphore Count: {2}")]
-        void MessageReceiverPumpDispatchTaskStop(string clientId, long sequenceNumber, int currentSemaphoreCount)
+        private void MessageReceiverPumpDispatchTaskStop(string clientId, long sequenceNumber, int currentSemaphoreCount)
         {
             this.WriteEvent(70, clientId, sequenceNumber, currentSemaphoreCount);
         }
@@ -770,7 +770,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(71, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump UserCallback start: Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpUserCallbackStart(string clientId, long sequenceNumber)
+        private void MessageReceiverPumpUserCallbackStart(string clientId, long sequenceNumber)
         {
             this.WriteEvent(71, clientId, sequenceNumber);
         }
@@ -785,7 +785,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(72, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump UserCallback done: Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpUserCallbackStop(string clientId, long sequenceNumber)
+        private void MessageReceiverPumpUserCallbackStop(string clientId, long sequenceNumber)
         {
             this.WriteEvent(72, clientId, sequenceNumber);
         }
@@ -800,7 +800,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(73, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump UserCallback Exception: Message: SequenceNumber: {1}, Exception: {2}")]
-        void MessageReceiverPumpUserCallbackException(string clientId, long sequenceNumber, string exception)
+        private void MessageReceiverPumpUserCallbackException(string clientId, long sequenceNumber, string exception)
         {
             this.WriteEvent(73, clientId, sequenceNumber, exception);
         }
@@ -815,7 +815,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(74, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump RenewMessage start: Message: SequenceNumber: {1}, RenewAfterTimeInSeconds: {2}")]
-        void MessageReceiverPumpRenewMessageStart(string clientId, long sequenceNumber, long renewAfterTimeSpanInSeconds)
+        private void MessageReceiverPumpRenewMessageStart(string clientId, long sequenceNumber, long renewAfterTimeSpanInSeconds)
         {
             this.WriteEvent(74, clientId, sequenceNumber, renewAfterTimeSpanInSeconds);
         }
@@ -830,7 +830,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(75, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump RenewMessage done: Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpRenewMessageStop(string clientId, long sequenceNumber)
+        private void MessageReceiverPumpRenewMessageStop(string clientId, long sequenceNumber)
         {
             this.WriteEvent(75, clientId, sequenceNumber);
         }
@@ -845,7 +845,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(76, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump RenewMessage Exception: Message: SequenceNumber: {1}, Exception: {2}")]
-        void MessageReceiverPumpRenewMessageException(string clientId, long sequenceNumber, string exception)
+        private void MessageReceiverPumpRenewMessageException(string clientId, long sequenceNumber, string exception)
         {
             this.WriteEvent(76, clientId, sequenceNumber, exception);
         }
@@ -860,7 +860,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(77, Level = EventLevel.Warning, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
-        void RunOperationExceptionEncountered(string exception)
+        private void RunOperationExceptionEncountered(string exception)
         {
             this.WriteEvent(77, exception);
         }
@@ -875,7 +875,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(78, Level = EventLevel.Informational, Message = "{0}: Register OnSessionHandler start: RegisterSessionHandler Options: AutoComplete: {1}, MaxConcurrentSessions: {2}, MessageWaitTimeout: {3}, AutoRenewTimeout: {4}")]
-        void RegisterOnSessionHandlerStart(string clientId, bool autoComplete, int maxConcurrentSessions, long messageWaitTimeoutInSeconds, long autorenewTimeoutInSeconds)
+        private void RegisterOnSessionHandlerStart(string clientId, bool autoComplete, int maxConcurrentSessions, long messageWaitTimeoutInSeconds, long autorenewTimeoutInSeconds)
         {
             this.WriteEvent(78, clientId, autoComplete, maxConcurrentSessions, messageWaitTimeoutInSeconds, autorenewTimeoutInSeconds);
         }
@@ -899,7 +899,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(80, Level = EventLevel.Error, Message = "{0}: Register OnSessionHandler Exception: {1}")]
-        void RegisterOnSessionHandlerException(string clientId, string exception)
+        private void RegisterOnSessionHandlerException(string clientId, string exception)
         {
             this.WriteEvent(80, clientId, exception);
         }
@@ -914,7 +914,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(81, Level = EventLevel.Error, Message = "{0}: Exception while Receving a session: SessionId: {1}")]
-        void SessionReceivePumpSessionReceiveException(string clientId, string exception)
+        private void SessionReceivePumpSessionReceiveException(string clientId, string exception)
         {
             this.WriteEvent(81, clientId, exception);
         }
@@ -947,7 +947,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(84, Level = EventLevel.Error, Message = "{0}: Exception while closing session: SessionId: {1}, Exception: {2}")]
-        void SessionReceivePumpSessionCloseException(string clientId, string sessionId, string exception)
+        private void SessionReceivePumpSessionCloseException(string clientId, string sessionId, string exception)
         {
             this.WriteEvent(84, clientId, sessionId, exception);
         }
@@ -962,7 +962,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(85, Level = EventLevel.Informational, Message = "{0}: SessionRenewLock start. SessionId: {1}, RenewAfterTimeInSeconds: {2}")]
-        void SessionReceivePumpSessionRenewLockStart(string clientId, string sessionId, long totalSeconds)
+        private void SessionReceivePumpSessionRenewLockStart(string clientId, string sessionId, long totalSeconds)
         {
             this.WriteEvent(85, clientId, sessionId, totalSeconds);
         }
@@ -986,7 +986,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(87, Level = EventLevel.Error, Message = "{0}: Exception while renewing session lock: SessionId: {1}, Exception: {2}")]
-        void SessionReceivePumpSessionRenewLockException(string clientId, string sessionId, string exception)
+        private void SessionReceivePumpSessionRenewLockException(string clientId, string sessionId, string exception)
         {
             this.WriteEvent(87, clientId, sessionId, exception);
         }
@@ -1001,7 +1001,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(88, Level = EventLevel.Informational, Message = "{0}: AcceptMessageSession start: EntityPath: {1}, ReceiveMode: {2}, PrefetchCount: {3}, SessionId: {4}")]
-        void AmqpSessionClientAcceptMessageSessionStart(string clientId, string entityPath, string receiveMode, int prefetchCount, string sessionId)
+        private void AmqpSessionClientAcceptMessageSessionStart(string clientId, string entityPath, string receiveMode, int prefetchCount, string sessionId)
         {
             this.WriteEvent(88, clientId, entityPath, receiveMode, prefetchCount, sessionId);
         }
@@ -1025,7 +1025,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(90, Level = EventLevel.Error, Message = "{0}: AcceptMessageSession Exception: EntityPath: {1}, Exception: {2}")]
-        void AmqpSessionClientAcceptMessageSessionException(string clientId, string entityPath, string exception)
+        private void AmqpSessionClientAcceptMessageSessionException(string clientId, string entityPath, string exception)
         {
             this.WriteEvent(90, clientId, entityPath, exception);
         }
@@ -1040,7 +1040,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(91, Level = EventLevel.Error, Message = "AmqpLinkCreatorException Exception: EntityPath: {0}, SessionString: {1}, SessionState: {2}, TerminalException: {3}, ConnectionInfo: {4}, ConnectionState: {5}, Exception: {6}")]
-        void AmqpLinkCreationException(string entityPath, string session, string sessionState, string terminalException,  string connectionInfo, string connectionState, string exception)
+        private void AmqpLinkCreationException(string entityPath, string session, string sessionState, string terminalException,  string connectionInfo, string connectionState, string exception)
         {
             this.WriteEvent(91, entityPath, session, sessionState, terminalException, connectionInfo, connectionState, exception);
         }
@@ -1055,7 +1055,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(92, Level = EventLevel.Verbose, Message = "AmqpConnectionCreated: HostName: {0}, ConnectionInfo: {1}, ConnectionState: {2}")]
-        void AmqpConnectionCreated(string hostName, string connectionInfo, string connectionState)
+        private void AmqpConnectionCreated(string hostName, string connectionInfo, string connectionState)
         {
             this.WriteEvent(92, hostName, connectionInfo, connectionState);
         }
@@ -1085,7 +1085,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(94, Level = EventLevel.Error, Message = "AmqpSessionCreationException Exception: EntityPath: {0}, ConnectionInfo: {1}, ConnectionState: {2}, Exception: {3}")]
-        void AmqpSessionCreationException(string entityPath, string connectionInfo, string connectionState, string exception)
+        private void AmqpSessionCreationException(string entityPath, string connectionInfo, string connectionState, string exception)
         {
             this.WriteEvent(94, entityPath, connectionInfo, connectionState, exception);
         }
@@ -1118,7 +1118,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(97, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. MessageId: {1}, Exception {2}")]
-        void PluginCallFailed(string pluginName, string messageId, string exception)
+        private void PluginCallFailed(string pluginName, string messageId, string exception)
         {
             this.WriteEvent(97, pluginName, messageId, exception);
         }
@@ -1133,7 +1133,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(98, Level = EventLevel.Error, Message = "Exception during Schedule Task. FunctionTargetName: {0}, MethodInfoName: {1}, Exception:{2}")]
-        void ScheduleTaskFailed(string funcTargetName, string methodInfoName, string exception)
+        private void ScheduleTaskFailed(string funcTargetName, string methodInfoName, string exception)
         {
             WriteEvent(98, funcTargetName, methodInfoName, exception);
         }
@@ -1148,7 +1148,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(99, Level = EventLevel.Error, Message = "ExceptionReceivedHandler threw exception. Exception:{0}")]
-        void ExceptionReceivedHandlerThrewException(string exception)
+        private void ExceptionReceivedHandlerThrewException(string exception)
         {
             WriteEvent(99, exception);
         }
@@ -1163,7 +1163,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(100, Level = EventLevel.Error, Message = "Link state lost. Throwing LockLostException for clientId: {0}, receiveLinkName: {1}, receiveLinkState: {2}, isSessionReceiver: {3}, exception: {4}.")]
-        void LinkStateLost(string clientId, string receiveLinkName, string receiveLinkState, bool isSessionReceiver, string exception)
+        private void LinkStateLost(string clientId, string receiveLinkName, string receiveLinkState, bool isSessionReceiver, string exception)
         {
             WriteEvent(100, clientId, receiveLinkName, receiveLinkState, isSessionReceiver, exception);
         }
@@ -1205,7 +1205,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(104, Level = EventLevel.Error, Message = "{0}: GetRulesException Exception: {1}.")]
-        void GetRulesException(string clientId, string exception)
+        private void GetRulesException(string clientId, string exception)
         {
             this.WriteEvent(104, clientId, exception);
         }
@@ -1220,7 +1220,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(105, Level = EventLevel.Informational, Message = "Creating/Recreating New Link. ClientId: {0}, IsSessionReceiver: {1}, SessionId: {2}, IsRequestResponseLink: {3}, LinkError: {4}.")]
-        void CreatingNewLink(string clientId, bool isSessionReceiver, string sessionId, bool isRequestResponseLink, string linkError)
+        private void CreatingNewLink(string clientId, bool isSessionReceiver, string sessionId, bool isRequestResponseLink, string linkError)
         {
             WriteEvent(105, clientId, isSessionReceiver, sessionId, isRequestResponseLink, linkError);
         }
@@ -1235,7 +1235,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(106, Level = EventLevel.Error, Message = "SessionReceiver Link Closed. ClientId: {0}, SessionId: {1}, linkException: {2}.")]
-        void SessionReceiverLinkClosed(string clientId, string sessionId, string linkException)
+        private void SessionReceiverLinkClosed(string clientId, string sessionId, string linkException)
         {
             WriteEvent(106, clientId, sessionId, linkException);
         }
@@ -1250,7 +1250,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(107, Level = EventLevel.Error, Message = "{0}: AmqpSendAuthenticationTokenException Exception: {1}.")]
-        void AmqpSendAuthenticationTokenException(string clientId, string exception)
+        private void AmqpSendAuthenticationTokenException(string clientId, string exception)
         {
             this.WriteEvent(107, clientId, exception);
         }
@@ -1265,7 +1265,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(108, Level = EventLevel.Error, Message = "AmqpTransactionInitializeException for TransactionId: {0} Exception: {1}.")]
-        void AmqpTransactionInitializeException(string transactionId, string exception)
+        private void AmqpTransactionInitializeException(string transactionId, string exception)
         {
             this.WriteEvent(108, transactionId, exception);
         }
@@ -1280,7 +1280,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(109, Level = EventLevel.Informational, Message = "AmqpTransactionDeclared for LocalTransactionId: {0} AmqpTransactionId: {1}.")]
-        void AmqpTransactionDeclared(string transactionId, string amqpTransactionId)
+        private void AmqpTransactionDeclared(string transactionId, string amqpTransactionId)
         {
             this.WriteEvent(109, transactionId, amqpTransactionId);
         }
@@ -1295,7 +1295,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(110, Level = EventLevel.Informational, Message = "AmqpTransactionDischarged for LocalTransactionId: {0} AmqpTransactionId: {1} Rollback: {2}.")]
-        void AmqpTransactionDischarged(string transactionId, string amqpTransactionId, bool rollback)
+        private void AmqpTransactionDischarged(string transactionId, string amqpTransactionId, bool rollback)
         {
             this.WriteEvent(110, transactionId, amqpTransactionId, rollback);
         }
@@ -1310,7 +1310,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(111, Level = EventLevel.Error, Message = "AmqpTransactionDischargeException for TransactionId: {0} AmqpTransactionId: {1} Exception: {2}.")]
-        void AmqpTransactionDischargeException(string transactionId, string amqpTransactionId, string exception)
+        private void AmqpTransactionDischargeException(string transactionId, string amqpTransactionId, string exception)
         {
             this.WriteEvent(111, transactionId, amqpTransactionId, exception);
         }
@@ -1325,7 +1325,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(112, Level = EventLevel.Error, Message = "AmqpCreateControllerException for ConnectionManager: {0} Exception: {1}.")]
-        void AmqpCreateControllerException(string connectionManager, string exception)
+        private void AmqpCreateControllerException(string connectionManager, string exception)
         {
             this.WriteEvent(112, connectionManager, exception);
         }
@@ -1358,7 +1358,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [Event(115, Level = EventLevel.Error, Message = "{0}: Management operation '{1}' encountered exception: '{2}'.")]
-        void ManagementOperationException(string clientId, string operationName, string exception)
+        private void ManagementOperationException(string clientId, string operationName, string exception)
         {
             this.WriteEvent(115, clientId, operationName, exception);
         }

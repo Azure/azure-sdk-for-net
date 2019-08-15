@@ -3,7 +3,7 @@
 
 namespace Azure.Messaging.ServiceBus.Primitives
 {
-    static class ClaimConstants
+    internal static class ClaimConstants
     {
         public const string Manage = "Manage";
         public const string Send = "Send";

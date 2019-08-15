@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Management
             }
         }
 
-        static string NormalizeForwardToAddress(string forwardTo, string baseAddress)
+        private static string NormalizeForwardToAddress(string forwardTo, string baseAddress)
         {
             if (!Uri.TryCreate(forwardTo, UriKind.Absolute, out var forwardToUri))
             {

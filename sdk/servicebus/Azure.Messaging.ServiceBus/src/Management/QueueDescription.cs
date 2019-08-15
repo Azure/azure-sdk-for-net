@@ -14,13 +14,20 @@ namespace Azure.Messaging.ServiceBus.Management
     {
         internal TimeSpan duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
         internal string path;
-        TimeSpan lockDuration = TimeSpan.FromSeconds(60);
-        TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
-        TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
-        int maxDeliveryCount = 10;
-        string forwardTo = null;
-        string forwardDeadLetteredMessagesTo = null;
-        string userMetadata = null;
+
+        private TimeSpan lockDuration = TimeSpan.FromSeconds(60);
+
+        private TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
+
+        private TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
+
+        private int maxDeliveryCount = 10;
+
+        private string forwardTo = null;
+
+        private string forwardDeadLetteredMessagesTo = null;
+
+        private string userMetadata = null;
 
         /// <summary>
         /// Initializes a new instance of QueueDescription class with the specified relative path.

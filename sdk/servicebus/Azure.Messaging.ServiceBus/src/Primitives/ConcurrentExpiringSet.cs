@@ -9,15 +9,21 @@ namespace Azure.Messaging.ServiceBus.Primitives
     using System.Threading;
     using System.Threading.Tasks;
 
-    sealed class ConcurrentExpiringSet<TKey>
+    internal sealed class ConcurrentExpiringSet<TKey>
     {
-        readonly ConcurrentDictionary<TKey, DateTime> dictionary;
-        readonly ICollection<KeyValuePair<TKey, DateTime>> dictionaryAsCollection;
-        readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
-        volatile TaskCompletionSource<bool> cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-        int closeSignaled;
-        bool closed;
-        static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
+        private readonly ConcurrentDictionary<TKey, DateTime> dictionary;
+
+        private readonly ICollection<KeyValuePair<TKey, DateTime>> dictionaryAsCollection;
+
+        private readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
+
+        private volatile TaskCompletionSource<bool> cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        private int closeSignaled;
+
+        private bool closed;
+
+        private static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
 
         public ConcurrentExpiringSet()
         {
@@ -56,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             this.tokenSource.Dispose();
         }
 
-        async Task CollectExpiredEntriesAsync(CancellationToken token)
+        private async Task CollectExpiredEntriesAsync(CancellationToken token)
         {
             while (!token.IsCancellationRequested)
             {
@@ -89,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             }
         }
 
-        void ThrowIfClosed()
+        private void ThrowIfClosed()
         {
             if (closed)
             {

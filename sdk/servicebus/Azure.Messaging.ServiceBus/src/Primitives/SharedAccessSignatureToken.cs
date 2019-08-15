@@ -21,11 +21,13 @@ namespace Azure.Messaging.ServiceBus.Primitives
         internal const int MaxKeyNameLength = 256;
         internal const int MaxKeyLength = 256;
 
-        const string SignedResourceFullFieldName = SharedAccessSignature + " " + SignedResource;
-        const string SasPairSeparator = "&";
-        const string SasKeyValueSeparator = "=";
+        private const string SignedResourceFullFieldName = SharedAccessSignature + " " + SignedResource;
 
-        static readonly Func<string, string> Decoder = WebUtility.UrlDecode;
+        private const string SasPairSeparator = "&";
+
+        private const string SasKeyValueSeparator = "=";
+
+        private static readonly Func<string, string> Decoder = WebUtility.UrlDecode;
 
         /// <summary>
         /// Creates a new instance of the <see cref="SharedAccessSignatureToken"/> class.
@@ -70,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             }
         }
 
-        static IDictionary<string, string> ExtractFieldValues(string sharedAccessSignature)
+        private static IDictionary<string, string> ExtractFieldValues(string sharedAccessSignature)
         {
             string[] tokenLines = sharedAccessSignature.Split();
 
@@ -103,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             return parsedFields;
         }
 
-        static string GetAudienceFromToken(string token)
+        private static string GetAudienceFromToken(string token)
         {
             IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
             if (!decodedToken.TryGetValue(SignedResourceFullFieldName, out var audience))
@@ -114,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             return audience;
         }
 
-        static DateTime GetExpirationDateTimeUtcFromToken(string token)
+        private static DateTime GetExpirationDateTimeUtcFromToken(string token)
         {
             IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
             if (!decodedToken.TryGetValue(SignedExpiry, out var expiresIn))
@@ -127,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             return expiresOn;
         }
 
-        static IDictionary<string, string> Decode(string encodedString, Func<string, string> keyDecoder, Func<string, string> valueDecoder, string keyValueSeparator, string pairSeparator)
+        private static IDictionary<string, string> Decode(string encodedString, Func<string, string> keyDecoder, Func<string, string> valueDecoder, string keyValueSeparator, string pairSeparator)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
             IEnumerable<string> valueEncodedPairs = encodedString.Split(new[] { pairSeparator }, StringSplitOptions.None);

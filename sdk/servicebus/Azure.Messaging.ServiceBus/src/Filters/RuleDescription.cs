@@ -21,8 +21,9 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public const string DefaultRuleName = "$Default";
 
-        Filter filter;
-        string name;
+        private Filter filter;
+
+        private string name;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RuleDescription" /> class with default values.

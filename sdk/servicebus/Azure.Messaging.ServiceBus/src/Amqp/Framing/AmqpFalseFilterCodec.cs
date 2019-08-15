@@ -5,7 +5,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
     using Microsoft.Azure.Amqp;
 
-    sealed class AmqpFalseFilterCodec : AmqpFilterCodec
+    internal sealed class AmqpFalseFilterCodec : AmqpFilterCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":false-filter:list";
         public const ulong Code = 0x000001370000008;

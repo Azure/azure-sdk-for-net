@@ -33,8 +33,9 @@ namespace Azure.Messaging.ServiceBus
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
     public class TopicClient
     {
-        readonly object syncLock;
-        MessageSender innerSender;
+        private readonly object syncLock;
+
+        private MessageSender innerSender;
         
         internal ClientEntity ClientEntity { get; set; }
         /// <summary>
@@ -54,7 +55,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityPath">Path to the topic</param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
         public TopicClient(string connectionString, string entityPath, AmqpClientOptions options = null)
-            : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), entityPath, options)
+            : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), entityPath, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -149,7 +150,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        ICbsTokenProvider CbsTokenProvider { get; }
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
         /// Sends a message to Service Bus.

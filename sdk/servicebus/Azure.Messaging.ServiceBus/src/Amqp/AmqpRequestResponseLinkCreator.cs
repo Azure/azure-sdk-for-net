@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
     internal class AmqpRequestResponseLinkCreator : AmqpLinkCreator
     {
-        readonly string entityPath;
+        private readonly string entityPath;
 
         public AmqpRequestResponseLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] audience, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings linkSettings, string clientId)
             : base(entityPath, serviceBusConnection, endpointAddress, audience, requiredClaims, cbsTokenProvider, linkSettings, clientId)

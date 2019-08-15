@@ -18,8 +18,9 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class SharedAccessAuthorizationRule : AuthorizationRule
     {
-        const int SupportedSASKeyLength = 44;
-        const string FixedClaimType = "SharedAccessKey";
+        private const int SupportedSASKeyLength = 44;
+
+        private const string FixedClaimType = "SharedAccessKey";
 
         private string internalKeyName;
         private string internalPrimaryKey;

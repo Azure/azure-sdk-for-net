@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus.InteropExtensions
     ///     string returned = Encoding.UTF8.GetString(message4.Body); // Since message was sent as Stream, no deserialization required here.
     ///
     /// </remarks>
-    static class MessageInteropExtensions
+    internal static class MessageInteropExtensions
     {
         /// <summary>
         /// Deserializes the body of a message that was serialized using XmlObjectSerializer

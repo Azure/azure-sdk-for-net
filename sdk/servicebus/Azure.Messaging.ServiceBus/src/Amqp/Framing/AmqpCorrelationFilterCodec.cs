@@ -7,13 +7,14 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
 
-    sealed class AmqpCorrelationFilterCodec : AmqpFilterCodec
+    internal sealed class AmqpCorrelationFilterCodec : AmqpFilterCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":correlation-filter:list";
         public const ulong Code = 0x000001370000009;
-        const int Fields = 9;
 
-        AmqpMap properties;
+        private const int Fields = 9;
+
+        private AmqpMap properties;
 
         public AmqpCorrelationFilterCodec() : base(Name, Code)
         {

@@ -5,7 +5,7 @@ namespace Azure.Messaging.ServiceBus
 {
     using System;
 
-    static class MessagingUtilities
+    internal static class MessagingUtilities
     {
         public static TimeSpan CalculateRenewAfterDuration(DateTime lockedUntilUtc)
         {

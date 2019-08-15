@@ -52,13 +52,17 @@ namespace Azure.Messaging.ServiceBus
     /// <remarks>It uses AMQP protocol for communicating with service bus. Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
     public class SubscriptionClient
     {
-        int prefetchCount;
-        readonly object syncLock;
-        readonly ServiceBusDiagnosticSource diagnosticSource;
+        private int prefetchCount;
 
-        AmqpSubscriptionClient innerSubscriptionClient;
-        SessionClient sessionClient;
-        SessionPumpHost sessionPumpHost;
+        private readonly object syncLock;
+
+        private readonly ServiceBusDiagnosticSource diagnosticSource;
+
+        private AmqpSubscriptionClient innerSubscriptionClient;
+
+        private SessionClient sessionClient;
+
+        private SessionPumpHost sessionPumpHost;
         
         internal ClientEntity ClientEntity { get; set; }
         /// <summary>
@@ -286,7 +290,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        ICbsTokenProvider CbsTokenProvider { get; }
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
         /// Completes a <see cref="Message"/> using its lock token. This will delete the message from the subscription.

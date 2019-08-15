@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     // WARNING: Consult filter engine owner before modifying this enum.
     // Introducing a new member here has impact to filtering engine in data type precedence and data conversion.
     // ALWAYS insert new types before Unknown!
-    enum PropertyValueType
+    internal enum PropertyValueType
     {
         Null,
         Byte, SByte, Char, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, // Numeric types
@@ -18,9 +18,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         Unknown,
     }
 
-    class SerializationUtilities
+    internal class SerializationUtilities
     {
-        static readonly Dictionary<Type, PropertyValueType> TypeToIntMap = new Dictionary<Type, PropertyValueType>
+        private static readonly Dictionary<Type, PropertyValueType> TypeToIntMap = new Dictionary<Type, PropertyValueType>
         {
             { typeof(byte), PropertyValueType.Byte },
             { typeof(sbyte), PropertyValueType.SByte },

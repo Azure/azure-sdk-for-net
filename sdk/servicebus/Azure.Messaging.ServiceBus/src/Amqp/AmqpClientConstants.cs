@@ -7,7 +7,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
 
-    class AmqpClientConstants
+    internal class AmqpClientConstants
     {
         // AMQP Management Operation
         public const string ManagementAddress = "$management";

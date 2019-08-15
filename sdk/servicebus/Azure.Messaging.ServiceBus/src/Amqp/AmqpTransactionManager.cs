@@ -10,8 +10,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
     internal class AmqpTransactionManager
     {
-        readonly object syncRoot = new object();
-        readonly Dictionary<string, AmqpTransactionEnlistment> enlistmentMap = new Dictionary<string, AmqpTransactionEnlistment>(StringComparer.Ordinal);
+        private readonly object syncRoot = new object();
+
+        private readonly Dictionary<string, AmqpTransactionEnlistment> enlistmentMap = new Dictionary<string, AmqpTransactionEnlistment>(StringComparer.Ordinal);
 
         public static AmqpTransactionManager Instance { get; } = new AmqpTransactionManager();
 

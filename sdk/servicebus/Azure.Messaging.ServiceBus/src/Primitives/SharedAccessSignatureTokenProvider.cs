@@ -19,17 +19,21 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
-    class SharedAccessSignatureTokenProvider: TokenCredential
+    internal class SharedAccessSignatureTokenProvider: TokenCredential
     {
-        const TokenScope DefaultTokenScope = TokenScope.Entity;
+        private const TokenScope DefaultTokenScope = TokenScope.Entity;
 
         internal static readonly TimeSpan DefaultTokenTTL = TimeSpan.FromMinutes(60);
 
-        readonly byte[] encodedSharedAccessKey;
-        readonly string keyName;
-        readonly TimeSpan tokenTimeToLive;
-        readonly TokenScope tokenScope;
-        readonly string sharedAccessSignature;
+        private readonly byte[] encodedSharedAccessKey;
+
+        private readonly string keyName;
+
+        private readonly TimeSpan tokenTimeToLive;
+
+        private readonly TokenScope tokenScope;
+
+        private readonly string sharedAccessSignature;
         internal static readonly Func<string, byte[]> MessagingTokenProviderKeyEncoder = Encoding.UTF8.GetBytes;
 
         internal SharedAccessSignatureTokenProvider(string sharedAccessSignature)
@@ -102,12 +106,12 @@ namespace Azure.Messaging.ServiceBus.Primitives
                 : this.sharedAccessSignature;
         }
 
-        string NormalizeAppliesTo(string[] appliesTo)
+        private string NormalizeAppliesTo(string[] appliesTo)
         {
             return ServiceBusUriHelper.NormalizeUri(appliesTo.Single(), "https", true, stripPath: this.tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
         }
 
-        static class SharedAccessSignatureBuilder
+        private static class SharedAccessSignatureBuilder
         {
             [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Uris are normalized to lowercase")]
             public static string BuildSignature(
@@ -139,7 +143,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
                     SharedAccessSignatureToken.SignedKeyName, WebUtility.UrlEncode(keyName));
             }
 
-            static string BuildExpiresOn(TimeSpan timeToLive)
+            private static string BuildExpiresOn(TimeSpan timeToLive)
             {
                 DateTime expiresOn = DateTime.UtcNow.Add(timeToLive);
                 TimeSpan secondsFromBaseTime = expiresOn.Subtract(Constants.EpochTime);
@@ -147,7 +151,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
                 return Convert.ToString(seconds, CultureInfo.InvariantCulture);
             }
 
-            static string Sign(string requestString, byte[] encodedSharedAccessKey)
+            private static string Sign(string requestString, byte[] encodedSharedAccessKey)
             {
                 using (var hmac = new HMACSHA256(encodedSharedAccessKey))
                 {

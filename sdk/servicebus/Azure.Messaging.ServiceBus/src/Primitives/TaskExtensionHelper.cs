@@ -6,14 +6,14 @@ namespace Azure.Messaging.ServiceBus.Primitives
     using System;
     using System.Threading.Tasks;
 
-    static class TaskExtensionHelper
+    internal static class TaskExtensionHelper
     {
         public static void Schedule(Func<Task> func)
         {
             _ = ScheduleInternal(func);
         }
 
-        static async Task ScheduleInternal(Func<Task> func)
+        private static async Task ScheduleInternal(Func<Task> func)
         {
             try
             {

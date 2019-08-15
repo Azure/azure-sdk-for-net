@@ -15,22 +15,35 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using Primitives;
     using SBMessage = Message;
 
-    static class AmqpMessageConverter
+    internal static class AmqpMessageConverter
     {
-        const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
-        const string ScheduledEnqueueTimeUtcName = "x-opt-scheduled-enqueue-time";
-        const string SequenceNumberName = "x-opt-sequence-number";
-        const string EnqueueSequenceNumberName = "x-opt-enqueue-sequence-number";
-        const string LockedUntilName = "x-opt-locked-until";
-        const string PublisherName = "x-opt-publisher";
-        const string PartitionKeyName = "x-opt-partition-key";
-        const string PartitionIdName = "x-opt-partition-id";
-        const string ViaPartitionKeyName = "x-opt-via-partition-key";
-        const string DeadLetterSourceName = "x-opt-deadletter-source";
-        const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
-        const string UriName = AmqpConstants.Vendor + ":uri";
-        const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
-        const int GuidSize = 16;
+        private const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
+
+        private const string ScheduledEnqueueTimeUtcName = "x-opt-scheduled-enqueue-time";
+
+        private const string SequenceNumberName = "x-opt-sequence-number";
+
+        private const string EnqueueSequenceNumberName = "x-opt-enqueue-sequence-number";
+
+        private const string LockedUntilName = "x-opt-locked-until";
+
+        private const string PublisherName = "x-opt-publisher";
+
+        private const string PartitionKeyName = "x-opt-partition-key";
+
+        private const string PartitionIdName = "x-opt-partition-id";
+
+        private const string ViaPartitionKeyName = "x-opt-via-partition-key";
+
+        private const string DeadLetterSourceName = "x-opt-deadletter-source";
+
+        private const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
+
+        private const string UriName = AmqpConstants.Vendor + ":uri";
+
+        private const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
+
+        private const int GuidSize = 16;
 
         public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<SBMessage> sbMessages)
         {
@@ -435,7 +448,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return filter;
         }
 
-        static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
+        private static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
         {
             RuleAction action;
 
@@ -532,7 +545,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpObject != null;
         }
 
-        static bool TryGetNetObjectFromAmqpObject(object amqpObject, MappingType mappingType, out object netObject)
+        private static bool TryGetNetObjectFromAmqpObject(object amqpObject, MappingType mappingType, out object netObject)
         {
             netObject = null;
             if (amqpObject == null)
@@ -622,7 +635,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return netObject != null;
         }
 
-        static ArraySegment<byte> StreamToBytes(Stream stream)
+        private static ArraySegment<byte> StreamToBytes(Stream stream)
         {
             ArraySegment<byte> buffer;
             if (stream == null || stream.Length < 1)
@@ -649,7 +662,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new Data { Value = value };
         }
 
-        static AmqpMap GetSqlFilterMap(SqlFilter sqlFilter)
+        private static AmqpMap GetSqlFilterMap(SqlFilter sqlFilter)
         {
             var amqpFilterMap = new AmqpMap
             {
@@ -658,7 +671,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpFilterMap;
         }
 
-        static AmqpMap GetCorrelationFilterMap(CorrelationFilter correlationFilter)
+        private static AmqpMap GetCorrelationFilterMap(CorrelationFilter correlationFilter)
         {
             var correlationFilterMap = new AmqpMap
             {
@@ -683,7 +696,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return correlationFilterMap;
         }
 
-        static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
+        private static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
         {
             AmqpMap ruleActionMap = null;
             if (sqlRuleAction != null)

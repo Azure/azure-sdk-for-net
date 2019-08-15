@@ -13,8 +13,9 @@ namespace Azure.Messaging.ServiceBus
     /// <see cref="SubscriptionClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" />.</summary>
     public sealed class MessageHandlerOptions
     {
-        int maxConcurrentCalls;
-        TimeSpan maxAutoRenewDuration;
+        private int maxConcurrentCalls;
+
+        private TimeSpan maxAutoRenewDuration;
 
         /// <summary>Initializes a new instance of the <see cref="MessageHandlerOptions" /> class.
         /// Default Values:

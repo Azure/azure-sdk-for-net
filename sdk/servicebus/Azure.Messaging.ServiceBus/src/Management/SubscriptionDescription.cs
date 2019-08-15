@@ -12,14 +12,21 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class SubscriptionDescription : IEquatable<SubscriptionDescription>
     {
-        string topicPath, subscriptionName;
-        TimeSpan lockDuration = TimeSpan.FromSeconds(60);
-        TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
-        TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
-        int maxDeliveryCount = 10;
-        string forwardTo = null;
-        string forwardDeadLetteredMessagesTo = null;
-        string userMetadata = null;
+        private string topicPath, subscriptionName;
+
+        private TimeSpan lockDuration = TimeSpan.FromSeconds(60);
+
+        private TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
+
+        private TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
+
+        private int maxDeliveryCount = 10;
+
+        private string forwardTo = null;
+
+        private string forwardDeadLetteredMessagesTo = null;
+
+        private string userMetadata = null;
 
         /// <summary>
         /// Initializes a new instance of SubscriptionDescription class with the specified name and topic path.

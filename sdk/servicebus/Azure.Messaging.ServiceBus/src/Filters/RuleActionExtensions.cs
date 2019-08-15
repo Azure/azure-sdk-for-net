@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        static RuleAction ParseFromXElementSqlRuleAction(XElement xElement)
+        private static RuleAction ParseFromXElementSqlRuleAction(XElement xElement)
         {
             var expression = xElement.Element(XName.Get("SqlExpression", ManagementClientConstants.SbNs))?.Value;
             if (string.IsNullOrWhiteSpace(expression))

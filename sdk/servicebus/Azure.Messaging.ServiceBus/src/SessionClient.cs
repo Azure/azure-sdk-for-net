@@ -46,8 +46,9 @@ namespace Azure.Messaging.ServiceBus
     /// <seealso cref="MessageSession"/>
     public sealed class SessionClient
     {
-        const int DefaultPrefetchCount = 0;
-        readonly ServiceBusDiagnosticSource diagnosticSource;
+        private const int DefaultPrefetchCount = 0;
+
+        private readonly ServiceBusDiagnosticSource diagnosticSource;
         
         internal ClientEntity ClientEntity { get; set; }
 
@@ -194,7 +195,7 @@ namespace Azure.Messaging.ServiceBus
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
         }
 
-        ReceiveMode ReceiveMode { get; }
+        private ReceiveMode ReceiveMode { get; }
 
         /// <summary>
         /// Gets the path of the entity. This is either the name of the queue, or the full path of the subscription.
@@ -206,11 +207,11 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string Path => this.EntityPath;
 
-        MessagingEntityType? EntityType { get; }
+        private MessagingEntityType? EntityType { get; }
 
         internal int PrefetchCount { get; set; }
 
-        ICbsTokenProvider CbsTokenProvider { get; }
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
         /// Gets a session object of any <see cref="MessageSession.SessionId"/> that can be used to receive messages for that sessionId.

@@ -5,7 +5,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
 {
     using System;
 
-    static class ServiceBusUriHelper
+    internal static class ServiceBusUriHelper
     {
         internal static string NormalizeUri(string uri, string scheme, bool stripQueryParameters = true, bool stripPath = false, bool ensureTrailingSlash = false)
         {

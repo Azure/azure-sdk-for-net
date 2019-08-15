@@ -6,11 +6,12 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
     using System.Text;
     using Microsoft.Azure.Amqp;
 
-    sealed class AmqpSqlRuleActionCodec : AmqpRuleActionCodec
+    internal sealed class AmqpSqlRuleActionCodec : AmqpRuleActionCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":sql-rule-action:list";
         public const ulong Code = 0x0000013700000006;
-        const int Fields = 2;
+
+        private const int Fields = 2;
 
         public AmqpSqlRuleActionCodec() : base(Name, Code) { }
 

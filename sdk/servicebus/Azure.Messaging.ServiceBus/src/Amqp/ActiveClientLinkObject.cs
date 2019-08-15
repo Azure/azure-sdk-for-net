@@ -6,9 +6,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using System;
 
-    abstract class ActiveClientLinkObject
+    internal abstract class ActiveClientLinkObject
     {
-        readonly string[] requiredClaims;
+        private readonly string[] requiredClaims;
 
         protected ActiveClientLinkObject(AmqpObject amqpLinkObject,  Uri endpointUri, string[] audience, string[] requiredClaims, DateTime authorizationValidUntilUtc)
         {

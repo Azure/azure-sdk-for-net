@@ -5,7 +5,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
     using Microsoft.Azure.Amqp.Framing;
 
-    abstract class AmqpRuleActionCodec : DescribedList
+    internal abstract class AmqpRuleActionCodec : DescribedList
     {
         protected AmqpRuleActionCodec(string name, ulong code)
             : base(name, code)

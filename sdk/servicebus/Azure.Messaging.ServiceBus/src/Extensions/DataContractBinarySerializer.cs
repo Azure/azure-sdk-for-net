@@ -14,9 +14,9 @@ namespace Azure.Messaging.ServiceBus.InteropExtensions
     /// ReadObject(Stream) and WriteObject(Stream, object) pick Binary Xml Reader/Writer
     /// instead of text.
     /// </summary>
-    sealed class DataContractBinarySerializer : XmlObjectSerializer
+    internal sealed class DataContractBinarySerializer : XmlObjectSerializer
     {
-        readonly DataContractSerializer dataContractSerializer;
+        private readonly DataContractSerializer dataContractSerializer;
 
         /// <summary>
         /// Initializes a new DataContractBinarySerializer instance
@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.InteropExtensions
     /// <summary>
     /// Returns a static <see cref="DataContractBinarySerializer"/> instance of type T
     /// </summary>
-    static class DataContractBinarySerializer<T>
+    internal static class DataContractBinarySerializer<T>
     {
         /// <summary>
         /// Initializes a DataContractBinarySerializer instance of type T

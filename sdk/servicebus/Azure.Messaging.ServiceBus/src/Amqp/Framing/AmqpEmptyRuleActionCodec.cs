@@ -5,11 +5,12 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
     using Microsoft.Azure.Amqp;
 
-    sealed class AmqpEmptyRuleActionCodec : AmqpRuleActionCodec
+    internal sealed class AmqpEmptyRuleActionCodec : AmqpRuleActionCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":empty-rule-action:list";
         public const ulong Code = 0x0000013700000005;
-        const int Fields = 0;
+
+        private const int Fields = 0;
 
         public AmqpEmptyRuleActionCodec() : base(Name, Code) { }
 

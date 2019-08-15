@@ -5,7 +5,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
 {
     // Enum.ToString() is used while serializing the AMQP disposition request.
     // DO NOT rename the enums.
-    enum DispositionStatus
+    internal enum DispositionStatus
     {
         Completed = 1,
         Defered = 2,
