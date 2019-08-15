@@ -99,8 +99,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private ServiceBusConnection ServiceBusConnection { get; }
 
-        private RetryPolicy RetryPolicy { get; }
-
         private ICbsTokenProvider CbsTokenProvider { get; }
 
         private ReceiveMode ReceiveMode { get; }

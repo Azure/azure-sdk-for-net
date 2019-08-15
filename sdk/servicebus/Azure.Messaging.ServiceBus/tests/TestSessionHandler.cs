@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
         public void RegisterSessionHandler(SessionHandlerOptions handlerOptions)
         {
-            this.sessionPumpHost.OnSessionHandler(this.OnSessionHandler, this.sessionHandlerOptions);
+            this.sessionPumpHost.RegisterSessionHandler(this.OnSessionHandler, this.sessionHandlerOptions);
         }
 
         public async Task SendSessionMessages()

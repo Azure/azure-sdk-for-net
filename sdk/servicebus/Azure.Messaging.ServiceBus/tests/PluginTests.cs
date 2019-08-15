@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
                 var sendReceivePlugin = new SendReceivePlugin();
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock, new AmqpClientOptions()
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, new AmqpClientOptions()
                 {
                     RegisteredPlugins = { sendReceivePlugin }
                 });
@@ -167,12 +167,16 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         MessageId = Guid.NewGuid().ToString(),
                         SessionId = Guid.NewGuid().ToString()
                     };
-                    await queueClient.SendAsync(sendMessage);
+                    
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateSessionPumpHost();
+
+                    await sender.SendAsync(sendMessage);
 
                     // Ensure the plugin is called.
                     Assert.True(sendReceivePlugin.MessageBodies.ContainsKey(sendMessage.MessageId));
 
-                    queueClient.RegisterSessionHandler(
+                    receiver.RegisterSessionHandler(
                         (session, message, cancellationToken) =>
                         {
                             Assert.Equal(sendMessage.SessionId, session.SessionId);

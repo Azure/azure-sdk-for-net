@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -32,13 +32,15 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                         var parentActivity = new Activity("test").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
 
                         parentActivity.Start();
-                        await TestUtility.SendSessionMessagesAsync(queueClient.InnerSender, 1, 1);
+                        await using var sender = queueClient.CreateSender();
+                        await TestUtility.SendSessionMessagesAsync(sender, 1, 1);
                         parentActivity.Stop();
 
                         var exceptionCalled = false;
                         var tcs = new TaskCompletionSource<Activity>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        queueClient.RegisterMessageHandler((msg, ct) =>
+                        await using var receiver = queueClient.CreateReceiver();
+                        receiver.RegisterMessageHandler((msg, ct) =>
                         {
                             tcs.TrySetResult(Activity.Current);
                             return Task.CompletedTask;
@@ -100,7 +102,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -108,14 +110,16 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                        await using var sender = queueClient.CreateSender();
+                        await TestUtility.SendMessagesAsync(sender, 1);
                         listener.Enable((name, queue, arg) => !name.EndsWith(".Start") && !name.Contains("Receive") );
 
                         var count = 0;
                         var exceptionCalled = false;
                         var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        queueClient.RegisterMessageHandler((msg, ct) =>
+                        var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
+                        receiver.RegisterMessageHandler((msg, ct) =>
                         {
                             if (count++ == 0)
                             {
@@ -186,7 +190,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -194,15 +198,18 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
+
+                        await TestUtility.SendMessagesAsync(sender, 1);
+                        var messages = await TestUtility.ReceiveMessagesAsync(receiver, 1);
 
                         listener.Enable((name, queue, arg) => name.Contains("Abandon") || name.Contains("Complete"));
-                        await TestUtility.AbandonMessagesAsync(queueClient.InnerReceiver, messages);
+                        await TestUtility.AbandonMessagesAsync(receiver, messages);
 
-                        messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                        messages = await TestUtility.ReceiveMessagesAsync(receiver, 1);
 
-                        await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
+                        await TestUtility.CompleteMessagesAsync(receiver, messages);
 
                         Assert.True(eventQueue.TryDequeue(out var abandonStart));
                         AssertAbandonStart(queueName, abandonStart.eventName, abandonStart.payload, abandonStart.activity, null);
@@ -233,7 +240,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -242,7 +249,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, arg) => name.Contains("Send") || name.Contains("Receive"));
-                        var messages = await queueClient.InnerReceiver.ReceiveAsync(2, TimeSpan.FromSeconds(5));
+                       
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+
+                        var messages = await receiver.ReceiveAsync(2, TimeSpan.FromSeconds(5));
 
                         int receivedStopCount = 0;
                         Assert.Equal(2, eventQueue.Count);
@@ -272,7 +282,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -281,9 +291,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
                         listener.Enable( (name, queue, arg) => name.Contains("Send") || name.Contains("Receive") );
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 2);
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 3);
-                        var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 5);
+                        
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+
+                        await TestUtility.SendMessagesAsync(sender, 2);
+                        await TestUtility.SendMessagesAsync(sender, 3);
+                        var messages = await TestUtility.ReceiveMessagesAsync(receiver, 5);
 
                         Assert.True(eventQueue.TryDequeue(out var sendStart1));
                         AssertSendStart(queueName, sendStart1.eventName, sendStart1.payload, sendStart1.activity, null, 2);
@@ -332,7 +346,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -341,14 +355,17 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queuName, arg) => name.Contains("Send") || name.Contains("Peek"));
+                        
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
 
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
+                        await TestUtility.SendMessagesAsync(sender, 1);
+                        await TestUtility.PeekMessageAsync(receiver);
 
                         listener.Disable();
 
-                        var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
-                        await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
+                        var messages = await TestUtility.ReceiveMessagesAsync(receiver, 1);
+                        await TestUtility.CompleteMessagesAsync(receiver, messages);
 
                         Assert.True(eventQueue.TryDequeue(out var sendStart));
                         AssertSendStart(queueName, sendStart.eventName, sendStart.payload, sendStart.activity, null);
@@ -379,7 +396,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -387,18 +404,21 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
+
+                        await TestUtility.SendMessagesAsync(sender, 1);
+                        var messages = await TestUtility.ReceiveMessagesAsync(receiver, 1);
 
                         listener.Enable((name, queue, arg) => name.Contains("DeadLetter"));
-                        await TestUtility.DeadLetterMessagesAsync(queueClient.InnerReceiver, messages);
+                        await TestUtility.DeadLetterMessagesAsync(receiver, messages);
                         listener.Disable();
 
                         QueueClient deadLetterQueueClient = null;
                         try
                         {
-                            deadLetterQueueClient = new QueueClient(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName), ReceiveMode.ReceiveAndDelete);
-                            await TestUtility.ReceiveMessagesAsync(deadLetterQueueClient.InnerReceiver, 1);
+                            deadLetterQueueClient = new QueueClient(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName));
+                            await TestUtility.ReceiveMessagesAsync(receiver, 1);
                         }
                         finally
                         {
@@ -428,7 +448,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -436,14 +456,17 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
+
+                        await TestUtility.SendMessagesAsync(sender, 1);
+                        var messages = await TestUtility.ReceiveMessagesAsync(receiver, 1);
 
                         listener.Enable((name, queue, arg) => name.Contains("RenewLock"));
-                        await queueClient.InnerReceiver.RenewLockAsync(messages[0]);
+                        await receiver.RenewLockAsync(messages[0]);
                         listener.Disable();
 
-                        await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
+                        await TestUtility.CompleteMessagesAsync(receiver, messages);
 
                         Assert.True(eventQueue.TryDequeue(out var renewStart));
                         AssertRenewLockStart(queueName, renewStart.eventName, renewStart.payload, renewStart.activity, null);
@@ -468,7 +491,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -476,15 +499,18 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
+
                         listener.Enable((name, queue, arg) => name.Contains("Send") || name.Contains("Defer") || name.Contains("Receive"));
 
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
-                        await TestUtility.DeferMessagesAsync(queueClient.InnerReceiver, messages);
-                        var message = await queueClient.InnerReceiver.ReceiveDeferredMessageAsync(messages[0].SequenceNumber);
+                        await TestUtility.SendMessagesAsync(sender, 1);
+                        var messages = await TestUtility.ReceiveMessagesAsync(receiver, 1);
+                        await TestUtility.DeferMessagesAsync(receiver, messages);
+                        var message = await receiver.ReceiveDeferredMessageAsync(messages[0].SequenceNumber);
 
                         listener.Disable();
-                        await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, new[] {message});
+                        await TestUtility.CompleteMessagesAsync(receiver, new[] {message});
 
                         Assert.True(eventQueue.TryDequeue(out var sendStart));
                         Assert.True(eventQueue.TryDequeue(out var sendStop));
@@ -521,7 +547,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -529,13 +555,16 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+
                         Activity parentActivity = new Activity("test");
                         listener.Enable((name, queue, arg) => name.Contains("Schedule") || name.Contains("Cancel"));
 
                         parentActivity.Start();
 
-                        var sequenceNumber = await queueClient.InnerSender.ScheduleMessageAsync(new Message(), DateTimeOffset.UtcNow.AddHours(1));
-                        await queueClient.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
+                        var sequenceNumber = await sender.ScheduleMessageAsync(new Message(), DateTimeOffset.UtcNow.AddHours(1));
+                        await sender.CancelScheduledMessageAsync(sequenceNumber);
 
                         Assert.True(eventQueue.TryDequeue(out var scheduleStart));
                         AssertScheduleStart(queueName, scheduleStart.eventName, scheduleStart.payload, scheduleStart.activity,

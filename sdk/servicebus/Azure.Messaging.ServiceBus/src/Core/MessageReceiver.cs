@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// you to manually renew locks using <see cref="RenewLockAsync(ReceivedMessage)"/>.
     /// It uses AMQP protocol to communicate with service.
     /// </remarks>
-    public class MessageReceiver
+    public class MessageReceiver: IAsyncDisposable
     {
         private static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
 
@@ -1641,6 +1641,11 @@ namespace Azure.Messaging.ServiceBus.Core
             }
 
             return rejected;
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await CloseAsync();
         }
     }
 }

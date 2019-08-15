@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -62,9 +62,11 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                         listener.Disable();
 
                         var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
 
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        queueClient.RegisterMessageHandler((msg, ct) =>
+                        await TestUtility.SendMessagesAsync(sender, 1);
+                        receiver.RegisterMessageHandler((msg, ct) =>
                         {
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;
@@ -94,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -103,11 +105,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, arg) => queue?.ToString() != queueName);
+                        
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
 
                         var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        queueClient.RegisterMessageHandler((msg, ct) =>
+                        await TestUtility.SendMessagesAsync(sender, 1);
+                        receiver.RegisterMessageHandler((msg, ct) =>
                         {
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;
@@ -184,7 +189,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
                 try
@@ -195,11 +200,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                         listener.Enable((name, queue, arg) => 
                             !name.Contains("Send") && !name.Contains("Process") && !name.Contains("Receive") && !name.Contains("Exception"));
 
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+
+                        await TestUtility.SendMessagesAsync(sender, 1);
 
                         var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        queueClient.RegisterMessageHandler((msg, ct) =>
+                        receiver.RegisterMessageHandler((msg, ct) =>
                         {
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;

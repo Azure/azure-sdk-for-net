@@ -9,7 +9,6 @@ namespace Azure.Messaging.ServiceBus
     using Primitives;
 
     /// <summary>Provides options associated with message pump processing using
-    /// <see cref="QueueClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" /> and
     /// <see cref="SubscriptionClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" />.</summary>
     public sealed class MessageHandlerOptions
     {
@@ -57,7 +56,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// <see cref="QueueClient.CompleteAsync(string)" /> or
         /// <see cref="SubscriptionClient.CompleteAsync(string)" /> on messages after the callback has completed processing.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete { get; set; }

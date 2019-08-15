@@ -106,7 +106,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                 var timeout = TimeSpan.FromSeconds(5);
                 var eventQueue = this.CreateEventQueue();
 
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete, new AmqpClientOptions()
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, new AmqpClientOptions()
                 {
                     OperationTimeout = timeout,
                     RetryPolicy = RetryPolicy.NoRetry,
@@ -117,6 +117,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
+                        
+                        await using var sender = queueClient.CreateSender();
+                        await using var pumpHost = queueClient.CreateSessionPumpHost();
+
                         var sw = Stopwatch.StartNew();
 
                         listener.Enable((name, queue, arg) => !name.Contains("AcceptMessageSession") &&
@@ -128,11 +132,11 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                             MessageId = "messageId",
                             SessionId = sessionId
                         };
-                        await queueClient.SendAsync(message);
+                        await sender.SendAsync(message);
 
                         var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        queueClient.RegisterSessionHandler((session, msg, ct) =>
+                        pumpHost.RegisterSessionHandler((session, msg, ct) =>
                         {
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;

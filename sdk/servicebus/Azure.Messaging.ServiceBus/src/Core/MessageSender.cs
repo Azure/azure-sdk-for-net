@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Core
     /// </code>
     /// </example>
     /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
-    public class MessageSender
+    public class MessageSender: IAsyncDisposable
     {
         private int deliveryCount;
 
@@ -721,6 +721,11 @@ namespace Azure.Messaging.ServiceBus.Core
         {
             var deliveryId = Interlocked.Increment(ref this.deliveryCount);
             return new ArraySegment<byte>(BitConverter.GetBytes(deliveryId));
+        }
+
+        public  async ValueTask DisposeAsync()
+        {
+            await CloseAsync().ConfigureAwait(false);
         }
     }
 }

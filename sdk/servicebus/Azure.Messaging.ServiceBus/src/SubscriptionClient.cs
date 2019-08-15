@@ -432,7 +432,7 @@ namespace Azure.Messaging.ServiceBus
         public void RegisterSessionHandler(Func<MessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
         {
             ClientEntity.ThrowIfClosed();
-            this.SessionPumpHost.OnSessionHandler(handler, sessionHandlerOptions);
+            this.SessionPumpHost.RegisterSessionHandler(handler, sessionHandlerOptions);
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ namespace Azure.Messaging.ServiceBus
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal sealed class SessionPumpHost
+    public sealed class SessionPumpHost: IAsyncDisposable
     {
         private readonly object syncLock;
 
@@ -42,7 +42,14 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public void OnSessionHandler(
+        public void RegisterSessionHandler(
+            Func<MessageSession, ReceivedMessage, CancellationToken, Task> callback,
+            Func<ExceptionReceivedEventArgs, Task> exceptionAction)
+        {
+            RegisterSessionHandler(callback, new SessionHandlerOptions(exceptionAction));
+        }
+
+        public void RegisterSessionHandler(
             Func<MessageSession, ReceivedMessage, CancellationToken, Task> callback,
             SessionHandlerOptions sessionHandlerOptions)
         {
@@ -84,6 +91,11 @@ namespace Azure.Messaging.ServiceBus
             }
 
             MessagingEventSource.Log.RegisterOnSessionHandlerStop(this.ClientId);
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await SessionClient.DisposeAsync();
         }
     }
 }

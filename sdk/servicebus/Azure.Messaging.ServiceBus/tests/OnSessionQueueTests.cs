@@ -63,8 +63,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             {
                 var queueClient = new QueueClient(
                     TestUtility.NamespaceConnectionString,
-                    queueName,
-                    ReceiveMode.PeekLock);
+                    queueName);
                 try
                 {
                     var sessionHandlerOptions =
@@ -74,12 +73,15 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                             MessageWaitTimeout = TimeSpan.FromSeconds(5),
                             AutoComplete = true
                         };
+                    
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateSessionPumpHost();
 
                     var testSessionHandler = new TestSessionHandler(
-                        queueClient.ReceiveMode,
+                        ReceiveMode.PeekLock,
                         sessionHandlerOptions,
-                        queueClient.InnerSender,
-                        queueClient.SessionPumpHost);
+                        sender,
+                        receiver);
 
                     // Register handler first without any messages
                     testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
@@ -129,7 +131,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     })
                     { MaxConcurrentSessions = 1 };
 
-                    queueClient.RegisterSessionHandler(
+                    
+                    await using var receiver = queueClient.CreateSessionPumpHost();
+                    receiver.RegisterSessionHandler(
                        (session, message, token) =>
                        {
                            return Task.CompletedTask;
@@ -161,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
                 TestUtility.Log($"Queue: {queueName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 try
                 {
                     var handlerOptions =
@@ -171,12 +175,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                             MessageWaitTimeout = TimeSpan.FromSeconds(5),
                             AutoComplete = autoComplete
                         };
-
+                    
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateSessionPumpHost(mode);
                     var testSessionHandler = new TestSessionHandler(
-                        queueClient.ReceiveMode,
+                        mode,
                         handlerOptions,
-                        queueClient.InnerSender,
-                        queueClient.SessionPumpHost);
+                        sender,
+                        receiver);
 
                     // Send messages to Session first
                     await testSessionHandler.SendSessionMessages();

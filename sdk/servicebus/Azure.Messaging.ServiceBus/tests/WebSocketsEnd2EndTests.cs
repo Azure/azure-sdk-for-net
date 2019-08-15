@@ -20,15 +20,17 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var tcs = new TaskCompletionSource<Message>(TaskCreationOptions.RunContinuationsAsynchronously);
-                var queueClient = new QueueClient(TestUtility.WebSocketsNamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-
+                var queueClient = new QueueClient(TestUtility.WebSocketsNamespaceConnectionString, queueName);
+                
+                await using var sender = queueClient.CreateSender();
+                await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
                 try
                 {
                     var random = new Random();
                     var contentAsBytes = new byte[8];
                     random.NextBytes(contentAsBytes);
 
-                    queueClient.RegisterMessageHandler((message, token) =>
+                    receiver.RegisterMessageHandler((message, token) =>
                     {
                         tcs.TrySetResult(message);
                         return Task.CompletedTask;
@@ -39,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         return Task.CompletedTask;
                     });
 
-                    await queueClient.SendAsync(new Message(contentAsBytes));
+                    await sender.SendAsync(new Message(contentAsBytes));
 
                     var receivedMessage = await tcs.Task.WithTimeout(Timeout);
                     Assert.True(contentAsBytes.AsSpan().SequenceEqual(receivedMessage.Body.Span));

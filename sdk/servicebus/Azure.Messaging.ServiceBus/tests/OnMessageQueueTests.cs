@@ -55,10 +55,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 try
                 {
-                    await this.OnMessageRegistrationWithoutPendingMessagesTestCase(queueClient.InnerSender, queueClient.InnerReceiver, maxConcurrentCalls, true);
+                    
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                    await this.OnMessageRegistrationWithoutPendingMessagesTestCase(sender, receiver, maxConcurrentCalls, true);
                 }
                 finally
                 {
@@ -75,8 +78,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             var invalidQueueName = "nonexistentqueuename";
             var exceptionReceivedHandlerCalled = false;
 
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, invalidQueueName, ReceiveMode.ReceiveAndDelete);
-            queueClient.RegisterMessageHandler(
+            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, invalidQueueName);
+            await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+            receiver.RegisterMessageHandler(
                 (message, token) => throw new Exception("Unexpected exception: Did not expect messages here"),
                 (eventArgs) =>
                 {
@@ -117,12 +121,15 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 try
                 {
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateReceiver(mode);
+
                     await this.OnMessageAsyncTestCase(
-                        queueClient.InnerSender,
-                        queueClient.InnerReceiver,
+                        sender,
+                        receiver,
                         maxConcurrentCalls,
                         autoComplete,
                         messageCount);

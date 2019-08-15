@@ -73,7 +73,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             {
                 await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
                 {
-                    var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                    var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
 
                     try
                     {
@@ -81,10 +81,15 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
                         var maxSizeMessage = new Message(maxPayload);
 
-                        await queueClient.SendAsync(maxSizeMessage);
+                        
+                        await using var sender = queueClient.CreateSender();
+                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
 
-                        var receivedMaxSizeMessage = await queueClient.InnerReceiver.ReceiveAsync();
-                        await queueClient.CompleteAsync(receivedMaxSizeMessage.LockToken);
+                        await sender.SendAsync(maxSizeMessage);
+
+
+                        var receivedMaxSizeMessage = await receiver.ReceiveAsync();
+                        await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
                         Assert.Equal(maxPayload, receivedMaxSizeMessage.Body.ToArray());
                     }
                     finally
@@ -118,13 +123,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
 
                 try
                 {
                     // 2 MB message.
                     var message = new Message(new byte[1024 * 1024 * 2]);
-                    await Assert.ThrowsAsync<MessageSizeExceededException>(async () => await queueClient.SendAsync(message));
+                    await Assert.ThrowsAsync<MessageSizeExceededException>(async () => await queueClient.CreateSender().SendAsync(message));
                 }
                 catch (Exception e)
                 {

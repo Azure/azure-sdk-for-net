@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <seealso cref="MessageSession"/>
-    public sealed class SessionClient
+    public sealed class SessionClient: IAsyncDisposable
     {
         private const int DefaultPrefetchCount = 0;
 
@@ -320,6 +320,11 @@ namespace Azure.Messaging.ServiceBus
         internal Task OnClosingAsync()
         {
             return Task.CompletedTask;
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await CloseAsync();
         }
     }
 }
