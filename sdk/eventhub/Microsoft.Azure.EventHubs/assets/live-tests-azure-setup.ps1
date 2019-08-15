@@ -47,7 +47,7 @@ param
 )
 
 # =====================
-# == Module Imports  ==
+# == Module Imports ==
 # =====================
 
 Import-Module Az.Resources
