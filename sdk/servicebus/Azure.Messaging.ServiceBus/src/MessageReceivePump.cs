@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus
 
     sealed class MessageReceivePump
     {
-        readonly Func<Message, CancellationToken, Task> onMessageCallback;
+        readonly Func<ReceivedMessage, CancellationToken, Task> onMessageCallback;
         readonly string endpoint;
         readonly MessageHandlerOptions registerHandlerOptions;
         readonly MessageReceiver messageReceiver;
@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
 
         public MessageReceivePump(MessageReceiver messageReceiver,
             MessageHandlerOptions registerHandlerOptions,
-            Func<Message, CancellationToken, Task> callback,
+            Func<ReceivedMessage, CancellationToken, Task> callback,
             Uri endpoint,
             CancellationToken pumpCancellationToken)
         {
@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus
 
                     TaskExtensionHelper.Schedule(async () =>
                     {
-                        Message message = null;
+                        ReceivedMessage message = null;
                         try
                         {
                             message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);
@@ -116,7 +116,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task MessageDispatchTaskInstrumented(Message message)
+        async Task MessageDispatchTaskInstrumented(ReceivedMessage message)
         {
             Activity activity = this.diagnosticSource.ProcessStart(message);
             Task processTask = null;
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task MessageDispatchTask(Message message)
+        async Task MessageDispatchTask(ReceivedMessage message)
         {
             CancellationTokenSource renewLockCancellationTokenSource = null;
             Timer autoRenewLockCancellationTimer = null;
@@ -206,13 +206,13 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task AbandonMessageIfNeededAsync(Message message)
+        async Task AbandonMessageIfNeededAsync(ReceivedMessage message)
         {
             try
             {
                 if (this.messageReceiver.ReceiveMode == ReceiveMode.PeekLock)
                 {
-                    await this.messageReceiver.AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+                    await this.messageReceiver.AbandonAsync(message.LockToken).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -221,14 +221,14 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task CompleteMessageIfNeededAsync(Message message)
+        async Task CompleteMessageIfNeededAsync(ReceivedMessage message)
         {
             try
             {
                 if (this.messageReceiver.ReceiveMode == ReceiveMode.PeekLock &&
                     this.registerHandlerOptions.AutoComplete)
                 {
-                    await this.messageReceiver.CompleteAsync(new[] { message.SystemProperties.LockToken }).ConfigureAwait(false);
+                    await this.messageReceiver.CompleteAsync(new[] { message.LockToken }).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -237,14 +237,14 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task RenewMessageLockTask(Message message, CancellationToken renewLockCancellationToken)
+        async Task RenewMessageLockTask(ReceivedMessage message, CancellationToken renewLockCancellationToken)
         {
             while (!this.pumpCancellationToken.IsCancellationRequested &&
                    !renewLockCancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    var amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
+                    var amount = MessagingUtilities.CalculateRenewAfterDuration(message.LockedUntilUtc);
                     MessagingEventSource.Log.MessageReceiverPumpRenewMessageStart(this.messageReceiver.ClientEntity.ClientId, message, amount);
 
                     // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled

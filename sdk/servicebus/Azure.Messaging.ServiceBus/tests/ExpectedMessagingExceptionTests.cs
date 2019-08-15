@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     Assert.NotNull(message);
                     await
                         Assert.ThrowsAsync<InvalidOperationException>(
-                            async () => await receiver.CompleteAsync(message.SystemProperties.LockToken));
+                            async () => await receiver.CompleteAsync(message.LockToken));
 
                     message = await receiver.ReceiveAsync();
                     Assert.NotNull(message);
@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.RenewSessionLockAsync());
                     await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.GetStateAsync());
                     await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.SetStateAsync(null));
-                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken));
+                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.CompleteAsync(message.LockToken));
 
                     await sessionReceiver.CloseAsync();
                     TestUtility.Log($"Closed Session Receiver...");
@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     TestUtility.Log($"Received Session: SessionId: {sessionReceiver.SessionId}");
                     message = await sessionReceiver.ReceiveAsync();
                     TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
-                    await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await sessionReceiver.CompleteAsync(message.LockToken);
                     await sessionReceiver.CloseAsync();
                 }
                 finally
@@ -184,7 +184,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     var message = await sessionReceiver.ReceiveAsync();
                     Assert.True(message.MessageId == messageId);
                     TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
-                    await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await sessionReceiver.CompleteAsync(message.LockToken);
                     await sessionReceiver.CloseAsync();
                 }
                 finally

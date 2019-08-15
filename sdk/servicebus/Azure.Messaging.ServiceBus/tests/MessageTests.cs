@@ -67,70 +67,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         public class WhenQueryingIsReceivedProperty
         {
             [Fact]
-            [DisplayTestMethodName]
-            public void Should_return_false_for_message_that_was_not_sent()
-            {
-                var message = new Message();
-                message.UserProperties["dummy"] = "dummy";
-                Assert.False(message.SystemProperties.IsReceived);
-            }
-
-            [Theory]
-            [DisplayTestMethodName]
-            [InlineData(ReceiveMode.ReceiveAndDelete)]
-            [InlineData(ReceiveMode.PeekLock)]
-            [LiveTest]
-            public async Task Should_return_true_for_message_that_was_sent_and_received(ReceiveMode receiveMode)
-            {
-                await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
-                {
-                    var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, receiveMode);
-
-                    try
-                    {
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        var receivedMessages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
-                        Assert.True(receivedMessages.First().SystemProperties.IsReceived);
-
-                        // TODO: remove when per test cleanup is possible
-                        if (receiveMode == ReceiveMode.PeekLock)
-                        {
-                            await queueClient.CompleteAsync(receivedMessages.First().SystemProperties.LockToken);
-                        }
-                    }
-                    finally
-                    {
-                        await queueClient.CloseAsync();
-                    }
-                });
-            }
-
-            [Fact]
-            [LiveTest]
-            [DisplayTestMethodName]
-            public async Task Should_return_true_for_peeked_message()
-            {
-                await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
-                {
-                    var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
-
-                    try
-                    {
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        var peekedMessage = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
-                        var result = peekedMessage.SystemProperties.IsReceived;
-                        Assert.True(result);
-                    }
-                    finally
-                    {
-                        var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
-                        await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
-                        await queueClient.CloseAsync();
-                    }
-                });
-            }
-
-            [Fact]
             [LiveTest]
             [DisplayTestMethodName]
             public async Task MessageWithMaxMessageSizeShouldWorkAsExpected()
@@ -148,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         await queueClient.SendAsync(maxSizeMessage);
 
                         var receivedMaxSizeMessage = await queueClient.InnerReceiver.ReceiveAsync();
-                        await queueClient.CompleteAsync(receivedMaxSizeMessage.SystemProperties.LockToken);
+                        await queueClient.CompleteAsync(receivedMaxSizeMessage.LockToken);
                         Assert.Equal(maxPayload, receivedMaxSizeMessage.Body.ToArray());
                     }
                     finally

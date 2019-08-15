@@ -33,14 +33,14 @@ namespace Azure.Messaging.ServiceBus.Core
     /// Receive a message from the Subscription.
     /// <code>
     /// var message = await messageReceiver.ReceiveAsync();
-    /// await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+    /// await messageReceiver.CompleteAsync(message.LockToken);
     /// </code>
     /// </example>
     /// <remarks>
     /// The MessageReceiver provides advanced functionality that is not found in the
     /// <see cref="QueueClient" /> or <see cref="SubscriptionClient" />. For instance,
     /// <see cref="ReceiveAsync()"/>, which allows you to receive messages on demand, but also requires
-    /// you to manually renew locks using <see cref="RenewLockAsync(Message)"/>.
+    /// you to manually renew locks using <see cref="RenewLockAsync(ReceivedMessage)"/>.
     /// It uses AMQP protocol to communicate with service.
     /// </remarks>
     public class MessageReceiver
@@ -108,7 +108,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="entityPath">Queue path.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
-        /// <param name="transportType">Transport type.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
@@ -117,7 +116,6 @@ namespace Azure.Messaging.ServiceBus.Core
             string endpoint,
             string entityPath,
             TokenCredential tokenProvider,
-            TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
@@ -218,7 +216,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// replenished in the background as space becomes available.If there are no messages available for delivery, the receive operation will drain the
         /// buffer and then wait or block as expected.
         /// </para>
-        /// <para>Prefetch also works equivalently with the <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, Func{ExceptionReceivedEventArgs, Task})"/> APIs.</para>
+        /// <para>Prefetch also works equivalently with the <see cref="RegisterMessageHandler(Func{ReceivedMessage,CancellationToken,Task}, Func{ExceptionReceivedEventArgs, Task})"/> APIs.</para>
         /// <para>Updates to this value take effect on the next receive call to the service.</para>
         /// </remarks>
         public int PrefetchCount
@@ -284,7 +282,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <returns>The message received. Returns null if no message is found.</returns>
         /// <remarks>Operation will time out after duration of <see cref="ClientEntity.OperationTimeout"/></remarks>
-        public Task<Message> ReceiveAsync()
+        public Task<ReceivedMessage> ReceiveAsync()
         {
             return this.ReceiveAsync(ClientEntity.OperationTimeout);
         }
@@ -299,7 +297,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// (either during the first receive or when connection needs to be re-established). If establishing the connection
         /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
         /// </remarks>
-        public async Task<Message> ReceiveAsync(TimeSpan operationTimeout)
+        public async Task<ReceivedMessage> ReceiveAsync(TimeSpan operationTimeout)
         {
             var messages = await this.ReceiveAsync(1, operationTimeout).ConfigureAwait(false);
             if (messages != null && messages.Count > 0)
@@ -316,7 +314,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <returns>List of messages received. Returns null if no message is found.</returns>
         /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
-        public Task<IList<Message>> ReceiveAsync(int maxMessageCount)
+        public Task<IList<ReceivedMessage>> ReceiveAsync(int maxMessageCount)
         {
             return this.ReceiveAsync(maxMessageCount, ClientEntity.OperationTimeout);
         }
@@ -332,7 +330,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// (either during the first receive or when connection needs to be re-established). If establishing the connection
         /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
         /// </remarks>
-        public async Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout)
+        public async Task<IList<ReceivedMessage>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout)
         {
             ClientEntity.ThrowIfClosed();
 
@@ -347,7 +345,7 @@ namespace Azure.Messaging.ServiceBus.Core
             Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.ReceiveStart(maxMessageCount) : null;
             Task receiveTask = null;
 
-            IList<Message> unprocessedMessageList = null;
+            IList<ReceivedMessage> unprocessedMessageList = null;
             try
             {
                 receiveTask = ClientEntity.RetryPolicy.RunOperation(
@@ -391,7 +389,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found.
         /// Throws if the message has not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public async Task<Message> ReceiveDeferredMessageAsync(long sequenceNumber)
+        public async Task<ReceivedMessage> ReceiveDeferredMessageAsync(long sequenceNumber)
         {
             var messages = await this.ReceiveDeferredMessageAsync(new[] { sequenceNumber }).ConfigureAwait(false);
             if (messages != null && messages.Count > 0)
@@ -409,7 +407,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public async Task<IList<Message>> ReceiveDeferredMessageAsync(IEnumerable<long> sequenceNumbers)
+        public async Task<IList<ReceivedMessage>> ReceiveDeferredMessageAsync(IEnumerable<long> sequenceNumbers)
         {
             ClientEntity.ThrowIfClosed();
             this.ThrowIfNotPeekLockMode();
@@ -430,7 +428,7 @@ namespace Azure.Messaging.ServiceBus.Core
             Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.ReceiveDeferredStart(sequenceNumberList) : null;
             Task receiveTask = null;
 
-            IList<Message> messages = null;
+            IList<ReceivedMessage> messages = null;
             try
             {
                 receiveTask = ClientEntity.RetryPolicy.RunOperation(
@@ -464,7 +462,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
@@ -477,7 +475,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Completes a series of <see cref="Message"/> using a list of lock tokens. This will delete the message from the service.
         /// </summary>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
@@ -531,7 +529,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
-        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// <remarks>A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this receiver.
@@ -574,9 +572,9 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="lockToken">The lock token of the <see cref="Message" />.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive this message again in the future, you will need to save the <see cref="Message.SystemPropertiesCollection.SequenceNumber"/>
+        /// In order to receive this message again in the future, you will need to save the <see cref="ReceivedMessage.SequenceNumber"/>
         /// and receive it using <see cref="ReceiveDeferredMessageAsync(long)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// This operation can only be performed on messages that were received by this receiver.
@@ -620,7 +618,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
@@ -666,7 +664,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
@@ -717,9 +715,9 @@ namespace Azure.Messaging.ServiceBus.Core
         /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
-        public async Task RenewLockAsync(Message message)
+        public async Task RenewLockAsync(ReceivedMessage message)
         {
-            message.SystemProperties.LockedUntilUtc = await RenewLockAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+            message.LockedUntilUtc = await RenewLockAsync(message.LockToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -781,7 +779,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns>The <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
-        public Task<Message> PeekAsync()
+        public Task<ReceivedMessage> PeekAsync()
         {
             return this.PeekBySequenceNumberAsync(this.lastPeekedSequenceNumber + 1);
         }
@@ -796,7 +794,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns>List of <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
-        public Task<IList<Message>> PeekAsync(int maxMessageCount)
+        public Task<IList<ReceivedMessage>> PeekAsync(int maxMessageCount)
         {
             return this.PeekBySequenceNumberAsync(this.lastPeekedSequenceNumber + 1, maxMessageCount);
         }
@@ -806,7 +804,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
         /// <returns>The asynchronous operation that returns the <see cref="Message" /> that represents the next message to be read.</returns>
-        public async Task<Message> PeekBySequenceNumberAsync(long fromSequenceNumber)
+        public async Task<ReceivedMessage> PeekBySequenceNumberAsync(long fromSequenceNumber)
         {
             var messages = await this.PeekBySequenceNumberAsync(fromSequenceNumber, 1).ConfigureAwait(false);
             return messages?.FirstOrDefault();
@@ -816,10 +814,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="fromSequenceNumber">The starting point from which to browse a batch of messages.</param>
         /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <returns>A batch of messages peeked.</returns>
-        public async Task<IList<Message>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
+        public async Task<IList<ReceivedMessage>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
         {
             ClientEntity.ThrowIfClosed();
-            IList<Message> messages = null;
+            IList<ReceivedMessage> messages = null;
 
             MessagingEventSource.Log.MessagePeekStart(ClientEntity.ClientId, fromSequenceNumber, messageCount);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
@@ -861,7 +859,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes messages.</param>
         /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
+        public void RegisterMessageHandler(Func<ReceivedMessage, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             this.RegisterMessageHandler(handler, new MessageHandlerOptions(exceptionReceivedHandler));
         }
@@ -873,7 +871,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
         /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
         /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
+        public void RegisterMessageHandler(Func<ReceivedMessage, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
             ClientEntity.ThrowIfClosed();
             this.OnMessageHandler(messageHandlerOptions, handler);
@@ -954,7 +952,7 @@ namespace Azure.Messaging.ServiceBus.Core
             this.requestResponseLockedMessages.Close();
         }
 
-        protected virtual async Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
+        protected virtual async Task<IList<ReceivedMessage>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
             ReceivingAmqpLink receiveLink = null;
 
@@ -972,7 +970,7 @@ namespace Azure.Messaging.ServiceBus.Core
                     receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 }
 
-                IList<Message> brokeredMessages = null;
+                IList<ReceivedMessage> brokeredMessages = null;
                 ClientEntity.ThrowIfClosed();
 
                 IEnumerable<AmqpMessage> amqpMessages = null;
@@ -998,7 +996,7 @@ namespace Azure.Messaging.ServiceBus.Core
                         var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         if (brokeredMessages == null)
                         {
-                            brokeredMessages = new List<Message>();
+                            brokeredMessages = new List<ReceivedMessage>();
                         }
 
                         brokeredMessages.Add(message);
@@ -1013,7 +1011,7 @@ namespace Azure.Messaging.ServiceBus.Core
             }
         }
 
-        protected virtual async Task<IList<Message>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
+        protected virtual async Task<IList<ReceivedMessage>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
         {
             try
             {
@@ -1035,12 +1033,12 @@ namespace Azure.Messaging.ServiceBus.Core
                     amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
                 }
 
-                var messages = new List<Message>();
+                var messages = new List<ReceivedMessage>();
 
                 var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
-                    Message message = null;
+                    ReceivedMessage message = null;
                     var messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
                     foreach (AmqpMap entry in messageList)
                     {
@@ -1052,7 +1050,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
                     if (message != null)
                     {
-                        this.LastPeekedSequenceNumber = message.SystemProperties.SequenceNumber;
+                        this.LastPeekedSequenceNumber = message.SequenceNumber;
                     }
 
                     return messages;
@@ -1072,9 +1070,9 @@ namespace Azure.Messaging.ServiceBus.Core
             }
         }
 
-        protected virtual async Task<IList<Message>> OnReceiveDeferredMessageAsync(long[] sequenceNumbers)
+        protected virtual async Task<IList<ReceivedMessage>> OnReceiveDeferredMessageAsync(long[] sequenceNumbers)
         {
-            var messages = new List<Message>();
+            var messages = new List<ReceivedMessage>();
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.ReceiveBySequenceNumberOperation, ClientEntity.OperationTimeout, null);
@@ -1102,8 +1100,8 @@ namespace Azure.Messaging.ServiceBus.Core
                         var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
-                            message.SystemProperties.LockTokenGuid = lockToken;
-                            this.requestResponseLockedMessages.AddOrUpdate(lockToken, message.SystemProperties.LockedUntilUtc);
+                            message.LockTokenGuid = lockToken;
+                            this.requestResponseLockedMessages.AddOrUpdate(lockToken, message.LockedUntilUtc);
                         }
 
                         messages.Add(message);
@@ -1210,7 +1208,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary> </summary>
         protected virtual void OnMessageHandler(
             MessageHandlerOptions registerHandlerOptions,
-            Func<Message, CancellationToken, Task> callback)
+            Func<ReceivedMessage, CancellationToken, Task> callback)
         {
             MessagingEventSource.Log.RegisterOnMessageHandlerStart(ClientEntity.ClientId, registerHandlerOptions);
 
@@ -1258,7 +1256,7 @@ namespace Azure.Messaging.ServiceBus.Core
             requestResponseAmqpLink.Session.SafeClose();
         }
 
-        async Task<Message> ProcessMessage(Message message)
+        async Task<ReceivedMessage> ProcessMessage(ReceivedMessage message)
         {
             var processedMessage = message;
             foreach (var plugin in ClientEntity.RegisteredPlugins)
@@ -1281,14 +1279,14 @@ namespace Azure.Messaging.ServiceBus.Core
             return processedMessage;
         }
 
-        async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
+        async Task<IList<ReceivedMessage>> ProcessMessages(IList<ReceivedMessage> messageList)
         {
             if (ClientEntity.RegisteredPlugins.Count < 1)
             {
                 return messageList;
             }
 
-            var processedMessageList = new List<Message>();
+            var processedMessageList = new List<ReceivedMessage>();
             foreach (var message in messageList)
             {
                 var processedMessage = await this.ProcessMessage(message).ConfigureAwait(false);

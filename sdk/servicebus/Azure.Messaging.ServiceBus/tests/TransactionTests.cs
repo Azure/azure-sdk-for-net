@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     Assert.NotNull(receivedMessage);
                     Assert.Equal(body, receivedMessage.Body.GetString());
-                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                    await receiver.CompleteAsync(receivedMessage.LockToken);
                 }
                 finally
                 {
@@ -123,7 +123,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(receivedMessage.LockToken);
                         ts.Complete();
                     }
 
@@ -131,7 +131,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     // Operating on the same message should not be done.
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken));
+                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
                 }
                 finally
                 {
@@ -164,14 +164,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(receivedMessage.LockToken);
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
                     // Operating on the same message should not be done.
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                    await receiver.CompleteAsync(receivedMessage.LockToken);
                 }
                 finally
                 {
@@ -210,7 +210,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(receivedMessage.LockToken);
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -219,7 +219,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(receivedMessage.LockToken);
                         ts.Complete();
                     }
 
@@ -227,7 +227,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     // Operating on the same message should not be done.
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken));
+                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
                 }
                 finally
                 {
@@ -258,14 +258,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
                     Assert.NotNull(receivedMessage);
                     Assert.Equal(body, receivedMessage.Body.GetString());
-                    var sequenceNumber = receivedMessage.SystemProperties.SequenceNumber;
-                    await receiver.DeferAsync(receivedMessage.SystemProperties.LockToken);
+                    var sequenceNumber = receivedMessage.SequenceNumber;
+                    await receiver.DeferAsync(receivedMessage.LockToken);
 
                     var deferredMessage = await receiver.ReceiveDeferredMessageAsync(sequenceNumber);
 
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(deferredMessage.LockToken);
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -274,7 +274,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(deferredMessage.LockToken);
                         ts.Complete();
                     }
 
@@ -282,7 +282,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     // Operating on the same message should not be done.
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken));
+                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(deferredMessage.LockToken));
                 }
                 finally
                 {
@@ -343,10 +343,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     transaction = new CommittableTransaction();
                     using (TransactionScope ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage1.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(receivedMessage1.LockToken);
 
                         await Assert.ThrowsAsync<InvalidOperationException>(
-                            async () => await receiver.CompleteAsync(receivedMessage2.SystemProperties.LockToken));
+                            async () => await receiver.CompleteAsync(receivedMessage2.LockToken));
                         ts.Complete();
                     }
 
@@ -356,8 +356,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     // Operating on the same message should not be done.
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    await receiver.CompleteAsync(receivedMessage1.SystemProperties.LockToken);
-                    await receiver.CompleteAsync(receivedMessage2.SystemProperties.LockToken);
+                    await receiver.CompleteAsync(receivedMessage1.LockToken);
+                    await receiver.CompleteAsync(receivedMessage2.LockToken);
                 }
                 catch (Exception e)
                 {
@@ -396,7 +396,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(receivedMessage.LockToken);
                         await sender.SendAsync(message2).ConfigureAwait(false);
                         ts.Complete();
                     }
@@ -406,13 +406,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
                     // Assert that complete did succeed
-                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken));
+                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
 
                     // Assert that send did succeed
                     receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
                     Assert.NotNull(receivedMessage);
                     Assert.Equal(body2, receivedMessage.Body.GetString());
-                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                    await receiver.CompleteAsync(receivedMessage.LockToken);
                 }
                 finally
                 {
@@ -448,7 +448,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                        await receiver.CompleteAsync(receivedMessage.LockToken);
                         await sender.SendAsync(message2).ConfigureAwait(false);
                     }
 
@@ -457,7 +457,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
                     // Following should succeed without exceptions
-                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                    await receiver.CompleteAsync(receivedMessage.LockToken);
 
                     // Assert that send failed
                     receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
@@ -523,7 +523,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 // If the transaction succeeds, then all the operations occurred on the same partition.
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await intermediateReceiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                    await intermediateReceiver.CompleteAsync(receivedMessage.LockToken);
                     await destination1ViaSender.SendAsync(message2);
                     await destination2ViaSender.SendAsync(message3);
                     ts.Complete();
@@ -545,7 +545,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 };
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await destination1Receiver.CompleteAsync(receivedMessage1.SystemProperties.LockToken);
+                    await destination1Receiver.CompleteAsync(receivedMessage1.LockToken);
                     await destination1Sender.SendAsync(destination1Message);
                     ts.Complete();
                 }
@@ -554,11 +554,11 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 var receivedMessage2 = await destination2Receiver.ReceiveAsync();
                 Assert.NotNull(receivedMessage2);
                 Assert.Equal("pk3", receivedMessage2.PartitionKey);
-                await destination2Receiver.CompleteAsync(receivedMessage2.SystemProperties.LockToken);
+                await destination2Receiver.CompleteAsync(receivedMessage2.LockToken);
 
                 // Cleanup
                 receivedMessage1 = await destination1Receiver.ReceiveAsync();
-                await destination1Receiver.CompleteAsync(receivedMessage1.SystemProperties.LockToken);
+                await destination1Receiver.CompleteAsync(receivedMessage1.LockToken);
             }
             finally
             {

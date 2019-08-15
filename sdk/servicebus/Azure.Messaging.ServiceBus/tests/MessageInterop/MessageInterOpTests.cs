@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.MessageInterop
             Assert.Equal(book, returned);
         }
 
-        private Message GetBrokeredMessage(XmlObjectSerializer serializer, TestBook book)
+        private ReceivedMessage GetBrokeredMessage(XmlObjectSerializer serializer, TestBook book)
         {
             byte[] payload = null;
             using (var memoryStream = new MemoryStream(10))
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.MessageInterop
                 payload = memoryStream.ToArray();
             };
 
-            return new Message(payload);
+            return new ReceivedMessage(payload);
         }
     }
 }

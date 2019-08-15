@@ -73,16 +73,16 @@ namespace Azure.Messaging.ServiceBus.InteropExtensions
         /// <summary>
         /// Deserializes the body of a message that was serialized using XmlObjectSerializer
         /// </summary>
-        public static T GetBody<T>(this Message message, XmlObjectSerializer serializer = null)
+        public static T GetBody<T>(this ReceivedMessage message, XmlObjectSerializer serializer = null)
         {
             if(message == null)
             {
                 throw new ArgumentNullException(nameof(message));
             }
 
-            if(message.SystemProperties.BodyObject != null)
+            if(message.BodyObject != null)
             {
-                return (T)message.SystemProperties.BodyObject;
+                return (T)message.BodyObject;
             }
 
             if(message.Body.IsEmpty)

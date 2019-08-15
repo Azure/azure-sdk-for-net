@@ -217,12 +217,13 @@ namespace Azure.Messaging.ServiceBus
             null);
         }
 
-        internal void ReceiveStop(Activity activity, int messageCount, TaskStatus? status, IList<Message> messageList)
+        internal void ReceiveStop(Activity activity, int messageCount, TaskStatus? status, IList<ReceivedMessage> messageList)
         {
             if (activity != null)
             {
-                SetRelatedOperations(activity, messageList);
-                SetTags(activity, messageList);
+                // TODO: PERF!
+                SetRelatedOperations(activity, messageList.ToArray<Message>());
+                SetTags(activity, messageList.ToArray<Message>());
                 DiagnosticListener.StopActivity(activity, new
                 {
                     RequestedMessageCount = messageCount,
@@ -251,12 +252,12 @@ namespace Azure.Messaging.ServiceBus
             null);
         }
 
-        internal void PeekStop(Activity activity, long fromSequenceNumber, int messageCount, TaskStatus? status, IList<Message> messageList)
+        internal void PeekStop(Activity activity, long fromSequenceNumber, int messageCount, TaskStatus? status, IList<ReceivedMessage> messageList)
         {
             if (activity != null)
             {
-                SetRelatedOperations(activity, messageList);
-                SetTags(activity, messageList);
+                SetRelatedOperations(activity, messageList.ToArray<Message>());
+                SetTags(activity, messageList.ToArray<Message>());
 
                 DiagnosticListener.StopActivity(activity, new
                 {
@@ -286,12 +287,12 @@ namespace Azure.Messaging.ServiceBus
             null);
         }
 
-        internal void ReceiveDeferredStop(Activity activity, IEnumerable<long> sequenceNumbers, TaskStatus? status, IList<Message> messageList)
+        internal void ReceiveDeferredStop(Activity activity, IEnumerable<long> sequenceNumbers, TaskStatus? status, IList<ReceivedMessage> messageList)
         {
             if (activity != null)
             {
-                SetRelatedOperations(activity, messageList);
-                SetTags(activity, messageList);
+                SetRelatedOperations(activity, messageList.ToArray<Message>());
+                SetTags(activity, messageList.ToArray<Message>());
 
                 DiagnosticListener.StopActivity(activity, new
                 {

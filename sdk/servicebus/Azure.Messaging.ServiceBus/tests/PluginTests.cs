@@ -242,7 +242,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             return Task.FromResult(clonedMessage);
         }
 
-        public override Task<Message> AfterMessageReceive(Message message)
+        public override Task<ReceivedMessage> AfterMessageReceive(ReceivedMessage message)
         {
             Assert.True(message.Body.IsEmpty);
             message.Body = this.MessageBodies[message.MessageId];

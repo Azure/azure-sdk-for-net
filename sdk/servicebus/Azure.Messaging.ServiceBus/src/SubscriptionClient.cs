@@ -35,11 +35,11 @@ namespace Azure.Messaging.ServiceBus
     ///        async (message, token) =&gt;
     ///        {
     ///            // Process the message
-    ///            Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
+    ///            Console.WriteLine($"Received message: SequenceNumber:{message.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
     ///
     ///            // Complete the message so that it is not received again.
     ///            // This can be done only if the subscriptionClient is opened in ReceiveMode.PeekLock mode.
-    ///            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+    ///            await subscriptionClient.CompleteAsync(message.LockToken);
     ///        },
     ///        async (exceptionEvent) =&gt;
     ///        {
@@ -293,7 +293,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// This operation can only be performed on messages that were received by this client.
         /// </remarks>
@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
-        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// <remarks>A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this client.
@@ -324,7 +324,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// In order to receive a message from the deadletter sub-queue, you will need a new <see cref="MessageReceiver"/> or <see cref="SubscriptionClient"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
@@ -342,7 +342,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
@@ -361,7 +361,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.

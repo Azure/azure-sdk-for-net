@@ -61,10 +61,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             Log($"Sent {messageCount} messages");
         }
 
-        internal static async Task<IList<Message>> ReceiveMessagesAsync(MessageReceiver messageReceiver, int messageCount, TimeSpan timeout = default)
+        internal static async Task<IList<ReceivedMessage>> ReceiveMessagesAsync(MessageReceiver messageReceiver, int messageCount, TimeSpan timeout = default)
         {
             var receiveAttempts = 0;
-            var messagesToReturn = new List<Message>();
+            var messagesToReturn = new List<ReceivedMessage>();
             var stopwatch = Stopwatch.StartNew();
 
             if (timeout == default)
@@ -93,9 +93,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         /// This utility method is required since for a partitioned entity, the messages could have been received from different partitions,
         /// and we cannot receive all the deferred messages from different partitions in a single call.
         /// </summary>
-        internal static async Task<IList<Message>> ReceiveDeferredMessagesAsync(MessageReceiver messageReceiver, IEnumerable<long> sequenceNumbers)
+        internal static async Task<IList<ReceivedMessage>> ReceiveDeferredMessagesAsync(MessageReceiver messageReceiver, IEnumerable<long> sequenceNumbers)
         {
-            var messagesToReturn = new List<Message>();
+            var messagesToReturn = new List<ReceivedMessage>();
             foreach(var sequenceNumber in sequenceNumbers)
             {
                 var msg = await messageReceiver.ReceiveDeferredMessageAsync(sequenceNumber);
@@ -108,17 +108,17 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             return messagesToReturn;
         }
 
-        internal static async Task<Message> PeekMessageAsync(MessageReceiver messageReceiver)
+        internal static async Task<ReceivedMessage> PeekMessageAsync(MessageReceiver messageReceiver)
         {
             var message = await messageReceiver.PeekAsync();
             Log($"Peeked 1 message");
             return message;
         }
 
-        internal static async Task<IEnumerable<Message>> PeekMessagesAsync(MessageReceiver messageReceiver, int messageCount)
+        internal static async Task<IEnumerable<ReceivedMessage>> PeekMessagesAsync(MessageReceiver messageReceiver, int messageCount)
         {
             var receiveAttempts = 0;
-            var peekedMessages = new List<Message>();
+            var peekedMessages = new List<ReceivedMessage>();
 
             while (receiveAttempts++ < TestConstants.MaxAttemptsCount && peekedMessages.Count < messageCount)
             {
@@ -134,40 +134,40 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             return peekedMessages;
         }
 
-        internal static async Task CompleteMessagesAsync(MessageReceiver messageReceiver, IList<Message> messages)
+        internal static async Task CompleteMessagesAsync(MessageReceiver messageReceiver, IList<ReceivedMessage> messages)
         {
-            await messageReceiver.CompleteAsync(messages.Select(message => message.SystemProperties.LockToken));
+            await messageReceiver.CompleteAsync(messages.Select(message => message.LockToken));
             Log($"Completed {messages.Count} messages");
         }
 
-        internal static async Task AbandonMessagesAsync(MessageReceiver messageReceiver, IEnumerable<Message> messages)
+        internal static async Task AbandonMessagesAsync(MessageReceiver messageReceiver, IEnumerable<ReceivedMessage> messages)
         {
             var count = 0;
             foreach (var message in messages)
             {
-                await messageReceiver.AbandonAsync(message.SystemProperties.LockToken);
+                await messageReceiver.AbandonAsync(message.LockToken);
                 count++;
             }
             Log($"Abandoned {count} messages");
         }
 
-        internal static async Task DeadLetterMessagesAsync(MessageReceiver messageReceiver, IEnumerable<Message> messages)
+        internal static async Task DeadLetterMessagesAsync(MessageReceiver messageReceiver, IEnumerable<ReceivedMessage> messages)
         {
             var count = 0;
             foreach (var message in messages)
             {
-                await messageReceiver.DeadLetterAsync(message.SystemProperties.LockToken);
+                await messageReceiver.DeadLetterAsync(message.LockToken);
                 count++;
             }
             Log($"Deadlettered {count} messages");
         }
 
-        internal static async Task DeferMessagesAsync(MessageReceiver messageReceiver, IEnumerable<Message> messages)
+        internal static async Task DeferMessagesAsync(MessageReceiver messageReceiver, IEnumerable<ReceivedMessage> messages)
         {
             var count = 0;
             foreach (var message in messages)
             {
-                await messageReceiver.DeferAsync(message.SystemProperties.LockToken);
+                await messageReceiver.DeferAsync(message.LockToken);
                 count++;
             }
             Log($"Deferred {count} messages");
@@ -198,16 +198,16 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             Log($"Sent {messagesPerSession} messages each for {numberOfSessions} sessions.");
         }
 
-        private static void VerifyUniqueMessages(List<Message> messages)
+        private static void VerifyUniqueMessages(List<ReceivedMessage> messages)
         {
             if (messages != null && messages.Count > 1)
             {
                 var sequenceNumbers = new HashSet<long>();
                 foreach (var message in messages)
                 {
-                    if (!sequenceNumbers.Add(message.SystemProperties.SequenceNumber))
+                    if (!sequenceNumbers.Add(message.SequenceNumber))
                     {
-                        throw new Exception($"Sequence Number '{message.SystemProperties.SequenceNumber}' was repeated");
+                        throw new Exception($"Sequence Number '{message.SequenceNumber}' was repeated");
                     }
                 }
             }

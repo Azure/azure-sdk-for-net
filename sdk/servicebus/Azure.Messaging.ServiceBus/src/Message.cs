@@ -8,6 +8,120 @@ namespace Azure.Messaging.ServiceBus
     using System.Globalization;
     using Primitives;
 
+    public class ReceivedMessage : Message
+    {
+        public ReceivedMessage()
+        {
+        }
+
+        public ReceivedMessage(Memory<byte> body) : base(body)
+        {
+        }
+
+        /// <summary>
+        /// Get the current delivery count.
+        /// </summary>
+        /// <value>This value starts at 1.</value>
+        /// <remarks>
+        ///    Number of deliveries that have been attempted for this message. The count is incremented when a message lock expires,
+        ///    or the message is explicitly abandoned by the receiver. This property is read-only.
+        /// </remarks>
+        public int DeliveryCount { get; internal set; }
+
+        /// <summary>Gets the date and time in UTC until which the message will be locked in the queue/subscription.</summary>
+        /// <value>The date and time until which the message will be locked in the queue/subscription.</value>
+        /// <remarks>
+        /// 	For messages retrieved under a lock (peek-lock receive mode, not pre-settled) this property reflects the UTC
+        ///     instant until which the message is held locked in the queue/subscription. When the lock expires, the <see cref="DeliveryCount"/>
+        ///     is incremented and the message is again available for retrieval. This property is read-only.
+        /// </remarks>
+        public DateTime LockedUntilUtc { get; internal set; }
+
+        /// <summary>Gets the unique number assigned to a message by Service Bus.</summary>
+        /// <remarks>
+        ///     The sequence number is a unique 64-bit integer assigned to a message as it is accepted
+        ///     and stored by the broker and functions as its true identifier. For partitioned entities,
+        ///     the topmost 16 bits reflect the partition identifier. Sequence numbers monotonically increase.
+        ///     They roll over to 0 when the 48-64 bit range is exhausted. This property is read-only.
+        /// </remarks>
+        public long SequenceNumber { get; internal set; } = -1;
+
+        /// <summary>
+        /// Gets the name of the queue or subscription that this message was enqueued on, before it was deadlettered.
+        /// </summary>
+        /// <remarks>
+        /// 	Only set in messages that have been dead-lettered and subsequently auto-forwarded from the dead-letter queue
+        ///     to another entity. Indicates the entity in which the message was dead-lettered. This property is read-only.
+        /// </remarks>
+        public string DeadLetterSource { get; internal set; }
+
+        /// <summary>
+        /// Specifies whether or not there is a lock token set on the current message.
+        /// </summary>
+        /// <remarks>A lock token will only be specified if the message was received using <see cref="ReceiveMode.PeekLock"/></remarks>
+        public bool IsLockTokenSet => this.LockTokenGuid != default;
+
+        /// <summary>
+        /// Gets the lock token for the current message.
+        /// </summary>
+        /// <remarks>
+        ///   The lock token is a reference to the lock that is being held by the broker in <see cref="ReceiveMode.PeekLock"/> mode.
+        ///   Locks are used to explicitly settle messages as explained in the <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement">product documentation in more detail</a>.
+        ///   The token can also be used to pin the lock permanently through the <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-deferral">Deferral API</a> and, with that, take the message out of the
+        ///   regular delivery state flow. This property is read-only.
+        /// </remarks>
+        public string LockToken => this.LockTokenGuid.ToString();
+
+
+        internal short PartitionId { get; set; }
+
+        /// <summary>Gets or sets the original sequence number of the message.</summary>
+        /// <value>The enqueued sequence number of the message.</value>
+        /// <remarks>
+        /// For messages that have been auto-forwarded, this property reflects the sequence number
+        /// that had first been assigned to the message at its original point of submission. This property is read-only.
+        /// </remarks>
+        public long EnqueuedSequenceNumber { get; internal set; }
+
+        /// <summary>Gets or sets the date and time of the sent time in UTC.</summary>
+        /// <value>The enqueue time in UTC. </value>
+        /// <remarks>
+        ///    The UTC instant at which the message has been accepted and stored in the entity.
+        ///    This value can be used as an authoritative and neutral arrival time indicator when
+        ///    the receiver does not want to trust the sender's clock. This property is read-only.
+        /// </remarks>
+        public DateTime EnqueuedTimeUtc { get; internal set; }
+
+        internal Guid LockTokenGuid { get; set; }
+
+        internal object BodyObject
+        {
+            get;
+            set;
+        }
+
+        /// <summary>Gets the date and time in UTC at which the message is set to expire.</summary>
+        /// <value>The message expiration time in UTC. This property is read-only.</value>
+        /// <exception cref="System.InvalidOperationException">If the message has not been received. For example if a new message was created but not yet sent and received.</exception>
+        /// <remarks>
+        ///  The UTC instant at which the message is marked for removal and no longer available for retrieval
+        ///  from the entity due to expiration. Expiry is controlled by the <see cref="Message.TimeToLive"/> property
+        ///  and this property is computed from <see cref="EnqueuedTimeUtc"/>+<see cref="Message.TimeToLive"/></remarks>
+        public DateTime ExpiresAtUtc
+        {
+            get
+            {
+                if (this.TimeToLive >= DateTime.MaxValue.Subtract(this.EnqueuedTimeUtc))
+                {
+                    return DateTime.MaxValue;
+                }
+
+                return this.EnqueuedTimeUtc.Add(this.TimeToLive);
+            }
+        }
+
+    }
+
     /// <summary>
     /// The message object used to communicate and transfer data with Service Bus.
     /// </summary>
@@ -48,7 +162,6 @@ namespace Azure.Messaging.ServiceBus
         public Message(ReadOnlyMemory<byte> body)
         {
             this.Body = body;
-            this.SystemProperties = new SystemPropertiesCollection();
             this.UserProperties = new Dictionary<string, object>();
         }
 
@@ -159,34 +272,13 @@ namespace Azure.Messaging.ServiceBus
                 this.replyToSessionId = value;
             }
         }
-
-        /// <summary>Gets the date and time in UTC at which the message is set to expire.</summary>
-        /// <value>The message expiration time in UTC. This property is read-only.</value>
-        /// <exception cref="System.InvalidOperationException">If the message has not been received. For example if a new message was created but not yet sent and received.</exception>
-        /// <remarks>
-        ///  The UTC instant at which the message is marked for removal and no longer available for retrieval
-        ///  from the entity due to expiration. Expiry is controlled by the <see cref="TimeToLive"/> property
-        ///  and this property is computed from <see cref="SystemPropertiesCollection.EnqueuedTimeUtc"/>+<see cref="TimeToLive"/></remarks>
-        public DateTime ExpiresAtUtc
-        {
-            get
-            {
-                if (this.TimeToLive >= DateTime.MaxValue.Subtract(this.SystemProperties.EnqueuedTimeUtc))
-                {
-                    return DateTime.MaxValue;
-                }
-
-                return this.SystemProperties.EnqueuedTimeUtc.Add(this.TimeToLive);
-            }
-        }
-
         /// <summary>
         /// Gets or sets the message’s "time to live" value.
         /// </summary>
         /// <value>The message’s time to live value.</value>
         /// <remarks>
         ///     This value is the relative duration after which the message expires, starting from the instant
-        ///      the message has been accepted and stored by the broker, as captured in <see cref="SystemPropertiesCollection.EnqueuedTimeUtc"/>.
+        ///      the message has been accepted and stored by the broker, as captured in <see cref="ReceivedMessage.EnqueuedTimeUtc"/>.
         ///      When not set explicitly, the assumed value is the DefaultTimeToLive for the respective queue or topic.
         ///      A message-level <see cref="TimeToLive"/> value cannot be longer than the entity's DefaultTimeToLive
         ///      setting and it is silently adjusted if it does.
@@ -274,11 +366,6 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public IDictionary<string, object> UserProperties { get; internal set; }
 
-        /// <summary>
-        /// Gets the <see cref="SystemPropertiesCollection"/>, which is used to store properties that are set by the system.
-        /// </summary>
-        public SystemPropertiesCollection SystemProperties { get; internal set; }
-
         /// <summary>Returns a string that represents the current message.</summary>
         /// <returns>The string representation of the current message.</returns>
         public override string ToString()
@@ -293,7 +380,6 @@ namespace Azure.Messaging.ServiceBus
         public Message Clone()
         {
             var clone = (Message)this.MemberwiseClone();
-            clone.SystemProperties = new SystemPropertiesCollection();
 
             if (!this.Body.IsEmpty)
             {
@@ -329,185 +415,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 // TODO: throw FxTrace.Exception.Argument(partitionKeyPropertyName, SRClient.PropertyOverMaxValue(partitionKeyPropertyName, Constants.MaxPartitionKeyLength));
                 throw new ArgumentException("PropertyValueOverMaxValue");
-            }
-        }
-
-        /// <summary>
-        /// A collection used to store properties which are set by the Service Bus service.
-        /// </summary>
-        public sealed class SystemPropertiesCollection
-        {
-            int deliveryCount;
-            DateTime lockedUntilUtc;
-            long sequenceNumber = -1;
-            short partitionId;
-            long enqueuedSequenceNumber;
-            DateTime enqueuedTimeUtc;
-            Guid lockTokenGuid;
-            string deadLetterSource;
-
-            /// <summary>
-            /// Specifies whether or not there is a lock token set on the current message.
-            /// </summary>
-            /// <remarks>A lock token will only be specified if the message was received using <see cref="ReceiveMode.PeekLock"/></remarks>
-            public bool IsLockTokenSet => this.lockTokenGuid != default;
-
-            /// <summary>
-            /// Gets the lock token for the current message.
-            /// </summary>
-            /// <remarks>
-            ///   The lock token is a reference to the lock that is being held by the broker in <see cref="ReceiveMode.PeekLock"/> mode.
-            ///   Locks are used to explicitly settle messages as explained in the <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement">product documentation in more detail</a>.
-            ///   The token can also be used to pin the lock permanently through the <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-deferral">Deferral API</a> and, with that, take the message out of the
-            ///   regular delivery state flow. This property is read-only.
-            /// </remarks>
-            public string LockToken => this.LockTokenGuid.ToString();
-
-            /// <summary>Specifies if the message has been obtained from the broker.</summary>
-            public bool IsReceived => this.sequenceNumber > -1;
-
-            /// <summary>
-            /// Get the current delivery count.
-            /// </summary>
-            /// <value>This value starts at 1.</value>
-            /// <remarks>
-            ///    Number of deliveries that have been attempted for this message. The count is incremented when a message lock expires,
-            ///    or the message is explicitly abandoned by the receiver. This property is read-only.
-            /// </remarks>
-            public int DeliveryCount
-            {
-                get
-                {
-                    this.ThrowIfNotReceived();
-                    return this.deliveryCount;
-                }
-
-                internal set => this.deliveryCount = value;
-            }
-
-            /// <summary>Gets the date and time in UTC until which the message will be locked in the queue/subscription.</summary>
-            /// <value>The date and time until which the message will be locked in the queue/subscription.</value>
-            /// <remarks>
-            /// 	For messages retrieved under a lock (peek-lock receive mode, not pre-settled) this property reflects the UTC
-            ///     instant until which the message is held locked in the queue/subscription. When the lock expires, the <see cref="DeliveryCount"/>
-            ///     is incremented and the message is again available for retrieval. This property is read-only.
-            /// </remarks>
-            public DateTime LockedUntilUtc
-            {
-                get
-                {
-                    this.ThrowIfNotReceived();
-                    return this.lockedUntilUtc;
-                }
-
-                internal set => this.lockedUntilUtc = value;
-            }
-
-            /// <summary>Gets the unique number assigned to a message by Service Bus.</summary>
-            /// <remarks>
-            ///     The sequence number is a unique 64-bit integer assigned to a message as it is accepted
-            ///     and stored by the broker and functions as its true identifier. For partitioned entities,
-            ///     the topmost 16 bits reflect the partition identifier. Sequence numbers monotonically increase.
-            ///     They roll over to 0 when the 48-64 bit range is exhausted. This property is read-only.
-            /// </remarks>
-            public long SequenceNumber
-            {
-                get
-                {
-                    this.ThrowIfNotReceived();
-                    return this.sequenceNumber;
-                }
-
-                internal set => this.sequenceNumber = value;
-            }
-
-            /// <summary>
-            /// Gets the name of the queue or subscription that this message was enqueued on, before it was deadlettered.
-            /// </summary>
-            /// <remarks>
-            /// 	Only set in messages that have been dead-lettered and subsequently auto-forwarded from the dead-letter queue
-            ///     to another entity. Indicates the entity in which the message was dead-lettered. This property is read-only.
-            /// </remarks>
-            public string DeadLetterSource
-            {
-                get
-                {
-                    this.ThrowIfNotReceived();
-                    return this.deadLetterSource;
-                }
-
-                internal set => this.deadLetterSource = value;
-            }
-
-            internal short PartitionId
-            {
-                get
-                {
-                    this.ThrowIfNotReceived();
-                    return this.partitionId;
-                }
-
-                set => this.partitionId = value;
-            }
-
-            /// <summary>Gets or sets the original sequence number of the message.</summary>
-            /// <value>The enqueued sequence number of the message.</value>
-            /// <remarks>
-            /// For messages that have been auto-forwarded, this property reflects the sequence number
-            /// that had first been assigned to the message at its original point of submission. This property is read-only.
-            /// </remarks>
-            public long EnqueuedSequenceNumber
-            {
-                get
-                {
-                    this.ThrowIfNotReceived();
-                    return this.enqueuedSequenceNumber;
-                }
-
-                internal set => this.enqueuedSequenceNumber = value;
-            }
-
-            /// <summary>Gets or sets the date and time of the sent time in UTC.</summary>
-            /// <value>The enqueue time in UTC. </value>
-            /// <remarks>
-            ///    The UTC instant at which the message has been accepted and stored in the entity.
-            ///    This value can be used as an authoritative and neutral arrival time indicator when
-            ///    the receiver does not want to trust the sender's clock. This property is read-only.
-            /// </remarks>
-            public DateTime EnqueuedTimeUtc
-            {
-                get
-                {
-                    this.ThrowIfNotReceived();
-                    return this.enqueuedTimeUtc;
-                }
-
-                internal set => this.enqueuedTimeUtc = value;
-            }
-
-            internal Guid LockTokenGuid
-            {
-                get
-                {
-                    this.ThrowIfNotReceived();
-                    return this.lockTokenGuid;
-                }
-
-                set => this.lockTokenGuid = value;
-            }
-
-            internal object BodyObject
-            {
-                get;
-                set;
-            }
-
-            void ThrowIfNotReceived()
-            {
-                if (!this.IsReceived)
-                {
-                    throw Fx.Exception.AsError(new InvalidOperationException());
-                }
             }
         }
     }

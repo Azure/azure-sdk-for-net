@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// This class can be used to format the path for different Service Bus entity types.
     /// </summary>
-    public static class EntityNameHelper
+    internal static class EntityNameHelper
     {
         private const string PathDelimiter = @"/";
         private const string SubscriptionsSubPath = "Subscriptions";

@@ -481,7 +481,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                         await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
                         var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
                         await TestUtility.DeferMessagesAsync(queueClient.InnerReceiver, messages);
-                        var message = await queueClient.InnerReceiver.ReceiveDeferredMessageAsync(messages[0].SystemProperties.SequenceNumber);
+                        var message = await queueClient.InnerReceiver.ReceiveDeferredMessageAsync(messages[0].SequenceNumber);
 
                         listener.Disable();
                         await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, new[] {message});

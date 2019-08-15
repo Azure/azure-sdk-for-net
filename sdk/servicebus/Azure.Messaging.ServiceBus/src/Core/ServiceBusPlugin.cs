@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="message">The <see cref="Message"/> to be modified by the plugin</param>
         /// <returns>The modified <see cref="Message"/></returns>
-        public virtual Task<Message> AfterMessageReceive(Message message)
+        public virtual Task<ReceivedMessage> AfterMessageReceive(ReceivedMessage message)
         {
             return Task.FromResult(message);
         }

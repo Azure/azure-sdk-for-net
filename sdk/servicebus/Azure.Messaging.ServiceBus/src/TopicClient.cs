@@ -185,7 +185,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Cancels a message that was scheduled.
         /// </summary>
-        /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="sequenceNumber">The <see cref="ReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         public Task CancelScheduledMessageAsync(long sequenceNumber)
         {
             ClientEntity.ThrowIfClosed();

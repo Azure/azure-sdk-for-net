@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     Assert.Equal(sessionStateString, returnedSessionStateString);
 
                     // Complete message using Session Receiver
-                    await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await sessionReceiver.CompleteAsync(message.LockToken);
                     TestUtility.Log($"Completed Message: {message.MessageId} for Session: {sessionReceiver.SessionId}");
 
                     sessionStateString = "Completed Message On Session!";
@@ -126,7 +126,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     await sessionReceiver.RenewSessionLockAsync();
                     TestUtility.Log($"After Second Renew Session LockedUntilUTC: {sessionReceiver.LockedUntilUtc} for Session: {sessionReceiver.SessionId}");
                     Assert.True(sessionReceiver.LockedUntilUtc >= renewRequestTime + TimeSpan.FromSeconds(5));
-                    await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await sessionReceiver.CompleteAsync(message.LockToken);
                     TestUtility.Log($"Completed Message: {message.MessageId} for Session: {sessionReceiver.SessionId}");
                     await sessionReceiver.CloseAsync();
                 }
@@ -197,11 +197,11 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
                     messageSession = await sessionClient.AcceptMessageSessionAsync(sessionId);
                     var msg = await messageSession.ReceiveAsync();
-                    var seqNum = msg.SystemProperties.SequenceNumber;
-                    await messageSession.DeferAsync(msg.SystemProperties.LockToken);
+                    var seqNum = msg.SequenceNumber;
+                    await messageSession.DeferAsync(msg.LockToken);
                     var msg2 = await messageSession.ReceiveDeferredMessageAsync(seqNum);
 
-                    Assert.Equal(seqNum, msg2.SystemProperties.SequenceNumber);
+                    Assert.Equal(seqNum, msg2.SequenceNumber);
                     Assert.Equal(messageId, msg2.MessageId);
                 }
                 finally
@@ -250,8 +250,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             Assert.True(message.MessageId == messageId);
             TestUtility.Log($"Received Message: {message.MessageId} from Session: {sessionReceiver.SessionId}");
 
-            await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
-            await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
+            await sessionReceiver.CompleteAsync(message.LockToken);
+            await sessionReceiver.CompleteAsync(message.LockToken);
             TestUtility.Log($"Completed Message: {message.MessageId} for Session: {sessionReceiver.SessionId}");
 
             await sessionReceiver.CloseAsync();

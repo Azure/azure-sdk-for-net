@@ -47,17 +47,17 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await TestUtility.SendSessionMessagesAsync(this.sender, NumberOfSessions, MessagesPerSession);
         }
 
-        public async Task OnSessionHandler(MessageSession session, Message message, CancellationToken token)
+        public async Task OnSessionHandler(MessageSession session, ReceivedMessage message, CancellationToken token)
         {
             Assert.NotNull(session);
             Assert.NotNull(message);
 
             Interlocked.Increment(ref this.totalMessageCount);
-            TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+            TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SequenceNumber}");
 
             if (this.receiveMode == ReceiveMode.PeekLock && !this.sessionHandlerOptions.AutoComplete)
             {
-                await session.CompleteAsync(message.SystemProperties.LockToken);
+                await session.CompleteAsync(message.LockToken);
             }
 
             this.sessionMessageMap.AddOrUpdate(session.SessionId, 1, (_, current) => current + 1);

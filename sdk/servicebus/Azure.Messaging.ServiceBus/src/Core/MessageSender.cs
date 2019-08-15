@@ -329,7 +329,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// Cancels a message that was scheduled.
         /// </summary>
-        /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="sequenceNumber">The <see cref="ReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         public async Task CancelScheduledMessageAsync(long sequenceNumber)
         {
             ClientEntity.ThrowIfClosed();
@@ -421,7 +421,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
         static void ValidateMessage(Message message)
         {
-            if (message.SystemProperties.IsLockTokenSet)
+            if (message is ReceivedMessage)
             {
                 throw Fx.Exception.Argument(nameof(message), "Cannot send a message that was already received.");
             }

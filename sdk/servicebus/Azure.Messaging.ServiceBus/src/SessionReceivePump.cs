@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus
     {
         readonly string clientId;
         readonly SessionClient client;
-        readonly Func<MessageSession, Message, CancellationToken, Task> userOnSessionCallback;
+        readonly Func<MessageSession, ReceivedMessage, CancellationToken, Task> userOnSessionCallback;
         readonly SessionHandlerOptions sessionHandlerOptions;
         readonly string endpoint;
         readonly string entityPath;
@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus
             SessionClient client,
             ReceiveMode receiveMode,
             SessionHandlerOptions sessionHandlerOptions,
-            Func<MessageSession, Message, CancellationToken, Task> callback,
+            Func<MessageSession, ReceivedMessage, CancellationToken, Task> callback,
             Uri endpoint,
             CancellationToken token)
         {
@@ -81,14 +81,14 @@ namespace Azure.Messaging.ServiceBus
             return this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
-        async Task CompleteMessageIfNeededAsync(MessageSession session, Message message)
+        async Task CompleteMessageIfNeededAsync(MessageSession session, ReceivedMessage message)
         {
             try
             {
                 if (this.ReceiveMode == ReceiveMode.PeekLock &&
                     this.sessionHandlerOptions.AutoComplete)
                 {
-                    await session.CompleteAsync(new[] { message.SystemProperties.LockToken }).ConfigureAwait(false);
+                    await session.CompleteAsync(new[] { message.LockToken }).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -97,13 +97,13 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        async Task AbandonMessageIfNeededAsync(MessageSession session, Message message)
+        async Task AbandonMessageIfNeededAsync(MessageSession session, ReceivedMessage message)
         {
             try
             {
                 if (session.ReceiveMode == ReceiveMode.PeekLock)
                 {
-                    await session.AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+                    await session.AbandonAsync(message.LockToken).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -190,7 +190,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 while (!this.pumpCancellationToken.IsCancellationRequested && !session.ClientEntity.IsClosedOrClosing)
                 {
-                    Message message;
+                    ReceivedMessage message;
                     try
                     {
                         message = await session.ReceiveAsync(this.sessionHandlerOptions.MessageWaitTimeout).ConfigureAwait(false);

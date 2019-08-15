@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     var message = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
 
-                    Assert.Equal(0, message.SystemProperties.DeliveryCount);
+                    Assert.Equal(0, message.DeliveryCount);
                 }
                 finally
                 {
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
 
-                    Assert.Equal(1, messages.First().SystemProperties.DeliveryCount);
+                    Assert.Equal(1, messages.First().DeliveryCount);
                 }
                 finally
                 {

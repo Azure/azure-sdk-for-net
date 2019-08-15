@@ -281,7 +281,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     Assert.NotNull(message);
 
                     await receiver.DeadLetterAsync(
-                        message.SystemProperties.LockToken,
+                        message.LockToken,
                         "deadLetterReason",
                         "deadLetterDescription");
                     var dlqMessage = await dlqReceiver.ReceiveAsync();
@@ -317,7 +317,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                     var message = await receiver.ReceiveAsync();
                     Assert.NotNull(message);
-                    await receiver.AbandonAsync(message.SystemProperties.LockToken, new Dictionary<string, object>
+                    await receiver.AbandonAsync(message.LockToken, new Dictionary<string, object>
                     {
                         {"key", "value1"}
                     });
@@ -327,8 +327,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     Assert.True(message.UserProperties.ContainsKey("key"));
                     Assert.Equal("value1", message.UserProperties["key"]);
 
-                    long sequenceNumber = message.SystemProperties.SequenceNumber;
-                    await receiver.DeferAsync(message.SystemProperties.LockToken, new Dictionary<string, object>
+                    long sequenceNumber = message.SequenceNumber;
+                    await receiver.DeferAsync(message.LockToken, new Dictionary<string, object>
                     {
                         {"key", "value2"}
                     });
@@ -338,7 +338,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     Assert.True(message.UserProperties.ContainsKey("key"));
                     Assert.Equal("value2", message.UserProperties["key"]);
 
-                    await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await receiver.CompleteAsync(message.LockToken);
                 }
                 finally
                 {

@@ -164,27 +164,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpMessage;
         }
 
-        public static SBMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
+        public static ReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
         {
             if (amqpMessage == null)
             {
                 throw Fx.Exception.ArgumentNull(nameof(amqpMessage));
             }
 
-            SBMessage sbMessage;
+            ReceivedMessage sbMessage;
 
             if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0
                 && amqpMessage.ValueBody.Value != null)
             {
-                sbMessage = new SBMessage();
+                sbMessage = new ReceivedMessage();
 
                 if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out var dotNetObject))
                 {
-                    sbMessage.SystemProperties.BodyObject = dotNetObject;
+                    sbMessage.BodyObject = dotNetObject;
                 }
                 else
                 {
-                    sbMessage.SystemProperties.BodyObject = amqpMessage.ValueBody.Value;
+                    sbMessage.BodyObject = amqpMessage.ValueBody.Value;
                 }
             }
             else if ((amqpMessage.BodyType & SectionFlag.Data) != 0
@@ -212,11 +212,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         dataSegments.AddRange(byteArray);
                     }
                 }
-                sbMessage = new SBMessage(dataSegments.ToArray());
+                sbMessage = new ReceivedMessage(dataSegments.ToArray());
             }
             else
             {
-                sbMessage = new SBMessage();
+                sbMessage = new ReceivedMessage();
             }
 
             var sections = amqpMessage.Sections;
@@ -229,7 +229,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (amqpMessage.Header.DeliveryCount != null)
                 {
-                    sbMessage.SystemProperties.DeliveryCount = isPeeked ? (int)(amqpMessage.Header.DeliveryCount.Value) : (int)(amqpMessage.Header.DeliveryCount.Value + 1);
+                    sbMessage.DeliveryCount = isPeeked ? (int)(amqpMessage.Header.DeliveryCount.Value) : (int)(amqpMessage.Header.DeliveryCount.Value + 1);
                 }
             }
 
@@ -297,31 +297,31 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     switch (key)
                     {
                         case EnqueuedTimeUtcName:
-                            sbMessage.SystemProperties.EnqueuedTimeUtc = (DateTime)pair.Value;
+                            sbMessage.EnqueuedTimeUtc = (DateTime)pair.Value;
                             break;
                         case ScheduledEnqueueTimeUtcName:
                             sbMessage.ScheduledEnqueueTimeUtc = (DateTime)pair.Value;
                             break;
                         case SequenceNumberName:
-                            sbMessage.SystemProperties.SequenceNumber = (long)pair.Value;
+                            sbMessage.SequenceNumber = (long)pair.Value;
                             break;
                         case EnqueueSequenceNumberName:
-                            sbMessage.SystemProperties.EnqueuedSequenceNumber = (long)pair.Value;
+                            sbMessage.EnqueuedSequenceNumber = (long)pair.Value;
                             break;
                         case LockedUntilName:
-                            sbMessage.SystemProperties.LockedUntilUtc = (DateTime)pair.Value;
+                            sbMessage.LockedUntilUtc = (DateTime)pair.Value;
                             break;
                         case PartitionKeyName:
                             sbMessage.PartitionKey = (string)pair.Value;
                             break;
                         case PartitionIdName:
-                            sbMessage.SystemProperties.PartitionId = (short)pair.Value;
+                            sbMessage.PartitionId = (short)pair.Value;
                             break;
                         case ViaPartitionKeyName:
                             sbMessage.ViaPartitionKey = (string)pair.Value;
                             break;
                         case DeadLetterSourceName:
-                            sbMessage.SystemProperties.DeadLetterSource = (string)pair.Value;
+                            sbMessage.DeadLetterSource = (string)pair.Value;
                             break;
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
@@ -337,7 +337,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 var guidBuffer = new byte[GuidSize];
                 Buffer.BlockCopy(amqpMessage.DeliveryTag.Array, amqpMessage.DeliveryTag.Offset, guidBuffer, 0, GuidSize);
-                sbMessage.SystemProperties.LockTokenGuid = new Guid(guidBuffer);
+                sbMessage.LockTokenGuid = new Guid(guidBuffer);
             }
 
             amqpMessage.Dispose();

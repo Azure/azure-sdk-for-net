@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.MessageInterop
 
                     // Receive Plain string
                     var returnedMessage = await dotNetStandardMessageReceiver.ReceiveAsync();
-                    TestUtility.Log($"Message1 SequenceNumber: {returnedMessage.SystemProperties.SequenceNumber}");
+                    TestUtility.Log($"Message1 SequenceNumber: {returnedMessage.SequenceNumber}");
                     var returnedBody1 = returnedMessage.GetBody<string>();
                     TestUtility.Log($"Message1: {returnedBody1}");
                     Assert.Equal(message1Body, returnedBody1);
@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.MessageInterop
 
                     // Receive Custom object
                     returnedMessage = await dotNetStandardMessageReceiver.ReceiveAsync();
-                    TestUtility.Log($"Message2 SequenceNumber: {returnedMessage.SystemProperties.SequenceNumber}");
+                    TestUtility.Log($"Message2 SequenceNumber: {returnedMessage.SequenceNumber}");
                     var returnedBody2 = returnedMessage.GetBody<TestBook>();
                     TestUtility.Log($"Message2: {returnedBody2}");
                     Assert.Equal(book, returnedBody2);
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.MessageInterop
 
                     // Receive UTF8 encoded byte array object
                     returnedMessage = await dotNetStandardMessageReceiver.ReceiveAsync();
-                    TestUtility.Log($"Message3 SequenceNumber: {returnedMessage.SystemProperties.SequenceNumber}");
+                    TestUtility.Log($"Message3 SequenceNumber: {returnedMessage.SequenceNumber}");
                     var returnedBody3 = Encoding.UTF8.GetString(returnedMessage.GetBody<byte[]>());
                     TestUtility.Log($"Message1: {returnedBody3}");
                     Assert.Equal(message3Body, returnedBody3);
@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.MessageInterop
 
                     // Receive Stream Object
                     returnedMessage = await dotNetStandardMessageReceiver.ReceiveAsync();
-                    TestUtility.Log($"Message3 SequenceNumber: {returnedMessage.SystemProperties.SequenceNumber}");
+                    TestUtility.Log($"Message3 SequenceNumber: {returnedMessage.SequenceNumber}");
                     var returnedBody4 = Encoding.UTF8.GetString(returnedMessage.Body.ToArray());
                     TestUtility.Log($"Message4: {returnedBody4}");
                     Assert.Equal(message4Body, returnedBody4);

@@ -144,9 +144,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             amqpMessage.Header.DeliveryCount = 2;
 
             var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, isPeeked: true);
-            sbMessage.SystemProperties.SequenceNumber = 1L;
+            sbMessage.SequenceNumber = 1L;
 
-            Assert.Equal(2, sbMessage.SystemProperties.DeliveryCount);
+            Assert.Equal(2, sbMessage.DeliveryCount);
         }
 
         [Fact]
@@ -161,9 +161,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             amqpMessage.Header.DeliveryCount = 2;
 
             var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, isPeeked: false);
-            sbMessage.SystemProperties.SequenceNumber = 1L;
+            sbMessage.SequenceNumber = 1L;
 
-            Assert.Equal(3, sbMessage.SystemProperties.DeliveryCount);
+            Assert.Equal(3, sbMessage.DeliveryCount);
         }
     }
 }

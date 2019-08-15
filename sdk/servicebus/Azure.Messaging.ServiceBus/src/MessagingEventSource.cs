@@ -692,11 +692,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpTaskStart(string clientId, Message message, int currentSemaphoreCount)
+        public void MessageReceiverPumpTaskStart(string clientId, ReceivedMessage message, int currentSemaphoreCount)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpTaskStart(clientId, message?.SystemProperties.SequenceNumber ?? -1, currentSemaphoreCount);
+                this.MessageReceiverPumpTaskStart(clientId, message?.SequenceNumber ?? -1, currentSemaphoreCount);
             }
         }
 
@@ -731,11 +731,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpDispatchTaskStart(string clientId, Message message)
+        public void MessageReceiverPumpDispatchTaskStart(string clientId, ReceivedMessage message)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpDispatchTaskStart(clientId, message?.SystemProperties.SequenceNumber ?? -1);
+                this.MessageReceiverPumpDispatchTaskStart(clientId, message?.SequenceNumber ?? -1);
             }
         }
 
@@ -746,11 +746,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpDispatchTaskStop(string clientId, Message message, int currentSemaphoreCount)
+        public void MessageReceiverPumpDispatchTaskStop(string clientId, ReceivedMessage message, int currentSemaphoreCount)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpDispatchTaskStop(clientId, message?.SystemProperties.SequenceNumber ?? -1, currentSemaphoreCount);
+                this.MessageReceiverPumpDispatchTaskStop(clientId, message?.SequenceNumber ?? -1, currentSemaphoreCount);
             }
         }
 
@@ -761,11 +761,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpUserCallbackStart(string clientId, Message message)
+        public void MessageReceiverPumpUserCallbackStart(string clientId, ReceivedMessage message)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackStart(clientId, message?.SystemProperties.SequenceNumber ?? -1);
+                this.MessageReceiverPumpUserCallbackStart(clientId, message?.SequenceNumber ?? -1);
             }
         }
 
@@ -776,11 +776,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpUserCallbackStop(string clientId, Message message)
+        public void MessageReceiverPumpUserCallbackStop(string clientId, ReceivedMessage message)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackStop(clientId, message?.SystemProperties.SequenceNumber ?? -1);
+                this.MessageReceiverPumpUserCallbackStop(clientId, message?.SequenceNumber ?? -1);
             }
         }
 
@@ -791,11 +791,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpUserCallbackException(string clientId, Message message, Exception exception)
+        public void MessageReceiverPumpUserCallbackException(string clientId, ReceivedMessage message, Exception exception)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpUserCallbackException(clientId, message?.SystemProperties.SequenceNumber ?? -1, exception.ToString());
+                this.MessageReceiverPumpUserCallbackException(clientId, message?.SequenceNumber ?? -1, exception.ToString());
             }
         }
 
@@ -806,11 +806,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpRenewMessageStart(string clientId, Message message, TimeSpan renewAfterTimeSpan)
+        public void MessageReceiverPumpRenewMessageStart(string clientId, ReceivedMessage message, TimeSpan renewAfterTimeSpan)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageStart(clientId, message?.SystemProperties.SequenceNumber ?? -1, (long)renewAfterTimeSpan.TotalSeconds);
+                this.MessageReceiverPumpRenewMessageStart(clientId, message?.SequenceNumber ?? -1, (long)renewAfterTimeSpan.TotalSeconds);
             }
         }
 
@@ -821,11 +821,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpRenewMessageStop(string clientId, Message message)
+        public void MessageReceiverPumpRenewMessageStop(string clientId, ReceivedMessage message)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageStop(clientId, message?.SystemProperties.SequenceNumber ?? -1);
+                this.MessageReceiverPumpRenewMessageStop(clientId, message?.SequenceNumber ?? -1);
             }
         }
 
@@ -836,11 +836,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpRenewMessageException(string clientId, Message message, Exception exception)
+        public void MessageReceiverPumpRenewMessageException(string clientId, ReceivedMessage message, Exception exception)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiverPumpRenewMessageException(clientId, message?.SystemProperties.SequenceNumber ?? -1, exception.ToString());
+                this.MessageReceiverPumpRenewMessageException(clientId, message?.SequenceNumber ?? -1, exception.ToString());
             }
         }
 
