@@ -274,7 +274,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
             }
 
             Assert.Equal(sentMessagesCount, GetPropertyValueFromAnonymousTypeInstance<int>(payload, "RequestedMessageCount"));
-            var messages = GetPropertyValueFromAnonymousTypeInstance<IList<Message>>(payload, "Messages", true);
+            var messages = GetPropertyValueFromAnonymousTypeInstance<IList<ReceivedMessage>>(payload, "Messages", true);
 
             if (receivedMessagesCount != -1)
             {
@@ -315,7 +315,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                 Assert.Equal(receiveActivity, activity);
             }
 
-            var messages = GetPropertyValueFromAnonymousTypeInstance<IList<Message>>(payload, "Messages");
+            var messages = GetPropertyValueFromAnonymousTypeInstance<IList<ReceivedMessage>>(payload, "Messages");
             Assert.Equal(1, messages.Count);
             Assert.Single(GetPropertyValueFromAnonymousTypeInstance<IEnumerable<long>>(payload, "SequenceNumbers"));
 
@@ -384,7 +384,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
 
             GetPropertyValueFromAnonymousTypeInstance<long>(payload, "FromSequenceNumber");
             Assert.Equal(1, GetPropertyValueFromAnonymousTypeInstance<int>(payload, "RequestedMessageCount"));
-            var messages = GetPropertyValueFromAnonymousTypeInstance<IList<Message>>(payload, "Messages");
+            var messages = GetPropertyValueFromAnonymousTypeInstance<IList<ReceivedMessage>>(payload, "Messages");
             AssertTags(messages, activity);
 
             Assert.Equal(sendActivity.Id, activity.Tags.Single(t => t.Key == "RelatedTo").Value);
@@ -421,7 +421,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
 
         #endregion
 
-        protected void AssertTags(IList<Message> messageList, Activity activity)
+        protected void AssertTags(IEnumerable<Message> messageList, Activity activity)
         {
             if (messageList == null)
             {

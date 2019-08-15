@@ -222,8 +222,8 @@ namespace Azure.Messaging.ServiceBus
             if (activity != null)
             {
                 // TODO: PERF!
-                SetRelatedOperations(activity, messageList.ToArray<Message>());
-                SetTags(activity, messageList.ToArray<Message>());
+                SetRelatedOperations(activity, messageList?.ToArray<Message>());
+                SetTags(activity, messageList?.ToArray<Message>());
                 DiagnosticListener.StopActivity(activity, new
                 {
                     RequestedMessageCount = messageCount,

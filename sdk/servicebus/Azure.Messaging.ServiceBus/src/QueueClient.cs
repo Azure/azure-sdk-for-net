@@ -56,8 +56,6 @@ namespace Azure.Messaging.ServiceBus
     /// It uses AMQP protocol for communicating with servicebus.</remarks>
     public class QueueClient
     {
-        private int prefetchCount;
-        
         internal ClientEntity ClientEntity { get; set; }
 
         /// <summary>
@@ -147,37 +145,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string Path => this.QueueName;
 
-        /// <summary>
-        /// Prefetch speeds up the message flow by aiming to have a message readily available for local retrieval when and before the application asks for one using Receive.
-        /// Setting a non-zero value prefetches PrefetchCount number of messages.
-        /// Setting the value to zero turns prefetch off.
-        /// Defaults to 0.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// When Prefetch is enabled, the client will quietly acquire more messages, up to the PrefetchCount limit, than what the application
-        /// immediately asks for. The message pump will therefore acquire a message for immediate consumption
-        /// that will be returned as soon as available, and the client will proceed to acquire further messages to fill the prefetch buffer in the background.
-        /// </para>
-        /// <para>
-        /// While messages are available in the prefetch buffer, any subsequent ReceiveAsync calls will be immediately satisfied from the buffer, and the buffer is
-        /// replenished in the background as space becomes available.If there are no messages available for delivery, the receive operation will drain the
-        /// buffer and then wait or block as expected.
-        /// </para>
-        /// <para>Updates to this value take effect on the next receive call to the service.</para>
-        /// </remarks>
-        public int PrefetchCount
-        {
-            get => this.prefetchCount;
-            set
-            {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(this.PrefetchCount), value, "Value cannot be less than 0.");
-                }
-                this.prefetchCount = value;
-            }
-        }
         
         internal MessageSender CreateSender()
         {
@@ -190,8 +157,10 @@ namespace Azure.Messaging.ServiceBus
                                 ClientEntity.Options);
         }
 
-        internal MessageReceiver CreateReceiver(ReceiveMode receiveMode = ReceiveMode.PeekLock)
+        internal MessageReceiver CreateReceiver(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
         {
+            receiveOptions ??= ReceiveOptions.Default;
+
             return new MessageReceiver(
                                 this.QueueName,
                                 MessagingEntityType.Queue,
@@ -199,28 +168,30 @@ namespace Azure.Messaging.ServiceBus
                                 ClientEntity.ServiceBusConnection,
                                 this.CbsTokenProvider,
                                 ClientEntity.Options,
-                                this.PrefetchCount);
+                                receiveOptions.PrefetchCount);
         }
 
-        internal SessionClient CreateSessionClient(ReceiveMode receiveMode = ReceiveMode.PeekLock)
-        {
+        internal SessionClient CreateSessionClient(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
+        {            
+            receiveOptions ??= ReceiveOptions.Default;
+
             return new SessionClient(
                 ClientEntity.ClientId,
                 this.Path,
                 MessagingEntityType.Queue,
                 receiveMode,
-                this.PrefetchCount,
+                receiveOptions.PrefetchCount,
                 ClientEntity.ServiceBusConnection,
                 this.CbsTokenProvider,
                 ClientEntity.Options);
         }
 
-        internal SessionPumpHost CreateSessionPumpHost(ReceiveMode mode = ReceiveMode.PeekLock)
+        internal SessionPumpHost CreateSessionPumpHost(ReceiveMode mode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
         {
             return new SessionPumpHost(
                 ClientEntity.ClientId,
                 mode,
-                CreateSessionClient(mode),
+                CreateSessionClient(mode, receiveOptions),
                 ClientEntity.ServiceBusConnection.Endpoint);
         }
 

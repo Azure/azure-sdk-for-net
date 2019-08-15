@@ -243,39 +243,5 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 }
             });
         }
-
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
-        public async Task UpdatingPrefetchCountOnQueueClientUpdatesTheReceiverPrefetchCount()
-        {
-            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
-            {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-                await using var sender = queueClient.CreateSender();
-                await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
-
-                try
-                {
-                    Assert.Equal(0, queueClient.PrefetchCount);
-
-                    queueClient.PrefetchCount = 2;
-                    Assert.Equal(2, queueClient.PrefetchCount);
-
-                    // Message receiver should be created with latest prefetch count (lazy load).
-                    Assert.Equal(2, receiver.PrefetchCount);
-
-                    queueClient.PrefetchCount = 3;
-                    Assert.Equal(3, queueClient.PrefetchCount);
-
-                    // Already created message receiver should have its prefetch value updated.
-                    Assert.Equal(3, receiver.PrefetchCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
-            });
-        }
     }
 }

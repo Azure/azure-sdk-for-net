@@ -119,7 +119,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                     {
                         
                         await using var sender = queueClient.CreateSender();
-                        await using var pumpHost = queueClient.CreateSessionPumpHost();
 
                         var sw = Stopwatch.StartNew();
 
@@ -135,7 +134,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                         await sender.SendAsync(message);
 
                         var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
-
+                        
+                        await using var pumpHost = queueClient.CreateSessionPumpHost(ReceiveMode.ReceiveAndDelete);
                         pumpHost.RegisterSessionHandler((session, msg, ct) =>
                         {
                             tcs.TrySetResult(0);
