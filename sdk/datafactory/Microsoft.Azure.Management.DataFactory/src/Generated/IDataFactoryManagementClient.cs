@@ -52,20 +52,19 @@ namespace Microsoft.Azure.Management.DataFactory
         string ApiVersion { get; }
 
         /// <summary>
-        /// The preferred language for the response.
+        /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// The retry timeout in seconds for Long Running Operations. Default
-        /// value is 30.
+        /// Gets or sets the retry timeout in seconds for Long Running
+        /// Operations. Default value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// Whether a unique x-ms-client-request-id should be generated. When
-        /// set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// When set to true a unique x-ms-client-request-id value is generated
+        /// and included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 

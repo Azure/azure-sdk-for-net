@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Document Database Collection sink.
+    /// A copy activity Json sink.
     /// </summary>
-    public partial class DocumentDbCollectionSink : CopySink
+    public partial class JsonSink : CopySink
     {
         /// <summary>
-        /// Initializes a new instance of the DocumentDbCollectionSink class.
+        /// Initializes a new instance of the JsonSink class.
         /// </summary>
-        public DocumentDbCollectionSink()
+        public JsonSink()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DocumentDbCollectionSink class.
+        /// Initializes a new instance of the JsonSink class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -49,16 +49,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="tableOption">The option to handle sink table, such as
         /// autoCreate. For now only 'autoCreate' value is supported. Type:
         /// string (or Expression with resultType string).</param>
-        /// <param name="nestingSeparator">Nested properties separator. Default
-        /// is . (dot). Type: string (or Expression with resultType
-        /// string).</param>
-        /// <param name="writeBehavior">Describes how to write data to Azure
-        /// Cosmos DB. Allowed values: insert and upsert.</param>
-        public DocumentDbCollectionSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), object nestingSeparator = default(object), object writeBehavior = default(object))
+        /// <param name="storeSettings">Json store settings.</param>
+        /// <param name="formatSettings">Json format settings.</param>
+        public JsonSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings), JsonWriteSettings formatSettings = default(JsonWriteSettings))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
         {
-            NestingSeparator = nestingSeparator;
-            WriteBehavior = writeBehavior;
+            StoreSettings = storeSettings;
+            FormatSettings = formatSettings;
             CustomInit();
         }
 
@@ -68,18 +65,33 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets nested properties separator. Default is . (dot). Type:
-        /// string (or Expression with resultType string).
+        /// Gets or sets json store settings.
         /// </summary>
-        [JsonProperty(PropertyName = "nestingSeparator")]
-        public object NestingSeparator { get; set; }
+        [JsonProperty(PropertyName = "storeSettings")]
+        public StoreWriteSettings StoreSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets describes how to write data to Azure Cosmos DB.
-        /// Allowed values: insert and upsert.
+        /// Gets or sets json format settings.
         /// </summary>
-        [JsonProperty(PropertyName = "writeBehavior")]
-        public object WriteBehavior { get; set; }
+        [JsonProperty(PropertyName = "formatSettings")]
+        public JsonWriteSettings FormatSettings { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (StoreSettings != null)
+            {
+                StoreSettings.Validate();
+            }
+            if (FormatSettings != null)
+            {
+                FormatSettings.Validate();
+            }
+        }
     }
 }

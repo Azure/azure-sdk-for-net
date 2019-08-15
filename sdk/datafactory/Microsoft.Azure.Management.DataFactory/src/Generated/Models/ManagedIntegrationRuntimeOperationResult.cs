@@ -33,8 +33,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the
         /// ManagedIntegrationRuntimeOperationResult class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="type">The operation type. Could be start or
         /// stop.</param>
         /// <param name="startTime">The start time of the operation.</param>
@@ -44,9 +42,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// parameters.</param>
         /// <param name="activityId">The activity id for the operation
         /// request.</param>
-        public ManagedIntegrationRuntimeOperationResult(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string type = default(string), System.DateTime? startTime = default(System.DateTime?), string result = default(string), string errorCode = default(string), IList<string> parameters = default(IList<string>), string activityId = default(string))
+        public ManagedIntegrationRuntimeOperationResult(string type = default(string), System.DateTime? startTime = default(System.DateTime?), string result = default(string), string errorCode = default(string), IList<string> parameters = default(IList<string>), string activityId = default(string))
         {
-            AdditionalProperties = additionalProperties;
             Type = type;
             StartTime = startTime;
             Result = result;
@@ -60,13 +57,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets the operation type. Could be start or stop.

@@ -33,8 +33,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the ManagedIntegrationRuntimeNode
         /// class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="nodeId">The managed integration runtime node
         /// id.</param>
         /// <param name="status">The managed integration runtime node status.
@@ -42,9 +40,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 'Unavailable'</param>
         /// <param name="errors">The errors that occurred on this integration
         /// runtime node.</param>
-        public ManagedIntegrationRuntimeNode(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string nodeId = default(string), string status = default(string), IList<ManagedIntegrationRuntimeError> errors = default(IList<ManagedIntegrationRuntimeError>))
+        public ManagedIntegrationRuntimeNode(string nodeId = default(string), string status = default(string), IList<ManagedIntegrationRuntimeError> errors = default(IList<ManagedIntegrationRuntimeError>))
         {
-            AdditionalProperties = additionalProperties;
             NodeId = nodeId;
             Status = status;
             Errors = errors;
@@ -55,13 +52,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets the managed integration runtime node id.
