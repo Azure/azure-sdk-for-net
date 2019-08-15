@@ -17,6 +17,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" PrivateAssets="All" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" VersionOverride="[5.1.2]" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.19" />
   </ItemGroup>
 </Project>
