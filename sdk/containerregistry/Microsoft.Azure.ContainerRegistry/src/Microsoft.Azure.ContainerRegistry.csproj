@@ -3,7 +3,7 @@
   	<PackageId>Microsoft.Azure.Runtime.ContainerRegistry</PackageId>
     <Description>Provides management capabilities for Azure Container Registry Runtime items.</Description>
     <AssemblyTitle>Microsoft Azure Container Registry</AssemblyTitle>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
     <PackageReleaseNotes>Added capabilities to manage repository, tag and manifest.</PackageReleaseNotes>
   </PropertyGroup>
@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <AzureApiTag>2019-07-15-preview</AzureApiTag>
+    <AzureApiTag>2019-08-15-preview</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
 

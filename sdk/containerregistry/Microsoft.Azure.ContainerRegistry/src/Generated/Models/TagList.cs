@@ -11,32 +11,34 @@
 namespace Microsoft.Azure.ContainerRegistry.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Tag attributes
+    /// List of tag details
     /// </summary>
-    public partial class TagAttributes
+    public partial class TagList
     {
         /// <summary>
-        /// Initializes a new instance of the TagAttributes class.
+        /// Initializes a new instance of the TagList class.
         /// </summary>
-        public TagAttributes()
+        public TagList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TagAttributes class.
+        /// Initializes a new instance of the TagList class.
         /// </summary>
         /// <param name="registry">Registry name</param>
         /// <param name="imageName">Image name</param>
-        /// <param name="tagAttributes">List of tag attribute details</param>
-        public TagAttributes(string registry = default(string), string imageName = default(string), TagAttributesBase tagAttributes = default(TagAttributesBase))
+        /// <param name="tagsAttributes">List of tag attribute details</param>
+        public TagList(string registry = default(string), string imageName = default(string), IList<TagAttributesBase> tagsAttributes = default(IList<TagAttributesBase>))
         {
             Registry = registry;
             ImageName = imageName;
-            TagAttributes = tagAttributes;
+            TagsAttributes = tagsAttributes;
             CustomInit();
         }
 
@@ -60,8 +62,8 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Gets or sets list of tag attribute details
         /// </summary>
-        [JsonProperty(PropertyName = "tag")]
-        public TagAttributesBase TagAttributes { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IList<TagAttributesBase> TagsAttributes { get; set; }
 
     }
 }

@@ -14,29 +14,29 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Tag attributes
+    /// Manifest attributes details
     /// </summary>
-    public partial class TagAttributes
+    public partial class ManifestAttributes
     {
         /// <summary>
-        /// Initializes a new instance of the TagAttributes class.
+        /// Initializes a new instance of the ManifestAttributes class.
         /// </summary>
-        public TagAttributes()
+        public ManifestAttributes()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TagAttributes class.
+        /// Initializes a new instance of the ManifestAttributes class.
         /// </summary>
         /// <param name="registry">Registry name</param>
         /// <param name="imageName">Image name</param>
-        /// <param name="tagAttributes">List of tag attribute details</param>
-        public TagAttributes(string registry = default(string), string imageName = default(string), TagAttributesBase tagAttributes = default(TagAttributesBase))
+        /// <param name="manifestAttributes">Manifest attributes</param>
+        public ManifestAttributes(string registry = default(string), string imageName = default(string), ManifestAttributesBase manifestAttributes = default(ManifestAttributesBase))
         {
             Registry = registry;
             ImageName = imageName;
-            TagAttributes = tagAttributes;
+            ManifestAttributes = manifestAttributes;
             CustomInit();
         }
 
@@ -58,10 +58,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         public string ImageName { get; set; }
 
         /// <summary>
-        /// Gets or sets list of tag attribute details
+        /// Gets or sets manifest attributes
         /// </summary>
-        [JsonProperty(PropertyName = "tag")]
-        public TagAttributesBase TagAttributes { get; set; }
+        [JsonProperty(PropertyName = "manifest")]
+        public ManifestAttributesBase ManifestAttributes { get; set; }
 
     }
 }

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.ContainerRegistry
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -77,21 +78,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> GetDockerRegistryV2SupportWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Fetch the tags under the repository identified by name
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<RepositoryTags,GetTagListHeaders>> GetTagListWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> CheckV2SupportWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Pulls the image manifest file associated with the specified name
@@ -155,14 +142,13 @@ namespace Microsoft.Azure.ContainerRegistry
         Task<AzureOperationResponse> DeleteManifestWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List repositories
+        /// Retrieve the blob from the registry identified by digest.
         /// </summary>
-        /// <param name='last'>
-        /// Query parameter for the last item in previous query. Result set
-        /// will include values lexically after last.
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
         /// </param>
-        /// <param name='n'>
-        /// query parameter for max number of items
+        /// <param name='digest'>
+        /// Digest of a BLOB
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -170,7 +156,221 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<Repositories,GetRepositoriesHeaders>> GetRepositoriesWithHttpMessagesAsync(string last = default(string), int? n = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Stream,GetBlobHeaders>> GetBlobWithHttpMessagesAsync(string name, string digest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Same as GET, except only the headers are returned.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='digest'>
+        /// Digest of a BLOB
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<CheckBlobExistenceHeaders>> CheckBlobExistenceWithHttpMessagesAsync(string name, string digest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='digest'>
+        /// Digest of a BLOB
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Stream,DeleteBlobHeaders>> DeleteBlobWithHttpMessagesAsync(string name, string digest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Mount a blob identified by the `mount` parameter from another
+        /// repository.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='fromParameter'>
+        /// Name of the source repository.
+        /// </param>
+        /// <param name='mount'>
+        /// Digest of blob to mount from the source repository.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<StartBlobUploadHeaders>> StartBlobUploadWithHttpMessagesAsync(string name, string fromParameter, string mount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Retrieve status of upload identified by uuid. The primary purpose
+        /// of this endpoint is to resolve the current status of a resumable
+        /// upload.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='uuid'>
+        /// A uuid identifying the upload.
+        /// </param>
+        /// <param name='_state'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='_nouploadcache'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<GetBlobUploadStatusSpecifiedHeaders>> GetBlobUploadStatusSpecifiedWithHttpMessagesAsync(string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Upload a stream of data without completing the upload. (Complete
+        /// path definition)
+        /// </summary>
+        /// <param name='value'>
+        /// </param>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='uuid'>
+        /// A uuid identifying the upload.
+        /// </param>
+        /// <param name='_state'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='_nouploadcache'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<UploadBlobContentSpecifiedHeaders>> UploadBlobContentSpecifiedWithHttpMessagesAsync(Stream value, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Complete the upload, providing all the data in the body, if
+        /// necessary. A request without a body will just complete the upload
+        /// with previously uploaded content.
+        /// </summary>
+        /// <param name='digest'>
+        /// Digest of a BLOB
+        /// </param>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='uuid'>
+        /// A uuid identifying the upload.
+        /// </param>
+        /// <param name='_state'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='_nouploadcache'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='value'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<EndBlobUploadSpecifiedHeaders>> EndBlobUploadSpecifiedWithHttpMessagesAsync(string digest, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Stream value = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Cancel outstanding upload processes, releasing associated
+        /// resources. If this is not called, the unfinished uploads will
+        /// eventually timeout.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='uuid'>
+        /// A uuid identifying the upload.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> CancelBlobUploadWithHttpMessagesAsync(string name, string uuid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Upload a stream of data without completing the upload.
+        /// </summary>
+        /// <param name='value'>
+        /// </param>
+        /// <param name='location'>
+        /// Link acquired from upload start or previous chunk. Note, do not
+        /// include initial / (must do substring(1) )
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<UploadBlobContentFromNextHeaders>> UploadBlobContentFromNextWithHttpMessagesAsync(Stream value, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Complete the upload, providing all the data in the body, if
+        /// necessary. A request without a body will just complete the upload
+        /// with previously uploaded content.
+        /// </summary>
+        /// <param name='digest'>
+        /// Digest of a BLOB
+        /// </param>
+        /// <param name='location'>
+        /// Link acquired from upload start or previous chunk. Note, do not
+        /// include initial / (must do substring(1) )
+        /// </param>
+        /// <param name='value'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<EndBlobUploadFromNextHeaders>> EndBlobUploadFromNextWithHttpMessagesAsync(string digest, string location, Stream value = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Retrieve status of upload identified by uuid. The primary purpose
+        /// of this endpoint is to resolve the current status of a resumable
+        /// upload.
+        /// </summary>
+        /// <param name='location'>
+        /// Link acquired from upload start or previous chunk. Note, do not
+        /// include initial / (must do substring(1) )
+        /// </param>
+        /// <param name='_state'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='_nouploadcache'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<GetBlobUploadStatusFromNextHeaders>> GetBlobUploadStatusFromNextWithHttpMessagesAsync(string location, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List repositories
@@ -188,7 +388,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<Repositories>> GetAcrRepositoriesWithHttpMessagesAsync(string last = default(string), int? n = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Repositories,GetRepositoryListHeaders>> GetRepositoryListWithHttpMessagesAsync(string last = default(string), int? n = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get repository attributes
@@ -202,7 +402,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<RepositoryAttributes>> GetAcrRepositoryAttributesWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RepositoryAttributes>> GetRepositoryAttributesWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Delete the repository identified by `name`
@@ -216,7 +416,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DeletedRepository>> DeleteAcrRepositoryWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeletedRepository>> DeleteRepositoryWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Update the attribute identified by `name` where `reference` is the
@@ -234,7 +434,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> UpdateAcrRepositoryAttributesWithHttpMessagesAsync(string name, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateRepositoryAttributesWithHttpMessagesAsync(string name, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List tags of a repository
@@ -261,7 +461,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<AcrRepositoryTags>> GetAcrTagsWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagList>> GetAcrTagListWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get tag attributes by tag
@@ -278,7 +478,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<AcrTagAttributes>> GetAcrTagAttributesWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagAttributes>> GetTagAttributesWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Update tag attributes
@@ -298,7 +498,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> UpdateAcrTagAttributesWithHttpMessagesAsync(string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateTagAttributesWithHttpMessagesAsync(string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Delete tag
@@ -315,7 +515,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> DeleteAcrTagWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteTagWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List manifests of a repository
@@ -339,7 +539,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<AcrManifests>> GetAcrManifestsWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AcrManifests>> GetManifestListWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get manifest attributes
@@ -356,7 +556,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<AcrManifestAttributes>> GetAcrManifestAttributesWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManifestAttributes>> GetManifestAttributesWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Update attributes of a manifest
@@ -376,7 +576,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> UpdateAcrManifestAttributesWithHttpMessagesAsync(string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateManifestAttributesWithHttpMessagesAsync(string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Exchange AAD tokens for an ACR refresh Token
@@ -406,7 +606,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<RefreshToken>> GetAcrRefreshTokenFromExchangeWithHttpMessagesAsync(string grantType, string service, string tenant = default(string), string refreshToken = default(string), string accessToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RefreshToken>> GetRefreshTokenFromExchangeWithHttpMessagesAsync(string grantType, string service, string tenant = default(string), string refreshToken = default(string), string accessToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Exchange ACR Refresh token for an ACR Access Token
@@ -428,7 +628,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<AccessToken>> GetAcrAccessTokenWithHttpMessagesAsync(string service, string scope, string refreshToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AccessToken>> GetAccessTokenWithHttpMessagesAsync(string service, string scope, string refreshToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Exchange Username, Password and Scope an ACR Access Token
@@ -447,7 +647,111 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<AccessToken>> GetAcrAccessTokenFromLoginWithHttpMessagesAsync(string service, string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AccessToken>> GetAccessTokenFromLoginWithHttpMessagesAsync(string service, string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Initiate a resumable blob upload with an empty request body.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='resumable'>
+        /// Initiate Resumable Blob Upload
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<StartEmptyResumableBlobUploadHeaders>> StartEmptyResumableBlobUploadWithHttpMessagesAsync(string name, string resumable = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Upload a chunk of data to specified upload without completing the
+        /// upload. The data will be uploaded to the specified Content Range.
+        /// </summary>
+        /// <param name='value'>
+        /// </param>
+        /// <param name='contentRange'>
+        /// Range of bytes identifying the desired block of content represented
+        /// by the body. Start must the end offset retrieved via status check
+        /// plus one. Note that this is a non-standard use of the
+        /// `Content-Range` header.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='uuid'>
+        /// A uuid identifying the upload.
+        /// </param>
+        /// <param name='chunk'>
+        /// Initiate Chunk Blob Upload
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<UploadBlobContentChunkHeaders>> UploadBlobContentChunkWithHttpMessagesAsync(Stream value, string contentRange, string name, string uuid, string chunk = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Retrieve the blob from the registry identified by `digest`. This
+        /// endpoint may also support RFC7233 compliant range requests. Support
+        /// can be detected by issuing a HEAD request. If the header
+        /// `Accept-Range: bytes` is returned, range requests can be used to
+        /// fetch partial content.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='digest'>
+        /// Digest of a BLOB
+        /// </param>
+        /// <param name='range'>
+        /// Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header
+        /// specifying blob chunk.
+        /// </param>
+        /// <param name='part'>
+        /// Acquire only part of a blob. This endpoint may also support RFC7233
+        /// compliant range requests. Support can be detected by issuing a HEAD
+        /// request. If the header `Accept-Range: bytes` is returned, range
+        /// requests can be used to fetch partial content
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Stream,GetBlobPartHeaders>> GetBlobPartWithHttpMessagesAsync(string name, string digest, string range, string part = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Same as GET, except only the headers are returned.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='digest'>
+        /// Digest of a BLOB
+        /// </param>
+        /// <param name='range'>
+        /// Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header
+        /// specifying blob chunk.
+        /// </param>
+        /// <param name='part'>
+        /// Acquire only part of a blob. This endpoint may also support RFC7233
+        /// compliant range requests. Support can be detected by issuing a HEAD
+        /// request. If the header `Accept-Range: bytes` is returned, range
+        /// requests can be used to fetch partial content
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationHeaderResponse<CheckBlobPartExistenceHeaders>> CheckBlobPartExistenceWithHttpMessagesAsync(string name, string digest, string range, string part = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

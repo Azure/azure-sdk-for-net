@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="mediaType">Layer media type</param>
         /// <param name="size">Layer size</param>
         /// <param name="digest">Layer digest</param>
-        public V2Descriptor(string mediaType = default(string), int? size = default(int?), string digest = default(string))
+        public V2Descriptor(string mediaType = default(string), long? size = default(long?), string digest = default(string))
         {
             MediaType = mediaType;
             Size = size;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets layer size
         /// </summary>
         [JsonProperty(PropertyName = "size")]
-        public int? Size { get; set; }
+        public long? Size { get; set; }
 
         /// <summary>
         /// Gets or sets layer digest

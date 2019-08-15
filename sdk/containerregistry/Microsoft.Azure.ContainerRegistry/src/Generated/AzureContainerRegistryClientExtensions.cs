@@ -13,6 +13,7 @@ namespace Microsoft.Azure.ContainerRegistry
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -31,26 +32,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetDockerRegistryV2SupportAsync(this IAzureContainerRegistryClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> CheckV2SupportAsync(this IAzureContainerRegistryClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.GetDockerRegistryV2SupportWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Fetch the tags under the repository identified by name
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the image (including the namespace)
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RepositoryTags> GetTagListAsync(this IAzureContainerRegistryClient operations, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetTagListWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckV2SupportWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -133,26 +117,290 @@ namespace Microsoft.Azure.ContainerRegistry
             }
 
             /// <summary>
-            /// List repositories
+            /// Retrieve the blob from the registry identified by digest.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='last'>
-            /// Query parameter for the last item in previous query. Result set will
-            /// include values lexically after last.
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
             /// </param>
-            /// <param name='n'>
-            /// query parameter for max number of items
+            /// <param name='digest'>
+            /// Digest of a BLOB
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Repositories> GetRepositoriesAsync(this IAzureContainerRegistryClient operations, string last = default(string), int? n = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> GetBlobAsync(this IAzureContainerRegistryClient operations, string name, string digest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetRepositoriesWithHttpMessagesAsync(last, n, null, cancellationToken).ConfigureAwait(false))
+                var _result = await operations.GetBlobWithHttpMessagesAsync(name, digest, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// Same as GET, except only the headers are returned.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='digest'>
+            /// Digest of a BLOB
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckBlobExistenceHeaders> CheckBlobExistenceAsync(this IAzureContainerRegistryClient operations, string name, string digest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckBlobExistenceWithHttpMessagesAsync(name, digest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='digest'>
+            /// Digest of a BLOB
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> DeleteBlobAsync(this IAzureContainerRegistryClient operations, string name, string digest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.DeleteBlobWithHttpMessagesAsync(name, digest, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// Mount a blob identified by the `mount` parameter from another repository.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Name of the source repository.
+            /// </param>
+            /// <param name='mount'>
+            /// Digest of blob to mount from the source repository.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StartBlobUploadHeaders> StartBlobUploadAsync(this IAzureContainerRegistryClient operations, string name, string fromParameter, string mount, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartBlobUploadWithHttpMessagesAsync(name, fromParameter, mount, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve status of upload identified by uuid. The primary purpose of this
+            /// endpoint is to resolve the current status of a resumable upload.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='uuid'>
+            /// A uuid identifying the upload.
+            /// </param>
+            /// <param name='_state'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='_nouploadcache'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GetBlobUploadStatusSpecifiedHeaders> GetBlobUploadStatusSpecifiedAsync(this IAzureContainerRegistryClient operations, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBlobUploadStatusSpecifiedWithHttpMessagesAsync(name, uuid, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Upload a stream of data without completing the upload. (Complete path
+            /// definition)
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='value'>
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='uuid'>
+            /// A uuid identifying the upload.
+            /// </param>
+            /// <param name='_state'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='_nouploadcache'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UploadBlobContentSpecifiedHeaders> UploadBlobContentSpecifiedAsync(this IAzureContainerRegistryClient operations, Stream value, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UploadBlobContentSpecifiedWithHttpMessagesAsync(value, name, uuid, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Complete the upload, providing all the data in the body, if necessary. A
+            /// request without a body will just complete the upload with previously
+            /// uploaded content.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='digest'>
+            /// Digest of a BLOB
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='uuid'>
+            /// A uuid identifying the upload.
+            /// </param>
+            /// <param name='_state'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='_nouploadcache'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='value'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EndBlobUploadSpecifiedHeaders> EndBlobUploadSpecifiedAsync(this IAzureContainerRegistryClient operations, string digest, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Stream value = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.EndBlobUploadSpecifiedWithHttpMessagesAsync(digest, name, uuid, _state, _nouploadcache, value, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Cancel outstanding upload processes, releasing associated resources. If
+            /// this is not called, the unfinished uploads will eventually timeout.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='uuid'>
+            /// A uuid identifying the upload.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CancelBlobUploadAsync(this IAzureContainerRegistryClient operations, string name, string uuid, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CancelBlobUploadWithHttpMessagesAsync(name, uuid, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Upload a stream of data without completing the upload.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='value'>
+            /// </param>
+            /// <param name='location'>
+            /// Link acquired from upload start or previous chunk. Note, do not include
+            /// initial / (must do substring(1) )
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UploadBlobContentFromNextHeaders> UploadBlobContentFromNextAsync(this IAzureContainerRegistryClient operations, Stream value, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UploadBlobContentFromNextWithHttpMessagesAsync(value, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Complete the upload, providing all the data in the body, if necessary. A
+            /// request without a body will just complete the upload with previously
+            /// uploaded content.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='digest'>
+            /// Digest of a BLOB
+            /// </param>
+            /// <param name='location'>
+            /// Link acquired from upload start or previous chunk. Note, do not include
+            /// initial / (must do substring(1) )
+            /// </param>
+            /// <param name='value'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EndBlobUploadFromNextHeaders> EndBlobUploadFromNextAsync(this IAzureContainerRegistryClient operations, string digest, string location, Stream value = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.EndBlobUploadFromNextWithHttpMessagesAsync(digest, location, value, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve status of upload identified by uuid. The primary purpose of this
+            /// endpoint is to resolve the current status of a resumable upload.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Link acquired from upload start or previous chunk. Note, do not include
+            /// initial / (must do substring(1) )
+            /// </param>
+            /// <param name='_state'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='_nouploadcache'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GetBlobUploadStatusFromNextHeaders> GetBlobUploadStatusFromNextAsync(this IAzureContainerRegistryClient operations, string location, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBlobUploadStatusFromNextWithHttpMessagesAsync(location, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
                 }
             }
 
@@ -172,9 +420,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Repositories> GetAcrRepositoriesAsync(this IAzureContainerRegistryClient operations, string last = default(string), int? n = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Repositories> GetRepositoryListAsync(this IAzureContainerRegistryClient operations, string last = default(string), int? n = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrRepositoriesWithHttpMessagesAsync(last, n, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetRepositoryListWithHttpMessagesAsync(last, n, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -192,9 +440,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RepositoryAttributes> GetAcrRepositoryAttributesAsync(this IAzureContainerRegistryClient operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RepositoryAttributes> GetRepositoryAttributesAsync(this IAzureContainerRegistryClient operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrRepositoryAttributesWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetRepositoryAttributesWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -212,9 +460,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeletedRepository> DeleteAcrRepositoryAsync(this IAzureContainerRegistryClient operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeletedRepository> DeleteRepositoryAsync(this IAzureContainerRegistryClient operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteAcrRepositoryWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteRepositoryWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -236,9 +484,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAcrRepositoryAttributesAsync(this IAzureContainerRegistryClient operations, string name, ChangeableAttributes value = default(ChangeableAttributes), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateRepositoryAttributesAsync(this IAzureContainerRegistryClient operations, string name, ChangeableAttributes value = default(ChangeableAttributes), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateAcrRepositoryAttributesWithHttpMessagesAsync(name, value, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateRepositoryAttributesWithHttpMessagesAsync(name, value, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -266,9 +514,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AcrRepositoryTags> GetAcrTagsAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagList> GetAcrTagListAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrTagsWithHttpMessagesAsync(name, last, n, orderby, digest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAcrTagListWithHttpMessagesAsync(name, last, n, orderby, digest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -289,9 +537,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AcrTagAttributes> GetAcrTagAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagAttributes> GetTagAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrTagAttributesWithHttpMessagesAsync(name, reference, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetTagAttributesWithHttpMessagesAsync(name, reference, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -315,9 +563,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAcrTagAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateTagAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateAcrTagAttributesWithHttpMessagesAsync(name, reference, value, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateTagAttributesWithHttpMessagesAsync(name, reference, value, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -335,9 +583,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAcrTagAsync(this IAzureContainerRegistryClient operations, string name, string reference, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteTagAsync(this IAzureContainerRegistryClient operations, string name, string reference, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteAcrTagWithHttpMessagesAsync(name, reference, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteTagWithHttpMessagesAsync(name, reference, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -362,9 +610,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AcrManifests> GetAcrManifestsAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), int? n = default(int?), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AcrManifests> GetManifestListAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), int? n = default(int?), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrManifestsWithHttpMessagesAsync(name, last, n, orderby, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetManifestListWithHttpMessagesAsync(name, last, n, orderby, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -385,9 +633,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AcrManifestAttributes> GetAcrManifestAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManifestAttributes> GetManifestAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrManifestAttributesWithHttpMessagesAsync(name, reference, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetManifestAttributesWithHttpMessagesAsync(name, reference, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -411,9 +659,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAcrManifestAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateManifestAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateAcrManifestAttributesWithHttpMessagesAsync(name, reference, value, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateManifestAttributesWithHttpMessagesAsync(name, reference, value, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -444,9 +692,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RefreshToken> GetAcrRefreshTokenFromExchangeAsync(this IAzureContainerRegistryClient operations, string grantType, string service, string tenant = default(string), string refreshToken = default(string), string accessToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RefreshToken> GetRefreshTokenFromExchangeAsync(this IAzureContainerRegistryClient operations, string grantType, string service, string tenant = default(string), string refreshToken = default(string), string accessToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrRefreshTokenFromExchangeWithHttpMessagesAsync(grantType, service, tenant, refreshToken, accessToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetRefreshTokenFromExchangeWithHttpMessagesAsync(grantType, service, tenant, refreshToken, accessToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -472,9 +720,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessToken> GetAcrAccessTokenAsync(this IAzureContainerRegistryClient operations, string service, string scope, string refreshToken, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessToken> GetAccessTokenAsync(this IAzureContainerRegistryClient operations, string service, string scope, string refreshToken, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrAccessTokenWithHttpMessagesAsync(service, scope, refreshToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAccessTokenWithHttpMessagesAsync(service, scope, refreshToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -497,11 +745,136 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessToken> GetAcrAccessTokenFromLoginAsync(this IAzureContainerRegistryClient operations, string service, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessToken> GetAccessTokenFromLoginAsync(this IAzureContainerRegistryClient operations, string service, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAcrAccessTokenFromLoginWithHttpMessagesAsync(service, scope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAccessTokenFromLoginWithHttpMessagesAsync(service, scope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Initiate a resumable blob upload with an empty request body.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='resumable'>
+            /// Initiate Resumable Blob Upload
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StartEmptyResumableBlobUploadHeaders> StartEmptyResumableBlobUploadAsync(this IAzureContainerRegistryClient operations, string name, string resumable = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartEmptyResumableBlobUploadWithHttpMessagesAsync(name, resumable, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Upload a chunk of data to specified upload without completing the upload.
+            /// The data will be uploaded to the specified Content Range.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='value'>
+            /// </param>
+            /// <param name='contentRange'>
+            /// Range of bytes identifying the desired block of content represented by the
+            /// body. Start must the end offset retrieved via status check plus one. Note
+            /// that this is a non-standard use of the `Content-Range` header.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='uuid'>
+            /// A uuid identifying the upload.
+            /// </param>
+            /// <param name='chunk'>
+            /// Initiate Chunk Blob Upload
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UploadBlobContentChunkHeaders> UploadBlobContentChunkAsync(this IAzureContainerRegistryClient operations, Stream value, string contentRange, string name, string uuid, string chunk = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UploadBlobContentChunkWithHttpMessagesAsync(value, contentRange, name, uuid, chunk, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve the blob from the registry identified by `digest`. This endpoint
+            /// may also support RFC7233 compliant range requests. Support can be detected
+            /// by issuing a HEAD request. If the header `Accept-Range: bytes` is returned,
+            /// range requests can be used to fetch partial content.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='digest'>
+            /// Digest of a BLOB
+            /// </param>
+            /// <param name='range'>
+            /// Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying
+            /// blob chunk.
+            /// </param>
+            /// <param name='part'>
+            /// Acquire only part of a blob. This endpoint may also support RFC7233
+            /// compliant range requests. Support can be detected by issuing a HEAD
+            /// request. If the header `Accept-Range: bytes` is returned, range requests
+            /// can be used to fetch partial content
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> GetBlobPartAsync(this IAzureContainerRegistryClient operations, string name, string digest, string range, string part = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.GetBlobPartWithHttpMessagesAsync(name, digest, range, part, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// Same as GET, except only the headers are returned.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='digest'>
+            /// Digest of a BLOB
+            /// </param>
+            /// <param name='range'>
+            /// Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying
+            /// blob chunk.
+            /// </param>
+            /// <param name='part'>
+            /// Acquire only part of a blob. This endpoint may also support RFC7233
+            /// compliant range requests. Support can be detected by issuing a HEAD
+            /// request. If the header `Accept-Range: bytes` is returned, range requests
+            /// can be used to fetch partial content
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckBlobPartExistenceHeaders> CheckBlobPartExistenceAsync(this IAzureContainerRegistryClient operations, string name, string digest, string range, string part = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckBlobPartExistenceWithHttpMessagesAsync(name, digest, range, part, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
                 }
             }
 
