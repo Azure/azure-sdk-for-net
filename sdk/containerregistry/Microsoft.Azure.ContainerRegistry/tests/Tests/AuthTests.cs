@@ -15,7 +15,7 @@
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRefreshTokenFromExchange)))
             {
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var refreshToken = await client.GetAcrRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
+                var refreshToken = await client.GetRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
                 validateRefreshToken(refreshToken.RefreshTokenProperty);
             }
         }
@@ -26,8 +26,8 @@
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrAccessToken)))
             {
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var refreshToken = await client.GetAcrRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
-                var accessToken = await client.GetAcrAccessTokenAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope, refreshToken.RefreshTokenProperty);
+                var refreshToken = await client.GetRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
+                var accessToken = await client.GetAccessTokenAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope, refreshToken.RefreshTokenProperty);
                 validateAccessToken(accessToken.AccessTokenProperty);
             }
         }
@@ -38,7 +38,7 @@
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrAccessTokenFromLogin)))
             {
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var accessToken = await client.GetAcrAccessTokenFromLoginAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope);
+                var accessToken = await client.GetAccessTokenFromLoginAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope);
                 validateAccessToken(accessToken.AccessTokenProperty);
             }
         }

@@ -1,8 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using Microsoft.Rest;
+﻿using Microsoft.Rest;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -19,50 +17,6 @@ namespace Microsoft.Azure.ContainerRegistry
     {
 
         #region Definitions
-        private class TokenCredentials : ServiceClientCredentials
-        {
-            private string AuthHeader { get; set; }
-
-            /*To be used for General Login Scheme*/
-            public TokenCredentials(string username, string password)
-            {
-                AuthHeader = EncodeTo64(username + ":" + password);
-            }
-            /*To be used for exchanging AAD Tokens for ACR Tokens*/
-            public TokenCredentials()
-            {
-                AuthHeader = null;
-            }
-            public override async Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                if (request == null)
-                {
-                    throw new ArgumentNullException("request");
-                }
-                if (AuthHeader != null)
-                {
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Basic", AuthHeader);
-                }
-                await base.ProcessHttpRequestAsync(request, cancellationToken);
-            }
-        }
-
-        public struct Token
-        {
-            public string TokenStr { get; set; }
-            public DateTime Expiration { get; set; }
-        }
-
-        private static readonly JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
-
-        public static Token MakeToken(string token)
-        {
-            Token tok = new Token();
-            tok.TokenStr = token;
-            SecurityToken fields = JwtSecurityClient.ReadToken(token);
-            tok.Expiration = fields.ValidTo;
-            return tok;
-        }
 
         public enum LoginMode
         {
@@ -71,10 +25,7 @@ namespace Microsoft.Azure.ContainerRegistry
             TokenAad
         }
 
-        // Constant to refresh tokens slighly before they are to expire guarding against possible latency related crashes
-        public const double LATENCY_SAFETY = 2;
 
-        public delegate Token AADAcquireCallback();
         #endregion
 
         #region Instance Variables        
@@ -87,16 +38,15 @@ namespace Microsoft.Azure.ContainerRegistry
         private CancellationToken RequestCancellationToken { get; set; }
 
         // Structure : Scope : Token
-        private Dictionary<string, Token> AcrAccessTokens;
+        private Dictionary<string, AcrAccessToken> AcrAccessTokens;
 
         // Structure : Method>Operation : Scope
         private Dictionary<string, string> AcrScopes;
 
         // Internal simplified client for Token Acquisition
         private Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient authClient;
-        private AADAcquireCallback acquireNewAADToken;
-        private Token AcrRefresh;
-        private Token AadAccess;
+        private AcrRefreshToken AcrRefresh;
+        private AuthToken AadAccess;
 
         #endregion
 
@@ -106,12 +56,13 @@ namespace Microsoft.Azure.ContainerRegistry
            authorization will be used. @Throws If LoginMode is set to TokenAad  */
         public AcrClientCredentials(LoginMode mode, string loginUrl, string username, string password, CancellationToken cancellationToken = default)
         {
+            AcrScopes = new Dictionary<string, string>();
+            AcrAccessTokens = new Dictionary<string, AcrAccessToken>();
             Mode = mode;
             if (Mode == LoginMode.TokenAad)
             {
                 throw new Exception("AAD token authorization requires you to provide the AAD_access_token");
             }
-            commonInit();
             LoginUrl = loginUrl;
             Username = username;
             Password = password;
@@ -121,22 +72,18 @@ namespace Microsoft.Azure.ContainerRegistry
         /*Constructor for use when providing an aad access token to be exchanged for an acr refresh token. Note that token expiration will require manually
          providing new aad tokens. This model assumes the client is able to do this authentication themselves for AAD tokens. A callback can be provided to 
          be executed once the ACR refresh token expires and can no longer be renewed as the provided Aad Token has expired.*/
-        public AcrClientCredentials(string AAD_access_token, string loginUrl, string tenant = null, string LoginUri = null, CancellationToken cancellationToken = default, AADAcquireCallback callback = null)
+        public AcrClientCredentials(string aadAccessToken, string loginUrl, string tenant = null, string LoginUri = null, CancellationToken cancellationToken = default, AuthToken.acquireCallback acquireNewAad = null)
         {
-            commonInit();
+            AcrScopes = new Dictionary<string, string>();
+            AcrAccessTokens = new Dictionary<string, AcrAccessToken>();
             Mode = LoginMode.TokenAad;
             LoginUrl = loginUrl;
             RequestCancellationToken = cancellationToken;
-            AadAccess = MakeToken(AAD_access_token);
+            AadAccess = new AuthToken(aadAccessToken, acquireNewAad);
+            AcrRefresh = new AcrRefreshToken(AadAccess, LoginUrl);
             Tenant = tenant;
-            acquireNewAADToken = callback;
         }
 
-        private void commonInit()
-        {
-            AcrScopes = new Dictionary<string, string>();
-            AcrAccessTokens = new Dictionary<string, Token>();
-        }
         #endregion
 
         #region Overrides
@@ -147,17 +94,6 @@ namespace Microsoft.Azure.ContainerRegistry
             if (Mode == LoginMode.Basic) // Basic Authentication
             {
                 AuthHeader = EncodeTo64(Username + ":" + Password);
-            }
-            else if (Mode == LoginMode.TokenAuth) // From Credentials
-            {
-                authClient = new Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient(new TokenCredentials(Username, Password));
-                authClient.LoginUri = "https://" + LoginUrl;
-            }
-            else // From AAD Access Token
-            {
-                authClient = new Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient(new TokenCredentials());
-                authClient.LoginUri = "https://" + LoginUrl;
-                AcrRefresh = MakeToken(authClient.GetAcrRefreshTokenFromExchangeAsync("access_token", LoginUrl, Tenant, null, AadAccess.TokenStr).GetAwaiter().GetResult().RefreshTokenProperty);
             }
         }
 
@@ -177,6 +113,7 @@ namespace Microsoft.Azure.ContainerRegistry
             {
                 string operation = "https://" + LoginUrl + request.RequestUri.AbsolutePath;
                 string scope = getScope(operation, request.Method.Method, request.RequestUri.AbsolutePath);
+                
                 request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + getAcrAccessToken(scope));
             }
             await base.ProcessHttpRequestAsync(request, cancellationToken);
@@ -190,7 +127,6 @@ namespace Microsoft.Azure.ContainerRegistry
             Console.WriteLine("Content: ");
             Console.WriteLine(request.Content?.ReadAsStringAsync().GetAwaiter().GetResult());
             Console.WriteLine("");
-            //Console.WriteLine(request.Content?.Headers?.ToString());
         }
 
         #endregion
@@ -206,53 +142,28 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw new Exception("This Function cannot be invoked for requested Login Mode. Basic Authentication does not support JWT Tokens ");
             }
 
-            // If Token is available and unexpired
-            if (AcrAccessTokens.ContainsKey(scope) && AcrAccessTokens[scope].Expiration > DateTime.UtcNow.AddMinutes(LATENCY_SAFETY))
+            // If Token is available or existed and can be renewed
+            if (AcrAccessTokens.ContainsKey(scope))
             {
-                return AcrAccessTokens[scope].TokenStr;
+                if (!AcrAccessTokens[scope].CheckAndRefresh()) {
+                    throw new Exception("Access Token for scope " + scope + " expired and could not be refreshed");
+                }
+
+                return AcrAccessTokens[scope].Value;
             }
 
             if (Mode == LoginMode.TokenAad)
             {
-                validateOrUpdateRefreshToken(); // Validates that refresh token is still valid
-                string acrAccess = authClient.GetAcrAccessTokenAsync(this.LoginUrl, scope, AcrRefresh.TokenStr).GetAwaiter().GetResult().AccessTokenProperty;
-                AcrAccessTokens[scope] = MakeToken(acrAccess);
-
+                AcrAccessTokens[scope] = new AcrAccessToken(AcrRefresh, scope, LoginUrl);
             }
             else if (Mode == LoginMode.TokenAuth)
             {
-                string acrAccess = authClient.GetAcrAccessTokenFromLoginAsync(this.LoginUrl, scope).GetAwaiter().GetResult().AccessTokenProperty;
-                AcrAccessTokens[scope] = MakeToken(acrAccess);
+                AcrAccessTokens[scope] = new AcrAccessToken(Username, Password, scope, LoginUrl);
             }
 
-            return AcrAccessTokens[scope].TokenStr;
+            return AcrAccessTokens[scope].Value;
         }
 
-        private void validateOrUpdateRefreshToken()
-        {
-
-            // Token is still valid, no change necessary
-            if (AcrRefresh.Expiration > DateTime.UtcNow.AddMinutes(LATENCY_SAFETY)) return;
-
-            // Need to refresh AAD access token to obtain a new ACR refresh token
-            if (AadAccess.Expiration < DateTime.UtcNow.AddMinutes(LATENCY_SAFETY))
-            {
-                if (acquireNewAADToken == null)
-                {
-                    throw new Exception("The Provided AAD token has expired and no callback was provided. ACR Refresh token cannot be updated.");
-                }
-                AadAccess = acquireNewAADToken();
-            }
-
-            if (AadAccess.Expiration < DateTime.UtcNow.AddMinutes(LATENCY_SAFETY))
-            {
-                throw new Exception("The newly provided AAD token is expired.");
-            }
-
-            // Obtain a new refresh Token using the regenerated / previously valid token
-            AcrRefresh = MakeToken(authClient.GetAcrRefreshTokenFromExchangeAsync("access_token", this.LoginUrl, Tenant, null, AadAccess.TokenStr).GetAwaiter().GetResult().RefreshTokenProperty);
-
-        }
 
         /* Acquires the required scope for a specific operation. This will be done by obtaining a chllange and parsing out the scope
          from the ww-Authenticate header. In the event of failure (Some endpoints do not seem to return the scope) it will attempt
@@ -344,4 +255,6 @@ namespace Microsoft.Azure.ContainerRegistry
 
     }
 }
+
+
 
