@@ -97,11 +97,11 @@
 
             // Serialize Request
             string _requestContent = null;
-            MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
-            if (formStream != null)
+            HttpContent _httpContent = null;
+            if (formStream is FileStream _formStreamAsFileStream)
             {
-                StreamContent _formStream = new StreamContent(formStream);
-                FileStream _formStreamAsFileStream = formStream as FileStream;
+                MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
+                StreamContent _formStream = new StreamContent(formStream);                
                 if (_formStreamAsFileStream != null)
                 {
                     _formStream.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
@@ -112,8 +112,14 @@
                     _formStream.Headers.Add("Content-Type", contentType);
                 }
                 _multiPartContent.Add(_formStream, "form_stream");
+                _httpContent = _multiPartContent;
             }
-            _httpRequest.Content = _multiPartContent;
+            else if (formStream is MemoryStream _memoryStram)
+            {
+                _httpContent = new StreamContent(_memoryStram);
+                _httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);                
+            }
+            _httpRequest.Content = _httpContent;
             // Set Credentials
             if (Credentials != null)
             {
