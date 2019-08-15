@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using Azure.Messaging.EventHubs.Tests.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -14,10 +15,6 @@ namespace Azure.Messaging.EventHubs.Tests
     ///
     public static class TestEnvironment
     {
-        /// <summary>The environment variable value for the Event Hubs connection string, lazily evaluated.</summary>
-        private static readonly Lazy<string> EventHubsConnectionStringInstance =
-            new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING"), LazyThreadSafetyMode.PublicationOnly);
-
         /// <summary>The environment variable value for the Event Hubs subscription name, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsSubscriptionInstance =
             new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_SUBSCRIPTION"), LazyThreadSafetyMode.PublicationOnly);
@@ -25,10 +22,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The environment variable value for the Event Hubs resource group name, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsResourceGroupInstance =
             new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_RESOURCEGROUP"), LazyThreadSafetyMode.PublicationOnly);
-
-        /// <summary>The environment variable value for the Event Hubs namespace name, lazily evaluated.</summary>
-        private static readonly Lazy<string> EventHubsNamespaceInstance =
-            new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_NAMESPACE"), LazyThreadSafetyMode.PublicationOnly);
 
         /// <summary>The environment variable value for the Azure Active Directory tenant that holds the service principal, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsTenantInstance =
@@ -42,14 +35,37 @@ namespace Azure.Messaging.EventHubs.Tests
         private static readonly Lazy<string> EventHubsSecretInstance =
             new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_SECRET"), LazyThreadSafetyMode.PublicationOnly);
 
+        /// <summary>The active Event Hubs namespace for this test run, lazily created.</summary>
+        private static readonly Lazy<EventHubScope.NamespaceProperties> ActiveEventHubsNamespace =
+            new Lazy<EventHubScope.NamespaceProperties>(() => EventHubScope.CreateNamespaceAsync().GetAwaiter().GetResult(), LazyThreadSafetyMode.ExecutionAndPublication);
+
+        /// <summary>The name of the shared access key to be used for accessing an Event Hubs namespace.</summary>
+        public const string EventHubsDefaultSharedAccessKey = "RootManageSharedAccessKey";
+
+        /// <summary>
+        ///   Indicates whether or not an ephemeral namespace was created for the current test execution.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if an Event Hubs namespace was created; otherwise, <c>false</c>.</value>
+        ///
+        public static bool WasEventHubsNamespaceCreated => ActiveEventHubsNamespace.IsValueCreated;
+
         /// <summary>
         ///   The connection string for the Event Hubs namespace instance to be used for
         ///   Live tests.
         /// </summary>
         ///
-        /// <value>The connection string is read from the "EVENT_HUBS_CONNECTION_STRING" environment variable.</value>
+        /// <value>The connection string will be determined by creating an ephemeral Event Hubs namespace for the test execution.</value>
         ///
-        public static string EventHubsConnectionString => EventHubsConnectionStringInstance.Value;
+        public static string EventHubsConnectionString => ActiveEventHubsNamespace.Value.ConnectionString;
+
+        /// <summary>
+        ///   The name of the Event Hubs namespace to be used for Live tests.
+        /// </summary>
+        ///
+        /// <value>The name will be determined by creating an ephemeral Event Hubs namespace for the test execution.</value>
+        ///
+        public static string EventHubsNamespace => ActiveEventHubsNamespace.Value.Name;
 
         /// <summary>
         ///   The name of the Azure subscription containing the Event Hubs namespace instance to be used for
@@ -68,15 +84,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <value>The name of the namespace is read from the "EVENT_HUBS_RESOURCEGROUP" environment variable.</value>
         ///
         public static string EventHubsResourceGroup => EventHubsResourceGroupInstance.Value;
-
-        /// <summary>
-        ///   The name of the Event Hubs namespace instance to be used for
-        ///   Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "EVENT_HUBS_NAMESPACE" environment variable.</value>
-        ///
-        public static string EventHubsNamespace => EventHubsNamespaceInstance.Value;
 
         /// <summary>
         ///   The name of the Azure Active Directory tenant that holds the service principal to use for management

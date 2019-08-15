@@ -1,14 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Azure.Core.Pipeline
 {
     internal static class ContentTypeUtilities
     {
-        public static bool TryGetTextEncoding(string contentType, out Encoding encoding)
+        public static bool TryGetTextEncoding(string? contentType, [NotNullWhen(true)] out Encoding? encoding)
         {
             const string charsetMarker = "; charset=";
             const string utf8Charset = "utf-8";

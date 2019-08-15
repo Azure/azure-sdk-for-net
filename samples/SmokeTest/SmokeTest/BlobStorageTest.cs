@@ -3,10 +3,9 @@
 // Licensed under the MIT License.
 // ------------------------------------
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using System;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 

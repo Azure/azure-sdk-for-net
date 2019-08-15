@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(TransportType.AmqpWebSockets)]
         public async Task ProducerWithNoOptionsCanSend(TransportType transportType)
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(TransportType.AmqpWebSockets)]
         public async Task ProducerWithOptionsCanSend(TransportType transportType)
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var producerOptions = new EventHubProducerOptions { RetryOptions = new RetryOptions { MaximumRetries = 5 } };
@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProducerCanSendToASpecificPartition()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProducerCanSendEventsWithCustomProperties()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var events = new[]
                 {
@@ -147,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProducerCanSendEventsUsingAPartitionHashKey()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var events = Enumerable
                     .Range(0, 25)
@@ -172,7 +172,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProducerCanSendMultipleSetsOfEventsUsingAPartitionHashKey()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var batchOptions = new SendOptions { PartitionKey = "some123key-!d" };
 

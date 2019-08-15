@@ -39,11 +39,6 @@ param
   [Parameter(Mandatory=$true, ParameterSetName="Execute")]
   [ValidateNotNullOrEmpty()]
   [ValidateScript({ $_.Length -ge 6})]
-  [string] $EventHubsName,
-
-  [Parameter(Mandatory=$true, ParameterSetName="Execute")]
-  [ValidateNotNullOrEmpty()]
-  [ValidateScript({ $_.Length -ge 6})]
   [string] $ServicePrincipalName,
 
   [Parameter(Mandatory=$true, ParameterSetName="Execute")]
@@ -101,11 +96,6 @@ function DisplayHelp
     
   Write-Host "$($indent)-ResourceGroupName`t`tThe name of the Azure Resource Group that will contain the resources"
   Write-Host "$($indent)`t`t`t`tused for the tests.  This will be created if it does not exist."
-  Write-Host ""
-
-  Write-Host "$($indent)-EventHubsName`t`tThe name of the Event Hubs namespace that will host the "
-  Write-Host "$($indent)`t`t`t`tEvent Hub instances for testing.  This will be created if it does"
-  Write-Host "$($indent)`t`t`t`tnot exist."
   Write-Host ""
 
   Write-Host "$($indent)-ServicePrincipalName`tThe name to use for the service principal that will be"
@@ -179,29 +169,11 @@ function TearDownResources
     param
     (
         [Parameter(Mandatory=$true)]
-        [bool] $cleanResourceGroup,
-
-        [Parameter(Mandatory=$true)]
-        [bool] $cleanEventHubs
+        [bool] $cleanResourceGroup
     )
     
     Write-Host("Cleaning up resources that were created:")
     
-    if ($cleanEventHubs)
-    {
-        try 
-        {
-            Write-Host "`t...Removing Event Hubs namespace `"$($EventHubsName)`""
-            Remove-AzEventHubNamespace -ResourceGroupName "$($ResourceGroupName)" -Name "$($EventHubsName)" -Force | Out-Null
-        }
-        catch 
-        {
-            Write-Error "The Event Hubs namespace: $($EventHubsName) could not be removed.  You will need to delete this manually."
-            Write-Error ""            
-            Write-Error $_.Exception.Message
-        }
-    }
-        
     if ($cleanResourceGroup)
     {
         try 
@@ -297,33 +269,7 @@ if ($resourceGroup -eq $null)
 
 try 
 {
-    # Create the Event Hubs namespace, if needed.
-
-    Write-Host "`t...Requesting Event Hubs namespace"
-    $createEventHubsNamespace = $false
-    $eventHubsNamespace = (Get-AzEventHubNamespace -ResourceGroupName "$($ResourceGroupName)" -Name "$($EventHubsName)" -ErrorAction SilentlyContinue)
-    
-    if ($eventHubsNamespace -eq $null)
-    {
-        $createEventHubsNamespace = $true
-    }
-
-    if ($createEventHubsNamespace)
-    {
-        Write-Host "`t...Creating new Event Hubs namespace"
-        Start-Sleep 1
-        
-        $eventHubsNamespace = (New-AzEventHubNamespace -ResourceGroupName "$($ResourceGroupName)" -NamespaceName "$($EventHubsName)" -Location "$($AzureRegion)")
-    }
-
-    if ($eventHubsNamespace -eq $null)
-    {
-        Write-Error "Unable to locate or create the Event Hubs namespace: $($EventHubsName)"
-        TearDownResources $createResourceGroup  $false
-        exit -1
-    }
-
-    # Create the service prinicpal and grant contributor access for management.
+    # Create the service prinicpal and grant contributor access for management in the resource group.
 
     Write-Host "`t...Creating new service principal"
     Start-Sleep 1
@@ -334,25 +280,31 @@ try
     if ($principal -eq $null)
     {
         Write-Error "Unable to create the service principal: $($ServicePrincipalName)"
-        TearDownResources $createResourceGroup $createEventHubsNamespace
+        TearDownResources $createResourceGroup
         exit -1
     }
     
     Write-Host "`t...Assigning permissions (this will take a moment)"
-    Start-Sleep 30
+    Start-Sleep 60
 
-    New-AzRoleAssignment -ObjectId "$($principal.Id)" -RoleDefinitionName "Contributor" -Scope "/subscriptions/$($subscription.SubscriptionId)/resourceGroups/$($ResourceGroupName)/providers/Microsoft.EventHub/namespaces/$($EventHubsName)" | Out-Null
-   
+    # The propagation of the identity is non-deterministic.  Attempt to retry once after waiting for another minute if
+    # the initial attempt fails.
+
+    try 
+    {
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
+    }
+    catch 
+    {
+        Write-Host "`t...Still waiting for identity propagation (this will take a moment)"
+        Start-Sleep 60
+        New-AzRoleAssignment -ApplicationId "$($principal.ApplicationId)" -RoleDefinitionName "Contributor" -ResourceGroupName "$($ResourceGroupName)" | Out-Null
+    }    
+
     # Write the environment variables
-   
-    $connectionString = $(Get-AzEventHubKey -ResourceGroupName "$($ResourceGroupName)" -Namespace "$($EventHubsName)" -Name "RootManageSharedAccessKey")
 
     Write-Host "Done."
     Write-Host ""
-    Write-Host ""
-    Write-Host "EVENT_HUBS_CONNECTION_STRING=$($connectionString.PrimaryConnectionString)"
-    Write-Host ""
-    Write-Host "EVENT_HUBS_NAMESPACE=$($EventHubsName)"
     Write-Host ""
     Write-Host "EVENT_HUBS_RESOURCEGROUP=$($ResourceGroupName)"
     Write-Host ""
@@ -368,6 +320,6 @@ try
 catch 
 {
     Write-Error $_.Exception.Message
-    TearDownResources $createResourceGroup $createEventHubsNamespace
+    TearDownResources $createResourceGroup
     exit -1
 }

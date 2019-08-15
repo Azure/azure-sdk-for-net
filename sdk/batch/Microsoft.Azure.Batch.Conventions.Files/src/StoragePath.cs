@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         internal abstract string BlobNamePrefix(IOutputKind kind);
 
         internal string BlobName(IOutputKind kind, string relativePath)
-            => $"{BlobNamePrefix(kind)}{relativePath}";
+            => $"{BlobNamePrefix(kind)}/{relativePath}";
 
         private static string GetDestinationBlobPath(string relativeSourcePath)
         {
@@ -221,8 +221,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             {
             }
 
-            internal override string BlobNamePrefix(IOutputKind kind)
-                => $"${kind.Text}/";
+            internal override string BlobNamePrefix(IOutputKind kind) => BlobNamePrefixImpl(kind);
+
+            internal static string BlobNamePrefixImpl(IOutputKind kind) => $"${kind.Text}";
         }
 
         internal sealed class TaskStoragePath : StoragePath
@@ -236,8 +237,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files
                 _taskId = taskId;
             }
 
-            internal override string BlobNamePrefix(IOutputKind kind)
-                => $"{_taskId}/${kind.Text}/";
+            internal override string BlobNamePrefix(IOutputKind kind) => BlobNamePrefixImpl(kind, _taskId);
+
+            internal static string BlobNamePrefixImpl(IOutputKind kind, string taskId) => $"{taskId}/${kind.Text}";
         }
     }
 }

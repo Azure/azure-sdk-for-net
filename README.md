@@ -17,15 +17,15 @@ Each service might have a number of libraries available from each of the followi
 
 ### Client: July 2019 Preview
 New wave of packages that we are currently releasing in **preview**.
-These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at [Azure.Core](/sdk/core/Azure.Core/README.md).
+These libraries follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet/guidelines/) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at [Azure.Core](/sdk/core/Azure.Core/README.md).
 
 These preview libraries can be easily identified by their folder, package, and namespaces names starting with 'Azure', e.g. Azure.Storage.Blobs. 
 
 The libraries released in the July 2019 preview:
 * [Azure.ApplicationModel.Configuration](/sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md)
 * [Azure.Messaging.EventHubs](/sdk/eventhub/Azure.Messaging.EventHubs/README.md)
-* [Azure.Identity.KeyVault.Keys](/sdk/keyvault/Azure.Security.KeyVault.Keys/Readme.md)
-* [Azure.Identity.KeyVault.Secrets](/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
+* [Azure.Security.KeyVault.Keys](/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
+* [Azure.Security.KeyVault.Secrets](/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md)
 * [Azure.Storage.Blobs](/sdk/storage/Azure.Storage.Blobs/README.md)
 * [Azure.Storage.Files](/sdk/storage/Azure.Storage.Files/README.md)
 * [Azure.Storage.Queues](/sdk/storage/Azure.Storage.Queues/README.md)

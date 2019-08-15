@@ -18,25 +18,25 @@ namespace Azure.Core.Testing
         {
         }
 
-        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, CancellationToken cancellationToken = default)
+        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
-            return IsAsync ? pipeline.SendRequestAsync(request, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, cancellationToken));
+            return IsAsync ? pipeline.SendRequestAsync(request, bufferResponse, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, bufferResponse, cancellationToken));
         }
 
-        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Request request, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
+        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Request request, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
         {
             await Task.Yield();
 
             var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
-            return await SendRequestAsync(pipeline, request, CancellationToken.None);
+            return await SendRequestAsync(pipeline, request, bufferResponse, CancellationToken.None);
         }
 
-        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
+        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
         {
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
             request.UriBuilder.Uri = new Uri("http://example.com");
-            return await SendRequestAsync(transport, request, policy, responseClassifier);
+            return await SendRequestAsync(transport, request, policy, responseClassifier, bufferResponse);
         }
     }
 }
