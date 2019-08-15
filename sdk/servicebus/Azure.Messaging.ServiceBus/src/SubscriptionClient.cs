@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
         public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, AmqpClientOptions options = null)
-            : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), topicPath, subscriptionName, receiveMode, options)
+            : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), topicPath, subscriptionName, receiveMode, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {

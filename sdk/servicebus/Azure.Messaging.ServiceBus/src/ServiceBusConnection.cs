@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace information.</param>
         /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
-        internal ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder, AmqpClientOptions options = null)
+        internal ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder, AmqpClientOptions options)
             : this(options)
         {
 
@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
-        public ServiceBusConnection(string endpoint, TokenCredential credential, AmqpClientOptions options = null)
+        public ServiceBusConnection(string endpoint, TokenCredential credential, AmqpClientOptions options)
             : this(options)
         {
             if (string.IsNullOrWhiteSpace(endpoint))

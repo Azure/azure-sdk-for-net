@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
-            : this(entityPath, null, receiveMode, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), null, options, prefetchCount)
+            : this(entityPath, null, receiveMode, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), null, options, prefetchCount)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {

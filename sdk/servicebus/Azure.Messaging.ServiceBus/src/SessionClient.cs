@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus
                   null,
                   receiveMode,
                   prefetchCount,
-                  new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)),
+                  new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options),
                   null,
                   options)
         {
@@ -106,7 +106,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="entityPath">Queue path.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
-        /// <param name="transportType">Transport type.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
@@ -115,7 +114,6 @@ namespace Azure.Messaging.ServiceBus
             string endpoint,
             string entityPath,
             TokenCredential tokenProvider,
-            TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             AmqpClientOptions options = null,
             int prefetchCount = DefaultPrefetchCount)

@@ -70,13 +70,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="entityPath">Topic path.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
-        /// <param name="transportType">Transport type.</param>
         /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
         public TopicClient(
             string endpoint,
             string entityPath,
             TokenCredential tokenProvider,
-            TransportType transportType = TransportType.Amqp,
             AmqpClientOptions options = null)
             : this(new ServiceBusConnection(endpoint, tokenProvider, options), entityPath, options)
         {

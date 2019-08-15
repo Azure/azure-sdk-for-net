@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string connectionString,
             string entityPath,
             AmqpClientOptions options = null)
-            : this(entityPath, null, null, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString)), null, options)
+            : this(entityPath, null, null, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), null, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -81,13 +81,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="entityPath">Queue path.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
-        /// <param name="transportType">Transport type.</param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageSender(
             string endpoint,
             string entityPath,
             TokenCredential tokenProvider,
-            TransportType transportType = TransportType.Amqp,
             AmqpClientOptions options = null)
             : this(entityPath, null, null, new ServiceBusConnection(endpoint, tokenProvider, options), null, options)
         {
