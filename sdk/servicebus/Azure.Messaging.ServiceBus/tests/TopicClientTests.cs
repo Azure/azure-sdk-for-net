@@ -32,8 +32,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                 try
                 {
+                    var topicClientSender = topicClient.CreateSender();
                     await this.PeekLockTestCase(
-                        topicClient.InnerSender,
+                        topicClientSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
                 }
@@ -61,9 +62,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     ReceiveMode.ReceiveAndDelete);
                 try
                 {
+                    var topicClientSender = topicClient.CreateSender();
                     await
                         this.ReceiveDeleteTestCase(
-                            topicClient.InnerSender,
+                            topicClientSender,
                             subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                             messageCount);
                 }
@@ -90,9 +92,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     subscriptionName);
                 try
                 {
+                    var topicClientSender = topicClient.CreateSender();
                     await
                         this.PeekLockWithAbandonTestCase(
-                            topicClient.InnerSender,
+                            topicClientSender,
                             subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                             messageCount);
                 }
@@ -127,9 +130,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                 try
                 {
+                    var topicClientSender = topicClient.CreateSender();
                     await
                         this.PeekLockWithDeadLetterTestCase(
-                            topicClient.InnerSender,
+                            topicClientSender,
                             subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                             deadLetterSubscriptionClient.InnerSubscriptionClient.InnerReceiver,
                             messageCount);
@@ -158,8 +162,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     subscriptionName);
                 try
                 {
+                    var topicClientSender = topicClient.CreateSender();
                     await this.RenewLockTestCase(
-                        topicClient.InnerSender,
+                        topicClientSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
                 }
@@ -187,9 +192,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     ReceiveMode.ReceiveAndDelete);
                 try
                 {
+                    var topicClientSender = topicClient.CreateSender();
                     await
                         this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(
-                            topicClient.InnerSender,
+                            topicClientSender,
                             subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                             messageCount);
                 }
@@ -217,9 +223,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     ReceiveMode.ReceiveAndDelete);
                 try
                 {
+                    var topicClientSender = topicClient.CreateSender();
                     await
                         this.CancelScheduledMessagesAsyncTestCase(
-                            topicClient.InnerSender,
+                            topicClientSender,
                             subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                             messageCount);
                 }

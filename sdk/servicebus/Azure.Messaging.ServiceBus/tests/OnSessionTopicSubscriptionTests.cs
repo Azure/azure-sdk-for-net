@@ -114,11 +114,12 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                             MessageWaitTimeout = TimeSpan.FromSeconds(5),
                             AutoComplete = true
                         };
-
+                    
+                    var topicClientSender = topicClient.CreateSender();
                     var testSessionHandler = new TestSessionHandler(
                         subscriptionClient.ReceiveMode,
                         sessionHandlerOptions,
-                        topicClient.InnerSender,
+                        topicClientSender,
                         subscriptionClient.SessionPumpHost);
 
                     // Send messages to Session

@@ -31,12 +31,8 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
-    public class TopicClient
+    public class TopicClient: IAsyncDisposable
     {
-        private readonly object syncLock;
-
-        private MessageSender innerSender;
-        
         internal ClientEntity ClientEntity { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="TopicClient"/> to perform operations on a topic.
@@ -97,7 +93,6 @@ namespace Azure.Messaging.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
             ClientEntity.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            this.syncLock = new object();
             this.TopicName = entityPath;
             ClientEntity.OwnsConnection = false;
             ClientEntity.ServiceBusConnection.ThrowIfClosed();
@@ -125,80 +120,26 @@ namespace Azure.Messaging.ServiceBus
         public string Path => this.TopicName;
 
 
-        internal MessageSender InnerSender
+        public MessageSender CreateSender()
         {
-            get
-            {
-                if (this.innerSender == null)
-                {
-                    lock (this.syncLock)
-                    {
-                        if (this.innerSender == null)
-                        {
-                            this.innerSender = new MessageSender(
+            return new MessageSender(
                                 this.TopicName,
                                 null,
                                 MessagingEntityType.Topic,
                                 ClientEntity.ServiceBusConnection,
                                 this.CbsTokenProvider,
                                 ClientEntity.Options);
-                        }
-                    }
-                }
-
-                return this.innerSender;
-            }
         }
 
         private ICbsTokenProvider CbsTokenProvider { get; }
 
-        /// <summary>
-        /// Sends a message to Service Bus.
-        /// </summary>
-        public Task SendAsync(Message message)
-        {
-            return this.SendAsync(new[] { message });
-        }
+      
+        public Task CloseAsync() => ClientEntity.CloseAsync(() => Task.CompletedTask);
 
-        /// <summary>
-        /// Sends a list of messages to Service Bus.
-        /// </summary>
-        public Task SendAsync(IList<Message> messageList)
-        {
-            ClientEntity.ThrowIfClosed();
-            return this.InnerSender.SendAsync(messageList);
-        }
 
-        /// <summary>
-        /// Schedules a message to appear on Service Bus at a later time.
-        /// </summary>
-        /// <param name="message">The <see cref="Message"/> that needs to be scheduled.</param>
-        /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing.</param>
-        /// <returns>The sequence number of the message that was scheduled.</returns>
-        public Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
+        public ValueTask DisposeAsync()
         {
-            ClientEntity.ThrowIfClosed();
-            return this.InnerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
-        }
-
-        /// <summary>
-        /// Cancels a message that was scheduled.
-        /// </summary>
-        /// <param name="sequenceNumber">The <see cref="ReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
-        public Task CancelScheduledMessageAsync(long sequenceNumber)
-        {
-            ClientEntity.ThrowIfClosed();
-            return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
-        }
-        
-        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
-
-        internal async Task OnClosingAsync()
-        {
-            if (this.innerSender != null)
-            {
-                await this.innerSender.CloseAsync().ConfigureAwait(false);
-            }
+            throw new NotImplementedException();
         }
     }
 }

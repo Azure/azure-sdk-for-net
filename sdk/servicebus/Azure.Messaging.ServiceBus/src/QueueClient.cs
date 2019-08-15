@@ -146,7 +146,7 @@ namespace Azure.Messaging.ServiceBus
         public string Path => this.QueueName;
 
         
-        internal MessageSender CreateSender()
+        public MessageSender CreateSender()
         {
            return new MessageSender(
                                 this.QueueName,
@@ -157,7 +157,7 @@ namespace Azure.Messaging.ServiceBus
                                 ClientEntity.Options);
         }
 
-        internal MessageReceiver CreateReceiver(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
+        public MessageReceiver CreateReceiver(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
         {
             receiveOptions ??= ReceiveOptions.Default;
 

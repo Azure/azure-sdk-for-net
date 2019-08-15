@@ -50,12 +50,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         Name = "RedCorrelation"
                     });
 
+                    var topicClientSender = topicClient.CreateSender();
                     var messageId1 = Guid.NewGuid().ToString();
-                    await topicClient.SendAsync(new Message { MessageId = messageId1, Label = "Blue" });
+                    await topicClientSender.SendAsync(new Message { MessageId = messageId1, Label = "Blue" });
                     TestUtility.Log($"Sent Message: {messageId1}");
 
                     var messageId2 = Guid.NewGuid().ToString();
-                    await topicClient.SendAsync(new Message { MessageId = messageId2, Label = "Red" });
+                    await topicClientSender.SendAsync(new Message { MessageId = messageId2, Label = "Red" });
                     TestUtility.Log($"Sent Message: {messageId2}");
 
                     var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
@@ -112,9 +113,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         Filter = new SqlFilter("Color = 'RedSql'"),
                         Name = "RedSql"
                     });
-
+                    
+                    var topicClientSender = topicClient.CreateSender();
                     var messageId1 = Guid.NewGuid().ToString();
-                    await topicClient.SendAsync(new Message
+                    await topicClientSender.SendAsync(new Message
                     {
                         MessageId = messageId1,
                         Label = "BlueSql",
@@ -123,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     TestUtility.Log($"Sent Message: {messageId1}");
 
                     var messageId2 = Guid.NewGuid().ToString();
-                    await topicClient.SendAsync(new Message
+                    await topicClientSender.SendAsync(new Message
                     {
                         MessageId = messageId2,
                         Label = "RedSql",
@@ -186,9 +188,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         Action = new SqlRuleAction("SET Color = 'RedSqlActionProcessed'"),
                         Name = "RedSqlAction"
                     });
-
+                    
+                    var topicClientSender = topicClient.CreateSender();
                     var messageId1 = Guid.NewGuid().ToString();
-                    await topicClient.SendAsync(new Message
+                    await topicClientSender.SendAsync(new Message
                     {
                         MessageId = messageId1,
                         Label = "BlueSqlAction",
@@ -197,7 +200,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     TestUtility.Log($"Sent Message: {messageId1}");
 
                     var messageId2 = Guid.NewGuid().ToString();
-                    await topicClient.SendAsync(new Message
+                    await topicClientSender.SendAsync(new Message
                     {
                         MessageId = messageId2,
                         Label = "RedSqlAction",

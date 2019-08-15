@@ -49,8 +49,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
                 try
                 {
+                    await using var sender = topicClient.CreateSender();
                     await this.OnMessageAsyncTestCase(
-                        topicClient.InnerSender,
+                        sender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         maxConcurrentCalls,
                         autoComplete,
