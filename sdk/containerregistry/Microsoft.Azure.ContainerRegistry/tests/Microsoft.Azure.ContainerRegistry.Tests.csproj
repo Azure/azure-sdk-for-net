@@ -36,4 +36,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" VersionOverride="5.1.2" />
+  </ItemGroup>
 </Project>
