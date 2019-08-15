@@ -19,7 +19,7 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(ListRepository)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositories = await client.GetRepositoriesAsync(null, 1);
+                var repositories = await client.GetRepositoryListAsync(null, 1);
 
                 Assert.Equal(1, repositories.Names.Count);
                 Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name));
@@ -32,7 +32,7 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetails)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
+                var repositoryDetails = await client.GetRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
 
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, repositoryDetails.Registry);
                 Assert.Equal(2, repositoryDetails.TagCount);
@@ -53,7 +53,7 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositories)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositories = await client.GetAcrRepositoriesAsync();
+                var repositories = await client.GetRepositoryListAsync();
                 Assert.Equal(2, repositories.Names.Count);
                 Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
                                                       name => Assert.Equal(ACRTestUtil.TestRepository, name));
@@ -66,7 +66,7 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepository)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
-                var repositories = await client.GetAcrRepositoriesAsync();
+                var repositories = await client.GetRepositoryListAsync();
 
                 //Selects one of the previously stored hello-world repositories for deletion
                 string deletableRepo = "";
@@ -78,7 +78,7 @@ namespace ContainerRegistry.Tests
                         continue;
                     }
                 }
-                var deletedRepo = await client.DeleteAcrRepositoryAsync(deletableRepo);
+                var deletedRepo = await client.DeleteRepositoryAsync(deletableRepo);
 
                 Assert.Equal(1, deletedRepo.ManifestsDeleted.Count);
                 Assert.Equal("sha256:92c7f9c92844bbbb5d0a101b22f7c2a7949e40f8ea90c8b3bc396879d95e899a", deletedRepo.ManifestsDeleted[0]);
@@ -96,10 +96,10 @@ namespace ContainerRegistry.Tests
 
                 //Changeable attributes
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = false, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
-                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
+                await client.UpdateRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
 
                 //Check success
-                var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository);
+                var repositoryDetails = await client.GetRepositoryAttributesAsync(ACRTestUtil.changeableRepository);
                 Assert.Equal(1, repositoryDetails.TagCount);
                 Assert.Equal(1, repositoryDetails.ManifestCount);
                 Assert.Equal(ACRTestUtil.changeableRepository, repositoryDetails.ImageName);
@@ -111,7 +111,7 @@ namespace ContainerRegistry.Tests
                 //Undo change
                 updateAttributes.WriteEnabled = true;
                 updateAttributes.DeleteEnabled = true;
-                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
+                await client.UpdateRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
             }
         }
 

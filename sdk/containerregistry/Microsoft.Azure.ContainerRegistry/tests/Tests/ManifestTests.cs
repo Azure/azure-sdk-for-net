@@ -232,7 +232,7 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributes)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositoryAttributes = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository,
+                var repositoryAttributes = await client.GetManifestAttributesAsync(ACRTestUtil.ProdRepository,
                     "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8");
 
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, repositoryAttributes.ImageName);
@@ -249,7 +249,7 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifests)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var manifests = await client.GetAcrManifestsAsync(ACRTestUtil.ProdRepository);
+                var manifests = await client.GetManifestListAsync(ACRTestUtil.ProdRepository);
 
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, manifests.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, manifests.Registry);
@@ -293,16 +293,16 @@ namespace ContainerRegistry.Tests
                 var digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8";
 
                 //Update attributes
-                await client.UpdateAcrManifestAttributesAsync(ACRTestUtil.changeableRepository, digest, updateAttributes);
-                var updatedManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
+                await client.UpdateManifestAttributesAsync(ACRTestUtil.changeableRepository, digest, updateAttributes);
+                var updatedManifest = await client.GetManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
 
                 //Check for success
                 Assert.False(updatedManifest.ManifestAttributes.ChangeableAttributes.WriteEnabled);
 
                 //Return attibutes to original
                 updateAttributes.WriteEnabled = true;
-                await client.UpdateAcrManifestAttributesAsync(ACRTestUtil.changeableRepository, digest, updateAttributes);
-                updatedManifest = await client.GetAcrManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
+                await client.UpdateManifestAttributesAsync(ACRTestUtil.changeableRepository, digest, updateAttributes);
+                updatedManifest = await client.GetMa(ACRTestUtil.changeableRepository, digest);
                 Assert.Equal(ExpectedAttributesChangeableRepository.ImageName, updatedManifest.ImageName);
                 Assert.Equal(ExpectedAttributesChangeableRepository.Registry, updatedManifest.Registry);
                 VerifyAcrManifestAttributesBase(ExpectedAttributesChangeableRepository.ManifestAttributes, updatedManifest.ManifestAttributes);
@@ -317,7 +317,7 @@ namespace ContainerRegistry.Tests
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
                 await client.CreateManifestAsync(ACRTestUtil.changeableRepository, "temporary", ExpectedV2ManifestProd);
                 var newManifest = await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", ACRTestUtil.MediatypeV2Manifest);
-                var tag = await client.GetAcrTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
+                var tag = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
 
                 verifyManifest(ExpectedV2ManifestProd, newManifest);
                 await client.DeleteManifestAsync(ACRTestUtil.changeableRepository, tag.TagAttributes.Digest);
