@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using Framing;
     using Primitives;
 
-    internal sealed class AmqpSubscriptionClient
+    internal sealed class AmqpSubscriptionClient: IAsyncDisposable
     {
         private int prefetchCount;
 
@@ -105,11 +105,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private string Path { get; }
 
-        public Task CloseAsync()
-        {
-            return this.innerReceiver?.CloseAsync();
-        }
-
         public async Task OnAddRuleAsync(RuleDescription description)
         {
             try
@@ -198,6 +193,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 throw AmqpExceptionHelper.GetClientException(exception);
             }
+        }
+
+        public ValueTask DisposeAsync()
+        {            
+            return this.innerReceiver?.DisposeAsync() ?? default;
         }
     }
 }

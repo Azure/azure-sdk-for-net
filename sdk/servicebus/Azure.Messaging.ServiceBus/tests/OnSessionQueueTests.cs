@@ -61,48 +61,41 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
-                var queueClient = new QueueClient(
+                await using var queueClient = new QueueClient(
                     TestUtility.NamespaceConnectionString,
                     queueName);
-                try
-                {
-                    var sessionHandlerOptions =
-                        new SessionHandlerOptions(ExceptionReceivedHandler)
-                        {
-                            MaxConcurrentSessions = 5,
-                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
-                            AutoComplete = true
-                        };
+                var sessionHandlerOptions =
+                    new SessionHandlerOptions(ExceptionReceivedHandler)
+                    {
+                        MaxConcurrentSessions = 5,
+                        MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                        AutoComplete = true
+                    };
                     
-                    await using var sender = queueClient.CreateSender();
-                    await using var receiver = queueClient.CreateSessionPumpHost();
+                await using var sender = queueClient.CreateSender();
+                await using var receiver = queueClient.CreateSessionPumpHost();
 
-                    var testSessionHandler = new TestSessionHandler(
-                        ReceiveMode.PeekLock,
-                        sessionHandlerOptions,
-                        sender,
-                        receiver);
+                var testSessionHandler = new TestSessionHandler(
+                    ReceiveMode.PeekLock,
+                    sessionHandlerOptions,
+                    sender,
+                    receiver);
 
-                    // Register handler first without any messages
-                    testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
+                // Register handler first without any messages
+                testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
 
-                    // Send messages to Session
-                    await testSessionHandler.SendSessionMessages();
+                // Send messages to Session
+                await testSessionHandler.SendSessionMessages();
 
-                    // Verify messages were received.
-                    await testSessionHandler.VerifyRun();
+                // Verify messages were received.
+                await testSessionHandler.VerifyRun();
 
-                    // Clear the data and re-run the scenario.
-                    testSessionHandler.ClearData();
-                    await testSessionHandler.SendSessionMessages();
+                // Clear the data and re-run the scenario.
+                testSessionHandler.ClearData();
+                await testSessionHandler.SendSessionMessages();
 
-                    // Verify messages were received.
-                    await testSessionHandler.VerifyRun();
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                // Verify messages were received.
+                await testSessionHandler.VerifyRun();
             });
         }
 
@@ -114,49 +107,42 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var exceptionReceivedHandlerCalled = false;
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
 
-                try
-                {
-                    var sessionHandlerOptions = new SessionHandlerOptions(
-                    (eventArgs) =>
-                    {
-                        Assert.NotNull(eventArgs);
-                        Assert.NotNull(eventArgs.Exception);
-                        if (eventArgs.Exception is InvalidOperationException)
+                var sessionHandlerOptions = new SessionHandlerOptions(
+                        (eventArgs) =>
                         {
-                            exceptionReceivedHandlerCalled = true;
-                        }
-                        return Task.CompletedTask;
-                    })
+                            Assert.NotNull(eventArgs);
+                            Assert.NotNull(eventArgs.Exception);
+                            if (eventArgs.Exception is InvalidOperationException)
+                            {
+                                exceptionReceivedHandlerCalled = true;
+                            }
+                            return Task.CompletedTask;
+                        })
                     { MaxConcurrentSessions = 1 };
 
                     
-                    await using var receiver = queueClient.CreateSessionPumpHost();
-                    receiver.RegisterSessionHandler(
-                       (session, message, token) =>
-                       {
-                           return Task.CompletedTask;
-                       },
-                       sessionHandlerOptions);
-
-                    var stopwatch = Stopwatch.StartNew();
-                    while (stopwatch.Elapsed.TotalSeconds <= 10)
+                await using var receiver = queueClient.CreateSessionPumpHost();
+                receiver.RegisterSessionHandler(
+                    (session, message, token) =>
                     {
-                        if (exceptionReceivedHandlerCalled)
-                        {
-                            break;
-                        }
+                        return Task.CompletedTask;
+                    },
+                    sessionHandlerOptions);
 
-                        await Task.Delay(TimeSpan.FromSeconds(1));
+                var stopwatch = Stopwatch.StartNew();
+                while (stopwatch.Elapsed.TotalSeconds <= 10)
+                {
+                    if (exceptionReceivedHandlerCalled)
+                    {
+                        break;
                     }
 
-                    Assert.True(exceptionReceivedHandlerCalled);
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+
+                Assert.True(exceptionReceivedHandlerCalled);
             });
         }
 
@@ -165,38 +151,31 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
                 TestUtility.Log($"Queue: {queueName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-                try
-                {
-                    var handlerOptions =
-                        new SessionHandlerOptions(ExceptionReceivedHandler)
-                        {
-                            MaxConcurrentSessions = maxConcurrentCalls,
-                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
-                            AutoComplete = autoComplete
-                        };
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                var handlerOptions =
+                    new SessionHandlerOptions(ExceptionReceivedHandler)
+                    {
+                        MaxConcurrentSessions = maxConcurrentCalls,
+                        MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                        AutoComplete = autoComplete
+                    };
                     
-                    await using var sender = queueClient.CreateSender();
-                    await using var receiver = queueClient.CreateSessionPumpHost(mode);
-                    var testSessionHandler = new TestSessionHandler(
-                        mode,
-                        handlerOptions,
-                        sender,
-                        receiver);
+                await using var sender = queueClient.CreateSender();
+                await using var receiver = queueClient.CreateSessionPumpHost(mode);
+                var testSessionHandler = new TestSessionHandler(
+                    mode,
+                    handlerOptions,
+                    sender,
+                    receiver);
 
-                    // Send messages to Session first
-                    await testSessionHandler.SendSessionMessages();
+                // Send messages to Session first
+                await testSessionHandler.SendSessionMessages();
 
-                    // Register handler
-                    testSessionHandler.RegisterSessionHandler(handlerOptions);
+                // Register handler
+                testSessionHandler.RegisterSessionHandler(handlerOptions);
 
-                    // Verify messages were received.
-                    await testSessionHandler.VerifyRun();
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                // Verify messages were received.
+                await testSessionHandler.VerifyRun();
             });
         }
 

@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus
                 await onClosing().ConfigureAwait(false);
                 if (OwnsConnection && this.ServiceBusConnection.IsClosedOrClosing == false)
                 {
-                    await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
+                    await this.ServiceBusConnection.DisposeAsync().ConfigureAwait(false);
                 }
             }
         }

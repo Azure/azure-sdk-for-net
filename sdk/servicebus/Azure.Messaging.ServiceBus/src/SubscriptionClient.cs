@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus
     /// </code>
     /// </example>
     /// <remarks>It uses AMQP protocol for communicating with service bus. Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
-    public class SubscriptionClient
+    public class SubscriptionClient: IAsyncDisposable
     {
         private int prefetchCount;
 
@@ -585,21 +585,24 @@ namespace Azure.Messaging.ServiceBus
             return rules;
         }
         
-        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
-
         internal async Task OnClosingAsync()
         {
             if (this.innerSubscriptionClient != null)
             {
-                await this.innerSubscriptionClient.CloseAsync().ConfigureAwait(false);
+                await this.innerSubscriptionClient.DisposeAsync().ConfigureAwait(false);
             }
 
             this.sessionPumpHost?.Close();
 
             if (this.sessionClient != null)
             {
-                await this.sessionClient.CloseAsync().ConfigureAwait(false);
+                await this.sessionClient.DisposeAsync().ConfigureAwait(false);
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await ClientEntity.CloseAsync(OnClosingAsync);
         }
     }
 }

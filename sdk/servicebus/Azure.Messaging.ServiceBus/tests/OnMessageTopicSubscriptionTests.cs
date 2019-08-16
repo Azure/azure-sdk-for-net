@@ -40,28 +40,20 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
             await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-                var subscriptionClient = new SubscriptionClient(
+                await using var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionName,
                     mode);
 
-                try
-                {
-                    await using var sender = topicClient.CreateSender();
-                    await this.OnMessageAsyncTestCase(
-                        sender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                        maxConcurrentCalls,
-                        autoComplete,
-                        messageCount);
-                }
-                finally
-                {
-                    await subscriptionClient.CloseAsync();
-                    await topicClient.CloseAsync();
-                }
+                await using var sender = topicClient.CreateSender();
+                await this.OnMessageAsyncTestCase(
+                    sender,
+                    subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                    maxConcurrentCalls,
+                    autoComplete,
+                    messageCount);
             });
         }
     }

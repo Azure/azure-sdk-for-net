@@ -26,8 +26,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-                var subscriptionClient = new SubscriptionClient(
+                await using var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionName,
@@ -75,9 +75,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     {
                         TestUtility.Log($" Cleanup failed with Exception: {e.Message}");
                     }
-
-                    await subscriptionClient.CloseAsync();
-                    await topicClient.CloseAsync();
                 }
             });
         }
@@ -90,8 +87,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-                var subscriptionClient = new SubscriptionClient(
+                await using var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionName,
@@ -149,9 +146,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     {
                         TestUtility.Log($" Cleanup failed with Exception: {e.Message}");
                     }
-
-                    await subscriptionClient.CloseAsync();
-                    await topicClient.CloseAsync();
                 }
             });
         }
@@ -164,8 +158,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-                var subscriptionClient = new SubscriptionClient(
+                await using var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionName,
@@ -218,8 +212,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 {
                     await subscriptionClient.RemoveRuleAsync("RedSqlAction");
                     await subscriptionClient.AddRuleAsync(RuleDescription.DefaultRuleName, new TrueFilter());
-                    await subscriptionClient.CloseAsync();
-                    await topicClient.CloseAsync();
                 }
             });
         }
@@ -231,7 +223,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
-                var subscriptionClient = new SubscriptionClient(
+                await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionName,
@@ -304,8 +296,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     var _ = Task.WhenAll(
                         subscriptionClient.RemoveRuleAsync(sqlRuleName),
                         subscriptionClient.RemoveRuleAsync(correlationRuleName)).ConfigureAwait(false);
-
-                    await subscriptionClient.CloseAsync();
                 }
             });
         }
@@ -317,30 +307,23 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
-                var subscriptionClient = new SubscriptionClient(
+                await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionName,
                     ReceiveMode.ReceiveAndDelete);
 
-                try
-                {
-                    Assert.Equal(0, subscriptionClient.PrefetchCount);
+                Assert.Equal(0, subscriptionClient.PrefetchCount);
 
-                    subscriptionClient.PrefetchCount = 2;
-                    Assert.Equal(2, subscriptionClient.PrefetchCount);
-                    // Message receiver should be created with latest prefetch count (lazy load).
-                    Assert.Equal(2, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
+                subscriptionClient.PrefetchCount = 2;
+                Assert.Equal(2, subscriptionClient.PrefetchCount);
+                // Message receiver should be created with latest prefetch count (lazy load).
+                Assert.Equal(2, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
 
-                    subscriptionClient.PrefetchCount = 3;
-                    Assert.Equal(3, subscriptionClient.PrefetchCount);
-                    // Already created message receiver should have its prefetch value updated.
-                    Assert.Equal(3, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
-                }
-                finally
-                {
-                    await subscriptionClient.CloseAsync();
-                }
+                subscriptionClient.PrefetchCount = 3;
+                Assert.Equal(3, subscriptionClient.PrefetchCount);
+                // Already created message receiver should have its prefetch value updated.
+                Assert.Equal(3, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
             });
         }
     }

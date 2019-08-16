@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// Connection object to service bus namespace
     /// </summary>
-    public class ServiceBusConnection
+    public class ServiceBusConnection: IAsyncDisposable
     {
         private static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
 
@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace information.</param>
-        /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
+        /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="DisposeAsync"/></remarks>
         internal ServiceBusConnection(ServiceBusConnectionStringBuilder connectionStringBuilder, AmqpClientOptions options = null)
             : this(options)
         {
@@ -134,26 +134,6 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>
-        /// Closes the connection.
-        /// </summary>
-        public async Task CloseAsync()
-        {
-            var callClose = false;
-            lock (this.syncLock)
-            {
-                if (!this.IsClosedOrClosing)
-                {
-                    this.IsClosedOrClosing = true;
-                    callClose = true;
-                }
-            }
-
-            if (callClose)
-            {
-                await this.ConnectionManager.CloseAsync();
-            }
-        }
 
         private void InitializeConnection(ServiceBusConnectionStringBuilder builder)
         {
@@ -274,5 +254,22 @@ namespace Azure.Messaging.ServiceBus
                 useSslStreamSecurity: true);
         }
 
+        public async ValueTask DisposeAsync()
+        {
+            var callClose = false;
+            lock (this.syncLock)
+            {
+                if (!this.IsClosedOrClosing)
+                {
+                    this.IsClosedOrClosing = true;
+                    callClose = true;
+                }
+            }
+
+            if (callClose)
+            {
+                await this.ConnectionManager.CloseAsync();
+            }
+        }
     }
 }

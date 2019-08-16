@@ -55,18 +55,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-                try
-                {
-                    
-                    await using var sender = queueClient.CreateSender();
-                    await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
-                    await this.OnMessageRegistrationWithoutPendingMessagesTestCase(sender, receiver, maxConcurrentCalls, true);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var sender = queueClient.CreateSender();
+                await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                await this.OnMessageRegistrationWithoutPendingMessagesTestCase(sender, receiver, maxConcurrentCalls, true);
             });
         }
 
@@ -78,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             var invalidQueueName = "nonexistentqueuename";
             var exceptionReceivedHandlerCalled = false;
 
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, invalidQueueName);
+            await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, invalidQueueName);
             await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
             receiver.RegisterMessageHandler(
                 (message, token) => throw new Exception("Unexpected exception: Did not expect messages here"),
@@ -93,26 +85,19 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     return Task.CompletedTask;
                 });
 
-            try
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 10)
             {
-                var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 10)
+                if (exceptionReceivedHandlerCalled)
                 {
-                    if (exceptionReceivedHandlerCalled)
-                    {
-                        break;
-                    }
-
-                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    break;
                 }
 
-                TestUtility.Log($"{DateTime.Now}: ExceptionReceivedHandlerCalled: {exceptionReceivedHandlerCalled}");
-                Assert.True(exceptionReceivedHandlerCalled);
+                await Task.Delay(TimeSpan.FromSeconds(1));
             }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+
+            TestUtility.Log($"{DateTime.Now}: ExceptionReceivedHandlerCalled: {exceptionReceivedHandlerCalled}");
+            Assert.True(exceptionReceivedHandlerCalled);
         }
 
         private async Task OnMessageTestAsync(bool partitioned, bool sessionEnabled, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
@@ -121,23 +106,16 @@ namespace Azure.Messaging.ServiceBus.UnitTests
 
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-                try
-                {
-                    await using var sender = queueClient.CreateSender();
-                    await using var receiver = queueClient.CreateReceiver(mode);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var sender = queueClient.CreateSender();
+                await using var receiver = queueClient.CreateReceiver(mode);
 
-                    await this.OnMessageAsyncTestCase(
-                        sender,
-                        receiver,
-                        maxConcurrentCalls,
-                        autoComplete,
-                        messageCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await this.OnMessageAsyncTestCase(
+                    sender,
+                    receiver,
+                    maxConcurrentCalls,
+                    autoComplete,
+                    messageCount);
             });
         }
     }

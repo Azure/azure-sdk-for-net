@@ -293,7 +293,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 try
                 {
-                    await session.CloseAsync().ConfigureAwait(false);
+                    await session.DisposeAsync().ConfigureAwait(false);
                     MessagingEventSource.Log.SessionReceivePumpSessionClosed(this.clientId, session.SessionId);
                 }
                 catch (Exception exception)

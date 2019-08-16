@@ -18,28 +18,21 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
-                var subscriptionClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName, ReceiveMode.ReceiveAndDelete);
+                await using var subscriptionClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName, ReceiveMode.ReceiveAndDelete);
                 var eventQueue = this.CreateEventQueue();
                 var entityName = $"{topicName}/Subscriptions/{subscriptionName}";
 
-                try
+                using (var listener = this.CreateEventListener(entityName, eventQueue))
+                using (var subscription = this.SubscribeToEvents(listener))
                 {
-                    using (var listener = this.CreateEventListener(entityName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
-                    {
-                        listener.Disable();
+                    listener.Disable();
 
-                        var ruleName = Guid.NewGuid().ToString();
-                        await subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
-                        await subscriptionClient.GetRulesAsync();
-                        await subscriptionClient.RemoveRuleAsync(ruleName);
+                    var ruleName = Guid.NewGuid().ToString();
+                    await subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
+                    await subscriptionClient.GetRulesAsync();
+                    await subscriptionClient.RemoveRuleAsync(ruleName);
 
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
-                    }
-                }
-                finally
-                {
-                    await subscriptionClient.CloseAsync();
+                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                 }
             });
         }
@@ -51,22 +44,20 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
-                try
+                using (var listener = this.CreateEventListener(queueName, eventQueue))
+                using (var subscription = this.SubscribeToEvents(listener))
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
-                    {
-                        listener.Disable();
+                    listener.Disable();
 
-                        var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
-                        await using var sender = queueClient.CreateSender();
-                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                    var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
 
-                        await TestUtility.SendMessagesAsync(sender, 1);
-                        receiver.RegisterMessageHandler((msg, ct) =>
+                    await TestUtility.SendMessagesAsync(sender, 1);
+                    receiver.RegisterMessageHandler((msg, ct) =>
                         {
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;
@@ -78,13 +69,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                             return Task.CompletedTask;
                         });
 
-                        await tcs.Task.WithTimeout(DefaultTimeout);
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
-                    }
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
+                    await tcs.Task.WithTimeout(DefaultTimeout);
+                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                 }
             });
         }
@@ -96,23 +82,21 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
-                try
+                using (var listener = this.CreateEventListener(queueName, eventQueue))
+                using (var subscription = this.SubscribeToEvents(listener))
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
-                    {
-                        listener.Enable((name, queue, arg) => queue?.ToString() != queueName);
+                    listener.Enable((name, queue, arg) => queue?.ToString() != queueName);
                         
-                        await using var sender = queueClient.CreateSender();
-                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
 
-                        var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        await TestUtility.SendMessagesAsync(sender, 1);
-                        receiver.RegisterMessageHandler((msg, ct) =>
+                    await TestUtility.SendMessagesAsync(sender, 1);
+                    receiver.RegisterMessageHandler((msg, ct) =>
                         {
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;
@@ -124,14 +108,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                             return Task.CompletedTask;
                         });
 
-                        await tcs.Task.WithTimeout(DefaultTimeout);
+                    await tcs.Task.WithTimeout(DefaultTimeout);
 
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
-                    }
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
+                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                 }
             });
         }
@@ -143,41 +122,31 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
-                var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                await using var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 var messageSession = default(MessageSession);
                 var eventQueue = this.CreateEventQueue();
 
-                try
+                using (var listener = this.CreateEventListener(queueName, eventQueue))
+                using (var subscription = this.SubscribeToEvents(listener))
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    listener.Disable();
+
+                    var sessionId = Guid.NewGuid().ToString();
+                    await messageSender.SendAsync(new Message
                     {
-                        listener.Disable();
+                        MessageId = "messageId",
+                        SessionId = sessionId
+                    });
 
-                        var sessionId = Guid.NewGuid().ToString();
-                        await messageSender.SendAsync(new Message
-                        {
-                            MessageId = "messageId",
-                            SessionId = sessionId
-                        });
+                    messageSession = await sessionClient.AcceptMessageSessionAsync(sessionId);
 
-                        messageSession = await sessionClient.AcceptMessageSessionAsync(sessionId);
+                    await messageSession.SetStateAsync(new byte[] { 1 });
+                    await messageSession.GetStateAsync();
+                    await messageSession.SetStateAsync(new byte[] { });
+                    await messageSession.ReceiveAsync();
 
-                        await messageSession.SetStateAsync(new byte[] { 1 });
-                        await messageSession.GetStateAsync();
-                        await messageSession.SetStateAsync(new byte[] { });
-                        await messageSession.ReceiveAsync();
-
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
-                    }
-                }
-                finally
-                {
-                    await Task.WhenAll(
-                        messageSession.CloseAsync(),
-                        messageSender.CloseAsync(),
-                        sessionClient.CloseAsync());
+                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                 }
             });
         }
@@ -189,25 +158,23 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = this.CreateEventQueue();
 
-                try
+                using (var listener = this.CreateEventListener(queueName, eventQueue))
+                using (var subscription = this.SubscribeToEvents(listener))
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
-                    {
-                        listener.Enable((name, queue, arg) => 
-                            !name.Contains("Send") && !name.Contains("Process") && !name.Contains("Receive") && !name.Contains("Exception"));
+                    listener.Enable((name, queue, arg) => 
+                        !name.Contains("Send") && !name.Contains("Process") && !name.Contains("Receive") && !name.Contains("Exception"));
 
-                        await using var sender = queueClient.CreateSender();
-                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
 
-                        await TestUtility.SendMessagesAsync(sender, 1);
+                    await TestUtility.SendMessagesAsync(sender, 1);
 
-                        var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        receiver.RegisterMessageHandler((msg, ct) =>
+                    receiver.RegisterMessageHandler((msg, ct) =>
                         {
                             tcs.TrySetResult(0);
                             return Task.CompletedTask;
@@ -219,13 +186,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
                             return Task.CompletedTask;
                         });
 
-                        await tcs.Task.WithTimeout(DefaultTimeout);
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
-                    }
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
+                    await tcs.Task.WithTimeout(DefaultTimeout);
+                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                 }
             });
         }

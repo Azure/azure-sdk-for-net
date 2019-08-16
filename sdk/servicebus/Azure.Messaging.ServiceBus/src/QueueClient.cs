@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus
     /// </example>
     /// <remarks>Use <see cref="MessageSender"/> or <see cref="MessageReceiver"/> for advanced set of functionality.
     /// It uses AMQP protocol for communicating with servicebus.</remarks>
-    public class QueueClient
+    public class QueueClient: IAsyncDisposable
     {
         internal ClientEntity ClientEntity { get; set; }
 
@@ -197,6 +197,9 @@ namespace Azure.Messaging.ServiceBus
 
         private ICbsTokenProvider CbsTokenProvider { get; }
 
-        public Task CloseAsync() => ClientEntity.CloseAsync(() => Task.CompletedTask);
+        public async ValueTask DisposeAsync()
+        {
+            await ClientEntity.CloseAsync(() => Task.CompletedTask);
+        }
     }
 }

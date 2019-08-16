@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.MessageInterop
                 var fullFrameWorkClientSender = messagingFactory.CreateMessageSender(queueName);
 
                 // Create a .NetStandard MessageReceiver
-                var dotNetStandardMessageReceiver = new Core.MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ServiceBus.ReceiveMode.ReceiveAndDelete);
+                await using var dotNetStandardMessageReceiver = new Core.MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ServiceBus.ReceiveMode.ReceiveAndDelete);
 
                 try
                 {
@@ -91,7 +91,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests.MessageInterop
                 }
                 finally
                 {
-                    await dotNetStandardMessageReceiver.CloseAsync();
                     await fullFrameWorkClientSender.CloseAsync();
                 }
             });

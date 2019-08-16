@@ -20,17 +20,15 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var tcs = new TaskCompletionSource<Message>(TaskCreationOptions.RunContinuationsAsynchronously);
-                var queueClient = new QueueClient(TestUtility.WebSocketsNamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.WebSocketsNamespaceConnectionString, queueName);
                 
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    var random = new Random();
-                    var contentAsBytes = new byte[8];
-                    random.NextBytes(contentAsBytes);
+                var random = new Random();
+                var contentAsBytes = new byte[8];
+                random.NextBytes(contentAsBytes);
 
-                    receiver.RegisterMessageHandler((message, token) =>
+                receiver.RegisterMessageHandler((message, token) =>
                     {
                         tcs.TrySetResult(message);
                         return Task.CompletedTask;
@@ -41,15 +39,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         return Task.CompletedTask;
                     });
 
-                    await sender.SendAsync(new Message(contentAsBytes));
+                await sender.SendAsync(new Message(contentAsBytes));
 
-                    var receivedMessage = await tcs.Task.WithTimeout(Timeout);
-                    Assert.True(contentAsBytes.AsSpan().SequenceEqual(receivedMessage.Body.Span));
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                var receivedMessage = await tcs.Task.WithTimeout(Timeout);
+                Assert.True(contentAsBytes.AsSpan().SequenceEqual(receivedMessage.Body.Span));
             });
         }
     }

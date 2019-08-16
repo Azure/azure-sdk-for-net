@@ -73,29 +73,22 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             {
                 await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
                 {
-                    var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                    await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
 
-                    try
-                    {
-                        var maxMessageSize = (256 * 1024) - 77;     // 77 bytes is the current serialization hit.
-                        var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
-                        var maxSizeMessage = new Message(maxPayload);
+                    var maxMessageSize = (256 * 1024) - 77;     // 77 bytes is the current serialization hit.
+                    var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
+                    var maxSizeMessage = new Message(maxPayload);
 
                         
-                        await using var sender = queueClient.CreateSender();
-                        await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
+                    await using var sender = queueClient.CreateSender();
+                    await using var receiver = queueClient.CreateReceiver(ReceiveMode.PeekLock);
 
-                        await sender.SendAsync(maxSizeMessage);
+                    await sender.SendAsync(maxSizeMessage);
 
 
-                        var receivedMaxSizeMessage = await receiver.ReceiveAsync();
-                        await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
-                        Assert.Equal(maxPayload, receivedMaxSizeMessage.Body.ToArray());
-                    }
-                    finally
-                    {
-                        await queueClient.CloseAsync();
-                    }
+                    var receivedMaxSizeMessage = await receiver.ReceiveAsync();
+                    await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
+                    Assert.Equal(maxPayload, receivedMaxSizeMessage.Body.ToArray());
                 });
             }
         }
@@ -123,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
 
                 try
                 {
@@ -135,10 +128,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 {
                     Console.WriteLine(e);
                     throw;
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
                 }
             });
         }

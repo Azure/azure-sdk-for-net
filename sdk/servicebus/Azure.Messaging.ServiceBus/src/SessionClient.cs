@@ -297,7 +297,7 @@ namespace Azure.Messaging.ServiceBus
                     this.EntityPath,
                     exception);
 
-                await session.CloseAsync().ConfigureAwait(false);
+                await session.DisposeAsync().ConfigureAwait(false);
                 throw AmqpExceptionHelper.GetClientException(exception);
             }
             finally
@@ -315,8 +315,6 @@ namespace Azure.Messaging.ServiceBus
             return session;
         }
         
-        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
-
         internal Task OnClosingAsync()
         {
             return Task.CompletedTask;
@@ -324,7 +322,7 @@ namespace Azure.Messaging.ServiceBus
 
         public async ValueTask DisposeAsync()
         {
-            await CloseAsync();
+            await ClientEntity.CloseAsync(OnClosingAsync);
         }
     }
 }

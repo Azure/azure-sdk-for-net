@@ -30,18 +30,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock);
 
-                try
-                {
-                    await this.PeekLockTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                await this.PeekLockTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -53,19 +45,11 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock);
 
-                try
-                {
-                    await
-                        this.PeekLockDeferTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                await
+                    this.PeekLockDeferTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -77,18 +61,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
 
-                try
-                {
-                    await this.PeekAsyncTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                await this.PeekAsyncTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -100,18 +76,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
 
-                try
-                {
-                    await this.ReceiveShouldReturnNoLaterThanServerWaitTimeTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                await this.ReceiveShouldReturnNoLaterThanServerWaitTimeTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -123,16 +91,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
 
-                try
-                {
-                    await this.ReceiveShouldThrowForServerTimeoutZero(receiver);
-                }
-                finally
-                {
-                    await receiver.CloseAsync();
-                }
+                await this.ReceiveShouldThrowForServerTimeoutZero(receiver);
             });
         }
 
@@ -143,10 +104,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
 
-                var receiver1 = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
-                var receiver2 = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete, prefetchCount: 1);
+                await using var receiver1 = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+                await using var receiver2 = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete, prefetchCount: 1);
 
                 Assert.Equal(0, receiver1.PrefetchCount);
                 Assert.Equal(1, receiver2.PrefetchCount);
@@ -199,12 +160,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         message = await receiver1.ReceiveAsync(TimeSpan.FromSeconds(3)).ConfigureAwait(false);
                     } while (message != null);
                 }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver1.CloseAsync();
-                    await receiver2.CloseAsync();
-                }
             });
         }
 
@@ -215,12 +170,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-
-                TestUtility.Log("Begin to receive from an empty queue.");
                 Task quickTask;
-                try
+                await using (var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete))
                 {
+                    TestUtility.Log("Begin to receive from an empty queue.");
                     quickTask = Task.Run(async () =>
                     {
                         try
@@ -235,11 +188,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     await Task.Delay(2000);
                     TestUtility.Log("Waited for 2 Seconds for the ReceiveAsync to establish connection.");
                 }
-                finally
-                {
-                    await receiver.CloseAsync();
-                    TestUtility.Log("Closed Receiver");
-                }
+                TestUtility.Log("Closed Receiver");
+
 
                 TestUtility.Log("Waiting for maximum 10 Secs");
                 bool receiverReturnedInTime = false;
@@ -270,34 +220,25 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName);
-                var dlqReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueName), ReceiveMode.ReceiveAndDelete);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName);
+                await using var dlqReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueName), ReceiveMode.ReceiveAndDelete);
 
-                try
-                {
-                    await sender.SendAsync(new Message(Encoding.UTF8.GetBytes("deadLetterTest2")));
-                    var message = await receiver.ReceiveAsync();
-                    Assert.NotNull(message);
+                await sender.SendAsync(new Message(Encoding.UTF8.GetBytes("deadLetterTest2")));
+                var message = await receiver.ReceiveAsync();
+                Assert.NotNull(message);
 
-                    await receiver.DeadLetterAsync(
-                        message.LockToken,
-                        "deadLetterReason",
-                        "deadLetterDescription");
-                    var dlqMessage = await dlqReceiver.ReceiveAsync();
+                await receiver.DeadLetterAsync(
+                    message.LockToken,
+                    "deadLetterReason",
+                    "deadLetterDescription");
+                var dlqMessage = await dlqReceiver.ReceiveAsync();
 
-                    Assert.NotNull(dlqMessage);
-                    Assert.True(dlqMessage.UserProperties.ContainsKey(Message.DeadLetterReasonHeader));
-                    Assert.True(dlqMessage.UserProperties.ContainsKey(Message.DeadLetterErrorDescriptionHeader));
-                    Assert.Equal("deadLetterReason", dlqMessage.UserProperties[Message.DeadLetterReasonHeader]);
-                    Assert.Equal("deadLetterDescription", dlqMessage.UserProperties[Message.DeadLetterErrorDescriptionHeader]);
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                    await dlqReceiver.CloseAsync();
-                }
+                Assert.NotNull(dlqMessage);
+                Assert.True(dlqMessage.UserProperties.ContainsKey(Message.DeadLetterReasonHeader));
+                Assert.True(dlqMessage.UserProperties.ContainsKey(Message.DeadLetterErrorDescriptionHeader));
+                Assert.Equal("deadLetterReason", dlqMessage.UserProperties[Message.DeadLetterReasonHeader]);
+                Assert.Equal("deadLetterDescription", dlqMessage.UserProperties[Message.DeadLetterErrorDescriptionHeader]);
             });
         }
 
@@ -308,43 +249,35 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName);
 
-                try
+                await sender.SendAsync(new Message(Encoding.UTF8.GetBytes("propertiesToUpdate")));
+
+                var message = await receiver.ReceiveAsync();
+                Assert.NotNull(message);
+                await receiver.AbandonAsync(message.LockToken, new Dictionary<string, object>
                 {
-                    await sender.SendAsync(new Message(Encoding.UTF8.GetBytes("propertiesToUpdate")));
+                    {"key", "value1"}
+                });
 
-                    var message = await receiver.ReceiveAsync();
-                    Assert.NotNull(message);
-                    await receiver.AbandonAsync(message.LockToken, new Dictionary<string, object>
-                    {
-                        {"key", "value1"}
-                    });
+                message = await receiver.ReceiveAsync();
+                Assert.NotNull(message);
+                Assert.True(message.UserProperties.ContainsKey("key"));
+                Assert.Equal("value1", message.UserProperties["key"]);
 
-                    message = await receiver.ReceiveAsync();
-                    Assert.NotNull(message);
-                    Assert.True(message.UserProperties.ContainsKey("key"));
-                    Assert.Equal("value1", message.UserProperties["key"]);
-
-                    long sequenceNumber = message.SequenceNumber;
-                    await receiver.DeferAsync(message.LockToken, new Dictionary<string, object>
-                    {
-                        {"key", "value2"}
-                    });
-
-                    message = await receiver.ReceiveDeferredMessageAsync(sequenceNumber);
-                    Assert.NotNull(message);
-                    Assert.True(message.UserProperties.ContainsKey("key"));
-                    Assert.Equal("value2", message.UserProperties["key"]);
-
-                    await receiver.CompleteAsync(message.LockToken);
-                }
-                finally
+                long sequenceNumber = message.SequenceNumber;
+                await receiver.DeferAsync(message.LockToken, new Dictionary<string, object>
                 {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                    {"key", "value2"}
+                });
+
+                message = await receiver.ReceiveDeferredMessageAsync(sequenceNumber);
+                Assert.NotNull(message);
+                Assert.True(message.UserProperties.ContainsKey("key"));
+                Assert.Equal("value2", message.UserProperties["key"]);
+
+                await receiver.CompleteAsync(message.LockToken);
             });
         }
 
@@ -355,18 +288,11 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
 
-                try
-                {
-                    long nonExistingSequenceNumber = 1000;
-                    await Assert.ThrowsAsync<MessageNotFoundException>(
-                        async () => await sender.CancelScheduledMessageAsync(nonExistingSequenceNumber));
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                }
+                long nonExistingSequenceNumber = 1000;
+                await Assert.ThrowsAsync<MessageNotFoundException>(
+                    async () => await sender.CancelScheduledMessageAsync(nonExistingSequenceNumber));
             });
         }
 
@@ -381,21 +307,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 csb.SasKeyName = "nonExistingKey";
                 csb.EntityPath = queueName;
 
-                var sender = new MessageSender(csb);
+                await using var sender = new MessageSender(csb);
 
-                try
-                {
-                    await Assert.ThrowsAsync<UnauthorizedException>(
-                        async () => await sender.SendAsync(new Message()));
+                await Assert.ThrowsAsync<UnauthorizedException>(
+                    async () => await sender.SendAsync(new Message()));
 
-                    long nonExistingSequenceNumber = 1000;
-                    await Assert.ThrowsAsync<UnauthorizedException>(
-                        async () => await sender.CancelScheduledMessageAsync(nonExistingSequenceNumber));
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                }
+                long nonExistingSequenceNumber = 1000;
+                await Assert.ThrowsAsync<UnauthorizedException>(
+                    async () => await sender.CancelScheduledMessageAsync(nonExistingSequenceNumber));
             });
         }
 
@@ -406,27 +325,19 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: true, sessionEnabled: false, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    var messageBody = Encoding.UTF8.GetBytes("Message");
-                    var message = new Message(messageBody);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+                var messageBody = Encoding.UTF8.GetBytes("Message");
+                var message = new Message(messageBody);
 
-                    await sender.SendAsync(message);
-                    await sender.CloseAsync();
+                await sender.SendAsync(message);
+                await sender.DisposeAsync();
 
-                    var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                    Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
+                var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
+                Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
 
-                    var connection = sender.ClientEntity.ServiceBusConnection;
-                    Assert.Throws<ObjectDisposedException>(() => new MessageSender(connection, queueName));
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                var connection = sender.ClientEntity.ServiceBusConnection;
+                Assert.Throws<ObjectDisposedException>(() => new MessageSender(connection, queueName));
             });
         }
 
@@ -437,38 +348,31 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: true, sessionEnabled: false, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
-                try
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+                var messageBody = Encoding.UTF8.GetBytes("Message");
+                var message = new Message(messageBody);
+
+                await sender.SendAsync(message);
+                await sender.DisposeAsync();
+
+                var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
+                Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
+
+                var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString)
                 {
-                    var messageBody = Encoding.UTF8.GetBytes("Message");
-                    var message = new Message(messageBody);
+                    EntityPath = queueName
+                };
+                ServiceBusConnection connection = new ServiceBusConnection(csb);
 
-                    await sender.SendAsync(message);
-                    await sender.CloseAsync();
+                await using var sender2 = new MessageSender(connection, queueName);
 
-                    var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                    Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
+                messageBody = Encoding.UTF8.GetBytes("Message 2");
+                message = new Message(messageBody);
+                await sender2.SendAsync(message);
 
-                    var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString)
-                    {
-                        EntityPath = queueName
-                    };
-                    ServiceBusConnection connection = new ServiceBusConnection(csb);
-                    sender = new MessageSender(connection, queueName);
-
-                    messageBody = Encoding.UTF8.GetBytes("Message 2");
-                    message = new Message(messageBody);
-                    await sender.SendAsync(message);
-
-                    recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                    Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
+                Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
             });
         }
 
@@ -481,33 +385,24 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             {
                 var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
                 var connection = new ServiceBusConnection(csb);
-                var sender = new MessageSender(connection, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    var messageBody = Encoding.UTF8.GetBytes("Message");
-                    var message = new Message(messageBody);
+                await using var sender = new MessageSender(connection, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+                var messageBody = Encoding.UTF8.GetBytes("Message");
+                var message = new Message(messageBody);
 
-                    await sender.SendAsync(message);
-                    await sender.CloseAsync();
+                await sender.SendAsync(message);
+                await sender.DisposeAsync();
 
-                    var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                    Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
+                var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
+                Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
 
-                    connection = sender.ClientEntity.ServiceBusConnection;
-                    sender = new MessageSender(connection, queueName);
-                    messageBody = Encoding.UTF8.GetBytes("Message 2");
-                    message = new Message(messageBody);
-                    await sender.SendAsync(message);
-                    recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                    Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
-
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                connection = sender.ClientEntity.ServiceBusConnection;
+                await using  var sender2 = new MessageSender(connection, queueName);
+                messageBody = Encoding.UTF8.GetBytes("Message 2");
+                message = new Message(messageBody);
+                await sender2.SendAsync(message);
+                recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
+                Assert.True(Encoding.UTF8.GetString(recivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(messageBody));
             });
         }
 
@@ -518,20 +413,12 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                await using var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                await using var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
 
-                try
-                {
-                    await sender.SendAsync(new List<Message>());
-                    var message = await receiver.ReceiveAsync(TimeSpan.FromSeconds(3));
-                    Assert.True(message == null, "Expected not to find any messages, but a message was received.");
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+                await sender.SendAsync(new List<Message>());
+                var message = await receiver.ReceiveAsync(TimeSpan.FromSeconds(3));
+                Assert.True(message == null, "Expected not to find any messages, but a message was received.");
             });
         }
 

@@ -46,8 +46,8 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
                 var exceptionReceivedHandlerCalled = false;
-                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-                var subscriptionClient = new SubscriptionClient(
+                await using var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicClient.TopicName,
                     subscriptionName,
@@ -69,27 +69,20 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                    (session, message, token) => Task.CompletedTask,
                    sessionHandlerOptions);
 
-                try
+                var stopwatch = Stopwatch.StartNew();
+                while (stopwatch.Elapsed.TotalSeconds <= 10)
                 {
-                    var stopwatch = Stopwatch.StartNew();
-                    while (stopwatch.Elapsed.TotalSeconds <= 10)
+                    if (exceptionReceivedHandlerCalled)
                     {
-                        if (exceptionReceivedHandlerCalled)
-                        {
-                            break;
-                        }
-
-                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        break;
                     }
 
-                    TestUtility.Log($"{DateTime.Now}: ExceptionReceivedHandlerCalled: {exceptionReceivedHandlerCalled}");
-                    Assert.True(exceptionReceivedHandlerCalled);
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
-                finally
-                {
-                    await subscriptionClient.CloseAsync();
-                    await topicClient.CloseAsync();
-                }
+
+                TestUtility.Log($"{DateTime.Now}: ExceptionReceivedHandlerCalled: {exceptionReceivedHandlerCalled}");
+                Assert.True(exceptionReceivedHandlerCalled);
+
             });
         }
 
@@ -98,44 +91,36 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
                 TestUtility.Log($"Topic: {topicName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
-                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-                var subscriptionClient = new SubscriptionClient(
+                await using var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicClient.TopicName,
                     subscriptionName,
                     ReceiveMode.PeekLock);
 
-                try
-                {
-                    var sessionHandlerOptions =
-                        new SessionHandlerOptions(ExceptionReceivedHandler)
-                        {
-                            MaxConcurrentSessions = 5,
-                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
-                            AutoComplete = true
-                        };
-                    
-                    var topicClientSender = topicClient.CreateSender();
-                    var testSessionHandler = new TestSessionHandler(
-                        subscriptionClient.ReceiveMode,
-                        sessionHandlerOptions,
-                        topicClientSender,
-                        subscriptionClient.SessionPumpHost);
+                var sessionHandlerOptions =
+                    new SessionHandlerOptions(ExceptionReceivedHandler)
+                    {
+                        MaxConcurrentSessions = 5,
+                        MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                        AutoComplete = true
+                    };
 
-                    // Send messages to Session
-                    await testSessionHandler.SendSessionMessages();
+                var topicClientSender = topicClient.CreateSender();
+                var testSessionHandler = new TestSessionHandler(
+                    subscriptionClient.ReceiveMode,
+                    sessionHandlerOptions,
+                    topicClientSender,
+                    subscriptionClient.SessionPumpHost);
 
-                    // Register handler
-                    testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
+                // Send messages to Session
+                await testSessionHandler.SendSessionMessages();
 
-                    // Verify messages were received.
-                    await testSessionHandler.VerifyRun();
-                }
-                finally
-                {
-                    await subscriptionClient.CloseAsync();
-                    await topicClient.CloseAsync();
-                }
+                // Register handler
+                testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
+
+                // Verify messages were received.
+                await testSessionHandler.VerifyRun();
             });
         }
 

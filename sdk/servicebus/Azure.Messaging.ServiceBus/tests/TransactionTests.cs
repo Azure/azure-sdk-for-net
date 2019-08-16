@@ -38,13 +38,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(ConnectionString, queueName);
-                var receiver = new MessageReceiver(ConnectionString, queueName);
+                await using var sender = new MessageSender(ConnectionString, queueName);
+                await using var receiver = new MessageReceiver(ConnectionString, queueName);
 
                 try
                 {
                     string body = Guid.NewGuid().ToString("N");
-                    var message = new Message(body.GetBytes()) {PartitionKey = "pk"};
+                    var message = new Message(body.GetBytes()) { PartitionKey = "pk" };
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await sender.SendAsync(message).ConfigureAwait(false);
@@ -59,8 +59,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
                 }
             });
         }
@@ -73,30 +71,22 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(ConnectionString, queueName);
-                var receiver = new MessageReceiver(ConnectionString, queueName);
+                await using var sender = new MessageSender(ConnectionString, queueName);
+                await using var receiver = new MessageReceiver(ConnectionString, queueName);
 
-                try
+                string body = Guid.NewGuid().ToString("N");
+                var message = new Message(body.GetBytes()) { PartitionKey = "pk" };
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    string body = Guid.NewGuid().ToString("N");
-                    var message = new Message(body.GetBytes()) { PartitionKey = "pk" };
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await sender.SendAsync(message).ConfigureAwait(false);
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.Null(receivedMessage);
+                    await sender.SendAsync(message).ConfigureAwait(false);
                 }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.Null(receivedMessage);
             });
         }
 
@@ -108,36 +98,28 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(ConnectionString, queueName);
-                var receiver = new MessageReceiver(ConnectionString, queueName);
+                await using var sender = new MessageSender(ConnectionString, queueName);
+                await using var receiver = new MessageReceiver(ConnectionString, queueName);
 
-                try
+                string body = Guid.NewGuid().ToString("N");
+                var message = new Message(body.GetBytes());
+                await sender.SendAsync(message).ConfigureAwait(false);
+
+                var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage);
+                Assert.Equal(body, receivedMessage.Body.GetString());
+
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    string body = Guid.NewGuid().ToString("N");
-                    var message = new Message(body.GetBytes());
-                    await sender.SendAsync(message).ConfigureAwait(false);
-
-                    var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage);
-                    Assert.Equal(body, receivedMessage.Body.GetString());
-
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(receivedMessage.LockToken);
-                        ts.Complete();
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
+                    await receiver.CompleteAsync(receivedMessage.LockToken);
+                    ts.Complete();
                 }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
             });
         }
 
@@ -149,35 +131,27 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(ConnectionString, queueName);
-                var receiver = new MessageReceiver(ConnectionString, queueName);
+                await using var sender = new MessageSender(ConnectionString, queueName);
+                await using var receiver = new MessageReceiver(ConnectionString, queueName);
 
-                try
+                string body = Guid.NewGuid().ToString("N");
+                var message = new Message(body.GetBytes());
+                await sender.SendAsync(message).ConfigureAwait(false);
+
+                var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage);
+                Assert.Equal(body, receivedMessage.Body.GetString());
+
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    string body = Guid.NewGuid().ToString("N");
-                    var message = new Message(body.GetBytes());
-                    await sender.SendAsync(message).ConfigureAwait(false);
-
-                    var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage);
-                    Assert.Equal(body, receivedMessage.Body.GetString());
-
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(receivedMessage.LockToken);
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
                     await receiver.CompleteAsync(receivedMessage.LockToken);
                 }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                await receiver.CompleteAsync(receivedMessage.LockToken);
             });
         }
 
@@ -189,52 +163,42 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(ConnectionString, queueName);
-                var sessionClient = new SessionClient(ConnectionString, queueName);
-                MessageSession receiver = null;
+                await using var sender = new MessageSender(ConnectionString, queueName);
+                await using var sessionClient = new SessionClient(ConnectionString, queueName);
 
-                try
+                string body = Guid.NewGuid().ToString("N");
+                var message = new Message(body.GetBytes())
                 {
-                    string body = Guid.NewGuid().ToString("N");
-                    var message = new Message(body.GetBytes())
-                    {
-                        SessionId = body
-                    };
-                    await sender.SendAsync(message).ConfigureAwait(false);
+                    SessionId = body
+                };
+                await sender.SendAsync(message).ConfigureAwait(false);
 
-                    receiver = await sessionClient.AcceptMessageSessionAsync(body);
+                await using var receiver = await sessionClient.AcceptMessageSessionAsync(body);
 
-                    var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage);
-                    Assert.Equal(body, receivedMessage.Body.GetString());
+                var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage);
+                Assert.Equal(body, receivedMessage.Body.GetString());
 
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(receivedMessage.LockToken);
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(receivedMessage.LockToken);
-                        ts.Complete();
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
-                }
-                finally
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await sender.CloseAsync();
-                    await sessionClient.CloseAsync();
-                    await receiver?.CloseAsync();
+                    await receiver.CompleteAsync(receivedMessage.LockToken);
                 }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await receiver.CompleteAsync(receivedMessage.LockToken);
+                    ts.Complete();
+                }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                await Assert.ThrowsAsync<SessionLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
             });
         }
 
@@ -246,49 +210,41 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var sender = new MessageSender(ConnectionString, queueName);
-                var receiver = new MessageReceiver(ConnectionString, queueName);
+                await using var sender = new MessageSender(ConnectionString, queueName);
+                await using var receiver = new MessageReceiver(ConnectionString, queueName);
 
-                try
+                string body = Guid.NewGuid().ToString("N");
+                var message = new Message(body.GetBytes());
+                await sender.SendAsync(message).ConfigureAwait(false);
+
+                var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage);
+                Assert.Equal(body, receivedMessage.Body.GetString());
+                var sequenceNumber = receivedMessage.SequenceNumber;
+                await receiver.DeferAsync(receivedMessage.LockToken);
+
+                var deferredMessage = await receiver.ReceiveDeferredMessageAsync(sequenceNumber);
+
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    string body = Guid.NewGuid().ToString("N");
-                    var message = new Message(body.GetBytes());
-                    await sender.SendAsync(message).ConfigureAwait(false);
-
-                    var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage);
-                    Assert.Equal(body, receivedMessage.Body.GetString());
-                    var sequenceNumber = receivedMessage.SequenceNumber;
-                    await receiver.DeferAsync(receivedMessage.LockToken);
-
-                    var deferredMessage = await receiver.ReceiveDeferredMessageAsync(sequenceNumber);
-
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(deferredMessage.LockToken);
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(deferredMessage.LockToken);
-                        ts.Complete();
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(deferredMessage.LockToken));
+                    await receiver.CompleteAsync(deferredMessage.LockToken);
                 }
-                finally
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
+                    await receiver.CompleteAsync(deferredMessage.LockToken);
+                    ts.Complete();
                 }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(deferredMessage.LockToken));
             });
         }
 
@@ -299,75 +255,63 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var sender = new MessageSender(ConnectionString, queueName);
-                var receiver = new MessageReceiver(ConnectionString, queueName);
+                await using var sender = new MessageSender(ConnectionString, queueName);
+                await using var receiver = new MessageReceiver(ConnectionString, queueName);
 
-                try
+                string body = Guid.NewGuid().ToString("N");
+                var message1 = new Message((body + "1").GetBytes())
                 {
-                    string body = Guid.NewGuid().ToString("N");
-                    var message1 = new Message((body + "1").GetBytes())
-                    {
-                        PartitionKey = "1"
-                    };
-                    var message2 = new Message((body + "2").GetBytes())
-                    {
-                        PartitionKey = "2"
-                    };
+                    PartitionKey = "1"
+                };
+                var message2 = new Message((body + "2").GetBytes())
+                {
+                    PartitionKey = "2"
+                };
 
-                    // Two send operations to different partitions.
-                    var transaction = new CommittableTransaction();
-                    using (TransactionScope ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await sender.SendAsync(message1);
-
-                        await Assert.ThrowsAsync<InvalidOperationException>(
-                            async () => await sender.SendAsync(message2));
-                        ts.Complete();
-                    }
-
-                    transaction.Rollback();
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    // Two complete operations to different partitions.
+                // Two send operations to different partitions.
+                var transaction = new CommittableTransaction();
+                using (TransactionScope ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
+                {
                     await sender.SendAsync(message1);
-                    await sender.SendAsync(message2);
 
-                    var receivedMessage1 = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage1);
-                    var receivedMessage2 = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage2);
+                    await Assert.ThrowsAsync<InvalidOperationException>(
+                        async () => await sender.SendAsync(message2));
+                    ts.Complete();
+                }
 
-                    transaction = new CommittableTransaction();
-                    using (TransactionScope ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(receivedMessage1.LockToken);
+                transaction.Rollback();
 
-                        await Assert.ThrowsAsync<InvalidOperationException>(
-                            async () => await receiver.CompleteAsync(receivedMessage2.LockToken));
-                        ts.Complete();
-                    }
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    transaction.Rollback();
+                // Two complete operations to different partitions.
+                await sender.SendAsync(message1);
+                await sender.SendAsync(message2);
 
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
+                var receivedMessage1 = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage1);
+                var receivedMessage2 = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage2);
 
+                transaction = new CommittableTransaction();
+                using (TransactionScope ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
+                {
                     await receiver.CompleteAsync(receivedMessage1.LockToken);
-                    await receiver.CompleteAsync(receivedMessage2.LockToken);
+
+                    await Assert.ThrowsAsync<InvalidOperationException>(
+                        async () => await receiver.CompleteAsync(receivedMessage2.LockToken));
+                    ts.Complete();
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                }
+
+                transaction.Rollback();
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                await receiver.CompleteAsync(receivedMessage1.LockToken);
+                await receiver.CompleteAsync(receivedMessage2.LockToken);
             });
         }
 
@@ -378,48 +322,39 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var connection = new ServiceBusConnection(new ServiceBusConnectionStringBuilder(ConnectionString));
-                var sender = new MessageSender(connection, queueName);
-                var receiver = new MessageReceiver(connection, queueName);
+                await using var connection = new ServiceBusConnection(new ServiceBusConnectionStringBuilder(ConnectionString));
+                await using var sender = new MessageSender(connection, queueName);
+                await using var receiver = new MessageReceiver(connection, queueName);
 
-                try
+                string body1 = Guid.NewGuid().ToString("N");
+                string body2 = Guid.NewGuid().ToString("N");
+                var message = new Message(body1.GetBytes());
+                var message2 = new Message(body2.GetBytes());
+                await sender.SendAsync(message).ConfigureAwait(false);
+
+                var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage);
+                Assert.Equal(body1, receivedMessage.Body.GetString());
+
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    string body1 = Guid.NewGuid().ToString("N");
-                    string body2 = Guid.NewGuid().ToString("N");
-                    var message = new Message(body1.GetBytes());
-                    var message2 = new Message(body2.GetBytes());
-                    await sender.SendAsync(message).ConfigureAwait(false);
-
-                    var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage);
-                    Assert.Equal(body1, receivedMessage.Body.GetString());
-
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(receivedMessage.LockToken);
-                        await sender.SendAsync(message2).ConfigureAwait(false);
-                        ts.Complete();
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    // Assert that complete did succeed
-                    await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
-
-                    // Assert that send did succeed
-                    receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage);
-                    Assert.Equal(body2, receivedMessage.Body.GetString());
                     await receiver.CompleteAsync(receivedMessage.LockToken);
+                    await sender.SendAsync(message2).ConfigureAwait(false);
+                    ts.Complete();
                 }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                    await connection.CloseAsync();
-                }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                // Assert that complete did succeed
+                await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.LockToken));
+
+                // Assert that send did succeed
+                receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage);
+                Assert.Equal(body2, receivedMessage.Body.GetString());
+                await receiver.CompleteAsync(receivedMessage.LockToken);
             });
         }
 
@@ -430,45 +365,36 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var connection = new ServiceBusConnection(new ServiceBusConnectionStringBuilder(ConnectionString));
-                var sender = new MessageSender(connection, queueName);
-                var receiver = new MessageReceiver(connection, queueName);
+                await using var connection = new ServiceBusConnection(new ServiceBusConnectionStringBuilder(ConnectionString));
+                await using var sender = new MessageSender(connection, queueName);
+                await using var receiver = new MessageReceiver(connection, queueName);
 
-                try
+                string body1 = Guid.NewGuid().ToString("N");
+                string body2 = Guid.NewGuid().ToString("N");
+                var message = new Message(body1.GetBytes());
+                var message2 = new Message(body2.GetBytes());
+                await sender.SendAsync(message).ConfigureAwait(false);
+
+                var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.NotNull(receivedMessage);
+                Assert.Equal(body1, receivedMessage.Body.GetString());
+
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    string body1 = Guid.NewGuid().ToString("N");
-                    string body2 = Guid.NewGuid().ToString("N");
-                    var message = new Message(body1.GetBytes());
-                    var message2 = new Message(body2.GetBytes());
-                    await sender.SendAsync(message).ConfigureAwait(false);
-
-                    var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.NotNull(receivedMessage);
-                    Assert.Equal(body1, receivedMessage.Body.GetString());
-
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await receiver.CompleteAsync(receivedMessage.LockToken);
-                        await sender.SendAsync(message2).ConfigureAwait(false);
-                    }
-
-                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                    // Operating on the same message should not be done.
-                    await Task.Delay(TimeSpan.FromSeconds(2));
-
-                    // Following should succeed without exceptions
                     await receiver.CompleteAsync(receivedMessage.LockToken);
+                    await sender.SendAsync(message2).ConfigureAwait(false);
+                }
 
-                    // Assert that send failed
-                    receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
-                    Assert.Null(receivedMessage);
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await receiver.CloseAsync();
-                    await connection.CloseAsync();
-                }
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                // Following should succeed without exceptions
+                await receiver.CompleteAsync(receivedMessage.LockToken);
+
+                // Assert that send failed
+                receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
+                Assert.Null(receivedMessage);
             });
         }
 
@@ -482,13 +408,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
             var intermediateQueue = default(ServiceBusScope.QueueScope);
             var destination1 = default(ServiceBusScope.TopicScope);
             var destination2 = default(ServiceBusScope.QueueScope);
-            var intermediateSender = default(MessageSender);
-            var intermediateReceiver = default(MessageReceiver);
-            var destination1Sender = default(MessageSender);
-            var destination1ViaSender = default(MessageSender);
-            var destination2ViaSender = default(MessageSender);
-            var destination1Receiver = default(MessageReceiver);
-            var destination2Receiver = default(MessageReceiver);
 
             try
             {
@@ -502,13 +421,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 var destination2Name = destination2.Name;
                 var destination2ReceiverName = destination2.Name;
 
-                intermediateSender = new MessageSender(connection, intermediateQueueName);
-                intermediateReceiver = new MessageReceiver(connection, intermediateQueueName);
-                destination1Sender = new MessageSender(connection, destination1Name);
-                destination1ViaSender = new MessageSender(connection, destination1Name, intermediateQueueName);
-                destination2ViaSender = new MessageSender(connection, destination2Name, intermediateQueueName);
-                destination1Receiver = new MessageReceiver(connection, destination1ReceiverName);
-                destination2Receiver = new MessageReceiver(connection, destination2ReceiverName);
+                await using var intermediateSender = new MessageSender(connection, intermediateQueueName);
+                await using var intermediateReceiver = new MessageReceiver(connection, intermediateQueueName);
+                await using var destination1Sender = new MessageSender(connection, destination1Name);
+                await using var destination1ViaSender = new MessageSender(connection, destination1Name, intermediateQueueName);
+                await using var destination2ViaSender = new MessageSender(connection, destination2Name, intermediateQueueName);
+                await using var destination1Receiver = new MessageReceiver(connection, destination1ReceiverName);
+                await using var destination2Receiver = new MessageReceiver(connection, destination2ReceiverName);
 
                 var body = Guid.NewGuid().ToString("N");
                 var message1 = new Message(body.GetBytes()) { MessageId = "1", PartitionKey = "pk1" };
@@ -565,16 +484,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 // The cleanup methods will not throw and are safe to call outside of a try/catch.  They
                 // also have no dependencies on execution order, so allowing them to run in parallel is fine.
                 await Task.WhenAll(
-                    SafeCloseAllAsync(intermediateSender.CloseAsync, intermediateReceiver.CloseAsync, destination1Sender.CloseAsync, destination1ViaSender.CloseAsync, destination2ViaSender.CloseAsync, destination1Receiver.CloseAsync, destination2Receiver.CloseAsync),
                     intermediateQueue?.CleanupAsync(),
                     destination1?.CleanupAsync(),
                     destination2?.CleanupAsync());
             }
-        }
-
-        private Task SafeCloseAllAsync(params Func<Task>[] clientEntities)
-        {
-            return Task.WhenAll(clientEntities.Select(entity => entity()));
         }
     }
 }

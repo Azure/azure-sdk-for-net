@@ -940,8 +940,6 @@ namespace Azure.Messaging.ServiceBus.Core
             return AmqpResponseMessage.CreateResponse(responseAmqpMessage);
         }
         
-        public Task CloseAsync() => ClientEntity.CloseAsync(OnClosingAsync);
-
         internal async Task OnClosingAsync()
         {
             this.clientLinkManager.Close();
@@ -1645,7 +1643,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
         public async ValueTask DisposeAsync()
         {
-            await CloseAsync();
+            await ClientEntity.CloseAsync(OnClosingAsync).ConfigureAwait(false);
         }
     }
 }

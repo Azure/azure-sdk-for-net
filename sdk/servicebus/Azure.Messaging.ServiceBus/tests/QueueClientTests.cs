@@ -25,17 +25,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver();
-                try
-                {
-                    await this.PeekLockTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await this.PeekLockTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -47,7 +40,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver();
@@ -65,8 +58,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 {
                     var messageToDelete = await TestUtility.ReceiveMessagesAsync(receiver, 1);
                     await TestUtility.CompleteMessagesAsync(receiver, messageToDelete);
-
-                    await queueClient.CloseAsync();
                 }
             });
         }
@@ -79,24 +70,18 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver();
-                try
-                {
-                    await TestUtility.SendMessagesAsync(sender, 1);
 
-                    var messages = await TestUtility.ReceiveMessagesAsync(receiver, 1);
+                await TestUtility.SendMessagesAsync(sender, 1);
 
-                    await TestUtility.CompleteMessagesAsync(receiver, messages);
+                var messages = await TestUtility.ReceiveMessagesAsync(receiver, 1);
 
-                    Assert.Equal(1, messages.First().DeliveryCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await TestUtility.CompleteMessagesAsync(receiver, messages);
+
+                Assert.Equal(1, messages.First().DeliveryCount);
             });
         }
 
@@ -109,17 +94,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await this.ReceiveDeleteTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -131,17 +109,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver();
-                try
-                {
-                    await this.PeekLockWithAbandonTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await this.PeekLockWithAbandonTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -153,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver();
 
@@ -161,20 +132,12 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 var deadLetterQueueClient = new QueueClient(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName));
                 
                 await using var deadLetterreceiver = deadLetterQueueClient.CreateReceiver();
-                try
-                {
-                    await
-                        this.PeekLockWithDeadLetterTestCase(
-                            sender,
-                            receiver,
-                            deadLetterreceiver,
-                            messageCount);
-                }
-                finally
-                {
-                    await deadLetterQueueClient.CloseAsync();
-                    await queueClient.CloseAsync();
-                }
+                await
+                    this.PeekLockWithDeadLetterTestCase(
+                        sender,
+                        receiver,
+                        deadLetterreceiver,
+                        messageCount);
             });
         }
 
@@ -186,17 +149,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver();
-                try
-                {
-                    await this.RenewLockTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await this.RenewLockTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -208,17 +164,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    await this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(sender, receiver, messageCount);
             });
         }
 
@@ -230,17 +179,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                await using var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 await using var sender = queueClient.CreateSender();
                 await using var receiver = queueClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
-                try
-                {
-                    await this.CancelScheduledMessagesAsyncTestCase(sender, receiver, messageCount);
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                await this.CancelScheduledMessagesAsyncTestCase(sender, receiver, messageCount);
             });
         }
     }

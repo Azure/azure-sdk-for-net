@@ -133,13 +133,9 @@ namespace Azure.Messaging.ServiceBus
 
         private ICbsTokenProvider CbsTokenProvider { get; }
 
-      
-        public Task CloseAsync() => ClientEntity.CloseAsync(() => Task.CompletedTask);
-
-
-        public ValueTask DisposeAsync()
+        public async ValueTask DisposeAsync()
         {
-            throw new NotImplementedException();
+            await ClientEntity.CloseAsync(() => Task.CompletedTask);
         }
     }
 }
