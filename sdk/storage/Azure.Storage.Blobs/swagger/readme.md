@@ -269,7 +269,7 @@ directive:
   where: $["x-ms-paths"]["/{containerName}?comp=lease&restype=container&acquire"]
   transform: >
     $.put.responses["201"].description = "The lease operation completed successfully.";
-    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a container or blob's lease";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
     $.put.responses["201"]["x-ms-client-name"] = "Lease";
 ```
 
@@ -290,7 +290,7 @@ directive:
   where: $["x-ms-paths"]["/{containerName}?comp=lease&restype=container&renew"]
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
-    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container or blob's lease";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
     $.put.responses["200"]["x-ms-client-name"] = "Lease";
 ```
 
@@ -311,7 +311,7 @@ directive:
   where: $["x-ms-paths"]["/{containerName}?comp=lease&restype=container&change"]
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
-    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container or blob's lease";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
     $.put.responses["200"]["x-ms-client-name"] = "Lease";
 ```
 
@@ -559,7 +559,7 @@ directive:
   transform: >
     $.put.responses["201"]["x-ms-client-name"] = "Lease";
     $.put.responses["201"].description = "The lease operation completed successfully.";
-    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a container or blob's lease";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
 
 ### /{containerName}/{blob}?comp=lease&release
@@ -580,7 +580,7 @@ directive:
   transform: >
     $.put.responses["200"]["x-ms-client-name"] = "Lease";
     $.put.responses["200"].description = "The lease operation completed successfully.";
-    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container or blob's lease";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
 
 ### /{containerName}/{blob}?comp=lease&change
@@ -591,7 +591,7 @@ directive:
   transform: >
     $.put.responses["200"]["x-ms-client-name"] = "Lease";
     $.put.responses["200"].description = "The lease operation completed successfully.";
-    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container or blob's lease";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a container's or blob's lease";
 ```
 
 ### /{containerName}/{blob}?comp=lease&break
@@ -966,7 +966,7 @@ directive:
     $["x-ms-public"] = false;
 ```
 
-### Hide *Include types
+### Hide various Include types
 ``` yaml
 directive:
 - from: swagger-document

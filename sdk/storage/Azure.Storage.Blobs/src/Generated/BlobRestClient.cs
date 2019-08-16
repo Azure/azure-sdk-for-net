@@ -16968,7 +16968,7 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// Uniquely identifies a container or blob's lease
+        /// Uniquely identifies a container's or blob's lease
         /// </summary>
         public string LeaseId { get; internal set; }
     }
