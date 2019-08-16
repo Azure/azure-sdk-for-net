@@ -38,6 +38,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
         public async Task AzureActiveDirectoryTokenProviderAuthCallbackTest()
         {
             string TestToken = @"eyJhbGciOiJIUzI1NiJ9.e30.ZRrHA1JJJW8opsbCGfG_HACGpVUMN_a9IV7pAx_Zmeo";
