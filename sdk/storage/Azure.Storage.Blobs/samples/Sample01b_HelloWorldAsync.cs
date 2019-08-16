@@ -114,7 +114,7 @@ namespace Azure.Storage.Blobs.Samples
         {
             // Download the public blob at https://aka.ms/bloburl
             BlobDownloadInfo download = await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadAsync();
-            using (FileStream file = File.OpenWrite("hello.jpg"))
+            using (FileStream file = File.OpenWrite(Path.GetTempPath() + "hello.jpg"))
             {
                 await download.Content.CopyToAsync(file);
             }

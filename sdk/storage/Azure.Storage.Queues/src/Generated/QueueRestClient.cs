@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -4019,14 +4019,14 @@ namespace Azure.Storage.Queues.Models
     internal partial class StorageError
     {
         /// <summary>
-        /// Code
-        /// </summary>
-        public string Code { get; internal set; }
-
-        /// <summary>
         /// Message
         /// </summary>
         public string Message { get; internal set; }
+
+        /// <summary>
+        /// Code
+        /// </summary>
+        public string Code { get; internal set; }
 
         /// <summary>
         /// Deserializes XML into a new StorageError instance.
@@ -4038,15 +4038,15 @@ namespace Azure.Storage.Queues.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Queues.Models.StorageError _value = new Azure.Storage.Queues.Models.StorageError();
-            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
-            if (_child != null)
-            {
-                _value.Code = _child.Value;
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
             if (_child != null)
             {
                 _value.Message = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
+            if (_child != null)
+            {
+                _value.Code = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;

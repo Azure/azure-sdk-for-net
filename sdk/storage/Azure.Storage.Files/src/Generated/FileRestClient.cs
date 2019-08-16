@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -3030,21 +3030,9 @@ namespace Azure.Storage.Files
                         {
                             _value.ContentLanguage = _header;
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
                             _value.AcceptRanges = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-completion-time", out _header))
                         {
@@ -3143,21 +3131,9 @@ namespace Azure.Storage.Files
                         {
                             _value.ContentLanguage = _header;
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
                             _value.AcceptRanges = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-completion-time", out _header))
                         {
@@ -3832,13 +3808,13 @@ namespace Azure.Storage.Files
                         {
                             _value.ETag = new Azure.Core.Http.ETag(_header);
                         }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -5796,6 +5772,11 @@ namespace Azure.Storage.Files.Models
         public int? MaxResults { get; internal set; }
 
         /// <summary>
+        /// NextMarker
+        /// </summary>
+        public string NextMarker { get; internal set; }
+
+        /// <summary>
         /// DirectoryItems
         /// </summary>
         public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.DirectoryItem> DirectoryItems { get; internal set; }
@@ -5804,11 +5785,6 @@ namespace Azure.Storage.Files.Models
         /// FileItems
         /// </summary>
         public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileItem> FileItems { get; internal set; }
-
-        /// <summary>
-        /// NextMarker
-        /// </summary>
-        public string NextMarker { get; internal set; }
 
         /// <summary>
         /// Creates a new FilesAndDirectoriesSegment instance
@@ -5865,6 +5841,7 @@ namespace Azure.Storage.Files.Models
             {
                 _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
+            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             _child = element.Element(System.Xml.Linq.XName.Get("Entries", ""));
             if (_child != null)
             {
@@ -5889,7 +5866,6 @@ namespace Azure.Storage.Files.Models
             {
                 _value.FileItems = new System.Collections.Generic.List<Azure.Storage.Files.Models.FileItem>();
             }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -5965,24 +5941,9 @@ namespace Azure.Storage.Files.Models
         public string ContentLanguage { get; internal set; }
 
         /// <summary>
-        /// This header uniquely identifies the request that was made and can be used for troubleshooting the request.
-        /// </summary>
-        public string RequestId { get; internal set; }
-
-        /// <summary>
-        /// Indicates the version of the File service used to execute the request.
-        /// </summary>
-        public string Version { get; internal set; }
-
-        /// <summary>
         /// Indicates that the service supports requests for partial file content.
         /// </summary>
         public string AcceptRanges { get; internal set; }
-
-        /// <summary>
-        /// A UTC date/time value generated by the service that indicates the time at which the response was initiated.
-        /// </summary>
-        public System.DateTimeOffset Date { get; internal set; }
 
         /// <summary>
         /// Conclusion time of the last attempted Copy File operation where this file was the destination file. This value can specify the time of a completed, aborted, or failed copy attempt.
@@ -7060,14 +7021,14 @@ namespace Azure.Storage.Files.Models
     internal partial class StorageError
     {
         /// <summary>
-        /// Code
-        /// </summary>
-        public string Code { get; internal set; }
-
-        /// <summary>
         /// Message
         /// </summary>
         public string Message { get; internal set; }
+
+        /// <summary>
+        /// Code
+        /// </summary>
+        public string Code { get; internal set; }
 
         /// <summary>
         /// Deserializes XML into a new StorageError instance.
@@ -7079,15 +7040,15 @@ namespace Azure.Storage.Files.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.StorageError _value = new Azure.Storage.Files.Models.StorageError();
-            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
-            if (_child != null)
-            {
-                _value.Code = _child.Value;
-            }
             _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
             if (_child != null)
             {
                 _value.Message = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
+            if (_child != null)
+            {
+                _value.Code = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -7604,14 +7565,14 @@ namespace Azure.Storage.Files.Models
     internal partial class StorageHandlesSegment
     {
         /// <summary>
-        /// Handles
-        /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.StorageHandle> Handles { get; internal set; }
-
-        /// <summary>
         /// NextMarker
         /// </summary>
         public string NextMarker { get; internal set; }
+
+        /// <summary>
+        /// Handles
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.StorageHandle> Handles { get; internal set; }
 
         /// <summary>
         /// Creates a new StorageHandlesSegment instance
@@ -7643,6 +7604,7 @@ namespace Azure.Storage.Files.Models
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             Azure.Storage.Files.Models.StorageHandlesSegment _value = new Azure.Storage.Files.Models.StorageHandlesSegment(true);
+            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             _child = element.Element(System.Xml.Linq.XName.Get("Entries", ""));
             if (_child != null)
             {
@@ -7655,7 +7617,6 @@ namespace Azure.Storage.Files.Models
             {
                 _value.Handles = new System.Collections.Generic.List<Azure.Storage.Files.Models.StorageHandle>();
             }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             CustomizeFromXml(element, _value);
             return _value;
         }

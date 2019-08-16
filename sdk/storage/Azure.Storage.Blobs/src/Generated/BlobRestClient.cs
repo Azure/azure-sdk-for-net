@@ -1125,18 +1125,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("x-ms-blob-public-access", out _header))
                         {
                             _value.BlobPublicAccess = Azure.Storage.Blobs.BlobRestClient.Serialization.ParsePublicAccessType(_header);
@@ -2426,18 +2414,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LeaseTime = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
 
                         // Create the response
                         Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> _result =
@@ -3200,21 +3176,9 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
                             _value.AcceptRanges = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-committed-block-count", out _header))
                         {
@@ -3337,21 +3301,9 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
                             _value.AcceptRanges = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-committed-block-count", out _header))
                         {
@@ -4179,18 +4131,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
 
                         // Create the response
                         Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation> _result =
@@ -4367,18 +4307,6 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
@@ -5262,18 +5190,6 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-lease-time", out _header))
                         {
                             _value.LeaseTime = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -9835,18 +9751,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.BlobContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        if (response.Headers.TryGetValue("x-ms-request-id", out _header))
-                        {
-                            _value.RequestId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-version", out _header))
-                        {
-                            _value.Version = _header;
-                        }
-                        if (response.Headers.TryGetValue("Date", out _header))
-                        {
-                            _value.Date = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
 
                         // Create the response
                         Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation> _result =
@@ -11196,11 +11100,6 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset? LastModified { get; internal set; }
 
         /// <summary>
-        /// ETag
-        /// </summary>
-        public Azure.Core.Http.ETag? ETag { get; internal set; }
-
-        /// <summary>
         /// Size in bytes
         /// </summary>
         public long? ContentLength { get; internal set; }
@@ -11338,6 +11237,11 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset? AccessTierChangeTime { get; internal set; }
 
         /// <summary>
+        /// ETag
+        /// </summary>
+        public Azure.Core.Http.ETag? ETag { get; internal set; }
+
+        /// <summary>
         /// Deserializes XML into a new BlobItemProperties instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -11356,11 +11260,6 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.LastModified = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
-            if (_child != null)
-            {
-                _value.ETag = new Azure.Core.Http.ETag(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Content-Length", ""));
             if (_child != null)
@@ -11497,6 +11396,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.AccessTierChangeTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
+            if (_child != null)
+            {
+                _value.ETag = new Azure.Core.Http.ETag(_child.Value);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -11513,9 +11417,8 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobItemProperties instance for mocking.
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
-            string copyId = default,
+            Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
             System.DateTimeOffset? creationTime = default,
-            Azure.Core.Http.ETag? eTag = default,
             long? contentLength = default,
             string contentType = default,
             string contentEncoding = default,
@@ -11528,8 +11431,8 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
+            string copyId = default,
             System.DateTimeOffset? lastModified = default,
-            Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
             System.Uri copySource = default,
             string copyProgress = default,
             System.DateTimeOffset? copyCompletionTime = default,
@@ -11542,12 +11445,12 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.AccessTier accessTier = default,
             bool? accessTierInferred = default,
             Azure.Storage.Blobs.Models.ArchiveStatus archiveStatus = default,
-            System.DateTimeOffset? accessTierChangeTime = default)
+            System.DateTimeOffset? accessTierChangeTime = default,
+            Azure.Core.Http.ETag? eTag = default)
         {
             var _model = new BlobItemProperties();
-            _model.CopyId = copyId;
+            _model.CopyStatus = copyStatus;
             _model.CreationTime = creationTime;
-            _model.ETag = eTag;
             _model.ContentLength = contentLength;
             _model.ContentType = contentType;
             _model.ContentEncoding = contentEncoding;
@@ -11560,8 +11463,8 @@ namespace Azure.Storage.Blobs.Models
             _model.LeaseStatus = leaseStatus;
             _model.LeaseState = leaseState;
             _model.LeaseDuration = leaseDuration;
+            _model.CopyId = copyId;
             _model.LastModified = lastModified;
-            _model.CopyStatus = copyStatus;
             _model.CopySource = copySource;
             _model.CopyProgress = copyProgress;
             _model.CopyCompletionTime = copyCompletionTime;
@@ -11575,6 +11478,7 @@ namespace Azure.Storage.Blobs.Models
             _model.AccessTierInferred = accessTierInferred;
             _model.ArchiveStatus = archiveStatus;
             _model.AccessTierChangeTime = accessTierChangeTime;
+            _model.ETag = eTag;
             return _model;
         }
     }
@@ -11712,7 +11616,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Core.Http.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// If the blob has an Hash hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
+        /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
         /// </summary>
         #pragma warning disable CA1819 // Properties should not return arrays
         public byte[] ContentHash { get; internal set; }
@@ -12232,14 +12136,14 @@ namespace Azure.Storage.Blobs.Models
         public string Delimiter { get; internal set; }
 
         /// <summary>
-        /// BlobItems
-        /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> BlobItems { get; internal set; }
-
-        /// <summary>
         /// NextMarker
         /// </summary>
         public string NextMarker { get; internal set; }
+
+        /// <summary>
+        /// BlobItems
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> BlobItems { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobsFlatSegment instance
@@ -12293,6 +12197,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Delimiter = _child.Value;
             }
+            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             _child = element.Element(System.Xml.Linq.XName.Get("Blobs", ""));
             if (_child != null)
             {
@@ -12305,7 +12210,6 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItem>();
             }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -12354,6 +12258,11 @@ namespace Azure.Storage.Blobs.Models
         public string Delimiter { get; internal set; }
 
         /// <summary>
+        /// NextMarker
+        /// </summary>
+        public string NextMarker { get; internal set; }
+
+        /// <summary>
         /// BlobItems
         /// </summary>
         public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> BlobItems { get; internal set; }
@@ -12362,11 +12271,6 @@ namespace Azure.Storage.Blobs.Models
         /// BlobPrefixes
         /// </summary>
         public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobPrefix> BlobPrefixes { get; internal set; }
-
-        /// <summary>
-        /// NextMarker
-        /// </summary>
-        public string NextMarker { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobsHierarchySegment instance
@@ -12421,6 +12325,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Delimiter = _child.Value;
             }
+            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             _child = element.Element(System.Xml.Linq.XName.Get("Blobs", ""));
             if (_child != null)
             {
@@ -12445,7 +12350,6 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.BlobPrefixes = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobPrefix>();
             }
-            _value.NextMarker = element.Element(System.Xml.Linq.XName.Get("NextMarker", "")).Value;
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -12806,21 +12710,6 @@ namespace Azure.Storage.Blobs.Models
         /// Approximate time remaining in the lease period, in seconds.
         /// </summary>
         public int LeaseTime { get; internal set; }
-
-        /// <summary>
-        /// This header uniquely identifies the request that was made and can be used for troubleshooting the request.
-        /// </summary>
-        public string RequestId { get; internal set; }
-
-        /// <summary>
-        /// Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above.
-        /// </summary>
-        public string Version { get; internal set; }
-
-        /// <summary>
-        /// UTC date/time value generated by the service that indicates the time at which the response was initiated
-        /// </summary>
-        public System.DateTimeOffset Date { get; internal set; }
     }
 }
 #endregion class BrokenLease
@@ -13109,11 +12998,6 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// ETag
-        /// </summary>
-        public Azure.Core.Http.ETag ETag { get; internal set; }
-
-        /// <summary>
         /// LeaseStatus
         /// </summary>
         public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { get; internal set; }
@@ -13144,6 +13028,11 @@ namespace Azure.Storage.Blobs.Models
         public bool? HasLegalHold { get; internal set; }
 
         /// <summary>
+        /// ETag
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
         /// Deserializes XML into a new ContainerProperties instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
@@ -13154,7 +13043,6 @@ namespace Azure.Storage.Blobs.Models
             System.Xml.Linq.XElement _child;
             Azure.Storage.Blobs.Models.ContainerProperties _value = new Azure.Storage.Blobs.Models.ContainerProperties();
             _value.LastModified = System.DateTimeOffset.Parse(element.Element(System.Xml.Linq.XName.Get("Last-Modified", "")).Value, System.Globalization.CultureInfo.InvariantCulture);
-            _value.ETag = new Azure.Core.Http.ETag(element.Element(System.Xml.Linq.XName.Get("Etag", "")).Value);
             _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
@@ -13185,6 +13073,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.HasLegalHold = bool.Parse(_child.Value);
             }
+            _value.ETag = new Azure.Core.Http.ETag(element.Element(System.Xml.Linq.XName.Get("Etag", "")).Value);
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -13587,21 +13476,6 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
-        /// This header uniquely identifies the request that was made and can be used for troubleshooting the request.
-        /// </summary>
-        public string RequestId { get; internal set; }
-
-        /// <summary>
-        /// Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above.
-        /// </summary>
-        public string Version { get; internal set; }
-
-        /// <summary>
-        /// UTC date/time value generated by the service that indicates the time at which the response was initiated
-        /// </summary>
-        public System.DateTimeOffset Date { get; internal set; }
-
-        /// <summary>
         /// Indicated whether data in the container may be accessed publicly and the level of access
         /// </summary>
         public Azure.Storage.Blobs.Models.PublicAccessType BlobPublicAccess { get; internal set; }
@@ -13748,24 +13622,9 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
-        /// This header uniquely identifies the request that was made and can be used for troubleshooting the request.
-        /// </summary>
-        public string RequestId { get; internal set; }
-
-        /// <summary>
-        /// Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above.
-        /// </summary>
-        public string Version { get; internal set; }
-
-        /// <summary>
         /// Indicates that the service supports requests for partial blob content.
         /// </summary>
         public string AcceptRanges { get; internal set; }
-
-        /// <summary>
-        /// UTC date/time value generated by the service that indicates the time at which the response was initiated
-        /// </summary>
-        public System.DateTimeOffset Date { get; internal set; }
 
         /// <summary>
         /// The number of committed blocks present in the blob. This header is returned only for append blobs.
@@ -13951,21 +13810,6 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the blob in bytes.
         /// </summary>
         public long BlobContentLength { get; internal set; }
-
-        /// <summary>
-        /// This header uniquely identifies the request that was made and can be used for troubleshooting the request.
-        /// </summary>
-        public string RequestId { get; internal set; }
-
-        /// <summary>
-        /// Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above.
-        /// </summary>
-        public string Version { get; internal set; }
-
-        /// <summary>
-        /// UTC date/time value generated by the service that indicates the time at which the response was initiated
-        /// </summary>
-        public System.DateTimeOffset Date { get; internal set; }
 
         /// <summary>
         /// Body
@@ -15149,21 +14993,6 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for a page blob. This header is not returned for block blobs or append blobs
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
-
-        /// <summary>
-        /// This header uniquely identifies the request that was made and can be used for troubleshooting the request.
-        /// </summary>
-        public string RequestId { get; internal set; }
-
-        /// <summary>
-        /// Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above.
-        /// </summary>
-        public string Version { get; internal set; }
-
-        /// <summary>
-        /// UTC date/time value generated by the service that indicates the time at which the response was initiated
-        /// </summary>
-        public System.DateTimeOffset Date { get; internal set; }
     }
 }
 #endregion class SetHttpHeadersOperation
@@ -15185,21 +15014,6 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// This header uniquely identifies the request that was made and can be used for troubleshooting the request.
-        /// </summary>
-        public string RequestId { get; internal set; }
-
-        /// <summary>
-        /// Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above.
-        /// </summary>
-        public string Version { get; internal set; }
-
-        /// <summary>
-        /// UTC date/time value generated by the service that indicates the time at which the response was initiated
-        /// </summary>
-        public System.DateTimeOffset Date { get; internal set; }
 
         /// <summary>
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
