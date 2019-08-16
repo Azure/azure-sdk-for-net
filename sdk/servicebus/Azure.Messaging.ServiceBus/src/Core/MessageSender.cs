@@ -639,21 +639,12 @@ namespace Azure.Messaging.ServiceBus.Core
 
             string[] claims = {ClaimConstants.Send};
             var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.SendingLinkDestination, ClientEntity.ServiceBusConnection, endpointUri, audience, claims, amqpLinkSettings, ClientEntity.ClientId);
-            (AmqpObject, DateTime) linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
+            var linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
-            var sendingAmqpLink = (SendingAmqpLink) linkDetails.Item1;
-            var activeSendReceiveClientLink = new ActiveClientLinkObject(
-                sendingAmqpLink,
-                sendingAmqpLink.Session.Connection,
-                endpointUri,
-                audience,
-                claims,
-                linkDetails.Item2);
-
-            this.clientLinkManager.SetLink(activeSendReceiveClientLink);
+            this.clientLinkManager.SetLink(linkDetails);
 
             MessagingEventSource.Log.AmqpSendLinkCreateStop(ClientEntity.ClientId);
-            return sendingAmqpLink;
+            return (SendingAmqpLink) linkDetails.Link;
         }
 
         private async Task<RequestResponseAmqpLink> CreateRequestResponseLinkAsync(TimeSpan timeout)
@@ -686,20 +677,11 @@ namespace Azure.Messaging.ServiceBus.Core
                 amqpLinkSettings,
                 ClientEntity.ClientId);
 
-            (AmqpObject, DateTime) linkDetails =
-                await amqpRequestResponseLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
+            var linkDetails = await amqpRequestResponseLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
-            var requestResponseAmqpLink = (RequestResponseAmqpLink) linkDetails.Item1;
-            var activeRequestResponseClientLink = new ActiveClientLinkObject(
-                requestResponseAmqpLink,
-                requestResponseAmqpLink.Session.Connection,
-                endpointUri,
-                audience,
-                claims,
-                linkDetails.Item2);
-            this.requestResponseLinkManager.SetLink(activeRequestResponseClientLink);
+            this.requestResponseLinkManager.SetLink(linkDetails);
 
-            return requestResponseAmqpLink;
+            return (RequestResponseAmqpLink) linkDetails.Link;
         }
 
         private ArraySegment<byte> GetNextDeliveryTag()

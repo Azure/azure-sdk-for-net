@@ -1464,22 +1464,13 @@ namespace Azure.Messaging.ServiceBus.Core
                 amqpLinkSettings,
                 ClientEntity.ClientId);
 
-            (AmqpObject, DateTime) linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
+            var linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
-            var receivingAmqpLink = (ReceivingAmqpLink) linkDetails.Item1;
-            var activeSendReceiveClientLink = new ActiveClientLinkObject(
-                receivingAmqpLink,
-                receivingAmqpLink.Session.Connection,
-                endpointUri,
-                new string[] { endpointUri.AbsoluteUri },
-                claims,
-                linkDetails.Item2);
-
-            this.clientLinkManager.SetLink(activeSendReceiveClientLink);
+            this.clientLinkManager.SetLink(linkDetails);
 
             MessagingEventSource.Log.AmqpReceiveLinkCreateStop(ClientEntity.ClientId);
 
-            return receivingAmqpLink;
+            return (ReceivingAmqpLink)linkDetails.Link;
         }
 
         // TODO: Consolidate the link creation paths
@@ -1504,18 +1495,10 @@ namespace Azure.Messaging.ServiceBus.Core
 
             var linkDetails = await amqpRequestResponseLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
-            var requestResponseAmqpLink = (RequestResponseAmqpLink)linkDetails.Item1;
-            var activeRequestResponseClientLink = new ActiveClientLinkObject(
-                requestResponseAmqpLink,
-                requestResponseAmqpLink.Session.Connection,
-                endpointUri,
-                new string[] { endpointUri.AbsoluteUri },
-                claims,
-                linkDetails.Item2);
-            this.requestResponseLinkManager.SetLink(activeRequestResponseClientLink);
+            this.requestResponseLinkManager.SetLink(linkDetails);
 
             MessagingEventSource.Log.AmqpReceiveLinkCreateStop(ClientEntity.ClientId);
-            return requestResponseAmqpLink;
+            return (RequestResponseAmqpLink)linkDetails.Link;
         }
 
         private void OnSessionReceiverLinkClosed(object sender, EventArgs e)
