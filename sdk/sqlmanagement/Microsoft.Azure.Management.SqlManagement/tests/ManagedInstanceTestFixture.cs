@@ -55,8 +55,8 @@ namespace Sql.Tests
         {
             NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
 
-            // Create vnet andinitialize subnets
-            string vnetName = SqlManagementTestUtilities.GenerateName();
+			// Create vnet andinitialize subnets
+			string vnetName = SqlManagementTestUtilities.GenerateName();
 
             // Create network security group
             NetworkSecurityGroup networkSecurityGroupParams = new NetworkSecurityGroup()
@@ -126,7 +126,7 @@ namespace Sql.Tests
                     }
                 }
             };
-            string networkSecurityGroupName = SqlManagementTestUtilities.GenerateName();
+			string networkSecurityGroupName = SqlManagementTestUtilities.GenerateName();
             networkClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroup.Name, networkSecurityGroupName, networkSecurityGroupParams);
             NetworkSecurityGroup securityGroup = networkClient.NetworkSecurityGroups.Get(resourceGroup.Name, networkSecurityGroupName);
 
@@ -141,10 +141,16 @@ namespace Sql.Tests
                         Name = SqlManagementTestUtilities.GenerateName(),
                         AddressPrefix = "0.0.0.0/0",
                         NextHopType = "Internet"
-                    }
-                }
+                    },
+					new Route()
+					{
+						Name = SqlManagementTestUtilities.GenerateName(),
+						AddressPrefix = "10.0.0.0/26",
+						NextHopType = "VnetLocal"
+					}
+				}
             };
-            string routeTableName = SqlManagementTestUtilities.GenerateName();
+			string routeTableName = SqlManagementTestUtilities.GenerateName();
             networkClient.RouteTables.CreateOrUpdate(resourceGroup.Name, routeTableName, routeTableParams);
             RouteTable routeTable = networkClient.RouteTables.Get(resourceGroup.Name, routeTableName);
 
