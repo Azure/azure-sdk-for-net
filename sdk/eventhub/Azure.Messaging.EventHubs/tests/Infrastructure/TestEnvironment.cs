@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -37,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>The active Event Hubs namespace for this test run, lazily created.</summary>
         private static readonly Lazy<EventHubScope.NamespaceProperties> ActiveEventHubsNamespace =
-            new Lazy<EventHubScope.NamespaceProperties>(() => EventHubScope.CreateNamespaceAsync().GetAwaiter().GetResult(), LazyThreadSafetyMode.ExecutionAndPublication);
+            new Lazy<EventHubScope.NamespaceProperties>(CreateNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
 
         /// <summary>The name of the shared access key to be used for accessing an Event Hubs namespace.</summary>
         public const string EventHubsDefaultSharedAccessKey = "RootManageSharedAccessKey";
@@ -140,5 +141,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             return environmentValue;
         }
+
+        /// <summary>
+        ///   Requests creation of an Event Hubs namespace to use for a specific test run,
+        ///   transforming the asynchronous request into a synchronous one that can be used with
+        ///   lazy instantiation.
+        /// </summary>
+        ///
+        /// <returns>The active Event Hubs namespace for this test run./returns>
+        ///
+        private static EventHubScope.NamespaceProperties CreateNamespace() =>
+            Task
+                .Run(async () => await EventHubScope.CreateNamespaceAsync().ConfigureAwait(false))
+                .ConfigureAwait(false)
+                .GetAwaiter()
+                .GetResult();
     }
 }
