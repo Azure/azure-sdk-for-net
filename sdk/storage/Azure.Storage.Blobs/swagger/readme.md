@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate blob storage
-input-file: ./blob-2018-11-09.json
+input-file: ./blob-2019-02-02.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -33,6 +33,41 @@ directive:
     $["x-ms-public"] = false;
 ```
 
+### Move directory operations last
+This is purely cosmetic for a cleaner diff.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    const directoryPaths = [];
+    for (var path in $) {
+        const op = Object.values($[path])[0];
+        if (op.operationId.startsWith("Directory_")) {
+            directoryPaths.push(path);
+        }
+    }
+    for (var path of directoryPaths) {
+        const ops = $[path];
+        delete $[path];
+        $[path] = ops;
+    }
+```
+
+### Remove extra consumes/produces values
+To avoid an arbitrary limitation in our generator
+``` yaml
+directive:
+- from: swagger-document
+  where: $.consumes
+  transform: >
+    return ["application/xml"];
+- from: swagger-document
+  where: $.produces
+  transform: >
+    return ["application/xml"];
+```
+
 ### Url
 ``` yaml
 directive:
@@ -59,6 +94,10 @@ directive:
   where: $["x-ms-paths"]..responses..headers["Date"]
   transform: >
     $["x-ms-ignore"] = true;
+- from: swagger-document
+  where: $["x-ms-paths"]..responses..headers["x-ms-client-request-id"]
+  transform: >
+    $["x-ms-ignore"] = true;
 ```
 
 ### Clean up Failure response
@@ -67,10 +106,10 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]..responses.default
   transform: >
+    delete $.headers;
     $["x-ms-client-name"] = "StorageErrorResult";
     $["x-ms-create-exception"] = true;
     $["x-ms-public"] = false;
-    $.headers["x-ms-error-code"]["x-ms-ignore"] = true;
 ```
 
 ### /?restype=service&comp=properties
@@ -864,6 +903,7 @@ directive:
         "format": "int64",
         "description": "The current sequence number for the page blob.  This is only returned for page blobs."
     };
+    $.put.responses["201"].headers["x-ms-content-crc64"]["x-ms-ignore"] = true;
 ```
 
 ### BlockLookupList
@@ -955,26 +995,36 @@ directive:
   where: $.definitions.StorageError
   transform: >
     $["x-ms-public"] = false;
+    $.properties.Code = { "type": "string" };
+- from: swagger-document
+  where: $.definitions.DataLakeStorageError
+  transform: >
+    $["x-ms-public"] = false;
 ```
 
-### ContainerMetadata and BlobMetadata
+### Make AccessTier Unique
+autorest.python complains that the same enum has different values
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions
+  where: $.parameters.AccessTierRequired
   transform: >
-    if (!$.ContainerMetadata) {
-        $.ContainerMetadata = $.Metadata;
-        delete $.Metadata;
-        $.ContainerMetadata.xml = { "name": "Metadata" };
-        $.BlobMetadata = {
-          "type": "object",
-          "xml": { "name": "Metadata" },
-          "properties": { "Encrypted": { "type": "string", "xml": { "attribute": true } } },
-          "additionalProperties": { "type": "string" }
-        };
-        const path = $.ContainerItem.properties.Metadata.$ref.replace(/[#].*$/, "#/definitions/");
-        $.ContainerItem.properties.Metadata = { "$ref": path + "ContainerMetadata" };
-        $.BlobItem.properties.Metadata = { "$ref": path + "BlobMetadata" };
-    }
+    $["x-ms-enum"].name = "AccessTierRequired";
+- from: swagger-document
+  where: $.parameters.AccessTierOptional
+  transform: >
+    $["x-ms-enum"].name = "AccessTierOptional";
+```
+
+### Fix doc comments
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.BlobTagsHeader
+  transform: >
+    $.description = "Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.";
+- from: swagger-document
+  where: $["x-ms-paths"]..get.responses..headers["x-ms-content-crc64"]
+  transform: >
+    $.description = "If the request is to read a specified range and the x-ms-range-get-content-crc64 is set to true, then the request returns a crc64 for the range, as long as the range size is less than or equal to 4 MB. If both x-ms-range-get-content-crc64 and x-ms-range-get-content-md5 is specified in the same request, it will fail with 400(Bad Request)";
 ```
