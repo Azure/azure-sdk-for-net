@@ -11,6 +11,7 @@
 - Added support for the following new datasets in ADF - AmazonRedshiftTableDataset, AzureMySqlSink, Db2TableDataset
 - Split tableName to schema and table in multiple datasets
 - Added new API to rerun a trigger run
+- Added new API for subscribing and unsubscribing triggers to events, and getting a triggers event subscription status
 
 ## Version 4.1.1
 ###  Feature Additions
