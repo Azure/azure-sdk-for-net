@@ -29,10 +29,10 @@ namespace Microsoft.Azure.EventHubs.Tests
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSecretEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
         private static readonly Lazy<EventHubScope.AzureResourceProperties> ActiveEventHubsNamespace =
-            new Lazy<EventHubScope.AzureResourceProperties>(() => EventHubScope.CreateNamespaceAsync().GetAwaiter().GetResult(), LazyThreadSafetyMode.ExecutionAndPublication);
+            new Lazy<EventHubScope.AzureResourceProperties>(CreateNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
 
         private static readonly Lazy<EventHubScope.AzureResourceProperties> ActiveStorageAccount =
-            new Lazy<EventHubScope.AzureResourceProperties>(() => EventHubScope.CreateStorageAsync().GetAwaiter().GetResult(), LazyThreadSafetyMode.ExecutionAndPublication);
+            new Lazy<EventHubScope.AzureResourceProperties>(CreateStorageAccount, LazyThreadSafetyMode.ExecutionAndPublication);
 
         internal static bool WasEventHubsNamespaceCreated => ActiveEventHubsNamespace.IsValueCreated;
 
@@ -129,5 +129,19 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             return environmentVar;
         }
+
+        private static EventHubScope.AzureResourceProperties CreateNamespace() =>
+            Task
+                .Run(async () => await EventHubScope.CreateNamespaceAsync().ConfigureAwait(false))
+                .ConfigureAwait(false)
+                .GetAwaiter()
+                .GetResult();
+
+        private static EventHubScope.AzureResourceProperties CreateStorageAccount() =>
+            Task
+                .Run(async () => await EventHubScope.CreateStorageAsync().ConfigureAwait(false))
+                .ConfigureAwait(false)
+                .GetAwaiter()
+                .GetResult();
     }
 }

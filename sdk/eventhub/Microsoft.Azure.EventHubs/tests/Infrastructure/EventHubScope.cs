@@ -71,14 +71,14 @@ namespace Microsoft.Azure.EventHubs.Tests
         }
 
         internal static Task<EventHubScope> CreateAsync(int partitionCount,
-                                                      [CallerMemberName] string caller = "") => CreateAsync(partitionCount, Enumerable.Empty<string>(), caller);
+                                                       [CallerMemberName] string caller = "") => CreateAsync(partitionCount, Enumerable.Empty<string>(), caller);
 
         internal static Task<EventHubScope> CreateAsync(int partitionCount,
-                                                      string consumerGroup,
-                                                      [CallerMemberName] string caller = "") => CreateAsync(partitionCount, new[] { consumerGroup }, caller);
+                                                        string consumerGroup,
+                                                        [CallerMemberName] string caller = "") => CreateAsync(partitionCount, new[] { consumerGroup }, caller);
         internal static async Task<EventHubScope> CreateAsync(int partitionCount,
-                                                            IEnumerable<string> consumerGroups,
-                                                            [CallerMemberName] string caller = "")
+                                                              IEnumerable<string> consumerGroups,
+                                                              [CallerMemberName] string caller = "")
         {
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
