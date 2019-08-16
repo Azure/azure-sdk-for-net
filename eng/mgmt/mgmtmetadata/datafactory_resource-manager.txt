@@ -3,12 +3,12 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=C:\Users\xiaoyz\Source\Repos\azure-sdk-for-net-wenbo\sdk
-2019-08-07 02:33:49 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=C:\git\azure-sdk-for-net\sdk
+2019-08-16 00:42:38 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      f80a6c182c85879a415d4c668473c592147416f3
+Commit:      ae2931234f6d16c8d3578efff152c956176ba2dd
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283
