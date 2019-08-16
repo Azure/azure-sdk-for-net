@@ -51,7 +51,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         
         
         /// <summary>
-        /// Return a new UndoContext
+        /// Return a new MockContext
         /// </summary>
         /// <returns></returns>
         public static MockContext Start(
@@ -71,6 +71,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
 
             return context;
+        }
+
+        /// <summary>
+        /// Return a new MockContext
+        /// </summary>
+        /// <returns></returns>
+        public static MockContext Start(
+            Type type,
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName= "testframework_failed")
+        {
+            return MockContext.Start(type.Name, methodName);
         }
 
         /// <summary>
