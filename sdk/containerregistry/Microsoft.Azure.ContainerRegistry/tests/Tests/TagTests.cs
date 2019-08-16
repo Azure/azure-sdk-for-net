@@ -14,12 +14,12 @@ namespace ContainerRegistry.Tests
     public class TagTests
     {
         #region Test Values
-        private static AcrRepositoryTags prodTags = new AcrRepositoryTags()
+        private static readonly TagList prodTags = new TagList()
         {
             Registry = ACRTestUtil.ManagedTestRegistry,
             ImageName = ACRTestUtil.ProdRepository,
-            TagsAttributes = new List<AcrTagAttributesBase>{
-               new AcrTagAttributesBase
+            Tags = new List<TagAttributesBase>{
+               new TagAttributesBase
                {
                    Name = "brandnew",
                    Digest = "sha256:3dfea53d16f8241fd606f8ceda4c8779ffae8e6b5e32c96e00f931de874ec709",
@@ -34,7 +34,7 @@ namespace ContainerRegistry.Tests
                        ReadEnabled = true
                    }
                },
-               new AcrTagAttributesBase
+               new TagAttributesBase
                {
                    Name = "latest",
                    Digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8",
@@ -59,13 +59,13 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrTags)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var tags = await client.GetAcrTagListAsync(ACRTestUtil.ProdRepository);
+                var tags = await client.GetTagListAsync(ACRTestUtil.ProdRepository);
 
                 Assert.Equal(ACRTestUtil.ProdRepository, tags.ImageName);
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, tags.Registry);
-                Assert.Equal(2, tags.TagsAttributes.Count);
-                validateTagAttributesBase(tags.TagsAttributes[0], prodTags.TagsAttributes[0]);
-                validateTagAttributesBase(tags.TagsAttributes[1], prodTags.TagsAttributes[1]);
+                Assert.Equal(2, tags.Tags.Count);
+                ValidateTagAttributesBase(tags.Tags[0], prodTags.Tags[0]);
+                ValidateTagAttributesBase(tags.Tags[1], prodTags.Tags[1]);
 
             }
         }
@@ -76,10 +76,10 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(GetTags)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var tags = await client.GetAcrTagListAsync(ACRTestUtil.ProdRepository);
+                var tags = await client.GetTagListAsync(ACRTestUtil.ProdRepository);
                 Assert.Equal(2, tags.Tags.Count);
-                Assert.Equal("latest", tags.Tags[1]);
-                Assert.Equal(ACRTestUtil.ProdRepository, tags.Name);
+                Assert.Equal("latest", tags.Tags[1].Name);
+                Assert.Equal(ACRTestUtil.ProdRepository, tags.ImageName);
             }
         }
 
@@ -89,11 +89,11 @@ namespace ContainerRegistry.Tests
             using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrTag)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
-                var tags = await client.GetAcrTagListAsync(ACRTestUtil.deleteableRepository);
+                var tags = await client.GetTagListAsync(ACRTestUtil.deleteableRepository);
 
                 //await client.DeleteTagAsync(ACRTestUtil.deleteableRepository, tags.[0]);
 
-                var newTags = await client.GetAcrTagListAsync(ACRTestUtil.deleteableRepository);
+                var newTags = await client.GetTagListAsync(ACRTestUtil.deleteableRepository);
                // Assert.DoesNotContain(newTags.Tags, tag => { return tag.Equals(tags..Tags[0]); });
             }
         }
@@ -109,13 +109,13 @@ namespace ContainerRegistry.Tests
                 await client.UpdateTagAttributesAsync(ACRTestUtil.changeableRepository, tag, updateAttributes);
 
                 var tagAttributes = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, tag);
-                Assert.False(tagAttributes.TagAttributes.ChangeableAttributes.WriteEnabled);
+                Assert.False(tagAttributes.Tag.ChangeableAttributes.WriteEnabled);
 
                 updateAttributes.WriteEnabled = true;
                 await client.UpdateTagAttributesAsync(ACRTestUtil.changeableRepository, tag, updateAttributes);
                 tagAttributes = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, tag);
 
-                Assert.True(tagAttributes.TagAttributes.ChangeableAttributes.WriteEnabled);
+                Assert.True(tagAttributes.Tag.ChangeableAttributes.WriteEnabled);
             }
         }
 
@@ -129,11 +129,11 @@ namespace ContainerRegistry.Tests
                 var tagAttributes = await client.GetTagAttributesAsync(ACRTestUtil.ProdRepository, tag);
                 Assert.Equal(ACRTestUtil.ProdRepository, tagAttributes.ImageName);
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, tagAttributes.Registry);
-                validateTagAttributesBase(tagAttributes.TagAttributes, prodTags.TagsAttributes[1]);
+                ValidateTagAttributesBase(tagAttributes.Tag, prodTags.Tags[1]);
             }
         }
 
-        private void validateTagAttributesBase(AcrTagAttributesBase toCheck, AcrTagAttributesBase expected)
+        private void ValidateTagAttributesBase(TagAttributesBase toCheck, TagAttributesBase expected)
         {
             Assert.Equal(toCheck.Name, expected.Name);
             Assert.Equal(toCheck.Digest, expected.Digest);

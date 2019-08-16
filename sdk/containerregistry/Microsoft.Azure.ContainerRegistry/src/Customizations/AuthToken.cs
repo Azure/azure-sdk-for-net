@@ -48,7 +48,11 @@ namespace Microsoft.Azure.ContainerRegistry
             return returnValue;
         }
     }
-
+    
+    /*This allows us to have refresh token chains. For example if an access token needs a refresh
+     it can use the refresh token which can be refreshed using an aad access token which can be
+     refreshed using an aad refresh token which can be obtained using service principals.  This 
+     will all be done internally and thus abstracts much of the checking away */
     public class AuthToken {
 
         public delegate string acquireCallback();
@@ -103,14 +107,15 @@ namespace Microsoft.Azure.ContainerRegistry
     // refreshing this requires an aad access token
     public class AcrRefreshToken : AuthToken
     {
-        private Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient authClient;
+        private AzureContainerRegistryClient authClient;
 
         public AcrRefreshToken(string token) : base(token) { }
         public AcrRefreshToken(AuthToken aadToken, string loginUrl)
         {
-
-            authClient = new AzureContainerRegistryClient(new TokenCredentials());
-            authClient.LoginUri = "https://" + loginUrl;
+            authClient = new AzureContainerRegistryClient(new TokenCredentials())
+            {
+                LoginUri = "https://" + loginUrl
+            };
             RefreshFn = () =>
             {
                 // Note: should be using real new access token
@@ -126,15 +131,17 @@ namespace Microsoft.Azure.ContainerRegistry
     // Refreshing this requires a nice refresh token
     public class AcrAccessToken : AuthToken
     {
-        private Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient authClient;
+        private AzureContainerRegistryClient authClient;
         public string Scope { get; set; }
         public AcrAccessToken(string token) : base(token) { }
         public AcrAccessToken(string token, acquireCallback refreshFn) : base(token, refreshFn) { }
         public AcrAccessToken(AcrRefreshToken acrRefresh, string scope, string loginUrl)
         {
             Scope = scope;
-            authClient = new AzureContainerRegistryClient(new TokenCredentials());
-            authClient.LoginUri = "https://" + loginUrl;
+            authClient = new AzureContainerRegistryClient(new TokenCredentials())
+            {
+                LoginUri = "https://" + loginUrl
+            };
             RefreshFn = () =>
             {
                 acrRefresh.CheckAndRefresh();
@@ -145,8 +152,10 @@ namespace Microsoft.Azure.ContainerRegistry
         public AcrAccessToken(string username, string password, string scope, string loginUrl)
         {
             Scope = scope;
-            authClient = new AzureContainerRegistryClient(new TokenCredentials(username, password));
-            authClient.LoginUri = "https://" + loginUrl;
+            authClient = new AzureContainerRegistryClient(new TokenCredentials(username, password))
+            {
+                LoginUri = "https://" + loginUrl
+            };
             RefreshFn = () =>
             {
                 return authClient.GetAccessTokenFromLoginAsync(loginUrl, scope).GetAwaiter().GetResult().AccessTokenProperty;

@@ -44,7 +44,6 @@ namespace Microsoft.Azure.ContainerRegistry
         private Dictionary<string, string> AcrScopes;
 
         // Internal simplified client for Token Acquisition
-        private Microsoft.Azure.ContainerRegistry.AzureContainerRegistryClient authClient;
         private AcrRefreshToken AcrRefresh;
         private AuthToken AadAccess;
 

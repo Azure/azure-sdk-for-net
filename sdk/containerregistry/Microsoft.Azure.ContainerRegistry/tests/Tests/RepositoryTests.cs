@@ -23,6 +23,11 @@ namespace ContainerRegistry.Tests
 
                 Assert.Equal(1, repositories.Names.Count);
                 Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name));
+
+                repositories = await client.GetRepositoryListAsync();
+                Assert.Equal(2, repositories.Names.Count);
+                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
+                                                      name => Assert.Equal(ACRTestUtil.TestRepository, name));
             }
         }
 
@@ -43,20 +48,6 @@ namespace ContainerRegistry.Tests
                 Assert.True(repositoryDetails.ChangeableAttributes.ListEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ReadEnabled);
                 Assert.False(repositoryDetails.ChangeableAttributes.WriteEnabled);
-            }
-        }
-
-
-        [Fact]
-        public async Task GetAcrRepositories()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositories)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositories = await client.GetRepositoryListAsync();
-                Assert.Equal(2, repositories.Names.Count);
-                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
-                                                      name => Assert.Equal(ACRTestUtil.TestRepository, name));
             }
         }
 

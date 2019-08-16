@@ -14,11 +14,11 @@ namespace ContainerRegistry.Tests
     public class ManifestTests
     {
         #region Test Values
-        private static readonly AcrManifestAttributes ExpectedAttributesOfProdRepository = new AcrManifestAttributes()
+        private static readonly ManifestAttributes ExpectedAttributesOfProdRepository = new ManifestAttributes()
         {
             Registry = ACRTestUtil.ManagedTestRegistryFullName,
             ImageName = ACRTestUtil.ProdRepository,
-            ManifestAttributes = new AcrManifestAttributesBase
+            Manifest = new ManifestAttributesBase
             {
                 Digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8",
                 ImageSize = 5964642,
@@ -197,11 +197,11 @@ namespace ContainerRegistry.Tests
             }
         };
 
-        private static readonly AcrManifestAttributes ExpectedAttributesChangeableRepository = new AcrManifestAttributes()
+        private static readonly ManifestAttributes ExpectedAttributesChangeableRepository = new ManifestAttributes()
         {
             Registry = ACRTestUtil.ManagedTestRegistryForChangesFullName,
             ImageName = ACRTestUtil.changeableRepository,
-            ManifestAttributes = new AcrManifestAttributesBase
+            Manifest = new ManifestAttributesBase
             {
                 Digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8",
                 ImageSize = 5964642,
@@ -237,7 +237,7 @@ namespace ContainerRegistry.Tests
 
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, repositoryAttributes.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, repositoryAttributes.Registry);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, repositoryAttributes.ManifestAttributes);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Manifest, repositoryAttributes.Manifest);
             }
 
 
@@ -254,7 +254,7 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, manifests.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, manifests.Registry);
                 Assert.Equal(2, manifests.ManifestsAttributes.Count);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.ManifestAttributes, manifests.ManifestsAttributes[1]);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Manifest, manifests.ManifestsAttributes[1]);
             }
         }
 
@@ -266,7 +266,7 @@ namespace ContainerRegistry.Tests
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var manifest = await client.GetManifestAsync(ACRTestUtil.TestRepository, tag);
-                verifyManifest(ExpectedV1ManifestProd, manifest);
+                VerifyManifest(ExpectedV1ManifestProd, manifest);
             }
         }
 
@@ -278,7 +278,7 @@ namespace ContainerRegistry.Tests
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var manifest = await client.GetManifestAsync(ACRTestUtil.TestRepository, tag, ACRTestUtil.MediatypeV2Manifest);
-                verifyManifest(ExpectedV2ManifestProd, manifest);
+                VerifyManifest(ExpectedV2ManifestProd, manifest);
             }
         }
 
@@ -297,15 +297,15 @@ namespace ContainerRegistry.Tests
                 var updatedManifest = await client.GetManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
 
                 //Check for success
-                Assert.False(updatedManifest.ManifestAttributes.ChangeableAttributes.WriteEnabled);
+                Assert.False(updatedManifest.Manifest.ChangeableAttributes.WriteEnabled);
 
                 //Return attibutes to original
                 updateAttributes.WriteEnabled = true;
                 await client.UpdateManifestAttributesAsync(ACRTestUtil.changeableRepository, digest, updateAttributes);
-                updatedManifest = await client.GetMa(ACRTestUtil.changeableRepository, digest);
+                updatedManifest = await client.GetManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
                 Assert.Equal(ExpectedAttributesChangeableRepository.ImageName, updatedManifest.ImageName);
                 Assert.Equal(ExpectedAttributesChangeableRepository.Registry, updatedManifest.Registry);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesChangeableRepository.ManifestAttributes, updatedManifest.ManifestAttributes);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesChangeableRepository.Manifest, updatedManifest.Manifest);
             }
         }
 
@@ -319,13 +319,13 @@ namespace ContainerRegistry.Tests
                 var newManifest = await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", ACRTestUtil.MediatypeV2Manifest);
                 var tag = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
 
-                verifyManifest(ExpectedV2ManifestProd, newManifest);
-                await client.DeleteManifestAsync(ACRTestUtil.changeableRepository, tag.TagAttributes.Digest);
+                VerifyManifest(ExpectedV2ManifestProd, newManifest);
+                await client.DeleteManifestAsync(ACRTestUtil.changeableRepository, tag.Tag.Digest);
             }
         }
 
         #region Validation Helpers
-        private void VerifyAcrManifestAttributesBase(AcrManifestAttributesBase expectedManifestBase, AcrManifestAttributesBase actualManifestBase)
+        private void VerifyAcrManifestAttributesBase(ManifestAttributesBase expectedManifestBase, ManifestAttributesBase actualManifestBase)
         {
             Assert.Equal(expectedManifestBase.Architecture, actualManifestBase.Architecture);
             Assert.Equal(expectedManifestBase.Digest, actualManifestBase.Digest);
@@ -340,7 +340,7 @@ namespace ContainerRegistry.Tests
         }
 
 
-        private void verifyManifest(Manifest baseManifest, Manifest actualManifest)
+        private void VerifyManifest(Manifest baseManifest, Manifest actualManifest)
         {
             Assert.Equal(baseManifest.Architecture, actualManifest.Architecture);
             Assert.Equal(baseManifest.MediaType, actualManifest.MediaType);

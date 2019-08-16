@@ -31,12 +31,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         /// <param name="registry">Registry name</param>
         /// <param name="imageName">Image name</param>
-        /// <param name="manifestAttributes">Manifest attributes</param>
-        public ManifestAttributes(string registry = default(string), string imageName = default(string), ManifestAttributesBase manifestAttributes = default(ManifestAttributesBase))
+        /// <param name="manifest">Manifest attributes</param>
+        public ManifestAttributes(string registry = default(string), string imageName = default(string), ManifestAttributesBase manifest = default(ManifestAttributesBase))
         {
             Registry = registry;
             ImageName = imageName;
-            ManifestAttributes = manifestAttributes;
+            Manifest = manifest;
             CustomInit();
         }
 
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets manifest attributes
         /// </summary>
         [JsonProperty(PropertyName = "manifest")]
-        public ManifestAttributesBase ManifestAttributes { get; set; }
+        public ManifestAttributesBase Manifest { get; set; }
 
     }
 }

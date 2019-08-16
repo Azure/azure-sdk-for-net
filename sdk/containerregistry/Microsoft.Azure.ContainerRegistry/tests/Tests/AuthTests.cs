@@ -16,7 +16,7 @@
             {
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var refreshToken = await client.GetRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
-                validateRefreshToken(refreshToken.RefreshTokenProperty);
+                ValidateRefreshToken(refreshToken.RefreshTokenProperty);
             }
         }
 
@@ -28,7 +28,7 @@
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var refreshToken = await client.GetRefreshTokenFromExchangeAsync("access_token", ACRTestUtil.ManagedTestRegistryFullName, null, null, await ACRTestUtil.getAADaccessToken());
                 var accessToken = await client.GetAccessTokenAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope, refreshToken.RefreshTokenProperty);
-                validateAccessToken(accessToken.AccessTokenProperty);
+                ValidateAccessToken(accessToken.AccessTokenProperty);
             }
         }
 
@@ -39,29 +39,29 @@
             {
                 AzureContainerRegistryClient client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var accessToken = await client.GetAccessTokenFromLoginAsync(ACRTestUtil.ManagedTestRegistryFullName, ACRTestUtil.Scope);
-                validateAccessToken(accessToken.AccessTokenProperty);
+                ValidateAccessToken(accessToken.AccessTokenProperty);
             }
         }
 
         #region Validation Helpers
 
-        private void validateAccessToken(string accessToken)
+        private void ValidateAccessToken(string accessToken)
         {
             JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
             JwtSecurityToken fields = JwtSecurityClient.ReadToken(accessToken) as JwtSecurityToken;
-            commonTokenValidation(fields);
+            CommonTokenValidation(fields);
             Assert.Equal("access_token", fields.Payload["grant_type"]);
         }
 
-        private void validateRefreshToken(string refreshToken)
+        private void ValidateRefreshToken(string refreshToken)
         {
             JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
             JwtSecurityToken fields = JwtSecurityClient.ReadToken(refreshToken) as JwtSecurityToken;
-            commonTokenValidation(fields);
+            CommonTokenValidation(fields);
             Assert.Equal("refresh_token", fields.Payload["grant_type"]);
         }
 
-        private void commonTokenValidation(JwtSecurityToken fields)
+        private void CommonTokenValidation(JwtSecurityToken fields)
         {
             Assert.Equal("azuresdkunittest.azurecr.io", fields.Audiences.ToList<string>()[0]);
             Assert.Equal("Azure Container Registry", fields.Issuer);
