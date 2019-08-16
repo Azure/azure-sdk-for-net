@@ -46,13 +46,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="tableOption">The option to handle sink table, such as
-        /// autoCreate. For now only 'autoCreate' value is supported. Type:
-        /// string (or Expression with resultType string).</param>
         /// <param name="storeSettings">Avro store settings.</param>
         /// <param name="formatSettings">Avro format settings.</param>
-        public AvroSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings), AvroWriteSettings formatSettings = default(AvroWriteSettings))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
+        public AvroSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings), AvroWriteSettings formatSettings = default(AvroWriteSettings))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
             FormatSettings = formatSettings;

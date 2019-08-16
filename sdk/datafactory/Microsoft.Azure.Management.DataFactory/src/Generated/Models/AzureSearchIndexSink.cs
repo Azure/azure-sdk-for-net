@@ -46,14 +46,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="tableOption">The option to handle sink table, such as
-        /// autoCreate. For now only 'autoCreate' value is supported. Type:
-        /// string (or Expression with resultType string).</param>
         /// <param name="writeBehavior">Specify the write behavior when
         /// upserting documents into Azure Search Index. Possible values
         /// include: 'Merge', 'Upload'</param>
-        public AzureSearchIndexSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), string writeBehavior = default(string))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
+        public AzureSearchIndexSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), string writeBehavior = default(string))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             WriteBehavior = writeBehavior;
             CustomInit();

@@ -46,16 +46,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="tableOption">The option to handle sink table, such as
-        /// autoCreate. For now only 'autoCreate' value is supported. Type:
-        /// string (or Expression with resultType string).</param>
         /// <param name="nestingSeparator">Nested properties separator. Default
         /// is . (dot). Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="writeBehavior">Describes how to write data to Azure
         /// Cosmos DB. Allowed values: insert and upsert.</param>
-        public DocumentDbCollectionSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), object nestingSeparator = default(object), object writeBehavior = default(object))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
+        public DocumentDbCollectionSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object nestingSeparator = default(object), object writeBehavior = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             NestingSeparator = nestingSeparator;
             WriteBehavior = writeBehavior;

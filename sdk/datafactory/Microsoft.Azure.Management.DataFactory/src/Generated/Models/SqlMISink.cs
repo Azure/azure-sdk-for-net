@@ -46,9 +46,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="tableOption">The option to handle sink table, such as
-        /// autoCreate. For now only 'autoCreate' value is supported. Type:
-        /// string (or Expression with resultType string).</param>
         /// <param name="sqlWriterStoredProcedureName">SQL writer stored
         /// procedure name. Type: string (or Expression with resultType
         /// string).</param>
@@ -61,14 +58,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="storedProcedureTableTypeParameterName">The stored
         /// procedure parameter name of the table type. Type: string (or
         /// Expression with resultType string).</param>
-        public SqlMISink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object tableOption = default(object), object sqlWriterStoredProcedureName = default(object), object sqlWriterTableType = default(object), object preCopyScript = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>), object storedProcedureTableTypeParameterName = default(object))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, tableOption)
+        /// <param name="tableOption">The option to handle sink table, such as
+        /// autoCreate. For now only 'autoCreate' value is supported. Type:
+        /// string (or Expression with resultType string).</param>
+        public SqlMISink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object sqlWriterStoredProcedureName = default(object), object sqlWriterTableType = default(object), object preCopyScript = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>), object storedProcedureTableTypeParameterName = default(object), object tableOption = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
             SqlWriterTableType = sqlWriterTableType;
             PreCopyScript = preCopyScript;
             StoredProcedureParameters = storedProcedureParameters;
             StoredProcedureTableTypeParameterName = storedProcedureTableTypeParameterName;
+            TableOption = tableOption;
             CustomInit();
         }
 
@@ -110,6 +111,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "storedProcedureTableTypeParameterName")]
         public object StoredProcedureTableTypeParameterName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the option to handle sink table, such as autoCreate.
+        /// For now only 'autoCreate' value is supported. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "tableOption")]
+        public object TableOption { get; set; }
 
     }
 }
