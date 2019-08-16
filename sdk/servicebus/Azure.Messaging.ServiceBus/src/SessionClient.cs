@@ -6,9 +6,7 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading.Tasks;
     using Amqp;
     using Microsoft.Azure.Amqp;
@@ -90,7 +88,6 @@ namespace Azure.Messaging.ServiceBus
                   receiveMode,
                   prefetchCount,
                   new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options),
-                  null,
                   options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -124,7 +121,6 @@ namespace Azure.Messaging.ServiceBus
                 receiveMode,
                 prefetchCount,
                 new ServiceBusConnection(endpoint, tokenProvider, options),
-                null,
                 options)
         {
             ClientEntity.OwnsConnection = true;
@@ -138,7 +134,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages the session object
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
-        public SessionClient(
+        internal SessionClient(
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             ReceiveMode receiveMode,
@@ -150,7 +146,6 @@ namespace Azure.Messaging.ServiceBus
                 receiveMode,
                 prefetchCount,
                 serviceBusConnection,
-                null,
                 options)
         {
             ClientEntity.OwnsConnection = false;
@@ -163,7 +158,6 @@ namespace Azure.Messaging.ServiceBus
             ReceiveMode receiveMode,
             int prefetchCount,
             ServiceBusConnection serviceBusConnection,
-            ICbsTokenProvider cbsTokenProvider,
             AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, entityPath);
@@ -178,19 +172,6 @@ namespace Azure.Messaging.ServiceBus
             this.ReceiveMode = receiveMode;
             this.PrefetchCount = prefetchCount;
             ClientEntity.ServiceBusConnection.ThrowIfClosed();
-
-            if (cbsTokenProvider != null)
-            {
-                this.CbsTokenProvider = cbsTokenProvider;
-            }
-            else if (ClientEntity.ServiceBusConnection.TokenCredential != null)
-            {
-                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
-            }
-            else
-            {
-                throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
-            }
 
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
         }
@@ -210,8 +191,6 @@ namespace Azure.Messaging.ServiceBus
         private MessagingEntityType? EntityType { get; }
 
         internal int PrefetchCount { get; set; }
-
-        private ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
         /// Gets a session object of any <see cref="MessageSession.SessionId"/> that can be used to receive messages for that sessionId.
@@ -272,7 +251,6 @@ namespace Azure.Messaging.ServiceBus
                 this.EntityType,
                 this.ReceiveMode,
                 ClientEntity.ServiceBusConnection,
-                this.CbsTokenProvider,
                 ClientEntity.Options,
                 this.PrefetchCount,
                 sessionId,

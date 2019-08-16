@@ -21,12 +21,11 @@ namespace Azure.Messaging.ServiceBus
             MessagingEntityType? entityType,
             ReceiveMode receiveMode,
             ServiceBusConnection serviceBusConnection,
-            ICbsTokenProvider cbsTokenProvider,
             AmqpClientOptions options,
             int prefetchCount = Constants.DefaultClientPrefetchCount,
             string sessionId = null,
             bool isSessionReceiver = false)
-            : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, options, prefetchCount, sessionId, isSessionReceiver)
+            : base(entityPath, entityType, receiveMode, serviceBusConnection, options, prefetchCount, sessionId, isSessionReceiver)
         {
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
         }

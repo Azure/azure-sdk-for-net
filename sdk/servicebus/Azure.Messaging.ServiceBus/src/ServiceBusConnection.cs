@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// Connection object to service bus namespace
     /// </summary>
-    public class ServiceBusConnection: IAsyncDisposable
+    internal class ServiceBusConnection: IAsyncDisposable
     {
         private static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
 
@@ -98,6 +98,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public TokenCredential TokenCredential { get; set; }
 
+        public  ICbsTokenProvider CbsTokenProvider => new TokenProviderAdapter(TokenCredential, OperationTimeout);
         /// <summary>
         /// Returns true if the Service Bus Connection is closed or closing.
         /// </summary>

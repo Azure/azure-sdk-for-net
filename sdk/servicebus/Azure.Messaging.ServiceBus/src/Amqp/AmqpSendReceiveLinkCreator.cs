@@ -9,8 +9,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
     internal class AmqpSendReceiveLinkCreator : AmqpLinkCreator
     {
-        public AmqpSendReceiveLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] audience, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings linkSettings, string clientId)
-            : base(entityPath, serviceBusConnection, endpointAddress, audience, requiredClaims, cbsTokenProvider, linkSettings, clientId)
+        public AmqpSendReceiveLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] audience, string[] requiredClaims, AmqpLinkSettings linkSettings, string clientId)
+            : base(entityPath, serviceBusConnection, endpointAddress, audience, requiredClaims, linkSettings, clientId)
         {
         }
 

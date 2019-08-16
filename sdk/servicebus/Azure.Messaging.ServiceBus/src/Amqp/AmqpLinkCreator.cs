@@ -21,18 +21,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private readonly string[] requiredClaims;
 
-        private readonly ICbsTokenProvider cbsTokenProvider;
 
         private readonly AmqpLinkSettings amqpLinkSettings;
 
-        protected AmqpLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] audience, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings amqpLinkSettings, string clientId)
+        protected AmqpLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] audience, string[] requiredClaims, AmqpLinkSettings amqpLinkSettings, string clientId)
         {
             this.entityPath = entityPath;
             this.serviceBusConnection = serviceBusConnection;
             this.endpointAddress = endpointAddress;
             this.audience = audience;
             this.requiredClaims = requiredClaims;
-            this.cbsTokenProvider = cbsTokenProvider;
             this.amqpLinkSettings = amqpLinkSettings;
             this.ClientId = clientId;
         }
@@ -56,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 MessagingEventSource.Log.AmqpSendAuthenticationTokenStart(this.endpointAddress, resource, resource, this.requiredClaims);
                 cbsTokenExpiresAtUtc = TimeoutHelper.Min(
                     cbsTokenExpiresAtUtc,
-                    await cbsLink.SendTokenAsync(this.cbsTokenProvider, this.endpointAddress, resource, resource, this.requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false));
+                    await cbsLink.SendTokenAsync(serviceBusConnection.CbsTokenProvider, this.endpointAddress, resource, resource, this.requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false));
                 MessagingEventSource.Log.AmqpSendAuthenticationTokenStop();
             }
 

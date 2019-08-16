@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">Queue path.</param>
-        public QueueClient(ServiceBusConnection serviceBusConnection, string entityPath, AmqpClientOptions options)
+        internal QueueClient(ServiceBusConnection serviceBusConnection, string entityPath, AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, entityPath);
             MessagingEventSource.Log.QueueClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath, "unknown");
@@ -121,15 +121,6 @@ namespace Azure.Messaging.ServiceBus
             this.QueueName = entityPath;
             ClientEntity.OwnsConnection = false;
             ClientEntity.ServiceBusConnection.ThrowIfClosed();
-
-            if (ClientEntity.ServiceBusConnection.TokenCredential != null)
-            {
-                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
-            }
-            else
-            {
-                throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
-            }
 
             MessagingEventSource.Log.QueueClientCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, ClientEntity.ClientId);
         }
@@ -153,7 +144,6 @@ namespace Azure.Messaging.ServiceBus
                                 null,
                                 MessagingEntityType.Queue,
                                 ClientEntity.ServiceBusConnection,
-                                this.CbsTokenProvider,
                                 ClientEntity.Options);
         }
 
@@ -166,7 +156,6 @@ namespace Azure.Messaging.ServiceBus
                                 MessagingEntityType.Queue,
                                 receiveMode,
                                 ClientEntity.ServiceBusConnection,
-                                this.CbsTokenProvider,
                                 ClientEntity.Options,
                                 receiveOptions.PrefetchCount);
         }
@@ -182,7 +171,6 @@ namespace Azure.Messaging.ServiceBus
                 receiveMode,
                 receiveOptions.PrefetchCount,
                 ClientEntity.ServiceBusConnection,
-                this.CbsTokenProvider,
                 ClientEntity.Options);
         }
 
@@ -194,8 +182,6 @@ namespace Azure.Messaging.ServiceBus
                 CreateSessionClient(mode, receiveOptions),
                 ClientEntity.ServiceBusConnection.Endpoint);
         }
-
-        private ICbsTokenProvider CbsTokenProvider { get; }
 
         public async ValueTask DisposeAsync()
         {

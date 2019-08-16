@@ -2,6 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Azure.Core;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -12,9 +15,6 @@ namespace Azure.Messaging.ServiceBus.Core
     using System.Threading;
     using System.Threading.Tasks;
     using System.Transactions;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
     using Azure.Messaging.ServiceBus.Amqp;
     using Azure.Messaging.ServiceBus.Primitives;
 
@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string connectionString,
             string entityPath,
             AmqpClientOptions options = null)
-            : this(entityPath, null, null, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), null, options)
+            : this(entityPath, null, null, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -90,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string entityPath,
             TokenCredential tokenProvider,
             AmqpClientOptions options = null)
-            : this(entityPath, null, null, new ServiceBusConnection(endpoint, tokenProvider, options), null, options)
+            : this(entityPath, null, null, new ServiceBusConnection(endpoint, tokenProvider, options), options)
         {
             ClientEntity.OwnsConnection = true;
         }
@@ -100,11 +100,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">The path of the entity this sender should connect to.</param>
-        public MessageSender(
+        internal MessageSender(
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             AmqpClientOptions options = null)
-            : this(entityPath, null, null, serviceBusConnection, null, options)
+            : this(entityPath, null, null, serviceBusConnection, options)
         {
             ClientEntity.OwnsConnection = false;
         }
@@ -121,12 +121,12 @@ namespace Azure.Messaging.ServiceBus.Core
         /// all the messages land initially in the same entity/partition for local transactions, and then
         /// let service bus handle transferring the message to the actual destination.
         /// </remarks>
-        public MessageSender(
+        internal MessageSender(
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             string viaEntityPath,
             AmqpClientOptions options = null)
-            :this(viaEntityPath, entityPath, null, serviceBusConnection, null, options)
+            :this(viaEntityPath, entityPath, null, serviceBusConnection, options)
         {
             ClientEntity.OwnsConnection = false;
         }
@@ -136,7 +136,6 @@ namespace Azure.Messaging.ServiceBus.Core
             string transferDestinationPath,
             MessagingEntityType? entityType,
             ServiceBusConnection serviceBusConnection,
-            ICbsTokenProvider cbsTokenProvider,
             AmqpClientOptions options)
         {
             this.ClientEntity = new ClientEntity(options, entityPath);
@@ -153,22 +152,9 @@ namespace Azure.Messaging.ServiceBus.Core
             this.EntityType = entityType;
             ClientEntity.ServiceBusConnection.ThrowIfClosed();
 
-            if (cbsTokenProvider != null)
-            {
-                this.CbsTokenProvider = cbsTokenProvider;
-            }
-            else if (ClientEntity.ServiceBusConnection.TokenCredential != null)
-            {
-                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
-            }
-            else
-            {
-                throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
-            }
-
             this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, CloseSession);
             this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, CloseRequestResponseSession);
-            this.clientLinkManager = new ActiveClientLinkManager(ClientEntity, this.CbsTokenProvider);
+            this.clientLinkManager = new ActiveClientLinkManager(ClientEntity);
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
 
             if (!string.IsNullOrWhiteSpace(transferDestinationPath))
@@ -202,8 +188,6 @@ namespace Azure.Messaging.ServiceBus.Core
         internal MessagingEntityType? EntityType { get; }
 
         internal string SendingLinkDestination { get; set; }
-
-        private ICbsTokenProvider CbsTokenProvider { get; }
 
         private FaultTolerantAmqpObject<SendingAmqpLink> SendLinkManager { get; }
 
@@ -652,7 +636,7 @@ namespace Azure.Messaging.ServiceBus.Core
             }
 
             string[] claims = {ClaimConstants.Send};
-            var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.SendingLinkDestination, ClientEntity.ServiceBusConnection, endpointUri, audience, claims, this.CbsTokenProvider, amqpLinkSettings, ClientEntity.ClientId);
+            var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.SendingLinkDestination, ClientEntity.ServiceBusConnection, endpointUri, audience, claims, amqpLinkSettings, ClientEntity.ClientId);
             Tuple<AmqpObject, DateTime> linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var sendingAmqpLink = (SendingAmqpLink) linkDetails.Item1;
@@ -696,7 +680,6 @@ namespace Azure.Messaging.ServiceBus.Core
                 endpointUri,
                 audience,
                 claims,
-                this.CbsTokenProvider,
                 amqpLinkSettings,
                 ClientEntity.ClientId);
 

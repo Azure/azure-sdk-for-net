@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="entityPath">Topic path.</param>
-        public TopicClient(ServiceBusConnection serviceBusConnection, string entityPath, AmqpClientOptions options)
+        internal TopicClient(ServiceBusConnection serviceBusConnection, string entityPath, AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, entityPath);
             MessagingEventSource.Log.TopicClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
@@ -127,7 +127,6 @@ namespace Azure.Messaging.ServiceBus
                                 null,
                                 MessagingEntityType.Topic,
                                 ClientEntity.ServiceBusConnection,
-                                this.CbsTokenProvider,
                                 ClientEntity.Options);
         }
 

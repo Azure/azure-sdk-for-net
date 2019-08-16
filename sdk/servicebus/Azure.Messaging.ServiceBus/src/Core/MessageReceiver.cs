@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
-            : this(entityPath, null, receiveMode, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), null, options, prefetchCount)
+            : this(entityPath, null, receiveMode, new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), options, prefetchCount)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -126,7 +126,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
-            : this(entityPath, null, receiveMode, new ServiceBusConnection(endpoint, tokenProvider, options), null, options, prefetchCount)
+            : this(entityPath, null, receiveMode, new ServiceBusConnection(endpoint, tokenProvider, options), options, prefetchCount)
         {
             ClientEntity.OwnsConnection = true;
         }
@@ -140,13 +140,13 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="receiveMode">The <see cref="ServiceBus.ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
-        public MessageReceiver(
+        internal MessageReceiver(
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             AmqpClientOptions options = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
-            : this(entityPath, null, receiveMode, serviceBusConnection, null, options, prefetchCount)
+            : this(entityPath, null, receiveMode, serviceBusConnection, options, prefetchCount)
         {
             ClientEntity.OwnsConnection = false;
         }
@@ -156,7 +156,6 @@ namespace Azure.Messaging.ServiceBus.Core
             MessagingEntityType? entityType,
             ReceiveMode receiveMode,
             ServiceBusConnection serviceBusConnection,
-            ICbsTokenProvider cbsTokenProvider,
             AmqpClientOptions options,
             int prefetchCount = Constants.DefaultClientPrefetchCount,
             string sessionId = null,
@@ -176,19 +175,6 @@ namespace Azure.Messaging.ServiceBus.Core
             this.EntityType = entityType;
             ClientEntity.ServiceBusConnection.ThrowIfClosed();
 
-            if (cbsTokenProvider != null)
-            {
-                this.CbsTokenProvider = cbsTokenProvider;
-            }
-            else if (ClientEntity.ServiceBusConnection.TokenCredential != null)
-            {
-                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
-            }
-            else
-            {
-                throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
-            }
-
             this.SessionIdInternal = sessionId;
             this.isSessionReceiver = isSessionReceiver;
             this.ReceiveLinkManager = new FaultTolerantAmqpObject<ReceivingAmqpLink>(this.CreateLinkAsync, CloseSession);
@@ -196,7 +182,7 @@ namespace Azure.Messaging.ServiceBus.Core
             this.requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             this.PrefetchCount = prefetchCount;
             this.messageReceivePumpSyncLock = new object();
-            this.clientLinkManager = new ActiveClientLinkManager(ClientEntity, this.CbsTokenProvider);
+            this.clientLinkManager = new ActiveClientLinkManager(ClientEntity);
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
             MessagingEventSource.Log.MessageReceiverCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, ClientEntity.ClientId);
         }
@@ -277,8 +263,6 @@ namespace Azure.Messaging.ServiceBus.Core
         internal MessagingEntityType? EntityType { get; }
 
         private Exception LinkException { get; set; }
-
-        private ICbsTokenProvider CbsTokenProvider { get; }
 
         internal FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLinkManager { get; }
 
@@ -1475,7 +1459,6 @@ namespace Azure.Messaging.ServiceBus.Core
                 endpointUri,
                 new string[] { endpointUri.AbsoluteUri },
                 claims,
-                this.CbsTokenProvider,
                 amqpLinkSettings,
                 ClientEntity.ClientId);
 
@@ -1513,7 +1496,6 @@ namespace Azure.Messaging.ServiceBus.Core
                 endpointUri,
                 new string[] { endpointUri.AbsoluteUri },
                 claims,
-                this.CbsTokenProvider,
                 amqpLinkSettings,
                 ClientEntity.ClientId);
 

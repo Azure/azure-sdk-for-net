@@ -35,7 +35,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string path,
             ServiceBusConnection servicebusConnection,
             AmqpClientOptions options,
-            ICbsTokenProvider cbsTokenProvider,
             int prefetchCount = 0,
             ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
         {
@@ -43,7 +42,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             this.Path = path;
             this.ServiceBusConnection = servicebusConnection;
             this.Options = options;
-            this.CbsTokenProvider = cbsTokenProvider;
             this.PrefetchCount = prefetchCount;
             this.ReceiveMode = mode;
         }
@@ -65,7 +63,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                 MessagingEntityType.Subscriber,
                                 this.ReceiveMode,
                                 this.ServiceBusConnection,
-                                this.CbsTokenProvider,
                                 this.Options,
                                 this.PrefetchCount);
                         }

@@ -31,11 +31,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private ActiveRequestResponseLink activeRequestResponseClientLink;
 
-        public ActiveClientLinkManager(ClientEntity client, ICbsTokenProvider tokenProvider)
+        public ActiveClientLinkManager(ClientEntity client)
         {
             this.clientId = client.ClientId;
             this.retryPolicy = client.RetryPolicy ?? RetryPolicy.Default;
-            this.cbsTokenProvider = tokenProvider;
+            this.cbsTokenProvider = client.ServiceBusConnection.CbsTokenProvider;
             this.sendReceiveLinkCbsTokenRenewalTimer = new Timer(OnRenewSendReceiveCbsToken, this, Timeout.Infinite, Timeout.Infinite);
             this.requestResponseLinkCbsTokenRenewalTimer = new Timer(OnRenewRequestResponseCbsToken, this, Timeout.Infinite, Timeout.Infinite);
         }
@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             cbsTokenExpiresAtUtc = TimeoutHelper.Min(
                                 cbsTokenExpiresAtUtc,
                                 await cbsLink.SendTokenAsync(
-                                    this.cbsTokenProvider,
+                                    cbsTokenProvider,
                                     activeClientLinkObject.EndpointUri,
                                     resource,
                                     resource,

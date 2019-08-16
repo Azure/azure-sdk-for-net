@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="topicPath">Topic path.</param>
         /// <param name="subscriptionName">Subscription name.</param>
-        public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, AmqpClientOptions options)
+        internal SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, $"{topicPath}/{subscriptionName}");
             if (string.IsNullOrWhiteSpace(topicPath))
@@ -132,15 +132,6 @@ namespace Azure.Messaging.ServiceBus
             this.diagnosticSource = new ServiceBusDiagnosticSource(this.Path, serviceBusConnection.Endpoint);
             ClientEntity.OwnsConnection = false;
             ClientEntity.ServiceBusConnection.ThrowIfClosed();
-
-            if (ClientEntity.ServiceBusConnection.TokenCredential != null)
-            {
-                this.CbsTokenProvider = new TokenProviderAdapter(ClientEntity.ServiceBusConnection.TokenCredential, ClientEntity.ServiceBusConnection.OperationTimeout);
-            }
-            else
-            {
-                throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
-            }
 
             MessagingEventSource.Log.SubscriptionClientCreateStop(serviceBusConnection.Endpoint.Authority, topicPath, subscriptionName, ClientEntity.ClientId);
         }
@@ -173,7 +164,6 @@ namespace Azure.Messaging.ServiceBus
                             this.Path,
                             ClientEntity.ServiceBusConnection,
                             ClientEntity.Options,
-                            this.CbsTokenProvider,
                             // TODO: if should matter
                             0, // 
                             ReceiveMode.PeekLock);
@@ -190,10 +180,9 @@ namespace Azure.Messaging.ServiceBus
 
             return new MessageReceiver(
                 this.Path,
-                MessagingEntityType.Queue,
+                MessagingEntityType.Subscriber,
                 receiveMode,
                 ClientEntity.ServiceBusConnection,
-                this.CbsTokenProvider,
                 ClientEntity.Options,
                 receiveOptions.PrefetchCount);
         }
@@ -205,11 +194,10 @@ namespace Azure.Messaging.ServiceBus
             return new SessionClient(
                 ClientEntity.ClientId,
                 this.Path,
-                MessagingEntityType.Queue,
+                MessagingEntityType.Subscriber,
                 receiveMode,
                 receiveOptions.PrefetchCount,
                 ClientEntity.ServiceBusConnection,
-                this.CbsTokenProvider,
                 ClientEntity.Options);
         }
 
@@ -222,9 +210,6 @@ namespace Azure.Messaging.ServiceBus
                 CreateSessionClient(mode, receiveOptions),
                 ClientEntity.ServiceBusConnection.Endpoint);
         }
-
-
-        private ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
         /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
