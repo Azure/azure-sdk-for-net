@@ -13045,12 +13045,142 @@
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ee5ea899-0791-418f-9270-77cd8273794b/resourceGroups/sqlcrudtest-3853?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY3YzA1NWMtNjMxMC00Mzc0LTk4NTItMTBlZjcxY2U1Zjg1L3Jlc291cmNlZ3JvdXBzL3NxbGNydWR0ZXN0LTE3NjQ/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7bee4cff-b4bd-4512-8473-d09e67d2fc29"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 28 Mar 2018 18:13:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/ee5ea899-0791-418f-9270-77cd8273794b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TUUxDUlVEVEVTVDoyRDE3NjQtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2017-03-01-preview"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "1e3b27d4-8ad6-4284-9994-681da92c175b"
+        ],
+        "x-ms-correlation-request-id": [
+          "1e3b27d4-8ad6-4284-9994-681da92c175b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180328T181342Z:1e3b27d4-8ad6-4284-9994-681da92c175b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/ee5ea899-0791-418f-9270-77cd8273794b/resourcegroups/sqlcrudtest-3853?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWU1ZWE4OTktMDc5MS00MThmLTkyNzAtNzdjZDgyNzM3OTRiL3Jlc291cmNlZ3JvdXBzL3NxbGNydWR0ZXN0LTM4NTM/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5bc9b43e-a09f-4eb9-95d2-09c1752a3c95"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/ee5ea899-0791-418f-9270-77cd8273794b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TUUxDUlVEVEVTVDoyRDM4NTMtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "c49407b7-cfe4-4632-8a64-3e326ec32b62"
+        ],
+        "x-ms-correlation-request-id": [
+          "c49407b7-cfe4-4632-8a64-3e326ec32b62"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20190816T133601Z:c49407b7-cfe4-4632-8a64-3e326ec32b62"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 16 Aug 2019 13:36:00 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
     }
   ],
   "Names": {
+    "CreateResourceGroup": [
+      "sqlcrudtest-3853"
+    ],
     "CreateVirtualNetwork": [
+	  "sqlcrudtest-3925",
+      "sqlcrudtest-5600",
       "sqlcrudtest-8805",
-      "sqlcrudtest-7690"
+      "sqlcrudtest-7690",
+      "sqlcrudtest-8847"
     ]
   },
   "Variables": {
