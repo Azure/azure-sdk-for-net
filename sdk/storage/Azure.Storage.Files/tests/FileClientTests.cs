@@ -672,7 +672,7 @@ namespace Azure.Storage.Files.Test
 
                     await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                    Assert.AreEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
                 }
 
                 // Assert
