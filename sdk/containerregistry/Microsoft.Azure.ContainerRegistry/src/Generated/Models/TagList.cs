@@ -33,12 +33,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         /// <param name="registry">Registry name</param>
         /// <param name="imageName">Image name</param>
-        /// <param name="tagsAttributes">List of tag attribute details</param>
-        public TagList(string registry = default(string), string imageName = default(string), IList<TagAttributesBase> tagsAttributes = default(IList<TagAttributesBase>))
+        /// <param name="tags">List of tag attribute details</param>
+        public TagList(string registry = default(string), string imageName = default(string), IList<TagAttributesBase> tags = default(IList<TagAttributesBase>))
         {
             Registry = registry;
             ImageName = imageName;
-            TagsAttributes = tagsAttributes;
+            Tags = tags;
             CustomInit();
         }
 
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets list of tag attribute details
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public IList<TagAttributesBase> TagsAttributes { get; set; }
+        public IList<TagAttributesBase> Tags { get; set; }
 
     }
 }
