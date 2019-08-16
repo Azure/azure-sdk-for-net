@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// This operation is called after a message is received, but before it is returned to the <see cref="MessageReceiver"/>.
+        /// This operation is called after a message is received, but before it is returned to the <see cref="IMessageReceiver"/>.
         /// </summary>
         /// <param name="message">The <see cref="Message"/> to be modified by the plugin</param>
         /// <returns>The modified <see cref="Message"/></returns>

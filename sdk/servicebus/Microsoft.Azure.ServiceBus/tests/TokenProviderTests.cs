@@ -19,10 +19,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
-                var tokenProvider = TokenCredential.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey, TimeSpan.FromDays(100));
+                var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey, TimeSpan.FromDays(100));
                 var connection = new ServiceBusConnection(csb)
                 {
-                    TokenCredential = tokenProvider
+                    TokenProvider = tokenProvider
                 };
                 var receiver = new MessageReceiver(connection, queueName, ReceiveMode.PeekLock, RetryPolicy.Default);
 
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             string TestToken = @"eyJhbGciOiJIUzI1NiJ9.e30.ZRrHA1JJJW8opsbCGfG_HACGpVUMN_a9IV7pAx_Zmeo";
             string ServiceBusAudience = "https://servicebus.azure.net";
 
-            var aadTokenProvider = TokenCredential.CreateAzureActiveDirectoryTokenProvider(
+            var aadTokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(
                 (audience, authority, state) =>
                 {
                     Assert.Equal(ServiceBusAudience, audience);

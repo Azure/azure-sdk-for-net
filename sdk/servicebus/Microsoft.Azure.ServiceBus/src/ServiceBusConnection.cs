@@ -145,9 +145,9 @@ namespace Microsoft.Azure.ServiceBus
         public TransportType TransportType { get; set; }
 
         /// <summary>
-        /// Token provider for authentication. <see cref="TokenCredential"/>
+        /// Token provider for authentication. <see cref="TokenProvider"/>
         /// </summary>
-        public TokenCredential TokenCredential { get; set; }
+        public ITokenProvider TokenProvider { get; set; }
 
         /// <summary>
         /// Returns true if the Service Bus Connection is closed or closing.
@@ -212,15 +212,15 @@ namespace Microsoft.Azure.ServiceBus
 
             if (builder.SasToken != null)
             {
-                this.TokenCredential = new SharedAccessSignatureTokenProvider(builder.SasToken);
+                this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasToken);
             }
             else if (builder.SasKeyName != null || builder.SasKey != null)
             {
-                this.TokenCredential = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
+                this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
             }
             else if (builder.Authentication.Equals(ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity))
             {
-                this.TokenCredential = new ManagedIdentityTokenProvider();
+                this.TokenProvider = new ManagedIdentityTokenProvider();
             }
 
             this.OperationTimeout = builder.OperationTimeout;

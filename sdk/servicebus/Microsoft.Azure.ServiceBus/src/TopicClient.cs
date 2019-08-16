@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ServiceBus
     /// <example>
     /// Create a new TopicClient
     /// <code>
-    /// TopicClient topicClient = new TopicClient(
+    /// ITopicClient topicClient = new TopicClient(
     ///     namespaceConnectionString,
     ///     topicName,
     ///     RetryExponential);
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.ServiceBus
     /// </code>
     /// </example>
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
-    public class TopicClient : ClientEntity, TopicClient
+    public class TopicClient : ClientEntity, ITopicClient
     {
         readonly object syncLock;
         MessageSender innerSender;
@@ -75,10 +75,10 @@ namespace Microsoft.Azure.ServiceBus
         public TopicClient(
             string endpoint,
             string entityPath,
-            TokenCredential tokenProvider,
+            ITokenProvider tokenProvider,
             TransportType transportType = TransportType.Amqp,
             RetryPolicy retryPolicy = null)
-            : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenCredential = tokenProvider}, entityPath, retryPolicy)
+            : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, entityPath, retryPolicy)
         {
             this.OwnsConnection = true;
         }
@@ -104,9 +104,9 @@ namespace Microsoft.Azure.ServiceBus
             this.OwnsConnection = false;
             this.ServiceBusConnection.ThrowIfClosed();
 
-            if (this.ServiceBusConnection.TokenCredential != null)
+            if (this.ServiceBusConnection.TokenProvider != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {

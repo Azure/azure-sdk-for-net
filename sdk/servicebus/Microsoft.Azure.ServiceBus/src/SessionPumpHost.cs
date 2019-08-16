@@ -14,7 +14,7 @@ namespace Microsoft.Azure.ServiceBus
         CancellationTokenSource sessionPumpCancellationTokenSource;
         readonly Uri endpoint;
 
-        public SessionPumpHost(string clientId, ReceiveMode receiveMode, SessionClient sessionClient, Uri endpoint)
+        public SessionPumpHost(string clientId, ReceiveMode receiveMode, ISessionClient sessionClient, Uri endpoint)
         {
             this.syncLock = new object();
             this.ClientId = clientId;
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus
 
         ReceiveMode ReceiveMode { get; }
 
-        SessionClient SessionClient { get; }
+        ISessionClient SessionClient { get; }
 
         string ClientId { get; }
 
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         public void OnSessionHandler(
-            Func<MessageSession, Message, CancellationToken, Task> callback,
+            Func<IMessageSession, Message, CancellationToken, Task> callback,
             SessionHandlerOptions sessionHandlerOptions)
         {
             MessagingEventSource.Log.RegisterOnSessionHandlerStart(this.ClientId, sessionHandlerOptions);

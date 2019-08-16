@@ -210,8 +210,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             var builder = new ServiceBusConnectionStringBuilder(connectionString);
             var connection = new ServiceBusConnection(builder);
-            new ManagementClient(builder); // Will throw without a valid TokenCredential
-            Assert.Equal(typeof(ManagedIdentityTokenProvider), connection.TokenCredential.GetType());
+            new ManagementClient(builder); // Will throw without a valid TokenProvider
+            Assert.Equal(typeof(ManagedIdentityTokenProvider), connection.TokenProvider.GetType());
         }
 
         [Theory]
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var builder = new ServiceBusConnectionStringBuilder(connectionString);
             var connection = new ServiceBusConnection(builder);
             Assert.Throws<ArgumentException>(() => new ManagementClient(builder));
-            Assert.Null(connection.TokenCredential);
+            Assert.Null(connection.TokenProvider);
         }
     }
 }

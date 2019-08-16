@@ -187,7 +187,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var messageId = Guid.NewGuid().ToString("N").Substring(0, 8);
                 var sender = default(MessageSender);
                 var sessionClient = default(SessionClient);
-                var messageSession = default(MessageSession);
+                var messageSession = default(IMessageSession);
 
                 try
                 {
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
                 var someSessionId = "someSessionId";
-                MessageSession session = null;
+                IMessageSession session = null;
 
                 try
                 {

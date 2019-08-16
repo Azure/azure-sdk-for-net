@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <example>
     /// Create a new MessageSender to send to a Queue
     /// <code>
-    /// MessageSender messageSender = new MessageSender(
+    /// IMessageSender messageSender = new MessageSender(
     ///     namespaceConnectionString,
     ///     queueName)
     /// </code>
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <seealso cref="MessageSender"/>
     /// <seealso cref="QueueClient"/>
     /// <seealso cref="TopicClient"/>
-    public interface MessageSender : SenderClient
+    public interface IMessageSender : ISenderClient
     {
     }
 }

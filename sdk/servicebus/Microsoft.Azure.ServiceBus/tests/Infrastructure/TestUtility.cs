@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        internal static async Task SendMessagesAsync(MessageSender messageSender, int messageCount)
+        internal static async Task SendMessagesAsync(IMessageSender messageSender, int messageCount)
         {
             if (messageCount == 0)
             {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Log($"Sent {messageCount} messages");
         }
 
-        internal static async Task<IList<Message>> ReceiveMessagesAsync(MessageReceiver messageReceiver, int messageCount, TimeSpan timeout = default)
+        internal static async Task<IList<Message>> ReceiveMessagesAsync(IMessageReceiver messageReceiver, int messageCount, TimeSpan timeout = default)
         {
             var receiveAttempts = 0;
             var messagesToReturn = new List<Message>();
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         /// This utility method is required since for a partitioned entity, the messages could have been received from different partitions,
         /// and we cannot receive all the deferred messages from different partitions in a single call.
         /// </summary>
-        internal static async Task<IList<Message>> ReceiveDeferredMessagesAsync(MessageReceiver messageReceiver, IEnumerable<long> sequenceNumbers)
+        internal static async Task<IList<Message>> ReceiveDeferredMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<long> sequenceNumbers)
         {
             var messagesToReturn = new List<Message>();
             foreach(var sequenceNumber in sequenceNumbers)
@@ -108,14 +108,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             return messagesToReturn;
         }
 
-        internal static async Task<Message> PeekMessageAsync(MessageReceiver messageReceiver)
+        internal static async Task<Message> PeekMessageAsync(IMessageReceiver messageReceiver)
         {
             var message = await messageReceiver.PeekAsync();
             Log($"Peeked 1 message");
             return message;
         }
 
-        internal static async Task<IEnumerable<Message>> PeekMessagesAsync(MessageReceiver messageReceiver, int messageCount)
+        internal static async Task<IEnumerable<Message>> PeekMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
         {
             var receiveAttempts = 0;
             var peekedMessages = new List<Message>();
@@ -134,13 +134,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             return peekedMessages;
         }
 
-        internal static async Task CompleteMessagesAsync(MessageReceiver messageReceiver, IList<Message> messages)
+        internal static async Task CompleteMessagesAsync(IMessageReceiver messageReceiver, IList<Message> messages)
         {
             await messageReceiver.CompleteAsync(messages.Select(message => message.SystemProperties.LockToken));
             Log($"Completed {messages.Count} messages");
         }
 
-        internal static async Task AbandonMessagesAsync(MessageReceiver messageReceiver, IEnumerable<Message> messages)
+        internal static async Task AbandonMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
             var count = 0;
             foreach (var message in messages)
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Log($"Abandoned {count} messages");
         }
 
-        internal static async Task DeadLetterMessagesAsync(MessageReceiver messageReceiver, IEnumerable<Message> messages)
+        internal static async Task DeadLetterMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
             var count = 0;
             foreach (var message in messages)
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Log($"Deadlettered {count} messages");
         }
 
-        internal static async Task DeferMessagesAsync(MessageReceiver messageReceiver, IEnumerable<Message> messages)
+        internal static async Task DeferMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
             var count = 0;
             foreach (var message in messages)
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Log($"Deferred {count} messages");
         }
 
-        internal static async Task SendSessionMessagesAsync(MessageSender messageSender, int numberOfSessions, int messagesPerSession)
+        internal static async Task SendSessionMessagesAsync(IMessageSender messageSender, int numberOfSessions, int messagesPerSession)
         {
             if (numberOfSessions == 0 || messagesPerSession == 0)
             {

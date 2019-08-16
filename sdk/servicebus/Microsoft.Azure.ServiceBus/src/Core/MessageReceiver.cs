@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <example>
     /// Create a new MessageReceiver to receive a message from a Subscription
     /// <code>
-    /// MessageReceiver messageReceiver = new MessageReceiver(
+    /// IMessageReceiver messageReceiver = new MessageReceiver(
     ///     namespaceConnectionString,
     ///     EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName),
     ///     ReceiveMode.PeekLock);
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// you to manually renew locks using <see cref="RenewLockAsync(Message)"/>.
     /// It uses AMQP protocol to communicate with service.
     /// </remarks>
-    public class MessageReceiver : ClientEntity, MessageReceiver
+    public class MessageReceiver : ClientEntity, IMessageReceiver
     {
         private static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
 
@@ -116,12 +116,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageReceiver(
             string endpoint,
             string entityPath,
-            TokenCredential tokenProvider,
+            ITokenProvider tokenProvider,
             TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             RetryPolicy retryPolicy = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
-            : this(entityPath, null, receiveMode, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenCredential = tokenProvider}, null, retryPolicy, prefetchCount)
+            : this(entityPath, null, receiveMode, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy, prefetchCount)
         {
             this.OwnsConnection = true;
         }
@@ -176,9 +176,9 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 this.CbsTokenProvider = cbsTokenProvider;
             }
-            else if (this.ServiceBusConnection.TokenCredential != null)
+            else if (this.ServiceBusConnection.TokenProvider != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {
@@ -642,7 +642,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
@@ -688,7 +688,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>

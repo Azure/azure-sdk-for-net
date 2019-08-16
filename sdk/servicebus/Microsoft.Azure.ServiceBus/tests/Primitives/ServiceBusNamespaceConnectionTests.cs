@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Primitives
         public void Returns_shared_access_key_name()
         {
             var namespaceConnection = new ServiceBusConnection(NamespaceConnectionString);
-            Assert.IsType<SharedAccessSignatureTokenProvider>(namespaceConnection.TokenCredential);
+            Assert.IsType<SharedAccessSignatureTokenProvider>(namespaceConnection.TokenProvider);
         }
 
         [Fact]

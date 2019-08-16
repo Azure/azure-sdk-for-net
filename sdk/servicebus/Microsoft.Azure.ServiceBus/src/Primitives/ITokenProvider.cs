@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// <summary>
     /// Provides interface definition of a token provider.
     /// </summary>
-    public interface TokenCredential
+    public interface ITokenProvider
     {
         /// <summary>
         /// Gets a <see cref="SecurityToken"/>.

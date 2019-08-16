@@ -15,12 +15,12 @@ namespace Microsoft.Azure.ServiceBus
         readonly Func<Message, CancellationToken, Task> onMessageCallback;
         readonly string endpoint;
         readonly MessageHandlerOptions registerHandlerOptions;
-        readonly MessageReceiver messageReceiver;
+        readonly IMessageReceiver messageReceiver;
         readonly CancellationToken pumpCancellationToken;
         readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
         readonly ServiceBusDiagnosticSource diagnosticSource;
 
-        public MessageReceivePump(MessageReceiver messageReceiver,
+        public MessageReceivePump(IMessageReceiver messageReceiver,
             MessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback,
             Uri endpoint,

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <example>
     /// Create a new MessageSender to send to a Queue
     /// <code>
-    /// MessageSender messageSender = new MessageSender(
+    /// IMessageSender messageSender = new MessageSender(
     ///     namespaceConnectionString,
     ///     queueName)
     /// </code>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// </code>
     /// </example>
     /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
-    public class MessageSender : ClientEntity, MessageSender
+    public class MessageSender : ClientEntity, IMessageSender
     {
         int deliveryCount;
         readonly ActiveClientLinkManager clientLinkManager;
@@ -87,10 +87,10 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageSender(
             string endpoint,
             string entityPath,
-            TokenCredential tokenProvider,
+            ITokenProvider tokenProvider,
             TransportType transportType = TransportType.Amqp,
             RetryPolicy retryPolicy = null)
-            : this(entityPath, null, null, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenCredential = tokenProvider}, null, retryPolicy)
+            : this(entityPath, null, null, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy)
         {
             this.OwnsConnection = true;
         }
@@ -159,9 +159,9 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 this.CbsTokenProvider = cbsTokenProvider;
             }
-            else if (this.ServiceBusConnection.TokenCredential != null)
+            else if (this.ServiceBusConnection.TokenProvider != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenCredential, this.ServiceBusConnection.OperationTimeout);
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
             }
             else
             {

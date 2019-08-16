@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus
     using Core;
 
     /// <summary>
-    /// Describes a Session object. MessageSession can be used to perform operations on sessions.
+    /// Describes a Session object. IMessageSession can be used to perform operations on sessions.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus
     /// Once a Session exists, there is no defined moment or gesture for when the session expires or disappears.
     /// </para>
     /// </remarks>
-    public interface MessageSession : MessageReceiver
+    public interface IMessageSession : IMessageReceiver
     {
         /// <summary>
         /// Gets the SessionId.

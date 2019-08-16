@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             {
                 var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
                 var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                var messageSession = default(MessageSession);
+                var messageSession = default(IMessageSession);
                 var eventQueue = this.CreateEventQueue();
                 
                 try
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             Assert.Equal("Microsoft.Azure.ServiceBus.ProcessSession.Start", eventName);
             AssertCommonPayloadProperties(entityName, payload);
 
-            GetPropertyValueFromAnonymousTypeInstance<MessageSession>(payload, "Session");
+            GetPropertyValueFromAnonymousTypeInstance<IMessageSession>(payload, "Session");
             var message = GetPropertyValueFromAnonymousTypeInstance<Message>(payload, "Message");
 
             Assert.NotNull(activity);
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.ProcessSession.Stop", eventName);
             AssertCommonStopPayloadProperties(entityName, payload);
-            GetPropertyValueFromAnonymousTypeInstance<MessageSession>(payload, "Session");
+            GetPropertyValueFromAnonymousTypeInstance<IMessageSession>(payload, "Session");
             var message = GetPropertyValueFromAnonymousTypeInstance<Message>(payload, "Message");
 
             if (processActivity != null)

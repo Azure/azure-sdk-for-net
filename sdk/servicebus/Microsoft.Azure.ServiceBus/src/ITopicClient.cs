@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus
     /// <example>
     /// Create a new TopicClient
     /// <code>
-    /// TopicClient topicClient = new TopicClient(
+    /// ITopicClient topicClient = new TopicClient(
     ///     namespaceConnectionString,
     ///     topicName,
     ///     RetryExponential);
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus
     /// await topicClient.SendAsync(data);
     /// </code>
     /// </example>
-    public interface TopicClient : SenderClient
+    public interface ITopicClient : ISenderClient
     {
         /// <summary>
         /// Gets the name of the topic.
