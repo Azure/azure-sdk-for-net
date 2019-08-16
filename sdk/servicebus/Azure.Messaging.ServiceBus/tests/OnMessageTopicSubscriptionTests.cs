@@ -44,13 +44,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
-                    subscriptionName,
-                    mode);
+                    subscriptionName);
 
                 await using var sender = topicClient.CreateSender();
+                await using var receiver = subscriptionClient.CreateReceiver(mode);
+
                 await this.OnMessageAsyncTestCase(
                     sender,
-                    subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                    receiver,
                     maxConcurrentCalls,
                     autoComplete,
                     messageCount);

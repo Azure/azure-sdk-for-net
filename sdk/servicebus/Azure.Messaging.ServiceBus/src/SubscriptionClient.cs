@@ -52,27 +52,20 @@ namespace Azure.Messaging.ServiceBus
     /// <remarks>It uses AMQP protocol for communicating with service bus. Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
     public class SubscriptionClient: IAsyncDisposable
     {
-        private int prefetchCount;
-
         private readonly object syncLock;
 
         private readonly ServiceBusDiagnosticSource diagnosticSource;
 
         private AmqpSubscriptionClient innerSubscriptionClient;
 
-        private SessionClient sessionClient;
-
-        private SessionPumpHost sessionPumpHost;
-        
         internal ClientEntity ClientEntity { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="SubscriptionClient"/> to perform operations on a subscription.
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
-        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
-        internal SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, AmqpClientOptions options = null)
-            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, subscriptionName, receiveMode, options)
+        internal SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, AmqpClientOptions options = null)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, subscriptionName, options)
         {
         }
 
@@ -80,10 +73,9 @@ namespace Azure.Messaging.ServiceBus
         /// Instantiates a new <see cref="SubscriptionClient"/> to perform operations on a subscription.
         /// </summary>
         /// <param name="connectionString">Namespace connection string. Must not contain topic or subscription information.</param>
-        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
-        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, AmqpClientOptions options = null)
-            : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), topicPath, subscriptionName, receiveMode, options)
+        public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, AmqpClientOptions options = null)
+            : this(new ServiceBusConnection(new ServiceBusConnectionStringBuilder(connectionString), options), topicPath, subscriptionName, options)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -100,16 +92,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicPath">Topic path.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
-        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
         public SubscriptionClient(
             string endpoint,
             string topicPath,
             string subscriptionName,
             TokenCredential tokenProvider,
-            AmqpClientOptions options,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock)
-            : this(new ServiceBusConnection(endpoint, tokenProvider, options), topicPath, subscriptionName, receiveMode, options)
+            AmqpClientOptions options)
+            : this(new ServiceBusConnection(endpoint, tokenProvider, options), topicPath, subscriptionName, options)
         {
             ClientEntity.OwnsConnection = true;
         }
@@ -120,8 +110,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
         /// <param name="topicPath">Topic path.</param>
         /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, AmqpClientOptions options)
+        public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, AmqpClientOptions options)
         {
             ClientEntity = new ClientEntity(options, $"{topicPath}/{subscriptionName}");
             if (string.IsNullOrWhiteSpace(topicPath))
@@ -133,14 +122,13 @@ namespace Azure.Messaging.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(subscriptionName);
             }
 
-            MessagingEventSource.Log.SubscriptionClientCreateStart(serviceBusConnection?.Endpoint.Authority, topicPath, subscriptionName, receiveMode.ToString());
+            MessagingEventSource.Log.SubscriptionClientCreateStart(serviceBusConnection?.Endpoint.Authority, topicPath, subscriptionName, "Unknows");
 
             ClientEntity.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.TopicPath = topicPath;
             this.SubscriptionName = subscriptionName;
             this.Path = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.SubscriptionName);
-            this.ReceiveMode = receiveMode;
             this.diagnosticSource = new ServiceBusDiagnosticSource(this.Path, serviceBusConnection.Endpoint);
             ClientEntity.OwnsConnection = false;
             ClientEntity.ServiceBusConnection.ThrowIfClosed();
@@ -173,51 +161,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string SubscriptionName { get; }
 
-        /// <summary>
-        /// Gets the <see cref="ServiceBus.ReceiveMode"/> for the SubscriptionClient.
-        /// </summary>
-        public ReceiveMode ReceiveMode { get; }
-
-        /// <summary>
-        /// Prefetch speeds up the message flow by aiming to have a message readily available for local retrieval when and before the application asks for one using Receive.
-        /// Setting a non-zero value prefetches PrefetchCount number of messages.
-        /// Setting the value to zero turns prefetch off.
-        /// Defaults to 0.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// When Prefetch is enabled, the client will quietly acquire more messages, up to the PrefetchCount limit, than what the application
-        /// immediately asks for. The message pump will therefore acquire a message for immediate consumption
-        /// that will be returned as soon as available, and the client will proceed to acquire further messages to fill the prefetch buffer in the background.
-        /// </para>
-        /// <para>
-        /// While messages are available in the prefetch buffer, any subsequent ReceiveAsync calls will be immediately satisfied from the buffer, and the buffer is
-        /// replenished in the background as space becomes available.If there are no messages available for delivery, the receive operation will drain the
-        /// buffer and then wait or block as expected.
-        /// </para>
-        /// <para>Updates to this value take effect on the next receive call to the service.</para>
-        /// </remarks>
-        public int PrefetchCount
-        {
-            get => this.prefetchCount;
-            set
-            {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(this.PrefetchCount), value, "Value cannot be less than 0.");
-                }
-                this.prefetchCount = value;
-                if (this.innerSubscriptionClient != null)
-                {
-                    this.innerSubscriptionClient.PrefetchCount = value;
-                }
-                if (this.sessionClient != null)
-                {
-                    this.sessionClient.PrefetchCount = value;
-                }
-            }
-        }
-
         internal AmqpSubscriptionClient InnerSubscriptionClient
         {
             get
@@ -231,8 +174,9 @@ namespace Azure.Messaging.ServiceBus
                             ClientEntity.ServiceBusConnection,
                             ClientEntity.Options,
                             this.CbsTokenProvider,
-                            this.PrefetchCount,
-                            this.ReceiveMode);
+                            // TODO: if should matter
+                            0, // 
+                            ReceiveMode.PeekLock);
                     }
                 }
 
@@ -240,200 +184,47 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal SessionClient SessionClient
+        public MessageReceiver CreateReceiver(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
         {
-            get
-            {
-                if (this.sessionClient == null)
-                {
-                    lock (this.syncLock)
-                    {
-                        if (this.sessionClient == null)
-                        {
-                            this.sessionClient = new SessionClient(
-                                ClientEntity.ClientId,
-                                this.Path,
-                                MessagingEntityType.Subscriber,
-                                this.ReceiveMode,
-                                this.PrefetchCount,
-                                ClientEntity.ServiceBusConnection,
-                                this.CbsTokenProvider,
-                                ClientEntity.Options);
-                        }
-                    }
-                }
+            receiveOptions ??= ReceiveOptions.Default;
 
-                return this.sessionClient;
-            }
+            return new MessageReceiver(
+                this.Path,
+                MessagingEntityType.Queue,
+                receiveMode,
+                ClientEntity.ServiceBusConnection,
+                this.CbsTokenProvider,
+                ClientEntity.Options,
+                receiveOptions.PrefetchCount);
         }
 
-        internal SessionPumpHost SessionPumpHost
-        {
-            get
-            {
-                if (this.sessionPumpHost == null)
-                {
-                    lock (this.syncLock)
-                    {
-                        if (this.sessionPumpHost == null)
-                        {
-                            this.sessionPumpHost = new SessionPumpHost(
-                                ClientEntity.ClientId,
-                                this.ReceiveMode,
-                                this.SessionClient,
-                                ClientEntity.ServiceBusConnection.Endpoint);
-                        }
-                    }
-                }
+        internal SessionClient CreateSessionClient(ReceiveMode receiveMode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
+        {            
+            receiveOptions ??= ReceiveOptions.Default;
 
-                return this.sessionPumpHost;
-            }
+            return new SessionClient(
+                ClientEntity.ClientId,
+                this.Path,
+                MessagingEntityType.Queue,
+                receiveMode,
+                receiveOptions.PrefetchCount,
+                ClientEntity.ServiceBusConnection,
+                this.CbsTokenProvider,
+                ClientEntity.Options);
         }
+
+        
+        internal SessionPumpHost CreateSessionPumpHost(ReceiveMode mode = ReceiveMode.PeekLock, ReceiveOptions receiveOptions = null)
+        {
+            return new SessionPumpHost(
+                ClientEntity.ClientId,
+                mode,
+                CreateSessionClient(mode, receiveOptions),
+                ClientEntity.ServiceBusConnection.Endpoint);
+        }
+
 
         private ICbsTokenProvider CbsTokenProvider { get; }
-
-        /// <summary>
-        /// Completes a <see cref="Message"/> using its lock token. This will delete the message from the subscription.
-        /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// This operation can only be performed on messages that were received by this client.
-        /// </remarks>
-        public Task CompleteAsync(string lockToken)
-        {
-            ClientEntity.ThrowIfClosed();
-            return this.InnerSubscriptionClient.InnerReceiver.CompleteAsync(lockToken);
-        }
-
-        /// <summary>
-        /// Abandons a <see cref="Message"/> using a lock token. This will make the message available again for processing.
-        /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
-        /// <remarks>A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// Abandoning a message will increase the delivery count on the message.
-        /// This operation can only be performed on messages that were received by this client.
-        /// </remarks>
-        public Task AbandonAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
-        {
-            ClientEntity.ThrowIfClosed();
-            return this.InnerSubscriptionClient.InnerReceiver.AbandonAsync(lockToken, propertiesToModify);
-        }
-
-        /// <summary>
-        /// Moves a message to the deadletter sub-queue.
-        /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter sub-queue, you will need a new <see cref="MessageReceiver"/> or <see cref="SubscriptionClient"/>, with the corresponding path.
-        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this client.
-        /// </remarks>
-        public Task DeadLetterAsync(string lockToken)
-        {
-            ClientEntity.ThrowIfClosed();
-            return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken);
-        }
-
-        /// <summary>
-        /// Moves a message to the deadletter sub-queue.
-        /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
-        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        public Task DeadLetterAsync(string lockToken, IDictionary<string, object> propertiesToModify)
-        {
-            ClientEntity.ThrowIfClosed();
-            return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken, propertiesToModify);
-        }
-
-        /// <summary>
-        /// Moves a message to the deadletter sub-queue.
-        /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
-        /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
-        /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="MessageReceiver"/>, with the corresponding path.
-        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        public Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null)
-        {
-            ClientEntity.ThrowIfClosed();
-            return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken, deadLetterReason, deadLetterErrorDescription);
-        }
-
-        /// <summary>
-        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
-        /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
-        /// </summary>
-        /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
-        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
-        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
-        /// <remarks>Enable prefetch to speed up the receive rate.
-        /// Use <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, MessageHandlerOptions)"/> to configure the settings of the pump.</remarks>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
-        {
-            ClientEntity.ThrowIfClosed();
-            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, exceptionReceivedHandler);
-        }
-
-        /// <summary>
-        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
-        /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
-        /// </summary>
-        /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
-        /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
-        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
-        {
-            ClientEntity.ThrowIfClosed();
-            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, messageHandlerOptions);
-        }
-
-        /// <summary>
-        /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.
-        /// This handler(<see cref="Func{MessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
-        /// </summary>
-        /// <param name="handler">A <see cref="Func{MessageSession, Message, CancellationToken, Task}"/> that processes messages.
-        /// <see cref="MessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="Message"/></param>
-        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
-        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
-        /// <remarks>  Enable prefetch to speed up the receive rate.
-        /// Use <see cref="RegisterSessionHandler(Func{MessageSession,Message,CancellationToken,Task}, SessionHandlerOptions)"/> to configure the settings of the pump.</remarks>
-        public void RegisterSessionHandler(Func<MessageSession, Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
-        {
-            var sessionHandlerOptions = new SessionHandlerOptions(exceptionReceivedHandler);
-            this.RegisterSessionHandler(handler, sessionHandlerOptions);
-        }
-
-        /// <summary>
-        /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.
-        /// This handler(<see cref="Func{MessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
-        /// </summary>
-        /// <param name="handler">A <see cref="Func{MessageSession, Message, CancellationToken, Task}"/> that processes messages.
-        /// <see cref="MessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="Message"/></param>
-        /// <param name="sessionHandlerOptions">Options used to configure the settings of the session pump.</param>
-        /// <remarks>Enable prefetch to speed up the receive rate. </remarks>
-        public void RegisterSessionHandler(Func<MessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
-        {
-            ClientEntity.ThrowIfClosed();
-            this.SessionPumpHost.RegisterSessionHandler(handler, sessionHandlerOptions);
-        }
 
         /// <summary>
         /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
@@ -592,12 +383,6 @@ namespace Azure.Messaging.ServiceBus
                 await this.innerSubscriptionClient.DisposeAsync().ConfigureAwait(false);
             }
 
-            this.sessionPumpHost?.Close();
-
-            if (this.sessionClient != null)
-            {
-                await this.sessionClient.DisposeAsync().ConfigureAwait(false);
-            }
         }
 
         public async ValueTask DisposeAsync()

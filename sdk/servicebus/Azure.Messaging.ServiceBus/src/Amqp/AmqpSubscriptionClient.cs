@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private AmqpClientOptions Options { get; set; }
 
-        public MessageReceiver InnerReceiver
+        private MessageReceiver InnerReceiver
         {
             get
             {

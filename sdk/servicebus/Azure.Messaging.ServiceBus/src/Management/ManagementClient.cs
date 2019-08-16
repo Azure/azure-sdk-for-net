@@ -871,11 +871,6 @@ namespace Azure.Messaging.ServiceBus.Management
             return true;
         }
 
-        public Task CloseAsync()
-        {
-            return Task.CompletedTask;
-        }
-
         #endregion
 
         private static int GetPort(string endpoint)

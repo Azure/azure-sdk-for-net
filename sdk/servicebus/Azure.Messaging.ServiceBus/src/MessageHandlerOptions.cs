@@ -6,10 +6,11 @@ namespace Azure.Messaging.ServiceBus
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using Azure.Messaging.ServiceBus.Core;
     using Primitives;
 
     /// <summary>Provides options associated with message pump processing using
-    /// <see cref="SubscriptionClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" />.</summary>
+    /// <see cref="MessageReceiver.RegisterMessageHandler(System.Func{Azure.Messaging.ServiceBus.ReceivedMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task},System.Func{Azure.Messaging.ServiceBus.ExceptionReceivedEventArgs,System.Threading.Tasks.Task})" />.</summary>
     public sealed class MessageHandlerOptions
     {
         private int maxConcurrentCalls;
@@ -56,7 +57,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// <see cref="SubscriptionClient.CompleteAsync(string)" /> on messages after the callback has completed processing.</summary>
+        /// <see cref="MessageReceiver.CompleteAsync(string)" /> on messages after the callback has completed processing.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete { get; set; }
 

@@ -30,10 +30,11 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     topicName,
                     subscriptionName);
 
-                var topicClientSender = topicClient.CreateSender();
+                await using var topicClientSender = topicClient.CreateSender();
+                await using var subscriptionReceiver = subscriptionClient.CreateReceiver();
                 await this.PeekLockTestCase(
                     topicClientSender,
-                    subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                    subscriptionReceiver,
                     messageCount);
             });
         }
@@ -50,13 +51,12 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
-                var topicClientSender = topicClient.CreateSender();
-                await
-                    this.ReceiveDeleteTestCase(
+                    subscriptionName);
+                await using var topicClientSender = topicClient.CreateSender();
+                await using var subscriptionReceiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                await this.ReceiveDeleteTestCase(
                         topicClientSender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                        subscriptionReceiver,
                         messageCount);
             });
         }
@@ -74,11 +74,12 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionName);
-                var topicClientSender = topicClient.CreateSender();
+                await using var topicClientSender = topicClient.CreateSender();
+                await using var subscriptionReceiver = subscriptionClient.CreateReceiver();
                 await
                     this.PeekLockWithAbandonTestCase(
                         topicClientSender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                        subscriptionReceiver,
                         messageCount);
             });
         }
@@ -103,13 +104,15 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionDeadletterPath);
+                await using var deadLetterSubscriptionReceiver = deadLetterSubscriptionClient.CreateReceiver();
 
-                var topicClientSender = topicClient.CreateSender();
+                await using var topicClientSender = topicClient.CreateSender();
+                await using var subscriptionReceiver = subscriptionClient.CreateReceiver();
                 await
                     this.PeekLockWithDeadLetterTestCase(
                         topicClientSender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                        deadLetterSubscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                        subscriptionReceiver,
+                        deadLetterSubscriptionReceiver,
                         messageCount);
             });
         }
@@ -127,10 +130,11 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     TestUtility.NamespaceConnectionString,
                     topicName,
                     subscriptionName);
-                var topicClientSender = topicClient.CreateSender();
+                await using var topicClientSender = topicClient.CreateSender();
+                await using var subscriptionReceiver = subscriptionClient.CreateReceiver();
                 await this.RenewLockTestCase(
                     topicClientSender,
-                    subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                    subscriptionReceiver,
                     messageCount);
             });
         }
@@ -147,13 +151,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
-                var topicClientSender = topicClient.CreateSender();
+                    subscriptionName);
+                await using var topicClientSender = topicClient.CreateSender();
+                await using var subscriptionReceiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
                 await
                     this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(
                         topicClientSender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                        subscriptionReceiver,
                         messageCount);
             });
         }
@@ -170,13 +174,13 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
-                var topicClientSender = topicClient.CreateSender();
+                    subscriptionName);
+                await using var topicClientSender = topicClient.CreateSender();
+                await using var subscriptionReceiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
                 await
                     this.CancelScheduledMessagesAsyncTestCase(
                         topicClientSender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                        subscriptionReceiver,
                         messageCount);
             });
         }

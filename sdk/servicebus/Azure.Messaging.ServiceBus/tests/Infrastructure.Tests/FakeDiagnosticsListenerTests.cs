@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
-                await using var subscriptionClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName, ReceiveMode.ReceiveAndDelete);
+                await using var subscriptionClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName);
                 var eventQueue = this.CreateEventQueue();
                 var entityName = $"{topicName}/Subscriptions/{subscriptionName}";
 

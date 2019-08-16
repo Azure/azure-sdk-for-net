@@ -50,8 +50,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicClient.TopicName,
-                    subscriptionName,
-                    ReceiveMode.PeekLock);
+                    subscriptionName);
 
                 var sessionHandlerOptions = new SessionHandlerOptions(eventArgs =>
                 {
@@ -64,8 +63,10 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     return Task.CompletedTask;
                 })
                 { MaxConcurrentSessions = 1 };
+                
+                await using var receiver = subscriptionClient.CreateSessionPumpHost(ReceiveMode.PeekLock);
 
-                subscriptionClient.RegisterSessionHandler(
+                receiver.RegisterSessionHandler(
                    (session, message, token) => Task.CompletedTask,
                    sessionHandlerOptions);
 
@@ -95,8 +96,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicClient.TopicName,
-                    subscriptionName,
-                    ReceiveMode.PeekLock);
+                    subscriptionName);
 
                 var sessionHandlerOptions =
                     new SessionHandlerOptions(ExceptionReceivedHandler)
@@ -105,13 +105,14 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         MessageWaitTimeout = TimeSpan.FromSeconds(5),
                         AutoComplete = true
                     };
-
+                
+                await using var receiver = subscriptionClient.CreateSessionPumpHost(mode);
                 var topicClientSender = topicClient.CreateSender();
                 var testSessionHandler = new TestSessionHandler(
-                    subscriptionClient.ReceiveMode,
+                    mode,
                     sessionHandlerOptions,
                     topicClientSender,
-                    subscriptionClient.SessionPumpHost);
+                    receiver);
 
                 // Send messages to Session
                 await testSessionHandler.SendSessionMessages();

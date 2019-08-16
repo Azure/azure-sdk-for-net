@@ -30,8 +30,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
+                    subscriptionName);
 
                 try
                 {
@@ -58,8 +57,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                     var messageId2 = Guid.NewGuid().ToString();
                     await topicClientSender.SendAsync(new Message { MessageId = messageId2, Label = "Red" });
                     TestUtility.Log($"Sent Message: {messageId2}");
-
-                    var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
+                    
+                    await using var receiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                    var messages = await receiver.ReceiveAsync(maxMessageCount: 2);
                     Assert.NotNull(messages);
                     Assert.True(messages.Count == 1);
                     Assert.Equal(messageId2, messages.First().MessageId);
@@ -91,8 +91,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
+                    subscriptionName);
 
                 try
                 {
@@ -129,8 +128,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         UserProperties = { { "color", "RedSql" } }
                     });
                     TestUtility.Log($"Sent Message: {messageId2}");
-
-                    var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
+                    
+                    await using var receiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                    var messages = await receiver.ReceiveAsync(maxMessageCount: 2);
                     Assert.NotNull(messages);
                     Assert.True(messages.Count == 1);
                     Assert.Equal(messageId2, messages.First().MessageId);
@@ -162,8 +162,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
+                    subscriptionName);
 
                 try
                 {
@@ -201,8 +200,9 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         UserProperties = { { "color", "RedSqlAction" } }
                     });
                     TestUtility.Log($"Sent Message: {messageId2}");
-
-                    var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
+                    
+                    await using var receiver = subscriptionClient.CreateReceiver(ReceiveMode.ReceiveAndDelete);
+                    var messages = await receiver.ReceiveAsync(maxMessageCount: 2);
                     Assert.NotNull(messages);
                     Assert.True(messages.Count == 1);
                     Assert.Equal(messageId2, messages.First().MessageId);
@@ -226,8 +226,7 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                 await using var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
+                    subscriptionName);
                 var sqlRuleName = "sqlRule";
                 var correlationRuleName = "correlationRule";
 
@@ -297,33 +296,6 @@ namespace Azure.Messaging.ServiceBus.UnitTests
                         subscriptionClient.RemoveRuleAsync(sqlRuleName),
                         subscriptionClient.RemoveRuleAsync(correlationRuleName)).ConfigureAwait(false);
                 }
-            });
-        }
-
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
-        public async Task UpdatingPrefetchCountOnSubscriptionClientUpdatesTheReceiverPrefetchCount()
-        {
-            await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
-            {
-                await using var subscriptionClient = new SubscriptionClient(
-                    TestUtility.NamespaceConnectionString,
-                    topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
-
-                Assert.Equal(0, subscriptionClient.PrefetchCount);
-
-                subscriptionClient.PrefetchCount = 2;
-                Assert.Equal(2, subscriptionClient.PrefetchCount);
-                // Message receiver should be created with latest prefetch count (lazy load).
-                Assert.Equal(2, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
-
-                subscriptionClient.PrefetchCount = 3;
-                Assert.Equal(3, subscriptionClient.PrefetchCount);
-                // Already created message receiver should have its prefetch value updated.
-                Assert.Equal(3, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
             });
         }
     }
