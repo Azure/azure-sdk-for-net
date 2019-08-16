@@ -1,8 +1,8 @@
 # GA SDK Releases
 
-Every minor version release targets the same (GA) API version as that of the corresponding major version release. API version targeted by the major version releases are listed when appropriate.
+Every minor version release targets the same (GA) REST API version as that of the corresponding major version release. The REST API version targeted by the major version releases are listed when appropriate.
 
-Features and improvements in a GA SDK are considered generally available, unless otherwise specified.
+Features and improvements in a GA SDK are considered generally available.
 
 <a name="10.0.0"></a>
 
@@ -26,11 +26,11 @@ For more details, visit the [SDK migration guide](https://docs.microsoft.com/azu
 - Introduce conditional skill. [PR 7204](https://github.com/Azure/azure-sdk-for-net/pull/7204).
 - Introduce text translate skill. [PR 7204](https://github.com/Azure/azure-sdk-for-net/pull/7204).
 - Indexer execution status adds more detail for errors and warnings. [PR 7265](https://github.com/Azure/azure-sdk-for-net/pull/7265).
-- Service limits expose complex type limits and indexer execution status includes indexer limits/quotes. [PR 7031](https://github.com/Azure/azure-sdk-for-net/pull/7031).
+- Service limits expose complex type limits and indexer execution status includes indexer limits/quotas. [PR 7031](https://github.com/Azure/azure-sdk-for-net/pull/7031).
 
 # Bug fixes
 
-- Fix web api skill validation error on creating skillset. See first item in "Breaking changes". [Issue 6468](https://github.com/Azure/azure-sdk-for-net/issues/6468).
+- Fix Web API skill validation error on creating a skillset. See first item in "Breaking changes". [Issue 6468](https://github.com/Azure/azure-sdk-for-net/issues/6468).
 
 # 9.1.0
 
@@ -77,7 +77,7 @@ For more details, visit the [SDK migration guide](https://docs.microsoft.com/azu
 - Several `bool` properties of `Field` class are now nullable. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
 - Batch and result types have a simplified hierarchy. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
 - `ExtensibleEnum` has been removed. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
-- Removed `FacetRestuls` and `HitHighlights` classes. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
+- Removed `FacetResults` and `HitHighlights` classes. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
 - `SynonymMap` constructor no longer has the redundant `enum` parameter for `SynonymMapFormat`. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
 - `DataSourceType.DocumentDb` is deprecated in favor of `DataSourceType.CosmosDb`. [PR 5223](https://github.com/Azure/azure-sdk-for-net/pull/5223).
 
@@ -163,7 +163,7 @@ None
 
 # Preview SDK Releases
 
-Every minor version release targets the same (preview) API version as that of the corresponding major version release. API version targeted by the major version releases are listed when appropriate.
+Every minor version release targets the same (preview) REST API version as that of the corresponding major version release. The REST API version targeted by the major version releases are listed when appropriate.
 
 Features and improvements offered in a preview SDK are in a preview capacity. They may or may not be shipped in a subsequent GA SDK. We advise not to use them in production environments.
 
