@@ -30,7 +30,9 @@ namespace Azure.Core.Tests
             {
                 activity = Activity.Current;
                 startEvent = testListener.Events.Dequeue();
-                return new MockResponse(201);
+                MockResponse mockResponse = new MockResponse(201);
+                mockResponse.AddHeader(new HttpHeader("x-ms-request-id", "server request id"));
+                return mockResponse;
             });
 
             using Request request = mockTransport.CreateRequest();
@@ -53,6 +55,8 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", request.ClientRequestId));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
         }
 
 
