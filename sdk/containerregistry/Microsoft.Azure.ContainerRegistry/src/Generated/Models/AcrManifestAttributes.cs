@@ -11,34 +11,32 @@
 namespace Microsoft.Azure.ContainerRegistry.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// List of tag details
+    /// Manifest attributes details
     /// </summary>
-    public partial class TagList
+    public partial class AcrManifestAttributes
     {
         /// <summary>
-        /// Initializes a new instance of the TagList class.
+        /// Initializes a new instance of the AcrManifestAttributes class.
         /// </summary>
-        public TagList()
+        public AcrManifestAttributes()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TagList class.
+        /// Initializes a new instance of the AcrManifestAttributes class.
         /// </summary>
         /// <param name="registry">Registry name</param>
         /// <param name="imageName">Image name</param>
-        /// <param name="tagsAttributes">List of tag attribute details</param>
-        public TagList(string registry = default(string), string imageName = default(string), IList<TagAttributesBase> tagsAttributes = default(IList<TagAttributesBase>))
+        /// <param name="manifestAttributes">Manifest attributes</param>
+        public AcrManifestAttributes(string registry = default(string), string imageName = default(string), AcrManifestAttributesBase manifestAttributes = default(AcrManifestAttributesBase))
         {
             Registry = registry;
             ImageName = imageName;
-            TagsAttributes = tagsAttributes;
+            ManifestAttributes = manifestAttributes;
             CustomInit();
         }
 
@@ -60,10 +58,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         public string ImageName { get; set; }
 
         /// <summary>
-        /// Gets or sets list of tag attribute details
+        /// Gets or sets manifest attributes
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IList<TagAttributesBase> TagsAttributes { get; set; }
+        [JsonProperty(PropertyName = "manifest")]
+        public AcrManifestAttributesBase ManifestAttributes { get; set; }
 
     }
 }

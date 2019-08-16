@@ -514,9 +514,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagList> GetTagListAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagList> GetAcrTagListAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTagListWithHttpMessagesAsync(name, last, n, orderby, digest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAcrTagListWithHttpMessagesAsync(name, last, n, orderby, digest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Name of the image (including the namespace)
             /// </param>
             /// <param name='reference'>
-            /// Tag name
+            /// Tag or digest of the target manifest
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

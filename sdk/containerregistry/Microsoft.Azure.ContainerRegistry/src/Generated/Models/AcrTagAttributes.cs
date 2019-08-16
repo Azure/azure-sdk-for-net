@@ -11,34 +11,32 @@
 namespace Microsoft.Azure.ContainerRegistry.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// List of tag details
+    /// Tag attributes
     /// </summary>
-    public partial class TagList
+    public partial class AcrTagAttributes
     {
         /// <summary>
-        /// Initializes a new instance of the TagList class.
+        /// Initializes a new instance of the AcrTagAttributes class.
         /// </summary>
-        public TagList()
+        public AcrTagAttributes()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TagList class.
+        /// Initializes a new instance of the AcrTagAttributes class.
         /// </summary>
         /// <param name="registry">Registry name</param>
         /// <param name="imageName">Image name</param>
-        /// <param name="tagsAttributes">List of tag attribute details</param>
-        public TagList(string registry = default(string), string imageName = default(string), IList<TagAttributesBase> tagsAttributes = default(IList<TagAttributesBase>))
+        /// <param name="tagAttributes">List of tag attribute details</param>
+        public AcrTagAttributes(string registry = default(string), string imageName = default(string), AcrTagAttributesBase tagAttributes = default(AcrTagAttributesBase))
         {
             Registry = registry;
             ImageName = imageName;
-            TagsAttributes = tagsAttributes;
+            TagAttributes = tagAttributes;
             CustomInit();
         }
 
@@ -62,8 +60,8 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Gets or sets list of tag attribute details
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IList<TagAttributesBase> TagsAttributes { get; set; }
+        [JsonProperty(PropertyName = "tag")]
+        public AcrTagAttributesBase TagAttributes { get; set; }
 
     }
 }

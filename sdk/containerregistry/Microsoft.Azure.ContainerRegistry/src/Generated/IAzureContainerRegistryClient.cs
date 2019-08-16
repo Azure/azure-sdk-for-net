@@ -461,7 +461,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<TagList>> GetTagListWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagList>> GetAcrTagListWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get tag attributes by tag
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Name of the image (including the namespace)
         /// </param>
         /// <param name='reference'>
-        /// Tag name
+        /// Tag or digest of the target manifest
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -18,23 +18,23 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     /// <summary>
     /// List of tag details
     /// </summary>
-    public partial class TagList
+    public partial class AcrRepositoryTags
     {
         /// <summary>
-        /// Initializes a new instance of the TagList class.
+        /// Initializes a new instance of the AcrRepositoryTags class.
         /// </summary>
-        public TagList()
+        public AcrRepositoryTags()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TagList class.
+        /// Initializes a new instance of the AcrRepositoryTags class.
         /// </summary>
         /// <param name="registry">Registry name</param>
         /// <param name="imageName">Image name</param>
         /// <param name="tagsAttributes">List of tag attribute details</param>
-        public TagList(string registry = default(string), string imageName = default(string), IList<TagAttributesBase> tagsAttributes = default(IList<TagAttributesBase>))
+        public AcrRepositoryTags(string registry = default(string), string imageName = default(string), IList<AcrTagAttributesBase> tagsAttributes = default(IList<AcrTagAttributesBase>))
         {
             Registry = registry;
             ImageName = imageName;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets list of tag attribute details
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public IList<TagAttributesBase> TagsAttributes { get; set; }
+        public IList<AcrTagAttributesBase> TagsAttributes { get; set; }
 
     }
 }

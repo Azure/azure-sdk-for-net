@@ -3785,7 +3785,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TagList>> GetTagListWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TagList>> GetAcrTagListWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -3808,7 +3808,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("digest", digest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetTagList", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetAcrTagList", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -3959,7 +3959,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Name of the image (including the namespace)
         /// </param>
         /// <param name='reference'>
-        /// Tag name
+        /// Tag or digest of the target manifest
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
