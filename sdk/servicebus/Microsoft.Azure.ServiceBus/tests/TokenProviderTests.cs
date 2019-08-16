@@ -38,6 +38,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
         public async Task AzureActiveDirectoryTokenProviderAuthCallbackTest()
         {
             var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
