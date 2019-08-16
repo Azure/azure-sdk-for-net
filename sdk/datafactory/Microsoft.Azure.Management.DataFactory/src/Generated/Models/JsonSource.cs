@@ -16,39 +16,34 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Binary sink.
+    /// A copy activity Json source.
     /// </summary>
-    public partial class BinarySink : CopySink
+    public partial class JsonSource : CopySource
     {
         /// <summary>
-        /// Initializes a new instance of the BinarySink class.
+        /// Initializes a new instance of the JsonSource class.
         /// </summary>
-        public BinarySink()
+        public JsonSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BinarySink class.
+        /// Initializes a new instance of the JsonSource class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="writeBatchSize">Write batch size. Type: integer (or
-        /// Expression with resultType integer), minimum: 0.</param>
-        /// <param name="writeBatchTimeout">Write batch timeout. Type: string
-        /// (or Expression with resultType string), pattern:
-        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        /// <param name="sinkRetryCount">Sink retry count. Type: integer (or
-        /// Expression with resultType integer).</param>
-        /// <param name="sinkRetryWait">Sink retry wait. Type: string (or
+        /// <param name="sourceRetryCount">Source retry count. Type: integer
+        /// (or Expression with resultType integer).</param>
+        /// <param name="sourceRetryWait">Source retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="maxConcurrentConnections">The maximum concurrent
-        /// connection count for the sink data store. Type: integer (or
+        /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="storeSettings">Binary store settings.</param>
-        public BinarySink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
+        /// <param name="storeSettings">Json store settings.</param>
+        public JsonSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
             CustomInit();
@@ -60,10 +55,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets binary store settings.
+        /// Gets or sets json store settings.
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
-        public StoreWriteSettings StoreSettings { get; set; }
+        public StoreReadSettings StoreSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

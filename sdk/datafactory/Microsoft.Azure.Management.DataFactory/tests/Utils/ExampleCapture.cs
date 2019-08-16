@@ -24,6 +24,7 @@ namespace DataFactory.Tests.Utils
         private const string managedIntegrationRuntimeName = "exampleManagedIntegrationRuntime";
         private const string linkedServiceName = "exampleLinkedService";
         private const string triggerName = "exampleTrigger";
+        private const string eventTriggerName = "exampleEventTrigger";
         private const string datasetName = "exampleDataset";
         private const string pipelineName = "examplePipeline";
         private const string outputBlobName = "exampleoutput.csv";
@@ -118,6 +119,12 @@ namespace DataFactory.Tests.Utils
                 CapturePipelineRuns_QueryByFactory(runId, beforeStartTime, afterEndTime); // 200, waits until succeeded so ready to get logs
                 CapturePipelineRuns_Get(runId); // 200
                 CaptureActivityRuns_QueryByPipelineRun(runId, beforeStartTime, afterEndTime); // 200
+
+                // Event Trigger subscription operations
+                CaptureTriggers_CreateEventful();
+                CaptureTriggers_SubscribeToEvents();
+                CaptureTriggers_GetEventSubscriptionStatus();
+                CaptureTriggers_UnsubscribeFromEvents();
 
                 // Start Trigger operations, leaving triggers available
                 CaptureTriggers_Create(); // 200
@@ -853,7 +860,45 @@ namespace DataFactory.Tests.Utils
             throw new TimeoutException("ActivityRuns_QueryByPipelineRun didn't finish in 3 minutes, should take about 1");
         }
 
-        private TriggerResource GetTriggerResource(string description)
+        private TriggerResource GetMultiplePipelineTriggerResource(TriggerResource resource)
+        {
+            TriggerPipelineReference triggerPipelineReference = new TriggerPipelineReference()
+            {
+                PipelineReference = new PipelineReference(pipelineName),
+                Parameters = new Dictionary<string, object>()
+            };
+
+            string[] outputBlobNameList = new string[1];
+            outputBlobNameList[0] = outputBlobName;
+
+            JArray outputBlobNameArray = JArray.FromObject(outputBlobNameList);
+
+            triggerPipelineReference.Parameters.Add("OutputBlobNameList", outputBlobNameArray);
+
+            (resource.Properties as MultiplePipelineTrigger).Pipelines.Add(triggerPipelineReference);
+
+            return resource;
+        }
+
+        private TriggerResource GetEventTriggerResource(string description)
+        {
+            TriggerResource resource = new TriggerResource()
+            {
+                Properties = new BlobEventsTrigger()
+                {
+                    Description = description,
+                    BlobPathBeginsWith = "/container/",
+                    BlobPathEndsWith = ".txt",
+                    Events = new List<string>() { "Microsoft.Storage.BlobCreated" },
+                    Scope = secrets.EventsStorageResourceId,
+                    Pipelines = new List<TriggerPipelineReference>()
+                }
+            };
+
+            return this.GetMultiplePipelineTriggerResource(resource);
+        }
+
+        private TriggerResource GetScheduleTriggerResource(string description)
         {
             TriggerResource resource = new TriggerResource()
             {
@@ -873,22 +918,7 @@ namespace DataFactory.Tests.Utils
                 }
             };
 
-            TriggerPipelineReference triggerPipelineReference = new TriggerPipelineReference()
-            {
-                PipelineReference = new PipelineReference(pipelineName),
-                Parameters = new Dictionary<string, object>()
-            };
-
-            string[] outputBlobNameList = new string[1];
-            outputBlobNameList[0] = outputBlobName;
-
-            JArray outputBlobNameArray = JArray.FromObject(outputBlobNameList);
-
-            triggerPipelineReference.Parameters.Add("OutputBlobNameList", outputBlobNameArray);
-
-            (resource.Properties as MultiplePipelineTrigger).Pipelines.Add(triggerPipelineReference);
-
-            return resource;
+            return this.GetMultiplePipelineTriggerResource(resource);
         }
 
         private TriggerResource GetTWTriggerResource(string description)
@@ -928,17 +958,24 @@ namespace DataFactory.Tests.Utils
             return resource;
         }
 
+        private void CaptureTriggers_CreateEventful()
+        {
+            interceptor.CurrentExampleName = "Triggers_CreateEventTrigger";
+            TriggerResource resourceIn = this.GetEventTriggerResource(null);
+            TriggerResource resource = client.Triggers.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, eventTriggerName, resourceIn);
+        }
+
         private void CaptureTriggers_Create()
         {
             interceptor.CurrentExampleName = "Triggers_Create";
-            TriggerResource resourceIn = this.GetTriggerResource(null);
+            TriggerResource resourceIn = this.GetScheduleTriggerResource(null);
             TriggerResource resource = client.Triggers.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, triggerName, resourceIn);
         }
 
         private void CaptureTriggers_Update()
         {
             interceptor.CurrentExampleName = "Triggers_Update";
-            TriggerResource resourceIn = this.GetTriggerResource("Example description");
+            TriggerResource resourceIn = this.GetScheduleTriggerResource("Example description");
             TriggerResource resource = client.Triggers.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, triggerName, resourceIn);
         }
 
@@ -952,6 +989,24 @@ namespace DataFactory.Tests.Utils
         {
             interceptor.CurrentExampleName = "Triggers_ListByFactory";
             IPage<TriggerResource> resources = client.Triggers.ListByFactory(secrets.ResourceGroupName, secrets.FactoryName);
+        }
+
+        private void CaptureTriggers_SubscribeToEvents()
+        {
+            interceptor.CurrentExampleName = "Triggers_SubscribeToEvents";
+            client.Triggers.SubscribeToEvents(secrets.ResourceGroupName, secrets.FactoryName, eventTriggerName);
+        }
+
+        private void CaptureTriggers_GetEventSubscriptionStatus()
+        {
+            interceptor.CurrentExampleName = "Triggers_GetEventSubscriptionStatus";
+            client.Triggers.GetEventSubscriptionStatus(secrets.ResourceGroupName, secrets.FactoryName, eventTriggerName);
+        }
+
+        private void CaptureTriggers_UnsubscribeFromEvents()
+        {
+            interceptor.CurrentExampleName = "Triggers_UnsubscribeFromEvents";
+            client.Triggers.UnsubscribeFromEvents(secrets.ResourceGroupName, secrets.FactoryName, eventTriggerName);
         }
 
         private void CaptureTriggers_Start()
