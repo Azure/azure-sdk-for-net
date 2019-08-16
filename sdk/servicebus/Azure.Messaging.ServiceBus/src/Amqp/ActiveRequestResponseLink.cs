@@ -6,16 +6,4 @@ namespace Azure.Messaging.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using System;
 
-    internal sealed class ActiveRequestResponseLink : ActiveClientLinkObject
-    {
-        public ActiveRequestResponseLink(RequestResponseAmqpLink link, Uri endpointUri, string[] audience, string[] requiredClaims, DateTime authorizationValidUntilUtc)
-            : base(link, endpointUri, audience, requiredClaims, authorizationValidUntilUtc)
-        {
-            this.Link = link;
-        }
-
-        public RequestResponseAmqpLink Link { get; }
-
-        public override AmqpConnection Connection => this.Link.Session.Connection;
-    }
 }

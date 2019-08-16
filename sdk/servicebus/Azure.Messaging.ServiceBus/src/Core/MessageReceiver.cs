@@ -52,8 +52,9 @@ namespace Azure.Messaging.ServiceBus.Core
         private readonly bool isSessionReceiver;
 
         private readonly object messageReceivePumpSyncLock;
-
+        
         private readonly ActiveClientLinkManager clientLinkManager;
+        private readonly ActiveClientLinkManager requestResponseLinkManager;
 
         private readonly ServiceBusDiagnosticSource diagnosticSource;
 
@@ -183,6 +184,7 @@ namespace Azure.Messaging.ServiceBus.Core
             this.PrefetchCount = prefetchCount;
             this.messageReceivePumpSyncLock = new object();
             this.clientLinkManager = new ActiveClientLinkManager(ClientEntity);
+            this.requestResponseLinkManager = new ActiveClientLinkManager(ClientEntity);
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
             MessagingEventSource.Log.MessageReceiverCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, ClientEntity.ClientId);
         }
@@ -1462,17 +1464,18 @@ namespace Azure.Messaging.ServiceBus.Core
                 amqpLinkSettings,
                 ClientEntity.ClientId);
 
-            Tuple<AmqpObject, DateTime> linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
+            (AmqpObject, DateTime) linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var receivingAmqpLink = (ReceivingAmqpLink) linkDetails.Item1;
-            var activeSendReceiveClientLink = new ActiveSendReceiveClientLink(
+            var activeSendReceiveClientLink = new ActiveClientLinkObject(
                 receivingAmqpLink,
+                receivingAmqpLink.Session.Connection,
                 endpointUri,
                 new string[] { endpointUri.AbsoluteUri },
                 claims,
                 linkDetails.Item2);
 
-            this.clientLinkManager.SetActiveSendReceiveLink(activeSendReceiveClientLink);
+            this.clientLinkManager.SetLink(activeSendReceiveClientLink);
 
             MessagingEventSource.Log.AmqpReceiveLinkCreateStop(ClientEntity.ClientId);
 
@@ -1502,13 +1505,14 @@ namespace Azure.Messaging.ServiceBus.Core
             var linkDetails = await amqpRequestResponseLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var requestResponseAmqpLink = (RequestResponseAmqpLink)linkDetails.Item1;
-            var activeRequestResponseClientLink = new ActiveRequestResponseLink(
+            var activeRequestResponseClientLink = new ActiveClientLinkObject(
                 requestResponseAmqpLink,
+                requestResponseAmqpLink.Session.Connection,
                 endpointUri,
                 new string[] { endpointUri.AbsoluteUri },
                 claims,
                 linkDetails.Item2);
-            this.clientLinkManager.SetActiveRequestResponseLink(activeRequestResponseClientLink);
+            this.requestResponseLinkManager.SetLink(activeRequestResponseClientLink);
 
             MessagingEventSource.Log.AmqpReceiveLinkCreateStop(ClientEntity.ClientId);
             return requestResponseAmqpLink;

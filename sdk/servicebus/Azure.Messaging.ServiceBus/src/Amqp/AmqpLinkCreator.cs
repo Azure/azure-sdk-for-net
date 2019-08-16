@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         protected string ClientId { get; }
 
-        public async Task<Tuple<AmqpObject, DateTime>> CreateAndOpenAmqpLinkAsync()
+        public async Task<(AmqpObject, DateTime)> CreateAndOpenAmqpLinkAsync()
         {
             var timeoutHelper = new TimeoutHelper(this.serviceBusConnection.OperationTimeout, true);
 
@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Create Link
                 link = this.OnCreateAmqpLink(amqpConnection, this.amqpLinkSettings, session);
                 await link.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
-                return new Tuple<AmqpObject, DateTime>(link, cbsTokenExpiresAtUtc);
+                return (link, cbsTokenExpiresAtUtc);
             }
             catch (Exception exception)
             {
