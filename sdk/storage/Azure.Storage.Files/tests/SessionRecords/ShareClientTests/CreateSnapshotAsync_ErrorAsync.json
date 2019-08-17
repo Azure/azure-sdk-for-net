@@ -5,34 +5,35 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|4a869cd9-4dc84921435af1be.",
+        "Request-Id": "|cd9d0708-4ec353129fdd7630.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "48fc6196d8c40149cb9e2f7fed71b627",
-        "x-ms-date": "Fri, 19 Jul 2019 22:32:14 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:16:43 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-02-02"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 19 Jul 2019 22:32:13 GMT",
+        "Date": "Sat, 17 Aug 2019 00:16:43 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
+        "x-ms-client-request-id": "48fc6196d8c40149cb9e2f7fed71b627",
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "39f8d844-e01a-005b-4b81-3e7435000000",
-        "x-ms-version": "2018-11-09"
+        "x-ms-request-id": "e5fc8ed7-701a-002b-6591-54cdc2000000",
+        "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eShareNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified share does not exist.\n",
-        "RequestId:39f8d844-e01a-005b-4b81-3e7435000000\n",
-        "Time:2019-07-19T22:32:14.5011024Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "RequestId:e5fc8ed7-701a-002b-6591-54cdc2000000\n",
+        "Time:2019-08-17T00:16:43.6055115Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     }
   ],

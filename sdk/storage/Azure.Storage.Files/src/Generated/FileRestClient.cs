@@ -106,7 +106,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Files.Models.FileServiceProperties.ToXml(properties, "StorageServiceProperties", "");
@@ -224,7 +224,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -506,7 +506,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
@@ -649,7 +649,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -802,7 +802,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (deleteSnapshots != null) { _request.Headers.SetValue("x-ms-delete-snapshots", Azure.Storage.Files.FileRestClient.Serialization.ToString(deleteSnapshots.Value)); }
 
                 return _request;
@@ -919,7 +919,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
@@ -980,6 +980,250 @@ namespace Azure.Storage.Files
                 }
             }
             #endregion Share.CreateSnapshotAsync
+
+            #region Share.CreatePermissionAsync
+            /// <summary>
+            /// Create a permission (a security descriptor).
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareCreatePermissionResult}</returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult>> CreatePermissionAsync(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                int? timeout = default,
+                bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.CreatePermission",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = CreatePermissionAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return CreatePermissionAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Share.CreatePermissionAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <returns>The Share.CreatePermissionAsync Request.</returns>
+            internal static Azure.Core.Http.Request CreatePermissionAsync_CreateRequest(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                int? timeout = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+
+                // Create the request
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+
+                // Set the endpoint
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.AppendQuery("restype", "share");
+                _request.UriBuilder.AppendQuery("comp", "filepermission");
+                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
+
+                return _request;
+            }
+
+            /// <summary>
+            /// Create the Share.CreatePermissionAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Share.CreatePermissionAsync Azure.Response{Azure.Storage.Files.Models.ShareCreatePermissionResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult> CreatePermissionAsync_CreateResponse(
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 201:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Models.ShareCreatePermissionResult _value = new Azure.Storage.Files.Models.ShareCreatePermissionResult();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("x-ms-file-permission-key", out _header))
+                        {
+                            _value.FilePermissonKey = _header;
+                        }
+
+                        // Create the response
+                        Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult> _result =
+                            new Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult>(
+                                response,
+                                _value);
+
+                        return _result;
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Models.StorageError _value = Azure.Storage.Files.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(response);
+                    }
+                }
+            }
+            #endregion Share.CreatePermissionAsync
+
+            #region Share.GetPermissionAsync
+            /// <summary>
+            /// Returns the permission (security descriptor) for a given key
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response</returns>
+            public static async System.Threading.Tasks.Task<Azure.Response> GetPermissionAsync(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string filePermissionKey = default,
+                int? timeout = default,
+                bool async = true,
+                string operationName = "Azure.Storage.Files.ShareClient.GetPermission",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetPermissionAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        filePermissionKey,
+                        timeout))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetPermissionAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Share.GetPermissionAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <returns>The Share.GetPermissionAsync Request.</returns>
+            internal static Azure.Core.Http.Request GetPermissionAsync_CreateRequest(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string filePermissionKey = default,
+                int? timeout = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+
+                // Create the request
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+
+                // Set the endpoint
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.AppendQuery("restype", "share");
+                _request.UriBuilder.AppendQuery("comp", "filepermission");
+                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
+                if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
+
+                return _request;
+            }
+
+            /// <summary>
+            /// Create the Share.GetPermissionAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Share.GetPermissionAsync Azure.Response.</returns>
+            internal static Azure.Response GetPermissionAsync_CreateResponse(
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        return response;
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Models.StorageError _value = Azure.Storage.Files.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(response);
+                    }
+                }
+            }
+            #endregion Share.GetPermissionAsync
 
             #region Share.SetQuotaAsync
             /// <summary>
@@ -1065,7 +1309,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (quota != null) { _request.Headers.SetValue("x-ms-share-quota", quota.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 return _request;
@@ -1202,7 +1446,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
@@ -1339,7 +1583,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -1469,7 +1713,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 // Create the body
                 System.Xml.Linq.XElement _body = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("SignedIdentifiers", ""));
@@ -1614,7 +1858,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -1670,8 +1914,13 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
+            /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
+            /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
+            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -1679,8 +1928,13 @@ namespace Azure.Storage.Files
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                string fileAttributes,
+                string fileCreationTime,
+                string fileLastWriteTime,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
+                string filePermission = default,
+                string filePermissionKey = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1693,8 +1947,13 @@ namespace Azure.Storage.Files
                     using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                         pipeline,
                         resourceUri,
+                        fileAttributes,
+                        fileCreationTime,
+                        fileLastWriteTime,
                         timeout,
-                        metadata))
+                        metadata,
+                        filePermission,
+                        filePermissionKey))
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
@@ -1722,19 +1981,41 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
+            /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
+            /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
+            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <returns>The Directory.CreateAsync Request.</returns>
             internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                string fileAttributes,
+                string fileCreationTime,
+                string fileLastWriteTime,
                 int? timeout = default,
-                System.Collections.Generic.IDictionary<string, string> metadata = default)
+                System.Collections.Generic.IDictionary<string, string> metadata = default,
+                string filePermission = default,
+                string filePermissionKey = default)
             {
                 // Validation
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (fileAttributes == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileAttributes));
+                }
+                if (fileCreationTime == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileCreationTime));
+                }
+                if (fileLastWriteTime == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileLastWriteTime));
                 }
 
                 // Create the request
@@ -1747,13 +2028,18 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
+                _request.Headers.SetValue("x-ms-file-attributes", fileAttributes);
+                _request.Headers.SetValue("x-ms-file-creation-time", fileCreationTime);
+                _request.Headers.SetValue("x-ms-file-last-write-time", fileLastWriteTime);
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
+                if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
+                if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
                 return _request;
             }
@@ -1783,6 +2069,34 @@ namespace Azure.Storage.Files
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-permission-key", out _header))
+                        {
+                            _value.FilePermissonKey = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-attributes", out _header))
+                        {
+                            _value.FileAttributes = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-creation-time", out _header))
+                        {
+                            _value.FileCreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-last-write-time", out _header))
+                        {
+                            _value.FileLastWriteTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-change-time", out _header))
+                        {
+                            _value.FileChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-id", out _header))
+                        {
+                            _value.FileId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-parent-id", out _header))
+                        {
+                            _value.FileParentId = _header;
                         }
 
                         // Create the response
@@ -1889,7 +2203,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -1931,6 +2245,34 @@ namespace Azure.Storage.Files
                         if (response.Headers.TryGetValue("x-ms-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-attributes", out _header))
+                        {
+                            _value.FileAttributes = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-creation-time", out _header))
+                        {
+                            _value.FileCreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-last-write-time", out _header))
+                        {
+                            _value.FileLastWriteTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-change-time", out _header))
+                        {
+                            _value.FileChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-permission-key", out _header))
+                        {
+                            _value.FilePermissionKey = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-id", out _header))
+                        {
+                            _value.FileId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-parent-id", out _header))
+                        {
+                            _value.FileParentId = _header;
                         }
 
                         // Create the response
@@ -2031,7 +2373,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -2062,6 +2404,210 @@ namespace Azure.Storage.Files
                 }
             }
             #endregion Directory.DeleteAsync
+
+            #region Directory.SetPropertiesAsync
+            /// <summary>
+            /// Sets properties on the directory.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
+            /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
+            /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.DirectorySetPropertiesResult}</returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.DirectorySetPropertiesResult>> SetPropertiesAsync(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string fileAttributes,
+                string fileCreationTime,
+                string fileLastWriteTime,
+                int? timeout = default,
+                string filePermission = default,
+                string filePermissionKey = default,
+                bool async = true,
+                string operationName = "Azure.Storage.Files.DirectoryClient.SetProperties",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        fileAttributes,
+                        fileCreationTime,
+                        fileLastWriteTime,
+                        timeout,
+                        filePermission,
+                        filePermissionKey))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Directory.SetPropertiesAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
+            /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
+            /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <returns>The Directory.SetPropertiesAsync Request.</returns>
+            internal static Azure.Core.Http.Request SetPropertiesAsync_CreateRequest(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string fileAttributes,
+                string fileCreationTime,
+                string fileLastWriteTime,
+                int? timeout = default,
+                string filePermission = default,
+                string filePermissionKey = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (fileAttributes == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileAttributes));
+                }
+                if (fileCreationTime == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileCreationTime));
+                }
+                if (fileLastWriteTime == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileLastWriteTime));
+                }
+
+                // Create the request
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+
+                // Set the endpoint
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.AppendQuery("comp", "properties");
+                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
+                _request.Headers.SetValue("x-ms-file-attributes", fileAttributes);
+                _request.Headers.SetValue("x-ms-file-creation-time", fileCreationTime);
+                _request.Headers.SetValue("x-ms-file-last-write-time", fileLastWriteTime);
+                if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
+                if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
+
+                return _request;
+            }
+
+            /// <summary>
+            /// Create the Directory.SetPropertiesAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Directory.SetPropertiesAsync Azure.Response{Azure.Storage.Files.Models.DirectorySetPropertiesResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Models.DirectorySetPropertiesResult> SetPropertiesAsync_CreateResponse(
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Models.DirectorySetPropertiesResult _value = new Azure.Storage.Files.Models.DirectorySetPropertiesResult();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
+                        {
+                            _value.IsServerEncrypted = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-permission-key", out _header))
+                        {
+                            _value.FilePermissionKey = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-attributes", out _header))
+                        {
+                            _value.FileAttributes = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-creation-time", out _header))
+                        {
+                            _value.FileCreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-last-write-time", out _header))
+                        {
+                            _value.FileLastWriteTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-change-time", out _header))
+                        {
+                            _value.FileChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-id", out _header))
+                        {
+                            _value.FileId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-parent-id", out _header))
+                        {
+                            _value.FileParentId = _header;
+                        }
+
+                        // Create the response
+                        Azure.Response<Azure.Storage.Files.Models.DirectorySetPropertiesResult> _result =
+                            new Azure.Response<Azure.Storage.Files.Models.DirectorySetPropertiesResult>(
+                                response,
+                                _value);
+
+                        return _result;
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Models.StorageError _value = Azure.Storage.Files.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(response);
+                    }
+                }
+            }
+            #endregion Directory.SetPropertiesAsync
 
             #region Directory.SetMetadataAsync
             /// <summary>
@@ -2147,7 +2693,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
@@ -2308,7 +2854,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -2451,7 +2997,7 @@ namespace Azure.Storage.Files
                 if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (recursive != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
                 _request.Headers.SetValue("x-ms-recursive", recursive.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
@@ -2603,7 +3149,7 @@ namespace Azure.Storage.Files
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-handle-id", handleId);
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (recursive != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
                 _request.Headers.SetValue("x-ms-recursive", recursive.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
@@ -2675,6 +3221,9 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="fileContentLength">Specifies the maximum size for the file, up to 1 TB.</param>
+            /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
+            /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
+            /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="fileContentType">Sets the MIME content type of the file. The default type is 'application/octet-stream'.</param>
             /// <param name="fileContentEncoding">Specifies which content encodings have been applied to the file.</param>
@@ -2683,6 +3232,8 @@ namespace Azure.Storage.Files
             /// <param name="fileContentHash">Sets the file's MD5 hash.</param>
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
+            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -2691,6 +3242,9 @@ namespace Azure.Storage.Files
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long fileContentLength,
+                string fileAttributes,
+                string fileCreationTime,
+                string fileLastWriteTime,
                 int? timeout = default,
                 string fileContentType = default,
                 System.Collections.Generic.IEnumerable<string> fileContentEncoding = default,
@@ -2699,6 +3253,8 @@ namespace Azure.Storage.Files
                 byte[] fileContentHash = default,
                 string fileContentDisposition = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
+                string filePermission = default,
+                string filePermissionKey = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.FileClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -2712,6 +3268,9 @@ namespace Azure.Storage.Files
                         pipeline,
                         resourceUri,
                         fileContentLength,
+                        fileAttributes,
+                        fileCreationTime,
+                        fileLastWriteTime,
                         timeout,
                         fileContentType,
                         fileContentEncoding,
@@ -2719,7 +3278,9 @@ namespace Azure.Storage.Files
                         fileCacheControl,
                         fileContentHash,
                         fileContentDisposition,
-                        metadata))
+                        metadata,
+                        filePermission,
+                        filePermissionKey))
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
@@ -2748,6 +3309,9 @@ namespace Azure.Storage.Files
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="fileContentLength">Specifies the maximum size for the file, up to 1 TB.</param>
+            /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
+            /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
+            /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="fileContentType">Sets the MIME content type of the file. The default type is 'application/octet-stream'.</param>
             /// <param name="fileContentEncoding">Specifies which content encodings have been applied to the file.</param>
@@ -2756,11 +3320,16 @@ namespace Azure.Storage.Files
             /// <param name="fileContentHash">Sets the file's MD5 hash.</param>
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
+            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <returns>The File.CreateAsync Request.</returns>
             internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long fileContentLength,
+                string fileAttributes,
+                string fileCreationTime,
+                string fileLastWriteTime,
                 int? timeout = default,
                 string fileContentType = default,
                 System.Collections.Generic.IEnumerable<string> fileContentEncoding = default,
@@ -2768,12 +3337,26 @@ namespace Azure.Storage.Files
                 string fileCacheControl = default,
                 byte[] fileContentHash = default,
                 string fileContentDisposition = default,
-                System.Collections.Generic.IDictionary<string, string> metadata = default)
+                System.Collections.Generic.IDictionary<string, string> metadata = default,
+                string filePermission = default,
+                string filePermissionKey = default)
             {
                 // Validation
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (fileAttributes == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileAttributes));
+                }
+                if (fileCreationTime == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileCreationTime));
+                }
+                if (fileLastWriteTime == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileLastWriteTime));
                 }
 
                 // Create the request
@@ -2785,9 +3368,12 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 _request.Headers.SetValue("x-ms-content-length", fileContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-type", "file");
+                _request.Headers.SetValue("x-ms-file-attributes", fileAttributes);
+                _request.Headers.SetValue("x-ms-file-creation-time", fileCreationTime);
+                _request.Headers.SetValue("x-ms-file-last-write-time", fileLastWriteTime);
                 if (fileContentType != null) { _request.Headers.SetValue("x-ms-content-type", fileContentType); }
                 if (fileContentEncoding != null) {
                     foreach (string _item in fileContentEncoding)
@@ -2810,6 +3396,8 @@ namespace Azure.Storage.Files
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
+                if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
+                if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
                 return _request;
             }
@@ -2843,6 +3431,34 @@ namespace Azure.Storage.Files
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-permission-key", out _header))
+                        {
+                            _value.FilePermissionKey = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-attributes", out _header))
+                        {
+                            _value.FileAttributes = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-creation-time", out _header))
+                        {
+                            _value.FileCreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-last-write-time", out _header))
+                        {
+                            _value.FileLastWriteTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-change-time", out _header))
+                        {
+                            _value.FileChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-id", out _header))
+                        {
+                            _value.FileId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-parent-id", out _header))
+                        {
+                            _value.FileParentId = _header;
                         }
 
                         // Create the response
@@ -2952,7 +3568,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
                 if (rangeGetContentHash != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -3065,6 +3681,34 @@ namespace Azure.Storage.Files
                         if (response.Headers.TryGetValue("x-ms-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-attributes", out _header))
+                        {
+                            _value.FileAttributes = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-creation-time", out _header))
+                        {
+                            _value.FileCreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-last-write-time", out _header))
+                        {
+                            _value.FileLastWriteTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-change-time", out _header))
+                        {
+                            _value.FileChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-permission-key", out _header))
+                        {
+                            _value.FilePermissionKey = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-id", out _header))
+                        {
+                            _value.FileId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-parent-id", out _header))
+                        {
+                            _value.FileParentId = _header;
                         }
 
                         // Create the response
@@ -3271,7 +3915,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -3369,6 +4013,34 @@ namespace Azure.Storage.Files
                         if (response.Headers.TryGetValue("x-ms-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-attributes", out _header))
+                        {
+                            _value.FileAttributes = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-creation-time", out _header))
+                        {
+                            _value.FileCreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-last-write-time", out _header))
+                        {
+                            _value.FileLastWriteTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-change-time", out _header))
+                        {
+                            _value.FileChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-permission-key", out _header))
+                        {
+                            _value.FilePermissionKey = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-id", out _header))
+                        {
+                            _value.FileId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-parent-id", out _header))
+                        {
+                            _value.FileParentId = _header;
                         }
 
                         // Create the response
@@ -3474,7 +4146,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -3512,6 +4184,9 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
+            /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
+            /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="fileContentLength">Resizes a file to the specified size. If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared.</param>
             /// <param name="fileContentType">Sets the MIME content type of the file. The default type is 'application/octet-stream'.</param>
@@ -3520,6 +4195,8 @@ namespace Azure.Storage.Files
             /// <param name="fileCacheControl">Sets the file's cache control. The File service stores this value but does not use or modify it.</param>
             /// <param name="fileContentHash">Sets the file's MD5 hash.</param>
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
+            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -3527,6 +4204,9 @@ namespace Azure.Storage.Files
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                string fileAttributes,
+                string fileCreationTime,
+                string fileLastWriteTime,
                 int? timeout = default,
                 long? fileContentLength = default,
                 string fileContentType = default,
@@ -3535,6 +4215,8 @@ namespace Azure.Storage.Files
                 string fileCacheControl = default,
                 byte[] fileContentHash = default,
                 string fileContentDisposition = default,
+                string filePermission = default,
+                string filePermissionKey = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.FileClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -3547,6 +4229,9 @@ namespace Azure.Storage.Files
                     using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
                         pipeline,
                         resourceUri,
+                        fileAttributes,
+                        fileCreationTime,
+                        fileLastWriteTime,
                         timeout,
                         fileContentLength,
                         fileContentType,
@@ -3554,7 +4239,9 @@ namespace Azure.Storage.Files
                         fileContentLanguage,
                         fileCacheControl,
                         fileContentHash,
-                        fileContentDisposition))
+                        fileContentDisposition,
+                        filePermission,
+                        filePermissionKey))
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
@@ -3582,6 +4269,9 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
+            /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
+            /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="fileContentLength">Resizes a file to the specified size. If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared.</param>
             /// <param name="fileContentType">Sets the MIME content type of the file. The default type is 'application/octet-stream'.</param>
@@ -3590,10 +4280,15 @@ namespace Azure.Storage.Files
             /// <param name="fileCacheControl">Sets the file's cache control. The File service stores this value but does not use or modify it.</param>
             /// <param name="fileContentHash">Sets the file's MD5 hash.</param>
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
+            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
+            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
             /// <returns>The File.SetPropertiesAsync Request.</returns>
             internal static Azure.Core.Http.Request SetPropertiesAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                string fileAttributes,
+                string fileCreationTime,
+                string fileLastWriteTime,
                 int? timeout = default,
                 long? fileContentLength = default,
                 string fileContentType = default,
@@ -3601,12 +4296,26 @@ namespace Azure.Storage.Files
                 System.Collections.Generic.IEnumerable<string> fileContentLanguage = default,
                 string fileCacheControl = default,
                 byte[] fileContentHash = default,
-                string fileContentDisposition = default)
+                string fileContentDisposition = default,
+                string filePermission = default,
+                string filePermissionKey = default)
             {
                 // Validation
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (fileAttributes == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileAttributes));
+                }
+                if (fileCreationTime == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileCreationTime));
+                }
+                if (fileLastWriteTime == null)
+                {
+                    throw new System.ArgumentNullException(nameof(fileLastWriteTime));
                 }
 
                 // Create the request
@@ -3619,7 +4328,10 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
+                _request.Headers.SetValue("x-ms-file-attributes", fileAttributes);
+                _request.Headers.SetValue("x-ms-file-creation-time", fileCreationTime);
+                _request.Headers.SetValue("x-ms-file-last-write-time", fileLastWriteTime);
                 if (fileContentLength != null) { _request.Headers.SetValue("x-ms-content-length", fileContentLength.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (fileContentType != null) { _request.Headers.SetValue("x-ms-content-type", fileContentType); }
                 if (fileContentEncoding != null) {
@@ -3637,6 +4349,8 @@ namespace Azure.Storage.Files
                 if (fileCacheControl != null) { _request.Headers.SetValue("x-ms-cache-control", fileCacheControl); }
                 if (fileContentHash != null) { _request.Headers.SetValue("x-ms-content-md5", System.Convert.ToBase64String(fileContentHash)); }
                 if (fileContentDisposition != null) { _request.Headers.SetValue("x-ms-content-disposition", fileContentDisposition); }
+                if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
+                if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
 
                 return _request;
             }
@@ -3670,6 +4384,34 @@ namespace Azure.Storage.Files
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-permission-key", out _header))
+                        {
+                            _value.FilePermissionKey = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-attributes", out _header))
+                        {
+                            _value.FileAttributes = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-creation-time", out _header))
+                        {
+                            _value.FileCreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-last-write-time", out _header))
+                        {
+                            _value.FileLastWriteTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-change-time", out _header))
+                        {
+                            _value.FileChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-id", out _header))
+                        {
+                            _value.FileId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-file-parent-id", out _header))
+                        {
+                            _value.FileParentId = _header;
                         }
 
                         // Create the response
@@ -3775,7 +4517,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
@@ -3947,7 +4689,7 @@ namespace Azure.Storage.Files
                 _request.Headers.SetValue("x-ms-range", range);
                 _request.Headers.SetValue("x-ms-write", Azure.Storage.Files.FileRestClient.Serialization.ToString(fileRangeWrite));
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (contentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(contentHash)); }
 
                 // Create the body
@@ -4010,6 +4752,195 @@ namespace Azure.Storage.Files
                 }
             }
             #endregion File.UploadRangeAsync
+
+            #region File.UploadRangeFromURLAsync
+            /// <summary>
+            /// Upload a range of bytes to a file where the contents are read from a URL.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="range">Writes data to the specified byte range in the file.</param>
+            /// <param name="copySource">Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source.</param>
+            /// <param name="contentLength">Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="sourceRange">Bytes of source data in the specified range.</param>
+            /// <param name="sourceContentCrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
+            /// <param name="sourceIfMatchCrc64">Specify the crc64 value to operate only on range with a matching crc64 checksum.</param>
+            /// <param name="sourceIfNoneMatchCrc64">Specify the crc64 value to operate only on range without a matching crc64 checksum.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.FileUploadRangeFromURLResult}</returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult>> UploadRangeFromURLAsync(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string range,
+                System.Uri copySource,
+                long contentLength,
+                int? timeout = default,
+                string sourceRange = default,
+                byte[] sourceContentCrc64 = default,
+                byte[] sourceIfMatchCrc64 = default,
+                byte[] sourceIfNoneMatchCrc64 = default,
+                bool async = true,
+                string operationName = "Azure.Storage.Files.FileClient.UploadRangeFromURL",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = UploadRangeFromURLAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        range,
+                        copySource,
+                        contentLength,
+                        timeout,
+                        sourceRange,
+                        sourceContentCrc64,
+                        sourceIfMatchCrc64,
+                        sourceIfNoneMatchCrc64))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return UploadRangeFromURLAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the File.UploadRangeFromURLAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="range">Writes data to the specified byte range in the file.</param>
+            /// <param name="copySource">Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source.</param>
+            /// <param name="contentLength">Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="sourceRange">Bytes of source data in the specified range.</param>
+            /// <param name="sourceContentCrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
+            /// <param name="sourceIfMatchCrc64">Specify the crc64 value to operate only on range with a matching crc64 checksum.</param>
+            /// <param name="sourceIfNoneMatchCrc64">Specify the crc64 value to operate only on range without a matching crc64 checksum.</param>
+            /// <returns>The File.UploadRangeFromURLAsync Request.</returns>
+            internal static Azure.Core.Http.Request UploadRangeFromURLAsync_CreateRequest(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string range,
+                System.Uri copySource,
+                long contentLength,
+                int? timeout = default,
+                string sourceRange = default,
+                byte[] sourceContentCrc64 = default,
+                byte[] sourceIfMatchCrc64 = default,
+                byte[] sourceIfNoneMatchCrc64 = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (range == null)
+                {
+                    throw new System.ArgumentNullException(nameof(range));
+                }
+                if (copySource == null)
+                {
+                    throw new System.ArgumentNullException(nameof(copySource));
+                }
+
+                // Create the request
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
+
+                // Set the endpoint
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
+                _request.UriBuilder.Uri = resourceUri;
+                _request.UriBuilder.AppendQuery("comp", "range");
+                if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-range", range);
+                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-write", "update");
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
+                if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange); }
+                if (sourceContentCrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentCrc64)); }
+                if (sourceIfMatchCrc64 != null) { _request.Headers.SetValue("x-ms-source-if-match-crc64", System.Convert.ToBase64String(sourceIfMatchCrc64)); }
+                if (sourceIfNoneMatchCrc64 != null) { _request.Headers.SetValue("x-ms-source-if-none-match-crc64", System.Convert.ToBase64String(sourceIfNoneMatchCrc64)); }
+
+                return _request;
+            }
+
+            /// <summary>
+            /// Create the File.UploadRangeFromURLAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The File.UploadRangeFromURLAsync Azure.Response{Azure.Storage.Files.Models.FileUploadRangeFromURLResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult> UploadRangeFromURLAsync_CreateResponse(
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 201:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Models.FileUploadRangeFromURLResult _value = new Azure.Storage.Files.Models.FileUploadRangeFromURLResult();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.Core.Http.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
+                        {
+                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
+                        {
+                            _value.IsServerEncrypted = bool.Parse(_header);
+                        }
+
+                        // Create the response
+                        Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult> _result =
+                            new Azure.Response<Azure.Storage.Files.Models.FileUploadRangeFromURLResult>(
+                                response,
+                                _value);
+
+                        return _result;
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Models.StorageError _value = Azure.Storage.Files.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(response);
+                    }
+                }
+            }
+            #endregion File.UploadRangeFromURLAsync
 
             #region File.GetRangeListAsync
             /// <summary>
@@ -4100,7 +5031,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
 
                 return _request;
@@ -4254,7 +5185,7 @@ namespace Azure.Storage.Files
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
@@ -4410,7 +5341,7 @@ namespace Azure.Storage.Files
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-copy-action", "abort");
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -4538,7 +5469,7 @@ namespace Azure.Storage.Files
                 if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -4680,7 +5611,7 @@ namespace Azure.Storage.Files
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-handle-id", handleId);
-                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
                 return _request;
             }
@@ -5035,6 +5966,102 @@ namespace Azure.Storage.Files
 }
 #endregion enum DeleteSnapshotsOptionType
 
+#region class DirectorySetPropertiesResult
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Directory SetPropertiesResult
+    /// </summary>
+    public partial class DirectorySetPropertiesResult
+    {
+        /// <summary>
+        /// The ETag contains a value which represents the version of the file, in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the directory was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
+        /// </summary>
+        public bool IsServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// Key of the permission set for the directory.
+        /// </summary>
+        public string FilePermissionKey { get; internal set; }
+
+        /// <summary>
+        /// Attributes set for the directory.
+        /// </summary>
+        public string FileAttributes { get; internal set; }
+
+        /// <summary>
+        /// Creation time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileCreationTime { get; internal set; }
+
+        /// <summary>
+        /// Last write time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileLastWriteTime { get; internal set; }
+
+        /// <summary>
+        /// Change time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileChangeTime { get; internal set; }
+
+        /// <summary>
+        /// The fileId of the directory.
+        /// </summary>
+        public string FileId { get; internal set; }
+
+        /// <summary>
+        /// The parent fileId of the directory.
+        /// </summary>
+        public string FileParentId { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new DirectorySetPropertiesResult instance for mocking.
+        /// </summary>
+        public static DirectorySetPropertiesResult DirectorySetPropertiesResult(
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified,
+            bool isServerEncrypted,
+            string filePermissionKey,
+            string fileAttributes,
+            System.DateTimeOffset fileCreationTime,
+            System.DateTimeOffset fileLastWriteTime,
+            System.DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId)
+        {
+            var _model = new DirectorySetPropertiesResult();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.IsServerEncrypted = isServerEncrypted;
+            _model.FilePermissionKey = filePermissionKey;
+            _model.FileAttributes = fileAttributes;
+            _model.FileCreationTime = fileCreationTime;
+            _model.FileLastWriteTime = fileLastWriteTime;
+            _model.FileChangeTime = fileChangeTime;
+            _model.FileId = fileId;
+            _model.FileParentId = fileParentId;
+            return _model;
+        }
+    }
+}
+#endregion class DirectorySetPropertiesResult
+
 #region class DirectoryItem
 namespace Azure.Storage.Files.Models
 {
@@ -5082,6 +6109,62 @@ namespace Azure.Storage.Files.Models
     }
 }
 #endregion class FailureNoContent
+
+#region class FileUploadRangeFromURLResult
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// File UploadRangeFromURLResult
+    /// </summary>
+    public partial class FileUploadRangeFromURLResult
+    {
+        /// <summary>
+        /// The ETag contains a value which represents the version of the file, in quotes.
+        /// </summary>
+        public Azure.Core.Http.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the directory was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// This header is returned so that the client can check for message content integrity. The value of this header is computed by the File service; it is not necessarily the same value as may have been specified in the request headers.
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] XMSContentCrc64 { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
+        /// </summary>
+        public bool IsServerEncrypted { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileUploadRangeFromURLResult instance for mocking.
+        /// </summary>
+        public static FileUploadRangeFromURLResult FileUploadRangeFromURLResult(
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] xMSContentCrc64,
+            bool isServerEncrypted)
+        {
+            var _model = new FileUploadRangeFromURLResult();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.XMSContentCrc64 = xMSContentCrc64;
+            _model.IsServerEncrypted = isServerEncrypted;
+            return _model;
+        }
+    }
+}
+#endregion class FileUploadRangeFromURLResult
 
 #region enum strings FileErrorCode
 namespace Azure.Storage.Files.Models
@@ -5988,6 +7071,41 @@ namespace Azure.Storage.Files.Models
         public bool IsServerEncrypted { get; internal set; }
 
         /// <summary>
+        /// Attributes set for the file.
+        /// </summary>
+        public string FileAttributes { get; internal set; }
+
+        /// <summary>
+        /// Creation time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileCreationTime { get; internal set; }
+
+        /// <summary>
+        /// Last write time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileLastWriteTime { get; internal set; }
+
+        /// <summary>
+        /// Change time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileChangeTime { get; internal set; }
+
+        /// <summary>
+        /// Key of the permission set for the file.
+        /// </summary>
+        public string FilePermissionKey { get; internal set; }
+
+        /// <summary>
+        /// The fileId of the file.
+        /// </summary>
+        public string FileId { get; internal set; }
+
+        /// <summary>
+        /// The parent fileId of the file.
+        /// </summary>
+        public string FileParentId { get; internal set; }
+
+        /// <summary>
         /// Content
         /// </summary>
         public System.IO.Stream Content { get; internal set; }
@@ -6296,6 +7414,39 @@ namespace Azure.Storage.Files.Models
     }
 }
 #endregion class RetentionPolicy
+
+#region class ShareCreatePermissionResult
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// Share CreatePermissionResult
+    /// </summary>
+    public partial class ShareCreatePermissionResult
+    {
+        /// <summary>
+        /// Key of the permission set for the directory/file.
+        /// </summary>
+        public string FilePermissonKey { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareCreatePermissionResult instance for mocking.
+        /// </summary>
+        public static ShareCreatePermissionResult ShareCreatePermissionResult(
+            string filePermissonKey)
+        {
+            var _model = new ShareCreatePermissionResult();
+            _model.FilePermissonKey = filePermissonKey;
+            return _model;
+        }
+    }
+}
+#endregion class ShareCreatePermissionResult
 
 #region class ShareInfo
 namespace Azure.Storage.Files.Models
@@ -6927,6 +8078,41 @@ namespace Azure.Storage.Files.Models
         /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Key of the permission set for the directory.
+        /// </summary>
+        public string FilePermissonKey { get; internal set; }
+
+        /// <summary>
+        /// Attributes set for the directory.
+        /// </summary>
+        public string FileAttributes { get; internal set; }
+
+        /// <summary>
+        /// Creation time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileCreationTime { get; internal set; }
+
+        /// <summary>
+        /// Last write time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileLastWriteTime { get; internal set; }
+
+        /// <summary>
+        /// Change time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileChangeTime { get; internal set; }
+
+        /// <summary>
+        /// The fileId of the directory.
+        /// </summary>
+        public string FileId { get; internal set; }
+
+        /// <summary>
+        /// The parent fileId of the directory.
+        /// </summary>
+        public string FileParentId { get; internal set; }
     }
 
     /// <summary>
@@ -6939,11 +8125,25 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static StorageDirectoryInfo StorageDirectoryInfo(
             Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified)
+            System.DateTimeOffset lastModified,
+            string filePermissonKey,
+            string fileAttributes,
+            System.DateTimeOffset fileCreationTime,
+            System.DateTimeOffset fileLastWriteTime,
+            System.DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId)
         {
             var _model = new StorageDirectoryInfo();
             _model.ETag = eTag;
             _model.LastModified = lastModified;
+            _model.FilePermissonKey = filePermissonKey;
+            _model.FileAttributes = fileAttributes;
+            _model.FileCreationTime = fileCreationTime;
+            _model.FileLastWriteTime = fileLastWriteTime;
+            _model.FileChangeTime = fileChangeTime;
+            _model.FileId = fileId;
+            _model.FileParentId = fileParentId;
             return _model;
         }
     }
@@ -6979,6 +8179,41 @@ namespace Azure.Storage.Files.Models
         public bool IsServerEncrypted { get; internal set; }
 
         /// <summary>
+        /// Attributes set for the directory.
+        /// </summary>
+        public string FileAttributes { get; internal set; }
+
+        /// <summary>
+        /// Creation time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileCreationTime { get; internal set; }
+
+        /// <summary>
+        /// Last write time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileLastWriteTime { get; internal set; }
+
+        /// <summary>
+        /// Change time for the directory.
+        /// </summary>
+        public System.DateTimeOffset FileChangeTime { get; internal set; }
+
+        /// <summary>
+        /// Key of the permission set for the directory.
+        /// </summary>
+        public string FilePermissionKey { get; internal set; }
+
+        /// <summary>
+        /// The fileId of the directory.
+        /// </summary>
+        public string FileId { get; internal set; }
+
+        /// <summary>
+        /// The parent fileId of the directory.
+        /// </summary>
+        public string FileParentId { get; internal set; }
+
+        /// <summary>
         /// Creates a new StorageDirectoryProperties instance
         /// </summary>
         public StorageDirectoryProperties()
@@ -6997,15 +8232,29 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static StorageDirectoryProperties StorageDirectoryProperties(
             System.Collections.Generic.IDictionary<string, string> metadata,
-            Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
-            bool isServerEncrypted)
+            bool isServerEncrypted,
+            string fileAttributes,
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset fileLastWriteTime,
+            System.DateTimeOffset fileChangeTime,
+            string filePermissionKey,
+            string fileId,
+            string fileParentId,
+            System.DateTimeOffset fileCreationTime)
         {
             var _model = new StorageDirectoryProperties();
             _model.Metadata = metadata;
-            _model.ETag = eTag;
             _model.LastModified = lastModified;
             _model.IsServerEncrypted = isServerEncrypted;
+            _model.FileAttributes = fileAttributes;
+            _model.ETag = eTag;
+            _model.FileLastWriteTime = fileLastWriteTime;
+            _model.FileChangeTime = fileChangeTime;
+            _model.FilePermissionKey = filePermissionKey;
+            _model.FileId = fileId;
+            _model.FileParentId = fileParentId;
+            _model.FileCreationTime = fileCreationTime;
             return _model;
         }
     }
@@ -7135,6 +8384,41 @@ namespace Azure.Storage.Files.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// Key of the permission set for the file.
+        /// </summary>
+        public string FilePermissionKey { get; internal set; }
+
+        /// <summary>
+        /// Attributes set for the file.
+        /// </summary>
+        public string FileAttributes { get; internal set; }
+
+        /// <summary>
+        /// Creation time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileCreationTime { get; internal set; }
+
+        /// <summary>
+        /// Last write time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileLastWriteTime { get; internal set; }
+
+        /// <summary>
+        /// Change time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileChangeTime { get; internal set; }
+
+        /// <summary>
+        /// The fileId of the file.
+        /// </summary>
+        public string FileId { get; internal set; }
+
+        /// <summary>
+        /// The parent fileId of the file.
+        /// </summary>
+        public string FileParentId { get; internal set; }
     }
 
     /// <summary>
@@ -7148,12 +8432,26 @@ namespace Azure.Storage.Files.Models
         public static StorageFileInfo StorageFileInfo(
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
-            bool isServerEncrypted)
+            bool isServerEncrypted,
+            string filePermissionKey,
+            string fileAttributes,
+            System.DateTimeOffset fileCreationTime,
+            System.DateTimeOffset fileLastWriteTime,
+            System.DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId)
         {
             var _model = new StorageFileInfo();
             _model.ETag = eTag;
             _model.LastModified = lastModified;
             _model.IsServerEncrypted = isServerEncrypted;
+            _model.FilePermissionKey = filePermissionKey;
+            _model.FileAttributes = fileAttributes;
+            _model.FileCreationTime = fileCreationTime;
+            _model.FileLastWriteTime = fileLastWriteTime;
+            _model.FileChangeTime = fileChangeTime;
+            _model.FileId = fileId;
+            _model.FileParentId = fileParentId;
             return _model;
         }
     }
@@ -7261,6 +8559,41 @@ namespace Azure.Storage.Files.Models
         public bool IsServerEncrypted { get; internal set; }
 
         /// <summary>
+        /// Attributes set for the file.
+        /// </summary>
+        public string FileAttributes { get; internal set; }
+
+        /// <summary>
+        /// Creation time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileCreationTime { get; internal set; }
+
+        /// <summary>
+        /// Last write time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileLastWriteTime { get; internal set; }
+
+        /// <summary>
+        /// Change time for the file.
+        /// </summary>
+        public System.DateTimeOffset FileChangeTime { get; internal set; }
+
+        /// <summary>
+        /// Key of the permission set for the file.
+        /// </summary>
+        public string FilePermissionKey { get; internal set; }
+
+        /// <summary>
+        /// The fileId of the file.
+        /// </summary>
+        public string FileId { get; internal set; }
+
+        /// <summary>
+        /// The parent fileId of the file.
+        /// </summary>
+        public string FileParentId { get; internal set; }
+
+        /// <summary>
         /// Creates a new StorageFileProperties instance
         /// </summary>
         public StorageFileProperties()
@@ -7281,43 +8614,57 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public static StorageFileProperties StorageFileProperties(
             System.DateTimeOffset lastModified,
-            Azure.Core.Http.ETag eTag,
-            byte[] contentHash,
-            System.Collections.Generic.IEnumerable<string> contentEncoding,
-            string cacheControl,
-            string contentType,
+            string contentDisposition,
             System.Collections.Generic.IEnumerable<string> contentLanguage,
             System.DateTimeOffset copyCompletionTime,
-            string copyStatusDescription,
+            string cacheControl,
             string copyId,
             string copyProgress,
-            long contentLength,
             string copySource,
-            Azure.Storage.Files.Models.Header fileType,
             Azure.Storage.Files.Models.CopyStatus copyStatus,
-            System.Collections.Generic.IDictionary<string, string> metadata,
             bool isServerEncrypted,
-            string contentDisposition)
+            System.Collections.Generic.IEnumerable<string> contentEncoding,
+            string fileAttributes,
+            byte[] contentHash,
+            System.DateTimeOffset fileCreationTime,
+            Azure.Core.Http.ETag eTag,
+            System.DateTimeOffset fileLastWriteTime,
+            string contentType,
+            System.DateTimeOffset fileChangeTime,
+            long contentLength,
+            string filePermissionKey,
+            Azure.Storage.Files.Models.Header fileType,
+            string fileId,
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            string fileParentId,
+            string copyStatusDescription)
         {
             var _model = new StorageFileProperties();
             _model.LastModified = lastModified;
-            _model.ETag = eTag;
-            _model.ContentHash = contentHash;
-            _model.ContentEncoding = contentEncoding;
-            _model.CacheControl = cacheControl;
-            _model.ContentType = contentType;
+            _model.ContentDisposition = contentDisposition;
             _model.ContentLanguage = contentLanguage;
             _model.CopyCompletionTime = copyCompletionTime;
-            _model.CopyStatusDescription = copyStatusDescription;
+            _model.CacheControl = cacheControl;
             _model.CopyId = copyId;
             _model.CopyProgress = copyProgress;
-            _model.ContentLength = contentLength;
             _model.CopySource = copySource;
-            _model.FileType = fileType;
             _model.CopyStatus = copyStatus;
-            _model.Metadata = metadata;
             _model.IsServerEncrypted = isServerEncrypted;
-            _model.ContentDisposition = contentDisposition;
+            _model.ContentEncoding = contentEncoding;
+            _model.FileAttributes = fileAttributes;
+            _model.ContentHash = contentHash;
+            _model.FileCreationTime = fileCreationTime;
+            _model.ETag = eTag;
+            _model.FileLastWriteTime = fileLastWriteTime;
+            _model.ContentType = contentType;
+            _model.FileChangeTime = fileChangeTime;
+            _model.ContentLength = contentLength;
+            _model.FilePermissionKey = filePermissionKey;
+            _model.FileType = fileType;
+            _model.FileId = fileId;
+            _model.Metadata = metadata;
+            _model.FileParentId = fileParentId;
+            _model.CopyStatusDescription = copyStatusDescription;
             return _model;
         }
     }
