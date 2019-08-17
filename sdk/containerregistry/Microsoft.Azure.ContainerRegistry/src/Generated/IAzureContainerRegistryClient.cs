@@ -100,7 +100,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<Manifest>> GetManifestWithHttpMessagesAsync(string name, string reference, string accept = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SuperManifest>> GetManifestWithHttpMessagesAsync(string name, string reference, string accept = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Put the manifest identified by `name` and `reference` where
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object,CreateManifestHeaders>> CreateManifestWithHttpMessagesAsync(string name, string reference, Manifest payload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object,CreateManifestHeaders>> CreateManifestWithHttpMessagesAsync(string name, string reference, SuperManifest payload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Delete the manifest identified by `name` and `reference`. Note that

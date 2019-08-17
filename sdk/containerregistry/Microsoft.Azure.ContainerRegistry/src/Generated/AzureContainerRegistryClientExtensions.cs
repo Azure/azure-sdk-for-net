@@ -60,7 +60,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Manifest> GetManifestAsync(this IAzureContainerRegistryClient operations, string name, string reference, string accept = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SuperManifest> GetManifestAsync(this IAzureContainerRegistryClient operations, string name, string reference, string accept = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetManifestWithHttpMessagesAsync(name, reference, accept, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> CreateManifestAsync(this IAzureContainerRegistryClient operations, string name, string reference, Manifest payload, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> CreateManifestAsync(this IAzureContainerRegistryClient operations, string name, string reference, SuperManifest payload, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateManifestWithHttpMessagesAsync(name, reference, payload, null, cancellationToken).ConfigureAwait(false))
                 {

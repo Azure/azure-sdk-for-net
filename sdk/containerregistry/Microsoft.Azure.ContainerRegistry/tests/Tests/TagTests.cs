@@ -109,13 +109,13 @@ namespace ContainerRegistry.Tests
                 await client.UpdateTagAttributesAsync(ACRTestUtil.changeableRepository, tag, updateAttributes);
 
                 var tagAttributes = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, tag);
-                Assert.False(tagAttributes.Tag.ChangeableAttributes.WriteEnabled);
+                Assert.False(tagAttributes.Attributes.ChangeableAttributes.WriteEnabled);
 
                 updateAttributes.WriteEnabled = true;
                 await client.UpdateTagAttributesAsync(ACRTestUtil.changeableRepository, tag, updateAttributes);
                 tagAttributes = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, tag);
 
-                Assert.True(tagAttributes.Tag.ChangeableAttributes.WriteEnabled);
+                Assert.True(tagAttributes.Attributes.ChangeableAttributes.WriteEnabled);
             }
         }
 
@@ -129,7 +129,7 @@ namespace ContainerRegistry.Tests
                 var tagAttributes = await client.GetTagAttributesAsync(ACRTestUtil.ProdRepository, tag);
                 Assert.Equal(ACRTestUtil.ProdRepository, tagAttributes.ImageName);
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, tagAttributes.Registry);
-                ValidateTagAttributesBase(tagAttributes.Tag, prodTags.Tags[1]);
+                ValidateTagAttributesBase(tagAttributes.Attributes, prodTags.Tags[1]);
             }
         }
 

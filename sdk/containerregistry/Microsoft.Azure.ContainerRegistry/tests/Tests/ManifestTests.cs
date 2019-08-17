@@ -18,7 +18,7 @@ namespace ContainerRegistry.Tests
         {
             Registry = ACRTestUtil.ManagedTestRegistryFullName,
             ImageName = ACRTestUtil.ProdRepository,
-            Manifest = new ManifestAttributesBase
+            Attributes = new ManifestAttributesBase
             {
                 Digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8",
                 ImageSize = 5964642,
@@ -41,10 +41,9 @@ namespace ContainerRegistry.Tests
             }
         };
 
-        private static readonly Manifest ExpectedV2ManifestProd = new Manifest()
+        private static readonly V2Manifest ExpectedV2ManifestProd = new V2Manifest()
         {
             SchemaVersion = 2,
-            MediaType = ACRTestUtil.MediatypeV2Manifest,
             Config = new V2Descriptor
             {
                 MediaType = ACRTestUtil.MediatypeV1Manifest,
@@ -71,21 +70,12 @@ namespace ContainerRegistry.Tests
                     Size = 344,
                     Digest = "sha256:1beb2aaf8cf93eacf658fa7f7f10f89ccec1838d1ac643a273345d4d0bc813a8"
                 }
-            },
-            Architecture = null,
-            Name = null,
-            Tag = null,
-            FsLayers = null,
-            History = null,
-            Signatures = null
+            }
         };
 
-        private static readonly Manifest ExpectedV1ManifestProd = new Manifest()
+        private static readonly V1Manifest ExpectedV1ManifestProd = new V1Manifest()
         {
             SchemaVersion = 1,
-            MediaType = null,
-            Config = null,
-            Layers = null,
             Architecture = "amd64",
             Name = ACRTestUtil.TestRepository,
             Tag = "latest",
@@ -201,7 +191,7 @@ namespace ContainerRegistry.Tests
         {
             Registry = ACRTestUtil.ManagedTestRegistryForChangesFullName,
             ImageName = ACRTestUtil.changeableRepository,
-            Manifest = new ManifestAttributesBase
+            Attributes = new ManifestAttributesBase
             {
                 Digest = "sha256:dbefd3c583a226ddcef02536cd761d2d86dc7e6f21c53f83957736d6246e9ed8",
                 ImageSize = 5964642,
@@ -237,7 +227,7 @@ namespace ContainerRegistry.Tests
 
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, repositoryAttributes.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, repositoryAttributes.Registry);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Manifest, repositoryAttributes.Manifest);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Attributes, repositoryAttributes.Attributes);
             }
 
 
@@ -254,7 +244,7 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(ExpectedAttributesOfProdRepository.ImageName, manifests.ImageName);
                 Assert.Equal(ExpectedAttributesOfProdRepository.Registry, manifests.Registry);
                 Assert.Equal(2, manifests.ManifestsAttributes.Count);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Manifest, manifests.ManifestsAttributes[1]);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesOfProdRepository.Attributes, manifests.ManifestsAttributes[1]);
             }
         }
 
@@ -297,7 +287,7 @@ namespace ContainerRegistry.Tests
                 var updatedManifest = await client.GetManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
 
                 //Check for success
-                Assert.False(updatedManifest.Manifest.ChangeableAttributes.WriteEnabled);
+                Assert.False(updatedManifest.Attributes.ChangeableAttributes.WriteEnabled);
 
                 //Return attibutes to original
                 updateAttributes.WriteEnabled = true;
@@ -305,7 +295,7 @@ namespace ContainerRegistry.Tests
                 updatedManifest = await client.GetManifestAttributesAsync(ACRTestUtil.changeableRepository, digest);
                 Assert.Equal(ExpectedAttributesChangeableRepository.ImageName, updatedManifest.ImageName);
                 Assert.Equal(ExpectedAttributesChangeableRepository.Registry, updatedManifest.Registry);
-                VerifyAcrManifestAttributesBase(ExpectedAttributesChangeableRepository.Manifest, updatedManifest.Manifest);
+                VerifyAcrManifestAttributesBase(ExpectedAttributesChangeableRepository.Attributes, updatedManifest.Attributes);
             }
         }
 
@@ -320,7 +310,7 @@ namespace ContainerRegistry.Tests
                 var tag = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
 
                 VerifyManifest(ExpectedV2ManifestProd, newManifest);
-                await client.DeleteManifestAsync(ACRTestUtil.changeableRepository, tag.Tag.Digest);
+                await client.DeleteManifestAsync(ACRTestUtil.changeableRepository, tag.Attributes.Digest);
             }
         }
 
@@ -340,49 +330,43 @@ namespace ContainerRegistry.Tests
         }
 
 
-        private void VerifyManifest(Manifest baseManifest, Manifest actualManifest)
+        private void VerifyManifest(SuperManifest baseManifest, SuperManifest actualManifest)
         {
-            Assert.Equal(baseManifest.Architecture, actualManifest.Architecture);
-            Assert.Equal(baseManifest.MediaType, actualManifest.MediaType);
-            Assert.Equal(baseManifest.Name, actualManifest.Name);
+            Assert.Equal(baseManifest.GetType(), actualManifest.GetType());
             Assert.Equal(baseManifest.SchemaVersion, actualManifest.SchemaVersion);
-            Assert.Equal(baseManifest.Tag, actualManifest.Tag);
 
-            //Nested Properties
-            if (baseManifest.Config != null && actualManifest.Config != null)
-            {
-                Assert.Equal(baseManifest.Config.Digest, actualManifest.Config.Digest);
-                Assert.Equal(baseManifest.Config.MediaType, actualManifest.Config.MediaType);
-                Assert.Equal(baseManifest.Config.Size, actualManifest.Config.Size);
-            }
-
-            if (baseManifest.FsLayers != null && actualManifest.FsLayers != null)
-            {
-                Assert.Equal(baseManifest.FsLayers.Count, actualManifest.FsLayers.Count);
-
-                for (int i = 0; i < baseManifest.FsLayers.Count; i++)
+            if (baseManifest.GetType() == typeof(V2Manifest)) {
+                var baseManifestV2 = (V2Manifest)baseManifest;
+                var actualManifestV2 = (V2Manifest)baseManifest;
+                Assert.Equal(baseManifestV2.Layers.Count, actualManifestV2.Layers.Count);
+                for (int i = 0; i < baseManifestV2.Layers.Count; i++)
                 {
-                    Assert.Equal(baseManifest.FsLayers[i].BlobSum, actualManifest.FsLayers[i].BlobSum);
+                    Assert.Equal(baseManifestV2.Layers[i].Digest, actualManifestV2.Layers[i].Digest);
+                    Assert.Equal(baseManifestV2.Layers[i].MediaType, actualManifestV2.Layers[i].MediaType);
+                    Assert.Equal(baseManifestV2.Layers[i].Size, actualManifestV2.Layers[i].Size);
                 }
+                Assert.Equal(baseManifestV2.Config.Digest, actualManifestV2.Config.Digest);
+                Assert.Equal(baseManifestV2.Config.MediaType, actualManifestV2.Config.MediaType);
+                Assert.Equal(baseManifestV2.Config.Size, actualManifestV2.Config.Size);
             }
-
-            if (baseManifest.Layers != null && actualManifest.Layers != null)
+            if (baseManifest.GetType() == typeof(V1Manifest))
             {
-                Assert.Equal(baseManifest.Layers.Count, actualManifest.Layers.Count);
-                for (int i = 0; i < baseManifest.Layers.Count; i++)
+                var baseManifestV1 = (V1Manifest)baseManifest;
+                var actualManifestV1 = (V1Manifest)baseManifest;
+                Assert.Equal(baseManifestV1.Architecture, actualManifestV1.Architecture);
+                Assert.Equal(baseManifestV1.Name, actualManifestV1.Name);
+                Assert.Equal(baseManifestV1.Tag, actualManifestV1.Tag);
+                Assert.Equal(baseManifestV1.FsLayers.Count, actualManifestV1.FsLayers.Count);
+
+                for (int i = 0; i < baseManifestV1.FsLayers.Count; i++)
                 {
-                    Assert.Equal(baseManifest.Layers[i].Digest, actualManifest.Layers[i].Digest);
-                    Assert.Equal(baseManifest.Layers[i].MediaType, actualManifest.Layers[i].MediaType);
-                    Assert.Equal(baseManifest.Layers[i].Size, actualManifest.Layers[i].Size);
+                    Assert.Equal(baseManifestV1.FsLayers[i].BlobSum, actualManifestV1.FsLayers[i].BlobSum);
                 }
-            }
 
-            if (baseManifest.History != null && actualManifest.History != null)
-            {
-                Assert.Equal(baseManifest.History.Count, actualManifest.History.Count);
-                for (int i = 0; i < baseManifest.History.Count; i++)
+                Assert.Equal(baseManifestV1.History.Count, actualManifestV1.History.Count);
+                for (int i = 0; i < baseManifestV1.History.Count; i++)
                 {
-                    Assert.Equal(baseManifest.History[i].V1Compatibility, actualManifest.History[i].V1Compatibility);
+                    Assert.Equal(baseManifestV1.History[i].V1Compatibility, actualManifestV1.History[i].V1Compatibility);
                 }
             }
         }
