@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
     using System.Linq;
 
     /// <summary>
-    /// The result of the sentiment analysis.
+    /// Sentiment of the input utterance.
     /// </summary>
     public partial class Sentiment
     {
@@ -29,13 +29,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// <summary>
         /// Initializes a new instance of the Sentiment class.
         /// </summary>
-        /// <param name="score">The sentiment score of the query.</param>
-        /// <param name="label">The label of the sentiment analysis
-        /// result.</param>
-        public Sentiment(double score, string label = default(string))
+        /// <param name="label">The polarity of the sentiment, can be positive,
+        /// neutral or negative.</param>
+        /// <param name="score">Score of the sentiment, ranges from 0 (most
+        /// negative) to 1 (most positive).</param>
+        public Sentiment(string label = default(string), double? score = default(double?))
         {
-            Score = score;
             Label = label;
+            Score = score;
             CustomInit();
         }
 
@@ -45,26 +46,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sentiment score of the query.
-        /// </summary>
-        [JsonProperty(PropertyName = "score")]
-        public double Score { get; set; }
-
-        /// <summary>
-        /// Gets or sets the label of the sentiment analysis result.
+        /// Gets or sets the polarity of the sentiment, can be positive,
+        /// neutral or negative.
         /// </summary>
         [JsonProperty(PropertyName = "label")]
         public string Label { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets score of the sentiment, ranges from 0 (most negative)
+        /// to 1 (most positive).
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
+        [JsonProperty(PropertyName = "score")]
+        public double? Score { get; set; }
+
     }
 }
