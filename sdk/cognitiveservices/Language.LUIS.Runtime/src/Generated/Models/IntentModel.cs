@@ -15,24 +15,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the error that occurred.
+    /// An intent detected from the utterance.
     /// </summary>
-    public partial class Error
+    public partial class IntentModel
     {
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the IntentModel class.
         /// </summary>
-        public Error()
+        public IntentModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the IntentModel class.
         /// </summary>
-        public Error(ErrorBody errorProperty)
+        /// <param name="intent">Name of the intent, as defined in
+        /// LUIS.</param>
+        /// <param name="score">Associated prediction score for the intent
+        /// (float).</param>
+        public IntentModel(string intent = default(string), double? score = default(double?))
         {
-            ErrorProperty = errorProperty;
+            Intent = intent;
+            Score = score;
             CustomInit();
         }
 
@@ -42,9 +47,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets name of the intent, as defined in LUIS.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorBody ErrorProperty { get; set; }
+        [JsonProperty(PropertyName = "intent")]
+        public string Intent { get; set; }
+
+        /// <summary>
+        /// Gets or sets associated prediction score for the intent (float).
+        /// </summary>
+        [JsonProperty(PropertyName = "score")]
+        public double? Score { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -54,13 +66,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ErrorProperty == null)
+            if (Score > 1)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ErrorProperty");
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Score", 1);
             }
-            if (ErrorProperty != null)
+            if (Score < 0)
             {
-                ErrorProperty.Validate();
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Score", 0);
             }
         }
     }

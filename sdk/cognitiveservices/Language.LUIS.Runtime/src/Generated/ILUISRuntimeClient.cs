@@ -46,9 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
 
 
         /// <summary>
-        /// Gets the IPredictionOperations.
+        /// Gets the IPrediction.
         /// </summary>
-        IPredictionOperations Prediction { get; }
+        IPrediction Prediction { get; }
 
     }
 }
