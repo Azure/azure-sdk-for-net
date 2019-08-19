@@ -358,6 +358,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         }
 
         [Fact]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/7335")]
         [DisplayTestMethodName]
         public void HardEventHubReceiveFailure()
         {
