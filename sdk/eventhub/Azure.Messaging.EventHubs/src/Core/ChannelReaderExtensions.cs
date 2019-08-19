@@ -17,9 +17,6 @@ namespace Azure.Messaging.EventHubs.Core
     ///
     internal static class ChannelReaderExtensions
     {
-        /// <summary>The maximum delay allowed when interacting with cancellation tokens.</summary>
-        private static readonly TimeSpan maximumCancellationDelay = TimeSpan.FromDays(10);
-
         /// <summary>
         ///   Enumerates the events as they become available in the associated channel.
         /// </summary>
@@ -54,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Core
                 {
                     if (reader.TryRead(out result))
                     {
-                        waitSource?.CancelAfter(maximumCancellationDelay);
+                        waitSource?.CancelAfter(Timeout.Infinite);
                         yield return result;
                     }
                     else if (reader.Completion.IsCompleted)
@@ -85,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Core
 
                             if (await reader.WaitToReadAsync(waitToken).ConfigureAwait(false))
                             {
-                                waitSource?.CancelAfter(maximumCancellationDelay);
+                                waitSource?.CancelAfter(Timeout.Infinite);
                                 continue;
                             }
                         }
