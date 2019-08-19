@@ -198,7 +198,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/7330")]
         public void EnumerateChannelRespectsTheMaximumWaitTime()
         {
             var forcedAbort = false;
