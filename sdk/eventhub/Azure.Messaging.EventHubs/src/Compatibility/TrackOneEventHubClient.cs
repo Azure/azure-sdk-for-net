@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
             Guard.ArgumentNotNull(nameof(defaultRetryPolicy), defaultRetryPolicy);
 
             _retryPolicy = defaultRetryPolicy;
-            _trackOneClient = new Lazy<TrackOne.EventHubClient>(() => eventHubClientFactory(host, eventHubName, credential, clientOptions, () => _retryPolicy), LazyThreadSafetyMode.PublicationOnly);
+            _trackOneClient = new Lazy<TrackOne.EventHubClient>(() => eventHubClientFactory(host, eventHubName, credential, clientOptions, () => _retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
         /// <summary>
