@@ -76,10 +76,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondEvent = new EventData((byte[])body.Clone());
 
             firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties["something"] = "trackOne";
+            firstEvent.SystemProperties.PartitionKey = "-1";
 
             secondEvent.SystemProperties = new EventData.SystemEventProperties();
-            secondEvent.SystemProperties["something"] = "trackTwo";
+            secondEvent.SystemProperties.PartitionKey = "trackTwo";
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
         }
@@ -97,10 +97,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondEvent = new EventData((byte[])body.Clone());
 
             firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties["something"] = "trackOne";
+            firstEvent.SystemProperties.Offset = 1;
 
             secondEvent.SystemProperties = new EventData.SystemEventProperties();
-            secondEvent.SystemProperties["something"] = "trackTwo";
+            secondEvent.SystemProperties.Offset = 2;
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent, true), Is.False);
         }
@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondEvent = new EventData((byte[])body.Clone());
 
             firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties["something"] = "trackOne";
+            firstEvent.SystemProperties.PartitionKey= "trackOne";
 
             secondEvent.SystemProperties = null;
 
@@ -141,10 +141,10 @@ namespace Azure.Messaging.EventHubs.Tests
             secondEvent.Properties["test"] = "same";
 
             firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties["something"] = "otherSame";
+            firstEvent.SystemProperties.PartitionKey = "otherSame";
 
             secondEvent.SystemProperties = new EventData.SystemEventProperties();
-            secondEvent.SystemProperties["something"] = "otherSame";
+            secondEvent.SystemProperties.PartitionKey = "otherSame";
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
         }
@@ -159,7 +159,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new EventData(new byte[] { 0x22, 0x44, 0x88 });
             firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties["something"] = "otherSame";
+            firstEvent.SystemProperties.SequenceNumber = 5555L;
 
             Assert.That(firstEvent.IsEquivalentTo(firstEvent), Is.True);
         }
@@ -185,7 +185,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new EventData(new byte[] { 0x22, 0x44, 0x88 });
             firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties["something"] = "otherSame";
+            firstEvent.SystemProperties.PartitionKey = "otherSame";
 
             Assert.That(((EventData)null).IsEquivalentTo(firstEvent), Is.False);
         }
@@ -200,7 +200,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var firstEvent = new EventData(new byte[] { 0x22, 0x44, 0x88 });
             firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties["something"] = "otherSame";
+            firstEvent.SystemProperties.PartitionKey = "otherSame";
 
             Assert.That(firstEvent.IsEquivalentTo((EventData)null), Is.False);
         }
