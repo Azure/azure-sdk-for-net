@@ -364,6 +364,10 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         metadata: metadata,
+                        fileAttributes: "None", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        filePermission: "inherit", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        fileCreationTime: "Now", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        fileLastWriteTime: "Now", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1227,6 +1231,10 @@ namespace Azure.Storage.Files
                         fileCacheControl: httpHeaders?.CacheControl,
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
+                        fileAttributes: "None", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        filePermission: "inherit", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        fileCreationTime: "Now", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        fileLastWriteTime: "Now", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
                         async: async,
                         operationName: Constants.File.SetHttpHeadersOperationName,
                         cancellationToken: cancellationToken)

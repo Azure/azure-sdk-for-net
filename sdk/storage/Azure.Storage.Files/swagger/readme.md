@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: ./file-2018-11-09.json
+input-file: ./file-2019-02-02.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -78,7 +78,7 @@ directive:
 directive:
 - from: swagger-document
   where: $.parameters.ApiVersionParameter
-  transform: $.enum = ["2018-11-09"]
+  transform: $.enum = ["2019-02-02"]
 ```
 
 ### /?restype=service&comp=properties
@@ -559,4 +559,26 @@ directive:
         $.ShareItemProperties.required = [];
         $.ShareItemProperties.xml = { "name": "Properties" };
     }
+```
+
+### FilePermission
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.FilePermission
+  transform: >
+    $.description = "If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.";
+```
+
+### Times aren't required
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.FileCreationTime
+  transform: >
+    delete $.format;
+- from: swagger-document
+  where: $.parameters.FileLastWriteTime
+  transform: >
+    delete $.format;
 ```
