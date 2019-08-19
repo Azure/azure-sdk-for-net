@@ -272,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(readCancellation.Token.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
             Assert.That(readCount, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
             Assert.That(iterateCount, Is.GreaterThan(readCount), "There should have been default items returned due to the wait time expiring.");
-            Assert.That(stopWatch.Elapsed, Is.EqualTo(cancelTimeout).Within(TimeSpan.FromSeconds(2)), "The elapsed time should be close to the duration set for the cancel timeout.");
+            Assert.That(stopWatch.Elapsed, Is.EqualTo(cancelTimeout).Within(TimeSpan.FromSeconds(5)), "The elapsed time should be close to the duration set for the cancel timeout.");
         }
 
         /// <summary>
