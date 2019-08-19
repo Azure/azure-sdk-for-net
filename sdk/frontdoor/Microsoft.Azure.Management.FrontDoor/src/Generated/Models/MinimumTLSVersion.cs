@@ -12,10 +12,11 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for FrontDoorTlsProtocolType.
+    /// Defines values for MinimumTLSVersion.
     /// </summary>
-    public static class FrontDoorTlsProtocolType
+    public static class MinimumTLSVersion
     {
-        public const string ServerNameIndication = "ServerNameIndication";
+        public const string OneFullStopZero = "1.0";
+        public const string OneFullStopTwo = "1.2";
     }
 }
