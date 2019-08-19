@@ -4,6 +4,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class PermissionsTests : BaseTest
     {
         [Fact]

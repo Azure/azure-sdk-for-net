@@ -9,6 +9,7 @@ namespace LUIS.Authoring.Tests.Luis
     using System.Text;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class EntityRolesTests : BaseTest
     {
         [Fact]

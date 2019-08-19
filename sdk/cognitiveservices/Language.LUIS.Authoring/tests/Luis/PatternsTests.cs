@@ -7,6 +7,7 @@ namespace LUIS.Authoring.Tests.Luis
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class PatternsTests : BaseTest
     {
         [Fact]

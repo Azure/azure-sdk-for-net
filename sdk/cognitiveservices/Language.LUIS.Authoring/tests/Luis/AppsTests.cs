@@ -7,7 +7,9 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
     using System.Linq;
+    using System.Threading;
 
+    [Collection("TestCollection")]
     public class AppsTests : BaseTest
     {
         [Fact]

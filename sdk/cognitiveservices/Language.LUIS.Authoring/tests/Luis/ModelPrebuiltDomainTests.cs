@@ -6,6 +6,7 @@
     using System.Linq;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelPrebuiltDomainTests: BaseTest
     {
         [Fact]

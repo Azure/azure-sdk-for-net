@@ -36,8 +36,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// Extractor', 'Hierarchical Entity Extractor', 'Hierarchical Child
         /// Entity Extractor', 'Composite Entity Extractor', 'List Entity
         /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
-        /// 'Pattern.Any Entity Extractor', 'Regular Expression Entity
-        /// Extractor'</param>
+        /// 'Pattern.Any Entity Extractor', 'Closed List Entity Extractor',
+        /// 'Regex Entity Extractor'</param>
         public HierarchicalChildEntity(System.Guid id, string name = default(string), int? typeId = default(int?), string readableType = default(string))
             : base(id, name)
         {
@@ -62,7 +62,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// 'Hierarchical Entity Extractor', 'Hierarchical Child Entity
         /// Extractor', 'Composite Entity Extractor', 'List Entity Extractor',
         /// 'Prebuilt Entity Extractor', 'Intent Classifier', 'Pattern.Any
-        /// Entity Extractor', 'Regular Expression Entity Extractor'
+        /// Entity Extractor', 'Closed List Entity Extractor', 'Regex Entity
+        /// Extractor'
         /// </summary>
         [JsonProperty(PropertyName = "readableType")]
         public string ReadableType { get; set; }
