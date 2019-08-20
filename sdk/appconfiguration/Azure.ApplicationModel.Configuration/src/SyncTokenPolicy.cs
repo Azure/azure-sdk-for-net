@@ -11,10 +11,7 @@ namespace Azure.ApplicationModel.Configuration
 {
     internal class SyncTokenPolicy : HttpPipelinePolicy
     {
-        /// <summary>
-        /// Map from token id to token.
-        /// </summary>
-        private ConcurrentDictionary<string, SyncToken> _syncTokens;
+        private ConcurrentDictionary<string, SyncToken> _syncTokens = new ConcurrentDictionary<string, SyncToken>();
 
         private const string SyncTokenHeader = "Sync-Token";
 
@@ -36,7 +33,7 @@ namespace Azure.ApplicationModel.Configuration
         {
             foreach (SyncToken token in _syncTokens.Values)
             {
-                message.Request.Headers.Add("Sync-Token", SyncTokenUtils.Format(token));
+                message.Request.Headers.Add(SyncTokenHeader, token.ToString());
             }
 
             if (async)
@@ -48,7 +45,7 @@ namespace Azure.ApplicationModel.Configuration
                 ProcessNext(message, pipeline);
             }
 
-            if (message.Response.Headers.TryGetValues("Sync-Token", out IEnumerable<string> rawSyncTokens))
+            if (message.Response.Headers.TryGetValues(SyncTokenHeader, out IEnumerable<string> rawSyncTokens))
             {
                 foreach (string rawToken in rawSyncTokens)
                 {

@@ -1,18 +1,13 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
 using System.Globalization;
 
 namespace Azure.ApplicationModel.Configuration
 {
     internal class SyncTokenUtils
     {
-        private static readonly SyncToken Default = new SyncToken();
-
-        // TODO: ToString is th ewrong name.  What is the opposite of parse?
-        public static string Format(SyncToken token)
-        {
-            return $"{token.Id}={token.Value}";
-        }
-
         public static bool TryParse(string value, out SyncToken result)
         {
             result = new SyncToken();
