@@ -73,7 +73,7 @@ namespace ContainerRegistry.Tests
             }
         };
 
-        private static readonly V1Manifest ExpectedV1ManifestProd = new V1Manifest()
+        private static readonly Manifest ExpectedV1ManifestProd = new Manifest()
         {
             SchemaVersion = 1,
             Architecture = "amd64",
@@ -330,7 +330,7 @@ namespace ContainerRegistry.Tests
         }
 
 
-        private void VerifyManifest(SuperManifest baseManifest, SuperManifest actualManifest)
+        private void VerifyManifest(Manifest baseManifest, Manifest actualManifest)
         {
             Assert.Equal(baseManifest.GetType(), actualManifest.GetType());
             Assert.Equal(baseManifest.SchemaVersion, actualManifest.SchemaVersion);
@@ -349,10 +349,10 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(baseManifestV2.Config.MediaType, actualManifestV2.Config.MediaType);
                 Assert.Equal(baseManifestV2.Config.Size, actualManifestV2.Config.Size);
             }
-            if (baseManifest.GetType() == typeof(V1Manifest))
+            if (baseManifest.GetType() == typeof(Manifest))
             {
-                var baseManifestV1 = (V1Manifest)baseManifest;
-                var actualManifestV1 = (V1Manifest)baseManifest;
+                var baseManifestV1 = baseManifest;
+                var actualManifestV1 = baseManifest;
                 Assert.Equal(baseManifestV1.Architecture, actualManifestV1.Architecture);
                 Assert.Equal(baseManifestV1.Name, actualManifestV1.Name);
                 Assert.Equal(baseManifestV1.Tag, actualManifestV1.Tag);

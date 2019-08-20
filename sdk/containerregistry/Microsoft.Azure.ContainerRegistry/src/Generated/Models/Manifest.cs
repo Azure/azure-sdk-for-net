@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Returns the requested manifest file
+    /// Returns the requested multi-arch-manifest file
     /// </summary>
     public partial class Manifest
     {
@@ -31,30 +31,22 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the Manifest class.
         /// </summary>
-        /// <param name="schemaVersion">Schema version</param>
-        /// <param name="mediaType">Media type usually
-        /// application/vnd.docker.distribution.manifest.v2+json if this is in
-        /// the accept header</param>
-        /// <param name="config">V2 image config descriptor</param>
-        /// <param name="layers">List of V2 image layer information</param>
         /// <param name="architecture">CPU architecture</param>
         /// <param name="name">Image name</param>
         /// <param name="tag">Image tag</param>
         /// <param name="fsLayers">List of layer information</param>
         /// <param name="history">Image history</param>
         /// <param name="signatures">Image signature</param>
-        public Manifest(int? schemaVersion = default(int?), string mediaType = default(string), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>), string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>))
+        /// <param name="schemaVersion">Schema version</param>
+        public Manifest(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?))
         {
-            SchemaVersion = schemaVersion;
-            MediaType = mediaType;
-            Config = config;
-            Layers = layers;
             Architecture = architecture;
             Name = name;
             Tag = tag;
             FsLayers = fsLayers;
             History = history;
             Signatures = signatures;
+            SchemaVersion = schemaVersion;
             CustomInit();
         }
 
@@ -62,32 +54,6 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets schema version
-        /// </summary>
-        [JsonProperty(PropertyName = "schemaVersion")]
-        public int? SchemaVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets media type usually
-        /// application/vnd.docker.distribution.manifest.v2+json if this is in
-        /// the accept header
-        /// </summary>
-        [JsonProperty(PropertyName = "mediaType")]
-        public string MediaType { get; set; }
-
-        /// <summary>
-        /// Gets or sets V2 image config descriptor
-        /// </summary>
-        [JsonProperty(PropertyName = "config")]
-        public V2Descriptor Config { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of V2 image layer information
-        /// </summary>
-        [JsonProperty(PropertyName = "layers")]
-        public IList<V2Descriptor> Layers { get; set; }
 
         /// <summary>
         /// Gets or sets CPU architecture
@@ -124,6 +90,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "signatures")]
         public IList<ImageSignature> Signatures { get; set; }
+
+        /// <summary>
+        /// Gets or sets schema version
+        /// </summary>
+        [JsonProperty(PropertyName = "schemaVersion")]
+        public int? SchemaVersion { get; set; }
 
     }
 }

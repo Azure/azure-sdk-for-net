@@ -10,14 +10,20 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.ContainerRegistry
 {
-    /*Robust handling of Basic and OAUTH2 authentication flows for the Azure Container Registry Runtime .Net SDK.
-     This class handles Basic Authentication as well as JWT token authentication using both username and password
-     routes as well as through exchanging AAD tokens. */
+
+    /// <summary>
+    /// Robust handling of Basic and OAUTH2 authentication flows for the Azure Container Registry Runtime .Net SDK.
+    /// This class handles Basic Authentication as well as JWT token authentication using both username and password
+    /// routes as well as through exchanging AAD tokens.
+    /// </summary>
     public class AcrClientCredentials : ServiceClientCredentials
     {
 
         #region Definitions
-
+        
+        /// <summary>
+        /// Authentication type
+        /// </summary>
         public enum LoginMode
         {
             Basic,
@@ -112,7 +118,7 @@ namespace Microsoft.Azure.ContainerRegistry
             {
                 string operation = "https://" + LoginUrl + request.RequestUri.AbsolutePath;
                 string scope = getScope(operation, request.Method.Method, request.RequestUri.AbsolutePath);
-                
+
                 request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + getAcrAccessToken(scope));
             }
             await base.ProcessHttpRequestAsync(request, cancellationToken);
@@ -144,7 +150,8 @@ namespace Microsoft.Azure.ContainerRegistry
             // If Token is available or existed and can be renewed
             if (AcrAccessTokens.ContainsKey(scope))
             {
-                if (!AcrAccessTokens[scope].CheckAndRefresh()) {
+                if (!AcrAccessTokens[scope].CheckAndRefresh())
+                {
                     throw new Exception("Access Token for scope " + scope + " expired and could not be refreshed");
                 }
 

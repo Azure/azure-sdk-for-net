@@ -48,12 +48,13 @@ namespace Microsoft.Azure.ContainerRegistry
             return returnValue;
         }
     }
-    
+
     /*This allows us to have refresh token chains. For example if an access token needs a refresh
      it can use the refresh token which can be refreshed using an aad access token which can be
      refreshed using an aad refresh token which can be obtained using service principals.  This 
      will all be done internally and thus abstracts much of the checking away */
-    public class AuthToken {
+    public class AuthToken
+    {
 
         public delegate string acquireCallback();
         private static readonly JwtSecurityTokenHandler JwtSecurityClient = new JwtSecurityTokenHandler();
@@ -65,7 +66,8 @@ namespace Microsoft.Azure.ContainerRegistry
         public DateTime Expiration { get; set; }
         public acquireCallback RefreshFn { get; set; }
 
-        public AuthToken(string token) {
+        public AuthToken(string token)
+        {
             Value = token;
             Expiration = JwtSecurityClient.ReadToken(Value).ValidTo;
         }
@@ -76,12 +78,14 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         //Extensibility purposes
-        protected AuthToken(){}
+        protected AuthToken() { }
 
 
         /* Returns true if refresh was succesful. */
-        public bool Refresh() {
-            if (RefreshFn == null) {
+        public bool Refresh()
+        {
+            if (RefreshFn == null)
+            {
                 return false;
             }
             Value = RefreshFn();
@@ -125,7 +129,7 @@ namespace Microsoft.Azure.ContainerRegistry
             Refresh();
         }
         public AcrRefreshToken(string token, acquireCallback refreshFn) : base(token, refreshFn) { }
-     
+
     }
 
     // Refreshing this requires a nice refresh token

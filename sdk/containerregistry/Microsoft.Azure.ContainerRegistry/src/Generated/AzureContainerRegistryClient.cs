@@ -29,45 +29,6 @@ namespace Microsoft.Azure.ContainerRegistry
     /// </summary>
     public partial class AzureContainerRegistryClient : ServiceClient<AzureContainerRegistryClient>, IAzureContainerRegistryClient, IAzureClient
     {
-
-        // MANUALLY ADDED FOR TESTING PURPOSES
-        /// <summary>
-        /// Initializes a new instance of the AzureContainerRegistryClient class.
-        /// </summary>
-        /// <param name='baseUri'
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Credentials needed for the client to connect to Azure.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-
-        public AzureContainerRegistryClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = "{url}";
-            Credentials = credentials;
-            if (Credentials != null)
-
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-
-        }
-
         /// <summary>
         /// The base URI of the service.
         /// </summary>
@@ -267,8 +228,8 @@ namespace Microsoft.Azure.ContainerRegistry
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SuperManifest>("mediaType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SuperManifest>("mediaType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Manifest>("mediaType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Manifest>("mediaType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
@@ -473,7 +434,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SuperManifest>> GetManifestWithHttpMessagesAsync(string name, string reference, string accept = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Manifest>> GetManifestWithHttpMessagesAsync(string name, string reference, string accept = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -603,7 +564,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SuperManifest>();
+            var _result = new AzureOperationResponse<Manifest>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -616,7 +577,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<SuperManifest>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Manifest>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -669,7 +630,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<object,CreateManifestHeaders>> CreateManifestWithHttpMessagesAsync(string name, string reference, SuperManifest payload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object,CreateManifestHeaders>> CreateManifestWithHttpMessagesAsync(string name, string reference, Manifest payload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {

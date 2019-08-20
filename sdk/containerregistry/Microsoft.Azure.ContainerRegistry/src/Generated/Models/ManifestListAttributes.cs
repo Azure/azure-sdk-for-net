@@ -13,20 +13,18 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class MultiArchManifestAttributes
+    public partial class ManifestListAttributes
     {
         /// <summary>
-        /// Initializes a new instance of the MultiArchManifestAttributes
-        /// class.
+        /// Initializes a new instance of the ManifestListAttributes class.
         /// </summary>
-        public MultiArchManifestAttributes()
+        public ManifestListAttributes()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MultiArchManifestAttributes
-        /// class.
+        /// Initializes a new instance of the ManifestListAttributes class.
         /// </summary>
         /// <param name="mediaType">The MIME type of the referenced object.
         /// This will generally be
@@ -35,7 +33,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="size">The size in bytes of the object</param>
         /// <param name="digest">The digest of the content, as defined by the
         /// Registry V2 HTTP API Specificiation</param>
-        public MultiArchManifestAttributes(string mediaType = default(string), long? size = default(long?), string digest = default(string), Platform platform = default(Platform))
+        public ManifestListAttributes(string mediaType = default(string), long? size = default(long?), string digest = default(string), Platform platform = default(Platform))
         {
             MediaType = mediaType;
             Size = size;

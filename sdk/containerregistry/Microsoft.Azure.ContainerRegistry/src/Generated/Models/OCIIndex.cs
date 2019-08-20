@@ -16,21 +16,21 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Returns the requested Docker V2 Manifest file
+    /// Returns the requested OCI index file
     /// </summary>
-    [Newtonsoft.Json.JsonObject("application/vnd.docker.distribution.manifest.v2+json")]
-    public partial class V2Manifest : Manifest
+    [Newtonsoft.Json.JsonObject("application/vnd.oci.image.index.v1+json")]
+    public partial class OCIIndex : Manifest
     {
         /// <summary>
-        /// Initializes a new instance of the V2Manifest class.
+        /// Initializes a new instance of the OCIIndex class.
         /// </summary>
-        public V2Manifest()
+        public OCIIndex()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the V2Manifest class.
+        /// Initializes a new instance of the OCIIndex class.
         /// </summary>
         /// <param name="architecture">CPU architecture</param>
         /// <param name="name">Image name</param>
@@ -39,13 +39,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="history">Image history</param>
         /// <param name="signatures">Image signature</param>
         /// <param name="schemaVersion">Schema version</param>
-        /// <param name="config">V2 image config descriptor</param>
-        /// <param name="layers">List of V2 image layer information</param>
-        public V2Manifest(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>))
+        /// <param name="manifests">List of OCI image layer information</param>
+        public OCIIndex(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>), Annotations annotations = default(Annotations))
             : base(architecture, name, tag, fsLayers, history, signatures, schemaVersion)
         {
-            Config = config;
-            Layers = layers;
+            Manifests = manifests;
+            Annotations = annotations;
             CustomInit();
         }
 
@@ -55,16 +54,15 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets V2 image config descriptor
+        /// Gets or sets list of OCI image layer information
         /// </summary>
-        [JsonProperty(PropertyName = "config")]
-        public V2Descriptor Config { get; set; }
+        [JsonProperty(PropertyName = "manifests")]
+        public IList<ManifestListAttributes> Manifests { get; set; }
 
         /// <summary>
-        /// Gets or sets list of V2 image layer information
         /// </summary>
-        [JsonProperty(PropertyName = "layers")]
-        public IList<V2Descriptor> Layers { get; set; }
+        [JsonProperty(PropertyName = "annotations")]
+        public Annotations Annotations { get; set; }
 
     }
 }

@@ -19,23 +19,29 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     /// Returns the requested Docker multi-arch-manifest file
     /// </summary>
     [Newtonsoft.Json.JsonObject("application/vnd.docker.distribution.manifest.list.v2+json")]
-    public partial class MultiArchManifest : SuperManifest
+    public partial class ManifestList : Manifest
     {
         /// <summary>
-        /// Initializes a new instance of the MultiArchManifest class.
+        /// Initializes a new instance of the ManifestList class.
         /// </summary>
-        public MultiArchManifest()
+        public ManifestList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MultiArchManifest class.
+        /// Initializes a new instance of the ManifestList class.
         /// </summary>
+        /// <param name="architecture">CPU architecture</param>
+        /// <param name="name">Image name</param>
+        /// <param name="tag">Image tag</param>
+        /// <param name="fsLayers">List of layer information</param>
+        /// <param name="history">Image history</param>
+        /// <param name="signatures">Image signature</param>
         /// <param name="schemaVersion">Schema version</param>
         /// <param name="manifests">List of V2 image layer information</param>
-        public MultiArchManifest(int? schemaVersion = default(int?), IList<MultiArchManifestAttributes> manifests = default(IList<MultiArchManifestAttributes>))
-            : base(schemaVersion)
+        public ManifestList(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>))
+            : base(architecture, name, tag, fsLayers, history, signatures, schemaVersion)
         {
             Manifests = manifests;
             CustomInit();
@@ -50,7 +56,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets list of V2 image layer information
         /// </summary>
         [JsonProperty(PropertyName = "manifests")]
-        public IList<MultiArchManifestAttributes> Manifests { get; set; }
+        public IList<ManifestListAttributes> Manifests { get; set; }
 
     }
 }
