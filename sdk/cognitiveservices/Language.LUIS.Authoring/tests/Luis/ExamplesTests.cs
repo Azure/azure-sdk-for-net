@@ -11,7 +11,7 @@
     {
         private const string versionId = "0.1";
         
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListExamples()
         {
             UseClientFor(async client =>
@@ -22,7 +22,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListExamples_ForEmptyApplication_ReturnsEmpty()
         {
             UseClientFor(async client =>
@@ -44,7 +44,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddExample()
         {
             UseClientFor(async client =>
@@ -91,7 +91,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddExamplesInBatch()
         {
             UseClientFor(async client =>
@@ -156,7 +156,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddExamplesInBatch_SomeInvalidExamples_ReturnsSomeErrors()
         {
             UseClientFor(async client =>
@@ -221,7 +221,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteExample()
         {
             UseClientFor(async client =>

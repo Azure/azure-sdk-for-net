@@ -116,7 +116,7 @@ jobs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" 
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:Configuration=$(BuildConfiguration)
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

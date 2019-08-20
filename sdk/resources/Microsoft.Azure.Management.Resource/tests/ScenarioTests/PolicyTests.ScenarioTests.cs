@@ -857,13 +857,17 @@ namespace Policy.Tests
                 resourceGroup.Name,
                 "Microsoft.Web",
                 string.Empty,
-                "sites",
+                "serverFarms",
                 resourceName,
-                "2016-08-01",
+                "2018-02-01",
                 new GenericResource
                 {
                     Location = resourceGroup.Location,
-                    Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}")
+                    Sku = new Sku
+                    {
+                        Name = "S1"
+                    },
+                    Properties = JObject.Parse("{}")
                 });
         }
 

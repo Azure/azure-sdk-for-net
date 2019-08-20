@@ -145,6 +145,15 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             return jobOutputContainerName;
         }
 
+        /// <summary>
+        /// Gets the Blob name prefix/folder where files of the given kind are stored
+        /// </summary>
+        /// <param name="job">The job to calculate the output storage destination for.</param>
+        /// <param name="kind">The output kind.</param>
+        /// <returns>The Blob name prefix/folder where files of the given kind are stored.</returns>
+        public static string GetOutputStoragePath(this CloudJob job, JobOutputKind kind)
+            => StoragePath.JobStoragePath.BlobNamePrefixImpl(kind);
+
         private static SharedAccessBlobPolicy CreateWriteAccessPolicy(TimeSpan expiryTime)
         {
             return new SharedAccessBlobPolicy

@@ -174,8 +174,45 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_ScheduledEvents")]
+        public void TestVMScaleSetScenarioOperations_ScheduledEvents()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
+                {
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false,
+                        vmScaleSetCustomizer:
+                        vmScaleSet =>
+                        {
+                            vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile = new ScheduledEventsProfile
+                            {
+                                TerminateNotificationProfile = new TerminateNotificationProfile
+                                {
+                                    Enable = true,
+                                    NotBeforeTimeout = "PT6M",
+                                }
+                            };
+                        },
+                        vmScaleSetValidator: vmScaleSet =>
+                        {
+                            Assert.True(true == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.Enable);
+                            Assert.True("PT6M" == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.NotBeforeTimeout);
+                        });
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
         private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
-            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false)
+            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
+            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null)
         {
             EnsureClientsInitialized(context);
 
@@ -221,6 +258,7 @@ namespace Compute.Tests
                         {
                             vmScaleSet.Sku.Name = vmSize;
                         }
+                        vmScaleSetCustomizer?.Invoke(vmScaleSet);
                     },
                     createWithManagedDisks: hasManagedDisks,
                     hasDiffDisks : hasDiffDisks,
@@ -265,6 +303,8 @@ namespace Compute.Tests
                         ValidateVMScaleSetVM(inputVMScaleSet, instanceId, getVMResponse, hasManagedDisks);
                     }
                 }
+
+                vmScaleSetValidator?.Invoke(getResponse);
 
                 m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
             }

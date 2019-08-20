@@ -4,8 +4,10 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +28,6 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         protected KeyClient()
         {
-
         }
 
         /// <summary>
@@ -53,8 +54,7 @@ namespace Azure.Security.KeyVault.Keys
             this.ApiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    bufferResponse: true,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"));
+                    new ChallengeBasedAuthenticationPolicy(credential));
         }
 
         /// <summary>

@@ -4227,6 +4227,54 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_Json_AzureBlob = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""JsonSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true,
+              ""wildcardFolderPath"":  ""abc*g"",
+              ""wildcardFileName"":  ""*.json""
+            }
+          },
+          ""sink"": {
+            ""type"": ""JsonSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""JsonWriteSettings"",
+              ""filePattern"": ""arrayOfObjects""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""sourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""sinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_Binary_Binary = @"{
   ""name"": ""MyPipeline"",
   ""properties"": {
@@ -4825,6 +4873,42 @@ namespace DataFactory.Tests.JsonSamples
                         type: ""BlobSink"",
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample(version: "Copy")]
+        public const string AzureMySqlSinkPipeline = @"
+{
+    name: ""DataPipeline_AzureMySqlSinkSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""Db2ToPostgreSqlCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""Db2Source"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""AzureMySqlSink"",
+                        preCopyScript: ""fake script""
                     }
                 },
                 policy:

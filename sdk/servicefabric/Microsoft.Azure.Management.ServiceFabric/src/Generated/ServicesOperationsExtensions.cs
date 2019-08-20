@@ -108,9 +108,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='parameters'>
             /// The service resource.
             /// </param>
-            public static ServiceResource Create(this IServicesOperations operations, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResource parameters)
+            public static ServiceResource CreateOrUpdate(this IServicesOperations operations, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResource parameters)
             {
-                return operations.CreateAsync(resourceGroupName, clusterName, applicationName, serviceName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, applicationName, serviceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServiceResource> CreateAsync(this IServicesOperations operations, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServiceResource> CreateOrUpdateAsync(this IServicesOperations operations, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -353,9 +353,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='parameters'>
             /// The service resource.
             /// </param>
-            public static ServiceResource BeginCreate(this IServicesOperations operations, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResource parameters)
+            public static ServiceResource BeginCreateOrUpdate(this IServicesOperations operations, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResource parameters)
             {
-                return operations.BeginCreateAsync(resourceGroupName, clusterName, applicationName, serviceName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, clusterName, applicationName, serviceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -386,9 +386,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServiceResource> BeginCreateAsync(this IServicesOperations operations, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServiceResource> BeginCreateOrUpdateAsync(this IServicesOperations operations, string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -24,7 +24,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class EventHubConsumerTests
     {
         /// <summary>
@@ -404,7 +403,16 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SubscribeManagesActiveChannels()
         {
-            var transportConsumer = new ObservableTransportConsumerMock();
+            var events = new List<EventData>
+            {
+               new EventData(Encoding.UTF8.GetBytes("One")),
+               new EventData(Encoding.UTF8.GetBytes("Two")),
+               new EventData(Encoding.UTF8.GetBytes("Three")),
+               new EventData(Encoding.UTF8.GetBytes("Four")),
+               new EventData(Encoding.UTF8.GetBytes("Five"))
+            };
+
+            var transportConsumer = new PublishingTransportConsumerMock(events, true);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
             var channels = GetActiveChannels(consumer);
 
@@ -413,13 +421,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var subscriptions = (await Task.WhenAll(
                 Enumerable.Range(0, 10)
-                .Select(index => Task.Run(() => consumer.SubscribeToEvents()))
+                .Select(index => Task.Run(() => consumer.SubscribeToEvents(TimeSpan.FromMilliseconds(5))))
             ).ConfigureAwait(false))
-                .Select(enumerable => (ChannelEnumerableSubscription<EventData>)enumerable)
+                .Select(enumerable => enumerable.GetAsyncEnumerator())
                 .ToList();
 
             try
             {
+                await Task.WhenAll(subscriptions.Select(subscription => subscription.MoveNextAsync().AsTask()).ToList());
                 Assert.That(channels, Is.Not.Null, "The consumer should have a set of active channels.");
                 Assert.That(channels.Count, Is.EqualTo(subscriptions.Count), "Each subscription should have an associated channel.");
             }
@@ -440,14 +449,24 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SubscribeManagesBackgroundPublishingWithOneSubscriber()
         {
-            var transportConsumer = new ObservableTransportConsumerMock();
+            var events = new List<EventData>
+            {
+               new EventData(Encoding.UTF8.GetBytes("One")),
+               new EventData(Encoding.UTF8.GetBytes("Two")),
+               new EventData(Encoding.UTF8.GetBytes("Three")),
+               new EventData(Encoding.UTF8.GetBytes("Four")),
+               new EventData(Encoding.UTF8.GetBytes("Five"))
+            };
+
+            var transportConsumer = new PublishingTransportConsumerMock(events, true);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
             var publishing = GetIsPublishingActiveFlag(consumer);
 
             Assert.That(publishing, Is.False, "Background publishing should not start without a subscription.");
 
-            await using (var subscription = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents())
+            await using (var enumerator = consumer.SubscribeToEvents(TimeSpan.FromMilliseconds(5)).GetAsyncEnumerator())
             {
+                await enumerator.MoveNextAsync();
                 publishing = GetIsPublishingActiveFlag(consumer);
                 Assert.That(publishing, Is.True, "Background publishing should be taking place when there is a subscriber.");
             }
@@ -464,19 +483,31 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SubscribeManagesBackgroundPublishingWithMultipleSubscribers()
         {
-            var transportConsumer = new PublishingTransportConsumerMock();
+            var events = new List<EventData>
+            {
+               new EventData(Encoding.UTF8.GetBytes("One")),
+               new EventData(Encoding.UTF8.GetBytes("Two")),
+               new EventData(Encoding.UTF8.GetBytes("Three")),
+               new EventData(Encoding.UTF8.GetBytes("Four")),
+               new EventData(Encoding.UTF8.GetBytes("Five"))
+            };
+
+            var waitTime = TimeSpan.FromMilliseconds(5);
+            var transportConsumer = new PublishingTransportConsumerMock(events, true);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
             var publishing = GetIsPublishingActiveFlag(consumer);
 
             Assert.That(publishing, Is.False, "Background publishing should not start without a subscription.");
 
-            await using (var subscription = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents())
+            await using (var firstEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
             {
-                transportConsumer.StartPublishing();
+                await firstEnumerator.MoveNextAsync();
 
-                await using (var secondSubscription = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents())
-                await using (var thirdSubscription = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents())
+                await using (var secondEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
+                await using (var thirdEnumerator = consumer.SubscribeToEvents(waitTime).GetAsyncEnumerator())
                 {
+                    await Task.WhenAll(secondEnumerator.MoveNextAsync().AsTask(), thirdEnumerator.MoveNextAsync().AsTask());
+
                     publishing = GetIsPublishingActiveFlag(consumer);
                     Assert.That(publishing, Is.True, "Background publishing should be taking place when there are multiple subscribers.");
                 }
@@ -495,7 +526,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SubscribePublishesEmptyEnumerableIfCancelledBeforeSubscribe()
+        public void SubscribeThrowsIfCancelledBeforeSubscribe()
         {
             var events = new List<EventData>
             {
@@ -513,15 +544,18 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellation = new CancellationTokenSource();
             cancellation.Cancel();
 
-            await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+            Assert.That(async () =>
             {
-                if (eventData == null)
+                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
                 {
-                    break;
-                }
+                    if (eventData == null)
+                    {
+                        break;
+                    }
 
-                ++receivedEvents;
-            }
+                    ++receivedEvents;
+                }
+            }, Throws.InstanceOf<TaskCanceledException>(), "Subscribe should have indicated the token was not active.");
 
             Assert.That(cancellation.IsCancellationRequested, Is.True, "The cancellation should have been requested.");
             Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
@@ -581,61 +615,72 @@ namespace Azure.Messaging.EventHubs.Tests
                 new EventData(Encoding.UTF8.GetBytes("Five"))
             };
 
+            var waitTime = TimeSpan.FromMilliseconds(5);
             var transportConsumer = new PublishingTransportConsumerMock(events);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
             var firstSubscriberEvents = new List<EventData>();
             var secondSubscriberEvents = new List<EventData>();
             var firstCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
             var secondCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var firstSubcriberReceiving = false;
+            var secondSubscriberReceiving = false;
+
+            void StartPublishingIfReady()
+            {
+                if (firstSubcriberReceiving && secondSubscriberReceiving)
+                {
+                    transportConsumer.StartPublishing();
+                }
+            }
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
-            // Create the subscriptions explicitly for better determinism; they should subscribe at the same time
-            // to ensure they receive the same set of events.
-
-            await using (var firstSubscriber = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents(cancellation.Token))
-            await using (var secondSubscriber = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents(cancellation.Token))
+            var firstSubscriberTask = Task.Run(async () =>
             {
-                transportConsumer.StartPublishing();
-
-                var firstSubscriberTask = Task.Run(async () =>
+                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
-                    await foreach (var eventData in firstSubscriber)
+                    firstSubcriberReceiving = true;
+                    StartPublishingIfReady();
+
+                    if (eventData != default)
                     {
                         firstSubscriberEvents.Add(eventData);
-
-                        if (firstSubscriberEvents.Count >= events.Count)
-                        {
-                            break;
-                        }
                     }
 
-                    await Task.Delay(250).ConfigureAwait(false);
-                    firstCompletionSource.TrySetResult(0);
+                    if (firstSubscriberEvents.Count >= events.Count)
+                    {
+                        break;
+                    }
+                }
 
-                }, cancellation.Token);
+                firstCompletionSource.TrySetResult(0);
 
-                var secondSubscriberTask = Task.Run(async () =>
+            }, cancellation.Token);
+
+            var secondSubscriberTask = Task.Run(async () =>
+            {
+                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
-                    await foreach (var eventData in secondSubscriber)
+                    secondSubscriberReceiving = true;
+                    StartPublishingIfReady();
+
+                    if (eventData != default)
                     {
                         secondSubscriberEvents.Add(eventData);
-
-                        if (secondSubscriberEvents.Count >= events.Count)
-                        {
-                            break;
-                        }
                     }
 
-                    await Task.Delay(250).ConfigureAwait(false);
-                    secondCompletionSource.TrySetResult(0);
+                    if (secondSubscriberEvents.Count >= events.Count)
+                    {
+                        break;
+                    }
+                }
 
-                }, cancellation.Token);
+                secondCompletionSource.TrySetResult(0);
 
-                await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
-                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            }
+            }, cancellation.Token);
 
+            await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
+            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
             Assert.That(firstSubscriberEvents, Is.EquivalentTo(events), "The received events for the first subscriber should match the published events.");
             Assert.That(secondSubscriberEvents, Is.EquivalentTo(events), "The received events for the second subscriber should match the published events.");
         }
@@ -682,6 +727,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SubscribePublishesEventsWithMultipleSubscribersAndMultipleBatches()
         {
+            var waitTime = TimeSpan.FromMilliseconds(5);
             var events = new List<EventData>();
             var transportConsumer = new PublishingTransportConsumerMock(events);
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
@@ -689,60 +735,70 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondSubscriberEvents = new List<EventData>();
             var firstCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
             var secondCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var firstSubcriberReceiving = false;
+            var secondSubscriberReceiving = false;
 
             events.AddRange(
                 Enumerable.Range(0, (GetBackgroundPublishReceiveBatchSize(consumer) * 3))
                     .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number { index }")))
             );
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-
-            // Create the subscriptions explicitly for better determinism; they should subscribe at the same time
-            // to ensure they receive the same set of events.
-
-            await using (var firstSubscriber = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents(cancellation.Token))
-            await using (var secondSubscriber = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents(cancellation.Token))
+            void StartPublishingIfReady()
             {
-                transportConsumer.StartPublishing();
-
-                var firstSubscriberTask = Task.Run(async () =>
+                if (firstSubcriberReceiving && secondSubscriberReceiving)
                 {
-                    await foreach (var eventData in firstSubscriber)
-                    {
-                        firstSubscriberEvents.Add(eventData);
-
-                        if (firstSubscriberEvents.Count >= events.Count)
-                        {
-                            break;
-                        }
-                    }
-
-                    await Task.Delay(250).ConfigureAwait(false);
-                    firstCompletionSource.TrySetResult(0);
-
-                }, cancellation.Token);
-
-                var secondSubscriberTask = Task.Run(async () =>
-                {
-                    await foreach (var eventData in secondSubscriber)
-                    {
-                        secondSubscriberEvents.Add(eventData);
-
-                        if (secondSubscriberEvents.Count >= events.Count)
-                        {
-                            break;
-                        }
-                    }
-
-                    await Task.Delay(250).ConfigureAwait(false);
-                    secondCompletionSource.TrySetResult(0);
-
-                }, cancellation.Token);
-
-                await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
-                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                    transportConsumer.StartPublishing();
+                }
             }
 
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+
+            var firstSubscriberTask = Task.Run(async () =>
+            {
+                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
+                {
+                    firstSubcriberReceiving = true;
+                    StartPublishingIfReady();
+
+                    if (eventData != default)
+                    {
+                        firstSubscriberEvents.Add(eventData);
+                    }
+
+                    if (firstSubscriberEvents.Count >= events.Count)
+                    {
+                        break;
+                    }
+                }
+
+                firstCompletionSource.TrySetResult(0);
+
+            }, cancellation.Token);
+
+            var secondSubscriberTask = Task.Run(async () =>
+            {
+                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
+                {
+                    secondSubscriberReceiving = true;
+                    StartPublishingIfReady();
+
+                    if (eventData != default)
+                    {
+                        secondSubscriberEvents.Add(eventData);
+                    }
+
+                    if (secondSubscriberEvents.Count >= events.Count)
+                    {
+                        break;
+                    }
+                }
+
+                secondCompletionSource.TrySetResult(0);
+
+            }, cancellation.Token);
+
+            await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
+            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
             Assert.That(firstSubscriberEvents, Is.EquivalentTo(events), "The received events for the first subscriber should match the published events.");
             Assert.That(secondSubscriberEvents, Is.EquivalentTo(events), "The received events for the second subscriber should match the published events.");
         }
@@ -809,59 +865,59 @@ namespace Azure.Messaging.EventHubs.Tests
             var activeChannels = GetActiveChannels(consumer);
             var firstCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
             var secondCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var firstSubscriberEvents = new List<EventData>();
-            var secondSubscriberEvents = new List<EventData>();
+            var firstIterations = 0;
+            var secondIterations = 0;
+            var firstSubcriberReceiving = false;
+            var secondSubscriberReceiving = false;
+
+            void StartPublishingIfReady()
+            {
+                if (firstSubcriberReceiving && secondSubscriberReceiving)
+                {
+                    transportConsumer.StartPublishing();
+                }
+            }
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
-            // Create the subscriptions explicitly for better determinism; they should subscribe at the same time
-            // to ensure they receive the same set of events.
-
-            await using (var firstSubscriber = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents(waitTime, cancellation.Token))
-            await using (var secondSubscriber = (ChannelEnumerableSubscription<EventData>)consumer.SubscribeToEvents(waitTime, cancellation.Token))
+            var firstSubscriberTask = Task.Run(async () =>
             {
-                var firstSubscriberTask = Task.Run(async () =>
+                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
-                    transportConsumer.StartPublishing();
+                    firstSubcriberReceiving = true;
+                    StartPublishingIfReady();
 
-                    await foreach (var eventData in firstSubscriber)
+                    if ((++firstIterations >= 2) && (transportConsumer.IsPublishingStarted))
                     {
-                        firstSubscriberEvents.Add(eventData);
-
-                        if (firstSubscriberEvents.Count >= events.Count)
-                        {
-                            Assert.That(activeChannels.Count, Is.AtLeast(1).And.AtMost(2), "There should be a one active channel for each subscriber.");
-                            break;
-                        }
+                        Assert.That(activeChannels.Count, Is.AtLeast(1).And.AtMost(2), "There should be a one active channel for each subscriber.");
+                        break;
                     }
+                }
 
-                    await Task.Delay(250).ConfigureAwait(false);
-                    firstCompletionSource.TrySetResult(0);
+                firstCompletionSource.TrySetResult(0);
 
-                }, cancellation.Token);
+            }, cancellation.Token);
 
-                var secondSubscriberTask = Task.Run(async () =>
+            var secondSubscriberTask = Task.Run(async () =>
+            {
+                await foreach (var eventData in consumer.SubscribeToEvents(waitTime, cancellation.Token).ConfigureAwait(false))
                 {
-                    await foreach (var eventData in secondSubscriber)
+                    secondSubscriberReceiving = true;
+                    StartPublishingIfReady();
+
+                    if ((++secondIterations >= 2) && (transportConsumer.IsPublishingStarted))
                     {
-                        secondSubscriberEvents.Add(eventData);
-
-                        if (secondSubscriberEvents.Count >= events.Count)
-                        {
-                            Assert.That(activeChannels.Count, Is.AtLeast(1).And.AtMost(2), "There should be a one active channel for each subscriber.");
-                            break;
-                        }
+                        Assert.That(activeChannels.Count, Is.AtLeast(1).And.AtMost(2), "There should be a one active channel for each subscriber.");
+                        break;
                     }
+                }
 
-                    await Task.Delay(250).ConfigureAwait(false);
-                    secondCompletionSource.TrySetResult(0);
+                secondCompletionSource.TrySetResult(0);
 
-                }, cancellation.Token);
+            }, cancellation.Token);
 
-                await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
-                Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-            }
-
+            await Task.WhenAll(firstSubscriberTask, secondSubscriberTask, firstCompletionSource.Task, secondCompletionSource.Task).ConfigureAwait(false);
+            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
             Assert.That(activeChannels.Count, Is.EqualTo(0), "The iterator should unsubscribe when complete.");
         }
 
@@ -889,7 +945,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var receivedEvents = new List<EventData>();
             var consecutiveEmptyCount = 0;
 
-            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(100));
 
             await foreach (var eventData in consumer.SubscribeToEvents(maxWaitTime, cancellation.Token))
             {
@@ -916,19 +972,55 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SubscribeExpectsTaskCanceledException()
+        [TestCase(typeof(ChannelClosedException))]
+        [TestCase(typeof(ArithmeticException))]
+        [TestCase(typeof(IndexOutOfRangeException))]
+        public void SubscribePropagagesException(Type exceptionType)
         {
-            var transportConsumer = new ReceiveCallbackTransportConsumerMock((_max, _time) => throw new TaskCanceledException());
+            var transportConsumer = new ReceiveCallbackTransportConsumerMock((_max, _time) => throw (Exception)Activator.CreateInstance(exceptionType));
             var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
-            await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+            Assert.That(async () =>
             {
-                ++receivedEvents;
-                break;
-            }
+                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+                {
+                    ++receivedEvents;
+                    break;
+                }
+            }, Throws.TypeOf(exceptionType), "An exception during receive should be propagated by the iterator.");
+
+            Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+            Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");
+            Assert.That(GetIsPublishingActiveFlag(consumer), Is.False, "The consumer should no longer be publishing.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConsumer.SubscribeToEvents" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(typeof(TaskCanceledException))]
+        [TestCase(typeof(OperationCanceledException))]
+        public void SubscribeSurfacesCancelation(Type exceptionType)
+        {
+            var transportConsumer = new ReceiveCallbackTransportConsumerMock((_max, _time) => throw (Exception)Activator.CreateInstance(exceptionType));
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var receivedEvents = 0;
+
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+
+            Assert.That(async () =>
+            {
+                await foreach (var eventData in consumer.SubscribeToEvents(cancellation.Token))
+                {
+                    ++receivedEvents;
+                    break;
+                }
+            }, Throws.InstanceOf<TaskCanceledException>(), "Cancellation should be surfaced as a TaskCanceledException");
 
             Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
             Assert.That(receivedEvents, Is.EqualTo(0), "No events should have been received.");

@@ -1,4 +1,9 @@
-﻿using Azure.Messaging.EventHubs;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
+// ------------------------------------
+using Azure.Messaging.EventHubs;
 using System;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;

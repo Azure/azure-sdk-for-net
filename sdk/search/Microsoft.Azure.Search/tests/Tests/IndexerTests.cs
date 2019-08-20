@@ -427,7 +427,9 @@ namespace Microsoft.Azure.Search.Tests
                         new FieldMapping("feature_id", "c", FieldMappingFunction.ExtractTokenAtPosition(delimiter: " ", position: 0)),
                         new FieldMapping("feature_id", "d", FieldMappingFunction.Base64Decode()),
                         new FieldMapping("feature_id", "e", FieldMappingFunction.Base64Decode(useHttpServerUtilityUrlTokenDecode: false)),
-                        new FieldMapping("feature_id", "f", FieldMappingFunction.JsonArrayToStringCollection())
+                        new FieldMapping("feature_id", "f", FieldMappingFunction.JsonArrayToStringCollection()),
+                        new FieldMapping("feature_id", "g", FieldMappingFunction.UrlEncode()),
+                        new FieldMapping("feature_id", "h", FieldMappingFunction.UrlDecode()),
                     }
                 };
 
@@ -435,7 +437,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 // We need to add desired fields to the index before those fields can be referenced by the field mappings
                 Index index = searchClient.Indexes.Get(Data.TargetIndexName);
-                string[] fieldNames = new[] { "a", "b", "c", "d", "e", "f" };
+                string[] fieldNames = new[] { "a", "b", "c", "d", "e", "f", "g", "h" };
                 index.Fields = index.Fields.Concat(fieldNames.Select(name => new Field(name, DataType.String))).ToList();
                 searchClient.Indexes.CreateOrUpdate(index);
 

@@ -1,0 +1,429 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//providers/Microsoft.Resources/deployments/csharpsdktest8195/validate?api-version=2019-07-01",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc2hhcnBzZGt0ZXN0ODE5NS92YWxpZGF0ZT9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"properties\": {\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"managementGroupId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tiano-mgtest01\"\r\n        },\r\n        \"subscriptionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"89ec4d1d-dcc7-4a3f-a701-0a5d074c8505\"\r\n        },\r\n        \"roleDefinitionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n        }\r\n      },\r\n      \"variables\": {\r\n        \"managementGroupScope\": \"[concat('Microsoft.Management/managementGroups/', parameters('managementGroupId'))]\",\r\n        \"managementGroupFullyQualifiedId\": \"[concat('/providers/', variables('managementGroupScope'))]\"\r\n      },\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n          \"name\": \"[parameters('roleDefinitionId')]\",\r\n          \"apiVersion\": \"2018-07-01\",\r\n          \"properties\": {\r\n            \"roleName\": \"Tiano SDK Test Role\",\r\n            \"description\": \"something\",\r\n            \"type\": \"CustomRole\",\r\n            \"permissions\": [\r\n              {\r\n                \"actions\": [\r\n                  \"Microsoft.Storage/*/read\"\r\n                ],\r\n                \"notActions\": []\r\n              }\r\n            ],\r\n            \"assignableScopes\": [\r\n              \"[variables('managementGroupFullyQualifiedId')]\"\r\n            ]\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"mg-nested\",\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"location\": \"West US\",\r\n          \"scope\": \"[variables('managementGroupScope')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n                  \"name\": \"policy2\",\r\n                  \"apiVersion\": \"2016-12-01\",\r\n                  \"properties\": {\r\n                    \"policyType\": \"Custom\",\r\n                    \"parameters\": {},\r\n                    \"policyRule\": {\r\n                      \"if\": {\r\n                        \"field\": \"location\",\r\n                        \"equals\": \"northeurope\"\r\n                      },\r\n                      \"then\": {\r\n                        \"effect\": \"deny\"\r\n                      }\r\n                    }\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sub-nested\",\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"location\": \"East US\",\r\n          \"subscriptionId\": \"[parameters('subscriptionId')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"sdk-testrg\",\r\n                  \"apiVersion\": \"2019-07-01\",\r\n                  \"location\": \"East US 2\",\r\n                  \"properties\": {}\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"parameters\": {\r\n      \"managementGroupId\": {\r\n        \"value\": \"tiano-mgtest01\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "18e1be4f-9c9e-42ad-a1d8-f37859374641"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "3898"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 22:36:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "1d4ddd45-aa49-48a4-888a-7ed83e53536e"
+        ],
+        "x-ms-correlation-request-id": [
+          "1d4ddd45-aa49-48a4-888a-7ed83e53536e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T223624Z:1d4ddd45-aa49-48a4-888a-7ed83e53536e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1464"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Resources/deployments/csharpsdktest8195\",\r\n  \"name\": \"csharpsdktest8195\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"templateHash\": \"12707336783073826175\",\r\n    \"parameters\": {\r\n      \"managementGroupId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tiano-mgtest01\"\r\n      },\r\n      \"subscriptionId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"89ec4d1d-dcc7-4a3f-a701-0a5d074c8505\"\r\n      },\r\n      \"roleDefinitionId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2019-08-06T22:36:24.3860878Z\",\r\n    \"duration\": \"PT0S\",\r\n    \"correlationId\": \"1d4ddd45-aa49-48a4-888a-7ed83e53536e\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"roleDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\",\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [],\r\n    \"validatedResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Authorization/roleDefinitions/0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/mg-nested\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/providers/Microsoft.Resources/deployments/sub-nested\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/sdk-testrg\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//providers/Microsoft.Resources/deployments/csharpsdktest8195?api-version=2019-07-01",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc2hhcnBzZGt0ZXN0ODE5NT9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"properties\": {\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"managementGroupId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tiano-mgtest01\"\r\n        },\r\n        \"subscriptionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"89ec4d1d-dcc7-4a3f-a701-0a5d074c8505\"\r\n        },\r\n        \"roleDefinitionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n        }\r\n      },\r\n      \"variables\": {\r\n        \"managementGroupScope\": \"[concat('Microsoft.Management/managementGroups/', parameters('managementGroupId'))]\",\r\n        \"managementGroupFullyQualifiedId\": \"[concat('/providers/', variables('managementGroupScope'))]\"\r\n      },\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/roleDefinitions\",\r\n          \"name\": \"[parameters('roleDefinitionId')]\",\r\n          \"apiVersion\": \"2018-07-01\",\r\n          \"properties\": {\r\n            \"roleName\": \"Tiano SDK Test Role\",\r\n            \"description\": \"something\",\r\n            \"type\": \"CustomRole\",\r\n            \"permissions\": [\r\n              {\r\n                \"actions\": [\r\n                  \"Microsoft.Storage/*/read\"\r\n                ],\r\n                \"notActions\": []\r\n              }\r\n            ],\r\n            \"assignableScopes\": [\r\n              \"[variables('managementGroupFullyQualifiedId')]\"\r\n            ]\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"mg-nested\",\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"location\": \"West US\",\r\n          \"scope\": \"[variables('managementGroupScope')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n                  \"name\": \"policy2\",\r\n                  \"apiVersion\": \"2016-12-01\",\r\n                  \"properties\": {\r\n                    \"policyType\": \"Custom\",\r\n                    \"parameters\": {},\r\n                    \"policyRule\": {\r\n                      \"if\": {\r\n                        \"field\": \"location\",\r\n                        \"equals\": \"northeurope\"\r\n                      },\r\n                      \"then\": {\r\n                        \"effect\": \"deny\"\r\n                      }\r\n                    }\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sub-nested\",\r\n          \"apiVersion\": \"2019-07-01\",\r\n          \"location\": \"East US\",\r\n          \"subscriptionId\": \"[parameters('subscriptionId')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"sdk-testrg\",\r\n                  \"apiVersion\": \"2019-07-01\",\r\n                  \"location\": \"East US 2\",\r\n                  \"properties\": {}\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"parameters\": {\r\n      \"managementGroupId\": {\r\n        \"value\": \"tiano-mgtest01\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f346854b-89c5-402c-8a3d-7dd03c605a49"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "3898"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 22:36:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/providers/Microsoft.Resources/deployments/csharpsdktest8195/operationStatuses/08586364759006983376?api-version=2019-07-01"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "82753aec-f6f2-4ada-9d7c-8e871ffea97e"
+        ],
+        "x-ms-correlation-request-id": [
+          "82753aec-f6f2-4ada-9d7c-8e871ffea97e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T223626Z:82753aec-f6f2-4ada-9d7c-8e871ffea97e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "892"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Resources/deployments/csharpsdktest8195\",\r\n  \"name\": \"csharpsdktest8195\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"templateHash\": \"12707336783073826175\",\r\n    \"parameters\": {\r\n      \"managementGroupId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tiano-mgtest01\"\r\n      },\r\n      \"subscriptionId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"89ec4d1d-dcc7-4a3f-a701-0a5d074c8505\"\r\n      },\r\n      \"roleDefinitionId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2019-08-06T22:36:26.2548963Z\",\r\n    \"duration\": \"PT1.4756145S\",\r\n    \"correlationId\": \"82753aec-f6f2-4ada-9d7c-8e871ffea97e\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"roleDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\",\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": []\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Resources/deployments/csharpsdktest8195/operationStatuses/08586364759006983376?api-version=2019-07-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q4MTk1L29wZXJhdGlvblN0YXR1c2VzLzA4NTg2MzY0NzU5MDA2OTgzMzc2P2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 22:36:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "d1e69bd9-a029-42cf-b1e7-406a431bf3f3"
+        ],
+        "x-ms-correlation-request-id": [
+          "d1e69bd9-a029-42cf-b1e7-406a431bf3f3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T223656Z:d1e69bd9-a029-42cf-b1e7-406a431bf3f3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "20"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Resources/deployments/csharpsdktest8195/operationStatuses/08586364759006983376?api-version=2019-07-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q4MTk1L29wZXJhdGlvblN0YXR1c2VzLzA4NTg2MzY0NzU5MDA2OTgzMzc2P2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 22:37:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "a358dec7-16d5-48c7-846a-f3f2cd4a53d8"
+        ],
+        "x-ms-correlation-request-id": [
+          "a358dec7-16d5-48c7-846a-f3f2cd4a53d8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T223727Z:a358dec7-16d5-48c7-846a-f3f2cd4a53d8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//providers/Microsoft.Resources/deployments/csharpsdktest8195?api-version=2019-07-01",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc2hhcnBzZGt0ZXN0ODE5NT9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 22:37:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "80afa4cb-2dd7-470a-b45b-657983ce111b"
+        ],
+        "x-ms-correlation-request-id": [
+          "80afa4cb-2dd7-470a-b45b-657983ce111b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T223727Z:80afa4cb-2dd7-470a-b45b-657983ce111b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1231"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Resources/deployments/csharpsdktest8195\",\r\n  \"name\": \"csharpsdktest8195\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"templateHash\": \"12707336783073826175\",\r\n    \"parameters\": {\r\n      \"managementGroupId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tiano-mgtest01\"\r\n      },\r\n      \"subscriptionId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"89ec4d1d-dcc7-4a3f-a701-0a5d074c8505\"\r\n      },\r\n      \"roleDefinitionId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2019-08-06T22:37:00.8939749Z\",\r\n    \"duration\": \"PT36.1146931S\",\r\n    \"correlationId\": \"82753aec-f6f2-4ada-9d7c-8e871ffea97e\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"roleDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\",\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Authorization/roleDefinitions/0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/sdk-testrg\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//providers/Microsoft.Resources/deployments/csharpsdktest8195?api-version=2019-07-01",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc2hhcnBzZGt0ZXN0ODE5NT9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6ef123d5-fa77-43d9-90eb-c6f6f7d96e93"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 22:37:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "fb56ae9a-e286-495d-accc-662657209bc8"
+        ],
+        "x-ms-correlation-request-id": [
+          "fb56ae9a-e286-495d-accc-662657209bc8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T223727Z:fb56ae9a-e286-495d-accc-662657209bc8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1231"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Resources/deployments/csharpsdktest8195\",\r\n  \"name\": \"csharpsdktest8195\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"templateHash\": \"12707336783073826175\",\r\n    \"parameters\": {\r\n      \"managementGroupId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tiano-mgtest01\"\r\n      },\r\n      \"subscriptionId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"89ec4d1d-dcc7-4a3f-a701-0a5d074c8505\"\r\n      },\r\n      \"roleDefinitionId\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2019-08-06T22:37:00.8939749Z\",\r\n    \"duration\": \"PT36.1146931S\",\r\n    \"correlationId\": \"82753aec-f6f2-4ada-9d7c-8e871ffea97e\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"roleDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\",\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Authorization/roleDefinitions/0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/sdk-testrg\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//providers/Microsoft.Resources/deployments/csharpsdktest8195/operations?api-version=2019-07-01",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc2hhcnBzZGt0ZXN0ODE5NS9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c38fd3d9-207a-415f-81ab-c68651559774"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 22:37:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11995"
+        ],
+        "x-ms-request-id": [
+          "1376dda2-eaa1-4343-ada7-f5180a2a0276"
+        ],
+        "x-ms-correlation-request-id": [
+          "1376dda2-eaa1-4343-ada7-f5180a2a0276"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T223727Z:1376dda2-eaa1-4343-ada7-f5180a2a0276"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "2290"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Resources/deployments/csharpsdktest8195/operations/55C3F6D29BAA5001\",\r\n      \"operationId\": \"55C3F6D29BAA5001\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2019-08-06T22:36:58.1338698Z\",\r\n        \"duration\": \"PT28.3147437S\",\r\n        \"trackingId\": \"1924866d-f5fd-4a2f-87d9-f1d3a746f208\",\r\n        \"serviceRequestId\": \"740dbbcc-6e4f-4098-8b66-674c5268fcf1\",\r\n        \"statusCode\": \"OK\",\r\n        \"targetResource\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/mg-nested\",\r\n          \"resourceType\": \"Microsoft.Resources/deployments\",\r\n          \"resourceName\": \"mg-nested\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Resources/deployments/csharpsdktest8195/operations/1861FE2FF8A6CC60\",\r\n      \"operationId\": \"1861FE2FF8A6CC60\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2019-08-06T22:36:31.0682498Z\",\r\n        \"duration\": \"PT1.2491237S\",\r\n        \"trackingId\": \"ee64a4b6-3c57-4723-8b06-b4d4021096aa\",\r\n        \"serviceRequestId\": \"3d595bcc-9661-4311-a014-d56f3d6b9b4b\",\r\n        \"statusCode\": \"Created\",\r\n        \"targetResource\": {\r\n          \"id\": \"/providers/Microsoft.Authorization/roleDefinitions/0cb07228-4614-4814-ac1a-c4e39793ce59\",\r\n          \"resourceType\": \"Microsoft.Authorization/roleDefinitions\",\r\n          \"resourceName\": \"0cb07228-4614-4814-ac1a-c4e39793ce59\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Resources/deployments/csharpsdktest8195/operations/591DE40DACECA9F1\",\r\n      \"operationId\": \"591DE40DACECA9F1\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2019-08-06T22:37:00.7211973Z\",\r\n        \"duration\": \"PT30.9020712S\",\r\n        \"trackingId\": \"0cc8ce7d-9bdb-4187-b017-0cbb712d6146\",\r\n        \"serviceRequestId\": \"5230790f-3124-48b4-85e8-2b47f64958a1\",\r\n        \"statusCode\": \"OK\",\r\n        \"targetResource\": {\r\n          \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/providers/Microsoft.Resources/deployments/sub-nested\",\r\n          \"resourceType\": \"Microsoft.Resources/deployments\",\r\n          \"resourceName\": \"sub-nested\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Resources/deployments/csharpsdktest8195/operations/08586364759006983376\",\r\n      \"operationId\": \"08586364759006983376\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"EvaluateDeploymentOutput\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2019-08-06T22:37:00.8767461Z\",\r\n        \"duration\": \"PT0.1053389S\",\r\n        \"trackingId\": \"0e201f85-e339-480d-b3bb-645249ad4ec1\",\r\n        \"statusCode\": \"OK\",\r\n        \"statusMessage\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "DeploymentWithScope_AtTenant": [
+      "csharpsdktest8195"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
+  }
+}

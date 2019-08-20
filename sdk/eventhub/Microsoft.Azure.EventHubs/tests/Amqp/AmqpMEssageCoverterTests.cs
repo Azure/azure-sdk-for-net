@@ -55,7 +55,8 @@ namespace Microsoft.Azure.EventHubs.Tests.Amqp
                 ArraySegment<byte>[] messageBuffers = message.GetPayload(payloadSize, out more);
                 if (messageBuffers != null)
                 {
-                    foreach (var segment in messageBuffers) { message.CompletePayload(segment.Count); }
+                    foreach (var segment in messageBuffers)
+                    { message.CompletePayload(segment.Count); }
                     buffers.AddRange(messageBuffers);
                 }
             }

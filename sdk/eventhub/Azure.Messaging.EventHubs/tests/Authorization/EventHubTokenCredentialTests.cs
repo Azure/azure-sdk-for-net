@@ -19,7 +19,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class EventHubTokenCredentialTests
     {
         /// <summary>

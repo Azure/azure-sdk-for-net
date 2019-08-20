@@ -6,7 +6,7 @@
 
     public class PermissionsTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListPermissions()
         {
             UseClientFor(async client =>
@@ -39,7 +39,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPermission()
         {
             UseClientFor(async client =>
@@ -57,7 +57,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePermission()
         {
             UseClientFor(async client =>
@@ -75,7 +75,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePermission()
         {
             UseClientFor(async client =>

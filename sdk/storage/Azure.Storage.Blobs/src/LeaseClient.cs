@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public LeaseClient(BlobBaseClient client, string leaseId = null)
         {
-            this._blob = client ?? throw new ArgumentNullException(nameof(client));
+            this._blob = client ?? throw Errors.ArgumentNull(nameof(client));
             this._container = null;
             this.LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
@@ -94,7 +94,7 @@ namespace Azure.Storage.Blobs.Specialized
         public LeaseClient(BlobContainerClient client, string leaseId = null)
         {
             this._blob = null;
-            this._container = client ?? throw new ArgumentNullException(nameof(client));
+            this._container = client ?? throw Errors.ArgumentNull(nameof(client));
             this.LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
 
@@ -112,8 +112,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (this.BlobClient == null && this.ContainerClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
-                throw new InvalidOperationException(
-                    $"{nameof(LeaseClient)} requires either a ${nameof(BlobBaseClient)} or ${nameof(BlobContainerClient)}");
+                throw BlobErrors.BlobOrContainerMissing(nameof(LeaseClient), nameof(BlobBaseClient), nameof(BlobContainerClient));
             }
         }
 

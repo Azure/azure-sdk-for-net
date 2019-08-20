@@ -58,8 +58,7 @@ namespace Azure.Security.KeyVault.Secrets
             this.ApiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    bufferResponse: true,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"));
+                    new ChallengeBasedAuthenticationPolicy(credential));
         }
 
         /// <summary>

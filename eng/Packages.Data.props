@@ -46,14 +46,14 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.1.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Update="Microsoft.NETCore.Platforms" Version="2.2.1" />
-    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" />
+    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.5, 2.0.0)" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.18, 4.0.0)" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="[2.3.20, 3.0.0)" />
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric.Services" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric" Version="6.4.624" />
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19351-01" />
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Microsoft.VisualStudio.TextTemplating.14.0" Version="14.3.25407" />
     <PackageReference Update="Moq" Version="4.10.1" />

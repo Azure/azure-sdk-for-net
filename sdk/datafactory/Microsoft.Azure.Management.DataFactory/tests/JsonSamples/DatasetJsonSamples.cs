@@ -1106,6 +1106,52 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string Json = @"
+{
+  name: ""MyJson"",
+  properties: {
+    type: ""Json"",
+    linkedServiceName: 
+    {  
+        referenceName : ""ls"",
+        type : ""LinkedServiceReference""
+    },
+    schema: {
+        type: ""object"",
+        properties: {
+          name: {
+            type: ""object"",
+            properties: {
+              firstName: {
+                type: ""string""
+              },
+              lastName: {
+                type: ""string""
+              }
+            }
+          },
+          age: {
+            type: ""integer""
+          }
+        }
+    },
+    typeProperties: {
+        location: {
+            type: ""AzureBlobStorageLocation"",
+            folderPath: ""testFolder"",
+            fileName: ""test.json"",
+            container: ""MyContainer""
+        },
+        encodingName: ""UTF-8"",
+        compression: {
+            type: ""GZip"",
+            level: ""Optimal""
+        }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string BinaryDataset = @"
 {
   ""name"": ""BinaryDataset"",
@@ -1599,6 +1645,78 @@ namespace DataFactory.Tests.JsonSamples
     name: ""VerticaDataset"",
     properties: {
         type: ""VerticaTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string NetezzaDatasetV2 = @"
+{
+    name: ""NetezzaDataset"",
+    properties: {
+        type: ""NetezzaTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PostgreSqlDataset = @"
+{
+    name: ""PostgreSqlDataset"",
+    properties: {
+        type: ""PostgreSqlTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string AmazonRedshiftTableDataset = @"
+{
+    name: ""AmazonRedshiftTableDataset"",
+    properties: {
+        type: ""AmazonRedshiftTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string Db2TableDataset = @"
+{
+    name: ""Db2TableDataset"",
+    properties: {
+        type: ""Db2Table"",
         linkedServiceName: {
             referenceName: ""ls"",
             type: ""LinkedServiceReference""
