@@ -28,9 +28,9 @@ directive:
     $["client-name"] = "FileRestClient";
     $["client-extensions-name"] = "FilesExtensions";
     $["client-model-factory-name"] = "FilesModelFactory";
-    $["x-ms-skip-path-components"] = true;
-    $["x-ms-include-sync-methods"] = true;
-    $["x-ms-public"] = false;
+    $["x-az-skip-path-components"] = true;
+    $["x-az-include-sync-methods"] = true;
+    $["x-az-public"] = false;
 ```
 
 ### Url
@@ -41,7 +41,7 @@ directive:
   transform: >
     $["x-ms-client-name"] = "resourceUri";
     $.format = "url";
-    $["x-ms-trace"] = true;
+    $["x-az-trace"] = true;
 ```
 
 ### Ignore common headers
@@ -50,15 +50,15 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]..responses..headers["x-ms-request-id"]
   transform: >
-    $["x-ms-ignore"] = true;
+    $["x-az-demote-header"] = true;
 - from: swagger-document
   where: $["x-ms-paths"]..responses..headers["x-ms-version"]
   transform: >
-    $["x-ms-ignore"] = true;
+    $["x-az-demote-header"] = true;
 - from: swagger-document
   where: $["x-ms-paths"]..responses..headers["Date"]
   transform: >
-    $["x-ms-ignore"] = true;
+    $["x-az-demote-header"] = true;
 ```
 
 ### Clean up Failure response
@@ -67,10 +67,10 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]..responses.default
   transform: >
-    $["x-ms-client-name"] = "StorageErrorResult";
-    $["x-ms-create-exception"] = true;
-    $["x-ms-public"] = false;
-    $.headers["x-ms-error-code"]["x-ms-ignore"] = true;
+    $["x-az-response-name"] = "StorageErrorResult";
+    $["x-az-create-exception"] = true;
+    $["x-az-public"] = false;
+    $.headers["x-ms-error-code"]["x-az-demote-header"] = true;
 ```
 
 ### ApiVersionParameter
@@ -126,7 +126,7 @@ directive:
     if (!$.SharesSegment) {
         $.SharesSegment = $.ListSharesResponse;
         delete $.ListSharesResponse;
-        $.SharesSegment["x-ms-public"] = false;
+        $.SharesSegment["x-az-public"] = false;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/?comp=list"]
@@ -145,8 +145,8 @@ directive:
   where: $["x-ms-paths"]["/{shareName}?restype=share"]
   transform: >
     $.put.responses["201"].description = "Success";
-    $.put.responses["201"]["x-ms-client-name"] = "ShareInfo";
-    $.get.responses["200"]["x-ms-client-name"] = "ShareProperties";
+    $.put.responses["201"]["x-az-response-name"] = "ShareInfo";
+    $.get.responses["200"]["x-az-response-name"] = "ShareProperties";
 ```
 
 ### /{shareName}?restype=share&comp=snapshot
@@ -155,7 +155,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}?restype=share&comp=snapshot"]
   transform: >
-    $.put.responses["201"]["x-ms-client-name"] = "ShareSnapshotInfo";
+    $.put.responses["201"]["x-az-response-name"] = "ShareSnapshotInfo";
 ```
 
 ### /{shareName}?restype=share&comp=properties
@@ -164,7 +164,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}?restype=share&comp=properties"]
   transform: >
-    $.put.responses["200"]["x-ms-client-name"] = "ShareInfo";
+    $.put.responses["200"]["x-az-response-name"] = "ShareInfo";
     $.put.responses["200"].headers.ETag.description = "The ETag contains a value which represents the version of the share, in quotes.";
     $.put.responses["200"].headers["Last-Modified"].description = "Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.";
 ```
@@ -175,7 +175,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}?restype=share&comp=metadata"]
   transform: >
-    $.put.responses["200"]["x-ms-client-name"] = "ShareInfo";
+    $.put.responses["200"]["x-az-response-name"] = "ShareInfo";
     $.put.responses["200"].headers.ETag.description = "The ETag contains a value which represents the version of the share, in quotes.";
     $.put.responses["200"].headers["Last-Modified"].description = "Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.";
 ```
@@ -186,9 +186,9 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}?restype=share&comp=acl"]
   transform: >
-    $.get.responses["200"].headers.ETag["x-ms-ignore"] = true;
-    $.get.responses["200"].headers["Last-Modified"]["x-ms-ignore"] = true;
-    $.put.responses["200"]["x-ms-client-name"] = "ShareInfo";
+    $.get.responses["200"].headers.ETag["x-az-demote-header"] = true;
+    $.get.responses["200"].headers["Last-Modified"]["x-az-demote-header"] = true;
+    $.put.responses["200"]["x-az-response-name"] = "ShareInfo";
     $.put.responses["200"].description = "Success";
     $.put.responses["200"].headers.ETag.description = "The ETag contains a value which represents the version of the share, in quotes.";
     $.put.responses["200"].headers["Last-Modified"].description = "Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.";
@@ -213,8 +213,8 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}?restype=share&comp=stats"]
   transform: >
-    $.get.responses["200"].headers.ETag["x-ms-ignore"] = true;
-    $.get.responses["200"].headers["Last-Modified"]["x-ms-ignore"] = true;
+    $.get.responses["200"].headers.ETag["x-az-demote-header"] = true;
+    $.get.responses["200"].headers["Last-Modified"]["x-az-demote-header"] = true;
     const def = $.get.responses["200"].schema;
     if (!def["$ref"].endsWith("ShareStatistics")) {
         const path = def["$ref"].replace(/[#].*$/, "#/definitions/ShareStatistics");
@@ -228,9 +228,9 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory"]
   transform: >
-    $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-ms-ignore"] = true;
-    $.put.responses["201"]["x-ms-client-name"] = "RawStorageDirectoryInfo";
-    $.get.responses["200"]["x-ms-client-name"] = "RawStorageDirectoryProperties";
+    $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
+    $.put.responses["201"]["x-az-response-name"] = "RawStorageDirectoryInfo";
+    $.get.responses["200"]["x-az-response-name"] = "RawStorageDirectoryProperties";
 ```
 
 ### /{shareName}/{directory}?restype=directory&comp=metadata
@@ -239,9 +239,9 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory&comp=metadata"]
   transform: >
-    $.put.responses["200"]["x-ms-client-name"] = "RawStorageDirectoryInfo";
+    $.put.responses["200"]["x-az-response-name"] = "RawStorageDirectoryInfo";
     $.put.responses["200"].description = "Success, Directory created.";
-    $.put.responses["200"].headers["x-ms-request-server-encrypted"]["x-ms-ignore"] = true;
+    $.put.responses["200"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["200"].headers["Last-Modified"] = {
       "type": "string",
       "format": "date-time-rfc1123",
@@ -255,9 +255,9 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory&comp=properties"]
   transform: >
-    $.put.responses["200"]["x-ms-client-name"] = "RawStorageDirectoryInfo";
+    $.put.responses["200"]["x-az-response-name"] = "RawStorageDirectoryInfo";
     $.put.responses["200"].description = "Success, Directory created.";
-    $.put.responses["200"].headers["x-ms-request-server-encrypted"]["x-ms-ignore"] = true;
+    $.put.responses["200"].headers["x-ms-request-server-encrypted"]["x-az-demote-header"] = true;
     $.put.responses["200"].headers["Last-Modified"] = {
       "type": "string",
       "format": "date-time-rfc1123",
@@ -287,13 +287,13 @@ directive:
             "xml": { "name": "Entries", "wrapped": true }
         };
         delete $.FilesAndDirectoriesSegment.properties.Segment;
-        $.FilesAndDirectoriesSegment["x-ms-public"] = false;
+        $.FilesAndDirectoriesSegment["x-az-public"] = false;
         delete $.FilesAndDirectoriesListSegment;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory&comp=list"]
   transform: >
-    $.get.responses["200"].headers["Content-Type"]["x-ms-ignore"] = true;
+    $.get.responses["200"].headers["Content-Type"]["x-az-demote-header"] = true;
     const def = $.get.responses["200"].schema;
     if (!def["$ref"].endsWith("FilesAndDirectoriesSegment")) {
         const path = def["$ref"].replace(/[#].*$/, "#/definitions/FilesAndDirectoriesSegment");
@@ -314,7 +314,7 @@ directive:
     if (!$.StorageHandlesSegment) {
         $.StorageHandlesSegment = $.ListHandlesResponse;
         delete $.ListHandlesResponse;
-        $.StorageHandlesSegment["x-ms-public"] = false;
+        $.StorageHandlesSegment["x-az-public"] = false;
         const path = $.StorageHandlesSegment.properties.HandleList.items.$ref.replace(/[#].*$/, "#/definitions/");
         $.StorageHandlesSegment.properties.Handles = {
             "type": "array",
@@ -331,7 +331,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}?comp=listhandles"]
   transform: >
-    $.get.responses["200"].headers["Content-Type"]["x-ms-ignore"] = true;
+    $.get.responses["200"].headers["Content-Type"]["x-az-demote-header"] = true;
     const def = $.get.responses["200"].schema;
     if (!def["$ref"].endsWith("StorageHandlesSegment")) {
         const path = def["$ref"].replace(/[#].*$/, "#/definitions/StorageHandlesSegment");
@@ -345,7 +345,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=listhandles"]
   transform: >
-    $.get.responses["200"].headers["Content-Type"]["x-ms-ignore"] = true;
+    $.get.responses["200"].headers["Content-Type"]["x-az-demote-header"] = true;
     const def = $.get.responses["200"].schema;
     if (!def["$ref"].endsWith("StorageHandlesSegment")) {
         const path = def["$ref"].replace(/[#].*$/, "#/definitions/StorageHandlesSegment");
@@ -359,7 +359,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}?comp=forceclosehandles"]
   transform: >
-    $.put.responses["200"]["x-ms-client-name"] = "StorageClosedHandlesSegment";
+    $.put.responses["200"]["x-az-response-name"] = "StorageClosedHandlesSegment";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=forceclosehandles
@@ -368,7 +368,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=forceclosehandles"]
   transform: >
-    $.put.responses["200"]["x-ms-client-name"] = "StorageClosedHandlesSegment";
+    $.put.responses["200"]["x-az-response-name"] = "StorageClosedHandlesSegment";
 ```
 
 ### /{shareName}/{directory}/{fileName}
@@ -377,60 +377,60 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
   transform: >
-    $.put.responses["201"]["x-ms-client-name"] = "RawStorageFileInfo";
+    $.put.responses["201"]["x-az-response-name"] = "RawStorageFileInfo";
     $.get.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.get.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["200"].headers["x-ms-content-md5"]["x-ms-client-name"] = "FileContentHash";
     $.get.responses["200"].headers["Content-Encoding"].type = "array";
-    $.get.responses["200"].headers["Content-Encoding"].collectionFormat = "multi";
+    $.get.responses["200"].headers["Content-Encoding"].collectionFormat = "csv";
     $.get.responses["200"].headers["Content-Encoding"].items = { "type": "string" };
     $.get.responses["200"].headers["Content-Language"].type = "array";
-    $.get.responses["200"].headers["Content-Language"].collectionFormat = "multi";
+    $.get.responses["200"].headers["Content-Language"].collectionFormat = "csv";
     $.get.responses["200"].headers["Content-Language"].items = { "type": "string" };
-    $.get.responses["200"]["x-ms-client-name"] = "FlattenedStorageFileProperties";
-    $.get.responses["200"]["x-ms-public"] = false;
-    $.get.responses["200"]["x-ms-schema-client-name"] = "Content";
+    $.get.responses["200"]["x-az-response-name"] = "FlattenedStorageFileProperties";
+    $.get.responses["200"]["x-az-public"] = false;
+    $.get.responses["200"]["x-az-response-schema-name"] = "Content";
     $.get.responses["206"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.get.responses["206"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["206"].headers["x-ms-content-md5"]["x-ms-client-name"] = "FileContentHash";
     $.get.responses["206"].headers["Content-Encoding"].type = "array";
-    $.get.responses["206"].headers["Content-Encoding"].collectionFormat = "multi";
+    $.get.responses["206"].headers["Content-Encoding"].collectionFormat = "csv";
     $.get.responses["206"].headers["Content-Encoding"].items = { "type": "string" };
     $.get.responses["206"].headers["Content-Language"].type = "array";
-    $.get.responses["206"].headers["Content-Language"].collectionFormat = "multi";
+    $.get.responses["206"].headers["Content-Language"].collectionFormat = "csv";
     $.get.responses["206"].headers["Content-Language"].items = { "type": "string" };
-    $.get.responses["206"]["x-ms-client-name"] = "FlattenedStorageFileProperties";
-    $.get.responses["206"]["x-ms-public"] = false;
-    $.get.responses["206"]["x-ms-schema-client-name"] = "Content";
+    $.get.responses["206"]["x-az-response-name"] = "FlattenedStorageFileProperties";
+    $.get.responses["206"]["x-az-public"] = false;
+    $.get.responses["206"]["x-az-response-schema-name"] = "Content";
     $.head.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.head.responses["200"].headers["Content-Encoding"].type = "array";
-    $.head.responses["200"].headers["Content-Encoding"].collectionFormat = "multi";
+    $.head.responses["200"].headers["Content-Encoding"].collectionFormat = "csv";
     $.head.responses["200"].headers["Content-Encoding"].items = { "type": "string" };
     $.head.responses["200"].headers["Content-Language"].type = "array";
-    $.head.responses["200"].headers["Content-Language"].collectionFormat = "multi";
+    $.head.responses["200"].headers["Content-Language"].collectionFormat = "csv";
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
-    $.head.responses["200"]["x-ms-client-name"] = "RawStorageFileProperties";
+    $.head.responses["200"]["x-az-response-name"] = "RawStorageFileProperties";
     $.head.responses.default = {
         "description": "Failure",
-        "x-ms-client-name": "FailureNoContent",
-        "x-ms-create-exception": true,
-        "x-ms-public": false,
+        "x-az-response-name": "FailureNoContent",
+        "x-az-create-exception": true,
+        "x-az-public": false,
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
     };
 - from: swagger-document
   where: $.parameters.FileContentLanguage
   transform: >
     $.type = "array";
-    $.collectionFormat = "multi";
+    $.collectionFormat = "csv";
     $.items = { "type": "string" };
 - from: swagger-document
   where: $.parameters.FileContentEncoding
   transform: >
     $.type = "array";
-    $.collectionFormat = "multi";
+    $.collectionFormat = "csv";
     $.items = { "type": "string" };
 ```
 
@@ -457,7 +457,7 @@ directive:
     $.put.operationId = "File_SetProperties";
     $.put.responses["200"].description = "Success, File created.";
     $.put.responses["200"].headers["Last-Modified"].description = "Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.";
-    $.put.responses["200"]["x-ms-client-name"] = "RawStorageFileInfo";
+    $.put.responses["200"]["x-az-response-name"] = "RawStorageFileInfo";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=metadata
@@ -472,7 +472,7 @@ directive:
         "format": "date-time-rfc1123",
         "description": "Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory."
     };
-    $.put.responses["200"]["x-ms-client-name"] = "RawStorageFileInfo";
+    $.put.responses["200"]["x-az-response-name"] = "RawStorageFileInfo";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=range
@@ -482,7 +482,7 @@ directive:
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=range"]
   transform: >
     $.put.responses["201"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
-    $.put.responses["201"]["x-ms-client-name"] = "StorageFileUploadInfo";
+    $.put.responses["201"]["x-az-response-name"] = "StorageFileUploadInfo";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=rangelist
@@ -491,8 +491,8 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=rangelist"]
   transform: >
-    $.get.responses["200"]["x-ms-client-name"] = "StorageFileRangeInfo";
-    $.get.responses["200"]["x-ms-schema-client-name"] = "Ranges";
+    $.get.responses["200"]["x-az-response-name"] = "StorageFileRangeInfo";
+    $.get.responses["200"]["x-az-response-schema-name"] = "Ranges";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=copy
@@ -502,7 +502,7 @@ directive:
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=copy"]
   transform: >
     $.put.responses["202"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
-    $.put.responses["202"]["x-ms-client-name"] = "StorageFileCopyInfo";
+    $.put.responses["202"]["x-az-response-name"] = "StorageFileCopyInfo";
 - from: swagger-document
   where: $.parameters.CopySource
   transform: >
@@ -514,7 +514,7 @@ directive:
 directive:
 - from: swagger-document
   where: $.definitions.DirectoryItem
-  transform: $["x-ms-public"] = false
+  transform: $["x-az-public"] = false
 ```
 
 ### FileItem
@@ -522,7 +522,7 @@ directive:
 directive:
 - from: swagger-document
   where: $.definitions.FileItem
-  transform: $["x-ms-public"] = false
+  transform: $["x-az-public"] = false
 ```
 
 ### ErrorCode
@@ -540,7 +540,7 @@ directive:
 - from: swagger-document
   where: $.definitions.FileProperty
   transform: >
-    $["x-ms-public"] = false;
+    $["x-az-public"] = false;
 ```
 
 ### Metrics
@@ -558,7 +558,7 @@ directive:
 - from: swagger-document
   where: $.definitions.StorageError
   transform: >
-    $["x-ms-public"] = false;
+    $["x-az-public"] = false;
     $.properties.Code = { "type": "string" };
 ```
 
@@ -584,7 +584,7 @@ directive:
     if (!$.ShareItemProperties) {
         $.ShareItemProperties = $.ShareProperties;
         delete $.ShareProperties;
-        $.ShareItemProperties.required = [];
+        delete $.ShareItemProperties.required;
         $.ShareItemProperties.xml = { "name": "Properties" };
     }
 ```
