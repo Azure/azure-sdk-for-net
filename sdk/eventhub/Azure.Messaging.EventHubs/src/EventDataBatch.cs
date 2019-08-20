@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -82,7 +84,18 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
         ///
-        public bool TryAdd(EventData eventData) => InnerBatch.TryAdd(eventData);
+        public bool TryAdd(EventData eventData)
+        {
+            bool instrumented = EventInstrumentation.InstrumentEvent(eventData, Activity.Current);
+            bool added = InnerBatch.TryAdd(eventData);
+
+            if (!added && instrumented)
+            {
+                EventInstrumentation.ResetEvent(eventData);
+            }
+
+            return added;
+        }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="EventDataBatch" />.

@@ -4,10 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -36,8 +40,12 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
         private static readonly SendOptions DefaultSendOptions = new SendOptions();
 
+        private readonly Uri _endpoint;
+
         /// <summary>The policy to use for determining retry behavior for when an operation fails.</summary>
         private EventHubRetryPolicy _retryPolicy;
+
+        private ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventHubProducer" /> is bound to, indicating
@@ -94,19 +102,19 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProducer"/> class.
         /// </summary>
-        ///
         /// <param name="transportProducer">An abstracted Event Hub producer specific to the active protocol and transport intended to perform delegated operations.</param>
+        /// <param name="endpoint"></param>
         /// <param name="eventHubName">The name of the Event Hub to which events will be sent.</param>
         /// <param name="producerOptions">The set of options to use for this consumer.</param>
         /// <param name="retryPolicy">The policy to apply when making retry decisions for failed operations.</param>
-        ///
         /// <remarks>
         ///   Because this is a non-public constructor, it is assumed that the <paramref name="producerOptions" /> passed are
         ///   owned by this instance and are safe from changes made by consumers.  It is considered the responsibility of the
         ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
-        ///
+        /// 
         internal EventHubProducer(TransportEventHubProducer transportProducer,
+                                  Uri endpoint,
                                   string eventHubName,
                                   EventHubProducerOptions producerOptions,
                                   EventHubRetryPolicy retryPolicy)
@@ -121,7 +129,9 @@ namespace Azure.Messaging.EventHubs
             Options = producerOptions;
             InnerProducer = transportProducer;
 
+            _endpoint = endpoint;
             _retryPolicy = retryPolicy;
+            _clientDiagnostics = new ClientDiagnostics(true);
         }
 
         /// <summary>
@@ -209,7 +219,7 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
-        public virtual Task SendAsync(IEnumerable<EventData> events,
+        public virtual async Task SendAsync(IEnumerable<EventData> events,
                                       SendOptions options,
                                       CancellationToken cancellationToken = default)
         {
@@ -218,7 +228,17 @@ namespace Azure.Messaging.EventHubs
             Guard.ArgumentNotNull(nameof(events), events);
             GuardSinglePartitionReference(PartitionId, options.PartitionKey);
 
-            return InnerProducer.SendAsync(events, options, cancellationToken);
+            using DiagnosticScope scope = CreateDiagnosticScope();
+            InstrumentMessages(events);
+            try
+            {
+                await InnerProducer.SendAsync(events, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -240,8 +260,17 @@ namespace Azure.Messaging.EventHubs
         {
             Guard.ArgumentNotNull(nameof(eventBatch), eventBatch);
             GuardSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
-
-            return InnerProducer.SendAsync(eventBatch, cancellationToken);
+            
+            using DiagnosticScope scope = CreateDiagnosticScope();
+            try
+            {
+                return InnerProducer.SendAsync(eventBatch, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -343,6 +372,26 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        private DiagnosticScope CreateDiagnosticScope()
+        {
+            DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Messaging.EventHubs.EventHubProducer.Send");
+            scope.AddAttribute("kind", "producer");
+            scope.AddAttribute("component", "eventhubs");
+            scope.AddAttribute("message_bus.destination", EventHubName);
+            scope.AddAttribute("peer.address", _endpoint);
+            scope.Start();
+
+            return scope;
+        }
+
+        private static void InstrumentMessages(IEnumerable<EventData> events)
+        {
+            foreach (var eventData in events)
+            {
+                EventInstrumentation.InstrumentEvent(eventData, Activity.Current);
+            }
+        }
 
         /// <summary>
         ///   Ensures that no more than a single partition reference is active.
