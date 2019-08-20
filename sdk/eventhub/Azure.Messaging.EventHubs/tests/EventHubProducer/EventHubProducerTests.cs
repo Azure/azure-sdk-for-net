@@ -316,7 +316,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWith;
 
-            Assert.That(calledWithEvents, Is.SameAs(events), "The events should be the same instance.");
+            CollectionAssert.AreEqual(calledWithEvents, events, "The events should contain same elements.");
             Assert.That(calledWithOptions, Is.Not.Null, "A default set of options should be used.");
         }
 
@@ -336,7 +336,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWith;
 
-            Assert.That(calledWithEvents, Is.SameAs(events), "The events should be the same instance.");
+            CollectionAssert.AreEqual(calledWithEvents, events, "The events should contain same elements.");
             Assert.That(calledWithOptions, Is.SameAs(options), "The options should be the same instance");
         }
 
