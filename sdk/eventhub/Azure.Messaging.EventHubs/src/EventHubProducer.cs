@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -228,6 +229,9 @@ namespace Azure.Messaging.EventHubs
             GuardSinglePartitionReference(PartitionId, options.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();
+
+            events = events.ToList();
+
             InstrumentMessages(events);
             try
             {
