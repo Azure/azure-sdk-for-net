@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
-    internal class EventInstrumentation
+    internal class EventDataInstrumentation
     {
         private const string DiagnosticIdProperty = "Diagnostic-Id";
 

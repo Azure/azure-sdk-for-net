@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -103,7 +102,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubProducer"/> class.
         /// </summary>
         /// <param name="transportProducer">An abstracted Event Hub producer specific to the active protocol and transport intended to perform delegated operations.</param>
-        /// <param name="endpoint"></param>
+        /// <param name="endpoint">The endpoint URI of Event Hub</param>
         /// <param name="eventHubName">The name of the Event Hub to which events will be sent.</param>
         /// <param name="producerOptions">The set of options to use for this consumer.</param>
         /// <param name="retryPolicy">The policy to apply when making retry decisions for failed operations.</param>
@@ -112,7 +111,7 @@ namespace Azure.Messaging.EventHubs
         ///   owned by this instance and are safe from changes made by consumers.  It is considered the responsibility of the
         ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
-        /// 
+        ///
         internal EventHubProducer(TransportEventHubProducer transportProducer,
                                   Uri endpoint,
                                   string eventHubName,
@@ -375,7 +374,7 @@ namespace Azure.Messaging.EventHubs
 
         private DiagnosticScope CreateDiagnosticScope()
         {
-            DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Messaging.EventHubs.EventHubProducer.Send");
+            DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Messaging)}.{nameof(EventHubs)}.{nameof(EventHubProducer)}.Send");
             scope.AddAttribute("kind", "producer");
             scope.AddAttribute("component", "eventhubs");
             scope.AddAttribute("message_bus.destination", EventHubName);
@@ -389,7 +388,7 @@ namespace Azure.Messaging.EventHubs
         {
             foreach (var eventData in events)
             {
-                EventInstrumentation.InstrumentEvent(eventData, Activity.Current);
+                EventDataInstrumentation.InstrumentEvent(eventData, Activity.Current);
             }
         }
 
