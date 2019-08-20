@@ -112,7 +112,6 @@ namespace Microsoft.Azure.ContainerRegistry
     public class AcrRefreshToken : AuthToken
     {
         private AzureContainerRegistryClient authClient;
-
         public AcrRefreshToken(string token) : base(token) { }
         public AcrRefreshToken(AuthToken aadToken, string loginUrl)
         {

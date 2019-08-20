@@ -31,7 +31,6 @@ namespace Microsoft.Azure.ContainerRegistry
             TokenAad
         }
 
-
         #endregion
 
         #region Instance Variables        

@@ -33,49 +33,47 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="orgopencontainersimagecreated">Date and time on which
-        /// the image was built (string, date-time as defined by
+        /// <param name="created">Date and time on which the image was built
+        /// (string, date-time as defined by
         /// https://tools.ietf.org/html/rfc3339#section-5.6)</param>
-        /// <param name="orgopencontainersimageauthors">Contact details of the
-        /// people or organization responsible for the image (freeform
-        /// string)</param>
-        /// <param name="orgopencontainersimageurl">URL to find more
-        /// information on the image (string)</param>
-        /// <param name="orgopencontainersimagedocumentation">URL to get
-        /// documentation on the image (string)</param>
-        /// <param name="orgopencontainersimagesource">URL to get source code
-        /// for building the image (string)</param>
-        /// <param name="orgopencontainersimageversion">Version of the packaged
-        /// software. The version MAY match a label or tag in the source code
-        /// repository, may also be Semantic versioning-compatible</param>
-        /// <param name="orgopencontainersimagerevision">Source control
-        /// revision identifier for the packaged software.</param>
-        /// <param name="orgopencontainersimagevendor">Name of the distributing
-        /// entity, organization or individual.</param>
-        /// <param name="orgopencontainersimagelicenses">License(s) under which
-        /// contained software is distributed as an SPDX License
-        /// Expression.</param>
-        /// <param name="orgopencontainersimagerefname">Name of the reference
-        /// for a target (string). </param>
-        /// <param name="orgopencontainersimagetitle">Human-readable title of
-        /// the image (string)</param>
-        /// <param name="orgopencontainersimagedescription">Human-readable
-        /// description of the software packaged in the image (string)</param>
-        public Annotations(IDictionary<string, string> additionalProperties = default(IDictionary<string, string>), System.DateTime? orgopencontainersimagecreated = default(System.DateTime?), string orgopencontainersimageauthors = default(string), string orgopencontainersimageurl = default(string), string orgopencontainersimagedocumentation = default(string), string orgopencontainersimagesource = default(string), string orgopencontainersimageversion = default(string), string orgopencontainersimagerevision = default(string), string orgopencontainersimagevendor = default(string), string orgopencontainersimagelicenses = default(string), string orgopencontainersimagerefname = default(string), string orgopencontainersimagetitle = default(string), string orgopencontainersimagedescription = default(string))
+        /// <param name="authors">Contact details of the people or organization
+        /// responsible for the image (freeform string)</param>
+        /// <param name="url">URL to find more information on the image
+        /// (string)</param>
+        /// <param name="documentation">URL to get documentation on the image
+        /// (string)</param>
+        /// <param name="source">URL to get source code for building the image
+        /// (string)</param>
+        /// <param name="version">Version of the packaged software. The version
+        /// MAY match a label or tag in the source code repository, may also be
+        /// Semantic versioning-compatible</param>
+        /// <param name="revision">Source control revision identifier for the
+        /// packaged software.</param>
+        /// <param name="vendor">Name of the distributing entity, organization
+        /// or individual.</param>
+        /// <param name="licenses">License(s) under which contained software is
+        /// distributed as an SPDX License Expression.</param>
+        /// <param name="name">Name of the reference for a target (string).
+        /// </param>
+        /// <param name="title">Human-readable title of the image
+        /// (string)</param>
+        /// <param name="description">Human-readable description of the
+        /// software packaged in the image (string)</param>
+        public Annotations(IDictionary<string, string> additionalProperties = default(IDictionary<string, string>), System.DateTime? created = default(System.DateTime?), string authors = default(string), string url = default(string), string documentation = default(string), string source = default(string), string version = default(string), string revision = default(string), string vendor = default(string), string licenses = default(string), string name = default(string), string title = default(string), string description = default(string))
         {
             AdditionalProperties = additionalProperties;
-            Orgopencontainersimagecreated = orgopencontainersimagecreated;
-            Orgopencontainersimageauthors = orgopencontainersimageauthors;
-            Orgopencontainersimageurl = orgopencontainersimageurl;
-            Orgopencontainersimagedocumentation = orgopencontainersimagedocumentation;
-            Orgopencontainersimagesource = orgopencontainersimagesource;
-            Orgopencontainersimageversion = orgopencontainersimageversion;
-            Orgopencontainersimagerevision = orgopencontainersimagerevision;
-            Orgopencontainersimagevendor = orgopencontainersimagevendor;
-            Orgopencontainersimagelicenses = orgopencontainersimagelicenses;
-            Orgopencontainersimagerefname = orgopencontainersimagerefname;
-            Orgopencontainersimagetitle = orgopencontainersimagetitle;
-            Orgopencontainersimagedescription = orgopencontainersimagedescription;
+            Created = created;
+            Authors = authors;
+            Url = url;
+            Documentation = documentation;
+            Source = source;
+            Version = version;
+            Revision = revision;
+            Vendor = vendor;
+            Licenses = licenses;
+            Name = name;
+            Title = title;
+            Description = description;
             CustomInit();
         }
 
@@ -97,32 +95,32 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// https://tools.ietf.org/html/rfc3339#section-5.6)
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.created")]
-        public System.DateTime? Orgopencontainersimagecreated { get; set; }
+        public System.DateTime? Created { get; set; }
 
         /// <summary>
         /// Gets or sets contact details of the people or organization
         /// responsible for the image (freeform string)
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.authors")]
-        public string Orgopencontainersimageauthors { get; set; }
+        public string Authors { get; set; }
 
         /// <summary>
         /// Gets or sets URL to find more information on the image (string)
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.url")]
-        public string Orgopencontainersimageurl { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets URL to get documentation on the image (string)
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.documentation")]
-        public string Orgopencontainersimagedocumentation { get; set; }
+        public string Documentation { get; set; }
 
         /// <summary>
         /// Gets or sets URL to get source code for building the image (string)
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.source")]
-        public string Orgopencontainersimagesource { get; set; }
+        public string Source { get; set; }
 
         /// <summary>
         /// Gets or sets version of the packaged software. The version MAY
@@ -130,47 +128,47 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Semantic versioning-compatible
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.version")]
-        public string Orgopencontainersimageversion { get; set; }
+        public string Version { get; set; }
 
         /// <summary>
         /// Gets or sets source control revision identifier for the packaged
         /// software.
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.revision")]
-        public string Orgopencontainersimagerevision { get; set; }
+        public string Revision { get; set; }
 
         /// <summary>
         /// Gets or sets name of the distributing entity, organization or
         /// individual.
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.vendor")]
-        public string Orgopencontainersimagevendor { get; set; }
+        public string Vendor { get; set; }
 
         /// <summary>
         /// Gets or sets license(s) under which contained software is
         /// distributed as an SPDX License Expression.
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.licenses")]
-        public string Orgopencontainersimagelicenses { get; set; }
+        public string Licenses { get; set; }
 
         /// <summary>
         /// Gets or sets name of the reference for a target (string).
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.ref.name")]
-        public string Orgopencontainersimagerefname { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets human-readable title of the image (string)
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.title")]
-        public string Orgopencontainersimagetitle { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets human-readable description of the software packaged in
         /// the image (string)
         /// </summary>
         [JsonProperty(PropertyName = "org.opencontainers.image.description")]
-        public string Orgopencontainersimagedescription { get; set; }
+        public string Description { get; set; }
 
     }
 }
