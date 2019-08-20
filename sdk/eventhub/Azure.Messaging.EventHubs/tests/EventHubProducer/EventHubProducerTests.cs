@@ -308,7 +308,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendWithoutOptionsInvokesTheTransportProducer()
         {
-            var events = Mock.Of<IEnumerable<EventData>>();
+            var events = new EventData[0];
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, null, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
@@ -327,7 +327,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendInvokesTheTransportProducer()
         {
-            var events = Mock.Of<IEnumerable<EventData>>();
+            var events = new EventData[0];
             var options = new SendOptions();
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, null, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
