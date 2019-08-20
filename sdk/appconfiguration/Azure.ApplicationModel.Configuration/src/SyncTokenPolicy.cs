@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-//using Azure.Core.Pipeline.TaskExtensions;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -15,6 +15,8 @@ namespace Azure.ApplicationModel.Configuration
         /// Map from token id to token.
         /// </summary>
         private ConcurrentDictionary<string, SyncToken> _syncTokens;
+
+        private const string SyncTokenHeader = "Sync-Token";
 
         public SyncTokenPolicy()
         {
@@ -32,9 +34,6 @@ namespace Azure.ApplicationModel.Configuration
 
         private async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-
-            //
-            // Use session synchonization tokens
             foreach (SyncToken token in _syncTokens.Values)
             {
                 message.Request.Headers.Add("Sync-Token", SyncTokenUtils.Format(token));
@@ -49,8 +48,24 @@ namespace Azure.ApplicationModel.Configuration
                 ProcessNext(message, pipeline);
             }
 
-            // TODO: YOU ARE HERE
+            if (message.Response.Headers.TryGetValues("Sync-Token", out IEnumerable<string> rawSyncTokens))
+            {
+                foreach (string rawToken in rawSyncTokens)
+                {
+                    if (SyncTokenUtils.TryParse(rawToken, out SyncToken token))
+                    {
+                        _syncTokens.AddOrUpdate(token.Id, token, (key, existing) =>
+                        {
+                            if (existing.SequenceNumber < token.SequenceNumber)
+                            {
+                                return token;
+                            }
 
+                            return existing;
+                        });
+                    }
+                }
+            }
         }
     }
 }
