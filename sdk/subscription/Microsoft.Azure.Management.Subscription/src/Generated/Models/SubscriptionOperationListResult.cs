@@ -11,27 +11,31 @@
 namespace Microsoft.Azure.Management.Subscription.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The ID of the subscriptions that is being renamed
+    /// A list of pending subscription operations.
     /// </summary>
-    public partial class RenamedSubscriptionId
+    public partial class SubscriptionOperationListResult
     {
         /// <summary>
-        /// Initializes a new instance of the RenamedSubscriptionId class.
+        /// Initializes a new instance of the SubscriptionOperationListResult
+        /// class.
         /// </summary>
-        public RenamedSubscriptionId()
+        public SubscriptionOperationListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RenamedSubscriptionId class.
+        /// Initializes a new instance of the SubscriptionOperationListResult
+        /// class.
         /// </summary>
-        /// <param name="value">The ID of the subscriptions that is being
-        /// renamed</param>
-        public RenamedSubscriptionId(string value = default(string))
+        /// <param name="value">A list of pending
+        /// SubscriptionOperations</param>
+        public SubscriptionOperationListResult(IList<SubscriptionOperation> value = default(IList<SubscriptionOperation>))
         {
             Value = value;
             CustomInit();
@@ -43,10 +47,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the ID of the subscriptions that is being renamed
+        /// Gets or sets a list of pending SubscriptionOperations
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public string Value { get; private set; }
+        public IList<SubscriptionOperation> Value { get; set; }
 
     }
 }
