@@ -145,147 +145,147 @@ namespace FrontDoor.Tests.ScenarioTests
 
             }
         }
-        
-        //[Fact]
-        //public void WAFCRUDTest()
-        //{
-        //    var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-        //    var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
-        //    {
-        //        // Create clients
-        //        var frontDoorMgmtClient = FrontDoorTestUtilities.GetFrontDoorManagementClient(context, handler1);
-        //        var resourcesClient = FrontDoorTestUtilities.GetResourceManagementClient(context, handler2);
+        [Fact]
+        public void WAFCRUDTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-        //        // Create resource group
-        //        var resourceGroupName = FrontDoorTestUtilities.CreateResourceGroup(resourcesClient);
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                // Create clients
+                var frontDoorMgmtClient = FrontDoorTestUtilities.GetFrontDoorManagementClient(context, handler1);
+                var resourcesClient = FrontDoorTestUtilities.GetResourceManagementClient(context, handler2);
 
-        //        // Create a frontDoor
-        //        string policyName = TestUtilities.GenerateName("policy");
+                // Create resource group
+                var resourceGroupName = FrontDoorTestUtilities.CreateResourceGroup(resourcesClient);
 
-        //        WebApplicationFirewallPolicy createParameters = new WebApplicationFirewallPolicy
-        //        {
-        //            Location = "global",
-        //            Tags = new Dictionary<string, string>
-        //            {
-        //                {"key1","value1"},
-        //                {"key2","value2"}
-        //            },
-        //            PolicySettings = new PolicySettings
-        //            {
-        //                EnabledState = "Enabled",
-        //                Mode = "Prevention",
-        //                CustomBlockResponseBody = "PGh0bWw+SGVsbG88L2h0bWw+",
-        //                CustomBlockResponseStatusCode = 403,
-        //                RedirectUrl = "http://www.bing.com"
-        //            },
-        //            CustomRules = new CustomRuleList(
-        //                new List<CustomRule>
-        //                {
-        //                    new CustomRule
-        //                    {
-        //                        Name = "rule1",
-        //                        EnabledState = "Enabled",
-        //                        Priority = 1,
-        //                        RuleType = "RateLimitRule",
-        //                        RateLimitThreshold = 1000,
-        //                        MatchConditions = new List<MatchCondition>
-        //                        {
-        //                            new MatchCondition
-        //                            {
-        //                                MatchVariable = "RemoteAddr",
-        //                                OperatorProperty = "IPMatch",
-        //                                MatchValue = new List<string>
-        //                                {
-        //                                    "192.168.1.0/24",
-        //                                    "10.0.0.0/24"
-        //                                }
-        //                            }
-        //                        },
-        //                        Action = "Block"
-        //                    }
-        //                }
-        //            ),
-        //            ManagedRules = new ManagedRuleSetList(
-        //                new List <ManagedRuleSet> {
-        //                    new ManagedRuleSet
-        //                    {
-        //                        RuleSetType = "DefaultRuleSet",
-        //                        RuleSetVersion = "1.0",
-        //                        RuleGroupOverrides = new List<ManagedRuleGroupOverride>
-        //                        {
-        //                            new ManagedRuleGroupOverride
-        //                            {
-        //                                RuleGroupName = "SQLI",
-        //                                Rules = new List<ManagedRuleOverride>
-        //                                {
-        //                                    new ManagedRuleOverride
-        //                                    {
-        //                                        RuleId = "Rule1",
-        //                                        Action = "Redirect",
-        //                                        EnabledState = "Disabled"
-        //                                    }
-        //                                }
-        //                            }
-        //                        }
-        //                    }
-                            
-        //            })
-                    
-        //        };
+                // Create a frontDoor
+                string policyName = TestUtilities.GenerateName("policy");
 
-        //        var policy = frontDoorMgmtClient.Policies.CreateOrUpdate(resourceGroupName, policyName, createParameters);
+                WebApplicationFirewallPolicy createParameters = new WebApplicationFirewallPolicy
+                {
+                    Location = "global",
+                    Tags = new Dictionary<string, string>
+                    {
+                        {"key1","value1"},
+                        {"key2","value2"}
+                    },
+                    PolicySettings = new PolicySettings
+                    {
+                        EnabledState = "Enabled",
+                        Mode = "Prevention",
+                        CustomBlockResponseBody = "PGh0bWw+SGVsbG88L2h0bWw+",
+                        CustomBlockResponseStatusCode = 403,
+                        RedirectUrl = "http://www.bing.com"
+                    },
+                    CustomRules = new CustomRuleList(
+                        new List<CustomRule>
+                        {
+                            new CustomRule
+                            {
+                                Name = "rule1",
+                                EnabledState = "Enabled",
+                                Priority = 1,
+                                RuleType = "RateLimitRule",
+                                RateLimitThreshold = 1000,
+                                MatchConditions = new List<MatchCondition>
+                                {
+                                    new MatchCondition
+                                    {
+                                        MatchVariable = "RemoteAddr",
+                                        OperatorProperty = "IPMatch",
+                                        MatchValue = new List<string>
+                                        {
+                                            "192.168.1.0/24",
+                                            "10.0.0.0/24"
+                                        }
+                                    }
+                                },
+                                Action = "Block"
+                            }
+                        }
+                    ),
+                    ManagedRules = new ManagedRuleSetList(
+                        new List<ManagedRuleSet> {
+                            new ManagedRuleSet
+                            {
+                                RuleSetType = "DefaultRuleSet",
+                                RuleSetVersion = "1.0",
+                                RuleGroupOverrides = new List<ManagedRuleGroupOverride>
+                                {
+                                    new ManagedRuleGroupOverride
+                                    {
+                                        RuleGroupName = "SQLI",
+                                        Rules = new List<ManagedRuleOverride>
+                                        {
+                                            new ManagedRuleOverride
+                                            {
+                                                RuleId = "Rule1",
+                                                Action = "Redirect",
+                                                EnabledState = "Disabled"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
 
-        //        // validate the created policy
-        //        VerifyPolicy(policy, createParameters);
+                    })
 
-        //        // Retrieve policy
-        //        var retrievedPolicy = frontDoorMgmtClient.Policies.Get(resourceGroupName, policyName);
+                };
 
-        //        // validate that correct policy is retrieved
-        //        VerifyPolicy(retrievedPolicy, createParameters);
+                var policy = frontDoorMgmtClient.Policies.CreateOrUpdate(resourceGroupName, policyName, createParameters);
 
-        //        // update Policy
-        //        CustomRule geoFilter = new CustomRule
-        //        {
-        //            Name = "rule2",
-        //            Priority = 2,
-        //            RuleType = "MatchRule",
-        //            MatchConditions = new List<MatchCondition>
-        //                        {
-        //                            new MatchCondition
-        //                            {
-        //                                MatchVariable = "RemoteAddr",
-        //                                OperatorProperty = "GeoMatch",
-        //                                MatchValue = new List<string>
-        //                                {
-        //                                    "US"
-        //                                }
-        //                            }
-        //                        },
-        //            Action = "Allow"
-        //        };
-        //        retrievedPolicy.CustomRules.Rules.Add(geoFilter);
+                // validate the created policy
+                VerifyPolicy(policy, createParameters);
+
+                // Retrieve policy
+                var retrievedPolicy = frontDoorMgmtClient.Policies.Get(resourceGroupName, policyName);
+
+                // validate that correct policy is retrieved
+                VerifyPolicy(retrievedPolicy, createParameters);
+
+                // update Policy
+                CustomRule geoFilter = new CustomRule
+                {
+                    Name = "rule2",
+                    Priority = 2,
+                    RuleType = "MatchRule",
+                    MatchConditions = new List<MatchCondition>
+                                {
+                                    new MatchCondition
+                                    {
+                                        MatchVariable = "RemoteAddr",
+                                        OperatorProperty = "GeoMatch",
+                                        MatchValue = new List<string>
+                                        {
+                                            "US"
+                                        }
+                                    }
+                                },
+                    Action = "Allow"
+                };
+                retrievedPolicy.CustomRules.Rules.Add(geoFilter);
 
 
-        //        var updatedPolicy = frontDoorMgmtClient.Policies.CreateOrUpdate(resourceGroupName, policyName, retrievedPolicy);
+                var updatedPolicy = frontDoorMgmtClient.Policies.CreateOrUpdate(resourceGroupName, policyName, retrievedPolicy);
 
-        //        // validate that Policy is correctly updated
-        //        VerifyPolicy(updatedPolicy, retrievedPolicy);
+                // validate that Policy is correctly updated
+                VerifyPolicy(updatedPolicy, retrievedPolicy);
 
-        //        // Delete Policy
-        //        frontDoorMgmtClient.Policies.Delete(resourceGroupName, policyName);
+                // Delete Policy
+                frontDoorMgmtClient.Policies.Delete(resourceGroupName, policyName);
 
-        //        // Verify that Policy is deleted
-        //        Assert.ThrowsAny<ErrorResponseException>(() =>
-        //        {
-        //            frontDoorMgmtClient.Policies.Get(resourceGroupName, policyName);
-        //        });
+                // Verify that Policy is deleted
+                Assert.ThrowsAny<ErrorResponseException>(() =>
+                {
+                    frontDoorMgmtClient.Policies.Get(resourceGroupName, policyName);
+                });
 
-        //        FrontDoorTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
-        //    }
-        //}
+                FrontDoorTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
+            }
+        }
 
         private static void VerifyPolicy(WebApplicationFirewallPolicy policy, WebApplicationFirewallPolicy parameters)
         {
