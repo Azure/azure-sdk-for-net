@@ -11,50 +11,59 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///    TODO.
+    ///   Provides an easy way to instantiate, start and stop multiple event processors.
     /// </summary>
     ///
     internal class EventProcessorHub
     {
         /// <summary>
-        ///    TODO.
+        ///   A factory used to create partition processors.
         /// </summary>
         ///
         private Func<PartitionContext, CheckpointManager, IPartitionProcessor> PartitionProcessorFactory { get; }
 
         /// <summary>
-        ///    TODO.
+        ///   The name of the consumer group the event processors are associated with.  Events will be
+        ///   read only in the context of this group.
         /// </summary>
         ///
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///    TODO.
+        ///   The client used to interact with the Azure Event Hubs service.
         /// </summary>
         ///
         private EventHubClient InnerClient { get; }
 
         /// <summary>
-        ///    TODO.
+        ///   The partition manager shared by all event processors in this hub.
         /// </summary>
         ///
         private PartitionManager InnerPartitionManager { get; }
 
         /// <summary>
-        ///    TODO.
+        ///   The set of options to use for the event processors.
         /// </summary>
         ///
         private EventProcessorOptions Options { get; }
 
         /// <summary>
-        ///    TODO.
+        ///   The event processors managed by this hub.
         /// </summary>
         ///
         private List<EventProcessor> EventProcessors { get; }
 
         /// <summary>
-        ///    TODO.
+        ///   Initializes a new instance of the <see cref="EventProcessorHub"/> class.
         /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
+        /// <param name="client">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="options">The set of options to use for the event processors.</param>
+        /// <param name="onInitialize">A callback action to be called on <see cref="PartitionProcessor.InitializeAsync" />.</param>
+        /// <param name="onClose">A callback action to be called on <see cref="PartitionProcessor.CloseAsync" />.</param>
+        /// <param name="onProcessEvents">A callback action to be called on <see cref="PartitionProcessor.ProcessEventsAsync" />.</param>
+        /// <param name="onProcessError">A callback action to be called on <see cref="PartitionProcessor.ProcessErrorAsync" />.</param>
         ///
         public EventProcessorHub(string consumerGroup,
                                  EventHubClient client,
@@ -94,8 +103,10 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    TODO.
+        ///   Adds new uninitialized event processors instances to this hub.
         /// </summary>
+        ///
+        /// <param name="amount">The amount of event processors to add.</param>
         ///
         public void AddEventProcessors(int amount)
         {
@@ -113,8 +124,10 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    TODO.
+        ///   Starts the event processors.
         /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public Task StartAllAsync()
         {
@@ -123,8 +136,10 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    TODO.
+        ///   Stops the event processors.
         /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public Task StopAllAsync()
         {
@@ -133,50 +148,58 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    TODO.
+        ///   A test helper implementation of <see cref="IPartitionProcessor" />.
         /// </summary>
         ///
         private class PartitionProcessor : IPartitionProcessor
         {
             /// <summary>
-            ///    TODO.
+            ///   Contains information about the partition this partition processor will be processing
+            ///   events from.
             /// </summary>
             ///
             private PartitionContext AssociatedPartitionContext { get; }
 
             /// <summary>
-            ///    TODO.
+            ///   Responsible for the creation of checkpoints.
             /// </summary>
             ///
-            private CheckpointManager CheckpointManagerReference { get; }
+            private CheckpointManager AssociatedCheckpointManager { get; }
 
             /// <summary>
-            ///    TODO.
+            ///   A callback action to be called on <see cref="InitializeAsync" />.
             /// </summary>
             ///
             private Action<PartitionContext, CheckpointManager> OnInitialize { get; }
 
             /// <summary>
-            ///    TODO.
+            ///   A callback action to be called on <see cref="CloseAsync" />.
             /// </summary>
             ///
             private Action<PartitionContext, CheckpointManager, PartitionProcessorCloseReason> OnClose { get; }
 
             /// <summary>
-            ///    TODO.
+            ///   A callback action to be called on <see cref="ProcessEventsAsync" />.
             /// </summary>
             ///
             private Action<PartitionContext, CheckpointManager, IEnumerable<EventData>, CancellationToken> OnProcessEvents { get; }
 
             /// <summary>
-            ///    TODO.
+            ///   A callback action to be called on <see cref="ProcessErrorAsync" />.
             /// </summary>
             ///
             private Action<PartitionContext, CheckpointManager, Exception, CancellationToken> OnProcessError { get; }
 
             /// <summary>
-            ///    TODO.
+            ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
             /// </summary>
+            ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.</param>
+            /// <param name="checkpointManager">Responsible for the creation of checkpoints.</param>
+            /// <param name="onInitialize">A callback action to be called on <see cref="InitializeAsync" />.</param>
+            /// <param name="onClose">A callback action to be called on <see cref="CloseAsync" />.</param>
+            /// <param name="onProcessEvents">A callback action to be called on <see cref="ProcessEventsAsync" />.</param>
+            /// <param name="onProcessError">A callback action to be called on <see cref="ProcessErrorAsync" />.</param>
             ///
             public PartitionProcessor(PartitionContext partitionContext,
                                       CheckpointManager checkpointManager,
@@ -186,7 +209,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                       Action<PartitionContext, CheckpointManager, Exception, CancellationToken> onProcessError = null)
             {
                 AssociatedPartitionContext = partitionContext;
-                CheckpointManagerReference = checkpointManager;
+                AssociatedCheckpointManager = checkpointManager;
                 OnInitialize = onInitialize;
                 OnClose = onClose;
                 OnProcessEvents = onProcessEvents;
@@ -194,44 +217,60 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             /// <summary>
-            ///    TODO.
+            ///   Initializes the partition processor.
             /// </summary>
+            ///
+            /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
             public Task InitializeAsync()
             {
-                OnInitialize?.Invoke(AssociatedPartitionContext, CheckpointManagerReference);
+                OnInitialize?.Invoke(AssociatedPartitionContext, AssociatedCheckpointManager);
                 return Task.CompletedTask;
             }
 
             /// <summary>
-            ///    TODO.
+            ///   Closes the partition processor.
             /// </summary>
+            ///
+            /// <param name="reason">The reason why the partition processor is being closed.</param>
+            ///
+            /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
             public Task CloseAsync(PartitionProcessorCloseReason reason)
             {
-                OnClose?.Invoke(AssociatedPartitionContext, CheckpointManagerReference, reason);
+                OnClose?.Invoke(AssociatedPartitionContext, AssociatedCheckpointManager, reason);
                 return Task.CompletedTask;
             }
 
             /// <summary>
-            ///    TODO.
+            ///   Processes a set of received <see cref="EventData" />.
             /// </summary>
+            ///
+            /// <param name="events">The received events to be processed.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
+            ///
+            /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
             public Task ProcessEventsAsync(IEnumerable<EventData> events,
                                            CancellationToken cancellationToken)
             {
-                OnProcessEvents?.Invoke(AssociatedPartitionContext, CheckpointManagerReference, events, cancellationToken);
+                OnProcessEvents?.Invoke(AssociatedPartitionContext, AssociatedCheckpointManager, events, cancellationToken);
                 return Task.CompletedTask;
             }
 
             /// <summary>
-            ///    TODO.
+            ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
             /// </summary>
+            ///
+            /// <param name="exception">The exception to be processed.  It's not used in this sample.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
+            ///
+            /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
             public Task ProcessErrorAsync(Exception exception,
                                           CancellationToken cancellationToken)
             {
-                OnProcessError?.Invoke(AssociatedPartitionContext, CheckpointManagerReference, exception, cancellationToken);
+                OnProcessError?.Invoke(AssociatedPartitionContext, AssociatedCheckpointManager, exception, cancellationToken);
                 return Task.CompletedTask;
             }
         }
