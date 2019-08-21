@@ -2,15 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
+using Azure.Core.Http;
 using Azure.Core.Testing;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.ApplicationModel.Configuration.Tests
@@ -28,7 +22,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             string headerValue = idTokenValue + seqNoValue;
             
             var syncTokenReponse = new MockResponse(200);
-            syncTokenReponse.AddHeader(new Core.Http.HttpHeader(headerName, headerValue));
+            syncTokenReponse.AddHeader(new HttpHeader(headerName, headerValue));
 
             MockTransport transport = CreateMockTransport(syncTokenReponse, new MockResponse(200));
             var policy = new SyncTokenPolicy();
@@ -43,6 +37,60 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             Assert.True(transport.Requests[1].Headers.TryGetValue("Sync-Token", out string requestValue));
             Assert.AreEqual(idTokenValue, requestValue);
+        }
+
+        [Test]
+        public async Task UpdatesCachedValue()
+        {
+            string headerName = "Sync-Token";
+            string header1Value = "id=A";
+            string header2Value = "id=B";
+
+            var response1 = new MockResponse(200);
+            response1.AddHeader(new HttpHeader(headerName, header1Value + ";sn=1"));
+
+            var response2 = new MockResponse(200);
+            response2.AddHeader(new HttpHeader(headerName, header2Value + ";sn=2"));
+            
+            MockTransport transport = CreateMockTransport(response1, response2, new MockResponse(200));
+            var policy = new SyncTokenPolicy();
+
+            await SendGetRequest(transport, policy);
+            await SendGetRequest(transport, policy);
+            await SendGetRequest(transport, policy);
+            
+            Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string res1Value));
+            Assert.True(transport.Requests[2].Headers.TryGetValue(headerName, out string res2Value));
+
+            Assert.AreEqual(header1Value, res1Value);
+            Assert.AreEqual(header2Value, res2Value);
+        }
+
+        [Test]
+        public async Task DoesNotUpdateCachedValue()
+        {
+            string headerName = "Sync-Token";
+            string header1Value = "id=A";
+            string header2Value = "id=B";
+
+            var response1 = new MockResponse(200);
+            response1.AddHeader(new HttpHeader(headerName, header1Value + ";sn=2"));
+
+            var response2 = new MockResponse(200);
+            response2.AddHeader(new HttpHeader(headerName, header2Value + ";sn=1"));
+
+            MockTransport transport = CreateMockTransport(response1, response2, new MockResponse(200));
+            var policy = new SyncTokenPolicy();
+
+            await SendGetRequest(transport, policy);
+            await SendGetRequest(transport, policy);
+            await SendGetRequest(transport, policy);
+
+            Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string res1Value));
+            Assert.True(transport.Requests[2].Headers.TryGetValue(headerName, out string res2Value));
+
+            Assert.AreEqual(header1Value, res1Value);
+            Assert.AreEqual(header1Value, res2Value);
         }
     }
 }
