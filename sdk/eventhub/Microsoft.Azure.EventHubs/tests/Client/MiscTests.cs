@@ -125,5 +125,23 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 }
             }
         }
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ClosingEventHubClientClosesChildEntities()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var ehSender = ehClient.CreatePartitionSender("0");
+                var ehReceiver = ehClient.CreatePartitionSender("0");
+
+                await ehClient.CloseAsync();
+                Assert.True(ehClient.IsClosed, "ehClient.IsClosed is not true.");
+                Assert.True(ehSender.IsClosed, "ehSender.IsClosed is not true.");
+                Assert.True(ehReceiver.IsClosed, "ehReceiver.IsClosed is not true.");
+            }
+        }
     }
 }
