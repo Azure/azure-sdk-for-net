@@ -58,6 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public EventProcessorHub(string consumerGroup,
                                  EventHubClient client,
+                                 EventProcessorOptions options = null,
                                  Action<PartitionContext, CheckpointManager> onInitialize = null,
                                  Action<PartitionContext, CheckpointManager, PartitionProcessorCloseReason> onClose = null,
                                  Action<PartitionContext, CheckpointManager, IEnumerable<EventData>, CancellationToken> onProcessEvents = null,
@@ -78,7 +79,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 );
 
             InnerPartitionManager = new InMemoryPartitionManager();
-            Options = new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(2) };
+
+            // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
+            // value (1 minute) would take too much time.
+
+            Options = options?.Clone() ?? new EventProcessorOptions();
+
+            if (Options.MaximumReceiveWaitTime == null)
+            {
+                Options.MaximumReceiveWaitTime = TimeSpan.FromSeconds(2);
+            }
+
             EventProcessors = new List<EventProcessor>();
         }
 
