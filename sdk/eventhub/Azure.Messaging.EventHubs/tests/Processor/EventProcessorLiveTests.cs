@@ -592,6 +592,146 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Current implementation does not catch ProcessEventsAsync exceptions")]
+        public async Task PartitionProcessorProcessEventsAsyncRetriesAfterThrowing()
+        {
+            var partitions = 1;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    int initializeCallsCount = 0;
+                    int processEventsCallsCount = 0;
+                    ConcurrentDictionary<int, IEnumerable<EventData>> eventsReferences = new ConcurrentDictionary<int, IEnumerable<EventData>>();
+
+                    // Create the event processor hub to manage our event processor.
+
+                    var hub = new EventProcessorHub
+                        (
+                            EventHubConsumer.DefaultConsumerGroupName,
+                            client,
+                            onInitialize: (partitionContext, checkpointManager) => Interlocked.Increment(ref initializeCallsCount),
+                            onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
+                            {
+                                // Store a reference to 'events' on the three first calls, throwing an exception on
+                                // the first one.  The second call is a retry attempt, so the first and the second
+                                // references should be the same.
+
+                                if (processEventsCallsCount < 3)
+                                {
+                                    Interlocked.Increment(ref processEventsCallsCount);
+
+                                    eventsReferences.TryAdd(processEventsCallsCount, events);
+
+                                    if (processEventsCallsCount == 1)
+                                    {
+                                        throw new Exception("First call exception");
+                                    }
+                                }
+                            }
+                        );
+
+                    hub.AddEventProcessors(1);
+
+                    // Start the event processor.
+
+                    await hub.StartAllAsync();
+
+                    // Make sure the event processor has enough time to claim partitions.
+                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
+
+                    await Task.Delay(500);
+
+                    // Stop the event processor.
+
+                    await hub.StopAllAsync();
+
+                    // Validate results.
+
+                    var orderedEventsReferences = eventsReferences
+                        .OrderBy(kvp => kvp.Key)
+                        .Select(kvp => kvp.Value)
+                        .ToArray();
+
+                    Assert.That(orderedEventsReferences.Count, Is.EqualTo(3));
+                    Assert.That(orderedEventsReferences[0], Is.EqualTo(orderedEventsReferences[1]));
+                    Assert.That(orderedEventsReferences[0], Is.Not.EqualTo(orderedEventsReferences[2]));
+
+                    // The single exception should not have been enough to close the partition processor.  If it
+                    // had been closed, the amount of initializations would be greater than the original amount
+                    // of partitions.
+
+                    Assert.That(initializeCallsCount, Is.EqualTo(partitions));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [Ignore("Current implementation does not catch ProcessEventsAsync exceptions")]
+        public async Task PartitionProcessorClosesAfterProcessEventsAsyncThrowsMultipleTimes()
+        {
+            var partitions = 1;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    int initializeCallsCount = 0;
+
+                    // Create the event processor hub to manage our event processor.
+
+                    var hub = new EventProcessorHub
+                        (
+                            EventHubConsumer.DefaultConsumerGroupName,
+                            client,
+                            onInitialize: (partitionContext, checkpointManager) => Interlocked.Increment(ref initializeCallsCount),
+                            onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
+                            {
+                                throw new Exception("I'll destroy everything.");
+                            }
+                        );
+
+                    hub.AddEventProcessors(1);
+
+                    // Start the event processor.
+
+                    await hub.StartAllAsync();
+
+                    // Make sure the event processor has enough time to claim partitions.
+                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
+
+                    await Task.Delay(500);
+
+                    // Stop the event processor.
+
+                    await hub.StopAllAsync();
+
+                    // Validate results.  We are expecting the partition processor to close, so the amount of
+                    // initializations should be greater than the original amount of partitions.
+
+                    Assert.That(initializeCallsCount, Is.GreaterThan(partitions));
+
+                    // TODO: decide the appropriate close reason to use and add an assertion.
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         [TestCase(10, 1)]
         [TestCase(10, 3)]
         [TestCase(10, 10)]
