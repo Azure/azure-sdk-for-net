@@ -37,8 +37,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 new KeyValuePair<string, string>("peer.address", "http://endpoint/"), 
                 new KeyValuePair<string, string>("message_bus.destination", "Name"));
 
-            var messageScope = testListener.AssertScope("Azure.Messaging.EventHubs.Message", 
-                new KeyValuePair<string, string>("kind", "internal"));
+            var messageScope = testListener.AssertScope("Azure.Messaging.EventHubs.Message");
 
             Assert.AreEqual(eventData.Properties["Diagnostic-Id"], messageScope.Activity.Id);
             Assert.AreNotSame(messageScope.Activity, sendScope.Activity);
@@ -77,8 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 new KeyValuePair<string, string>("peer.address", "http://endpoint/"), 
                 new KeyValuePair<string, string>("message_bus.destination", "Name"));
 
-            var messageScope = testListener.AssertScope("Azure.Messaging.EventHubs.Message", 
-                new KeyValuePair<string, string>("kind", "internal"));
+            var messageScope = testListener.AssertScope("Azure.Messaging.EventHubs.Message");
 
             Assert.AreEqual(eventData.Properties["Diagnostic-Id"], messageScope.Activity.Id);
             

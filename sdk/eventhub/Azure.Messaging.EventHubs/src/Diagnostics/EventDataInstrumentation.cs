@@ -17,7 +17,6 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (!eventData.Properties.ContainsKey(DiagnosticIdProperty))
             {
                 using DiagnosticScope messageScope = clientDiagnostics.CreateScope(MessageActivityName);
-                messageScope.AddAttribute("kind", "internal");
                 messageScope.Start();
 
                 var activity = Activity.Current;
