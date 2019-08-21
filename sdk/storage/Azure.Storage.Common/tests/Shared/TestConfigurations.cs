@@ -159,7 +159,7 @@ namespace Azure.Storage.Test
             TestConfigurationsPath = Environment.GetEnvironmentVariable(DefaultTestConfigPathEnvironmentVariable);
             if (String.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
             {
-                TestConfigurationsPath = DefaultTestConfigFilePath;
+                TestConfigurationsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, DefaultTestConfigFilePath);
                 if (String.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
                 {
                     Assert.Inconclusive($"Live test configuration not found at file {TestConfigurationsPath}!");

@@ -16,8 +16,14 @@ namespace Azure.Storage
         public static ArgumentNullException ArgumentNull(string paramName) =>
             new ArgumentNullException(paramName);
 
+        public static ArgumentException CannotBothBeNotNull(string param0, string param1) =>
+            new ArgumentException($"{param0} and {param1} cannot both be set");
+
         public static ArgumentOutOfRangeException MustBeGreaterThanOrEqualTo(string paramName, long value) =>
             new ArgumentOutOfRangeException(paramName, $"Value must be greater than or equal to {value}");
+
+        public static ArgumentOutOfRangeException MustBeLessThanOrEqualTo(string paramName, long value) =>
+            new ArgumentOutOfRangeException(paramName, $"Value must be less than or equal to {value}");
 
         public static ArgumentOutOfRangeException MustBeGreaterThanValueOrEqualToOtherValue(string paramName,
             long value0,

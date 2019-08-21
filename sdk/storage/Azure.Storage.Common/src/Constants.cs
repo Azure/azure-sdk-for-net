@@ -230,6 +230,11 @@ namespace Azure.Storage
         /// </summary>
         internal static class File
         {
+            public const string None = "None";
+            public const string Now = "Now";
+            public const string Preserve = "Preserve";
+            public const string Inherit = "Inherit";
+
             public const string SetHttpHeadersOperationName =
                 "Azure.Storage.Files.FileClient.SetHttpHeaders";
             internal static class Directory
@@ -240,6 +245,8 @@ namespace Azure.Storage
                     "Azure.Storage.Files.DirectoryClient.Delete";
                 public const string GetPropertiesOperationName =
                     "Azure.Storage.Files.DirectoryClient.GetProperties";
+                public const string SetHttpHeadersOperationName =
+                    "Azure.Storage.Files.DirectoryClient.SetHttpHeaders";
                 public const string SetMetadataOperationName =
                     "Azure.Storage.Files.DirectoryClient.SetMetadata";
                 public const string ListFilesAndDirectoriesSegmentOperationName =
