@@ -114,7 +114,8 @@ namespace Azure.Storage.Files.Test
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                     directory.CreateAsync(filePermission: filePermission),
                     e => Assert.AreEqual(
-                        "Value must be less than or equal to 8192\r\nParameter name: filePermission", e.Message));
+                        "Value must be less than or equal to 8192" + Environment.NewLine
+                        + "Parameter name: filePermission", e.Message));
             }
         }
 
@@ -305,7 +306,8 @@ namespace Azure.Storage.Files.Test
                     directory.SetHttpHeadersAsync(
                         filePermission: filePermission),
                     e => Assert.AreEqual(
-                        "Value must be less than or equal to 8192\r\nParameter name: filePermission", e.Message));
+                        "Value must be less than or equal to 8192" + Environment.NewLine 
+                        + "Parameter name: filePermission", e.Message));
             }
         }
 
