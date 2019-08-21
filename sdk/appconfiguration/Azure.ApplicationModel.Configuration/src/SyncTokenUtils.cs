@@ -94,9 +94,7 @@ namespace Azure.ApplicationModel.Configuration
             bool success = false;
             if (!(tokenId == null || tokenValue == null))
             {
-                result.Id = tokenId;
-                result.Value = tokenValue;
-                result.SequenceNumber = sequenceNumber;
+                result = new SyncToken(tokenId, tokenValue, sequenceNumber);
                 success = true;
             }
 

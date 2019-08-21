@@ -4,22 +4,29 @@
 
 namespace Azure.ApplicationModel.Configuration
 {
-    internal struct SyncToken
+    internal readonly struct SyncToken
     {
         /// <summary>
         /// The token's ID.
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary>
         /// The token's value.
         /// </summary>
-        public string Value { get; set; }
+        public string Value { get; }
 
         /// <summary>
         /// Token sequence number (version). Higher means newer version of the same token. 
         /// </summary>
-        public long SequenceNumber { get; set; }
+        public long SequenceNumber { get; }
+
+        public SyncToken(string id, string value, long sequenceNumber)
+        {
+            Id = id;
+            Value = value;
+            SequenceNumber = sequenceNumber;
+        }
 
         /// <summary>
         /// Creates a string representation of a <see cref="SyncToken"/>.
