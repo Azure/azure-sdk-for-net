@@ -8,7 +8,8 @@ namespace Azure.ApplicationModel.Configuration
 {
     internal class SyncTokenUtils
     {
-        public static bool TryParse(string value, out SyncToken result)
+        // Sync-Token Syntax: <id>=<value>;sn=<sn>
+        internal static bool TryParse(string value, out SyncToken result)
         {
             result = new SyncToken();
 
@@ -25,7 +26,7 @@ namespace Azure.ApplicationModel.Configuration
             string name = null;
             string val = null;
 
-            for (int i = 0; i < value.Length; ++i)
+            for (int i = 0; i < value.Length; i++)
             {
                 char ch = value[i];
 
@@ -46,7 +47,7 @@ namespace Azure.ApplicationModel.Configuration
                     // Done with the current name-value pair
                     if (i == value.Length - 1)
                     {
-                        ++i;
+                        i++;
                     }
 
                     string fragment = value.Substring(pos, i - pos);
