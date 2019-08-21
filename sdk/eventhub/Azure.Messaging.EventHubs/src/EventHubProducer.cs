@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -45,7 +44,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The policy to use for determining retry behavior for when an operation fails.</summary>
         private EventHubRetryPolicy _retryPolicy;
 
-        private ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventHubProducer" /> is bound to, indicating
@@ -388,11 +387,11 @@ namespace Azure.Messaging.EventHubs
             return scope;
         }
 
-        private static void InstrumentMessages(IEnumerable<EventData> events)
+        private void InstrumentMessages(IEnumerable<EventData> events)
         {
             foreach (var eventData in events)
             {
-                EventDataInstrumentation.InstrumentEvent(eventData, Activity.Current);
+                EventDataInstrumentation.InstrumentEvent(_clientDiagnostics, eventData);
             }
         }
 

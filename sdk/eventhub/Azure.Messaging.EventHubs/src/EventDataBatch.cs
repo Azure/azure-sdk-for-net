@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
@@ -16,6 +17,8 @@ namespace Azure.Messaging.EventHubs
     ///
     public sealed class EventDataBatch : IDisposable
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
         ///   well as any overhead for the batch itself when sent to the Event Hubs service.
@@ -73,6 +76,7 @@ namespace Azure.Messaging.EventHubs
 
             InnerBatch = transportBatch;
             SendOptions = sendOptions;
+            _clientDiagnostics = new ClientDiagnostics(isActivityEnabled: true);
         }
 
         /// <summary>
@@ -86,7 +90,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public bool TryAdd(EventData eventData)
         {
-            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData, Activity.Current);
+            bool instrumented = EventDataInstrumentation.InstrumentEvent(_clientDiagnostics, eventData);
             bool added = InnerBatch.TryAdd(eventData);
 
             if (!added && instrumented)

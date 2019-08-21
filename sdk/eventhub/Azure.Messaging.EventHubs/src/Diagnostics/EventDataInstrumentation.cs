@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
@@ -9,13 +10,22 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     {
         private const string DiagnosticIdProperty = "Diagnostic-Id";
 
-        public static bool InstrumentEvent(EventData eventData, Activity activity)
+        private static readonly string MessageActivityName = $"{nameof(Azure)}.{nameof(Messaging)}.{nameof(EventHubs)}.Message";
+
+        public static bool InstrumentEvent(ClientDiagnostics clientDiagnostics, EventData eventData)
         {
-            if (activity != null &&
-                !eventData.Properties.ContainsKey(DiagnosticIdProperty))
+            if (!eventData.Properties.ContainsKey(DiagnosticIdProperty))
             {
-                eventData.Properties[DiagnosticIdProperty] = activity.Id;
-                return true;
+                using DiagnosticScope messageScope = clientDiagnostics.CreateScope(MessageActivityName);
+                messageScope.AddAttribute("kind", "internal");
+                messageScope.Start();
+
+                var activity = Activity.Current;
+                if (activity != null)
+                {
+                    eventData.Properties[DiagnosticIdProperty] = activity.Id;
+                    return true;
+                }
             }
 
             return false;

@@ -31,11 +31,17 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
             await producer.SendAsync(eventData);
             
-            testListener.AssertScope("Azure.Messaging.EventHubs.EventHubProducer.Send", 
+            var sendScope = testListener.AssertScope("Azure.Messaging.EventHubs.EventHubProducer.Send", 
                 new KeyValuePair<string, string>("kind", "producer"),
                 new KeyValuePair<string, string>("component", "eventhubs"), 
                 new KeyValuePair<string, string>("peer.address", "http://endpoint/"), 
                 new KeyValuePair<string, string>("message_bus.destination", "Name"));
+
+            var messageScope = testListener.AssertScope("Azure.Messaging.EventHubs.Message", 
+                new KeyValuePair<string, string>("kind", "internal"));
+
+            Assert.AreEqual(eventData.Properties["Diagnostic-Id"], messageScope.Activity.Id);
+            Assert.AreNotSame(messageScope.Activity, sendScope.Activity);
         }
 
         [Test]
@@ -65,11 +71,18 @@ namespace Azure.Messaging.EventHubs.Tests
             
             await producer.SendAsync(batch);
             
-            testListener.AssertScope("Azure.Messaging.EventHubs.EventHubProducer.Send", 
+            var sendScope = testListener.AssertScope("Azure.Messaging.EventHubs.EventHubProducer.Send", 
                 new KeyValuePair<string, string>("kind", "producer"),
                 new KeyValuePair<string, string>("component", "eventhubs"), 
                 new KeyValuePair<string, string>("peer.address", "http://endpoint/"), 
                 new KeyValuePair<string, string>("message_bus.destination", "Name"));
+
+            var messageScope = testListener.AssertScope("Azure.Messaging.EventHubs.Message", 
+                new KeyValuePair<string, string>("kind", "internal"));
+
+            Assert.AreEqual(eventData.Properties["Diagnostic-Id"], messageScope.Activity.Id);
+            
+            Assert.AreNotSame(messageScope.Activity, sendScope.Activity);
         }
         
         [Test]
