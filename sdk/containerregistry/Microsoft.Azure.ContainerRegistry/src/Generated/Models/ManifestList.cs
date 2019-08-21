@@ -18,7 +18,6 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     /// <summary>
     /// Returns the requested Docker multi-arch-manifest file
     /// </summary>
-    [Newtonsoft.Json.JsonObject("application/vnd.docker.distribution.manifest.list.v2+json")]
     public partial class ManifestList : Manifest
     {
         /// <summary>
@@ -32,17 +31,13 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the ManifestList class.
         /// </summary>
-        /// <param name="architecture">CPU architecture</param>
-        /// <param name="name">Image name</param>
-        /// <param name="tag">Image tag</param>
-        /// <param name="fsLayers">List of layer information</param>
-        /// <param name="history">Image history</param>
-        /// <param name="signatures">Image signature</param>
         /// <param name="schemaVersion">Schema version</param>
+        /// <param name="mediaType">Media type for this Manifest</param>
         /// <param name="manifests">List of V2 image layer information</param>
-        public ManifestList(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>))
-            : base(architecture, name, tag, fsLayers, history, signatures, schemaVersion)
+        public ManifestList(int? schemaVersion = default(int?), string mediaType = default(string), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>))
+            : base(schemaVersion)
         {
+            MediaType = mediaType;
             Manifests = manifests;
             CustomInit();
         }
@@ -51,6 +46,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets media type for this Manifest
+        /// </summary>
+        [JsonProperty(PropertyName = "mediaType")]
+        public string MediaType { get; set; }
 
         /// <summary>
         /// Gets or sets list of V2 image layer information

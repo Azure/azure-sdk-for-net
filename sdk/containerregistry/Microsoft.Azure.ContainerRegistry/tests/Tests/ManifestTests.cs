@@ -7,6 +7,7 @@ namespace ContainerRegistry.Tests
     using Microsoft.Azure.ContainerRegistry;
     using Microsoft.Azure.ContainerRegistry.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
@@ -44,6 +45,7 @@ namespace ContainerRegistry.Tests
         private static readonly V2Manifest ExpectedV2ManifestProd = new V2Manifest()
         {
             SchemaVersion = 2,
+            MediaType = ACRTestUtil.MediatypeV2Manifest,
             Config = new V2Descriptor
             {
                 MediaType = ACRTestUtil.MediatypeV1Manifest,
@@ -73,7 +75,7 @@ namespace ContainerRegistry.Tests
             }
         };
 
-        private static readonly Manifest ExpectedV1ManifestProd = new Manifest()
+        private static readonly V1Manifest ExpectedV1ManifestProd = new V1Manifest()
         {
             SchemaVersion = 1,
             Architecture = "amd64",
@@ -255,7 +257,7 @@ namespace ContainerRegistry.Tests
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var manifest = await client.GetManifestAsync(ACRTestUtil.TestRepository, tag);
+                var manifest = (V1Manifest)await client.GetManifestAsync(ACRTestUtil.TestRepository, tag);
                 VerifyManifest(ExpectedV1ManifestProd, manifest);
             }
         }
@@ -267,7 +269,7 @@ namespace ContainerRegistry.Tests
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var manifest = await client.GetManifestAsync(ACRTestUtil.TestRepository, tag, ACRTestUtil.MediatypeV2Manifest);
+                var manifest = (V2Manifest)await client.GetManifestAsync(ACRTestUtil.TestRepository, tag, ACRTestUtil.MediatypeV2Manifest);
                 VerifyManifest(ExpectedV2ManifestProd, manifest);
             }
         }
@@ -306,7 +308,8 @@ namespace ContainerRegistry.Tests
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
                 await client.CreateManifestAsync(ACRTestUtil.changeableRepository, "temporary", ExpectedV2ManifestProd);
-                var newManifest = await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", ACRTestUtil.MediatypeV2Manifest);
+                
+                var newManifest = (V2Manifest) await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", ACRTestUtil.MediatypeV2Manifest);
                 var tag = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
 
                 VerifyManifest(ExpectedV2ManifestProd, newManifest);
@@ -349,10 +352,10 @@ namespace ContainerRegistry.Tests
                 Assert.Equal(baseManifestV2.Config.MediaType, actualManifestV2.Config.MediaType);
                 Assert.Equal(baseManifestV2.Config.Size, actualManifestV2.Config.Size);
             }
-            if (baseManifest.GetType() == typeof(Manifest))
+            if (baseManifest.GetType() == typeof(V1Manifest))
             {
-                var baseManifestV1 = baseManifest;
-                var actualManifestV1 = baseManifest;
+                var baseManifestV1 = (V1Manifest)baseManifest;
+                var actualManifestV1 = (V1Manifest)baseManifest;
                 Assert.Equal(baseManifestV1.Architecture, actualManifestV1.Architecture);
                 Assert.Equal(baseManifestV1.Name, actualManifestV1.Name);
                 Assert.Equal(baseManifestV1.Tag, actualManifestV1.Tag);

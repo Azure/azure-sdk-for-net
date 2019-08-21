@@ -11,12 +11,10 @@
 namespace Microsoft.Azure.ContainerRegistry.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Returns the requested multi-arch-manifest file
+    /// Returns the requested manifest file
     /// </summary>
     public partial class Manifest
     {
@@ -31,21 +29,9 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the Manifest class.
         /// </summary>
-        /// <param name="architecture">CPU architecture</param>
-        /// <param name="name">Image name</param>
-        /// <param name="tag">Image tag</param>
-        /// <param name="fsLayers">List of layer information</param>
-        /// <param name="history">Image history</param>
-        /// <param name="signatures">Image signature</param>
         /// <param name="schemaVersion">Schema version</param>
-        public Manifest(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?))
+        public Manifest(int? schemaVersion = default(int?))
         {
-            Architecture = architecture;
-            Name = name;
-            Tag = tag;
-            FsLayers = fsLayers;
-            History = history;
-            Signatures = signatures;
             SchemaVersion = schemaVersion;
             CustomInit();
         }
@@ -54,42 +40,6 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets CPU architecture
-        /// </summary>
-        [JsonProperty(PropertyName = "architecture")]
-        public string Architecture { get; set; }
-
-        /// <summary>
-        /// Gets or sets image name
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets image tag
-        /// </summary>
-        [JsonProperty(PropertyName = "tag")]
-        public string Tag { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of layer information
-        /// </summary>
-        [JsonProperty(PropertyName = "fsLayers")]
-        public IList<FsLayer> FsLayers { get; set; }
-
-        /// <summary>
-        /// Gets or sets image history
-        /// </summary>
-        [JsonProperty(PropertyName = "history")]
-        public IList<History> History { get; set; }
-
-        /// <summary>
-        /// Gets or sets image signature
-        /// </summary>
-        [JsonProperty(PropertyName = "signatures")]
-        public IList<ImageSignature> Signatures { get; set; }
 
         /// <summary>
         /// Gets or sets schema version

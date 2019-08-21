@@ -18,7 +18,6 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     /// <summary>
     /// Returns the requested OCI index file
     /// </summary>
-    [Newtonsoft.Json.JsonObject("application/vnd.oci.image.index.v1+json")]
     public partial class OCIIndex : Manifest
     {
         /// <summary>
@@ -32,16 +31,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the OCIIndex class.
         /// </summary>
-        /// <param name="architecture">CPU architecture</param>
-        /// <param name="name">Image name</param>
-        /// <param name="tag">Image tag</param>
-        /// <param name="fsLayers">List of layer information</param>
-        /// <param name="history">Image history</param>
-        /// <param name="signatures">Image signature</param>
         /// <param name="schemaVersion">Schema version</param>
         /// <param name="manifests">List of OCI image layer information</param>
-        public OCIIndex(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>), Annotations annotations = default(Annotations))
-            : base(architecture, name, tag, fsLayers, history, signatures, schemaVersion)
+        public OCIIndex(int? schemaVersion = default(int?), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>), Annotations annotations = default(Annotations))
+            : base(schemaVersion)
         {
             Manifests = manifests;
             Annotations = annotations;

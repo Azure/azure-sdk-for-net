@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// (string)</param>
         /// <param name="description">Human-readable description of the
         /// software packaged in the image (string)</param>
-        public Annotations(IDictionary<string, string> additionalProperties = default(IDictionary<string, string>), System.DateTime? created = default(System.DateTime?), string authors = default(string), string url = default(string), string documentation = default(string), string source = default(string), string version = default(string), string revision = default(string), string vendor = default(string), string licenses = default(string), string name = default(string), string title = default(string), string description = default(string))
+        public Annotations(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), System.DateTime? created = default(System.DateTime?), string authors = default(string), string url = default(string), string documentation = default(string), string source = default(string), string version = default(string), string revision = default(string), string vendor = default(string), string licenses = default(string), string name = default(string), string title = default(string), string description = default(string))
         {
             AdditionalProperties = additionalProperties;
             Created = created;
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// this collection
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, string> AdditionalProperties { get; set; }
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets date and time on which the image was built (string,

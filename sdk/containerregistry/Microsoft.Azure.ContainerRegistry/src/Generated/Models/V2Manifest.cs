@@ -18,7 +18,6 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     /// <summary>
     /// Returns the requested Docker V2 Manifest file
     /// </summary>
-    [Newtonsoft.Json.JsonObject("application/vnd.docker.distribution.manifest.v2+json")]
     public partial class V2Manifest : Manifest
     {
         /// <summary>
@@ -32,18 +31,14 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the V2Manifest class.
         /// </summary>
-        /// <param name="architecture">CPU architecture</param>
-        /// <param name="name">Image name</param>
-        /// <param name="tag">Image tag</param>
-        /// <param name="fsLayers">List of layer information</param>
-        /// <param name="history">Image history</param>
-        /// <param name="signatures">Image signature</param>
         /// <param name="schemaVersion">Schema version</param>
+        /// <param name="mediaType">Media type for this Manifest</param>
         /// <param name="config">V2 image config descriptor</param>
         /// <param name="layers">List of V2 image layer information</param>
-        public V2Manifest(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>))
-            : base(architecture, name, tag, fsLayers, history, signatures, schemaVersion)
+        public V2Manifest(int? schemaVersion = default(int?), string mediaType = default(string), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>))
+            : base(schemaVersion)
         {
+            MediaType = mediaType;
             Config = config;
             Layers = layers;
             CustomInit();
@@ -53,6 +48,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets media type for this Manifest
+        /// </summary>
+        [JsonProperty(PropertyName = "mediaType")]
+        public string MediaType { get; set; }
 
         /// <summary>
         /// Gets or sets V2 image config descriptor

@@ -89,8 +89,14 @@ namespace ContainerRegistry.Tests
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = false, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
                 await client.UpdateRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
 
-                //Check success
                 var repositoryDetails = await client.GetRepositoryAttributesAsync(ACRTestUtil.changeableRepository);
+
+                //Undo change in remote (in case this fails)
+                updateAttributes.WriteEnabled = true;
+                updateAttributes.DeleteEnabled = true;
+                await client.UpdateRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
+
+                //Check success
                 Assert.Equal(1, repositoryDetails.TagCount);
                 Assert.Equal(1, repositoryDetails.ManifestCount);
                 Assert.Equal(ACRTestUtil.changeableRepository, repositoryDetails.ImageName);
@@ -99,10 +105,6 @@ namespace ContainerRegistry.Tests
                 Assert.True(repositoryDetails.ChangeableAttributes.ReadEnabled);
                 Assert.False(repositoryDetails.ChangeableAttributes.WriteEnabled);
 
-                //Undo change
-                updateAttributes.WriteEnabled = true;
-                updateAttributes.DeleteEnabled = true;
-                await client.UpdateRepositoryAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
             }
         }
 

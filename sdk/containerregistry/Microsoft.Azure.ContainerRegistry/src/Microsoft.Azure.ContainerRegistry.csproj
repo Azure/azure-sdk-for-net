@@ -27,4 +27,5 @@
   <ItemGroup>
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.19" />
   </ItemGroup>
+
 </Project>

@@ -18,7 +18,6 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     /// <summary>
     /// Returns the requested OCI Manifest file
     /// </summary>
-    [Newtonsoft.Json.JsonObject("application/vnd.oci.image.manifest.v1+json")]
     public partial class OCIManifest : Manifest
     {
         /// <summary>
@@ -32,17 +31,11 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the OCIManifest class.
         /// </summary>
-        /// <param name="architecture">CPU architecture</param>
-        /// <param name="name">Image name</param>
-        /// <param name="tag">Image tag</param>
-        /// <param name="fsLayers">List of layer information</param>
-        /// <param name="history">Image history</param>
-        /// <param name="signatures">Image signature</param>
         /// <param name="schemaVersion">Schema version</param>
         /// <param name="config">V2 image config descriptor</param>
         /// <param name="layers">List of V2 image layer information</param>
-        public OCIManifest(string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>), int? schemaVersion = default(int?), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>), Annotations annotations = default(Annotations))
-            : base(architecture, name, tag, fsLayers, history, signatures, schemaVersion)
+        public OCIManifest(int? schemaVersion = default(int?), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>), Annotations annotations = default(Annotations))
+            : base(schemaVersion)
         {
             Config = config;
             Layers = layers;
