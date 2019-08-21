@@ -135,7 +135,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 var ehSender = ehClient.CreatePartitionSender("0");
-                var ehReceiver = ehClient.CreatePartitionSender("0");
+                var ehReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
 
                 await ehClient.CloseAsync();
                 Assert.True(ehClient.IsClosed, "ehClient.IsClosed is not true.");
