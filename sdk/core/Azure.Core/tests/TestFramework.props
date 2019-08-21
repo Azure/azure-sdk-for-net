@@ -10,6 +10,11 @@
     <None Update="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(ExcludeRecordingFramework)' == 'true'">
+    <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\PlaybackTransport.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\*Record*.cs" />
+  </ItemGroup>
+
   <Target Name="UpdateSessionRecords">
     <ItemGroup>
       <_CopyItems Include="$(OutputPath)\netcoreapp2.1\SessionRecords\**\*.*" />
