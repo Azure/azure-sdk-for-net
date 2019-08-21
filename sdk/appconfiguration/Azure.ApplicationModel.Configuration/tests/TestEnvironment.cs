@@ -11,8 +11,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
     {
         public static string GetClientConnectionString()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
-            Assert.NotNull(connectionString, "Set APP_CONFIG_CONNECTION environment variable to the connection string");
+            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            Assert.NotNull(connectionString, "Set APPCONFIGURATION_CONNECTION_STRING environment variable to the connection string");
             return connectionString;
         }
     }
