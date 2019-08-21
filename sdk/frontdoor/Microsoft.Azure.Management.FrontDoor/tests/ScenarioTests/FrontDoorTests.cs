@@ -52,7 +52,9 @@ namespace FrontDoor.Tests.ScenarioTests
                         name: "healthProbeSettings1",
                         path: "/",
                         protocol: "Http",
-                        intervalInSeconds: 120
+                        intervalInSeconds: 120,
+                        //healthProbeMethod: "GET",
+                        enabledState: "Enabled"
                     );
                 
                 LoadBalancingSettingsModel loadBalancingSettings1 = new LoadBalancingSettingsModel(
@@ -78,11 +80,21 @@ namespace FrontDoor.Tests.ScenarioTests
                     healthProbeSettings: new refID("/subscriptions/"+subid+"/resourceGroups/"+resourceGroupName+"/providers/Microsoft.Network/frontDoors/"+frontDoorName+"/healthProbeSettings/healthProbeSettings1")
                     );
 
+                BackendPoolsSettings backendPoolsSettings1 = new BackendPoolsSettings(
+                    sendRecvTimeoutSeconds: 123
+                    );
+
+                CustomHttpsConfiguration customHttpsConfiguration1 = new CustomHttpsConfiguration(
+                    certificateSource: "AzureKeyVault",
+                    minimumTlsVersion: "1.2"
+                    );
+
                 FrontendEndpoint frontendEndpoint1 = new FrontendEndpoint(
                     name: "frontendEndpoint1",
                     hostName: frontDoorName+".azurefd.net",
                     sessionAffinityEnabledState: "Disabled",
-                    sessionAffinityTtlSeconds: 0
+                    sessionAffinityTtlSeconds: 0,
+                    customHttpsConfiguration: customHttpsConfiguration1
                     );
 
                 FrontDoorModel createParameters = new FrontDoorModel
@@ -98,7 +110,8 @@ namespace FrontDoor.Tests.ScenarioTests
                     LoadBalancingSettings = new List<LoadBalancingSettingsModel> { loadBalancingSettings1 },
                     HealthProbeSettings = new List<HealthProbeSettingsModel> { healthProbeSettings1 },
                     FrontendEndpoints = new List<FrontendEndpoint> { frontendEndpoint1 },
-                    BackendPools = new List<BackendPool> { backendPool1 }
+                    BackendPools = new List<BackendPool> { backendPool1 },
+                    BackendPoolsSettings = backendPoolsSettings1
                 };
                 
                 
@@ -303,6 +316,7 @@ namespace FrontDoor.Tests.ScenarioTests
             Assert.True(frontDoor.Tags.SequenceEqual(parameters.Tags));
             VerifyRoutingRules(frontDoor.RoutingRules, parameters.RoutingRules);
             VerifyBackendPool(frontDoor.BackendPools, parameters.BackendPools);
+            VerifyBackendPoolsSettings(frontDoor.BackendPoolsSettings, parameters.BackendPoolsSettings);
             VerifyHealthProbeSettings(frontDoor.HealthProbeSettings, parameters.HealthProbeSettings);
             VerifyLoadBalancingSettings(frontDoor.LoadBalancingSettings, parameters.LoadBalancingSettings);
             VerifyFrontendEndpoint(frontDoor.FrontendEndpoints, parameters.FrontendEndpoints);
@@ -343,6 +357,11 @@ namespace FrontDoor.Tests.ScenarioTests
             }
         }
 
+        private static void VerifyBackendPoolsSettings(BackendPoolsSettings backendPoolsSettings, BackendPoolsSettings parameters)
+        {
+            Assert.Equal(backendPoolsSettings.SendRecvTimeoutSeconds, parameters.SendRecvTimeoutSeconds);
+        }
+
         private static void VerifyHealthProbeSettings(IList<HealthProbeSettingsModel> healthProbeSettings, IList<HealthProbeSettingsModel> parameters)
         {
             Assert.Equal(healthProbeSettings.Count, parameters.Count);
@@ -351,6 +370,8 @@ namespace FrontDoor.Tests.ScenarioTests
                 Assert.Equal(healthProbeSettings[i].Path, parameters[i].Path);
                 Assert.Equal(healthProbeSettings[i].Protocol, parameters[i].Protocol);
                 Assert.Equal(healthProbeSettings[i].IntervalInSeconds, parameters[i].IntervalInSeconds);
+                //Assert.Equal(healthProbeSettings[i].HealthProbeMethod, parameters[i].HealthProbeMethod);
+                Assert.Equal(healthProbeSettings[i].EnabledState, parameters[i].EnabledState);
             }
         }
 
@@ -374,6 +395,12 @@ namespace FrontDoor.Tests.ScenarioTests
                 Assert.Equal(frontendEndpoint[i].SessionAffinityEnabledState, parameters[i].SessionAffinityEnabledState);
                 Assert.Equal(frontendEndpoint[i].SessionAffinityTtlSeconds, parameters[i].SessionAffinityTtlSeconds);
             }
+        }
+
+        private static void VerifyCustomHttpsConfiguration(CustomHttpsConfiguration customHttpsConfiguration, CustomHttpsConfiguration parameters)
+        {
+            Assert.Equal(customHttpsConfiguration.CertificateSource, parameters.CertificateSource);
+            Assert.Equal(customHttpsConfiguration.MinimumTlsVersion, parameters.MinimumTlsVersion);
         }
     }
 }
