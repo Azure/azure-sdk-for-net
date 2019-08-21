@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Search.Models
         /// 'th', 'to', 'tr', 'uk', 'ur', 'vi', 'cy', 'yua'</param>
         /// <param name="name">The name of the skill which uniquely identifies
         /// it within the skillset. A skill with no name defined will be given
-        /// a default name of its 1-based index in the skills array.</param>
+        /// a default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take

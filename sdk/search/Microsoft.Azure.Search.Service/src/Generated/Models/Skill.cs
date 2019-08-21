@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Search.Models
         /// another skill.</param>
         /// <param name="name">The name of the skill which uniquely identifies
         /// it within the skillset. A skill with no name defined will be given
-        /// a default name of its 1-based index in the skills array.</param>
+        /// a default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
@@ -66,7 +67,8 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the name of the skill which uniquely identifies it
         /// within the skillset. A skill with no name defined will be given a
-        /// default name of its 1-based index in the skills array.
+        /// default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
