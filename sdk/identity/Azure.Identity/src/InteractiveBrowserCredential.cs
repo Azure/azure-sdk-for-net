@@ -44,7 +44,7 @@ namespace Azure.Identity
 
             _options = options ??= new IdentityClientOptions();
 
-            var pipeline = HttpPipelineBuilder.Build(_options, bufferResponse: true);
+            var pipeline = HttpPipelineBuilder.Build(_options);
 
             _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).WithRedirectUri("http://localhost").Build();
         }

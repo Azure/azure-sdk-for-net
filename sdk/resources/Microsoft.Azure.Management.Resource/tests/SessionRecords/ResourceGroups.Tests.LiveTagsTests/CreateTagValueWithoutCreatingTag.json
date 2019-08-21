@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/tagNames/csmtg8562/tagValues/csmtgv1802?api-version=2019-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3RhZ05hbWVzL2NzbXRnODU2Mi90YWdWYWx1ZXMvY3NtdGd2MTgwMj9hcGktdmVyc2lvbj0yMDE5LTA1LTAx",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/tagNames/csmtg8763/tagValues/csmtgv9060?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3RhZ05hbWVzL2NzbXRnODc2My90YWdWYWx1ZXMvY3NtdGd2OTA2MD9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f669d85f-71a0-405c-b9a4-a870f9be9430"
+          "e856cfe4-8bcb-4155-b667-25083b27441a"
         ],
         "accept-language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.26328.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.3.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 07 Jun 2019 22:31:32 GMT"
+          "Tue, 13 Aug 2019 00:04:44 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -36,13 +36,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "587d241a-b58e-40fb-b16e-171a883d9061"
+          "a985b82c-d19f-40c0-aa7a-c5b618f2036e"
         ],
         "x-ms-correlation-request-id": [
-          "587d241a-b58e-40fb-b16e-171a883d9061"
+          "a985b82c-d19f-40c0-aa7a-c5b618f2036e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190607T223133Z:587d241a-b58e-40fb-b16e-171a883d9061"
+          "WESTUS:20190813T000444Z:a985b82c-d19f-40c0-aa7a-c5b618f2036e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -60,14 +60,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"SubscriptionTagNameNotFound\",\r\n    \"message\": \"Subscription tag name 'csmtg8562' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"SubscriptionTagNameNotFound\",\r\n    \"message\": \"Subscription tag name 'csmtg8763' could not be found.\"\r\n  }\r\n}",
       "StatusCode": 404
     }
   ],
   "Names": {
     "CreateTagValueWithoutCreatingTag": [
-      "csmtg8562",
-      "csmtgv1802"
+      "csmtg8763",
+      "csmtgv9060"
     ]
   },
   "Variables": {

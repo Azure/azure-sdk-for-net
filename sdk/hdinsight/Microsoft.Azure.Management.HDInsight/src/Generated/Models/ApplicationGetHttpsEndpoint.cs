@@ -39,12 +39,18 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="destinationPort">The destination port to connect
         /// to.</param>
         /// <param name="publicPort">The public port to connect to.</param>
-        public ApplicationGetHttpsEndpoint(IList<string> accessModes = default(IList<string>), string location = default(string), int? destinationPort = default(int?), int? publicPort = default(int?))
+        /// <param name="subDomainSuffix">The subdomain suffix of the
+        /// application.</param>
+        /// <param name="disableGatewayAuth">The value indicates whether to
+        /// disable GatewayAuth.</param>
+        public ApplicationGetHttpsEndpoint(IList<string> accessModes = default(IList<string>), string location = default(string), int? destinationPort = default(int?), int? publicPort = default(int?), string subDomainSuffix = default(string), bool? disableGatewayAuth = default(bool?))
         {
             AccessModes = accessModes;
             Location = location;
             DestinationPort = destinationPort;
             PublicPort = publicPort;
+            SubDomainSuffix = subDomainSuffix;
+            DisableGatewayAuth = disableGatewayAuth;
             CustomInit();
         }
 
@@ -76,6 +82,18 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "publicPort")]
         public int? PublicPort { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subdomain suffix of the application.
+        /// </summary>
+        [JsonProperty(PropertyName = "subDomainSuffix")]
+        public string SubDomainSuffix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value indicates whether to disable GatewayAuth.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableGatewayAuth")]
+        public bool? DisableGatewayAuth { get; set; }
 
     }
 }

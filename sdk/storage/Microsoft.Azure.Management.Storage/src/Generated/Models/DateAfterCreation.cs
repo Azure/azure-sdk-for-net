@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the DateAfterCreation class.
         /// </summary>
-        /// <param name="daysAfterCreationGreaterThan">Integer value indicating
-        /// the age in days after creation</param>
-        public DateAfterCreation(int daysAfterCreationGreaterThan)
+        /// <param name="daysAfterCreationGreaterThan">Value indicating the age
+        /// in days after creation</param>
+        public DateAfterCreation(double daysAfterCreationGreaterThan)
         {
             DaysAfterCreationGreaterThan = daysAfterCreationGreaterThan;
             CustomInit();
@@ -44,11 +44,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets integer value indicating the age in days after
-        /// creation
+        /// Gets or sets value indicating the age in days after creation
         /// </summary>
         [JsonProperty(PropertyName = "daysAfterCreationGreaterThan")]
-        public int DaysAfterCreationGreaterThan { get; set; }
+        public double DaysAfterCreationGreaterThan { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -61,6 +60,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (DaysAfterCreationGreaterThan < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "DaysAfterCreationGreaterThan", 0);
+            }
+            if (DaysAfterCreationGreaterThan % 1 != 0)
+            {
+                throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterCreationGreaterThan", 1);
             }
         }
     }

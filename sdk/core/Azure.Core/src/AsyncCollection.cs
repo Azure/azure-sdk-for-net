@@ -13,7 +13,7 @@ namespace Azure
     /// iterate over.
     /// </summary>
     /// <typeparam name="T">The type of the values.</typeparam>
-    public abstract class AsyncCollection<T> : IAsyncEnumerable<Response<T>>
+    public abstract class AsyncCollection<T> : IAsyncEnumerable<Response<T>> where T : notnull
     {
         /// <summary>
         /// Gets a <see cref="CancellationToken"/> used for requests made while
@@ -55,7 +55,7 @@ namespace Azure
         /// An async sequence of <see cref="Page{T}"/>s.
         /// </returns>
         public abstract IAsyncEnumerable<Page<T>> ByPage(
-            string continuationToken = default,
+            string? continuationToken = default,
             int? pageSizeHint = default);
 
         /// <summary>

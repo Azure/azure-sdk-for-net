@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(TransportType.AmqpWebSockets)]
         public async Task ConsumerWithNoOptionsCanReceive(TransportType transportType)
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(TransportType.AmqpWebSockets)]
         public async Task ConsumerWithOptionsCanReceive(TransportType transportType)
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var options = new EventHubConsumerOptions { Identifier = "FakeIdentifier" };
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReceiveCanReadOneEventBatchFromAnEventSet()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReceiveCanReadOneEventBatchFromAnEventBatch()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -235,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReceiveCanReadMultipleEventBatches()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -1020,9 +1020,19 @@ namespace Azure.Messaging.EventHubs.Tests
                             receivedEvents.Add(receivedEvent);
                             consecutiveEmpties = (receivedEvent == null) ? consecutiveEmpties + 1 : 0;
 
-                            if (consecutiveEmpties > 1)
+                            // Stop iterating if there have been too many consecutive empty emits; that is
+                            // a sign that the partition is empty.
+
+                            if (consecutiveEmpties > 15)
                             {
                                 break;
+                            }
+                            else if (consecutiveEmpties % 5 == 0)
+                            {
+                                // If we have a smaller number of consecutive empty emits, then pause for a moment to
+                                // account for the non-determinism of availability after an event was published.
+
+                                await Task.Delay(TimeSpan.FromSeconds(0.5)).ConfigureAwait(false);
                             }
                         }
 
@@ -1138,9 +1148,19 @@ namespace Azure.Messaging.EventHubs.Tests
                             receivedEvents.Add(receivedEvent);
                             consecutiveEmpties = (receivedEvent == null) ? consecutiveEmpties + 1 : 0;
 
-                            if (consecutiveEmpties > 5)
+                            // Stop iterating if there have been too many consecutive empty emits; that is
+                            // a sign that the partition is empty.
+
+                            if (consecutiveEmpties > 25)
                             {
                                 break;
+                            }
+                            else if (consecutiveEmpties % 5 == 0)
+                            {
+                                // If we have a smaller number of consecutive empty emits, then pause for a moment to
+                                // account for the non-determinism of availability after an event was published.
+
+                                await Task.Delay(TimeSpan.FromSeconds(0.5)).ConfigureAwait(false);
                             }
 
                             if (secondSend != null)

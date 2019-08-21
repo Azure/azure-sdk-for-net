@@ -114,8 +114,8 @@ function todo(project: IProject, fn: () => any, location?: string): void {
 
 // Look up a parameter in the global cache
 function getGlobalParameter(project: IProject, ref: string): IParameter {
-    const parts = ref.split(/\//g);
-    if (parts.length !== 3 || parts[0] !== '#' || parts[1] !== 'parameters') {
+    const parts = ref.split(/#/)[1].split(/\//g);
+    if (parts.length !== 3 || parts[0] !== '' || parts[1] !== 'parameters') {
         throw `Invalid parameter reference ${ref}`;
     }
 
@@ -130,8 +130,8 @@ function getGlobalParameter(project: IProject, ref: string): IParameter {
 
 // Look up a type definition in the global cache
 function getGlobalDefinition(project: IProject, ref: string): IModelType {
-    const parts = ref.split(/\//g);
-    if (parts.length !== 3 || parts[0] !== '#' || parts[1] !== 'definitions') {
+    const parts = ref.split(/#/)[1].split(/\//g);
+    if (parts.length !== 3 || parts[0] !== '' || parts[1] !== 'definitions') {
         throw `Invalid definition reference ${ref}`;
     }
 
@@ -149,8 +149,8 @@ function getGlobalDefinition(project: IProject, ref: string): IModelType {
 
 // Look up a response in the global cache
 function getGlobalResponse(project: IProject, code: string, ref: string): IResponse {
-    const parts = ref.split(/\//g);
-    if (parts.length !== 3 || parts[0] !== '#' || parts[1] !== 'responses') {
+    const parts = ref.split(/#/)[1].split(/\//g);
+    if (parts.length !== 3 || parts[0] !== '' || parts[1] !== 'responses') {
         throw `Invalid response reference ${ref}`;
     }
 
@@ -219,7 +219,7 @@ function createServiceInfo(project: IProject): IServiceInfo {
     const schemes = optional(() => project.swagger.schemes, [`https`]);
     if (schemes.length != 1 || schemes[0] != `https`) { throw `Only HTTPS is supported for  project.swagger.schemes`; }
 
-    // Proces produces + consumes
+    // Process produces + consumes
     const consumes = required(() => project.swagger.consumes);
     if (consumes.length != 1 || consumes[0] != `application/xml`) {
         throw `Only application/xml is supported for project.swagger.consumes`;

@@ -596,7 +596,12 @@ function generateValidation(w: IndentWriter, operation: IOperation, parameter: I
 function generateModels(w: IndentWriter, model: IServiceModel): void {
     w.line(`#region Models`);
     const fencepost = IndentWriter.createFenceposter();
-    for (const [name, def] of <[string, IModelType][]>Object.entries(model.models)) {
+    const types = <[string, IModelType][]>Object.entries(model.models);
+    types.sort((a, b) =>
+        a[0] < b[0] ? -1 :
+        a[0] > b[0] ? 1 :
+        0);
+    for (const [name, def] of types) {
         if (fencepost()) { w.line(); }
         if (isEnumType(def) && !def.modelAsString) { generateEnum(w, model, def); }
         else if (isEnumType(def) && def.modelAsString) { generateEnumStrings(w, model, def); }

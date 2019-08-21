@@ -12,13 +12,23 @@ namespace Microsoft.Azure.ServiceBus.Filters
     {
         internal static object ParseValueObject(XElement element)
         {
+            var serializedPrefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.SerializationNamespace));
+            var type = element.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs)).Value;
+
+            if (!string.IsNullOrEmpty(serializedPrefix))
+            {
+                if (type.Substring(serializedPrefix.Length + 1) == "duration")
+                {
+                    return XmlConvert.ToTimeSpan(element.Value);
+                }
+            }
+
             var prefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.XmlSchemaNs));
             if (string.IsNullOrWhiteSpace(prefix))
             {
                 return element.Value;
             }
 
-            var type = element.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs)).Value;
             switch (type.Substring(prefix.Length + 1))
             {
                 case "string":
@@ -33,6 +43,8 @@ namespace Microsoft.Azure.ServiceBus.Filters
                     return XmlConvert.ToDouble(element.Value);
                 case "dateTime":
                     return XmlConvert.ToDateTime(element.Value, XmlDateTimeSerializationMode.Utc);
+                case "duration":
+                    return XmlConvert.ToTimeSpan(element.Value);
                 default:
                     MessagingEventSource.Log.ManagementSerializationException(
                             $"{nameof(XmlObjectConvertor)}_{nameof(ParseValueObject)}",
@@ -68,6 +80,10 @@ namespace Microsoft.Azure.ServiceBus.Filters
             else if (value is DateTime)
             {
                 type += "dateTime";
+            }
+            else if (value is TimeSpan)
+            {
+                type += "duration";
             }
             else
             {

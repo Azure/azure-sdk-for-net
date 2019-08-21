@@ -71,7 +71,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
         /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to
         /// availability set at creation time. An existing VM cannot be added
-        /// to an availability set.</param>
+        /// to an availability set. &lt;br&gt;&lt;br&gt;This property cannot
+        /// exist along with a non-null properties.virtualMachineScaleSet
+        /// reference.</param>
+        /// <param name="virtualMachineScaleSet">Specifies information about
+        /// the virtual machine scale set that the virtual machine should be
+        /// assigned to. Virtual machines specified in the same virtual machine
+        /// scale set are allocated to different nodes to maximize
+        /// availability. Currently, a VM can only be added to virtual machine
+        /// scale set at creation time. An existing VM cannot be added to a
+        /// virtual machine scale set. &lt;br&gt;&lt;br&gt;This property cannot
+        /// exist along with a non-null properties.availabilitySet reference.
+        /// &lt;br&gt;&lt;br&gt;Minimum api‐version: 2019‐03‐01</param>
         /// <param name="proximityPlacementGroup">Specifies information about
         /// the proximity placement group that the virtual machine should be
         /// assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
@@ -102,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
@@ -113,6 +124,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             NetworkProfile = networkProfile;
             DiagnosticsProfile = diagnosticsProfile;
             AvailabilitySet = availabilitySet;
+            VirtualMachineScaleSet = virtualMachineScaleSet;
             ProximityPlacementGroup = proximityPlacementGroup;
             Host = host;
             ProvisioningState = provisioningState;
@@ -199,9 +211,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Currently, a VM can only be
         /// added to availability set at creation time. An existing VM cannot
         /// be added to an availability set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This property cannot exist
+        /// along with a non-null properties.virtualMachineScaleSet reference.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the virtual machine scale
+        /// set that the virtual machine should be assigned to. Virtual
+        /// machines specified in the same virtual machine scale set are
+        /// allocated to different nodes to maximize availability. Currently, a
+        /// VM can only be added to virtual machine scale set at creation time.
+        /// An existing VM cannot be added to a virtual machine scale set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This property cannot exist
+        /// along with a non-null properties.availabilitySet reference.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api‐version: 2019‐03‐01
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualMachineScaleSet")]
+        public SubResource VirtualMachineScaleSet { get; set; }
 
         /// <summary>
         /// Gets or sets specifies information about the proximity placement
