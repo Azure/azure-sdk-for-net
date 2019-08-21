@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
+            skills.Add(new OcrSkill(inputs, outputs, "myocr", "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = algorithm,
                 DefaultLanguageCode = OcrSkillLanguage.En
@@ -365,7 +365,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new EntityRecognitionSkill(inputs1, outputs1, "Tested Entity Recognition skill", RootPathString)
+            skills.Add(new EntityRecognitionSkill(
+                inputs1, 
+                outputs1, 
+                name: "myentity", 
+                description: "Tested Entity Recognition skill", 
+                context: RootPathString)
             {
                 Categories = categories,
                 DefaultLanguageCode = EntityRecognitionSkillLanguage.En,
@@ -404,7 +409,12 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString));
+            skills.Add(new OcrSkill(
+                inputs, 
+                outputs, 
+                name: "myocr",
+                description: "Tested OCR skill", 
+                context: RootPathString));
 
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
@@ -424,7 +434,12 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "description", TargetName = "mydescription" }
             };
 
-            skills.Add(new ImageAnalysisSkill(inputs, outputs, "Tested image analysis skill", RootPathString));
+            skills.Add(new ImageAnalysisSkill(
+                inputs, 
+                outputs, 
+                name: "myimage",
+                description: "Tested image analysis skill", 
+                context: RootPathString));
 
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
@@ -451,7 +466,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new KeyPhraseExtractionSkill(inputs, outputs, "Tested Key Phrase skill", RootPathString));
+            skills.Add(new KeyPhraseExtractionSkill(
+                inputs, 
+                outputs,
+                name: "mykeyphrases", 
+                description: "Tested Key Phrase skill", 
+                context: RootPathString));
 
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
@@ -488,7 +508,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new MergeSkill(inputs, outputs, "Tested Merged Text skill", RootPathString));
+            skills.Add(new MergeSkill(
+                inputs, 
+                outputs,
+                name: "mymerge", 
+                description: "Tested Merged Text skill", 
+                context: RootPathString));
 
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
@@ -515,7 +540,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new EntityRecognitionSkill(inputs, outputs, "Tested Entity Recognition skill", RootPathString));
+            skills.Add(new EntityRecognitionSkill(
+                inputs, 
+                outputs,
+                name: "myentity", 
+                description: "Tested Entity Recognition skill", 
+                context: RootPathString));
 
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
@@ -542,7 +572,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new SentimentSkill(inputs, outputs, "Tested Sentiment skill", RootPathString));
+            skills.Add(new SentimentSkill(
+                inputs, 
+                outputs, 
+                name: "mysentiment",
+                description: "Tested Sentiment skill", 
+                context: RootPathString));
 
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
@@ -569,7 +604,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new SplitSkill(inputs, outputs, "Tested Split skill", RootPathString)
+            skills.Add(new SplitSkill(
+                inputs, 
+                outputs,
+                name: "mysplit", 
+                description: "Tested Split skill", 
+                context: RootPathString)
             {
                 TextSplitMode = TextSplitMode.Pages
             });
@@ -594,7 +634,12 @@ namespace Microsoft.Azure.Search.Tests
                     new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" + i }
                 };
 
-                skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
+                skills.Add(new OcrSkill(
+                    inputs, 
+                    outputs,
+                    name: "myocr-" + i, 
+                    description: "Tested OCR skill", 
+                    context: RootPathString)
                 {
                     TextExtractionAlgorithm = algorithm,
                     ShouldDetectOrientation = shouldDetectOrientation,
@@ -638,7 +683,12 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
+            skills.Add(new OcrSkill(
+                inputs, 
+                outputs,
+                name: "myocr", 
+                description: "Tested OCR skill", 
+                context: RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = ocrLanguageCode
@@ -662,7 +712,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new KeyPhraseExtractionSkill(inputs1, outputs1, "Tested Key Phrase skill", RootPathString)
+            skills.Add(new KeyPhraseExtractionSkill(
+                inputs1, 
+                outputs1,
+                name: "mykeyphrases", 
+                description: "Tested Key Phrase skill", 
+                context: RootPathString)
             {
                 DefaultLanguageCode = keyPhraseLanguageCode
             });
@@ -685,7 +740,13 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
+            skills.Add(
+                new OcrSkill(
+                    inputs, 
+                    outputs,
+                    name: "myocr",
+                    description: "Tested OCR skill", 
+                    context: RootPathString)
             {
                 TextExtractionAlgorithm = algorithm,
                 DefaultLanguageCode = ocrLanguageCode
@@ -709,7 +770,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new SentimentSkill(inputs1, outputs1, "Tested Sentiment skill", RootPathString)
+            skills.Add(new SentimentSkill(
+                inputs1, 
+                outputs1,
+                name: "mysentiment", 
+                description: "Tested Sentiment skill", 
+                context: RootPathString)
             {
                 DefaultLanguageCode = sentimentLanguageCode
             });
@@ -732,7 +798,12 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "description", TargetName = "mydescription" }
             };
 
-            skills.Add(new ImageAnalysisSkill(inputs, outputs, "Tested image analysis skill", RootPathString)
+            skills.Add(new ImageAnalysisSkill(
+                inputs, 
+                outputs,
+                name: "myimage", 
+                description: "Tested image analysis skill", 
+                context: RootPathString)
             {
                 VisualFeatures = new List<VisualFeature>
                 {
@@ -769,7 +840,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new KeyPhraseExtractionSkill(inputs1, outputs1, "Tested Key Phrase skill", RootPathString)
+            skills.Add(new KeyPhraseExtractionSkill(
+                inputs1, 
+                outputs1, 
+                name: "mykeyphrases",
+                description: "Tested Key Phrase skill", 
+                context: RootPathString)
             {
                 DefaultLanguageCode = KeyPhraseExtractionSkillLanguage.En
             });
@@ -799,7 +875,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new LanguageDetectionSkill(inputs, outputs, "Tested Language Detection skill", RootPathString));
+            skills.Add(new LanguageDetectionSkill(
+                inputs, 
+                outputs,
+                name: "mylanguage", 
+                description: "Tested Language Detection skill", 
+                context: RootPathString));
 
             return new Skillset("testskillset3", "Skillset for testing", skills);
         }
@@ -836,7 +917,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new MergeSkill(inputs, outputs, "Tested Merged Text skill", RootPathString)
+            skills.Add(new MergeSkill(
+                inputs, 
+                outputs, 
+                name: "mymerge",
+                description: "Tested Merged Text skill", 
+                context: RootPathString)
             {
                 InsertPreTag = "__",
                 InsertPostTag = "__e"
@@ -860,7 +946,12 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
+            skills.Add(new OcrSkill(
+                inputs, 
+                outputs,
+                name: "myocr", 
+                description: "Tested OCR skill", 
+                context: RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = OcrSkillLanguage.En
@@ -884,7 +975,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new ShaperSkill(inputs1, outputs1, "Tested Shaper skill", RootPathString));
+            skills.Add(new ShaperSkill(
+                inputs1, 
+                outputs1,
+                name: "myshaper", 
+                description: "Tested Shaper skill", 
+                context: RootPathString));
 
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
@@ -904,7 +1000,12 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
+            skills.Add(new OcrSkill(
+                inputs, 
+                outputs,
+                name: "myocr", 
+                description: "Tested OCR skill", 
+                context: RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = OcrSkillLanguage.En
@@ -928,7 +1029,12 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
+            skills.Add(new OcrSkill(
+                inputs, 
+                outputs,
+                name: "myocr", 
+                description: "Tested OCR skill", 
+                context: RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = ocrLanguageCode
@@ -952,7 +1058,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new SplitSkill(inputs1, outputs1, "Tested Split skill", RootPathString)
+            skills.Add(new SplitSkill(
+                inputs1, 
+                outputs1, 
+                name: "mysplit",
+                description: "Tested Split skill", 
+                context: RootPathString)
             {
                 TextSplitMode = textSplitMode,
                 DefaultLanguageCode = splitLanguageCode
@@ -998,17 +1109,26 @@ namespace Microsoft.Azure.Search.Tests
 
             if (isShaper)
             {
-                skills.Add(new ShaperSkill(inputs, outputs, "Tested Shaper skill", RootPathString));
+                skills.Add(new ShaperSkill(
+                    inputs, 
+                    outputs, 
+                    name: "myshaper",
+                    description: "Tested Shaper skill", 
+                    context: RootPathString));
             }
             else
             {
                 // Used for testing skill that shouldn't allow nested inputs
-                skills.Add(new WebApiSkill(inputs, outputs, "Invalid skill with nested inputed", RootPathString));
+                skills.Add(new WebApiSkill(
+                    inputs, 
+                    outputs,
+                    uri: "https://contoso.example.org",
+                    description: "Invalid skill with nested inputed", 
+                    context: RootPathString));
             }
 
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
-
 
         private static Skillset CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage defaultToLanguageCode, TextTranslationSkillLanguage? defaultFromLanguageCode = null, TextTranslationSkillLanguage? suggestedFrom = null)
         {
@@ -1042,7 +1162,13 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new TextTranslationSkill(inputs, outputs, defaultToLanguageCode, defaultFromLanguageCode: defaultFromLanguageCode, suggestedFrom: suggestedFrom));
+            skills.Add(new TextTranslationSkill(
+                inputs, 
+                outputs, 
+                defaultToLanguageCode, 
+                name: "mytranslate",
+                defaultFromLanguageCode: defaultFromLanguageCode, 
+                suggestedFrom: suggestedFrom));
 
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
@@ -1079,7 +1205,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new ConditionalSkill(inputs, outputs, "Tested Conditional skill", RootPathString));
+            skills.Add(new ConditionalSkill(
+                inputs, 
+                outputs,
+                name: "myconditional", 
+                description: "Tested Conditional skill", 
+                context: RootPathString));
 
             return new Skillset("testskillset3", "Skillset for testing", skills);
         }
@@ -1110,10 +1241,12 @@ namespace Microsoft.Azure.Search.Tests
                     inputs,
                     outputs,
                     uri: "https://contoso.example.org",
+                    name: "mywebapi",
                     description: "A simple web api skill",
                     context: RootPathString)
             {
-                HttpMethod = "POST"
+                HttpMethod = "POST",
+                DegreeOfParallelism = 7
             };
 
             if (includeHeader)
