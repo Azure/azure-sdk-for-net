@@ -84,17 +84,11 @@ namespace FrontDoor.Tests.ScenarioTests
                     sendRecvTimeoutSeconds: 123
                     );
 
-                CustomHttpsConfiguration customHttpsConfiguration1 = new CustomHttpsConfiguration(
-                    certificateSource: "AzureKeyVault",
-                    minimumTlsVersion: "1.2"
-                    );
-
                 FrontendEndpoint frontendEndpoint1 = new FrontendEndpoint(
                     name: "frontendEndpoint1",
                     hostName: frontDoorName+".azurefd.net",
                     sessionAffinityEnabledState: "Disabled",
-                    sessionAffinityTtlSeconds: 0,
-                    customHttpsConfiguration: customHttpsConfiguration1
+                    sessionAffinityTtlSeconds: 0
                     );
 
                 FrontDoorModel createParameters = new FrontDoorModel
@@ -113,10 +107,9 @@ namespace FrontDoor.Tests.ScenarioTests
                     BackendPools = new List<BackendPool> { backendPool1 },
                     BackendPoolsSettings = backendPoolsSettings1
                 };
-                
-                
-                var createdFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, createParameters);
 
+                var createdFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, createParameters);
+                
                 // validate that correct frontdoor is created
                 VerifyFrontDoor(createdFrontDoor, createParameters);
 
@@ -395,12 +388,6 @@ namespace FrontDoor.Tests.ScenarioTests
                 Assert.Equal(frontendEndpoint[i].SessionAffinityEnabledState, parameters[i].SessionAffinityEnabledState);
                 Assert.Equal(frontendEndpoint[i].SessionAffinityTtlSeconds, parameters[i].SessionAffinityTtlSeconds);
             }
-        }
-
-        private static void VerifyCustomHttpsConfiguration(CustomHttpsConfiguration customHttpsConfiguration, CustomHttpsConfiguration parameters)
-        {
-            Assert.Equal(customHttpsConfiguration.CertificateSource, parameters.CertificateSource);
-            Assert.Equal(customHttpsConfiguration.MinimumTlsVersion, parameters.MinimumTlsVersion);
         }
     }
 }
