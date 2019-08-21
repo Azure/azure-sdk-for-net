@@ -17,6 +17,7 @@ namespace LUIS.Authoring.Tests.Luis
         protected readonly Guid GlobalAppIdError = new Guid("86226c53-b7a6-416f-876b-226b2b5ab07d");
         protected readonly Guid GlobalNoneId = new Guid("9a3fce96-2ab4-4f88-ba80-2011731e3188");
         protected const string AuthoringKey = "00000000000000000000000000000000";
+        protected readonly string OwnerEmail = "AppOwner@microsoft.com";
 
 
         private string ClassName => GetType().FullName;
