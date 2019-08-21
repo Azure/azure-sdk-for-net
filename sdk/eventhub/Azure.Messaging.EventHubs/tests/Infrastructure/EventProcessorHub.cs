@@ -3,7 +3,6 @@
 
 using Azure.Messaging.EventHubs.Processor;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -21,25 +20,37 @@ namespace Azure.Messaging.EventHubs.Tests
         ///    TODO.
         /// </summary>
         ///
+        private Func<PartitionContext, CheckpointManager, IPartitionProcessor> PartitionProcessorFactory { get; }
+
+        /// <summary>
+        ///    TODO.
+        /// </summary>
+        ///
+        private string ConsumerGroup { get; }
+
+        /// <summary>
+        ///    TODO.
+        /// </summary>
+        ///
+        private EventHubClient InnerClient { get; }
+
+        /// <summary>
+        ///    TODO.
+        /// </summary>
+        ///
+        private PartitionManager InnerPartitionManager { get; }
+
+        /// <summary>
+        ///    TODO.
+        /// </summary>
+        ///
+        private EventProcessorOptions Options { get; }
+
+        /// <summary>
+        ///    TODO.
+        /// </summary>
+        ///
         private List<EventProcessor> EventProcessors { get; }
-
-        /// <summary>
-        ///    TODO.
-        /// </summary>
-        ///
-        public ConcurrentDictionary<string, int> EventsCount { get; }
-
-        /// <summary>
-        ///    TODO.
-        /// </summary>
-        ///
-        public ConcurrentDictionary<string, int> PartitionDistribution { get; }
-
-        /// <summary>
-        ///    TODO.
-        /// </summary>
-        ///
-        public ConcurrentDictionary<string, PartitionProcessorCloseReason> CloseReason { get; }
 
         /// <summary>
         ///    TODO.
@@ -47,35 +58,47 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public EventProcessorHub(string consumerGroup,
                                  EventHubClient client,
-                                 int eventProcessorCount = 1)
+                                 Action<PartitionContext, CheckpointManager> onInitialize = null,
+                                 Action<PartitionContext, CheckpointManager, PartitionProcessorCloseReason> onClose = null,
+                                 Action<PartitionContext, CheckpointManager, IEnumerable<EventData>, CancellationToken> onProcessEvents = null,
+                                 Action<PartitionContext, CheckpointManager, Exception, CancellationToken> onProcessError = null)
         {
-            Func<PartitionContext, CheckpointManager, IPartitionProcessor> factory =
-                (partitionContext, checkpointManager) =>
-                {
-                    return new PartitionProcessor(this, partitionContext.PartitionId);
-                };
+            ConsumerGroup = consumerGroup;
+            InnerClient = client;
 
-            var partitionManager = new InMemoryPartitionManager();
-
-            var options = new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(2) };
-
-            EventProcessors = new List<EventProcessor>();
-
-            for (int i = 0; i < eventProcessorCount; i++)
-            {
-                EventProcessors.Add
+            PartitionProcessorFactory = (partitionContext, checkpointManager) =>
+                new PartitionProcessor
                 (
-                    new EventProcessor(consumerGroup,
-                        client,
-                        factory,
-                        partitionManager,
-                        options
-                ));
-            }
+                    partitionContext,
+                    checkpointManager,
+                    onInitialize,
+                    onClose,
+                    onProcessEvents,
+                    onProcessError
+                );
 
-            EventsCount = new ConcurrentDictionary<string, int>();
-            PartitionDistribution = new ConcurrentDictionary<string, int>();
-            CloseReason = new ConcurrentDictionary<string, PartitionProcessorCloseReason>();
+            InnerPartitionManager = new InMemoryPartitionManager();
+            Options = new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(2) };
+            EventProcessors = new List<EventProcessor>();
+        }
+
+        /// <summary>
+        ///    TODO.
+        /// </summary>
+        ///
+        public void AddEventProcessors(int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                EventProcessors.Add(new EventProcessor
+                    (
+                        ConsumerGroup,
+                        InnerClient,
+                        PartitionProcessorFactory,
+                        InnerPartitionManager,
+                        Options
+                    ));
+            }
         }
 
         /// <summary>
@@ -108,22 +131,55 @@ namespace Azure.Messaging.EventHubs.Tests
             ///    TODO.
             /// </summary>
             ///
-            private EventProcessorHub Hub;
+            private PartitionContext AssociatedPartitionContext { get; }
 
             /// <summary>
             ///    TODO.
             /// </summary>
             ///
-            private string PartitionId { get; }
+            private CheckpointManager CheckpointManagerReference { get; }
 
             /// <summary>
             ///    TODO.
             /// </summary>
             ///
-            public PartitionProcessor(EventProcessorHub hub, string partitionId)
+            private Action<PartitionContext, CheckpointManager> OnInitialize { get; }
+
+            /// <summary>
+            ///    TODO.
+            /// </summary>
+            ///
+            private Action<PartitionContext, CheckpointManager, PartitionProcessorCloseReason> OnClose { get; }
+
+            /// <summary>
+            ///    TODO.
+            /// </summary>
+            ///
+            private Action<PartitionContext, CheckpointManager, IEnumerable<EventData>, CancellationToken> OnProcessEvents { get; }
+
+            /// <summary>
+            ///    TODO.
+            /// </summary>
+            ///
+            private Action<PartitionContext, CheckpointManager, Exception, CancellationToken> OnProcessError { get; }
+
+            /// <summary>
+            ///    TODO.
+            /// </summary>
+            ///
+            public PartitionProcessor(PartitionContext partitionContext,
+                                      CheckpointManager checkpointManager,
+                                      Action<PartitionContext, CheckpointManager> onInitialize = null,
+                                      Action<PartitionContext, CheckpointManager, PartitionProcessorCloseReason> onClose = null,
+                                      Action<PartitionContext, CheckpointManager, IEnumerable<EventData>, CancellationToken> onProcessEvents = null,
+                                      Action<PartitionContext, CheckpointManager, Exception, CancellationToken> onProcessError = null)
             {
-                Hub = hub;
-                PartitionId = partitionId;
+                AssociatedPartitionContext = partitionContext;
+                CheckpointManagerReference = checkpointManager;
+                OnInitialize = onInitialize;
+                OnClose = onClose;
+                OnProcessEvents = onProcessEvents;
+                OnProcessError = onProcessError;
             }
 
             /// <summary>
@@ -132,10 +188,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             public Task InitializeAsync()
             {
-                // If key already exists, the original value won't be overwritten.
-
-                Hub.EventsCount.TryAdd(PartitionId, 0);
-
+                OnInitialize?.Invoke(AssociatedPartitionContext, CheckpointManagerReference);
                 return Task.CompletedTask;
             }
 
@@ -145,8 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             public Task CloseAsync(PartitionProcessorCloseReason reason)
             {
-                Hub.CloseReason[PartitionId] = reason;
-
+                OnClose?.Invoke(AssociatedPartitionContext, CheckpointManagerReference, reason);
                 return Task.CompletedTask;
             }
 
@@ -157,12 +209,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public Task ProcessEventsAsync(IEnumerable<EventData> events,
                                            CancellationToken cancellationToken)
             {
-                if (events.Count() > 0)
-                {
-                    var existingValue = Hub.EventsCount[PartitionId];
-                    Hub.EventsCount.TryUpdate(PartitionId, existingValue + events.Count(), existingValue);
-                }
-
+                OnProcessEvents?.Invoke(AssociatedPartitionContext, CheckpointManagerReference, events, cancellationToken);
                 return Task.CompletedTask;
             }
 
@@ -173,6 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public Task ProcessErrorAsync(Exception exception,
                                           CancellationToken cancellationToken)
             {
+                OnProcessError?.Invoke(AssociatedPartitionContext, CheckpointManagerReference, exception, cancellationToken);
                 return Task.CompletedTask;
             }
         }
