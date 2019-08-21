@@ -135,5 +135,19 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(header1Value, req1Value);
             Assert.AreEqual(header1Value, req2Value);
         }
+
+        [Test]
+        public void ParsesValidSyncToken()
+        {
+            string id = "jtqGc1I4";
+            string value = "MDoyOA==";
+            long seqNo = 28;
+            string headerValue = $"{id}={value};sn={seqNo}";
+
+            Assert.IsTrue(SyncTokenUtils.TryParse(headerValue, out SyncToken syncToken));
+            Assert.AreEqual(id, syncToken.Id);
+            Assert.AreEqual(value, syncToken.Value);
+            Assert.AreEqual(seqNo, syncToken.SequenceNumber);
+        }
     }
 }
