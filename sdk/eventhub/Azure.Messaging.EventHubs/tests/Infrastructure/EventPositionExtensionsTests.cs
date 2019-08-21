@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using System;
 
-namespace Azure.Messaging.EventHubs.Tests.Infrastructure
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="EventPositionExtensions" />

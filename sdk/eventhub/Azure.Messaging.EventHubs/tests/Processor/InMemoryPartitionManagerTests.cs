@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Tests.Processor
 {
     /// <summary>
     ///   The suite of tests for the <see cref="InMemoryPartitionManager" />
