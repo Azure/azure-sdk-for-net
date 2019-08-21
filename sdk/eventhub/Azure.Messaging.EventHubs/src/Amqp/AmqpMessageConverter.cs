@@ -504,10 +504,10 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return ReadOnlyMemory<byte>.Empty;
             }
 
-           using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-           stream.CopyTo(memStream, StreamBufferSizeInBytes);
+            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+            stream.CopyTo(memStream, StreamBufferSizeInBytes);
 
-           return new ReadOnlyMemory<byte>(memStream.ToArray());
+            return new ReadOnlyMemory<byte>(memStream.ToArray());
         }
     }
 }

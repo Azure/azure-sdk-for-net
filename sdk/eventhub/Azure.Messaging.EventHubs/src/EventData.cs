@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {

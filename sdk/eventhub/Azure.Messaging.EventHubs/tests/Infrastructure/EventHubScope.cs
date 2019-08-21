@@ -28,10 +28,10 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
     public sealed class EventHubScope : IAsyncDisposable
     {
         /// <summary>The maximum number of attempts to retry a management operation.</summary>
-        private const int RetryMaximumAttemps = 12;
+        private const int RetryMaximumAttemps = 15;
 
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
-        private const double RetryExponentialBackoffSeconds = 1.0;
+        private const double RetryExponentialBackoffSeconds = 1.5;
 
         /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
         private const double RetryBaseJitterSeconds = 7.0;
@@ -98,6 +98,15 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
             try
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.EventHubs.DeleteAsync(resourceGroup, eventHubNamespace, EventHubName));
+            }
+            catch
+            {
+                // This should not be considered a critical failure that results in a test failure.  Due
+                // to ARM being temperamental, some management operations may be rejected.  Throwing here
+                // does not help to ensure resource cleanup only flags the test itself as a failure.
+                //
+                // If an Event Hub fails to be deleted, removing of the associated namespace at the end of the
+                // test run will also remove the orphan.
             }
             finally
             {
