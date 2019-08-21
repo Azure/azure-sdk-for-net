@@ -184,7 +184,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a client is closing, which may corespond to an <see cref="EventHubClient" />,
+        ///   Indicates that a client is closing, which may correspond to an <see cref="EventHubClient" />,
         ///   <see cref="EventHubProducer" />, or <see cref="EventHubConsumer" />.
         /// </summary>
         ///
@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a client has been closed, which may corespond to an <see cref="EventHubClient" />,
+        ///   Indicates that a client has been closed, which may correspond to an <see cref="EventHubClient" />,
         ///   <see cref="EventHubProducer" />, or <see cref="EventHubConsumer" />.
         /// </summary>
         ///
