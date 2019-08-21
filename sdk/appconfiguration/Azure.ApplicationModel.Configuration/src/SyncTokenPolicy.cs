@@ -49,19 +49,24 @@ namespace Azure.ApplicationModel.Configuration
 
             if (message.Response.Headers.TryGetValues(SyncTokenHeader, out IEnumerable<string> rawSyncTokens))
             {
-                foreach (string rawToken in rawSyncTokens)
+                foreach (string fullRawToken in rawSyncTokens)
                 {
-                    if (SyncTokenUtils.TryParse(rawToken, out SyncToken token))
+                    // Handle multiple header values.
+                    string[] rawTokens = fullRawToken.Split(',');
+                    foreach (string rawToken in rawTokens)
                     {
-                        _syncTokens.AddOrUpdate(token.Id, token, (key, existing) =>
+                        if (SyncTokenUtils.TryParse(rawToken, out SyncToken token))
                         {
-                            if (existing.SequenceNumber < token.SequenceNumber)
+                            _syncTokens.AddOrUpdate(token.Id, token, (key, existing) =>
                             {
-                                return token;
-                            }
+                                if (existing.SequenceNumber < token.SequenceNumber)
+                                {
+                                    return token;
+                                }
 
-                            return existing;
-                        });
+                                return existing;
+                            });
+                        }
                     }
                 }
             }
