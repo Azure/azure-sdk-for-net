@@ -18,7 +18,7 @@ namespace Microsoft.AzureStack.Management.Subscription
     /// <summary>
     /// Subscription Management Client
     /// </summary>
-    public partial interface SubscriptionClient : System.IDisposable
+    public partial interface ISubscriptionClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
