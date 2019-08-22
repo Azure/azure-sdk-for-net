@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -265,30 +266,24 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="SubscribeToEvents(CancellationToken)"/>
         ///
-        public virtual IAsyncEnumerable<EventData> SubscribeToEvents(TimeSpan? maximumWaitTime,
-                                                                     CancellationToken cancellationToken = default)
+        public virtual async IAsyncEnumerable<EventData> SubscribeToEvents(TimeSpan? maximumWaitTime,
+                                                                          [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return CreateEmptyAsyncEnumerable<EventData>();
-            }
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2));
+            var subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
 
             try
             {
-                var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2));
-                var subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
-
-                return new ChannelEnumerableSubscription<EventData>(subscription.ChannelReader, maximumWaitTime, () => UnsubscribeFromChannelAsync(subscription.Identifier), cancellationToken);
+                await foreach (var item in subscription.ChannelReader.EnumerateChannel(maximumWaitTime, cancellationToken).ConfigureAwait(false))
+                {
+                    yield return item;
+                }
             }
-            catch (Exception ex) when
-                (ex is TaskCanceledException
-                || ex is OperationCanceledException)
+            finally
             {
-
-                // This is unlikely, but possible if cancellation is triggered after the conditional, and
-                // indicates that the synchronization primitive for subscriptions referenced the canceled token.
-
-                return CreateEmptyAsyncEnumerable<EventData>();
+                await UnsubscribeFromChannelAsync(subscription.Identifier).ConfigureAwait(false);
             }
         }
 

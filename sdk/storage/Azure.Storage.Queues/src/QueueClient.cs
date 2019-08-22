@@ -754,7 +754,7 @@ namespace Azure.Storage.Queues
 
         #region ClearMessages
         /// <summary>
-        /// Clear deletes all messages from a queue.
+        /// Deletes all messages from a queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
         /// </summary>
         /// <param name="cancellationToken">
@@ -771,7 +771,7 @@ namespace Azure.Storage.Queues
                 .EnsureCompleted();
 
         /// <summary>
-        /// Clear deletes all messages from a queue.
+        /// Deletes all messages from a queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
         /// </summary>
         /// <param name="cancellationToken">
@@ -788,7 +788,7 @@ namespace Azure.Storage.Queues
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Clear deletes all messages from a queue.
+        /// Deletes all messages from a queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
         /// </summary>
         /// <param name="async">

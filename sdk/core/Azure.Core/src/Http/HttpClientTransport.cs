@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -73,7 +74,7 @@ namespace Azure.Core.Pipeline
             return pipelineRequest.BuildRequestMessage(message.CancellationToken);
         }
 
-        internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
+        internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
         {
             if (TryGetHeader(headers, content, name, out IEnumerable<string> values))
             {
@@ -85,12 +86,12 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out IEnumerable<string> values)
+        internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, out IEnumerable<string> values)
         {
             return headers.TryGetValues(name, out values) || content?.Headers.TryGetValues(name, out values) == true;
         }
 
-        internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent content)
+        internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent? content)
         {
             foreach (var header in headers)
             {
@@ -106,7 +107,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        internal static bool RemoveHeader(HttpHeaders headers, HttpContent content, string name)
+        internal static bool RemoveHeader(HttpHeaders headers, HttpContent? content, string name)
         {
             // .Remove throws on invalid header name so use TryGet here to check
             if (headers.TryGetValues(name, out _ ) && headers.Remove(name))
@@ -117,7 +118,7 @@ namespace Azure.Core.Pipeline
             return content?.Headers.TryGetValues(name, out _ ) == true && content.Headers.Remove(name);
         }
 
-        internal static bool ContainsHeader(HttpHeaders headers, HttpContent content, string name)
+        internal static bool ContainsHeader(HttpHeaders headers, HttpContent? content, string name)
         {
             // .Contains throws on invalid header name so use TryGet here
             if (headers.TryGetValues(name, out _))
@@ -149,7 +150,7 @@ namespace Azure.Core.Pipeline
             private bool _wasSent = false;
             private readonly HttpRequestMessage _requestMessage;
 
-            private PipelineContentAdapter _requestContent;
+            private PipelineContentAdapter? _requestContent;
 
             public PipelineRequest()
             {
@@ -163,7 +164,7 @@ namespace Azure.Core.Pipeline
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
-            public override HttpPipelineRequestContent Content { get; set; }
+            public override HttpPipelineRequestContent? Content { get; set; }
 
             public override string ClientRequestId { get; set; }
 
@@ -174,14 +175,14 @@ namespace Azure.Core.Pipeline
                     return;
                 }
 
-                EnsureContentInitialized();
-                if (!_requestContent.Headers.TryAddWithoutValidation(name, value))
+                var requestContent = EnsureContentInitialized();
+                if (!requestContent.Headers.TryAddWithoutValidation(name, value))
                 {
                     throw new InvalidOperationException("Unable to add header to request or content");
                 }
             }
 
-            protected internal override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out values);
 
@@ -215,12 +216,11 @@ namespace Azure.Core.Pipeline
                     if (_wasSent)
                     {
                         currentContent = new PipelineContentAdapter();
-                        CopyHeaders(_requestContent.Headers, currentContent.Headers);
+                        CopyHeaders(_requestContent!.Headers, currentContent.Headers);
                     }
                     else
                     {
-                        EnsureContentInitialized();
-                        currentContent = _requestContent;
+                        currentContent = EnsureContentInitialized();
                     }
 
                     currentContent.CancellationToken = cancellation;
@@ -284,31 +284,33 @@ namespace Azure.Core.Pipeline
                 return new HttpMethod(method);
             }
 
-            private void EnsureContentInitialized()
+            private PipelineContentAdapter EnsureContentInitialized()
             {
                 if (_requestContent == null)
                 {
                     _requestContent = new PipelineContentAdapter();
                 }
+
+                return _requestContent;
             }
 
             sealed class PipelineContentAdapter : HttpContent
             {
-                public HttpPipelineRequestContent PipelineContent { get; set; }
+                public HttpPipelineRequestContent? PipelineContent { get; set; }
 
                 public CancellationToken CancellationToken { get; set; }
 
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
                 {
                     Debug.Assert(PipelineContent != null);
-                    await PipelineContent.WriteToAsync(stream, CancellationToken).ConfigureAwait(false);
+                    await PipelineContent!.WriteToAsync(stream, CancellationToken).ConfigureAwait(false);
                 }
 
                 protected override bool TryComputeLength(out long length)
                 {
                     Debug.Assert(PipelineContent != null);
 
-                    return PipelineContent.TryComputeLength(out length);
+                    return PipelineContent!.TryComputeLength(out length);
                 }
             }
         }
@@ -317,7 +319,7 @@ namespace Azure.Core.Pipeline
         {
             private readonly HttpResponseMessage _responseMessage;
 
-            private Stream _contentStream;
+            private Stream? _contentStream;
 
             public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
             {
@@ -329,7 +331,7 @@ namespace Azure.Core.Pipeline
 
             public override string ReasonPhrase => _responseMessage.ReasonPhrase;
 
-            public override Stream ContentStream
+            public override Stream? ContentStream
             {
                 get
                 {
@@ -364,7 +366,7 @@ namespace Azure.Core.Pipeline
 
             public override string ClientRequestId { get; set; }
 
-            protected internal override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out values);
 
@@ -383,36 +385,34 @@ namespace Azure.Core.Pipeline
         private class ContentStream : ReadOnlyStream
         {
             private readonly Task<Stream> _contentTask;
-            private Stream _contentStream;
+            private Stream? _contentStream;
 
             public ContentStream(Task<Stream> contentTask)
             {
                 _contentTask = contentTask;
             }
+
             public override long Seek(long offset, SeekOrigin origin)
             {
-                EnsureStream();
-                return _contentStream.Seek(offset, origin);
+                return Stream.Seek(offset, origin);
             }
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
                 await EnsureStreamAsync().ConfigureAwait(false);
-                return await _contentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+                return await Stream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
             }
 
             public override int Read(byte[] buffer, int offset, int count)
             {
-                EnsureStream();
-                return _contentStream.Read(buffer, offset, count);
+                return Stream.Read(buffer, offset, count);
             }
 
             public override bool CanRead
             {
                 get
                 {
-                    EnsureStream();
-                    return _contentStream.CanRead;
+                    return Stream.CanRead;
                 }
             }
 
@@ -420,8 +420,7 @@ namespace Azure.Core.Pipeline
             {
                 get
                 {
-                    EnsureStream();
-                    return _contentStream.CanSeek;
+                    return Stream.CanSeek;
                 }
             }
 
@@ -429,8 +428,7 @@ namespace Azure.Core.Pipeline
             {
                 get
                 {
-                    EnsureStream();
-                    return _contentStream.Length;
+                    return Stream.Length;
                 }
             }
 
@@ -438,32 +436,35 @@ namespace Azure.Core.Pipeline
             {
                 get
                 {
-                    EnsureStream();
-                    return _contentStream.Position;
+                    return Stream.Position;
                 }
                 set
                 {
-                    EnsureStream();
-                    _contentStream.Position = value;
+                    Stream.Position = value;
                 }
             }
 
-            private void EnsureStream()
+            private Stream Stream
             {
-                if (_contentStream != null)
+                get
                 {
-                    EnsureStreamAsync().GetAwaiter().GetResult();
+                    if (_contentStream == null)
+                    {
+                        return EnsureStreamAsync().GetAwaiter().GetResult();
+                    }
+
+                    return _contentStream;
                 }
             }
 
-            private Task EnsureStreamAsync()
+            private ValueTask<Stream> EnsureStreamAsync()
             {
-                async Task EnsureStreamAsyncImpl()
+                async ValueTask<Stream> EnsureStreamAsyncImpl()
                 {
-                    _contentStream = await _contentTask.ConfigureAwait(false);
+                    return (_contentStream = await _contentTask.ConfigureAwait(false));
                 }
 
-                return _contentStream == null ? EnsureStreamAsyncImpl() : Task.CompletedTask;
+                return _contentStream == null ? EnsureStreamAsyncImpl() : new ValueTask<Stream>(_contentStream);
             }
         }
     }

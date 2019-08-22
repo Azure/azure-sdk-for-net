@@ -60,7 +60,7 @@ namespace Azure.Identity
 
             _options = options ?? new IdentityClientOptions();
 
-            _pipeline = HttpPipelineBuilder.Build(_options, bufferResponse: true);
+            _pipeline = HttpPipelineBuilder.Build(_options);
 
             _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
         }

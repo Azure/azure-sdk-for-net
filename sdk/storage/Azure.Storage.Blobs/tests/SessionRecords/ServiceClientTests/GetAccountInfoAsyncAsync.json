@@ -5,29 +5,30 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|83329d13-417105b58f893b74.",
+        "Request-Id": "|584d31c8-4110f39a1cab3ec1.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190719.1\u002bc8048e578cb4cbc84a82baab49fbe6ebc3f4bd7e",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "2d12073170d16ad80bbda7fd265fa953",
-        "x-ms-date": "Fri, 19 Jul 2019 22:31:07 GMT",
+        "x-ms-date": "Fri, 16 Aug 2019 17:08:17 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-02-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 19 Jul 2019 22:31:07 GMT",
+        "Date": "Fri, 16 Aug 2019 17:08:17 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-account-kind": "StorageV2",
-        "x-ms-request-id": "9db62903-701e-003b-0581-3e08aa000000",
+        "x-ms-client-request-id": "2d12073170d16ad80bbda7fd265fa953",
+        "x-ms-request-id": "b901180d-a01e-0081-3a55-54edd4000000",
         "x-ms-sku-name": "Standard_RAGRS",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     }

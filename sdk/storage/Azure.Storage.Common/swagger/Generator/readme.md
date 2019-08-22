@@ -18,8 +18,7 @@ pipeline:
         # Add `azure-track2-csharp: true` in config
         # or pass `--azure-track2-csharp` to the CLI
         scope: azure-track2-csharp
-        # There's no `input:` section because we process the raw swagger
-
+        input: swagger-document/individual/transform
 #
 # Everything else configures AutoRest to save any files we write out
 #

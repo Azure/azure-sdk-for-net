@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // Create a new consumer beginning using the third event as the last sequence number processed; this new consumer will begin reading at the next available
                     // sequence number, allowing it to read the set of published events beginning with the fourth one.
 
-                    await using (EventHubConsumer newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber)))
+                    await using (EventHubConsumer newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber.Value)))
                     {
                         // We will consume the events using the new consumer until all of the published events have been received.
 

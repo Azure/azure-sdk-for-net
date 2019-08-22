@@ -311,6 +311,10 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         metadata: metadata,
+                        fileAttributes: "None", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        filePermission: "inherit", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        fileCreationTime: "Now", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        fileLastWriteTime: "Now", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
                         async: async,
                         operationName: Constants.File.Directory.CreateOperationName,
                         cancellationToken: cancellationToken)
