@@ -497,7 +497,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                         // Validate results.
 
-                        Assert.That(receivedEventsCount, Is.EqualTo(expectedEventsCount));
+                        Assert.That(receivedEventsCount, Is.EqualTo(expectedEventsCount), $"Events should match in iteration { i + 1 }.");
                     }
                 }
             }
