@@ -181,15 +181,19 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             client,
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
-                                if (events.Count() > 0)
+                                // Make it a list so we can avoid enumerating it twice.
+
+                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
+
+                                if (eventsList.Count > 0)
                                 {
                                     allReceivedEvents.AddOrUpdate
                                     (
                                         partitionContext.PartitionId,
-                                        partitionId => new List<EventData>(events),
+                                        partitionId => eventsList,
                                         (partitionId, list) =>
                                         {
-                                            list.AddRange(events);
+                                            list.AddRange(eventsList);
                                             return list;
                                         }
                                     );
@@ -452,9 +456,13 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             client,
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
-                                if (events.Count() > 0)
+                                // Make it a list so we can avoid enumerating it twice.
+
+                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
+
+                                if (eventsList.Count > 0)
                                 {
-                                    Interlocked.Add(ref receivedEventsCount, events.Count());
+                                    Interlocked.Add(ref receivedEventsCount, eventsList.Count);
                                 }
                             }
                         );
@@ -557,9 +565,13 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
-                                if (events.Count() > 0)
+                                // Make it a list so we can avoid enumerating it twice.
+
+                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
+
+                                if (eventsList.Count > 0)
                                 {
-                                    Interlocked.Add(ref receivedEventsCount, events.Count());
+                                    Interlocked.Add(ref receivedEventsCount, eventsList.Count);
                                 }
                             }
                         );
@@ -718,12 +730,16 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
+                                // Make it a list so we can avoid enumerating it twice.
+
+                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
+
                                 // In case we find a message count greater than the allowed amount, we only store the first
                                 // occurrence and ignore the subsequent ones.
 
-                                if (events.Count() > maximumMessageCount)
+                                if (eventsList.Count > maximumMessageCount)
                                 {
-                                    Interlocked.CompareExchange(ref unexpectedMessageCount, events.Count(), -1);
+                                    Interlocked.CompareExchange(ref unexpectedMessageCount, eventsList.Count, -1);
                                 }
                             }
                         );
