@@ -46,10 +46,13 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         /// </summary>
         ///
         [Test]
-        public void MaximumMessageCountIsValidated()
+        [TestCase(-32767)]
+        [TestCase(-1)]
+        [TestCase(0)]
+        public void MaximumMessageCountIsValidated(int maximumMessageCount)
         {
             var options = new EventProcessorOptions();
-            Assert.That(() => options.MaximumMessageCount = 0, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(() => options.MaximumMessageCount = maximumMessageCount, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>
@@ -58,10 +61,14 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         /// </summary>
         ///
         [Test]
-        public void MaximumReceiveWaitTimeIsValidated()
+        [TestCase(-1)]
+        [TestCase(-100)]
+        [TestCase(-1000)]
+        [TestCase(-10000)]
+        public void MaximumReceiveWaitTimeIsValidated(int timeSpanDelta)
         {
             var options = new EventProcessorOptions();
-            Assert.That(() => options.MaximumReceiveWaitTime = TimeSpan.FromSeconds(-1), Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(() => options.MaximumReceiveWaitTime = TimeSpan.FromMilliseconds(timeSpanDelta), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         /// <summary>
