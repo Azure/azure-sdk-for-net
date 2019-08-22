@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -278,7 +278,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -334,7 +334,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -451,7 +451,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -555,7 +555,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -612,7 +612,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -716,7 +716,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -780,7 +780,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -845,7 +845,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Create the event processor hub to manage our event processors.
 
-                    var hub = new EventProcessorHub
+                    var hub = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,

@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   Provides an easy way to instantiate, start and stop multiple event processors.
     /// </summary>
     ///
-    internal class EventProcessorHub
+    internal class EventProcessorManager
     {
         /// <summary>
         ///   A factory used to create partition processors.
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private List<EventProcessor> EventProcessors { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorHub"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
@@ -65,13 +65,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="onProcessEvents">A callback action to be called on <see cref="PartitionProcessor.ProcessEventsAsync" />.</param>
         /// <param name="onProcessError">A callback action to be called on <see cref="PartitionProcessor.ProcessErrorAsync" />.</param>
         ///
-        public EventProcessorHub(string consumerGroup,
-                                 EventHubClient client,
-                                 EventProcessorOptions options = null,
-                                 Action<PartitionContext, CheckpointManager> onInitialize = null,
-                                 Action<PartitionContext, CheckpointManager, PartitionProcessorCloseReason> onClose = null,
-                                 Action<PartitionContext, CheckpointManager, IEnumerable<EventData>, CancellationToken> onProcessEvents = null,
-                                 Action<PartitionContext, CheckpointManager, Exception, CancellationToken> onProcessError = null)
+        public EventProcessorManager(string consumerGroup,
+                                     EventHubClient client,
+                                     EventProcessorOptions options = null,
+                                     Action<PartitionContext, CheckpointManager> onInitialize = null,
+                                     Action<PartitionContext, CheckpointManager, PartitionProcessorCloseReason> onClose = null,
+                                     Action<PartitionContext, CheckpointManager, IEnumerable<EventData>, CancellationToken> onProcessEvents = null,
+                                     Action<PartitionContext, CheckpointManager, Exception, CancellationToken> onProcessError = null)
         {
             ConsumerGroup = consumerGroup;
             InnerClient = client;
