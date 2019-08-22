@@ -58,7 +58,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue));
 
-            Assert.AreEqual($"{header1Value},{header2Value}", reqValue);
+            Assert.True($"{header1Value},{header2Value}".Equals(reqValue) ||
+                        $"{header2Value},{header1Value}".Equals(reqValue));
         }
 
         [Test]
@@ -78,8 +79,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
             await SendGetRequest(transport, policy);
 
             Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue));
-
-            Assert.AreEqual($"{header1Value},{header2Value}", reqValue);
+            
+            Assert.True($"{header1Value},{header2Value}".Equals(reqValue) ||
+                        $"{header2Value},{header1Value}".Equals(reqValue));
         }
 
         [Test]
