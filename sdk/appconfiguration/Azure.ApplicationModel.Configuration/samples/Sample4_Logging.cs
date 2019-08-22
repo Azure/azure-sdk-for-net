@@ -19,7 +19,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal.
-            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
             var client = new ConfigurationClient(connectionString);
 
             // Setup a listener to monitor logged events.

@@ -52,7 +52,8 @@ namespace Azure.ApplicationModel.Configuration
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    new AuthenticationPolicy(credential, secret));
+                    new AuthenticationPolicy(credential, secret),
+                    new SyncTokenPolicy());
         }
 
         /// <summary>

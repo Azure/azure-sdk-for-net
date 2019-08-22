@@ -37,7 +37,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // add a policy that executes once per retry
             options.AddPolicy(HttpPipelinePosition.PerRetry, new CustomLogPolicy());
 
-            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 

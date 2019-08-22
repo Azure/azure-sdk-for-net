@@ -20,7 +20,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             options.Retry.MaxRetries = 10;
             options.Retry.Delay = TimeSpan.FromSeconds(1);
 
-            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
