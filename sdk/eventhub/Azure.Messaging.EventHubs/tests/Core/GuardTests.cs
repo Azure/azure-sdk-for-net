@@ -350,5 +350,26 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             Assert.That(() => Guard.ArgumentNotTooLong(nameof(value), value, maxLength), Throws.Nothing);
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.NotDisposed" /> method.
+        /// </summary>
+        ///
+        [Test]
+        public void NotDisposedAllowsUndisposed()
+        {
+            Assert.That(() => Guard.NotDisposed("test", false), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.NotDisposed" /> method.
+        /// </summary>
+        ///
+        [Test]
+        public void NotDisposedEnforcesDisposed()
+        {
+            var target = "test";
+            Assert.That(() => Guard.NotDisposed(target, true), Throws.InstanceOf<ObjectDisposedException>().And.Message.Contains(target));
+        }
     }
 }

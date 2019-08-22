@@ -153,7 +153,7 @@ namespace Azure.Security.KeyVault
             {
                 AuthenticationChallenge challenge = null;
 
-                if (message.Response != null)
+                if (message.HasResponse)
                 {
                     challenge = GetChallengeFromResponse(message.Response);
 

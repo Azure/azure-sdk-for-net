@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.Subscription</PackageId>
 		<Description>Provides subscription management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Subscription</AssemblyName>
-		<Version>1.1.2-preview</Version>
+		<Version>1.1.3-preview</Version>
 		<PackageTags>Microsoft Azure Subscription;subscription definitions;</PackageTags>
 		<PackageReleaseNotes>Adding Cancel and Rename API support</PackageReleaseNotes>
 	</PropertyGroup>

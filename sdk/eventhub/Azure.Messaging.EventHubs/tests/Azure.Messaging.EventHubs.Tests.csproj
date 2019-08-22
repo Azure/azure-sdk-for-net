@@ -4,6 +4,7 @@
     <VersionPrefix>5.0.0</VersionPrefix>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.EventHub" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
   </ItemGroup>
@@ -25,4 +27,7 @@
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
     <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.Samples.csproj" />
   </ItemGroup>
+
+  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
+
 </Project>

@@ -21,8 +21,8 @@ namespace SmokeTest
     class EventHubsTest
     {
         private static EventHubClient client;
-        private static EventSender sender;
-        private static EventReceiver receiver;
+        private static EventHubProducer sender;
+        private static EventHubConsumer receiver;
 
         /// <summary>
         /// Test the Event Hubs SDK by sending and receiving events
@@ -47,16 +47,12 @@ namespace SmokeTest
         {
             Console.Write("Creating the Sender and Receivers... ");
             var partition = (await client.GetPartitionIdsAsync()).First();
-            var senderOptions = new EventSenderOptions
+            var producerOptions = new EventHubProducerOptions
             {
                 PartitionId = partition
             };
-            var receiverOptions = new EventReceiverOptions
-            {
-                BeginReceivingAt = EventPosition.NewEventsOnly
-            };
-            sender = client.CreateSender(senderOptions);
-            receiver = client.CreateReceiver(partition, receiverOptions);
+            sender = client.CreateProducer(producerOptions);
+            receiver = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest);
             Console.WriteLine("\tdone");
         }
 

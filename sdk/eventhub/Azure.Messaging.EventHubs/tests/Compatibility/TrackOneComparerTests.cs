@@ -78,10 +78,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var trackTwoEvent = new EventData((byte[])body.Clone());
 
             trackOneEvent.SystemProperties = new TrackOne.EventData.SystemPropertiesCollection();
-            trackOneEvent.SystemProperties["something"] = "trackOne";
+            trackOneEvent.SystemProperties[TrackOne.ClientConstants.OffsetName] = "4";
 
             trackTwoEvent.SystemProperties = new EventData.SystemEventProperties();
-            trackTwoEvent.SystemProperties["something"] = "trackTwo";
+            trackTwoEvent.SystemProperties.Offset = 27;
 
             Assert.That(TrackOneComparer.IsEventDataEquivalent(trackOneEvent, trackTwoEvent), Is.False);
         }
@@ -122,10 +122,10 @@ namespace Azure.Messaging.EventHubs.Tests
             trackTwoEvent.Properties["test"] = "same";
 
             trackOneEvent.SystemProperties = new TrackOne.EventData.SystemPropertiesCollection();
-            trackOneEvent.SystemProperties["something"] = "otherSame";
+            trackOneEvent.SystemProperties[TrackOne.ClientConstants.OffsetName] = "4";
 
             trackTwoEvent.SystemProperties = new EventData.SystemEventProperties();
-            trackTwoEvent.SystemProperties["something"] = "otherSame";
+            trackTwoEvent.SystemProperties.Offset = 4;
 
             Assert.That(TrackOneComparer.IsEventDataEquivalent(trackOneEvent, trackTwoEvent), Is.True);
         }

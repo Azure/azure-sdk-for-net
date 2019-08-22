@@ -72,7 +72,7 @@ namespace Azure.Storage
             string errorCode,
             IDictionary<string, string> additionalInfo = null)
             : base(
-                  response?.Status ?? throw new ArgumentNullException(nameof(response)),
+                  response?.Status ?? throw Errors.ArgumentNull(nameof(response)),
                   CreateMessage(response, message ?? response?.ReasonPhrase, errorCode, additionalInfo),
                   innerException)
         {

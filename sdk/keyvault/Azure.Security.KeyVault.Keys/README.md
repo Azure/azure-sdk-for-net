@@ -81,12 +81,25 @@ Key key = await Client.CreateKey("key-name", KeyType.EllipticCurve);
 > new DefaultAzureCredential():
 > Uses the environment variables previously set (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, and `AZURE_TENANT_ID`).
 
+#### Create CryptographyClient
+Once you've created a `Key` in the key vault, you can also create the [CryptographyClient][crypto_client_class]:
+
+```c#
+using Azure.Identity;
+using Azure.Security.KeyVault.Keys.Cryptography;
+
+// Create a new cryptography client using the default credential from Azure.Identity
+var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
+```
 ## Key concepts
 ### Keys
 Azure Key Vault supports multiple key types and algorithms, and enables the use of Hardware Security Modules (HSM) for high value keys.
 
 ### Key Client:
 A KeyClient providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a KeyClient, you can interact with the primary resource types in Key Vault.
+
+### Cryptography Client:
+A CryptographyClient providing both synchronous and asynchronous operations exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a CryptographyClient, you can use it to perform cryptographic operations with keys stored in Key Vault.
 
 ## Examples
 The Azure.Security.KeyVault.Keys package supports synchronous and asynchronous APIs.
@@ -99,7 +112,7 @@ The following section provides several code snippets using the [above created](#
 * [Update an existing Key](#update-an-existing-key)
 * [Delete a Key](#delete-a-key)
 * [List Keys](#list-keys)
-
+* [Encrypt and Decrypt](#encrypt-and-decrypt)
 ### Async examples
 * [Create a Key](#async-create-a-key)
 
@@ -175,6 +188,19 @@ IEnumerable<Response<KeyBase>> allKeys = client.GetKeys();
   {
     Console.WriteLine(key.Name);
   }
+```
+
+### Encrypt and Decrypt
+This example creates a CryptographyClient and uses it to encrypt and decrypt with a key in Key Vault.
+
+```c#
+byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+
+// encrypt the data using the algorithm RSAOAEP
+EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RSAOAEP, plaintext);
+
+// decrypt the encrypted data.
+DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RSAOAEP, encryptResult.Ciphertext);
 ```
 
 ### Async create a Key
@@ -266,6 +292,18 @@ Several Key Vault Keys client library samples are available to you in this GitHu
   * Delete keys from the Key Vault
   * List deleted keys in the Key Vault
 
+* [EncryptDecrypt.cs][encrypt_decrypt_sync] and [EncryptDecryptAsync.cs][encrypt_decrypt_async] - Example code for performing cryptographic operations with Key Vault keys, including:
+  * Encrypt and Decrypt data with the CryptographyClient
+
+* [SignVerify.cs][sign_verify_sync] and [SignVerifyAsync.cs][sign_verify_async] - Example code for working with Key Vault keys, including:
+  * Sign a precalculated digest and verify the signature with Sign and Verify
+  * Sign raw data and verify the signature with SignData and VerifyData
+  
+
+* [WrapUnwrap.cs][wrap_unwrap_sync] and [WrapUnwrapAsync.cs][wrap_unwrap_async] - Example code for working with Key Vault keys, including:
+  * Wrap and Unwrap a symmetric key
+
+
  ###  Additional Documentation
 - For more extensive documentation on Azure Key Vault, see the [API reference documentation][keyvault_rest].
 - For Secrets client library see [Secrets client library][secrets_client_library].
@@ -289,9 +327,16 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [get_secrets_async]: samples/Sample3_GetKeysAsync.cs
 [get_secrets_sync]: samples/Sample3_GetKeys.cs
+[encrypt_decrypt_async]: samples/Sample4_EncryptDecryptAsync.cs
+[encrypt_decrypt_sync]: samples/Sample4_EncryptDecrypt.cs
+[sign_verify_async]: samples/Sample5_SignVerifyAsync.cs
+[sign_verify_sync]: samples/Sample5_SignVerify.cs
+[wrap_unwrap_async]: samples/Sample6_WrapUnwrapAsync.cs
+[wrap_unwrap_sync]: samples/Sample6_WrapUnwrap.cs
 [hello_world_async]: samples/Sample1_HelloWorldAsync.cs
 [hello_world_sync]: samples/Sample1_HelloWorld.cs
 [key_client_class]: src/KeyClient.cs
+[crypto_client_class]: src/Cryptography/CryptographyClient.cs
 [key_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Keys/
 [key_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples
 [key_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/src
