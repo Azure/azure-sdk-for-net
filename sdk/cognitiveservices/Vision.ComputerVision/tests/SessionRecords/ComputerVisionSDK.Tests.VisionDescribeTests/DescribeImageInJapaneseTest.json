@@ -7,7 +7,6 @@
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/dog.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "e2aaf8541fc942bb9745af9d755778b8",
           ""
         ],
         "User-Agent": [
