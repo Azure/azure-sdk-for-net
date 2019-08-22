@@ -16,7 +16,7 @@ namespace Microsoft.Rest.Azure.Authentication
     /// <summary>
     /// Provides tokens for Azure Active Directory applications. 
     /// </summary>
-    public class ApplicationTokenProvider : TokenCredential
+    public class ApplicationTokenProvider : ITokenProvider
     {
         #region fields
         private AuthenticationContext _authenticationContext;

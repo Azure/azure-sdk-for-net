@@ -23,7 +23,7 @@ namespace Microsoft.Rest
         /// Gets or sets secure token used to authenticate against Microsoft Azure API. 
         /// No anonymous requests are allowed.
         /// </summary>
-        protected TokenCredential TokenCredential { get; private set; }
+        protected ITokenProvider TokenProvider { get; private set; }
 
         /// <summary>
         /// Gets Tenant ID
@@ -68,14 +68,14 @@ namespace Microsoft.Rest
         /// Create an access token credentials object, given an interface to a token source.
         /// </summary>
         /// <param name="tokenProvider">The source of tokens for these credentials.</param>
-        public TokenCredentials(TokenCredential tokenProvider)
+        public TokenCredentials(ITokenProvider tokenProvider)
         {
             if (tokenProvider == null)
             {
                 throw new ArgumentNullException("tokenProvider");
             }
 
-            this.TokenCredential = tokenProvider;
+            this.TokenProvider = tokenProvider;
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Microsoft.Rest
         /// <param name="tokenProvider">The source of tokens for these credentials.</param>
         /// <param name="tenantId">Tenant ID from AuthenticationResult</param>
         /// <param name="callerId">UserInfo.DisplayableId field from AuthenticationResult</param>
-        public TokenCredentials(TokenCredential tokenProvider, string tenantId, string callerId)
+        public TokenCredentials(ITokenProvider tokenProvider, string tenantId, string callerId)
             : this(tokenProvider)
         {
             this.TenantId = tenantId;
@@ -107,12 +107,12 @@ namespace Microsoft.Rest
                 throw new ArgumentNullException("request");
             }
 
-            if (TokenCredential == null)
+            if (TokenProvider == null)
             {
                 throw new InvalidOperationException(Resources.TokenProviderCannotBeNull);
             }
 
-            request.Headers.Authorization = await TokenCredential.GetAuthenticationHeaderAsync(cancellationToken).ConfigureAwait(false);
+            request.Headers.Authorization = await TokenProvider.GetAuthenticationHeaderAsync(cancellationToken).ConfigureAwait(false);
             await base.ProcessHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
     }

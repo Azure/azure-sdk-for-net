@@ -10,7 +10,7 @@ namespace Microsoft.Rest
     /// <summary>
     /// Interface to a source of access tokens.
     /// </summary>
-    public interface TokenCredential
+    public interface ITokenProvider
     {
         /// <summary>
         /// Gets the authentication header with token.
