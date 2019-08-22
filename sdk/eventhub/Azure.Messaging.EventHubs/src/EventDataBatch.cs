@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -17,6 +16,7 @@ namespace Azure.Messaging.EventHubs
     ///
     public sealed class EventDataBatch : IDisposable
     {
+        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
@@ -76,6 +76,7 @@ namespace Azure.Messaging.EventHubs
 
             InnerBatch = transportBatch;
             SendOptions = sendOptions;
+
             _clientDiagnostics = new ClientDiagnostics(isActivityEnabled: true);
         }
 
