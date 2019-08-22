@@ -33,18 +33,20 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubProducer : IAsyncDisposable
     {
-        /// <summary>The maximum allowable size, in bytes, for a batch to be sent.</summary>
+        /// <summary>The minimum allowable size, in bytes, for a batch to be sent.</summary>
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
         private static readonly SendOptions DefaultSendOptions = new SendOptions();
 
+        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>The fully-qualified location of the Event Hub instance to which events will be sent.</summary>
         private readonly Uri _endpoint;
 
         /// <summary>The policy to use for determining retry behavior for when an operation fails.</summary>
         private EventHubRetryPolicy _retryPolicy;
-
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventHubProducer" /> is bound to, indicating
@@ -101,11 +103,13 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProducer"/> class.
         /// </summary>
+        ///
         /// <param name="transportProducer">An abstracted Event Hub producer specific to the active protocol and transport intended to perform delegated operations.</param>
-        /// <param name="endpoint">The endpoint URI of Event Hub</param>
+        /// <param name="endpoint">The fully-qualified location of the Event Hub instance to which events will be sent.</param>
         /// <param name="eventHubName">The name of the Event Hub to which events will be sent.</param>
         /// <param name="producerOptions">The set of options to use for this consumer.</param>
         /// <param name="retryPolicy">The policy to apply when making retry decisions for failed operations.</param>
+        ///
         /// <remarks>
         ///   Because this is a non-public constructor, it is assumed that the <paramref name="producerOptions" /> passed are
         ///   owned by this instance and are safe from changes made by consumers.  It is considered the responsibility of the
@@ -119,6 +123,7 @@ namespace Azure.Messaging.EventHubs
                                   EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(transportProducer), transportProducer);
+            Guard.ArgumentNotNull(nameof(endpoint), endpoint);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
             Guard.ArgumentNotNull(nameof(producerOptions), producerOptions);
             Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
@@ -219,8 +224,8 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         public virtual async Task SendAsync(IEnumerable<EventData> events,
-                                      SendOptions options,
-                                      CancellationToken cancellationToken = default)
+                                            SendOptions options,
+                                            CancellationToken cancellationToken = default)
         {
             options = options ?? DefaultSendOptions;
 
@@ -230,11 +235,11 @@ namespace Azure.Messaging.EventHubs
             using DiagnosticScope scope = CreateDiagnosticScope();
 
             events = events.ToList();
-
             InstrumentMessages(events);
+
             try
             {
-                await InnerProducer.SendAsync(events, options, cancellationToken);
+                await InnerProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -257,16 +262,17 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, SendOptions, CancellationToken)" />
         ///
-        public virtual Task SendAsync(EventDataBatch eventBatch,
-                                      CancellationToken cancellationToken = default)
+        public virtual async Task SendAsync(EventDataBatch eventBatch,
+                                            CancellationToken cancellationToken = default)
         {
             Guard.ArgumentNotNull(nameof(eventBatch), eventBatch);
             GuardSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
-            
+
             using DiagnosticScope scope = CreateDiagnosticScope();
+
             try
             {
-                return InnerProducer.SendAsync(eventBatch, cancellationToken);
+                await InnerProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -375,18 +381,31 @@ namespace Azure.Messaging.EventHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
+        /// <summary>
+        ///   Creates and configures a diagnostics scope to be used for instrumenting
+        ///   events.
+        /// </summary>
+        ///
+        /// <returns>The requested <see cref="DiagnosticScope" />.</returns>
+        ///
         private DiagnosticScope CreateDiagnosticScope()
         {
-            DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Messaging)}.{nameof(EventHubs)}.{nameof(EventHubProducer)}.Send");
-            scope.AddAttribute("kind", "producer");
-            scope.AddAttribute("component", "eventhubs");
-            scope.AddAttribute("message_bus.destination", EventHubName);
-            scope.AddAttribute("peer.address", _endpoint);
+            DiagnosticScope scope = _clientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
+            scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType);
+            scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
+            scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
+            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, _endpoint);
             scope.Start();
 
             return scope;
         }
 
+        /// <summary>
+        ///   Performs the actions needed to instrument a set of events.
+        /// </summary>
+        ///
+        /// <param name="events">The events to instrument.</param>
+        ///
         private void InstrumentMessages(IEnumerable<EventData> events)
         {
             foreach (var eventData in events)
