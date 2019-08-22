@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <param name="scopes">The access scopes to request a token for.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
-        /// <returns>The token representating the shared access signature for this credential.</returns>
+        /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken) => Credential.GetToken(scopes, cancellationToken);
 
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <param name="scopes">The access scopes to request a token for.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
-        /// <returns>The token representating the shared access signature for this credential.</returns>
+        /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
         public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken) => Credential.GetTokenAsync(scopes, cancellationToken);
     }

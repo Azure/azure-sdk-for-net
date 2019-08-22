@@ -16,7 +16,7 @@ For users that have access to the `Azure SDK Developer Playground` subscription,
     1. Check your active subscription value by doing `az account show`
     2. Set default `az account set --subscription {Name or ID of subscription}`
     3. Double check your active subscription value by doing `az account show`
-5. From the output, get the first connection string and add it as `APP_CONFIG_CONNECTION` environment variable's value.
+5. From the output, get the first connection string and add it as `APPCONFIGURATION_CONNECTION_STRING` environment variable's value.
 6. Make sure to restart VS or the environment where the tests are running.
 
 

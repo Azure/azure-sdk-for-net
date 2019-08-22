@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventHubs
         ///   it is not valid.
         /// </summary>
         ///
-        /// <param name="identifier">The identifier to validae.</param>
+        /// <param name="identifier">The identifier to validate.</param>
         ///
         private void ValidateIdentifier(string identifier)
         {
@@ -176,7 +176,7 @@ namespace Azure.Messaging.EventHubs
         ///   it is not valid.
         /// </summary>
         ///
-        /// <param name="maximumWaitTime">The time period to validae.</param>
+        /// <param name="maximumWaitTime">The time period to validate.</param>
         ///
         private void ValidateMaximumReceiveWaitTime(TimeSpan? maximumWaitTime)
         {

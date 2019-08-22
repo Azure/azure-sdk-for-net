@@ -334,13 +334,22 @@ namespace Microsoft.Azure.Search.Tests
 
                 Assert.Equal("1", oldestResult.Errors[0].Key);
                 Assert.Equal("Key field contains unsafe characters", oldestResult.Errors[0].ErrorMessage);
+                Assert.Equal("errorSourceName", oldestResult.Errors[0].Name);
+                Assert.Equal("errorDetails", oldestResult.Errors[0].Details);
+                Assert.Equal("documentationLink", oldestResult.Errors[0].DocumentationLink);
 
                 Assert.Equal("121713", oldestResult.Errors[1].Key);
                 Assert.Equal("Item is too large", oldestResult.Errors[1].ErrorMessage);
+                Assert.Equal("errorSourceName", oldestResult.Errors[1].Name);
+                Assert.Equal("errorDetails", oldestResult.Errors[1].Details);
+                Assert.Equal("documentationLink", oldestResult.Errors[1].DocumentationLink);
 
                 Assert.Equal(1, oldestResult.Warnings.Count);
                 Assert.Equal("2", oldestResult.Warnings[0].Key);
                 Assert.Equal("This is the first and last warning", oldestResult.Warnings[0].Message);
+                Assert.Equal("warningSourceName", oldestResult.Warnings[0].Name);
+                Assert.Equal("details", oldestResult.Warnings[0].Details);
+                Assert.Equal("documentationLink", oldestResult.Warnings[0].DocumentationLink);
             });
         }
 

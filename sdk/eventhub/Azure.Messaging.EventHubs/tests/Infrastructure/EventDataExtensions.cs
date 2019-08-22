@@ -70,14 +70,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     return false;
                 }
 
-                // Verify that the system properties contain the same elements, assuming they are non-null.
-
-                if (instance.SystemProperties?.Count != other.SystemProperties?.Count)
-                {
-                    return false;
-                }
-
-                if (!instance.SystemProperties.OrderBy(kvp => kvp.Key).SequenceEqual(other.SystemProperties.OrderBy(kvp => kvp.Key)))
+                if ((instance.SystemProperties.Offset != other.SystemProperties.Offset)
+                    || (instance.SystemProperties.EnqueuedTime != other.SystemProperties.EnqueuedTime)
+                    || (instance.SystemProperties.PartitionKey != other.SystemProperties.PartitionKey)
+                    || (instance.SystemProperties.SequenceNumber != other.SystemProperties.SequenceNumber))
                 {
                     return false;
                 }
