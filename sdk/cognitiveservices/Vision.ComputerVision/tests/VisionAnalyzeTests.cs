@@ -39,8 +39,10 @@ namespace ComputerVisionSDK.Tests
                     Assert.Equal("Jpeg", result.Metadata.Format);
                     Assert.False(result.Adult.IsAdultContent);
                     Assert.False(result.Adult.IsRacyContent);
+                    Assert.False(result.Adult.IsGoryContent);
                     Assert.True(result.Adult.AdultScore < 0.1);
                     Assert.True(result.Adult.RacyScore < 0.1);
+                    Assert.True(result.Adult.GoreScore < 0.1);
                     Assert.Equal("building_", result.Categories[0].Name);
                     Assert.True(result.Categories[0].Score > 0.5);
                     Assert.Equal("Green", result.Color.DominantColorBackground);
@@ -76,8 +78,10 @@ namespace ComputerVisionSDK.Tests
                     Assert.Equal("Jpeg", result.Metadata.Format);
                     Assert.False(result.Adult.IsAdultContent);
                     Assert.False(result.Adult.IsRacyContent);
+                    Assert.False(result.Adult.IsGoryContent);
                     Assert.True(result.Adult.AdultScore < 0.1);
                     Assert.True(result.Adult.RacyScore < 0.1);
+                    Assert.True(result.Adult.GoreScore < 0.1);
                     Assert.Equal("building_", result.Categories[0].Name);
                     Assert.True(result.Categories[0].Score > 0.5);
                     Assert.Equal("Green", result.Color.DominantColorBackground);
