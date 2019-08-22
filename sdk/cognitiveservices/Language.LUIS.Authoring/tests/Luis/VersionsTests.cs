@@ -8,7 +8,7 @@
 
     public class VersionsTests: BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListVersions()
         {
             UseClientFor(async client =>
@@ -23,7 +23,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetVersion()
         {
             UseClientFor(async client =>
@@ -38,7 +38,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateVersion()
         {
             UseClientFor(async client =>
@@ -63,7 +63,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteVersion()
         {
             UseClientFor(async client =>
@@ -89,7 +89,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void CloneVersion()
         {
             UseClientFor(async client =>
@@ -113,7 +113,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListVersions_ErrorSubscriptionKey()
         {
             var headers = new Dictionary<string, List<string>>
@@ -130,7 +130,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListVersions_ErrorAppId()
         {
             var errorCode = "BadArgument";
@@ -143,7 +143,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetVersion_ErrorVersion()
         {
             var errorCode = "BadArgument";
@@ -158,7 +158,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateVersion_ErrorModel()
         {
             var errorCode = "BadArgument";
@@ -178,7 +178,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteVersion_ErrorModel()
         {
             var errorCode = "BadArgument";
@@ -194,7 +194,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void CloneVersion_ErrorModel()
         {
             var errorCode = "BadArgument";

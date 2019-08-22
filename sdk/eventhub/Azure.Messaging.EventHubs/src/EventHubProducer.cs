@@ -52,11 +52,11 @@ namespace Azure.Messaging.EventHubs
         public string PartitionId { get; }
 
         /// <summary>
-        ///   The path of the specific Event Hub that the client is connected to, relative
-        ///   to the Event Hubs namespace that contains it.
+        ///   The name of the Event Hub that the producer is connected to, specific to the
+        ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public string EventHubPath { get; }
+        public string EventHubName { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="transportProducer">An abstracted Event Hub producer specific to the active protocol and transport intended to perform delegated operations.</param>
-        /// <param name="eventHubPath">The path of the Event Hub to which events will be sent.</param>
+        /// <param name="eventHubName">The name of the Event Hub to which events will be sent.</param>
         /// <param name="producerOptions">The set of options to use for this consumer.</param>
         /// <param name="retryPolicy">The policy to apply when making retry decisions for failed operations.</param>
         ///
@@ -107,17 +107,17 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         internal EventHubProducer(TransportEventHubProducer transportProducer,
-                                  string eventHubPath,
+                                  string eventHubName,
                                   EventHubProducerOptions producerOptions,
                                   EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(transportProducer), transportProducer);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
             Guard.ArgumentNotNull(nameof(producerOptions), producerOptions);
             Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
 
             PartitionId = producerOptions.PartitionId;
-            EventHubPath = eventHubPath;
+            EventHubName = eventHubName;
             Options = producerOptions;
             InnerProducer = transportProducer;
 

@@ -5,15 +5,16 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
     <Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
-    <Version>4.1.1</Version>
+    <Version>4.1.2</Version>
     <AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes><![CDATA[
-- Add PostgreSql Sink
-- Add Partition settings for Oracle, SapTable
-- Add dedicated source and dataset for several relational sources including ODBC, MySql
-- Add Azure Data Explorer Command activity, which allows users executing Kusto Control Commands
-- Update PostgreSql Dataset to use a dedicated AzurePostgreSqlTableDatasetTypeProperties
+- Add SapBwCube and Sybase dataset
+- Added support for the follwoing new datasets in ADF - AvroDataset, along with source and sink for Copy activity
+- AvroDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
+- Added support for the following new datasets in ADF - AmazonRedshiftTableDataset, AzureMySqlSink, Db2TableDataset
+- Split tableName to schema and table in multiple datasets
+- Added new API to rerun a trigger run
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

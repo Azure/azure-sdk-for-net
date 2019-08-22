@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -12,10 +14,26 @@ namespace Azure
     /// Represents a long running operation (LRO).
     /// </summary>
     /// <typeparam name="T">The final result of the LRO.</typeparam>
-    public abstract class Operation<T>
+    public abstract class Operation<T> where T : notnull
     {
         T _value;
         Response _response;
+
+        /// <summary>
+        /// Creates a new instance of the Operation representing the specified
+        /// <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The ID of the LRO.</param>
+        protected Operation(string id)
+        {
+            Id = id;
+        }
+
+        /// <summary>
+        /// Gets an ID representing the operation that can be used to poll for
+        /// the status of the LRO.
+        /// </summary>
+        public string Id { get; }
 
         /// <summary>
         /// Final result of the LRO.
@@ -107,8 +125,6 @@ namespace Azure
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
         /// </remarks>
         public abstract Response UpdateStatus(CancellationToken cancellationToken = default);
-
-        protected Operation() { }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);

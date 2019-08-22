@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText KeySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
         private const string KeyOpsPropertyName = "key_ops";
         private static readonly JsonEncodedText KeyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
-        private const string CurveNamePropertyName = "curveName";
+        private const string CurveNamePropertyName = "crv";
         private static readonly JsonEncodedText CurveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
         private const string AttributesPropertyName = "attributes";
         private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);

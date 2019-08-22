@@ -47,6 +47,15 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             return new TaskOutputStorage(storageAccount, task.JobId(), task.Id);
         }
 
+        /// <summary>
+        /// Gets the Blob name prefix/folder where files of the given kind are stored
+        /// </summary>
+        /// <param name="task">The task to calculate the output storage destination for.</param>
+        /// <param name="kind">The output kind.</param>
+        /// <returns>The Blob name prefix/folder where files of the given kind are stored.</returns>
+        public static string GetOutputStoragePath(this CloudTask task, TaskOutputKind kind)
+            => StoragePath.TaskStoragePath.BlobNamePrefixImpl(kind, task.Id);
+
         private static string JobId(this CloudTask task)
         {
             // Workaround for CloudTask not knowing its parent job ID.

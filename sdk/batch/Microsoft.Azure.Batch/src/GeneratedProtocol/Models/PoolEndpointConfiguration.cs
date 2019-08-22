@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The endpoint configuration for a pool.
+    /// The endpoint configuration for a Pool.
     /// </summary>
     public partial class PoolEndpointConfiguration
     {
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolEndpointConfiguration class.
         /// </summary>
-        /// <param name="inboundNATPools">A list of inbound NAT pools that can
-        /// be used to address specific ports on an individual compute node
+        /// <param name="inboundNATPools">A list of inbound NAT Pools that can
+        /// be used to address specific ports on an individual Compute Node
         /// externally.</param>
         public PoolEndpointConfiguration(IList<InboundNATPool> inboundNATPools)
         {
@@ -46,12 +46,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of inbound NAT pools that can be used to
-        /// address specific ports on an individual compute node externally.
+        /// Gets or sets a list of inbound NAT Pools that can be used to
+        /// address specific ports on an individual Compute Node externally.
         /// </summary>
         /// <remarks>
-        /// The maximum number of inbound NAT pools per Batch pool is 5. If the
-        /// maximum number of inbound NAT pools is exceeded the request fails
+        /// The maximum number of inbound NAT Pools per Batch Pool is 5. If the
+        /// maximum number of inbound NAT Pools is exceeded the request fails
         /// with HTTP status code 400.
         /// </remarks>
         [JsonProperty(PropertyName = "inboundNATPools")]

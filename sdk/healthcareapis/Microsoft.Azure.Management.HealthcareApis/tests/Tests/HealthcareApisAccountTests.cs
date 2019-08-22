@@ -39,6 +39,30 @@ namespace HealthcareApis.Tests
         }
 
         [Fact]
+        public void HealthcareApisCreateTestWithDefaultKind()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Generate account name
+                string accountName = TestUtilities.GenerateName("hca");
+
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+
+                // Create healthcare apis account
+                var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+                Assert.Equal(Kind.Fhir, account.Kind);
+            }
+        }
+
+        [Fact]
         public void HealthcareApisCreateWithParametersTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -103,7 +127,7 @@ namespace HealthcareApis.Tests
                 // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
-                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription(Kind.FhirR4);
 
                 // Create healthcareApis account
                 var createdAccount = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);

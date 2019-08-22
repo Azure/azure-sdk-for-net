@@ -189,8 +189,10 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(Stream content) =>
             this.Upload(content, CancellationToken.None);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream)"/> operation creates a new block blob
@@ -216,8 +218,10 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(Stream content) =>
             await this.UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
@@ -248,6 +252,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             CancellationToken cancellationToken) =>
@@ -255,6 +260,7 @@ namespace Azure.Storage.Blobs
                 content,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
@@ -285,6 +291,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             CancellationToken cancellationToken) =>
@@ -293,6 +300,7 @@ namespace Azure.Storage.Blobs
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, IProgress{StorageProgress}, CancellationToken)"/>

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The results and errors from an execution of a pool autoscale formula.
+    /// The results and errors from an execution of a Pool autoscale formula.
     /// </summary>
     public partial class AutoScaleRun
     {
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="results">The final values of all variables used in the
         /// evaluation of the autoscale formula.</param>
         /// <param name="error">Details of the error encountered evaluating the
-        /// autoscale formula on the pool, if the evaluation was
+        /// autoscale formula on the Pool, if the evaluation was
         /// unsuccessful.</param>
         public AutoScaleRun(System.DateTime timestamp, string results = default(string), AutoScaleRunError error = default(AutoScaleRunError))
         {
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets details of the error encountered evaluating the
-        /// autoscale formula on the pool, if the evaluation was unsuccessful.
+        /// autoscale formula on the Pool, if the evaluation was unsuccessful.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public AutoScaleRunError Error { get; set; }

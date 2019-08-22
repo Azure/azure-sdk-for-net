@@ -107,7 +107,7 @@ namespace ServiceFabric.Tests.Tests
                 rg,
                 new ResourceGroup(rgLocation));
 
-            var cluster = serviceFabricClient.Clusters.Create(rg, clusterName, newCluster);
+            var cluster = serviceFabricClient.Clusters.CreateOrUpdate(rg, clusterName, newCluster);
             Assert.NotNull(cluster);
 
             cluster = serviceFabricClient.Clusters.Get(rg, clusterName);

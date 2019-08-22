@@ -58,8 +58,7 @@ namespace Azure.Security.KeyVault.Secrets
             this.ApiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    bufferResponse: true,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"));
+                    new ChallengeBasedAuthenticationPolicy(credential));
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual IAsyncEnumerable<Response<SecretBase>> GetSecretVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncCollection<SecretBase> GetSecretVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
@@ -168,7 +167,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// requires the secrets/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual IAsyncEnumerable<Response<SecretBase>> GetSecretsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollection<SecretBase> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = new Uri(_vaultUri, SecretsPath + $"?api-version={ApiVersion}");
 
@@ -465,7 +464,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// secrets/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual IAsyncEnumerable<Response<DeletedSecret>> GetDeletedSecretsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollection<DeletedSecret> GetDeletedSecretsAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = new Uri(_vaultUri, DeletedSecretsPath + $"?api-version={ApiVersion}");
 
@@ -809,7 +808,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        private async Task<PageResponse<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
+        private async Task<Page<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
                 where T : Model
         {
             // if we don't have a nextLink specified, use firstPageUri
@@ -828,11 +827,11 @@ namespace Azure.Security.KeyVault.Secrets
                     Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                     // read the respose
-                    Page<T> responseAsPage = new Page<T>(itemFactory);
+                    KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                     responseAsPage.Deserialize(response.ContentStream);
 
                     // convert from the Page<T> to PageResponse<T>
-                    return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink?.ToString());
+                    return new Page<T>(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
                 }
             }
             catch (Exception e)
@@ -842,7 +841,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        private PageResponse<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
+        private Page<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
             where T : Model
         {
             // if we don't have a nextLink specified, use firstPageUri
@@ -861,11 +860,11 @@ namespace Azure.Security.KeyVault.Secrets
                     Response response = SendRequest(request, cancellationToken);
 
                     // read the respose
-                    Page<T> responseAsPage = new Page<T>(itemFactory);
+                    KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                     responseAsPage.Deserialize(response.ContentStream);
 
                     // convert from the Page<T> to PageResponse<T>
-                    return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink?.ToString());
+                    return new Page<T>(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
                 }
             }
             catch (Exception e)

@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
             public readonly PropertyAccessor<int?> MaxTasksPerComputeNodeProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
+            public readonly PropertyAccessor<IList<MountConfiguration>> MountConfigurationProperty;
             public readonly PropertyAccessor<NetworkConfiguration> NetworkConfigurationProperty;
             public readonly PropertyAccessor<IReadOnlyList<ResizeError>> ResizeErrorsProperty;
             public readonly PropertyAccessor<TimeSpan?> ResizeTimeoutProperty;
@@ -81,6 +82,7 @@ namespace Microsoft.Azure.Batch
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
                 this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor<int?>(nameof(MaxTasksPerComputeNode), BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
+                this.MountConfigurationProperty = this.CreatePropertyAccessor<IList<MountConfiguration>>(nameof(MountConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>(nameof(NetworkConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.ResizeErrorsProperty = this.CreatePropertyAccessor<IReadOnlyList<ResizeError>>(nameof(ResizeErrors), BindingAccess.None);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(ResizeTimeout), BindingAccess.Read | BindingAccess.Write);
@@ -179,6 +181,10 @@ namespace Microsoft.Azure.Batch
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
                     nameof(Metadata),
                     BindingAccess.Read | BindingAccess.Write);
+                this.MountConfigurationProperty = this.CreatePropertyAccessor(
+                    Batch.MountConfiguration.ConvertFromProtocolCollectionAndFreeze(protocolObject.MountConfiguration),
+                    nameof(MountConfiguration),
+                    BindingAccess.Read);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new NetworkConfiguration(o).Freeze()),
                     nameof(NetworkConfiguration),
@@ -509,6 +515,21 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets a list of file systems to mount on each node in the pool.
+        /// </summary>
+        /// <remarks>
+        /// This supports Azure Files, NFS, CIFS/SMB, and Blobfuse.
+        /// </remarks>
+        public IList<MountConfiguration> MountConfiguration
+        {
+            get { return this.propertyContainer.MountConfigurationProperty.Value; }
+            set
+            {
+                this.propertyContainer.MountConfigurationProperty.Value = ConcurrentChangeTrackedModifiableList<MountConfiguration>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the network configuration of the pool.
         /// </summary>
         public NetworkConfiguration NetworkConfiguration
@@ -692,6 +713,7 @@ namespace Microsoft.Azure.Batch
                 EnableInterNodeCommunication = this.InterComputeNodeCommunicationEnabled,
                 MaxTasksPerNode = this.MaxTasksPerComputeNode,
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
+                MountConfiguration = UtilitiesInternal.ConvertToProtocolCollection(this.MountConfiguration),
                 NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
                 ResizeTimeout = this.ResizeTimeout,
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),

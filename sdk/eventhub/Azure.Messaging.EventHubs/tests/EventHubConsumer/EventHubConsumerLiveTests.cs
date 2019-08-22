@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
@@ -42,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(TransportType.AmqpWebSockets)]
         public async Task ConsumerWithNoOptionsCanReceive(TransportType transportType)
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -68,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(TransportType.AmqpWebSockets)]
         public async Task ConsumerWithOptionsCanReceive(TransportType transportType)
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var options = new EventHubConsumerOptions { Identifier = "FakeIdentifier" };
@@ -93,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReceiveCanReadOneEventBatchFromAnEventSet()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -120,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await producer.SendAsync(eventSet);
 
-                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -131,6 +132,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             receivedEvents.AddRange(await consumer.ReceiveAsync(eventSet.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         index = 0;
 
@@ -156,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReceiveCanReadOneEventBatchFromAnEventBatch()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -192,7 +196,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await producer.SendAsync(eventBatch);
 
-                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -203,6 +207,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Count + 10, TimeSpan.FromMilliseconds(25)));
                         }
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         index = 0;
 
@@ -228,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReceiveCanReadMultipleEventBatches()
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -264,7 +271,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         foreach (var eventData in eventSet)
                         {
-                            eventBatch.TryAdd(eventData);
+                            if (!eventBatch.TryAdd(eventData))
+                            {
+                                Assert.Fail("All of the events could not be added to the batch.");
+                            }
                         }
 
                         // Initiate an operation to force the consumer to connect and set its position at the
@@ -274,9 +284,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Send the batch of events, receive and validate them.
 
-                        await producer.SendAsync(eventSet);
+                        await producer.SendAsync(eventBatch);
 
-                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -294,6 +304,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             ++batchNumber;
                         }
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         index = 0;
 
@@ -342,7 +355,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await producer.SendAsync(eventBatch);
 
-                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -353,6 +366,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         index = 0;
 
@@ -401,7 +417,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await producer.SendAsync(eventBatch);
 
-                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -412,6 +428,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         index = 0;
 
@@ -462,7 +481,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await producer.SendAsync(eventSet);
 
-                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -473,6 +492,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             receivedEvents.AddRange(await consumer.ReceiveAsync(eventSet.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         index = 0;
 
@@ -502,9 +524,10 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
+                // The actual limit is 1046520 for a single event
+
                 var eventBatch = new[]
                 {
-                    // Actual limit is 1046520 for a single event
                     new EventData(new byte[100000])
                 };
 
@@ -528,7 +551,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await Task.Delay(TimeSpan.FromSeconds(5));
 
-                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -537,8 +560,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         while ((receivedEvents.Count < eventBatch.Length) && (++index < ReceiveRetryLimit))
                         {
-                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(500)));
                         }
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         index = 0;
 
@@ -596,7 +622,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await producer.SendAsync(eventBatch);
 
-                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -607,6 +633,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         index = 0;
 
@@ -929,6 +958,245 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task SubscribeCanReceiveEventsFromTheEnumerable()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var eventSet = new[]
+                {
+                    new EventData(Encoding.UTF8.GetBytes("One")),
+                    new EventData(Encoding.UTF8.GetBytes("Two")),
+                    new EventData(Encoding.UTF8.GetBytes("Three")),
+                    new EventData(Encoding.UTF8.GetBytes("Four")),
+                    new EventData(Encoding.UTF8.GetBytes("Five")),
+                    new EventData(Encoding.UTF8.GetBytes("Six")),
+                    new EventData(Encoding.UTF8.GetBytes("Seven")),
+                    new EventData(Encoding.UTF8.GetBytes("Eight")),
+                    new EventData(Encoding.UTF8.GetBytes("Nine")),
+                    new EventData(Encoding.UTF8.GetBytes("Ten")),
+                    new EventData(Encoding.UTF8.GetBytes("Eleven")),
+                    new EventData(Encoding.UTF8.GetBytes("Twelve")),
+                    new EventData(Encoding.UTF8.GetBytes("Thirteen")),
+                    new EventData(Encoding.UTF8.GetBytes("Fourteen")),
+                    new EventData(Encoding.UTF8.GetBytes("Fifteen"))
+                };
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Earliest))
+                    {
+                        // Create the batch of events to publish.
+
+                        using var eventBatch = await producer.CreateBatchAsync();
+
+                        foreach (var eventData in eventSet)
+                        {
+                            if (!eventBatch.TryAdd(eventData))
+                            {
+                                Assert.Fail("All of the events could not be added to the batch.");
+                            }
+                        }
+
+                        // Send the batch of events, receive and validate them.
+
+                        await producer.SendAsync(eventBatch);
+
+                        // Receive the events; when there have been multiple consecutive empty events emitted due to
+                        // exceeding the maximum wait time, assume the batch is complete and terminate.
+
+                        var consecutiveEmpties = 0;
+                        var maximumWaitTime = TimeSpan.FromMilliseconds(50);
+                        var receivedEvents = new List<EventData>();
+
+                        using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(90));
+
+                        await foreach (var receivedEvent in consumer.SubscribeToEvents(maximumWaitTime, cancellation.Token))
+                        {
+                            receivedEvents.Add(receivedEvent);
+                            consecutiveEmpties = (receivedEvent == null) ? consecutiveEmpties + 1 : 0;
+
+                            // Stop iterating if there have been too many consecutive empty emits; that is
+                            // a sign that the partition is empty.
+
+                            if (consecutiveEmpties > 15)
+                            {
+                                break;
+                            }
+                            else if (consecutiveEmpties % 5 == 0)
+                            {
+                                // If we have a smaller number of consecutive empty emits, then pause for a moment to
+                                // account for the non-determinism of availability after an event was published.
+
+                                await Task.Delay(TimeSpan.FromSeconds(0.5)).ConfigureAwait(false);
+                            }
+                        }
+
+                        Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                        Assert.That(receivedEvents.Count, Is.AtLeast(eventSet.Length), "The number of received events should be at least the number of events sent.");
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
+
+                        var index = 0;
+                        receivedEvents = receivedEvents.Where(item => item != null).ToList();
+
+                        foreach (var receivedEvent in receivedEvents)
+                        {
+                            Assert.That(receivedEvent.IsEquivalentTo(eventSet[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
+                            ++index;
+                        }
+
+                        Assert.That(index, Is.EqualTo(eventSet.Length), "The number of received events did not match the batch size.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task SubscribeCanReceiveBatchedEventsFromTheEnumerable()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var firstEvents = new[]
+                {
+                    new EventData(Encoding.UTF8.GetBytes("One")),
+                    new EventData(Encoding.UTF8.GetBytes("Two")),
+                    new EventData(Encoding.UTF8.GetBytes("Three")),
+                    new EventData(Encoding.UTF8.GetBytes("Four")),
+                    new EventData(Encoding.UTF8.GetBytes("Five")),
+                    new EventData(Encoding.UTF8.GetBytes("Six")),
+                    new EventData(Encoding.UTF8.GetBytes("Seven")),
+                    new EventData(Encoding.UTF8.GetBytes("Eight"))
+                };
+
+                var secondEvents = new[]
+                {
+                    new EventData(Encoding.UTF8.GetBytes("Nine")),
+                    new EventData(Encoding.UTF8.GetBytes("Ten")),
+                    new EventData(Encoding.UTF8.GetBytes("Eleven")),
+                    new EventData(Encoding.UTF8.GetBytes("Twelve")),
+                    new EventData(Encoding.UTF8.GetBytes("Thirteen")),
+                    new EventData(Encoding.UTF8.GetBytes("Fourteen")),
+                    new EventData(Encoding.UTF8.GetBytes("Fifteen"))
+                };
+
+                var eventSet = firstEvents.Concat(secondEvents).ToArray();
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Earliest))
+                    {
+                        // Create the batch of events to publish.
+
+                        using var firstBatch = await producer.CreateBatchAsync();
+                        using var secondBatch = await producer.CreateBatchAsync();
+
+                        foreach (var eventData in firstEvents)
+                        {
+                            if (!firstBatch.TryAdd(eventData))
+                            {
+                                Assert.Fail("All of the events could not be added to the batch.");
+                            }
+                        }
+
+                        foreach (var eventData in secondEvents)
+                        {
+                            if (!secondBatch.TryAdd(eventData))
+                            {
+                                Assert.Fail("All of the events could not be added to the batch.");
+                            }
+                        }
+
+                        // Send the batches of events, receive and validate them.
+
+                        await producer.SendAsync(firstBatch);
+
+                        Task secondSend = new Task(async () =>
+                        {
+                            await Task.Delay(15).ConfigureAwait(false);
+                            await producer.SendAsync(secondBatch).ConfigureAwait(false);
+                        });
+
+                        // Receive the events; when there have been multiple consecutive empty events emitted due to
+                        // exceeding the maximum wait time, assume the batch is complete and terminate.
+
+                        var consecutiveEmpties = 0;
+                        var maximumWaitTime = TimeSpan.FromMilliseconds(25);
+                        var receivedEvents = new List<EventData>();
+
+                        using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(90));
+
+                        await foreach (var receivedEvent in consumer.SubscribeToEvents(maximumWaitTime, cancellation.Token))
+                        {
+                            secondSend?.Start();
+
+                            receivedEvents.Add(receivedEvent);
+                            consecutiveEmpties = (receivedEvent == null) ? consecutiveEmpties + 1 : 0;
+
+                            // Stop iterating if there have been too many consecutive empty emits; that is
+                            // a sign that the partition is empty.
+
+                            if (consecutiveEmpties > 25)
+                            {
+                                break;
+                            }
+                            else if (consecutiveEmpties % 5 == 0)
+                            {
+                                // If we have a smaller number of consecutive empty emits, then pause for a moment to
+                                // account for the non-determinism of availability after an event was published.
+
+                                await Task.Delay(TimeSpan.FromSeconds(0.5)).ConfigureAwait(false);
+                            }
+
+                            if (secondSend != null)
+                            {
+                                await secondSend.ConfigureAwait(false);
+                                secondSend = null;
+                            }
+                        }
+
+                        Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
+                        Assert.That(receivedEvents.Count, Is.AtLeast(eventSet.Length), "The number of received events should be at least the number of events sent.");
+
+                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
+                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
+
+                        var index = 0;
+                        receivedEvents = receivedEvents.Where(item => item != null).ToList();
+
+                        foreach (var receivedEvent in receivedEvents)
+                        {
+                            Assert.That(receivedEvent.IsEquivalentTo(eventSet[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
+                            ++index;
+                        }
+
+                        Assert.That(index, Is.EqualTo(eventSet.Length), "The number of received events did not match the batch size.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task ConsumerCannotReceiveWhenClosed(bool sync)
@@ -979,11 +1247,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
+                await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, invalidPartition, EventPosition.Latest))
                 {
-                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, invalidPartition, EventPosition.Latest))
-                    {
-                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
-                    }
+                    Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
                 }
             }
         }

@@ -36,13 +36,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="AppendBlobMaxAppendBlockBytes"/> indicates the maximum
         /// number of bytes that can be sent in a call to AppendBlock.
         /// </summary>
-        public const int AppendBlobMaxAppendBlockBytes = 4 * Constants.MB; // 4MB
+        public const int AppendBlobMaxAppendBlockBytes = Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
         /// <see cref="AppendBlobMaxBlocks"/> indicates the maximum number of
         /// blocks allowed in an append blob.
         /// </summary>
-        public const int AppendBlobMaxBlocks = 50000;
+        public const int AppendBlobMaxBlocks = Constants.Blob.Append.MaxBlocks;
 
         #region ctors
         /// <summary>

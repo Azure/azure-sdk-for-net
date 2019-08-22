@@ -98,22 +98,17 @@
 
                 if (this.RequestInformation.BatchError != null)
                 {
-                    sb.AppendFormat("\n\nError Code = {0},",
-                        this.RequestInformation.BatchError.Code);
+                    sb.Append($"\n\nError Code = {this.RequestInformation.BatchError.Code},");
                     if (this.RequestInformation.BatchError.Message != null)
                     {
-                        sb.AppendFormat(" Lang={0}, Message = {1}\nAdditional Values:\n",
-                            this.RequestInformation.BatchError.Message.Language,
-                            this.RequestInformation.BatchError.Message.Value);
+                        sb.Append($" Lang={this.RequestInformation.BatchError.Message.Language}, Message = {this.RequestInformation.BatchError.Message.Value}\nAdditional Values:\n");
                     }
 
                     if (this.RequestInformation.BatchError.Values != null)
                     {
                         foreach (var item in this.RequestInformation.BatchError.Values)
                         {
-                            sb.AppendFormat("Error Details key={0} value={1}\n",
-                                item.Key,
-                                item.Value);
+                            sb.Append($"Error Details key={item.Key} value={item.Value}\n");
                         }
                     }
                 }

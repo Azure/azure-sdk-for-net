@@ -81,6 +81,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListContainersSegmentAsync_MaxResults()
         {
             var service = this.GetServiceClient_SharedKey();
@@ -138,6 +139,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListContainersSegmentAsync_Error()
         {
             // Arrange

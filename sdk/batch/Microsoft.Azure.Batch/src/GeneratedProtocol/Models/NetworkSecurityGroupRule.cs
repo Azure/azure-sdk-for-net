@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the priority for this rule.
         /// </summary>
         /// <remarks>
-        /// Priorities within a pool must be unique and are evaluated in order
+        /// Priorities within a Pool must be unique and are evaluated in order
         /// of priority. The lower the number the higher the priority. For
         /// example, rules could be specified with order numbers of 150, 250,
         /// and 350. The rule with the order number of 150 takes precedence

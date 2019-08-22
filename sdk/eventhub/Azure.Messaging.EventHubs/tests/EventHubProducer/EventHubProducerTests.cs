@@ -19,7 +19,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class EventHubProducerTests
     {
         /// <summary>
@@ -39,9 +38,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ConstructorValidatesTheEventHubPath(string eventHubPath)
+        public void ConstructorValidatesTheEventHubName(string eventHubName)
         {
-            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), eventHubPath, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -72,10 +71,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("123")]
         [TestCase(" ")]
         [TestCase("someValue")]
-        public void ConstructorSetsTheEventHubPath(string eventHubPath)
+        public void ConstructorSetsTheEventHubName(string eventHubName)
         {
-            var producer = new EventHubProducer(new ObservableTransportProducerMock(), eventHubPath, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
-            Assert.That(producer.EventHubPath, Is.EqualTo(eventHubPath));
+            var producer = new EventHubProducer(new ObservableTransportProducerMock(), eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            Assert.That(producer.EventHubName, Is.EqualTo(eventHubName));
         }
 
         /// <summary>

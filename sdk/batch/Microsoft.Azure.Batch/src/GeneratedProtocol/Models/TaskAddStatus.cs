@@ -22,12 +22,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum TaskAddStatus
     {
         /// <summary>
-        /// The task was added successfully.
+        /// The Task was added successfully.
         /// </summary>
         [EnumMember(Value = "success")]
         Success,
         /// <summary>
-        /// The task failed to add due to a client error and should not be
+        /// The Task failed to add due to a client error and should not be
         /// retried without modifying the request as appropriate.
         /// </summary>
         [EnumMember(Value = "clienterror")]

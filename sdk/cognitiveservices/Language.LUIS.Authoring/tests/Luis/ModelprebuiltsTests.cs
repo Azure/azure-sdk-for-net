@@ -7,7 +7,7 @@
 
     public class ModelPrebuiltsTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListPrebuiltEntities()
         {
             UseClientFor(async client =>
@@ -19,7 +19,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListPrebuilts()
         {
             UseClientFor(async client =>
@@ -38,7 +38,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPrebuilt()
         {
             UseClientFor(async client =>
@@ -59,7 +59,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPrebuilt()
         {
             UseClientFor(async client =>
@@ -77,7 +77,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePrebuilt()
         {
             UseClientFor(async client =>

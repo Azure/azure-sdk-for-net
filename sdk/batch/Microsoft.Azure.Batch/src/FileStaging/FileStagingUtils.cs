@@ -57,12 +57,12 @@ namespace Microsoft.Azure.Batch.FileStaging
             {
                 if (null == allFileStagingArtifacts)
                 {
-                    throw new ArgumentNullException("allFileStagingArtifacts");
+                    throw new ArgumentNullException(nameof(allFileStagingArtifacts));
                 }
 
                 if (allFileStagingArtifacts.Count > 0)
                 {
-                    throw new ArgumentOutOfRangeException("allFileStagingArtifacts.Count");
+                    throw new ArgumentOutOfRangeException(nameof(allFileStagingArtifacts));
                 }
 
                 // first we get the buckets.  One for each file staging provider that contains only the files for that provider.

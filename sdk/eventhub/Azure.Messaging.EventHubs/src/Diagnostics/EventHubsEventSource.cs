@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
         ///
-        [Event(6, Level = EventLevel.Informational, Message = "Receiveing events for Event Hub: {0} (Partition Id: '{1}').")]
+        [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Event Hub: {0} (Partition Id: '{1}').")]
         public void EventReceiveStart(string eventHubName,
                                       string partitionId)
         {
@@ -353,7 +353,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [Event(18, Level = EventLevel.Informational, Message = "Subscribing to Event Hub: {0} (Partition Id: '{1}').")]
         public void SubscribeToPartitionStart(string eventHubName,
-                                                string partitionId)
+                                              string partitionId)
         {
             if (IsEnabled())
             {

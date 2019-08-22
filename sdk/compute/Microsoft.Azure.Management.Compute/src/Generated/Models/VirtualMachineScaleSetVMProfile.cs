@@ -62,7 +62,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual machines in a low priority scale set.
         /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2017-10-30-preview.
         /// Possible values include: 'Deallocate', 'Delete'</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string))
+        /// <param name="scheduledEventsProfile">Specifies Scheduled Event
+        /// related configurations.</param>
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             LicenseType = licenseType;
             Priority = priority;
             EvictionPolicy = evictionPolicy;
+            ScheduledEventsProfile = scheduledEventsProfile;
             CustomInit();
         }
 
@@ -150,6 +153,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "evictionPolicy")]
         public string EvictionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies Scheduled Event related configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "scheduledEventsProfile")]
+        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
 
         /// <summary>
         /// Validate the object.

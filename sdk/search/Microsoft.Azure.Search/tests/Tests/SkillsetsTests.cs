@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http.Headers;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search.Tests.Utilities;
 using Microsoft.Rest.Azure;
@@ -22,6 +23,26 @@ namespace Microsoft.Azure.Search.Tests
         public const string OutputLayoutTextFieldName = "layoutText";
 
         public const string RootPathString = "/document";
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWebApiSkillWithHeaders()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill());
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWebApiSkillWithoutHeaders()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWebApiSkill(includeHeader: false));
+            });
+        }
 
         [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrKeyPhrase()
@@ -57,21 +78,9 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Pt, SentimentSkillLanguage.PtPt, TextExtractionAlgorithm.Printed));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Pt, SentimentSkillLanguage.PtPT, TextExtractionAlgorithm.Printed));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi, TextExtractionAlgorithm.Printed));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.En, SentimentSkillLanguage.En, TextExtractionAlgorithm.Handwritten));
-            });
-        }
-
-        [Fact]
-        public void CreateSkillsetThrowsExceptionWithInvalidLanguageSelection()
-        {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                Skillset skillset = CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi, TextExtractionAlgorithm.Handwritten);
-                CloudException exception = Assert.Throws<CloudException>(() => searchClient.Skillsets.Create(skillset));
-                Assert.Contains("When 'textExtractionAlgorithm' parameter is set to 'handwritten' the only supported value for 'defaultLanguageCode' parameter is 'en'", exception.Message);
             });
         }
 
@@ -127,6 +136,28 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionShaperWithNestedInputs()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetWithNestedInputs());
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetThrowsExceptionWithNonShaperSkillWithNestedInputs()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                Skillset skillset = CreateTestSkillsetWithNestedInputs(isShaper: false);
+                CloudException exception = Assert.Throws<CloudException>(() => searchClient.Skillsets.Create(skillset));
+                Assert.Contains("Skill '#1' is not allowed to have recursively defined inputs", exception.Message);
+            });
+        }
+
+        [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrSplitText()
         {
             Run(() =>
@@ -136,6 +167,29 @@ namespace Microsoft.Azure.Search.Tests
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.Fr, SplitSkillLanguage.Fr, TextSplitMode.Pages));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.Fi, SplitSkillLanguage.Fi, TextSplitMode.Sentences));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.Da, SplitSkillLanguage.Da, TextSplitMode.Sentences));
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionTextTranslation()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage.Es));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage.Es, defaultFromLanguageCode: TextTranslationSkillLanguage.En));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage.Es, suggestedFrom: TextTranslationSkillLanguage.En));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage.Es, TextTranslationSkillLanguage.En, TextTranslationSkillLanguage.En));
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionConditional()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetConditional());
             });
         }
 
@@ -290,7 +344,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = algorithm,
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = OcrSkillLanguage.En
             });
 
             var inputs1 = new List<InputFieldMappingEntry>()
@@ -314,7 +368,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new EntityRecognitionSkill(inputs1, outputs1, "Tested Entity Recognition skill", RootPathString)
             {
                 Categories = categories,
-                DefaultLanguageCode = "en",
+                DefaultLanguageCode = EntityRecognitionSkillLanguage.En,
                 MinimumPrecision = 0.5
             });
 
@@ -544,7 +598,7 @@ namespace Microsoft.Azure.Search.Tests
                 {
                     TextExtractionAlgorithm = algorithm,
                     ShouldDetectOrientation = shouldDetectOrientation,
-                    DefaultLanguageCode = "en"
+                    DefaultLanguageCode = OcrSkillLanguage.En
                 });
             }
 
@@ -694,7 +748,7 @@ namespace Microsoft.Azure.Search.Tests
                     ImageDetail.Celebrities,
                     ImageDetail.Landmarks
                 },
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = ImageAnalysisSkillLanguage.En
             });
 
             var inputs1 = new List<InputFieldMappingEntry>()
@@ -717,7 +771,7 @@ namespace Microsoft.Azure.Search.Tests
 
             skills.Add(new KeyPhraseExtractionSkill(inputs1, outputs1, "Tested Key Phrase skill", RootPathString)
             {
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = KeyPhraseExtractionSkillLanguage.En
             });
 
             return new Skillset("testskillset2", "Skillset for testing", skills);
@@ -809,7 +863,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = OcrSkillLanguage.En
             });
 
             var inputs1 = new List<InputFieldMappingEntry>()
@@ -853,7 +907,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = OcrSkillLanguage.En
             });
 
             return new Skillset("testskillset", "Skillset for testing", skills, new DefaultCognitiveServices());
@@ -905,6 +959,174 @@ namespace Microsoft.Azure.Search.Tests
             });
 
             return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateTestSkillsetWithNestedInputs(bool isShaper = true)
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "doc",
+                    SourceContext = "/document",
+                    Inputs = new List<InputFieldMappingEntry>
+                    {
+                        new InputFieldMappingEntry
+                        {
+                            Name = "text",
+                            Source = "/document/content"
+                        },
+                        new InputFieldMappingEntry
+                        {
+                            Name = "images",
+                            Source = "/document/normalized_images/*"
+                        }
+                    }
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "output",
+                    TargetName = "myOutput"
+                }
+            };
+
+            if (isShaper)
+            {
+                skills.Add(new ShaperSkill(inputs, outputs, "Tested Shaper skill", RootPathString));
+            }
+            else
+            {
+                // Used for testing skill that shouldn't allow nested inputs
+                skills.Add(new WebApiSkill(inputs, outputs, "Invalid skill with nested inputed", RootPathString));
+            }
+
+            return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+
+        private static Skillset CreateTestSkillsetTextTranslation(TextTranslationSkillLanguage defaultToLanguageCode, TextTranslationSkillLanguage? defaultFromLanguageCode = null, TextTranslationSkillLanguage? suggestedFrom = null)
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/text"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "translatedText",
+                    TargetName = "translatedText"
+                },
+                new OutputFieldMappingEntry
+                {
+                    Name = "translatedFromLanguageCode",
+                    TargetName = "translatedFromLanguageCode"
+                },
+                new OutputFieldMappingEntry
+                {
+                    Name = "translatedToLanguageCode",
+                    TargetName = "translatedToLanguageCode"
+                }
+            };
+
+            skills.Add(new TextTranslationSkill(inputs, outputs, defaultToLanguageCode, defaultFromLanguageCode: defaultFromLanguageCode, suggestedFrom: suggestedFrom));
+
+            return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateTestSkillsetConditional()
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "condition",
+                    Source = "= $(/document/language) == null"
+                },
+                new InputFieldMappingEntry
+                {
+                    Name = "whenTrue",
+                    Source = "= 'es'"
+                },
+                new InputFieldMappingEntry
+                {
+                    Name = "whenFalse",
+                    Source = "= $(/document/language)"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "output",
+                    TargetName = "myLanguageCode"
+                }
+            };
+
+            skills.Add(new ConditionalSkill(inputs, outputs, "Tested Conditional skill", RootPathString));
+
+            return new Skillset("testskillset3", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateTestSkillsetWebApiSkill(bool includeHeader = true)
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/text"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "coolResult",
+                    TargetName = "myCoolResult"
+                }
+            };
+
+            var skill = new WebApiSkill(
+                    inputs,
+                    outputs,
+                    uri: "https://contoso.example.org",
+                    description: "A simple web api skill",
+                    context: RootPathString)
+            {
+                HttpMethod = "POST"
+            };
+
+            if (includeHeader)
+            {
+                skill.HttpHeaders = new Dictionary<string, string>
+                {
+                    ["x-ms-example"] = "example"
+                };
+            }
+
+            skills.Add(skill);
+
+            return new Skillset("webapiskillset", "Skillset for testing", skills);
         }
     }
 }

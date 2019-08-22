@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies any dependencies of a task. Any task that is explicitly
+    /// Specifies any dependencies of a Task. Any Task that is explicitly
     /// specified or within a dependency range must complete before the
-    /// dependant task will be scheduled.
+    /// dependant Task will be scheduled.
     /// </summary>
     public partial class TaskDependencies
     {
@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskDependencies class.
         /// </summary>
-        /// <param name="taskIds">The list of task IDs that this task depends
-        /// on. All tasks in this list must complete successfully before the
-        /// dependent task can be scheduled.</param>
-        /// <param name="taskIdRanges">The list of task ID ranges that this
-        /// task depends on. All tasks in all ranges must complete successfully
-        /// before the dependent task can be scheduled.</param>
+        /// <param name="taskIds">The list of Task IDs that this Task depends
+        /// on. All Tasks in this list must complete successfully before the
+        /// dependent Task can be scheduled.</param>
+        /// <param name="taskIdRanges">The list of Task ID ranges that this
+        /// Task depends on. All Tasks in all ranges must complete successfully
+        /// before the dependent Task can be scheduled.</param>
         public TaskDependencies(IList<string> taskIds = default(IList<string>), IList<TaskIdRange> taskIdRanges = default(IList<TaskIdRange>))
         {
             TaskIds = taskIds;
@@ -52,24 +52,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of task IDs that this task depends on. All
-        /// tasks in this list must complete successfully before the dependent
-        /// task can be scheduled.
+        /// Gets or sets the list of Task IDs that this Task depends on. All
+        /// Tasks in this list must complete successfully before the dependent
+        /// Task can be scheduled.
         /// </summary>
         /// <remarks>
         /// The taskIds collection is limited to 64000 characters total (i.e.
-        /// the combined length of all task IDs). If the taskIds collection
+        /// the combined length of all Task IDs). If the taskIds collection
         /// exceeds the maximum length, the Add Task request fails with error
-        /// code TaskDependencyListTooLong. In this case consider using task ID
+        /// code TaskDependencyListTooLong. In this case consider using Task ID
         /// ranges instead.
         /// </remarks>
         [JsonProperty(PropertyName = "taskIds")]
         public IList<string> TaskIds { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of task ID ranges that this task depends on.
-        /// All tasks in all ranges must complete successfully before the
-        /// dependent task can be scheduled.
+        /// Gets or sets the list of Task ID ranges that this Task depends on.
+        /// All Tasks in all ranges must complete successfully before the
+        /// dependent Task can be scheduled.
         /// </summary>
         [JsonProperty(PropertyName = "taskIdRanges")]
         public IList<TaskIdRange> TaskIdRanges { get; set; }

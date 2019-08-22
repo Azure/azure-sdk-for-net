@@ -8,7 +8,7 @@ namespace Azure.Core.Pipeline
 {
     public struct DiagnosticScope: IDisposable
     {
-        private Activity _activity;
+        private Activity? _activity;
 
         private readonly string _name;
 
@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
 
         public void AddAttribute<T>(string name, T value)
         {
-            if (_activity != null)
+            if (_activity != null && value != null)
             {
                 AddAttribute(name, value.ToString());
             }
