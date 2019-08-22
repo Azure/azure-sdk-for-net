@@ -222,7 +222,7 @@ namespace FrontDoor.Tests.ScenarioTests
                                         {
                                             new ManagedRuleOverride
                                             {
-                                                RuleId = "Rule1",
+                                                RuleId = "942100",
                                                 Action = "Redirect",
                                                 EnabledState = "Disabled"
                                             }
