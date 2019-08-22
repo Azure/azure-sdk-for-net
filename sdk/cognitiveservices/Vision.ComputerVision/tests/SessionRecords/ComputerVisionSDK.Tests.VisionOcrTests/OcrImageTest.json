@@ -1,17 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.0/ocr?detectOrientation=true&language=de",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRl",
+      "RequestUri": "/vision/v2.1/ocr?detectOrientation=true&language=de",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/achtung.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
+          "e2aaf8541fc942bb9745af9d755778b8",
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
+          "FxVersion/4.8.3815.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18362.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -21,20 +24,17 @@
         ]
       },
       "ResponseHeaders": {
-        "Connection": [
-          "close"
-        ],
-        "Date": [
-          "Mon, 30 Jul 2018 21:58:50 GMT"
-        ],
         "apim-request-id": [
-          "92660d3f-3115-425b-b779-b23b4cb801d1"
+          "9a712fd6-069d-483b-98a4-4eb7b8f6dcea"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
         "x-content-type-options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 22 Aug 2019 04:06:36 GMT"
         ],
         "Content-Length": [
           "219"
@@ -43,7 +43,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"language\": \"de\",\r\n  \"orientation\": \"Up\",\r\n  \"textAngle\": 0.24434609527920675,\r\n  \"regions\": [\r\n    {\r\n      \"boundingBox\": \"115,223,562,131\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": \"115,223,562,131\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"115,223,562,131\",\r\n              \"text\": \"ACHTUNG\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"language\": \"de\",\r\n  \"textAngle\": 0.24434609527920675,\r\n  \"orientation\": \"Up\",\r\n  \"regions\": [\r\n    {\r\n      \"boundingBox\": \"115,223,562,131\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": \"115,223,562,131\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"115,223,562,131\",\r\n              \"text\": \"ACHTUNG\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

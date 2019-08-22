@@ -11,7 +11,7 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionAnalyzeTests : BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeImageInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -49,7 +49,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -116,7 +116,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeImageNullImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

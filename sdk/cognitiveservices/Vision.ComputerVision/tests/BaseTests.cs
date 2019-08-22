@@ -11,7 +11,7 @@ namespace ComputerVisionSDK.Tests
     public abstract class BaseTests
     {
         public static bool IsTestTenant = false;
-        private static readonly string ComputerVisionSubscriptionKey;
+        private static readonly string ComputerVisionSubscriptionKey = "e2aaf8541fc942bb9745af9d755778b8";
         private static Lazy<string> TestBaseUrl = new Lazy<string>(() =>
         {
             string user = "Azure";
@@ -60,7 +60,7 @@ namespace ComputerVisionSDK.Tests
         {
             IComputerVisionClient client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(ComputerVisionSubscriptionKey), handlers: handler)
             {
-                Endpoint = "https://westus.api.cognitive.microsoft.com"
+                Endpoint = "https://cognitivewudev.azure-api.net"
             };
 
             return client;

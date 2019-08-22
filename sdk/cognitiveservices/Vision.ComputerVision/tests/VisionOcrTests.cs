@@ -9,7 +9,7 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionOcrTests : BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void OcrImageInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -35,7 +35,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void OcrImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

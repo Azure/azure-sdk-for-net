@@ -9,7 +9,7 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionAreaOfInterestTests : BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AreaOfInterestImageInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -29,7 +29,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AreaOfInterestImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -48,7 +48,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AreaOfInterestLogoTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

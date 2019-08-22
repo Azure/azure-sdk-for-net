@@ -77,7 +77,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionClient operations, string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
+                var customHeaders = new Dictionary<string, List<string>>();
+                customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+                using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, descriptionExclude, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -120,7 +123,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, descriptionExclude, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -145,7 +151,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<DetectResult> DetectObjectsAsync(this IComputerVisionClient operations, string url, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DetectObjectsWithHttpMessagesAsync(url, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.DetectObjectsWithHttpMessagesAsync(url, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -167,7 +176,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<ListModelsResult> ListModelsAsync(this IComputerVisionClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListModelsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.ListModelsWithHttpMessagesAsync(customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -206,7 +218,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<DomainModelResults> AnalyzeImageByDomainAsync(this IComputerVisionClient operations, string model, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageByDomainWithHttpMessagesAsync(model, url, language, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.AnalyzeImageByDomainWithHttpMessagesAsync(model, url, language, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -245,7 +260,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<OcrResult> RecognizePrintedTextAsync(this IComputerVisionClient operations, bool detectOrientation, string url, OcrLanguages? language = default(OcrLanguages?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizePrintedTextWithHttpMessagesAsync(detectOrientation, url, language, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.RecognizePrintedTextWithHttpMessagesAsync(detectOrientation, url, language, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -283,7 +301,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<TagResult> TagImageAsync(this IComputerVisionClient operations, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TagImageWithHttpMessagesAsync(url, language, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.TagImageWithHttpMessagesAsync(url, language, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -325,7 +346,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<Stream> GenerateThumbnailAsync(this IComputerVisionClient operations, int width, int height, string url, bool? smartCropping = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GenerateThumbnailWithHttpMessagesAsync(width, height, url, smartCropping, null, cancellationToken).ConfigureAwait(false);
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            var _result = await operations.GenerateThumbnailWithHttpMessagesAsync(width, height, url, smartCropping, customHeaders, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -351,7 +375,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<AreaOfInterestResult> GetAreaOfInterestAsync(this IComputerVisionClient operations, string url, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAreaOfInterestWithHttpMessagesAsync(url, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.GetAreaOfInterestWithHttpMessagesAsync(url, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -378,7 +405,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<RecognizeTextHeaders> RecognizeTextAsync(this IComputerVisionClient operations, string url, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizeTextWithHttpMessagesAsync(url, mode, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.RecognizeTextWithHttpMessagesAsync(url, mode, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -400,7 +430,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<TextOperationResult> GetTextOperationResultAsync(this IComputerVisionClient operations, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTextOperationResultWithHttpMessagesAsync(operationId, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.GetTextOperationResultWithHttpMessagesAsync(operationId, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -425,7 +458,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<BatchReadFileHeaders> BatchReadFileAsync(this IComputerVisionClient operations, string url, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BatchReadFileWithHttpMessagesAsync(url, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.BatchReadFileWithHttpMessagesAsync(url, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -448,7 +484,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<ReadOperationResult> GetReadOperationResultAsync(this IComputerVisionClient operations, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetReadOperationResultWithHttpMessagesAsync(operationId, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.GetReadOperationResultWithHttpMessagesAsync(operationId, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -509,7 +548,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, descriptionExclude, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -536,7 +578,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<AreaOfInterestResult> GetAreaOfInterestInStreamAsync(this IComputerVisionClient operations, Stream image, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAreaOfInterestInStreamWithHttpMessagesAsync(image, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.GetAreaOfInterestInStreamWithHttpMessagesAsync(image, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -579,7 +624,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, descriptionExclude, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -604,7 +652,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<DetectResult> DetectObjectsInStreamAsync(this IComputerVisionClient operations, Stream image, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DetectObjectsInStreamWithHttpMessagesAsync(image, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.DetectObjectsInStreamWithHttpMessagesAsync(image, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -646,7 +697,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<Stream> GenerateThumbnailInStreamAsync(this IComputerVisionClient operations, int width, int height, Stream image, bool? smartCropping = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GenerateThumbnailInStreamWithHttpMessagesAsync(width, height, image, smartCropping, null, cancellationToken).ConfigureAwait(false);
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            var _result = await operations.GenerateThumbnailInStreamWithHttpMessagesAsync(width, height, image, smartCropping, customHeaders, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -684,7 +738,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<DomainModelResults> AnalyzeImageByDomainInStreamAsync(this IComputerVisionClient operations, string model, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageByDomainInStreamWithHttpMessagesAsync(model, image, language, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.AnalyzeImageByDomainInStreamWithHttpMessagesAsync(model, image, language, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -723,7 +780,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<OcrResult> RecognizePrintedTextInStreamAsync(this IComputerVisionClient operations, bool detectOrientation, Stream image, OcrLanguages? language = default(OcrLanguages?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizePrintedTextInStreamWithHttpMessagesAsync(detectOrientation, image, language, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.RecognizePrintedTextInStreamWithHttpMessagesAsync(detectOrientation, image, language, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -761,7 +821,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<TagResult> TagImageInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TagImageInStreamWithHttpMessagesAsync(image, language, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.TagImageInStreamWithHttpMessagesAsync(image, language, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -788,7 +851,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<RecognizeTextInStreamHeaders> RecognizeTextInStreamAsync(this IComputerVisionClient operations, Stream image, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizeTextInStreamWithHttpMessagesAsync(image, mode, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.RecognizeTextInStreamWithHttpMessagesAsync(image, mode, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -813,7 +879,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// </param>
             public static async Task<BatchReadFileInStreamHeaders> BatchReadFileInStreamAsync(this IComputerVisionClient operations, Stream image, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BatchReadFileInStreamWithHttpMessagesAsync(image, null, cancellationToken).ConfigureAwait(false))
+            var customHeaders = new Dictionary<string, List<string>>();
+            customHeaders.Add("Ocp-Apim-Subscription-Key", new List<string> { "e2aaf8541fc942bb9745af9d755778b8" });
+
+            using (var _result = await operations.BatchReadFileInStreamWithHttpMessagesAsync(image, customHeaders, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
