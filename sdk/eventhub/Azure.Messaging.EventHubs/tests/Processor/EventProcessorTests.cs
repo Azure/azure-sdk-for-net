@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Messaging.EventHubs.Processor;
-using Moq;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Azure.Messaging.EventHubs.Processor;
+using Moq;
+using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Processor
 {

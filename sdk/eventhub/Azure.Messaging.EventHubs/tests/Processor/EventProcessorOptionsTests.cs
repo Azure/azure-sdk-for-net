@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Messaging.EventHubs.Processor;
 using NUnit.Framework;
-using System;
 
 namespace Azure.Messaging.EventHubs.Tests.Processor
 {
