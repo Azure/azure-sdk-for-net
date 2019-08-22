@@ -285,7 +285,7 @@ namespace Azure.Data.AppConfiguration.Tests
         private void AssertRequestCommon(MockRequest request)
         {
             Assert.True(request.Headers.TryGetValue("User-Agent", out var value));
-            StringAssert.Contains("azsdk-net-ApplicationModel.Configuration/1.0.0", value);
+            StringAssert.Contains("azsdk-net-Data.AppConfiguration/1.0.0", value);
         }
 
         private static ConfigurationSetting CreateSetting(int i)

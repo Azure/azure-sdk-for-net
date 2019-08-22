@@ -11,7 +11,7 @@
         "Date": "Wed, 21 Aug 2019 19:39:58 GMT",
         "Request-Id": "|e844dc16-43d9842b852579ab.",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "2a1c721cd4d0446bba666737cc9676da",
@@ -71,7 +71,7 @@
         "Request-Id": "|e844dc17-43d9842b852579ab.",
         "Sync-Token": "zAJw6V16=ODotMSM0NDQ0MjQ=",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "9e44d85a1177873d34a8fb96bfb2342a",
@@ -126,7 +126,7 @@
         "Request-Id": "|e844dc18-43d9842b852579ab.",
         "Sync-Token": "zAJw6V16=ODotMSM0NDQ0MjQ=",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "9c6901f2dc5a2278bbe348de8fc5f181",
@@ -184,7 +184,7 @@
         "Request-Id": "|e844dc19-43d9842b852579ab.",
         "Sync-Token": "zAJw6V16=ODotMSM0NDQ0MjU=",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "4d3bf02d357f0ab93494f528d9d48407",

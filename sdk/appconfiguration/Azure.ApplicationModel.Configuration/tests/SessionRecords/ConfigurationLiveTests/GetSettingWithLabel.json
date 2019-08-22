@@ -11,7 +11,7 @@
         "Date": "Wed, 21 Aug 2019 19:39:57 GMT",
         "Request-Id": "|e844dbfc-43d9842b852579ab.",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "91eed328f2199c8fc2d050149340241d",
@@ -72,7 +72,7 @@
         "Request-Id": "|e844dbfd-43d9842b852579ab.",
         "Sync-Token": "zAJw6V16=ODotMSM0NDQ0MDE=",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "396af885e058fecdbdc1cb7ca1ceecc9",
@@ -132,7 +132,7 @@
         "Request-Id": "|e844dbfe-43d9842b852579ab.",
         "Sync-Token": "zAJw6V16=ODotMSM0NDQ0MDI=",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "142c2f4503744b9ad7e735b618fcf1dc",
@@ -183,7 +183,7 @@
         "Request-Id": "|e844dbff-43d9842b852579ab.",
         "Sync-Token": "zAJw6V16=ODotMSM0NDQ0MDI=",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "4ef920477b24485505f0d4572712faf3",
@@ -234,7 +234,7 @@
         "Request-Id": "|e844dc00-43d9842b852579ab.",
         "Sync-Token": "zAJw6V16=ODotMSM0NDQ0MDM=",
         "User-Agent": [
-          "azsdk-net-ApplicationModel.Configuration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "63cf87e40f1481a95d1e6270aa17e5c0",
