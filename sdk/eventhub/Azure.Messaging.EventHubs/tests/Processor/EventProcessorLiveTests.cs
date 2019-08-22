@@ -181,7 +181,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             client,
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
-                                // Make it a list so we can avoid enumerating it twice.
+                                // Make it a list so we can safely enumerate it.
 
                                 var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
 
@@ -456,7 +456,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             client,
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
-                                // Make it a list so we can avoid enumerating it twice.
+                                // Make it a list so we can safely enumerate it.
 
                                 var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
 
@@ -565,7 +565,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
-                                // Make it a list so we can avoid enumerating it twice.
+                                // Make it a list so we can safely enumerate it.
 
                                 var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
 
@@ -730,7 +730,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
-                                // Make it a list so we can avoid enumerating it twice.
+                                // Make it a list so we can safely enumerate it.
 
                                 var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
 
