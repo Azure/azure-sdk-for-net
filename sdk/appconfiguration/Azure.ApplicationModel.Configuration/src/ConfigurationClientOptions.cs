@@ -3,7 +3,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// Options that allow to configure the management of the request sent to the service

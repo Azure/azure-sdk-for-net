@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     public partial class ConfigurationClient
     {

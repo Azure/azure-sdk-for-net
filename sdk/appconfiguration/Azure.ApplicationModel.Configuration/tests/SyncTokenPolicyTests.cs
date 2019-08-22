@@ -7,7 +7,7 @@ using Azure.Core.Http;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Data.AppConfiguration.Tests
 {
     public class SyncTokenPolicyTests : SyncAsyncPolicyTestBase
     {

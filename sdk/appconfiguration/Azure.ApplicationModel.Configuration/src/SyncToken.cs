@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     internal readonly struct SyncToken
     {

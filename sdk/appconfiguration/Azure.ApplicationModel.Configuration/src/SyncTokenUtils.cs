@@ -4,7 +4,7 @@
 
 using System.Globalization;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     internal class SyncTokenUtils
     {

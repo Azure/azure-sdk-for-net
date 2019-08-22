@@ -3,7 +3,7 @@
 
 using Azure.Core.Extensions;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// Extension methods to add <see cref="ConfigurationClient"/> client to clients builder

@@ -4,7 +4,7 @@
 using System;
 using Azure.Core.Http;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// Configuration Setting model factory that enables mocking for the App Configuration client library

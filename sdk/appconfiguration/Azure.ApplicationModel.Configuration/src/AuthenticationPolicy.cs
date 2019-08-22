@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     internal class AuthenticationPolicy : HttpPipelinePolicy
     {

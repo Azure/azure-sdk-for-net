@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Net.Http;
 
-namespace Azure.ApplicationModel.Configuration.Samples
+namespace Azure.Data.AppConfiguration.Samples
 {
     [Category("Live")]
     public partial class ConfigurationSamples

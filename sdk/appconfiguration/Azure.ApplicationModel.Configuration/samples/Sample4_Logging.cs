@@ -7,7 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 
-namespace Azure.ApplicationModel.Configuration.Samples
+namespace Azure.Data.AppConfiguration.Samples
 {
     [Category("Live")]
     public partial class ConfigurationSamples

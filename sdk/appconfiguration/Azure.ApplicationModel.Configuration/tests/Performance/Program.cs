@@ -4,7 +4,7 @@
 using System.IO;
 using BenchmarkDotNet.Running;
 
-namespace Azure.ApplicationModel.Configuration.Performance
+namespace Azure.Data.AppConfiguration.Performance
 {
     public class Program
     {

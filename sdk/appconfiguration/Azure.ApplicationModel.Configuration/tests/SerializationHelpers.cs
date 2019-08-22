@@ -5,7 +5,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Data.AppConfiguration.Tests
 {
     internal class SerializationHelpers
     {

@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationLiveTests: RecordedTestBase
     {

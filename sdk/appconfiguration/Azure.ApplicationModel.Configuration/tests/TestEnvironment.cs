@@ -5,7 +5,7 @@
 using NUnit.Framework;
 using System;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Data.AppConfiguration.Tests
 {
     public static class TestEnvironment
     {

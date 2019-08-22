@@ -7,7 +7,7 @@ using System.Threading;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.ApplicationModel.Configuration.Samples
+namespace Azure.Data.AppConfiguration.Samples
 {
     public partial class ConfigurationSamples
     {

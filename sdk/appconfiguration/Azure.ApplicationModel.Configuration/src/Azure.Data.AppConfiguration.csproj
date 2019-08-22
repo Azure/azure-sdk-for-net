@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>This is the Microsoft Azure Application Configuration Service client library</Description>
-    <AssemblyTitle>Microsoft Azure.ApplicationModel.Configuration client library</AssemblyTitle>
+    <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
     <VersionPrefix>1.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Application Configuration</PackageTags>
     <PackageReleaseNotes>

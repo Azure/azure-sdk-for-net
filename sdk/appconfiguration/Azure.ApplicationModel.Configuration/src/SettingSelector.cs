@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.

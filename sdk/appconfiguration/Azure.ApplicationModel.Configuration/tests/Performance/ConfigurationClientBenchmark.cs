@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using BenchmarkDotNet.Attributes;
 
-namespace Azure.ApplicationModel.Configuration.Performance
+namespace Azure.Data.AppConfiguration.Performance
 {
     [MemoryDiagnoser]
     public class ConfigurationClientBenchmark

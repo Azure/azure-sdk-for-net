@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Azure.ApplicationModel.Configuration.Samples
+namespace Azure.Data.AppConfiguration.Samples
 {
     [Category("Live")]
     public partial class ConfigurationSamples

@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// Fields to retrieve from a configuration setting.

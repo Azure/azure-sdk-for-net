@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Http;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationSettingTests
     {

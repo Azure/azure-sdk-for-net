@@ -8,7 +8,7 @@ using System.Text;
 using Azure.Core.Testing;
 using Newtonsoft.Json.Linq;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationRecordMatcher : RecordMatcher
     {

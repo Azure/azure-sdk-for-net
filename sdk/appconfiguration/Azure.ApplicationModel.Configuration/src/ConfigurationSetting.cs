@@ -8,7 +8,7 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Http;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// A setting, defined by a unique combination of a key and label.

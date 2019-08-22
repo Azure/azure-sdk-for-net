@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.ApplicationModel.Configuration.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Data.AppConfiguration.csproj" />
   </ItemGroup>
 
 </Project>

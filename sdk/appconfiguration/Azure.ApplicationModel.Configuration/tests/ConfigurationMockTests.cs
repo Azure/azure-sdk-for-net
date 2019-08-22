@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core.Http;
 using NUnit.Framework;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Data.AppConfiguration.Tests
 {
     [TestFixture(true)]
     [TestFixture(false)]

@@ -3,7 +3,7 @@
 
 using Azure.Core.Testing;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationRecordedTestSanitizer : RecordedTestSanitizer
     {
