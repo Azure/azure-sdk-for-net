@@ -125,22 +125,74 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 }
             }
         }
+
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public async Task ClosingEventHubClientClosesChildEntities()
+        public async Task ClosingSenderEntity()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 var ehSender = ehClient.CreatePartitionSender("0");
+
+                await ehSender.CloseAsync();
+                Assert.True(ehSender.IsClosed, "ehSender.IsClosed is not true.");
+                Assert.True(!ehClient.IsClosed, "ehClient.IsClosed is not false.");
+            }
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ClosingReceiverEntity()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 var ehReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
 
-                await ehClient.CloseAsync();
-                Assert.True(ehClient.IsClosed, "ehClient.IsClosed is not true.");
-                Assert.True(ehSender.IsClosed, "ehSender.IsClosed is not true.");
+                await ehReceiver.CloseAsync();
                 Assert.True(ehReceiver.IsClosed, "ehReceiver.IsClosed is not true.");
+                Assert.True(!ehClient.IsClosed, "ehClient.IsClosed is not false.");
+            }
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ClosingEventHubClientClosesSenderEntities()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var ehSender0 = ehClient.CreatePartitionSender("0");
+                var ehSender1 = ehClient.CreatePartitionSender("1");
+
+                await ehClient.CloseAsync();
+                Assert.True(ehSender0.IsClosed, "ehSender0.IsClosed is not true.");
+                Assert.True(ehSender1.IsClosed, "ehSender1.IsClosed is not true.");
+            }
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ClosingEventHubClientClosesReceiverEntities()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var ehReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
+                var ehReceiverEpoch = ehClient.CreateEpochReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnd(), 0);
+
+                await ehClient.CloseAsync();
+                Assert.True(ehReceiver.IsClosed, "ehReceiver.IsClosed is not true.");
+                Assert.True(ehReceiverEpoch.IsClosed, "ehReceiverEpoch.IsClosed is not true.");
             }
         }
     }
