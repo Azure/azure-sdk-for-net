@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -14,6 +15,21 @@ namespace Azure.Messaging.EventHubs.Tests
     [TestFixture]
     public class EventPositionExtensionsTests
     {
+        /// <summary>
+        ///   Provides test cases for the equality tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> IsEquivalentToDetectsEqualEventPositionsCases()
+        {
+            var date = DateTimeOffset.Parse("1975-04-04T00:00:00Z");
+
+            yield return new object[] { EventPosition.Earliest, EventPosition.Earliest };
+            yield return new object[] { EventPosition.Latest, EventPosition.Latest };
+            yield return new object[] { EventPosition.FromOffset(1975), EventPosition.FromOffset(1975) };
+            yield return new object[] { EventPosition.FromSequenceNumber(42), EventPosition.FromSequenceNumber(42) };
+            yield return new object[] { EventPosition.FromEnqueuedTime(date), EventPosition.FromEnqueuedTime(date) };
+        }
+
         /// <summary>
         ///   Verifies functionality of the <see cref="EventPositionExtensions.IsEquivalentTo" /> test
         ///   helper.
@@ -76,11 +92,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void IsEquivalentToDetectsEqualEventPositions()
+        [TestCaseSource(nameof(IsEquivalentToDetectsEqualEventPositionsCases))]
+        public void IsEquivalentToDetectsEqualEventPositions(EventPosition first, EventPosition second)
         {
-            var first = EventPosition.FromOffset(1975);
-            var second = EventPosition.FromOffset(1975);
-
             Assert.That(first.IsEquivalentTo(second), Is.True);
         }
 
