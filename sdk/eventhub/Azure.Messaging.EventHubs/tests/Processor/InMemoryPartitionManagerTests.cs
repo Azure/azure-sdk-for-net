@@ -28,8 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
             var partitionManager = new InMemoryPartitionManager();
             var ownership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
 
-            Assert.That(ownership, Is.Not.Null);
-            Assert.That(ownership, Is.Empty);
+            Assert.That(ownership, Is.Not.Null.And.Empty);
         }
 
         /// <summary>
