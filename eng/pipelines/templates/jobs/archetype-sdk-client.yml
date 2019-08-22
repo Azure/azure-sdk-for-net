@@ -61,13 +61,17 @@ jobs:
           arguments: '-PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" -OutPath "$(Build.ArtifactStagingDirectory)/dependencies.html"'
           pwsh: true
       - pwsh: |
-          $ServiceDir = If ( '${{parameters.ServiceDirectory}}' -eq '*') {'sdk'} Else { '${{parameters.ServiceDirectory}}' }
-          Write-Output "Analyzing Path Lengths..."; $LongestPath = ''; $LongestPathLength = 0
-          Get-ChildItem -Path "$(Build.SourcesDirectory)/$($ServiceDir)" -Recurse -File | ForEach-Object {
-          if ($_.FullName.Length -gt $LongestPathLength) { $LongestPathLength = $_.FullName.Length; $LongestPath = $_.FullName 
-          if ($LongestPathLength -gt 260) { Write-Output "$($LongestPath) : is greater than 260 Character. Reduce path length"; exit 1 }}}
-          Write-Output "The Longest path : $($LongestPath) is $($LongestPathLength) characters long"
-        workingDirectory: $(Build.SourcesDirectory)
+          Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
+          -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"
+        workingDirectory: "$(Build.BinariesDirectory)"
+        displayName: "Download Tools Archive From Github Release and Extract it"
+      - task: PowerShell@2
+        inputs:
+          targetType: filePath
+          filePath: "$(Build.BinariesDirectory)/sdk-tools/scripts/powershell/VerifyPathLength.ps1"
+          arguements: "-ServiceDirectory ${{parameters.ServiceDirectory}}"
+          pwsh: true
+          workingDirectory: $(Build.SourcesDirectory)
         displayName: Analyze Path Lengths
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
