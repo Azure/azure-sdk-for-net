@@ -31,7 +31,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
             };
 
             var clone = options.Clone();
+
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
+            Assert.That(clone, Is.Not.SameAs(options), "The clone should be a different instance.");
 
             Assert.That(clone.InitialEventPosition, Is.EqualTo(options.InitialEventPosition), "The initial event position of the clone should match.");
             Assert.That(clone.MaximumMessageCount, Is.EqualTo(options.MaximumMessageCount), "The maximum message count of the clone should match.");
