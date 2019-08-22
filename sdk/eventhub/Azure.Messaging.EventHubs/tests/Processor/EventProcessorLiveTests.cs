@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                 {
                     var initializeCalls = new ConcurrentDictionary<string, int>();
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -57,32 +57,33 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // InitializeAsync should have not been called when constructing the event processor.
+                    // InitializeAsync should have not been called when constructing the event processors.
 
                     Assert.That(initializeCalls.Keys, Is.Empty);
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions.
+                    // Make sure the event processors have enough time to stabilize.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                     await Task.Delay(5000);
 
-                    // Validate results.
+                    // Validate results before calling stop.  This way, we can make sure the initialize calls were
+                    // triggered by start.
 
                     var partitionIds = await client.GetPartitionIdsAsync();
 
                     foreach (var partitionId in partitionIds)
                     {
-                        Assert.That(initializeCalls.TryGetValue(partitionId, out var calls), Is.True);
-                        Assert.That(calls, Is.EqualTo(1));
+                        Assert.That(initializeCalls.TryGetValue(partitionId, out var calls), Is.True, $"{ partitionId }: InitializeAsync should have been called.");
+                        Assert.That(calls, Is.EqualTo(1), $"{ partitionId }: InitializeAsync should have been called only once.");
                     }
 
                     Assert.That(initializeCalls.Keys.Count, Is.EqualTo(partitionIds.Count()));
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
                 }
@@ -106,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     var closeCalls = new ConcurrentDictionary<string, int>();
                     var closeReasons = new ConcurrentDictionary<string, PartitionProcessorCloseReason>();
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -121,11 +122,11 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions.
+                    // Make sure the event processors have enough time to stabilize.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                     await Task.Delay(5000);
@@ -134,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     Assert.That(closeCalls.Keys, Is.Empty);
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
 
@@ -144,11 +145,11 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     foreach (var partitionId in partitionIds)
                     {
-                        Assert.That(closeCalls.TryGetValue(partitionId, out var calls), Is.True);
-                        Assert.That(calls, Is.EqualTo(1));
+                        Assert.That(closeCalls.TryGetValue(partitionId, out var calls), Is.True, $"{ partitionId }: CloseAsync should have been called.");
+                        Assert.That(calls, Is.EqualTo(1), $"{ partitionId }: CloseAsync should have been called only once.");
 
-                        Assert.That(closeReasons.TryGetValue(partitionId, out var reason), Is.True);
-                        Assert.That(reason, Is.EqualTo(PartitionProcessorCloseReason.Shutdown));
+                        Assert.That(closeReasons.TryGetValue(partitionId, out var reason), Is.True, $"{ partitionId }: close reason should have been set.");
+                        Assert.That(reason, Is.EqualTo(PartitionProcessorCloseReason.Shutdown), $"{ partitionId }: unexpected close reason.");
                     }
 
                     Assert.That(closeCalls.Keys.Count, Is.EqualTo(partitionIds.Count()));
@@ -172,7 +173,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                 {
                     var allReceivedEvents = new ConcurrentDictionary<string, List<EventData>>();
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -198,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Send some events to be received by the event processor.
+                    // Send some events.
 
                     var partitionIds = await client.GetPartitionIdsAsync();
                     var expectedEvents = new Dictionary<string, List<EventData>>();
@@ -224,16 +225,16 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                         }
                     }
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions and receive events.
+                    // Make sure the event processors have enough time to stabilize and receive events.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                     await Task.Delay(5000);
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
 
@@ -242,14 +243,14 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     foreach (var partitionId in partitionIds)
                     {
-                        Assert.That(allReceivedEvents.TryGetValue(partitionId, out var partitionReceivedEvents), Is.True);
-                        Assert.That(partitionReceivedEvents.Count, Is.EqualTo(expectedEvents[partitionId].Count));
+                        Assert.That(allReceivedEvents.TryGetValue(partitionId, out var partitionReceivedEvents), Is.True, $"{ partitionId }: there should have been a set of events received.");
+                        Assert.That(partitionReceivedEvents.Count, Is.EqualTo(expectedEvents[partitionId].Count), $"{ partitionId }: amount of received events should match.");
 
                         var index = 0;
 
                         foreach (var receivedEvent in partitionReceivedEvents)
                         {
-                            Assert.That(receivedEvent.IsEquivalentTo(expectedEvents[partitionId][index]), Is.True);
+                            Assert.That(receivedEvent.IsEquivalentTo(expectedEvents[partitionId][index]), Is.True, $"{ partitionId }: the received event at index { index } did not match the sent set of events.");
                             ++index;
                         }
                     }
@@ -275,7 +276,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                 {
                     var receivedEventSets = new ConcurrentBag<IEnumerable<EventData>>();
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -287,16 +288,16 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions.
+                    // Make sure the event processors have enough time to stabilize.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                     await Task.Delay(5000);
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
 
@@ -321,7 +322,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task StartAsyncDoesNothingWhenEventProcessorIsRunning()
         {
-            var partitions = 2;
+            var partitions = 1;
 
             await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
@@ -331,7 +332,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                 {
                     int initializeCallsCount = 0;
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -343,11 +344,11 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions.
+                    // Make sure the event processors have enough time to stabilize.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                     await Task.Delay(5000);
@@ -356,12 +357,12 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     Assert.That(async () => await hub.StartAllAsync(), Throws.Nothing);
 
-                    // Give the event processor more time in case it tries to initialize again, which shouldn't happen.
+                    // Give the event processors more time in case they try to initialize again, which shouldn't happen.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(500);
+                    await Task.Delay(5000);
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
 
@@ -380,7 +381,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task StopAsyncDoesNothingWhenEventProcessorIsNotRunning()
         {
-            var partitions = 2;
+            var partitions = 1;
 
             await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
@@ -390,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                 {
                     int closeCallsCount = 0;
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -402,36 +403,28 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Calling StopAsync before starting the event processor shouldn't have any effect.
+                    // Calling StopAsync before starting the event processors shouldn't have any effect.
 
                     Assert.That(async () => await hub.StopAllAsync(), Throws.Nothing);
 
-                    // Give the event processor some time in case it tries to do something, which shouldn't happen.
-
-                    await Task.Delay(5000);
-
                     Assert.That(closeCallsCount, Is.EqualTo(0));
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions.
+                    // Make sure the event processors have enough time to stabilize.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                     await Task.Delay(5000);
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
 
-                    // We should be able to call StartAsync again without getting an exception.
+                    // We should be able to call StopAsync again without getting an exception.
 
                     Assert.That(async () => await hub.StopAllAsync(), Throws.Nothing);
-
-                    // Give the event processor some time in case it tries to do something, which shouldn't happen.
-
-                    await Task.Delay(5000);
 
                     // Validate results.
 
@@ -456,7 +449,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                 {
                     int receivedEventsCount = 0;
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -473,7 +466,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Send some events to be received by the event processor.
+                    // Send some events.
 
                     var expectedEventsCount = 20;
 
@@ -487,23 +480,23 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                         }
                     }
 
-                    // We'll start and stop the event processor twice.  This way, we can assert it will behave
+                    // We'll start and stop the event processors twice.  This way, we can assert they will behave
                     // the same way both times, reprocessing all events in the second run.
 
                     for (int i = 0; i < 2; i++)
                     {
                         receivedEventsCount = 0;
 
-                        // Start the event processor.
+                        // Start the event processors.
 
                         await hub.StartAllAsync();
 
-                        // Make sure the event processor has enough time to claim partitions and receive events.
+                        // Make sure the event processors have enough time to stabilize and receive events.
                         // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                         await Task.Delay(5000);
 
-                        // Stop the event processor.
+                        // Stop the event processors.
 
                         await hub.StopAllAsync();
 
@@ -531,7 +524,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                 {
                     int receivedEventsCount = 0;
 
-                    // Send some events to be received by the event processor.
+                    // Send some events.
 
                     var expectedEventsCount = 20;
                     var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
@@ -560,7 +553,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                         }
                     }
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -578,16 +571,16 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions and receive events.
+                    // Make sure the event processors have enough time to stabilize and receive events.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                     await Task.Delay(5000);
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
 
@@ -609,17 +602,15 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [TestCase(15)]
         public async Task EventProcessorWaitsMaximumReceiveWaitTimeForEvents(int maximumWaitTimeInSecs)
         {
-            var partitions = 2;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
                 {
-                    var timeStamps = new ConcurrentDictionary<string, List<DateTimeOffset>>();
+                    var timestamps = new ConcurrentDictionary<string, List<DateTimeOffset>>();
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -627,9 +618,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             client,
                             new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: (partitionContext, checkpointManager) =>
-                                timeStamps.TryAdd(partitionContext.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
+                                timestamps.TryAdd(partitionContext.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
-                                timeStamps.AddOrUpdate
+                                timestamps.AddOrUpdate
                                     (
                                         // The key already exists, so the 'addValue' factory will never be called.
 
@@ -645,33 +636,35 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions.
+                    // Make sure the event processors have enough time to stabilize.  We are waiting a few times the maximum
+                    // wait time span so we can have enough samples.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(3000 * maximumWaitTimeInSecs);
+                    await Task.Delay(4000 * maximumWaitTimeInSecs);
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
 
                     // Validate results.
 
-                    Assert.That(timeStamps.Count, Is.EqualTo(partitions));
-
-                    foreach (var partitionTimeStamps in timeStamps.Values)
+                    foreach (var kvp in timestamps)
                     {
-                        var index = 0;
+                        var partitionId = kvp.Key;
+                        var partitionTimestamps = kvp.Value;
 
-                        foreach (var timeStamp in partitionTimeStamps.Skip(1))
+                        Assert.That(partitionTimestamps.Count, Is.GreaterThan(1), $"{ partitionId }: more timestamp samples were expected.");
+
+                        for (int index = 1; index < partitionTimestamps.Count; index++)
                         {
-                            var elapsedTime = timeStamp.Subtract(partitionTimeStamps[index]).TotalSeconds;
+                            var elapsedTime = partitionTimestamps[index].Subtract(partitionTimestamps[index-1]).TotalSeconds;
 
-                            Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1));
-                            Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5));
+                            Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too short.");
+                            Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too long.");
 
                             ++index;
                         }
@@ -702,9 +695,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                 await using (var client = new EventHubClient(connectionString))
                 {
-                    int messageLimitExceedCount = 0;
+                    var unexpectedMessageCount = -1;
 
-                    // Send some events to be received by the event processor.
+                    // Send some events.
 
                     await using (var producer = client.CreateProducer())
                     {
@@ -721,7 +714,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                         }
                     }
 
-                    // Create the event processor hub to manage our event processor.
+                    // Create the event processor hub to manage our event processors.
 
                     var hub = new EventProcessorHub
                         (
@@ -730,31 +723,34 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                             new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
                             onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
                             {
+                                // In case we find a message count greater than the allowed amount, we only store the first
+                                // occurrence and ignore the subsequent ones.
+
                                 if (events.Count() > maximumMessageCount)
                                 {
-                                    Interlocked.Increment(ref messageLimitExceedCount);
+                                    Interlocked.CompareExchange(ref unexpectedMessageCount, events.Count(), -1);
                                 }
                             }
                         );
 
                     hub.AddEventProcessors(1);
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions and receive events.
+                    // Make sure the event processors have enough time to stabilize and receive events.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
                     await Task.Delay(5000);
 
-                    // Stop the event processor.
+                    // Stop the event processors.
 
                     await hub.StopAllAsync();
 
                     // Validate results.
 
-                    Assert.That(messageLimitExceedCount, Is.EqualTo(0));
+                    Assert.That(unexpectedMessageCount, Is.EqualTo(-1), $"A set of { unexpectedMessageCount } events was received.");
                 }
             }
         }
@@ -800,12 +796,12 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processors have enough time to claim partitions.
+                    // Make sure the event processors have enough time to stabilize.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(500);
+                    await Task.Delay(5000);
 
-                    // Take a snapshot of the current partition balancing status so it won't change when closing the event processors.
+                    // Take a snapshot of the current partition balancing status.
 
                     var ownedPartitionsCountSnapshot = ownedPartitionsCount.ToArray().Select(kvp => kvp.Value);
 
@@ -861,14 +857,14 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     hub.AddEventProcessors(1);
 
-                    // Start the event processor.
+                    // Start the event processors.
 
                     await hub.StartAllAsync();
 
-                    // Make sure the event processor has enough time to claim partitions.
+                    // Make sure the event processors have enough time to stabilize.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(500);
+                    await Task.Delay(5000);
 
                     // Assert all partitions have been claimed.
 
@@ -880,12 +876,12 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     await hub.StartAllAsync();
 
-                    // Make sure the new event processor has enough time to steal partitions.
+                    // Make sure the event processors have enough time to stabilize.
                     // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(500);
+                    await Task.Delay(5000);
 
-                    // Take a snapshot of the current partition balancing status so it won't change when closing the event processors.
+                    // Take a snapshot of the current partition balancing status.
 
                     var ownedPartitionsCountSnapshot = ownedPartitionsCount.ToArray().Select(kvp => kvp.Value);
 
