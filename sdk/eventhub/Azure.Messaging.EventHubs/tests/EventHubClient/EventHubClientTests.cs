@@ -285,7 +285,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ContructorWithConnectionStringCreatesTheTransportClient()
         {
-
             var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubClientOptions());
             Assert.That(GetTransportClient(client), Is.Not.Null);
         }
