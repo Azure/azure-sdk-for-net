@@ -304,12 +304,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     // Validate results.
 
                     Assert.That(receivedEventSets, Is.Not.Empty);
-
-                    foreach (var eventSet in receivedEventSets)
-                    {
-                        Assert.That(eventSet, Is.Not.Null);
-                        Assert.That(eventSet, Is.Empty);
-                    }
+                    Assert.That(receivedEventSets.Any(set => (set == null || set.Any())), Is.False);
                 }
             }
         }
