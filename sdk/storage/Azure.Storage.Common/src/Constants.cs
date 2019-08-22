@@ -2,10 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Dynamic;
-using System.Threading;
-
 namespace Azure.Storage
 {
     internal static class Constants
@@ -115,6 +111,7 @@ namespace Azure.Storage
 
             internal static class Block
             {
+                public const int DefaultParallelUploadCount = 4; // TODO What should the value really be?  Can we get rid of it with a different dispatch algorithm? (probably yes)
                 public const int MaxUploadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxStageBytes = 100 * Constants.MB; // 100MB
                 public const int MaxBlocks = 50000;
