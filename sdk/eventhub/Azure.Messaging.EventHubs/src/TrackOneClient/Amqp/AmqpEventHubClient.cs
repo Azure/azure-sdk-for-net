@@ -19,22 +19,22 @@ namespace TrackOne.Amqp
         public AmqpEventHubClient(EventHubsConnectionStringBuilder csb)
             : this(csb,
                 !string.IsNullOrWhiteSpace(csb.SharedAccessSignature)
-                ? TokenCredential.CreateSharedAccessSignatureTokenProvider(csb.SharedAccessSignature)
-                : TokenCredential.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey))
+                ? TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SharedAccessSignature)
+                : TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey))
         {
         }
 
         public AmqpEventHubClient(
             Uri endpointAddress,
             string entityPath,
-            TokenCredential tokenProvider,
+            ITokenProvider tokenProvider,
             TimeSpan operationTimeout,
             TrackOne.TransportType transportType)
             : this(new EventHubsConnectionStringBuilder(endpointAddress, entityPath, operationTimeout, transportType), tokenProvider)
         {
         }
 
-        private AmqpEventHubClient(EventHubsConnectionStringBuilder csb, TokenCredential tokenProvider)
+        private AmqpEventHubClient(EventHubsConnectionStringBuilder csb, ITokenProvider tokenProvider)
             : base(csb)
         {
             this.ContainerId = Guid.NewGuid().ToString("N");
@@ -57,7 +57,7 @@ namespace TrackOne.Amqp
 
         uint MaxFrameSize { get; }
 
-        internal TokenCredential InternalTokenProvider { get; }
+        internal ITokenProvider InternalTokenProvider { get; }
 
         internal override EventDataSender OnCreateEventSender(string partitionId)
         {
@@ -255,7 +255,7 @@ namespace TrackOne.Amqp
         }
 
         /// <summary>
-        /// Provides an adapter from TokenCredential to ICbsTokenProvider for AMQP CBS usage.
+        /// Provides an adapter from TokenProvider to ICbsTokenProvider for AMQP CBS usage.
         /// </summary>
         sealed class TokenProviderAdapter : ICbsTokenProvider
         {

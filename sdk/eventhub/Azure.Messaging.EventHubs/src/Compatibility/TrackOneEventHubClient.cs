@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             // Translate the provided credential into a Track One token provider.
 
-            TokenCredential tokenProvider;
+            TokenProvider tokenProvider;
 
             switch (credential)
             {

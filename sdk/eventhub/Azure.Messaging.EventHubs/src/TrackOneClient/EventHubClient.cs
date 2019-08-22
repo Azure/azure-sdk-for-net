@@ -64,7 +64,7 @@ namespace TrackOne
         public static EventHubClient Create(
             Uri endpointAddress,
             string entityPath,
-            TokenCredential tokenProvider,
+            ITokenProvider tokenProvider,
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
         {
@@ -105,7 +105,7 @@ namespace TrackOne
             return Create(
                 endpointAddress,
                 entityPath,
-                TokenCredential.CreateAadTokenProvider(authContext, clientCredential),
+                TokenProvider.CreateAadTokenProvider(authContext, clientCredential),
                 operationTimeout,
                 transportType);
         }
@@ -138,7 +138,7 @@ namespace TrackOne
             return Create(
                 endpointAddress,
                 entityPath,
-                TokenCredential.CreateAadTokenProvider(authContext, clientId, redirectUri, platformParameters, userIdentifier),
+                TokenProvider.CreateAadTokenProvider(authContext, clientId, redirectUri, platformParameters, userIdentifier),
                 operationTimeout,
                 transportType);
         }
@@ -165,7 +165,7 @@ namespace TrackOne
             return Create(
                 endpointAddress,
                 entityPath,
-                TokenCredential.CreateAadTokenProvider(authContext, clientAssertionCertificate),
+                TokenProvider.CreateAadTokenProvider(authContext, clientAssertionCertificate),
                 operationTimeout,
                 transportType);
         }
@@ -188,7 +188,7 @@ namespace TrackOne
             return Create(
                 endpointAddress,
                 entityPath,
-                TokenCredential.CreateManagedServiceIdentityTokenProvider(),
+                TokenProvider.CreateManagedServiceIdentityTokenProvider(),
                 operationTimeout,
                 transportType);
         }

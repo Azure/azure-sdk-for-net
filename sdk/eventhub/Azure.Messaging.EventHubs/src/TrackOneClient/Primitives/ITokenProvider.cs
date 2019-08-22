@@ -9,7 +9,7 @@ namespace TrackOne
     /// <summary>
     /// Provides interface definition of a token provider.
     /// </summary>
-    internal interface TokenCredential
+    internal interface ITokenProvider
     {
         /// <summary>
         /// Gets a <see cref="SecurityToken"/>.

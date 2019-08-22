@@ -10,7 +10,7 @@ namespace TrackOne
     /// <summary>
     /// Represents the Azure Active Directory token provider for the Event Hubs.
     /// </summary>
-    internal class AzureActiveDirectoryTokenProvider : TokenCredential
+    internal class AzureActiveDirectoryTokenProvider : TokenProvider
     {
         readonly AuthenticationContext authContext;
 
