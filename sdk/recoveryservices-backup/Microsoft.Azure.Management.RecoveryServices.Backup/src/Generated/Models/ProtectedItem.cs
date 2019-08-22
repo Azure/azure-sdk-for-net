@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Gets or sets flag to identify whether the deferred deleted DS is to
         /// be purged soon
         /// </summary>
-        [JsonProperty(PropertyName = "IsDeferredDeleteScheduleUpcoming")]
+        [JsonProperty(PropertyName = "isDeferredDeleteScheduleUpcoming")]
         public bool? IsDeferredDeleteScheduleUpcoming { get; set; }
 
         /// <summary>
