@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Subscription
     /// <summary>
     /// The subscription client
     /// </summary>
-    public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, SubscriptionClient, IAzureClient
+    public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
