@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Batch
 
         private BatchClient(Auth.BatchTokenCredentials credentials) : this()
         {
-            ServiceClientCredentials proxyCredentials = new TokenCredentials(new BatchTokenProvider(credentials.TokenCredential));
+            ServiceClientCredentials proxyCredentials = new TokenCredentials(new BatchTokenProvider(credentials.TokenProvider));
             this.ProtocolLayer = new ProtocolLayer(credentials.BaseUrl, proxyCredentials);
         }
 

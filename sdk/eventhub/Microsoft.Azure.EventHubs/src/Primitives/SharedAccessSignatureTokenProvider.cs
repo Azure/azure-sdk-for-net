@@ -16,7 +16,7 @@ namespace Microsoft.Azure.EventHubs
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
-    public class SharedAccessSignatureTokenProvider : TokenCredential
+    public class SharedAccessSignatureTokenProvider : TokenProvider
     {
         internal static readonly TimeSpan DefaultTokenTimeout = TimeSpan.FromMinutes(60);
 

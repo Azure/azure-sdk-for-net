@@ -11,11 +11,11 @@ namespace Microsoft.Azure.Batch.Protocol
     using System.Threading.Tasks;
     using Rest;
 
-    public class BatchTokenProvider : TokenCredential
+    public class BatchTokenProvider : ITokenProvider
     {
         private const string BearerAuthenticationScheme = "Bearer";
 
-        private Func<Task<string>> TokenCredential { get; }
+        private Func<Task<string>> TokenProvider { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchTokenProvider"/> class.
@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name="tokenProvider">A token provider function which retrieves an AAD token.</param>
         public BatchTokenProvider(Func<Task<string>> tokenProvider)
         {
-            this.TokenCredential = tokenProvider;
+            this.TokenProvider = tokenProvider;
         }
 
         public async Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync(CancellationToken cancellationToken)
         {
-            string token = await this.TokenCredential().ConfigureAwait(false);
+            string token = await this.TokenProvider().ConfigureAwait(false);
             return new AuthenticationHeaderValue(BearerAuthenticationScheme, token);
         }
     }

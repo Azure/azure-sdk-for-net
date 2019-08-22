@@ -10,67 +10,67 @@ namespace Microsoft.Azure.EventHubs
     /// <summary>
     /// This abstract base class can be extended to implement additional token providers.
     /// </summary>
-    public abstract class TokenCredential : TokenCredential
+    public abstract class TokenProvider : ITokenProvider
     {
         /// <summary>
-        /// Construct a TokenCredential based on a sharedAccessSignature.
+        /// Construct a TokenProvider based on a sharedAccessSignature.
         /// </summary>
         /// <param name="sharedAccessSignature">The shared access signature</param>
-        /// <returns>A TokenCredential initialized with the shared access signature</returns>
-        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature)
+        /// <returns>A TokenProvider initialized with the shared access signature</returns>
+        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature)
         {
             return new SharedAccessSignatureTokenProvider(sharedAccessSignature);
         }
 
         /// <summary>
-        /// Construct a TokenCredential based on the provided Key Name and Shared Access Key.
+        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
-        /// <returns>A TokenCredential initialized with the provided RuleId and Password</returns>
-        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey)
+        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
+        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey);
         }
 
-        //internal static TokenCredential CreateIoTTokenProvider(string keyName, string sharedAccessKey)
+        //internal static TokenProvider CreateIoTTokenProvider(string keyName, string sharedAccessKey)
         //{
         //    return new IoTTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
         //}
 
         /// <summary>
-        /// Construct a TokenCredential based on the provided Key Name and Shared Access Key.
+        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <param name="tokenTimeToLive">The token time to live</param>
-        /// <returns>A TokenCredential initialized with the provided RuleId and Password</returns>
-        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive)
+        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
+        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenTimeToLive);
         }
 
         /// <summary>
-        /// Construct a TokenCredential based on the provided Key Name and Shared Access Key.
+        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
-        /// <returns>A TokenCredential initialized with the provided RuleId and Password</returns>
-        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope)
+        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
+        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenScope);
         }
 
         /// <summary>
-        /// Construct a TokenCredential based on the provided Key Name and Shared Access Key.
+        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <param name="tokenTimeToLive">The token time to live</param>
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
-        /// <returns>A TokenCredential initialized with the provided RuleId and Password</returns>
-        public static TokenCredential CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope)
+        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
+        public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenTimeToLive, tokenScope);
         }
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="authCallback">The authentication delegate to provide access token.</param>
         /// <param name="authority">Address of the authority to issue token.</param>
         /// <param name="state">State to be delivered to callback.</param>
-        /// <returns>The <see cref="TokenCredential" /> for returning Json web token.</returns>
-        public static TokenCredential CreateAzureActiveDirectoryTokenProvider(
+        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
+        public static TokenProvider CreateAzureActiveDirectoryTokenProvider(
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
             string authority,
             object state = null)
@@ -92,8 +92,8 @@ namespace Microsoft.Azure.EventHubs
         }
 
         /// <summary>Creates Azure Managed Identity token provider.</summary>
-        /// <returns>The <see cref="TokenCredential" /> for returning Json web token.</returns>
-        public static TokenCredential CreateManagedIdentityTokenProvider()
+        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
+        public static TokenProvider CreateManagedIdentityTokenProvider()
         {
             return new ManagedIdentityTokenProvider();
         }

@@ -1022,7 +1022,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                         return authResult.AccessToken;
                     };
 
-            var tokenProvider = TokenCredential.CreateAzureActiveDirectoryTokenProvider(authCallback, appAuthority);
+                var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, appAuthority);
                 var epo = await GetOptionsAsync(connectionString);
                 var csb = new EventHubsConnectionStringBuilder(connectionString);
 

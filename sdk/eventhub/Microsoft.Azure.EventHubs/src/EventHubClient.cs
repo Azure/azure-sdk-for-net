@@ -66,7 +66,7 @@ namespace Microsoft.Azure.EventHubs
         public static EventHubClient CreateWithTokenProvider(
             Uri endpointAddress,
             string entityPath,
-            TokenCredential tokenProvider,
+            ITokenProvider tokenProvider,
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
         {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.EventHubs
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
         {
-            TokenCredential tokenProvider = TokenCredential.CreateAzureActiveDirectoryTokenProvider(authCallback, authority);
+            TokenProvider tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, authority);
 
             return CreateWithTokenProvider(
                 endpointAddress,
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.EventHubs
             return CreateWithTokenProvider(
                 endpointAddress,
                 entityPath,
-                TokenCredential.CreateManagedIdentityTokenProvider(),
+                TokenProvider.CreateManagedIdentityTokenProvider(),
                 operationTimeout,
                 transportType);
         }
