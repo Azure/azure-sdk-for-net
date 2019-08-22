@@ -32,7 +32,20 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             if (namespaceDeleteTask != null || storageDeleteTask != null)
             {
-                Task.WhenAll(namespaceDeleteTask ?? Task.CompletedTask, storageDeleteTask ?? Task.CompletedTask).GetAwaiter().GetResult();
+                try
+                {
+                    Task.WhenAll(namespaceDeleteTask ?? Task.CompletedTask, storageDeleteTask ?? Task.CompletedTask).GetAwaiter().GetResult();
+                }
+                catch
+                {
+                    // This should not be considered a critical failure that results in a test run failure.  Due
+                    // to ARM being temperamental, some management operations may be rejected.  Throwing here
+                    // does not help to ensure resource cleanup.
+                    //
+                    // Because resources may be orphaned outside of an observed exception, throwing to raise awareness
+                    // is not sufficient for all scenarios; since an external process is already needed to manage
+                    // orphans, there is no benefit to failing the run; allow the test results to be reported.
+                }
             }
 
             base.Dispose();

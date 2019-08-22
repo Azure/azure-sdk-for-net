@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Retrieves the inner transport batch from an <see cref="EventDataBatch" />
-        ///   using its private accessor.
+        ///   using its private accessors.
         /// </summary>
         ///
         /// <param name="batch">The batch to retrieve the inner transport batch from.</param>
