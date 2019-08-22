@@ -36,7 +36,7 @@ namespace Azure.Storage
 
         // SASTimeFormat represents the format of a SAS start or expiry time. Use it when formatting/parsing a time.Time.
         // ISO 8601 uses "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
-        public const string TimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
+        public const string SasTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
 
         public const string SnapshotParameterName = "snapshot";
 
@@ -230,10 +230,12 @@ namespace Azure.Storage
         /// </summary>
         internal static class File
         {
-            public const string None = "None";
-            public const string Now = "Now";
+            public const string FileAttributesNone = "None";
+            public const string FileTimeNow = "Now";
             public const string Preserve = "Preserve";
-            public const string Inherit = "Inherit";
+            public const string FilePermissionInherit = "Inherit";
+            public const int MaxFilePermissionHeaderSize = 8 * KB;
+            public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
 
             public const string SetHttpHeadersOperationName =
                 "Azure.Storage.Files.FileClient.SetHttpHeaders";

@@ -121,4 +121,16 @@ namespace Azure.Storage.Files.Models
             this.SmbProperties = new FileSmbProperties(rawStorageFileProperties);
         }
     }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileProperties instance for mocking.
+        /// </summary>
+        public static StorageFileProperties StorageFileProperties(RawStorageFileProperties rawStorageFileProperties)
+            => new StorageFileProperties(rawStorageFileProperties);
+    }
 }

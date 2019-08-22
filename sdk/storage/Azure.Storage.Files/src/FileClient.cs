@@ -382,9 +382,9 @@ namespace Azure.Storage.Files
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    smbProperties ??= new FileSmbProperties();
+                    var smbPrps = smbProperties ?? new FileSmbProperties();
 
-                    ClientHelper.AssertValidFilePermissionAndKey(filePermission, smbProperties.Value.FilePermissionKey);
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbPrps.FilePermissionKey);
 
                     var response = await FileRestClient.File.CreateAsync(
                         this.Pipeline,
@@ -397,11 +397,11 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         metadata: metadata,
-                        fileAttributes: CloudFileNtfsAttributesHelper.ToString(smbProperties.Value.FileAttributes) ?? Constants.File.None,
-                        filePermission: filePermission ?? Constants.File.Inherit,
-                        fileCreationTime: smbProperties.Value.FileCreationTimeToString() ?? Constants.File.Now,
-                        fileLastWriteTime: smbProperties.Value.FileLastWriteTimeToString() ?? Constants.File.Now,
-                        filePermissionKey: smbProperties.Value.FilePermissionKey,
+                        fileAttributes: smbPrps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
+                        filePermission: filePermission ?? Constants.File.FilePermissionInherit,
+                        fileCreationTime: smbPrps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbPrps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        filePermissionKey: smbPrps.FilePermissionKey,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1293,9 +1293,9 @@ namespace Azure.Storage.Files
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    smbProperties ??= new FileSmbProperties();
+                    var smbProps = smbProperties ?? new FileSmbProperties();
 
-                    ClientHelper.AssertValidFilePermissionAndKey(filePermission, smbProperties.Value.FilePermissionKey);
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
 
                     var response = await FileRestClient.File.SetPropertiesAsync(
                         this.Pipeline,
@@ -1307,11 +1307,11 @@ namespace Azure.Storage.Files
                         fileCacheControl: httpHeaders?.CacheControl,
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
-                        fileAttributes: CloudFileNtfsAttributesHelper.ToString(smbProperties.Value.FileAttributes) ?? Constants.File.Preserve,
+                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
                         filePermission:  filePermission ?? Constants.File.Preserve,
-                        fileCreationTime: smbProperties.Value.FileCreationTimeToString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProperties.Value.FileLastWriteTimeToString() ?? Constants.File.Preserve,
-                        filePermissionKey: smbProperties.Value.FilePermissionKey,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
+                        filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         operationName: Constants.File.SetHttpHeadersOperationName,
                         cancellationToken: cancellationToken)

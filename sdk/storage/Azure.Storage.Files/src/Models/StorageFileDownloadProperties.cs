@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core.Http;
@@ -120,6 +121,59 @@ namespace Azure.Storage.Files.Models
         {
             this._flattened = flattened;
             this.SmbProperties = new FileSmbProperties(flattened);
+        }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileDownloadProperties instance for mocking.
+        /// </summary>
+        public static StorageFileDownloadProperties StorageFileDownloadProperties(
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentType,
+            string contentRange,
+            ETag eTag,
+            IEnumerable<string> contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            IEnumerable<string> contentLanguage,
+            string acceptRanges,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            byte[] fileContentHash,
+            bool isServiceEncrypted)
+        {
+            var flattened = new FlattenedStorageFileProperties()
+            {
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentType = contentType,
+                ContentRange = contentRange,
+                ETag = eTag,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                AcceptRanges = acceptRanges,
+                CopyCompletionTime = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                FileContentHash = fileContentHash,
+                IsServerEncrypted = isServiceEncrypted
+            };
+            return new StorageFileDownloadProperties(flattened);
         }
     }
 }

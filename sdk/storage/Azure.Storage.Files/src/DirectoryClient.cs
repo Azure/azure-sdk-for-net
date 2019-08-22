@@ -335,19 +335,19 @@ namespace Azure.Storage.Files
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
-                    smbProperties ??= new FileSmbProperties();
+                    var smbProps = smbProperties ?? new FileSmbProperties();
 
-                    ClientHelper.AssertValidFilePermissionAndKey(filePermission, smbProperties.Value.FilePermissionKey);
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
 
                     var response = await FileRestClient.Directory.CreateAsync(
                         this.Pipeline,
                         this.Uri,
                         metadata: metadata,
-                        fileAttributes: CloudFileNtfsAttributesHelper.ToString(smbProperties.Value.FileAttributes) ?? Constants.File.None,
-                        filePermission: filePermission ?? Constants.File.Inherit,
-                        fileCreationTime: smbProperties.Value.FileCreationTimeToString() ?? Constants.File.Now,
-                        fileLastWriteTime: smbProperties.Value.FileLastWriteTimeToString() ?? Constants.File.Now,
-                        filePermissionKey: smbProperties.Value.FilePermissionKey,
+                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
+                        filePermission: filePermission ?? Constants.File.FilePermissionInherit,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         operationName: Constants.File.Directory.CreateOperationName,
                         cancellationToken: cancellationToken)
@@ -717,18 +717,18 @@ namespace Azure.Storage.Files
                     $"{nameof(filePermission)}: {filePermission}");
                 try
                 {
-                    smbProperties ??= new FileSmbProperties();
+                    var smbProps = smbProperties ?? new FileSmbProperties();
 
-                    ClientHelper.AssertValidFilePermissionAndKey(filePermission, smbProperties.Value.FilePermissionKey);
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
 
                     var response = await FileRestClient.Directory.SetPropertiesAsync(
                         this.Pipeline,
                         this.Uri,
-                        fileAttributes: CloudFileNtfsAttributesHelper.ToString(smbProperties.Value.FileAttributes) ?? Constants.File.Preserve,
+                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
                         filePermission: filePermission ?? Constants.File.Preserve,
-                        fileCreationTime: smbProperties.Value.FileCreationTimeToString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProperties.Value.FileLastWriteTimeToString() ?? Constants.File.Preserve,
-                        filePermissionKey: smbProperties.Value.FilePermissionKey,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
+                        filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         operationName: Constants.File.Directory.SetHttpHeadersOperationName,
                         cancellationToken: cancellationToken)
