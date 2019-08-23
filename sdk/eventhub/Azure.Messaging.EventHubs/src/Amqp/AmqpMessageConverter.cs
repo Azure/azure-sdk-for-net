@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -35,6 +36,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The AMQP message that represents the converted event data.</returns>
         ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
         public virtual AmqpMessage CreateMessageFromEvent(EventData source,
                                                           string partitionKey = null)
         {
@@ -50,6 +56,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="partitionKey">The partition key to associate with the batch, if any.</param>
         ///
         /// <returns>The AMQP message that represents a batch containing the converted set of event data.</returns>
+        ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
         ///
         public virtual AmqpMessage CreateBatchFromEvents(IEnumerable<EventData> source,
                                                          string partitionKey = null)
@@ -67,6 +78,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The AMQP message that represents a batch containing the converted set of event data.</returns>
         ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
         public virtual AmqpMessage CreateBatchFromMessages(IEnumerable<AmqpMessage> source,
                                                            string partitionKey = null)
         {
@@ -83,10 +99,145 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The event that represents the converted AMQP message.</returns>
         ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the specified message, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
         public virtual EventData CreateEventFromMessage(AmqpMessage source)
         {
             Guard.ArgumentNotNull(nameof(source), source);
             return BuildEventFromAmqpMessage(source);
+        }
+
+        /// <summary>
+        ///   Creates an <see cref="AmqpMessage" /> for use in requesting the properties of an Event Hub.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub to query the properties of.</param>
+        /// <param name="managementAuthorizationToken">The bearer token to use for authorization of management operations.</param>
+        ///
+        /// <returns>The AMQP message for issuing the request.</returns>
+        ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
+        public virtual AmqpMessage CreateEventHubPropertiesRequest(string eventHubName,
+                                                                   string managementAuthorizationToken)
+        {
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
+            Guard.ArgumentNotNullOrEmpty(nameof(managementAuthorizationToken), managementAuthorizationToken);
+
+            var request = AmqpMessage.Create();
+            request.ApplicationProperties = new ApplicationProperties();
+            request.ApplicationProperties.Map[AmqpManagement.ResourceNameKey] = eventHubName;
+            request.ApplicationProperties.Map[AmqpManagement.OperationKey] = AmqpManagement.ReadOperationValue;
+            request.ApplicationProperties.Map[AmqpManagement.ResourceTypeKey] = AmqpManagement.EventHubResourceTypeValue;
+            request.ApplicationProperties.Map[AmqpManagement.SecurityTokenKey] = managementAuthorizationToken;
+
+            return request;
+        }
+
+        /// <summary>
+        ///   Converts a given <see cref="AmqpMessage" /> response to a query for Event Hub properties into the
+        ///   corresponding <see cref="EventHubProperties" /> representation.
+        /// </summary>
+        ///
+        /// <param name="response">The response message to convert.</param>
+        ///
+        /// <returns>The set of properties represented by the response.</returns>
+        ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the specified message, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
+        public virtual EventHubProperties CreateEventHubPropertiesFromResponse(AmqpMessage response)
+        {
+            Guard.ArgumentNotNull(nameof(response), response);
+
+            var responseData = response.ValueBody?.Value as AmqpMap;
+
+            if (responseData == null)
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
+            }
+
+            return new EventHubProperties(
+                (string)responseData[AmqpManagement.ResponseMap.Name],
+                (DateTime)responseData[AmqpManagement.ResponseMap.CreatedAt],
+                (string[])responseData[AmqpManagement.ResponseMap.PartitionIdentifiers]);
+        }
+
+        /// <summary>
+        ///   Creates an <see cref="AmqpMessage" /> for use in requesting the properties of an Event Hub partition.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub to query the properties of.</param>
+        /// <param name="partitionIdentifier">The identifier of the partition to query the properties of.</param>
+        /// <param name="managementAuthorizationToken">The bearer token to use for authorization of management operations.</param>
+        ///
+        /// <returns>The AMQP message for issuing the request.</returns>
+        ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
+        public virtual AmqpMessage CreatePartitionPropertiesRequest(string eventHubName,
+                                                                    string partitionIdentifier,
+                                                                    string managementAuthorizationToken)
+        {
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
+            Guard.ArgumentNotNullOrEmpty(nameof(partitionIdentifier), partitionIdentifier);
+            Guard.ArgumentNotNullOrEmpty(nameof(managementAuthorizationToken), managementAuthorizationToken);
+
+            var request = AmqpMessage.Create();
+            request.ApplicationProperties = new ApplicationProperties();
+            request.ApplicationProperties.Map[AmqpManagement.ResourceNameKey] = eventHubName;
+            request.ApplicationProperties.Map[AmqpManagement.PartitionNameKey] = partitionIdentifier;
+            request.ApplicationProperties.Map[AmqpManagement.OperationKey] = AmqpManagement.ReadOperationValue;
+            request.ApplicationProperties.Map[AmqpManagement.ResourceTypeKey] = AmqpManagement.PartitionResourceTypeValue;
+            request.ApplicationProperties.Map[AmqpManagement.SecurityTokenKey] = managementAuthorizationToken;
+
+            return request;
+        }
+
+        /// <summary>
+        ///   Converts a given <see cref="AmqpMessage" /> response to a query for Event Hub partition properties into
+        ///   the corresponding <see cref="PartitionProperties" /> representation.
+        /// </summary>
+        ///
+        /// <param name="response">The response message to convert.</param>
+        ///
+        /// <returns>The set of properties represented by the response.</returns>
+        ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the specified message, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
+        public virtual PartitionProperties CreatePartitionPropertiesFromResponse(AmqpMessage response)
+        {
+            Guard.ArgumentNotNull(nameof(response), response);
+
+            var responseData = response.ValueBody?.Value as AmqpMap;
+
+            if (responseData == null)
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
+            }
+
+            return new PartitionProperties(
+                (string)responseData[AmqpManagement.ResponseMap.Name],
+                (string)responseData[AmqpManagement.ResponseMap.PartitionIdentifier],
+                (long)responseData[AmqpManagement.ResponseMap.PartitionBeginSequenceNumber],
+                (long)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber],
+                Int64.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset]),
+                (DateTime)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc],
+                (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty]);
         }
 
         /// <summary>
