@@ -89,17 +89,13 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                                                         CancellationToken cancellationToken)
         {
             static EventData TransformEvent(TrackOne.EventData eventData) =>
-                new EventData(eventData.Body)
-                {
-                    Properties = eventData.Properties,
-                    SystemProperties = new EventData.SystemEventProperties
-                    {
-                        SequenceNumber = eventData.SystemProperties.SequenceNumber,
-                        EnqueuedTime = new DateTimeOffset(eventData.SystemProperties.EnqueuedTimeUtc),
-                        Offset = Int64.Parse(eventData.SystemProperties.Offset),
-                        PartitionKey = eventData.SystemProperties.PartitionKey
-                    }
-                };
+                new EventData(eventData.Body,
+                              eventData.Properties,
+                              eventData.SystemProperties.WithoutTypedMembers(),
+                              eventData.SystemProperties.SequenceNumber,
+                              Int64.Parse(eventData.SystemProperties.Offset),
+                              new DateTimeOffset(eventData.SystemProperties.EnqueuedTimeUtc),
+                              eventData.SystemProperties.PartitionKey);
 
             try
             {

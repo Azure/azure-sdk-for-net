@@ -347,10 +347,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 ? ReadStreamToMemory(source.BodyStream)
                 : ReadOnlyMemory<byte>.Empty;
 
-            var eventData = new EventData(body, BuildSystemProperties(source));
+            var systemAnnotations = ParseSystemAnnotations(source);
 
             // If there were application properties associated with the message, translate them
             // to the event.
+
+            var properties = new Dictionary<string, object>();
 
             if (source.Sections.HasFlag(SectionFlag.ApplicationProperties))
             {
@@ -360,47 +362,57 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     if (TryCreateEventPropertyForAmqpProperty(pair.Value, out propertyValue))
                     {
-                        eventData.Properties[pair.Key.ToString()] = propertyValue;
+                        properties[pair.Key.ToString()] = propertyValue;
                     }
                 }
             }
 
-            return eventData;
+            return new EventData(
+                eventBody: body,
+                properties: properties,
+                systemProperties: systemAnnotations.ServiceAnnotations,
+                sequenceNumber: systemAnnotations.SequenceNumber,
+                offset: systemAnnotations.Offset,
+                enqueuedTime: systemAnnotations.EnqueuedTime,
+                partitionKey: systemAnnotations.PartitionKey);
         }
 
         /// <summary>
-        ///   Builds the set of <see cref="EventData.SystemEventProperties" /> from an <see cref="AmqpMessage" />
+        ///   Parses the annotations set by the Event Hubs service on the <see cref="AmqpMessage"/>
+        ///   associated with an event, extracting them into a consumable form.
         /// </summary>
         ///
         /// <param name="source">The message to use as the source of the event.</param>
         ///
-        /// <returns>The <see cref="EventData.SystemEventProperties" /> constructed from the source message.</returns>
+        /// <returns>The <see cref="ParsedAnnotations" /> parsed from the source message.</returns>
         ///
-        private static EventData.SystemEventProperties BuildSystemProperties(AmqpMessage source)
+        private static ParsedAnnotations ParseSystemAnnotations(AmqpMessage source)
         {
-            var systemProperties = default(EventData.SystemEventProperties);
-            var populated = false;
+            var systemProperties = new ParsedAnnotations();
+            systemProperties.ServiceAnnotations = new Dictionary<string, object>();
 
             object amqpValue;
             object propertyValue;
 
+            // Process the message annotations.
+
             if (source.Sections.HasFlag(SectionFlag.MessageAnnotations))
             {
-                systemProperties = new EventData.SystemEventProperties();
                 var annotations = source.MessageAnnotations.Map;
+                var processed = new HashSet<string>();
 
                 if ((annotations.TryGetValue(AmqpProperty.EnqueuedTime, out amqpValue))
                     && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
                 {
                     systemProperties.EnqueuedTime = (DateTimeOffset)propertyValue;
-                    populated = true;
+                    processed.Add(AmqpProperty.EnqueuedTime.ToString());
                 }
 
                 if ((annotations.TryGetValue(AmqpProperty.SequenceNumber, out amqpValue))
                     && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
                 {
                     systemProperties.SequenceNumber = (long)propertyValue;
-                    populated = true;
+                    processed.Add(AmqpProperty.SequenceNumber.ToString());
                 }
 
                 if ((annotations.TryGetValue(AmqpProperty.Offset, out amqpValue))
@@ -408,18 +420,61 @@ namespace Azure.Messaging.EventHubs.Amqp
                     && (Int64.TryParse((string)propertyValue, out var offset)))
                 {
                     systemProperties.Offset = offset;
-                    populated = true;
+                    processed.Add(AmqpProperty.Offset.ToString());
                 }
 
                 if ((annotations.TryGetValue(AmqpProperty.PartitionKey, out amqpValue))
                     && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
                 {
                     systemProperties.PartitionKey = (string)propertyValue;
-                    populated = true;
+                    processed.Add(AmqpProperty.PartitionKey.ToString());
+                }
+
+                string key;
+
+                foreach (var pair in annotations)
+                {
+                    key = pair.Key.ToString();
+
+                    if ((!processed.Contains(key))
+                        && (TryCreateEventPropertyForAmqpProperty(pair.Value, out propertyValue)))
+                    {
+                        systemProperties.ServiceAnnotations.Add(key, propertyValue);
+                        processed.Add(key);
+                    }
                 }
             }
 
-            return (populated ? systemProperties : null);
+            // Process the properties annotations
+
+            if (source.Sections.HasFlag(SectionFlag.Properties))
+            {
+                var properties = source.Properties;
+
+                void conditionalAdd(string name, object value, bool condition)
+                {
+                    if (condition)
+                    {
+                        systemProperties.ServiceAnnotations.Add(name, value);
+                    }
+                }
+
+                conditionalAdd(Properties.MessageIdName, properties.MessageId, properties.MessageId != null);
+                conditionalAdd(Properties.UserIdName, properties.UserId, properties.UserId.Array != null);
+                conditionalAdd(Properties.ToName, properties.To, properties.To != null);
+                conditionalAdd(Properties.SubjectName, properties.Subject, properties.Subject != null);
+                conditionalAdd(Properties.ReplyToName, properties.ReplyTo, properties.ReplyTo != null);
+                conditionalAdd(Properties.CorrelationIdName, properties.CorrelationId, properties.CorrelationId != null);
+                conditionalAdd(Properties.ContentTypeName, properties.ContentType, properties.ContentType.Value != null);
+                conditionalAdd(Properties.ContentEncodingName, properties.ContentEncoding, properties.ContentEncoding.Value != null);
+                conditionalAdd(Properties.AbsoluteExpiryTimeName, properties.AbsoluteExpiryTime, properties.AbsoluteExpiryTime != null);
+                conditionalAdd(Properties.CreationTimeName, properties.CreationTime, properties.CreationTime != null);
+                conditionalAdd(Properties.GroupIdName, properties.GroupId, properties.GroupId != null);
+                conditionalAdd(Properties.GroupSequenceName, properties.GroupSequence, properties.GroupSequence != null);
+                conditionalAdd(Properties.ReplyToGroupIdName, properties.ReplyToGroupId, properties.ReplyToGroupId != null);
+            }
+
+            return systemProperties;
         }
 
         /// <summary>
@@ -659,6 +714,29 @@ namespace Azure.Messaging.EventHubs.Amqp
             stream.CopyTo(memStream, StreamBufferSizeInBytes);
 
             return new ReadOnlyMemory<byte>(memStream.ToArray());
+        }
+
+        /// <summary>
+        ///   The set of system annotations set on a message received from the
+        ///   Event Hubs service.
+        /// </summary>
+        ///
+        private struct ParsedAnnotations
+        {
+            /// <summary>The set of weakly typed annotations associated with the message.</summary>
+            public Dictionary<string, object> ServiceAnnotations;
+
+            /// <summary>The sequence number of the event associated with the message.</summary>
+            public long? SequenceNumber;
+
+            /// <summary>The offset of the event associated with the message.</summary>
+            public long? Offset;
+
+            /// <summary>The date and time, in UTC, that the event associated with the message was enqueued.</summary>
+            public DateTimeOffset? EnqueuedTime;
+
+            /// <summary>The partition key that the event associated with the message was published with.</summary>
+            public string PartitionKey;
         }
     }
 }

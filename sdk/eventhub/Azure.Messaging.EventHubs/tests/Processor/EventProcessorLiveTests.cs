@@ -12,7 +12,7 @@ using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests.Processor
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of live tests for the <see cref="EventProcessor" />
@@ -242,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     await hub.StopAllAsync();
 
-                    // Validate results.  Make sure we received every event in the correct partition processor, 
+                    // Validate results.  Make sure we received every event in the correct partition processor,
                     // in the order they were sent.
 
                     foreach (var partitionId in partitionIds)
