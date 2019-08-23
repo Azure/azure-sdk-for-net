@@ -135,19 +135,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
 
-                        await Task.WhenAll(partitionIds
-                            .Select(partitionId =>
-                            {
-                                var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId);
-                                var checkpointManager = new CheckpointManager(partitionContext, Manager, Identifier);
-
-                                var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
-
-                                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
-                                PartitionPumps.TryAdd(partitionId, partitionPump);
-
-                                return partitionPump.StartAsync();
-                            })).ConfigureAwait(false);
+                        await Task.WhenAll(partitionIds.Select(partitionId => CreatePartitionPump(partitionId))).ConfigureAwait(false);
 
                         RunningTask = RunAsync(RunningTaskTokenSource.Token);
                     }
@@ -229,17 +217,7 @@ namespace Azure.Messaging.EventHubs.Processor
                             // TODO: delegate the exception handling to an Exception Callback.
                         }
 
-                        var partitionId = kvp.Key;
-
-                        var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId);
-                        var checkpointManager = new CheckpointManager(partitionContext, Manager, Identifier);
-
-                        var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
-
-                        var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
-                        PartitionPumps.TryUpdate(partitionId, partitionPump, partitionPump);
-
-                        await partitionPump.StartAsync();
+                        await CreatePartitionPump(kvp.Key);
                     })).ConfigureAwait(false);
 
                 try
@@ -250,6 +228,29 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 catch (TaskCanceledException) { }
             }
+        }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        private Task CreatePartitionPump(string partitionId)
+        {
+            var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId);
+            var checkpointManager = new CheckpointManager(partitionContext, Manager, Identifier);
+
+            var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
+
+            // TODO: what if there's already a pump?
+            // TODO: should we return it instead of adding it?
+            // TODO: do we need a concurrent dictionary if we are only claiming one partition at a time?
+
+            var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
+            PartitionPumps[partitionId] = partitionPump;
+
+            return partitionPump.StartAsync();
         }
     }
 }
