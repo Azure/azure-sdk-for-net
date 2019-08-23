@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -54,10 +55,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEquivalentToDetectsWhenOnePropertySetIsNull()
         {
             var body = new byte[] { 0x22, 0x44, 0x88 };
-            var firstEvent = new EventData((byte[])body.Clone());
+            var firstEvent = new EventData((byte[])body.Clone(), properties: null);
             var secondEvent = new EventData((byte[])body.Clone());
 
-            firstEvent.Properties = null;
             secondEvent.Properties["test"] = "trackTwo";
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.False);
@@ -69,17 +69,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void IsEquivalentToIgnoresSystemPropertiesByDefault()
+        public void IsEquivalentToIgnoresTypedSystemPropertiesByDefault()
         {
             var body = new byte[] { 0x22, 0x44, 0x88 };
-            var firstEvent = new EventData((byte[])body.Clone());
-            var secondEvent = new EventData((byte[])body.Clone());
-
-            firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties.PartitionKey = "-1";
-
-            secondEvent.SystemProperties = new EventData.SystemEventProperties();
-            secondEvent.SystemProperties.PartitionKey = "trackTwo";
+            var firstEvent = new EventData((byte[])body.Clone(), partitionKey: "1");
+            var secondEvent = new EventData((byte[])body.Clone(), partitionKey: "2");
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
         }
@@ -90,17 +84,31 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void IsEquivalentToDetectsDifferentSystemProperties()
+        public void IsEquivalentToIgnoresMappedSystemPropertiesByDefault()
         {
             var body = new byte[] { 0x22, 0x44, 0x88 };
-            var firstEvent = new EventData((byte[])body.Clone());
-            var secondEvent = new EventData((byte[])body.Clone());
+            var firstSystemProperties = new Dictionary<string, object>();
+            var secondSystemProperties = new Dictionary<string, object>();
+            var firstEvent = new EventData((byte[])body.Clone(), systemProperties: firstSystemProperties);
+            var secondEvent = new EventData((byte[])body.Clone(), systemProperties: secondSystemProperties);
 
-            firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties.Offset = 1;
+            firstSystemProperties[nameof(IsEquivalentToIgnoresMappedSystemPropertiesByDefault)] = true;
+            secondSystemProperties[nameof(IsEquivalentToIgnoresMappedSystemPropertiesByDefault)] = false;
 
-            secondEvent.SystemProperties = new EventData.SystemEventProperties();
-            secondEvent.SystemProperties.Offset = 2;
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsDifferentTypedSystemProperties()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone(), offset: 1);
+            var secondEvent = new EventData((byte[])body.Clone(), offset: 2);
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent, true), Is.False);
         }
@@ -111,16 +119,73 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void IsEquivalentToDetectsWhenOneSystemPropertySetIsNull()
+        public void IsEquivalentToDetectsDifferentMappedSystemProperties()
         {
             var body = new byte[] { 0x22, 0x44, 0x88 };
-            var firstEvent = new EventData((byte[])body.Clone());
-            var secondEvent = new EventData((byte[])body.Clone());
+            var firstSystemProperties = new Dictionary<string, object>();
+            var secondSystemProperties = new Dictionary<string, object>();
+            var firstEvent = new EventData((byte[])body.Clone(), systemProperties: firstSystemProperties);
+            var secondEvent = new EventData((byte[])body.Clone(), systemProperties: secondSystemProperties);
 
-            firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties.PartitionKey = "trackOne";
+            firstSystemProperties[nameof(IsEquivalentToDetectsDifferentMappedSystemProperties)] = true;
+            secondSystemProperties[nameof(IsEquivalentToDetectsDifferentMappedSystemProperties)] = false;
 
-            secondEvent.SystemProperties = null;
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent, true), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsMissingMappedSystemPropertyInFirstArgument()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstSystemProperties = new Dictionary<string, object>();
+            var secondSystemProperties = new Dictionary<string, object>();
+            var firstEvent = new EventData((byte[])body.Clone(), systemProperties: firstSystemProperties);
+            var secondEvent = new EventData((byte[])body.Clone(), systemProperties: secondSystemProperties);
+
+            firstSystemProperties["one"] = true;
+            firstSystemProperties[nameof(IsEquivalentToDetectsMissingMappedSystemPropertyInFirstArgument)] = true;
+            secondSystemProperties[nameof(IsEquivalentToDetectsMissingMappedSystemPropertyInFirstArgument)] = true;
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent, true), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsMissingMappedSystemPropertyInSecondArgument()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstSystemProperties = new Dictionary<string, object>();
+            var secondSystemProperties = new Dictionary<string, object>();
+            var firstEvent = new EventData((byte[])body.Clone(), systemProperties: firstSystemProperties);
+            var secondEvent = new EventData((byte[])body.Clone(), systemProperties: secondSystemProperties);
+
+            firstSystemProperties[nameof(IsEquivalentToDetectsMissingMappedSystemPropertyInSecondArgument)] = true;
+            secondSystemProperties[nameof(IsEquivalentToDetectsMissingMappedSystemPropertyInSecondArgument)] = true;
+            secondSystemProperties["one"] = true;
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent, true), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsWhenOneTypedSystemPropertyIsNull()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone(), partitionKey: null);
+            var secondEvent = new EventData((byte[])body.Clone(), partitionKey: "trackOne");
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent, true), Is.False);
         }
@@ -134,17 +199,19 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEquivalentToDetectsEqualEvents()
         {
             var body = new byte[] { 0x22, 0x44, 0x88 };
-            var firstEvent = new EventData((byte[])body.Clone());
-            var secondEvent = new EventData((byte[])body.Clone());
 
-            firstEvent.Properties["test"] = "same";
-            secondEvent.Properties["test"] = "same";
+            var firstEvent = new EventData(
+                eventBody: (byte[])body.Clone(),
+                offset: 1,
+                partitionKey: "hello",
+                systemProperties: new Dictionary<string, object> { {"test", new object() }});
 
-            firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties.PartitionKey = "otherSame";
 
-            secondEvent.SystemProperties = new EventData.SystemEventProperties();
-            secondEvent.SystemProperties.PartitionKey = "otherSame";
+            var secondEvent = new EventData(
+                eventBody: (byte[])body.Clone(),
+                offset: 1,
+                partitionKey: "hello",
+                systemProperties: new Dictionary<string, object> { {"test", new object() }});
 
             Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
         }
@@ -157,9 +224,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsSameInstance()
         {
-            var firstEvent = new EventData(new byte[] { 0x22, 0x44, 0x88 });
-            firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties.SequenceNumber = 5555L;
+            var firstEvent = new EventData(
+                eventBody: new byte[] { 0x22, 0x44, 0x88 },
+                offset: 1,
+                partitionKey: "hello",
+                systemProperties: new Dictionary<string, object> { {"test", new object() }});
 
             Assert.That(firstEvent.IsEquivalentTo(firstEvent), Is.True);
         }
@@ -183,9 +252,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsNullInstance()
         {
-            var firstEvent = new EventData(new byte[] { 0x22, 0x44, 0x88 });
-            firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties.PartitionKey = "otherSame";
+            var firstEvent = new EventData(
+                eventBody: new byte[] { 0x22, 0x44, 0x88 },
+                offset: 1,
+                partitionKey: "hello",
+                systemProperties: new Dictionary<string, object> { {"test", new object() }});
 
             Assert.That(((EventData)null).IsEquivalentTo(firstEvent), Is.False);
         }
@@ -198,9 +269,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEquivalentToDetectsNullArgument()
         {
-            var firstEvent = new EventData(new byte[] { 0x22, 0x44, 0x88 });
-            firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties.PartitionKey = "otherSame";
+            var firstEvent = new EventData(
+                eventBody: new byte[] { 0x22, 0x44, 0x88 },
+                offset: 1,
+                partitionKey: "hello",
+                systemProperties: new Dictionary<string, object> { {"test", new object() }});
 
             Assert.That(firstEvent.IsEquivalentTo((EventData)null), Is.False);
         }

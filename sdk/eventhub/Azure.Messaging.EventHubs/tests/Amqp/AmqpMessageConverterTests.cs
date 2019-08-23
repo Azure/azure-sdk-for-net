@@ -162,10 +162,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 "hello"
             };
 
-            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 })
-            {
-                Properties = propertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value)
-            };
+            var eventData = new EventData(
+                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                properties: propertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value));
 
             using var message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
 
@@ -197,10 +196,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                    object propertyValueRaw,
                                                                                    Func<object, object> propertyValueAccessor)
         {
-            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 })
-            {
-                Properties = new Dictionary<string, object> { { "TestProp", propertyValueRaw } }
-            };
+            var eventData = new EventData(
+                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                properties: new Dictionary<string, object> { { "TestProp", propertyValueRaw } });
 
             using var message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
 
@@ -227,10 +225,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateMessageFromEventTranslatesStreamApplicationProperties(object propertyStream,
                                                                                 byte[] contents)
         {
-            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 })
-            {
-                Properties = new Dictionary<string, object> { { "TestProp", propertyStream } }
-            };
+            var eventData = new EventData(
+                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                properties: new Dictionary<string, object> { { "TestProp", propertyStream } });
 
             using var message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
 
@@ -254,10 +251,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateMessageFromEventFailsForUnknownApplicationPropertyType()
         {
-            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 })
-            {
-                Properties = new Dictionary<string, object> { { "TestProperty", new RankException() } }
-            };
+            var eventData = new EventData(
+                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                properties: new Dictionary<string, object> { { "TestProperty", new RankException() } });
 
             Assert.That(() => new AmqpMessageConverter().CreateMessageFromEvent(eventData), Throws.InstanceOf<SerializationException>());
         }
@@ -396,10 +392,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var body = new byte[] { 0x11, 0x22, 0x33 };
             var property = 65;
 
-            var eventData = new EventData(body)
-            {
-                Properties = new Dictionary<string, object> { { nameof(property), property } }
-            };
+            var eventData = new EventData(
+                eventBody: body,
+                properties: new Dictionary<string, object> { { nameof(property), property } });
 
             using var message = new AmqpMessageConverter().CreateBatchFromEvents(new[] { eventData }, "Something");
             Assert.That(message, Is.Not.Null, "The batch envelope should have been created.");
@@ -424,15 +419,13 @@ namespace Azure.Messaging.EventHubs.Tests
             using var firstEventStream = new MemoryStream(new byte[] { 0x37, 0x39 });
             using var secondEventStream = new MemoryStream(new byte[] { 0x73, 0x93 });
 
-            var firstEvent = new EventData(new byte[] { 0x11, 0x22, 0x33 })
-            {
-                Properties = new Dictionary<string, object> { { nameof(MemoryStream), firstEventStream } }
-            };
+            var firstEvent = new EventData(
+                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                properties: new Dictionary<string, object> { { nameof(MemoryStream), firstEventStream } });
 
-            var secondEvent = new EventData(new byte[] { 0x44, 0x55, 0x66 })
-            {
-                Properties = new Dictionary<string, object> { { nameof(MemoryStream), secondEventStream } }
-            };
+            var secondEvent = new EventData(
+                eventBody: new byte[] { 0x44, 0x55, 0x66 },
+                properties: new Dictionary<string, object> { { nameof(MemoryStream), secondEventStream } });
 
             var events = new[] { firstEvent, secondEvent };
             var converter = new AmqpMessageConverter();
@@ -600,10 +593,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var body = new byte[] { 0x11, 0x22, 0x33 };
             var property = 65;
 
-            var eventData = new EventData(body)
-            {
-                Properties = new Dictionary<string, object> { { nameof(property), property } }
-            };
+            var eventData = new EventData(
+                eventBody: body,
+                properties: new Dictionary<string, object> { { nameof(property), property } });
 
             using var source = converter.CreateMessageFromEvent(eventData);
             using var batchEnvelope = converter.CreateBatchFromMessages(new[] { source }, "Something");
@@ -631,15 +623,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var converter = new AmqpMessageConverter();
 
-            var firstEvent = new EventData(new byte[] { 0x11, 0x22, 0x33 })
-            {
-                Properties = new Dictionary<string, object> { { nameof(MemoryStream), firstEventStream } }
-            };
+            var firstEvent = new EventData(
+                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                properties: new Dictionary<string, object> { { nameof(MemoryStream), firstEventStream } });
 
-            var secondEvent = new EventData(new byte[] { 0x44, 0x55, 0x66 })
-            {
-                Properties = new Dictionary<string, object> { { nameof(MemoryStream), secondEventStream } }
-            };
+            var secondEvent = new EventData(
+                eventBody: new byte[] { 0x44, 0x55, 0x66 },
+                properties: new Dictionary<string, object> { { nameof(MemoryStream), secondEventStream } });
 
             using var firstMessage = converter.CreateMessageFromEvent(firstEvent);
             using var secondMessage = converter.CreateMessageFromEvent(secondEvent);
@@ -1019,10 +1009,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void AnEventCanBeTranslatedToItself()
         {
-            var sourceEvent = new EventData(new byte[] { 0x11, 0x22, 0x33 })
-            {
-                Properties = new Dictionary<string, object> { { "Test", 1234 } }
-            };
+            var sourceEvent = new EventData(
+                eventBody: new byte[] { 0x11, 0x22, 0x33 },
+                properties: new Dictionary<string, object> { { "Test", 1234 } });
 
             var converter = new AmqpMessageConverter();
             using var message = converter.CreateMessageFromEvent(sourceEvent);

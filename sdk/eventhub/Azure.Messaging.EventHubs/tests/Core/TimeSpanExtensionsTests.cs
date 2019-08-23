@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests.Core
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="TimeSpanExtensions" />
