@@ -31,15 +31,16 @@ namespace Compute.Tests.DiskRPTests
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones);
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
 
                 try
                 {
                     // **********
                     // SETUP
                     // **********
-                    // Create resource group, unless create option is import in which case resource group will be created with vm
-                    if (diskCreateOption != DiskCreateOption.Import)
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which casethe resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
                     {
                         m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
                     }
@@ -103,7 +104,7 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
-        protected void Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        protected void Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, bool incremental = false)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
@@ -129,18 +130,18 @@ namespace Compute.Tests.DiskRPTests
                     Validate(sourceDisk, diskOut, DiskRPLocation);
 
                     // Generate snapshot using disk info
-                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id);
+                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id, incremental: incremental);
 
                     // **********
                     // TEST
                     // **********
                     // Put
                     Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // Get
                     snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // Get access
                     AccessUri accessUri = m_CrpClient.Snapshots.GrantAccess(rgName, snapshotName, AccessDataDefault);
@@ -148,18 +149,18 @@ namespace Compute.Tests.DiskRPTests
 
                     // Get
                     snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // Patch
                     var updatesnapshot = new SnapshotUpdate();
                     const string tagKey = "tageKey";
                     updatesnapshot.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
                     snapshotOut = m_CrpClient.Snapshots.Update(rgName, snapshotName, updatesnapshot);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // Get
                     snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // End access
                     m_CrpClient.Snapshots.RevokeAccess(rgName, snapshotName);
@@ -186,19 +187,20 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
-        protected void Disk_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null)
+        protected void Disk_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
 
                 // Data
                 var rgName1 = TestUtilities.GenerateName(TestPrefix);
                 var rgName2 = TestUtilities.GenerateName(TestPrefix);
                 var diskName1 = TestUtilities.GenerateName(DiskNamePrefix);
                 var diskName2 = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk1 = GenerateDefaultDisk(diskCreateOption, rgName1, diskSizeGB);
-                Disk disk2 = GenerateDefaultDisk(diskCreateOption, rgName2, diskSizeGB);
+                Disk disk1 = GenerateDefaultDisk(diskCreateOption, rgName1, diskSizeGB, location: location);
+                Disk disk2 = GenerateDefaultDisk(diskCreateOption, rgName2, diskSizeGB, location: location);
 
                 try
                 {
@@ -328,21 +330,28 @@ namespace Compute.Tests.DiskRPTests
         #region Generation
         public static readonly GrantAccessData AccessDataDefault = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
 
-        protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null)
+        protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null, string location = null)
         {
             Disk disk;
 
             switch (diskCreateOption)
             {
                 case "Upload":
+                    disk = GenerateBaseDisk(diskCreateOption);
+                    disk.CreationData.UploadSizeBytes = (long) (diskSizeGB ?? 10) * 1024 * 1024 * 1024 + 512;
+                    break;
                 case "Empty":
                     disk = GenerateBaseDisk(diskCreateOption);
                     disk.DiskSizeGB = diskSizeGB;
                     disk.Zones = zones;
                     break;
                 case "Import":
-                    disk = GenerateImportDisk(diskCreateOption, rgName);
+                    disk = GenerateImportDisk(diskCreateOption, rgName, location);
                     disk.DiskSizeGB = diskSizeGB;
+                    disk.Zones = zones;
+                    break;
+                case "Copy":
+                    disk = GenerateCopyDisk(rgName, diskSizeGB ?? 10, location);
                     disk.Zones = zones;
                     break;
                 default:
@@ -356,13 +365,14 @@ namespace Compute.Tests.DiskRPTests
         /// Generates a disk used when the DiskCreateOption is Import
         /// </summary>
         /// <returns></returns>
-        private Disk GenerateImportDisk(string diskCreateOption, string rgName)
+        private Disk GenerateImportDisk(string diskCreateOption, string rgName, string location)
         {
             // Create a VM, so we can use its OS disk for creating the image
             string storageAccountName = ComputeManagementTestUtilities.GenerateName(DiskNamePrefix);
             string asName = ComputeManagementTestUtilities.GenerateName("as");
             ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
             VirtualMachine inputVM = null;
+            m_location = location;
 
             // Create Storage Account
             var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
@@ -384,6 +394,25 @@ namespace Compute.Tests.DiskRPTests
             return disk;
         }
 
+        /// <summary>
+        /// Generates a disk used when the DiskCreateOption is Copy
+        /// </summary>
+        /// <returns></returns>
+        private Disk GenerateCopyDisk(string rgName, int diskSizeGB, string location)
+        {
+            // Create an empty disk
+            Disk originalDisk = GenerateDefaultDisk("Empty", rgName, diskSizeGB: diskSizeGB);
+            m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+            Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, TestUtilities.GenerateName(DiskNamePrefix + "_original"), originalDisk);
+
+            Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id);
+            Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, "snapshotswaaggertest", snapshot);
+
+            Disk copyDisk = GenerateBaseDisk("Import");
+            copyDisk.CreationData.SourceResourceId = snapshotOut.Id;
+            return copyDisk;
+        }
+
         protected Disk GenerateBaseDisk(string diskCreateOption)
         {
             var disk = new Disk
@@ -403,17 +432,18 @@ namespace Compute.Tests.DiskRPTests
             return disk;
         }
 
-        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = "Standard_LRS")
+        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = "Standard_LRS", bool incremental = false)
         {
-            Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId, snapshotStorageAccountTypes);
+            Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId, snapshotStorageAccountTypes, incremental);
             return snapshot;
         }
 
-        private Snapshot GenerateBaseSnapshot(string sourceDiskId, string snapshotStorageAccountTypes)
+        private Snapshot GenerateBaseSnapshot(string sourceDiskId, string snapshotStorageAccountTypes, bool incremental = false)
         {
             var snapshot = new Snapshot()
             {
-                Location = DiskRPLocation
+                Location = DiskRPLocation,
+                Incremental = incremental
             };
             snapshot.Sku = new SnapshotSku()
             {
@@ -431,7 +461,7 @@ namespace Compute.Tests.DiskRPTests
 
         #region Validation
 
-        private void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false)
+        private void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false, bool incremental = false)
         {
             // snapshot resource
             Assert.Equal(string.Format("{0}/{1}", ApiConstants.ResourceProviderNamespace, "snapshots"), snapshotActual.Type);
@@ -442,6 +472,8 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(snapshotExpected.Sku.Name, snapshotActual.Sku.Name);
             Assert.True(snapshotActual.ManagedBy == null);
             Assert.NotNull(snapshotActual.ProvisioningState);
+            Assert.Equal(incremental, snapshotActual.Incremental);
+            Assert.NotNull(snapshotActual.CreationData.SourceUniqueId);
             if (snapshotExpected.OsType != null) //these properties are not mandatory for the client
             {
                 Assert.Equal(snapshotExpected.OsType, snapshotActual.OsType);
@@ -452,7 +484,6 @@ namespace Compute.Tests.DiskRPTests
                 // Disk resizing
                 Assert.Equal(snapshotExpected.DiskSizeGB, snapshotActual.DiskSizeGB);
             }
-
 
             // Creation data
             CreationData creationDataExp = snapshotExpected.CreationData;
@@ -488,11 +519,13 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(diskExpected.Sku.Name, diskActual.Sku.Name);
             Assert.NotNull(diskActual.ProvisioningState);
             Assert.Equal(diskExpected.OsType, diskActual.OsType);
+            Assert.NotNull(diskActual.UniqueId);
 
             if (diskExpected.DiskSizeGB != null)
             {
                 // Disk resizing
                 Assert.Equal(diskExpected.DiskSizeGB, diskActual.DiskSizeGB);
+                Assert.NotNull(diskActual.DiskSizeBytes);
             }
 
             if (!update)
