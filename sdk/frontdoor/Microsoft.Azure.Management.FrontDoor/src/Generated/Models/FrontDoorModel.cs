@@ -158,5 +158,28 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         [JsonProperty(PropertyName = "properties.cname")]
         public string Cname { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (FrontendEndpoints != null)
+            {
+                foreach (var element in FrontendEndpoints)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (BackendPoolsSettings != null)
+            {
+                BackendPoolsSettings.Validate();
+            }
+        }
     }
 }

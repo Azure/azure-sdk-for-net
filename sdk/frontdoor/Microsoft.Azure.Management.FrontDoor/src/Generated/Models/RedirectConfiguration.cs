@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="redirectProtocol">The protocol of the destination to
         /// where the traffic is redirected. Possible values include:
         /// 'HttpOnly', 'HttpsOnly', 'MatchRequest'</param>
-        /// <param name="customHost">Host to redirect. Leave empty to use use
-        /// the incoming host as the destination host.</param>
+        /// <param name="customHost">Host to redirect. Leave empty to use the
+        /// incoming host as the destination host.</param>
         /// <param name="customPath">The full path to redirect. Path cannot be
         /// empty and must start with /. Leave empty to use the incoming path
         /// as destination path.</param>
@@ -84,8 +84,8 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string RedirectProtocol { get; set; }
 
         /// <summary>
-        /// Gets or sets host to redirect. Leave empty to use use the incoming
-        /// host as the destination host.
+        /// Gets or sets host to redirect. Leave empty to use the incoming host
+        /// as the destination host.
         /// </summary>
         [JsonProperty(PropertyName = "customHost")]
         public string CustomHost { get; set; }
