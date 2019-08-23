@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondEvent = new EventData((byte[])body.Clone());
 
             firstEvent.SystemProperties = new EventData.SystemEventProperties();
-            firstEvent.SystemProperties.PartitionKey= "trackOne";
+            firstEvent.SystemProperties.PartitionKey = "trackOne";
 
             secondEvent.SystemProperties = null;
 

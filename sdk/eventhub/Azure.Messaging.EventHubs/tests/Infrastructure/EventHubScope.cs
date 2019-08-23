@@ -235,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
 
             using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
             {
-                await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));;
+                await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
             }
         }
 
