@@ -63,6 +63,90 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
+        public async Task CreateAsync_FilePermission()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+
+                // Act
+                var response = await directory.CreateAsync(filePermission: filePermission);
+
+                // Assert
+                AssertValidStorageDirectoryInfo(response);
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_FilePermissionAndFilePermissionKeySet()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                var fileSmbProperties = new FileSmbProperties()
+                {
+                    FilePermissionKey = "filePermissionKey"
+                };
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    directory.CreateAsync(
+                        smbProperties: fileSmbProperties,
+                        filePermission: filePermission),
+                    e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_FilePermissionTooLarge()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var filePermission = new string('*', 9 * Constants.KB);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                    directory.CreateAsync(filePermission: filePermission),
+                    e => Assert.AreEqual(
+                        "Value must be less than or equal to 8192" + Environment.NewLine
+                        + "Parameter name: filePermission", e.Message));
+            }
+        }
+
+        //TODO add FilePermissionId once Share.CreateFilePermission is implemented.
+        [Test]
+        public async Task CreateAsync_SmbProperties()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var smbProperties = new FileSmbProperties
+                {
+                    //TODO FilePermissionKey
+                    FileAttributes = NtfsFileAttributes.Parse("Directory|ReadOnly"),
+                    FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                };
+
+                // Act
+                var response = await directory.CreateAsync(smbProperties: smbProperties);
+
+                // Assert
+                AssertValidStorageDirectoryInfo(response);
+                //Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+            }
+        }
+
+        [Test]
         public async Task CreateAsync_Error()
         {
             using (this.GetNewShare(out var share))
@@ -128,13 +212,19 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetPropertiesAsync()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (this.GetNewShare(out var share))
             {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+
                 // Act
-                var response = await directory.GetPropertiesAsync();
+                var createResponse = await directory.CreateAsync();
+                var getPropertiesResponse = await directory.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
+                Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
+                Assert.AreEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
             }
         }
 
@@ -150,6 +240,97 @@ namespace Azure.Storage.Files.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     directory.GetPropertiesAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+            }
+        }
+
+        [Test]
+        public async Task SetPropertiesAsync_FilePermission()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                await directory.CreateAsync();
+
+                // Act
+                var response = await directory.SetHttpHeadersAsync(filePermission: filePermission);
+
+                // Assert
+                AssertValidStorageDirectoryInfo(response);
+            }
+        }
+
+        //TODO add FilePermissionId once Share.CreateFilePermission is implemented.
+        [Test]
+        public async Task SetPropertiesAsync_SmbProperties()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var smbProperties = new FileSmbProperties
+                {
+                    //TODO FilePermissionKey
+                    FileAttributes = NtfsFileAttributes.Parse("Directory|ReadOnly"),
+                    FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                };
+
+
+                await directory.CreateAsync();
+
+                // Act
+                var response = await directory.SetHttpHeadersAsync(smbProperties: smbProperties);
+
+                // Assert
+                AssertValidStorageDirectoryInfo(response);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+            }
+        }
+
+        [Test]
+        public async Task SetPropertiesAsync_FilePermissionTooLong()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var filePermission = new string('*', 9 * Constants.KB);
+                await directory.CreateAsync();
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                    directory.SetHttpHeadersAsync(
+                        filePermission: filePermission),
+                    e => Assert.AreEqual(
+                        "Value must be less than or equal to 8192" + Environment.NewLine 
+                        + "Parameter name: filePermission", e.Message));
+            }
+        }
+
+        [Test]
+        public async Task SetPropertiesAsync_FilePermissionAndFilePermissionKeySet()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                var fileSmbProperties = new FileSmbProperties()
+                {
+                    FilePermissionKey = "filePermissionKey"
+                };
+                await directory.CreateAsync();
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    directory.SetHttpHeadersAsync(
+                        smbProperties: fileSmbProperties,
+                        filePermission: filePermission),
+                    e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
             }
         }
 

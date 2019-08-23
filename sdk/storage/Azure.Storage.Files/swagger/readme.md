@@ -229,8 +229,8 @@ directive:
   where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory"]
   transform: >
     $.put.responses["201"].headers["x-ms-request-server-encrypted"]["x-ms-ignore"] = true;
-    $.put.responses["201"]["x-ms-client-name"] = "StorageDirectoryInfo";
-    $.get.responses["200"]["x-ms-client-name"] = "StorageDirectoryProperties";
+    $.put.responses["201"]["x-ms-client-name"] = "RawStorageDirectoryInfo";
+    $.get.responses["200"]["x-ms-client-name"] = "RawStorageDirectoryProperties";
 ```
 
 ### /{shareName}/{directory}?restype=directory&comp=metadata
@@ -239,7 +239,23 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory&comp=metadata"]
   transform: >
-    $.put.responses["200"]["x-ms-client-name"] = "StorageDirectoryInfo";
+    $.put.responses["200"]["x-ms-client-name"] = "RawStorageDirectoryInfo";
+    $.put.responses["200"].description = "Success, Directory created.";
+    $.put.responses["200"].headers["x-ms-request-server-encrypted"]["x-ms-ignore"] = true;
+    $.put.responses["200"].headers["Last-Modified"] = {
+      "type": "string",
+      "format": "date-time-rfc1123",
+      "description": "Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory."
+    };
+```
+
+### /{shareName}/{directory}?restype=directory&comp=properties
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}?restype=directory&comp=properties"]
+  transform: >
+    $.put.responses["200"]["x-ms-client-name"] = "RawStorageDirectoryInfo";
     $.put.responses["200"].description = "Success, Directory created.";
     $.put.responses["200"].headers["x-ms-request-server-encrypted"]["x-ms-ignore"] = true;
     $.put.responses["200"].headers["Last-Modified"] = {
@@ -361,11 +377,17 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
   transform: >
-    $.put.responses["201"]["x-ms-client-name"] = "StorageFileInfo";
+    $.put.responses["201"]["x-ms-client-name"] = "RawStorageFileInfo";
     $.get.responses["200"].headers["Content-MD5"]["x-ms-client-name"] = "ContentHash";
     $.get.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["200"].headers["x-ms-content-md5"]["x-ms-client-name"] = "FileContentHash";
+    $.get.responses["200"].headers["Content-Encoding"].type = "array";
+    $.get.responses["200"].headers["Content-Encoding"].collectionFormat = "multi";
+    $.get.responses["200"].headers["Content-Encoding"].items = { "type": "string" };
+    $.get.responses["200"].headers["Content-Language"].type = "array";
+    $.get.responses["200"].headers["Content-Language"].collectionFormat = "multi";
+    $.get.responses["200"].headers["Content-Language"].items = { "type": "string" };
     $.get.responses["200"]["x-ms-client-name"] = "FlattenedStorageFileProperties";
     $.get.responses["200"]["x-ms-public"] = false;
     $.get.responses["200"]["x-ms-schema-client-name"] = "Content";
@@ -373,6 +395,12 @@ directive:
     $.get.responses["206"].headers["x-ms-copy-source"].format = "url";
     $.get.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.get.responses["206"].headers["x-ms-content-md5"]["x-ms-client-name"] = "FileContentHash";
+    $.get.responses["206"].headers["Content-Encoding"].type = "array";
+    $.get.responses["206"].headers["Content-Encoding"].collectionFormat = "multi";
+    $.get.responses["206"].headers["Content-Encoding"].items = { "type": "string" };
+    $.get.responses["206"].headers["Content-Language"].type = "array";
+    $.get.responses["206"].headers["Content-Language"].collectionFormat = "multi";
+    $.get.responses["206"].headers["Content-Language"].items = { "type": "string" };
     $.get.responses["206"]["x-ms-client-name"] = "FlattenedStorageFileProperties";
     $.get.responses["206"]["x-ms-public"] = false;
     $.get.responses["206"]["x-ms-schema-client-name"] = "Content";
@@ -384,7 +412,7 @@ directive:
     $.head.responses["200"].headers["Content-Language"].collectionFormat = "multi";
     $.head.responses["200"].headers["Content-Language"].items = { "type": "string" };
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
-    $.head.responses["200"]["x-ms-client-name"] = "StorageFileProperties";
+    $.head.responses["200"]["x-ms-client-name"] = "RawStorageFileProperties";
     $.head.responses.default = {
         "description": "Failure",
         "x-ms-client-name": "FailureNoContent",
@@ -429,7 +457,7 @@ directive:
     $.put.operationId = "File_SetProperties";
     $.put.responses["200"].description = "Success, File created.";
     $.put.responses["200"].headers["Last-Modified"].description = "Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.";
-    $.put.responses["200"]["x-ms-client-name"] = "StorageFileInfo";
+    $.put.responses["200"]["x-ms-client-name"] = "RawStorageFileInfo";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=metadata
@@ -444,7 +472,7 @@ directive:
         "format": "date-time-rfc1123",
         "description": "Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory."
     };
-    $.put.responses["200"]["x-ms-client-name"] = "StorageFileInfo";
+    $.put.responses["200"]["x-ms-client-name"] = "RawStorageFileInfo";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=range
