@@ -30,6 +30,16 @@ namespace Azure.Messaging.EventHubs.Compatibility
         private Lazy<TrackOne.EventHubClient> _trackOneClient;
 
         /// <summary>
+        ///   Indicates whether or not this client has been closed.
+        ///   </summary>
+        ///   
+        /// <value>
+        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///   
+        public override bool Closed => (_trackOneClient.IsValueCreated) ? _trackOneClient.Value.CloseCalled : false;
+
+        /// <summary>
         ///   The track one <see cref="TrackOne.EventHubClient" /> for use with this transport client.
         /// </summary>
         ///

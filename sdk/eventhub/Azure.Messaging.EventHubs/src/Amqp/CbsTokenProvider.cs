@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The type to consider a token if not based on a shared access signature.</summary>
         private const string JsonWebTokenType = "jwt";
 
-        /// <summary>;The type to consider a token generated from the associated <see cref="Credential" />.</summary>
+        /// <summary>The type to consider a token generated from the associated <see cref="Credential" />.</summary>
         private readonly string TokenType;
 
         /// <summary>The credential used to generate access tokens.</summary>
