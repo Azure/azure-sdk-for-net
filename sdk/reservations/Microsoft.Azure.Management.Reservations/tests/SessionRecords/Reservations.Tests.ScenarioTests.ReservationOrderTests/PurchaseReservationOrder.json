@@ -4,33 +4,39 @@
       "RequestUri": "/providers/Microsoft.Capacity/calculatePrice?api-version=2019-04-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2FsY3VsYXRlUHJpY2U/YXBpLXZlcnNpb249MjAxOS0wNC0wMQ==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_F1\"\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"reservedResourceType\": \"VirtualMachines\",\r\n    \"billingScopeId\": \"/subscriptions/796c84b3-7e3b-411a-a103-157a9ba99783\",\r\n    \"term\": \"P1Y\",\r\n    \"quantity\": 3,\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"appliedScopeType\": \"Single\",\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/796c84b3-7e3b-411a-a103-157a9ba99783\"\r\n    ],\r\n    \"reservedResourceProperties\": {\r\n      \"instanceFlexibility\": \"On\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D1\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"reservedResourceType\": \"VirtualMachines\",\r\n    \"billingScopeId\": \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\",\r\n    \"term\": \"P1Y\",\r\n    \"quantity\": 3,\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"appliedScopeType\": \"Single\",\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\"\r\n    ],\r\n    \"renew\": false,\r\n    \"reservedResourceProperties\": {\r\n      \"instanceFlexibility\": \"On\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d5c6c090-3dff-4946-9966-a4ca3b703496"
+          "d4aea133-0f7e-4431-9f12-a71933b00215"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27414.06",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.9.1.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "518"
+          "539"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 23 Aug 2019 17:59:36 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
         ],
         "Vary": [
           "Accept-Encoding"
@@ -39,31 +45,25 @@
           "1199"
         ],
         "x-ms-test": [
-          "{\"contact\":\"juhle\",\"scenarios\":\"test\",\"retention\":\"7/18/2019 7:24:14 PM\"}"
+          "{\"contact\":\"kgautam\",\"scenarios\":\"RITesting\",\"retention\":\"11/21/2019 5:59:26 PM\"}"
         ],
         "x-ms-request-id": [
-          "centralus:1a116515-e537-48fa-8d26-90b55a2370ca"
+          "westus:1b16ee7b-0ddf-461f-83dc-58dbcfd4471d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
         "x-ms-correlation-request-id": [
-          "33642fa4-8760-4bbc-8759-a6c45196bf0f"
+          "cade8a59-ee42-4499-9e15-a44b56dd58cc"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190419T192423Z:33642fa4-8760-4bbc-8759-a6c45196bf0f"
+          "WESTUS:20190823T175936Z:cade8a59-ee42-4499-9e15-a44b56dd58cc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Date": [
-          "Fri, 19 Apr 2019 19:24:23 GMT"
-        ],
         "Content-Length": [
-          "295"
+          "344"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -72,76 +72,76 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"billingCurrencyTotal\": {\r\n      \"currencyCode\": \"USD\",\r\n      \"amount\": 813.0\r\n    },\r\n    \"reservationOrderId\": \"4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a\",\r\n    \"skuTitle\": \"Reserved VM Instance, Standard_F1, US East, 1 Year\",\r\n    \"skuDescription\": \"Standard_F1\",\r\n    \"pricingCurrencyTotal\": {\r\n      \"currencyCode\": \"USD\",\r\n      \"amount\": 813.0\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"billingCurrencyTotal\": {\r\n      \"currencyCode\": \"USD\",\r\n      \"amount\": 1398.0\r\n    },\r\n    \"netTotal\": 0.0,\r\n    \"taxTotal\": 0.0,\r\n    \"grandTotal\": 0.0,\r\n    \"reservationOrderId\": \"6dbddcad-2aa5-4305-8429-4a0c6f31b869\",\r\n    \"skuTitle\": \"Reserved VM Instance, Standard_D1, US West, 1 Year\",\r\n    \"skuDescription\": \"Standard_D1\",\r\n    \"pricingCurrencyTotal\": {\r\n      \"currencyCode\": \"USD\",\r\n      \"amount\": 1398.0\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a?api-version=2019-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvNGIwYTBmNDMtZWE4NC00NmY0LTgyYTMtMThjMmIwZTU4ZjZhP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869?api-version=2019-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvNmRiZGRjYWQtMmFhNS00MzA1LTg0MjktNGEwYzZmMzFiODY5P2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_F1\"\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"reservedResourceType\": \"VirtualMachines\",\r\n    \"billingScopeId\": \"/subscriptions/796c84b3-7e3b-411a-a103-157a9ba99783\",\r\n    \"term\": \"P1Y\",\r\n    \"quantity\": 3,\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"appliedScopeType\": \"Single\",\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/796c84b3-7e3b-411a-a103-157a9ba99783\"\r\n    ],\r\n    \"reservedResourceProperties\": {\r\n      \"instanceFlexibility\": \"On\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D1\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"reservedResourceType\": \"VirtualMachines\",\r\n    \"billingScopeId\": \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\",\r\n    \"term\": \"P1Y\",\r\n    \"quantity\": 3,\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"appliedScopeType\": \"Single\",\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\"\r\n    ],\r\n    \"renew\": false,\r\n    \"reservedResourceProperties\": {\r\n      \"instanceFlexibility\": \"On\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fe12a020-7d1c-4c46-88ab-e7f9ac8aca36"
+          "7703188b-0b2c-4d52-b29b-22a27973f47c"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27414.06",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.9.1.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "518"
+          "539"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Aug 2019 17:59:55 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a?api-version=2019-04-01"
+          "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869?api-version=2019-04-01"
         ],
         "Retry-After": [
           "120"
         ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
         "x-ms-test": [
-          "{\"contact\":\"juhle\",\"scenarios\":\"test\",\"retention\":\"7/18/2019 7:24:25 PM\"}"
+          "{\"contact\":\"kgautam\",\"scenarios\":\"RITesting\",\"retention\":\"11/21/2019 5:59:37 PM\"}"
         ],
         "x-ms-request-id": [
-          "centralus:5b43af05-150b-48f0-853e-290bed4d7478"
+          "westus:4e66cf3a-55a3-42c6-afa6-1467a4c5eb1c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "5639a04b-f91f-47ac-b8df-0fd8a00dbc92"
+          "78c57160-bebc-488e-9575-8c503867f20c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190419T192440Z:5639a04b-f91f-47ac-b8df-0fd8a00dbc92"
+          "WESTUS:20190823T175955Z:78c57160-bebc-488e-9575-8c503867f20c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Date": [
-          "Fri, 19 Apr 2019 19:24:40 GMT"
-        ],
         "Content-Length": [
-          "1165"
+          "1227"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -150,58 +150,58 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a\",\r\n  \"etag\": 1,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"requestDateTime\": \"2019-04-19T19:24:36.5490847Z\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"reservations\": [\r\n      {\r\n        \"sku\": {\r\n          \"name\": \"Standard_F1\"\r\n        },\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a/reservations/e18d44a9-c613-4c48-a55f-7c92ddf20da4\",\r\n        \"type\": \"Microsoft.Capacity/reservationOrders/reservations\",\r\n        \"name\": \"4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a/e18d44a9-c613-4c48-a55f-7c92ddf20da4\",\r\n        \"etag\": 1,\r\n        \"location\": \"eastus\",\r\n        \"properties\": {\r\n          \"appliedScopes\": [\r\n            \"/subscriptions/796c84b3-7e3b-411a-a103-157a9ba99783\"\r\n          ],\r\n          \"appliedScopeType\": \"Single\",\r\n          \"quantity\": 3,\r\n          \"provisioningState\": \"Creating\",\r\n          \"displayName\": \"TestPurchaseReservation\",\r\n          \"effectiveDateTime\": \"2019-04-19T19:24:36.5490847Z\",\r\n          \"lastUpdatedDateTime\": \"2019-04-19T19:24:36.5490847Z\",\r\n          \"reservedResourceType\": \"VirtualMachines\",\r\n          \"instanceFlexibility\": \"On\",\r\n          \"skuDescription\": \"Reserved VM Instance, Standard_F1, US East, 1 Year\"\r\n        }\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"6dbddcad-2aa5-4305-8429-4a0c6f31b869\",\r\n  \"etag\": 1,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"requestDateTime\": \"2019-08-23T17:59:49.5123225Z\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"reservations\": [\r\n      {\r\n        \"sku\": {\r\n          \"name\": \"Standard_D1\"\r\n        },\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869/reservations/9cb178f6-774a-42f7-be45-4b2d7de6e815\",\r\n        \"type\": \"Microsoft.Capacity/reservationOrders/reservations\",\r\n        \"name\": \"6dbddcad-2aa5-4305-8429-4a0c6f31b869/9cb178f6-774a-42f7-be45-4b2d7de6e815\",\r\n        \"etag\": 1,\r\n        \"location\": \"westus\",\r\n        \"properties\": {\r\n          \"appliedScopes\": [\r\n            \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\"\r\n          ],\r\n          \"appliedScopeType\": \"Single\",\r\n          \"quantity\": 3,\r\n          \"provisioningState\": \"Creating\",\r\n          \"displayName\": \"TestPurchaseReservation\",\r\n          \"effectiveDateTime\": \"2019-08-23T17:59:49.5123225Z\",\r\n          \"lastUpdatedDateTime\": \"2019-08-23T17:59:49.5123225Z\",\r\n          \"reservedResourceType\": \"VirtualMachines\",\r\n          \"instanceFlexibility\": \"On\",\r\n          \"skuDescription\": \"Reserved VM Instance, Standard_D1, US West, 1 Year\",\r\n          \"renew\": false,\r\n          \"billingPlan\": \"Upfront\"\r\n        }\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3,\r\n    \"billingPlan\": \"Upfront\"\r\n  }\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a?api-version=2019-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvNGIwYTBmNDMtZWE4NC00NmY0LTgyYTMtMThjMmIwZTU4ZjZhP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869?api-version=2019-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvNmRiZGRjYWQtMmFhNS00MzA1LTg0MjktNGEwYzZmMzFiODY5P2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.27414.06",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.9.1.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 23 Aug 2019 18:01:54 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
         ],
         "Vary": [
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
+          "11999"
         ],
         "x-ms-request-id": [
-          "centralus:fe54e993-6316-4718-8798-ce7dc05abe7b"
+          "westus:476a9a60-af33-40a2-8317-06013fc297d1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
         "x-ms-correlation-request-id": [
-          "b9c0d18d-cf72-41f8-b022-9364b3e911c7"
+          "1579b0a7-2a88-4e99-bc9b-65eac055e440"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190419T192642Z:b9c0d18d-cf72-41f8-b022-9364b3e911c7"
+          "WESTUS:20190823T180155Z:1579b0a7-2a88-4e99-bc9b-65eac055e440"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Date": [
-          "Fri, 19 Apr 2019 19:26:42 GMT"
-        ],
         "Content-Length": [
-          "558"
+          "555"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -210,58 +210,58 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a\",\r\n  \"etag\": 7,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"requestDateTime\": \"2019-04-19T19:24:36.5490847Z\",\r\n    \"expiryDate\": \"2020-04-19\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"ConfirmedBilling\",\r\n    \"reservations\": [\r\n      {\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a/reservations/e18d44a9-c613-4c48-a55f-7c92ddf20da4\"\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"6dbddcad-2aa5-4305-8429-4a0c6f31b869\",\r\n  \"etag\": 5,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"requestDateTime\": \"2019-08-23T17:59:49.5123225Z\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"PendingCapacity\",\r\n    \"reservations\": [\r\n      {\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869/reservations/9cb178f6-774a-42f7-be45-4b2d7de6e815\"\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3,\r\n    \"billingPlan\": \"Upfront\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a?api-version=2019-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvNGIwYTBmNDMtZWE4NC00NmY0LTgyYTMtMThjMmIwZTU4ZjZhP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869?api-version=2019-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvNmRiZGRjYWQtMmFhNS00MzA1LTg0MjktNGEwYzZmMzFiODY5P2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.27414.06",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.9.1.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Fri, 23 Aug 2019 18:03:55 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
         ],
         "Vary": [
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14998"
+          "11999"
         ],
         "x-ms-request-id": [
-          "centralus:086abeec-5f4a-4777-839f-8c4968b84a66"
+          "westus:e974d4f7-62bb-4c1e-a05b-1b8aec6638a6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
         "x-ms-correlation-request-id": [
-          "2827cebc-850c-4487-9f89-7c65786fd5dd"
+          "3f044ebe-fd32-403d-abe5-8f0629926d8e"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190419T192844Z:2827cebc-850c-4487-9f89-7c65786fd5dd"
+          "WESTUS:20190823T180355Z:3f044ebe-fd32-403d-abe5-8f0629926d8e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Date": [
-          "Fri, 19 Apr 2019 19:28:43 GMT"
-        ],
         "Content-Length": [
-          "600"
+          "624"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -270,12 +270,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a\",\r\n  \"etag\": 8,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"requestDateTime\": \"2019-04-19T19:24:36.5490847Z\",\r\n    \"createdDateTime\": \"2019-04-19T19:26:46.8824742Z\",\r\n    \"expiryDate\": \"2020-04-19\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"reservations\": [\r\n      {\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/4b0a0f43-ea84-46f4-82a3-18c2b0e58f6a/reservations/e18d44a9-c613-4c48-a55f-7c92ddf20da4\"\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n  \"name\": \"6dbddcad-2aa5-4305-8429-4a0c6f31b869\",\r\n  \"etag\": 9,\r\n  \"properties\": {\r\n    \"displayName\": \"TestPurchaseReservation\",\r\n    \"requestDateTime\": \"2019-08-23T17:59:49.5123225Z\",\r\n    \"createdDateTime\": \"2019-08-23T18:03:31.8207727Z\",\r\n    \"expiryDate\": \"2020-08-23\",\r\n    \"term\": \"P1Y\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"reservations\": [\r\n      {\r\n        \"id\": \"/providers/microsoft.capacity/reservationOrders/6dbddcad-2aa5-4305-8429-4a0c6f31b869/reservations/9cb178f6-774a-42f7-be45-4b2d7de6e815\"\r\n      }\r\n    ],\r\n    \"originalQuantity\": 3,\r\n    \"billingPlan\": \"Upfront\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "796c84b3-7e3b-411a-a103-157a9ba99783"
+    "SubscriptionId": "d3ae48e5-dbb2-4618-afd4-fb1b8559cb80"
   }
 }
