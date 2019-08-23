@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// unique id identifying the source of this resource.</param>
         /// <param name="uploadSizeBytes">If createOption is Upload, this is
         /// the size of the contents of the upload including the VHD footer.
-        /// This value should be between 1073741824 (1 GiB + 512 bytes for the
+        /// This value should be between 20972032 (20 MiB + 512 bytes for the
         /// VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the
         /// VHD footer).</param>
         public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?))
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets if createOption is Upload, this is the size of the
         /// contents of the upload including the VHD footer. This value should
-        /// be between 1073741824 (1 GiB + 512 bytes for the VHD footer) and
+        /// be between 20972032 (20 MiB + 512 bytes for the VHD footer) and
         /// 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer).
         /// </summary>
         [JsonProperty(PropertyName = "uploadSizeBytes")]
