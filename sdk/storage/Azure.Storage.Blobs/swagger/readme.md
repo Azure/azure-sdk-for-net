@@ -1027,4 +1027,12 @@ directive:
   where: $["x-ms-paths"]..get.responses..headers["x-ms-content-crc64"]
   transform: >
     $.description = "If the request is to read a specified range and the x-ms-range-get-content-crc64 is set to true, then the request returns a crc64 for the range, as long as the range size is less than or equal to 4 MB. If both x-ms-range-get-content-crc64 and x-ms-range-get-content-md5 is specified in the same request, it will fail with 400(Bad Request)";
+- from: swagger-document
+  where: $["x-ms-paths"]["/?comp=batch"].get.responses["200"].headers["Content-Type"]
+  transform: >
+    $.description = $.description.replace("<GUID>", "{GUID}");
+- from: swagger-document
+  where: $.parameters.MultipartContentType
+  transform: >
+    $.description = $.description.replace("<GUID>", "{GUID}");
 ```
