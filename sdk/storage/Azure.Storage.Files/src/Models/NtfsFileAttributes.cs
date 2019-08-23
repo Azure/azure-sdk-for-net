@@ -15,7 +15,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// NTFS file attributes for Files and Directories.
     /// </summary>
-    public struct FileNtfsAttributes : IEquatable<FileNtfsAttributes>
+    public struct NtfsFileAttributes : IEquatable<NtfsFileAttributes>
     {
         /// <summary>
         /// The File or Directory has no NTFS attributes.
@@ -86,14 +86,14 @@ namespace Azure.Storage.Files.Models
         /// <param name="other">The other instance to compare to.</param>
         /// <returns></returns>
         public override bool Equals(object other)
-            => other is FileNtfsAttributes attributes && this.Equals(attributes);
+            => other is NtfsFileAttributes attributes && this.Equals(attributes);
 
         /// <summary>
         /// Checks if two FileNtfsAttributes are equal to each other.
         /// </summary>
         /// <param name="other">TThe other instance to compare to.</param>
         /// <returns></returns>
-        public bool Equals(FileNtfsAttributes other)
+        public bool Equals(NtfsFileAttributes other)
             => this.None == other.None
             && this.ReadOnly == other.ReadOnly
             && this.Hidden == other.Hidden
@@ -200,13 +200,13 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         /// <param name="attributesString">string to parse</param>
         /// <returns></returns>
-        public static FileNtfsAttributes? Parse(string attributesString)
+        public static NtfsFileAttributes? Parse(string attributesString)
         {
             if (attributesString == null)
             {
                 return null;
             }
-            var attributes = new FileNtfsAttributes();
+            var attributes = new NtfsFileAttributes();
             var splitString = attributesString.Split('|');
 
             if(splitString.Length == 0)
@@ -272,7 +272,7 @@ namespace Azure.Storage.Files.Models
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FileNtfsAttributes left, FileNtfsAttributes right) => left.Equals(right);
+        public static bool operator ==(NtfsFileAttributes left, NtfsFileAttributes right) => left.Equals(right);
 
         /// <summary>
         /// Check if two FileNtfsAttributes instances are not equal.
@@ -280,6 +280,6 @@ namespace Azure.Storage.Files.Models
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FileNtfsAttributes left, FileNtfsAttributes right) => !(left == right);
+        public static bool operator !=(NtfsFileAttributes left, NtfsFileAttributes right) => !(left == right);
     }
 }

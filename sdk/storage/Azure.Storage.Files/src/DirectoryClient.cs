@@ -712,9 +712,7 @@ namespace Azure.Storage.Files
                 this.Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(smbProperties)}: {smbProperties}\n" +
-                    $"{nameof(filePermission)}: {filePermission}");
+                    $"{nameof(this.Uri)}: {this.Uri}\n");
                 try
                 {
                     var smbProps = smbProperties ?? new FileSmbProperties();

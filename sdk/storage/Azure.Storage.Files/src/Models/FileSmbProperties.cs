@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The file system attributes for this file.
         /// </summary>
-        public FileNtfsAttributes? FileAttributes { get; set; }
+        public NtfsFileAttributes? FileAttributes { get; set; }
 
         /// <summary>
         /// The key of the file permission.
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageFileInfo rawStorageFileInfo)
         {
-            this.FileAttributes = FileNtfsAttributes.Parse(rawStorageFileInfo.FileAttributes);
+            this.FileAttributes = NtfsFileAttributes.Parse(rawStorageFileInfo.FileAttributes);
             this.FilePermissionKey = rawStorageFileInfo.FilePermissionKey;
             this.FileCreationTime = rawStorageFileInfo.FileCreationTime;
             this.FileLastWriteTime = rawStorageFileInfo.FileLastWriteTime;
@@ -64,7 +64,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageFileProperties rawStorageFileProperties)
         {
-            this.FileAttributes = FileNtfsAttributes.Parse(rawStorageFileProperties.FileAttributes);
+            this.FileAttributes = NtfsFileAttributes.Parse(rawStorageFileProperties.FileAttributes);
             this.FilePermissionKey = rawStorageFileProperties.FilePermissionKey;
             this.FileCreationTime = rawStorageFileProperties.FileCreationTime;
             this.FileLastWriteTime = rawStorageFileProperties.FileLastWriteTime;
@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(FlattenedStorageFileProperties flattenedStorageFileProperties)
         {
-            this.FileAttributes = FileNtfsAttributes.Parse(flattenedStorageFileProperties.FileAttributes);
+            this.FileAttributes = NtfsFileAttributes.Parse(flattenedStorageFileProperties.FileAttributes);
             this.FilePermissionKey = flattenedStorageFileProperties.FilePermissionKey;
             this.FileCreationTime = flattenedStorageFileProperties.FileCreationTime;
             this.FileLastWriteTime = flattenedStorageFileProperties.FileLastWriteTime;
@@ -86,7 +86,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageDirectoryInfo rawStorageDirectoryInfo)
         {
-            this.FileAttributes = FileNtfsAttributes.Parse(rawStorageDirectoryInfo.FileAttributes);
+            this.FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryInfo.FileAttributes);
             this.FilePermissionKey = rawStorageDirectoryInfo.FilePermissionKey;
             this.FileCreationTime = rawStorageDirectoryInfo.FileCreationTime;
             this.FileLastWriteTime = rawStorageDirectoryInfo.FileLastWriteTime;
@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.Models
 
         internal FileSmbProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
         {
-            this.FileAttributes = FileNtfsAttributes.Parse(rawStorageDirectoryProperties.FileAttributes);
+            this.FileAttributes = NtfsFileAttributes.Parse(rawStorageDirectoryProperties.FileAttributes);
             this.FilePermissionKey = rawStorageDirectoryProperties.FilePermissionKey;
             this.FileCreationTime = rawStorageDirectoryProperties.FileCreationTime;
             this.FileLastWriteTime = rawStorageDirectoryProperties.FileLastWriteTime;
@@ -155,24 +155,6 @@ namespace Azure.Storage.Files.Models
             && this.FileChangeTime == other.FileChangeTime
             && this.FileId == other.FileId
             && this.ParentId == other.ParentId;
-
-        /// <summary>
-        /// ToString
-        /// </summary>
-        /// <returns>string</returns>
-        public override string ToString()
-        {
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(nameof(FileSmbProperties) + ":");
-            stringBuilder.AppendLine(nameof(this.FileAttributes) + ": " + this.FileAttributes.ToString());
-            stringBuilder.AppendLine(nameof(this.FilePermissionKey) + ": " + this.FilePermissionKey);
-            stringBuilder.AppendLine(nameof(this.FileCreationTime) + ": " + this.FileCreationTime.ToString());
-            stringBuilder.AppendLine(nameof(this.FileLastWriteTime) + ": " + this.FileLastWriteTime.ToString());
-            stringBuilder.AppendLine(nameof(this.FileChangeTime) + ": " + this.FileChangeTime.ToString());
-            stringBuilder.AppendLine(nameof(this.FileId) + ": " + this.FileId);
-            stringBuilder.AppendLine(nameof(this.ParentId) + ": " + this.ParentId);
-            return stringBuilder.ToString();
-        }
 
         internal string FileCreationTimeToString()
             => NullableDateTimeOffsetToString(this.FileCreationTime);
