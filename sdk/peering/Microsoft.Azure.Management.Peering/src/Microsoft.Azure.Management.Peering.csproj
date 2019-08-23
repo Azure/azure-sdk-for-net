@@ -7,15 +7,22 @@
 		<PackageId>Microsoft.Azure.Management.Peering</PackageId>
 		<Description>Microsoft Azure Management Peering library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Peering</AssemblyName>
-		<Version>0.10.0-preview</Version>
+		<Version>1.0.0-preview</Version>
 		<PackageTags>Azure Peering;</PackageTags>
     <PackageReleaseNotes>
-	<![CDATA[New features:   Adding Connection Identifier for BGP Session]]>
+	<![CDATA[New features:   Adding Peering Service operations. ]]>
+</PackageReleaseNotes>
+		<PackageTags>Azure Peering;Peering_2019-08-01-preview</PackageTags>
+    <PackageReleaseNotes>
+	<![CDATA[New features:   Adding Peering Service]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Folder Include="Generated\" />
+	</ItemGroup>
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
