@@ -28,9 +28,9 @@ directive:
     $["client-name"] = "QueueRestClient";
     $["client-extensions-name"] = "QueuesExtensions";
     $["client-model-factory-name"] = "QueuesModelFactory";
-    $["x-ms-skip-path-components"] = true;
-    $["x-ms-include-sync-methods"] = true;
-    $["x-ms-public"] = false;
+    $["x-az-skip-path-components"] = true;
+    $["x-az-include-sync-methods"] = true;
+    $["x-az-public"] = false;
 ```
 
 ### Clean up Failure response
@@ -39,10 +39,10 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]..responses.default
   transform: >
-    $["x-ms-client-name"] = "StorageErrorResult";
-    $["x-ms-create-exception"] = true;
-    $["x-ms-public"] = false;
-    $.headers["x-ms-error-code"]["x-ms-ignore"] = true;
+    $["x-az-response-name"] = "StorageErrorResult";
+    $["x-az-create-exception"] = true;
+    $["x-az-public"] = false;
+    $.headers["x-ms-error-code"]["x-az-demote-header"] = true;
 ```
 
 ### Ignore common headers
@@ -51,15 +51,15 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]..responses..headers["x-ms-request-id"]
   transform: >
-    $["x-ms-ignore"] = true;
+    $["x-az-demote-header"] = true;
 - from: swagger-document
   where: $["x-ms-paths"]..responses..headers["x-ms-version"]
   transform:
-    $["x-ms-ignore"] = true;
+    $["x-az-demote-header"] = true;
 - from: swagger-document
   where: $["x-ms-paths"]..responses..headers["Date"]
   transform:
-    $["x-ms-ignore"] = true;
+    $["x-az-demote-header"] = true;
 ```
 
 ### QueueServiceProperties
@@ -128,7 +128,7 @@ directive:
     if (!$.QueuesSegment) {
         $.QueuesSegment = $.ListQueuesSegmentResponse;
         delete $.ListQueuesSegmentResponse;
-        $.QueuesSegment["x-ms-public"] = false;
+        $.QueuesSegment["x-az-public"] = false;
         $.QueuesSegment.required = ["ServiceEndpoint"];
     }
 - from: swagger-document
@@ -147,7 +147,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{queueName}?comp=metadata"]
   transform: >
-    $.get.responses["200"]["x-ms-client-name"] = "QueueProperties";
+    $.get.responses["200"]["x-az-response-name"] = "QueueProperties";
 ```
 
 ### /{queueName}/messages/{messageid}?popreceipt={popReceipt}&visibilitytimeout={visibilityTimeout}
@@ -156,7 +156,7 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{queueName}/messages/{messageid}?popreceipt={popReceipt}&visibilitytimeout={visibilityTimeout}"]
   transform: >
-    $.put.responses["204"]["x-ms-client-name"] = "UpdatedMessage";
+    $.put.responses["204"]["x-az-response-name"] = "UpdatedMessage";
 ```
 
 ### QueueErrorCode
@@ -182,7 +182,7 @@ directive:
 directive:
 - from: swagger-document
   where: $.definitions.Logging
-  transform: $["x-ms-disable-warnings"] = "CA1724"
+  transform: $["x-az-disable-warnings"] = "CA1724"
 ```
 
 ### StorageError
@@ -192,7 +192,7 @@ directive:
   where: $.definitions.StorageError
   transform: >
     $.properties.Code = { "type": "string" };
-    $["x-ms-public"] = false;
+    $["x-az-public"] = false;
 ```
 
 ### Metrics
@@ -210,7 +210,7 @@ directive:
 - from: swagger-document
   where: $.definitions.QueueMessage
   transform: >
-    $["x-ms-public"] = false;
+    $["x-az-public"] = false;
     $.xml = { "name": "QueueMessage" };
 - from: swagger-document
   where: $.parameters.QueueMessage
@@ -264,8 +264,8 @@ directive:
 - from: swagger-document
   where: $.parameters.ListQueuesInclude
   transform: >
-    $["x-ms-public"] = false;
-    $.items["x-ms-public"] = false;
+    $["x-az-public"] = false;
+    $.items["x-az-public"] = false;
 ```
 
 ### AccessPolicy
@@ -293,7 +293,7 @@ directive:
   transform: >
     $["x-ms-client-name"] = "resourceUri";
     $.format = "url";
-    $["x-ms-trace"] = true;
+    $["x-az-trace"] = true;
 ```
 
 ### Timeout docs
