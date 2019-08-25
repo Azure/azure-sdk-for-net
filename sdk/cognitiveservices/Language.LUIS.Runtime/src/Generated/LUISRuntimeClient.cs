@@ -48,9 +48,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets the IPredictionOperations.
+        /// Gets the IPrediction.
         /// </summary>
-        public virtual IPredictionOperations Prediction { get; private set; }
+        public virtual IPrediction Prediction { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the LUISRuntimeClient class.
@@ -179,8 +179,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// </summary>
         private void Initialize()
         {
-            Prediction = new PredictionOperations(this);
-            BaseUri = "{Endpoint}/luis/v3.0-preview";
+            Prediction = new Prediction(this);
+            BaseUri = "{Endpoint}/luis/v2.0";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

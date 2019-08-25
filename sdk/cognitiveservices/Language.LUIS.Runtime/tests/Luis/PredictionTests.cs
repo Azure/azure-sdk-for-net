@@ -15,190 +15,32 @@
         {
             UseClientFor(async client =>
             {
-                var utterance = "today this is a test with post";
-                var slotName = "production";
+                Prediction prediction = new Prediction((LUISRuntimeClient)client);
+                string utterance = "today this is a test with post";
+                double timezoneOffset = -360;
+                bool verbose = true;
+                bool isStaging = false;
 
-                var requestOptions = new PredictionRequestOptions
-                {
-                    DatetimeReference = DateTime.Parse("2019-01-01"),
-                    OverridePredictions = true
-                };
-
-                var externalResolution = JObject.FromObject(new { text = "post", external = true });
-                var externalEntities = new[]
-                {
-                    new ExternalEntity
-                    {
-                        EntityName = "simple",
-                        StartIndex = 26,
-                        EntityLength = 4,
-                        Resolution = externalResolution
-                    }
-                };
-
-                var dynamicLists = new[]
-                {
-                    new DynamicList
-                    {
-                        ListEntityName = "list",
-                        RequestLists = new[]
-                        {
-                            new RequestList
-                            {
-                                Name = "test",
-                                CanonicalForm = "testing",
-                                Synonyms = new[] { "this" }
-                            }
-                        }
-                    }
-                };
-
-                var predictionRequest = new PredictionRequest
-                {
-                    Query = utterance,
-                    Options = requestOptions,
-                    ExternalEntities = externalEntities,
-                    DynamicLists = dynamicLists 
-                };
-
-                var result = await client.Prediction.GetSlotPredictionAsync(
+                LuisResult luisResult = await PredictionExtensions.ResolveAsync(
+                    prediction,
                     Guid.Parse(appId),
-                    slotName,
-                    predictionRequest,
-                    verbose: true,
-                    showAllIntents: true);
+                    utterance,
+                    timezoneOffset,
+                    verbose,
+                    isStaging);
 
-                var prediction = result.Prediction;
-                Assert.Equal(utterance, result.Query);
-                Assert.Equal(utterance, prediction.NormalizedQuery);
-                Assert.Equal("intent", prediction.TopIntent);
-                Assert.Equal(2, prediction.Intents.Count);
-                Assert.Equal(4, prediction.Entities.Count);
-                Assert.Contains("datetimeV2", prediction.Entities.Keys);
-                Assert.Contains("simple", prediction.Entities.Keys);
-                Assert.Contains("list", prediction.Entities.Keys);
-                Assert.Contains("$instance", prediction.Entities.Keys);
+                Assert.Equal(utterance, luisResult.Query);
+                Assert.Equal("intent", luisResult.TopScoringIntent.Intent);
+                Assert.Equal(2, luisResult.Intents.Count);
+                Assert.Equal(2, luisResult.Entities.Count);
+                Assert.Equal("simple", luisResult.Entities.ToArray()[0].Type);
+                Assert.Equal("builtin.datetimeV2.date", luisResult.Entities.ToArray()[1].Type);
 
-                // Test external resolution
-                var actualResolution = (prediction.Entities["simple"] as JArray).Single();
-                Assert.True(JToken.DeepEquals(externalResolution, actualResolution));
-
-                var topIntent = prediction.Intents[prediction.TopIntent];
+                var topIntent = luisResult.TopScoringIntent;
                 Assert.True(topIntent.Score > 0.5);
 
-                Assert.Equal("positive", prediction.Sentiment.Label);
-                Assert.True(prediction.Sentiment.Score > 0.5);
-
-                // dispatch
-                var child = topIntent.ChildApp;
-                Assert.Equal(utterance, child.NormalizedQuery);
-                Assert.Equal("None", child.TopIntent);
-                Assert.Equal(1, child.Intents.Count);
-                Assert.Equal(2, child.Entities.Count);
-                Assert.Contains("datetimeV2", child.Entities.Keys);
-                Assert.Contains("$instance", child.Entities.Keys);
-
-                var dispatchTopIntent = child.Intents[child.TopIntent];
-                Assert.True(dispatchTopIntent.Score > 0.5);
-
-                Assert.Equal("positive", child.Sentiment.Label);
-                Assert.True(child.Sentiment.Score > 0.5);
-            });
-        }
-
-        [Fact]
-        public void Prediction_Version()
-        {
-            UseClientFor(async client =>
-            {
-                var utterance = "today this is a test with post";
-                var versionId = "0.1";
-
-                var requestOptions = new PredictionRequestOptions
-                {
-                    DatetimeReference = DateTime.Parse("2019-01-01"),
-                    OverridePredictions = true
-                };
-
-                var externalResolution = JObject.FromObject(new { text = "post", external = true });
-                var externalEntities = new[]
-                {
-                    new ExternalEntity
-                    {
-                        EntityName = "simple",
-                        StartIndex = 26,
-                        EntityLength = 4,
-                        Resolution = externalResolution
-                    }
-                };
-
-                var dynamicLists = new[]
-                {
-                    new DynamicList
-                    {
-                        ListEntityName = "list",
-                        RequestLists = new[]
-                        {
-                            new RequestList
-                            {
-                                Name = "test",
-                                CanonicalForm = "testing",
-                                Synonyms = new[] { "this" }
-                            }
-                        }
-                    }
-                };
-
-                var predictionRequest = new PredictionRequest
-                {
-                    Query = utterance,
-                    Options = requestOptions,
-                    ExternalEntities = externalEntities,
-                    DynamicLists = dynamicLists
-                };
-
-                var result = await client.Prediction.GetVersionPredictionAsync(
-                    Guid.Parse(appId),
-                    versionId,
-                    predictionRequest,
-                    verbose: true,
-                    showAllIntents: true);
-
-                var prediction = result.Prediction;
-                Assert.Equal(utterance, result.Query);
-                Assert.Equal(utterance, prediction.NormalizedQuery);
-                Assert.Equal("intent", prediction.TopIntent);
-                Assert.Equal(2, prediction.Intents.Count);
-                Assert.Equal(4, prediction.Entities.Count);
-                Assert.Contains("datetimeV2", prediction.Entities.Keys);
-                Assert.Contains("simple", prediction.Entities.Keys);
-                Assert.Contains("list", prediction.Entities.Keys);
-                Assert.Contains("$instance", prediction.Entities.Keys);
-
-                // Test external resolution
-                var actualResolution = (prediction.Entities["simple"] as JArray).Single();
-                Assert.True(JToken.DeepEquals(externalResolution, actualResolution));
-
-                var topIntent = prediction.Intents[prediction.TopIntent];
-                Assert.True(topIntent.Score > 0.5);
-
-                Assert.Equal("positive", prediction.Sentiment.Label);
-                Assert.True(prediction.Sentiment.Score > 0.5);
-
-                // dispatch
-                var child = topIntent.ChildApp;
-                Assert.Equal(utterance, child.NormalizedQuery);
-                Assert.Equal("None", child.TopIntent);
-                Assert.Equal(1, child.Intents.Count);
-                Assert.Equal(2, child.Entities.Count);
-                Assert.Contains("datetimeV2", child.Entities.Keys);
-                Assert.Contains("$instance", child.Entities.Keys);
-
-                var dispatchTopIntent = child.Intents[child.TopIntent];
-                Assert.True(dispatchTopIntent.Score > 0.5);
-
-                Assert.Equal("positive", child.Sentiment.Label);
-                Assert.True(child.Sentiment.Score > 0.5);
+                Assert.Equal("positive", luisResult.SentimentAnalysis.Label);
+                Assert.True(luisResult.SentimentAnalysis.Score > 0.5);
             });
         }
 
@@ -207,18 +49,16 @@
         {
             UseClientFor(async client =>
             {
-                var ex = await Assert.ThrowsAsync<ErrorException>(async () =>
+                var ex = await Assert.ThrowsAsync<APIErrorException>(async () =>
                 {
-                    await client.Prediction.GetSlotPredictionAsync(
+                    Prediction prediction = new Prediction((LUISRuntimeClient)client);
+                    var luisResult = await PredictionExtensions.ResolveAsync(
+                        prediction,
                         Guid.Parse("7555b7c1-e69c-4580-9d95-1abd6dfa8291"),
-                        "production",
-                        new PredictionRequest
-                        {
-                            Query = "this is a test with post"
-                        });
+                        "this is a test with post");
                 });
 
-                Assert.Equal("NotFound", ex.Body.ErrorProperty.Code);
+                Assert.Equal("Operation returned an invalid status code 'Gone'", ex.Message);
             });
         }
 
@@ -229,10 +69,14 @@
             {
                 var ex = await Assert.ThrowsAsync<ValidationException>(async () =>
                 {
-                    await client.Prediction.GetSlotPredictionAsync(Guid.Parse(appId), "production", new PredictionRequest());
+                    Prediction prediction = new Prediction((LUISRuntimeClient)client);
+                    var luisResult = await PredictionExtensions.ResolveAsync(
+                        prediction,
+                        Guid.Parse(appId),
+                        null);
                 });
 
-                Assert.Equal("Query", ex.Target);
+                Assert.Equal("query", ex.Target);
             });
         }
     }

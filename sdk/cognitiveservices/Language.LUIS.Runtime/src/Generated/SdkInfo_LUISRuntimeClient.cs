@@ -19,7 +19,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("LUISRuntimeClient", "Prediction", "3.0-preview"),
+                new Tuple<string, string, string>("LUISRuntimeClient", "Prediction", "2.0"),
               }.AsEnumerable();
           }
       }
