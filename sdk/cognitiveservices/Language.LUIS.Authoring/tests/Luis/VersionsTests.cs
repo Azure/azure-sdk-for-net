@@ -121,13 +121,13 @@
             {
                 { "Ocp-Apim-Subscription-Key", new List<string> { "3eff76bb229942899255402725b72933" } }
             };
-            var errorCode = "401";
+            var errorMessage = "Operation returned an invalid status code 'Unauthorized'";
             UseClientFor(async client =>
             {
                 var exception = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.ListWithHttpMessagesAsync(GlobalAppId, customHeaders: headers));
-                var error = exception.Body;
+                var error = exception.Message;
 
-                Assert.Equal(errorCode, error.Code);
+                Assert.Equal(errorMessage, error);
             });
         }
 
