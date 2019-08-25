@@ -17,7 +17,7 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchPoolEndToEndAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();

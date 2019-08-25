@@ -25,7 +25,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
         [Fact]
         public async Task DynamicBlueprintCRUD()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -85,7 +85,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 blueprintName = "MGBPfromDotnetSDK",
                 blueprintName2 = "MGBPfromDotnetSDK2";
 
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -130,7 +130,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 blueprintName = "subBPfromDotnetSDK",
                 blueprintName2 = "subBPfromDotnetSDK2";
 
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -172,7 +172,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 templateArtifactName = "vNicTemplate",
                 policyArtifactName = "costCenterPolicy",
                 rbacArtifactName = "ownerRBAC";
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -190,7 +190,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     Assert.Equal("Microsoft.Blueprint/blueprints/artifacts", templateArtifactGet.Type);
                     Assert.Equal("vNicResourceGroup", templateArtifactGet.ResourceGroup);
                     Assert.Equal(2, templateArtifactGet.Parameters.Count);
-                    Assert.Single(templateArtifactGet.Parameters.Where(kvp=> kvp.Key.Equals("vNetName")));
+                    Assert.Single(templateArtifactGet.Parameters.Where(kvp => kvp.Key.Equals("vNetName")));
                     Assert.Single(templateArtifactGet.Parameters.Where(kvp => kvp.Key.Equals("Location")));
 
                     // update template artifact
@@ -256,7 +256,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 assignmentName = "testAssignment",
                 subscriptionId = "7e2bacd2-6c4b-444c-9331-2e76799cbfc9";
 
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -298,7 +298,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     Assert.Equal(assignmentName, assignmentGet.Name);
                     Assert.Equal("Microsoft.Blueprint/blueprintAssignments", assignmentGet.Type);
                     Assert.Equal(1, assignment.ResourceGroups.Count);
-                    Assert.Single(assignment.ResourceGroups.Keys.Where(k=>k.Equals("vNicResourceGroup")));
+                    Assert.Single(assignment.ResourceGroups.Keys.Where(k => k.Equals("vNicResourceGroup")));
                     Assert.Equal(3, assignment.Parameters.Count);
                     Assert.Single(assignment.Parameters.Keys.Where(k => k.Equals("vNetName")));
                     Assert.Single(assignment.Parameters.Keys.Where(k => k.Equals("defaultLocation")));
@@ -320,7 +320,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     var assignmentOperation = Assert.Single(assignmentOperationList);
                     var assignmentOperationGet = await testFixture.BlueprintClient.AssignmentOperations.GetInSubscriptionAsync(subscriptionId, assignmentGet.Name, assignmentOperation.Name);
                     Assert.Equal(assignmentGet.ProvisioningState, assignmentOperationGet.AssignmentState);
-                    
+
                     // cleanup
                     await testFixture.BlueprintClient.Assignments.DeleteInSubscriptionAsync(subscriptionId, assignmentName);
                     // assignment delete is async operation
@@ -329,12 +329,14 @@ namespace Management.Blueprint.Tests.ScenarioTests
                         () => testFixture.BlueprintClient.Assignments.GetInSubscriptionAsync(subscriptionId, assignmentName),
                         (Assignment assign) => assign.IsTerminalState(),
                         waitTillFinish.Token,
-                        (Exception ex) => {
+                        (Exception ex) =>
+                        {
                             if (ex is CloudException && (ex as CloudException).Response.StatusCode == HttpStatusCode.NotFound)
                             {
                                 return true;
                             }
-                            throw ex; });
+                            throw ex;
+                        });
 
                     await testFixture.BlueprintClient.PublishedBlueprints.DeleteInManagementGroupAsync(managementGroupName, blueprintName, "v1.0");
                     await testFixture.BlueprintClient.PublishedBlueprints.DeleteInManagementGroupAsync(managementGroupName, blueprintName, "v1.1");
@@ -368,7 +370,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     }
                     throw ex;
                 }
-                
+
                 if (condition(result))
                 {
                     return result;

@@ -13,7 +13,7 @@
         public void CanGetMachineRunById()
         {
             var runId = Guid.Parse("da6493d0-de31-48d9-bc78-08e3c1d80d0a");
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
@@ -26,7 +26,7 @@
         [Fact]
         public void CanGetAllMachineRuns()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
@@ -40,7 +40,7 @@
         public void CanGetAllRunsByCorrelationId()
         {
             Guid correlationId = Guid.Parse("6ff49ee2-092a-48bf-841a-c3d645611689");
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
@@ -54,7 +54,7 @@
         public void CanGetAllRunsByStatus()
         {
             const string status = "Succeeded";
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 

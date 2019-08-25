@@ -1,4 +1,4 @@
-﻿using DataBox.Tests.Helpers;
+using DataBox.Tests.Helpers;
 using Microsoft.Azure.Management.DataBox;
 using Microsoft.Azure.Management.DataBox.Models;
 using Microsoft.Azure.Management.Resources;
@@ -99,3 +99,4 @@ namespace DataBox.Tests.Tests
         
     }
 }
+

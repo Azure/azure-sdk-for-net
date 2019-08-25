@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -23,7 +23,7 @@ namespace Compute.Tests.DiskRPTests
         #region Execution
         protected void Disk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
                 DiskRPLocation = location ?? DiskRPLocation;
@@ -106,7 +106,7 @@ namespace Compute.Tests.DiskRPTests
         }
         protected void Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, bool incremental = false)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
                 DiskRPLocation = location ?? DiskRPLocation;
@@ -189,7 +189,7 @@ namespace Compute.Tests.DiskRPTests
         }
         protected void Disk_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
                 DiskRPLocation = location ?? DiskRPLocation;
@@ -253,7 +253,7 @@ namespace Compute.Tests.DiskRPTests
 
         protected void Snapshot_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
 

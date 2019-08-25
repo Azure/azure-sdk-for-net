@@ -15,9 +15,9 @@ namespace QnAMaker.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6210")]
         public void QnAMakerKnowledgebaseCrud()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "QnAMakerKnowledgebaseCrud");
+                HttpMockServer.Initialize(this.GetType(), "QnAMakerKnowledgebaseCrud");
                 IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
 
                 // Create
