@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Http;
 using Azure.Core.Testing;
@@ -62,7 +63,98 @@ namespace Azure.Storage.Files.Test
                 var response = await file.CreateAsync(maxSize: Constants.MB);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                AssertValidStorageFileInfo(response);
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_FilePermission()
+        {
+            using (this.GetNewDirectory(out var directory))
+            {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+
+                // Act
+                var response = await file.CreateAsync(
+                    maxSize: Constants.MB,
+                    filePermission: filePermission);
+
+                // Assert
+                AssertValidStorageFileInfo(response);
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_FilePermissionAndFilePermissionKeySet()
+        {
+            using (this.GetNewDirectory(out var directory))
+            {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                var fileSmbProperties = new FileSmbProperties()
+                {
+                    FilePermissionKey = "filePermissionKey"
+                };
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    file.CreateAsync(
+                        maxSize: Constants.MB,
+                        smbProperties: fileSmbProperties,
+                        filePermission: filePermission),
+                    e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_FilePermissionTooLarge()
+        {
+            using (this.GetNewDirectory(out var directory))
+            {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                var filePermission = new string('*', 9 * Constants.KB);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                    file.CreateAsync(
+                        maxSize: Constants.MB,
+                        filePermission: filePermission),
+                    e => Assert.AreEqual(
+                        "Value must be less than or equal to 8192" + Environment.NewLine 
+                        + "Parameter name: filePermission", e.Message));
+            }
+        }
+
+        //TODO add FilePermissionId once Share.CreateFilePermission is implemented.
+        [Test]
+        public async Task CreateAsync_SmbProperties()
+        {
+            using (this.GetNewDirectory(out var directory))
+            {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                var smbProperties = new FileSmbProperties
+                {
+                    //TODO FilePermissionKey
+                    FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
+                    FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                };
+
+                // Act
+                var response = await file.CreateAsync(
+                    maxSize: Constants.KB,
+                    smbProperties: smbProperties);
+
+                // Assert
+                AssertValidStorageFileInfo(response);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
             }
         }
 
@@ -173,13 +265,20 @@ namespace Azure.Storage.Files.Test
         [Test]
         public async Task GetPropertiesAsync()
         {
-            using (this.GetNewFile(out var file))
+            using (this.GetNewDirectory(out var directory))
             {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+
                 // Act
-                var response = await file.GetPropertiesAsync();
+                var createResponse = await file.CreateAsync(maxSize: Constants.KB);
+                var getPropertiesResponse = await file.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
+                Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
+                Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
+                Assert.AreEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
             }
         }
 
@@ -254,7 +353,6 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Ignore("#7318 - doesn't accept Now for x-ms-file-creation-time")]
         public async Task SetHttpHeadersAsync()
         {
             var constants = new TestConstants(this);
@@ -286,7 +384,99 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Ignore("#7318 - doesn't accept Now for x-ms-file-creation-time")]
+        public async Task SetPropertiesAsync_FilePermission()
+        {
+            using (this.GetNewDirectory(out var directory))
+            {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                await file.CreateAsync(maxSize: Constants.KB);
+
+                // Act
+                var response = await file.SetHttpHeadersAsync(filePermission: filePermission);
+
+                // Assert
+                AssertValidStorageFileInfo(response);
+            }
+        }
+
+        //TODO add FilePermissionId once Share.CreateFilePermission is implemented.
+        [Test]
+        public async Task SetPropertiesAsync_SmbProperties()
+        {
+            using (this.GetNewDirectory(out var directory))
+            {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                var smbProperties = new FileSmbProperties
+                {
+                    //TODO FilePermissionKey
+                    FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
+                    FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                };
+
+
+                await file.CreateAsync(maxSize: Constants.KB);
+
+                // Act
+                var response = await file.SetHttpHeadersAsync(smbProperties: smbProperties);
+
+                // Assert
+                AssertValidStorageFileInfo(response);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+            }
+        }
+
+        [Test]
+        public async Task SetPropertiesAsync_FilePermissionTooLong()
+        {
+            var constants = new TestConstants(this);
+            using (this.GetNewDirectory(out var directory))
+            {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                var filePermission = new string('*', 9 * Constants.KB);
+                await file.CreateAsync(maxSize: Constants.KB);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                    file.SetHttpHeadersAsync(
+                        filePermission: filePermission),
+                    e => Assert.AreEqual(
+                        "Value must be less than or equal to 8192" + Environment.NewLine
+                        + "Parameter name: filePermission", e.Message));
+            }
+        }
+
+        [Test]
+        public async Task SetPropertiesAsync_FilePermissionAndFilePermissionKeySet()
+        {
+            using (this.GetNewDirectory(out var directory))
+            {
+                // Arrange
+                var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
+                await file.CreateAsync(maxSize: Constants.KB);
+
+                var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                var fileSmbProperties = new FileSmbProperties()
+                {
+                    FilePermissionKey = "filePermissionKey"
+                };
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    file.SetHttpHeadersAsync(
+                        smbProperties: fileSmbProperties,
+                        filePermission: filePermission),
+                    e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
+            }
+        }
+
+        [Test]
         public async Task SetPropertiesAsync_Error()
         {
             var constants = new TestConstants(this);
@@ -509,13 +699,34 @@ namespace Azure.Storage.Files.Test
                     content: stream);
 
                 // Act
-                var response = await file.DownloadAsync(range: new HttpRange(Constants.KB, data.LongLength));
+                var getPropertiesResponse = await file.GetPropertiesAsync();
+                var downloadResponse = await file.DownloadAsync(range: new HttpRange(Constants.KB, data.LongLength));
 
                 // Assert
-                Assert.AreEqual(data.Length, response.Value.ContentLength);
+
+                // Content is equal
+                Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
                 var actual = new MemoryStream();
-                await response.Value.Content.CopyToAsync(actual);
+                await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
+
+                // Properties are equal
+                Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Properties.LastModified);
+                this.AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Properties.Metadata);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.Properties.ContentType);
+                Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Properties.ETag);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Properties.ContentEncoding);
+                Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Properties.CacheControl);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentDisposition, downloadResponse.Value.Properties.ContentDisposition);
+                Assert.AreEqual(getPropertiesResponse.Value.ContentLanguage, downloadResponse.Value.Properties.ContentLanguage);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletionTime, downloadResponse.Value.Properties.CopyCompletionTime);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyStatusDescription, downloadResponse.Value.Properties.CopyStatusDescription);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyId, downloadResponse.Value.Properties.CopyId);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyProgress, downloadResponse.Value.Properties.CopyProgress);
+                Assert.AreEqual(getPropertiesResponse.Value.CopySource, downloadResponse.Value.Properties.CopySource);
+                Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Properties.CopyStatus);
+                Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Properties.IsServerEncrypted);
+                Assert.AreEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Properties.SmbProperties);
             }
         }
 

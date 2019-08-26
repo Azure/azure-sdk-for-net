@@ -24,7 +24,7 @@ namespace BatchAI.Tests
             string workspaceName = "testclustercreationanddeletion_testworkspace";
             string clusterName = "testclustercreationanddeletion_testcluster";
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = Helpers.GetBatchAIClient(context, handler1);
 

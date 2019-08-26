@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs
 
             var sharedAccessSignature = new SharedAccessSignature
             (
-                 BuildResource(clientOptions.TransportType, eventHubsHostName, eventHubName),
+                 BuildAudienceResource(clientOptions.TransportType, eventHubsHostName, eventHubName),
                  connectionStringProperties.SharedAccessKeyName,
                  connectionStringProperties.SharedAccessKey
             );
@@ -198,11 +198,11 @@ namespace Azure.Messaging.EventHubs
                     break;
 
                 case EventHubSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildResource(clientOptions.TransportType, host, eventHubName));
+                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(clientOptions.TransportType, host, eventHubName));
                     break;
 
                 default:
-                    credential = new EventHubTokenCredential(credential, BuildResource(clientOptions.TransportType, host, eventHubName));
+                    credential = new EventHubTokenCredential(credential, BuildAudienceResource(clientOptions.TransportType, host, eventHubName));
                     break;
             }
 
@@ -258,8 +258,8 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
         ///
         /// <remarks>
-        ///   This method is synonomous with invoking <see cref="GetPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
-        ///   property that is returned. It is offered as a convienience for quick access to the set of partition identifiers for the associated Event Hub.
+        ///   This method is synonymous with invoking <see cref="GetPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
+        ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
         ///   No new or extended information is presented.
         /// </remarks>
         ///
@@ -449,9 +449,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
-        private static string BuildResource(TransportType transportType,
-                                            string host,
-                                            string eventHubName)
+        private static string BuildAudienceResource(TransportType transportType,
+                                                    string host,
+                                                    string eventHubName)
         {
             var builder = new UriBuilder(host)
             {
@@ -490,9 +490,12 @@ namespace Azure.Messaging.EventHubs
                                                          string connectionStringArgumentName)
         {
             // The Event Hub name may only be specified in one of the possible forms, either as part of the
-            // connection string or as a stand-alone parameter, but not both.
+            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
+            // value, then do not consider this a failure.
 
-            if ((!String.IsNullOrEmpty(eventHubName)) && (!String.IsNullOrEmpty(properties.EventHubName)))
+            if ((!String.IsNullOrEmpty(eventHubName))
+                && (!String.IsNullOrEmpty(properties.EventHubName))
+                && (!String.Equals(eventHubName, properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new ArgumentException(Resources.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
             }
@@ -540,7 +543,7 @@ namespace Azure.Messaging.EventHubs
                 return;
             }
 
-            // A proxy is only valid when websockets is used as the transport.
+            // A proxy is only valid when web sockets is used as the transport.
 
             if ((clientOptions.TransportType == TransportType.AmqpTcp) && (clientOptions.Proxy != null))
             {
