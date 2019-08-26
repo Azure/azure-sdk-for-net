@@ -66,14 +66,6 @@ namespace ManagedNetwork.Tests
                         new ResourceId()
                             {
                                 Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3"
-                            },
-                         new ResourceId()
-                            {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh4"
-                            },
-                        new ResourceId()
-                            {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh5"
                             }
                     }
                 };
@@ -103,21 +95,11 @@ namespace ManagedNetwork.Tests
                         new ResourceId()
                             {
                                 Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3"
-                            },
-                         new ResourceId()
-                            {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh4"
-                            },
-                        new ResourceId()
-                            {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh5"
                             }
                     }
                 };
                 // Put Connectivity Group
                 ManagedNetworkGroup putManagedNetworkGroupResponse = this.client.ManagedNetworkGroups.CreateOrUpdate(managedNetworkGroup, resourceGroupName, managedNetworkName, managedNetworkGroupName);
-
-
 
                 #region Create peeringPolicy
                 string peeringPolicyName = "SDK_MeshPolicy";
@@ -199,14 +181,6 @@ namespace ManagedNetwork.Tests
                             },
                         new ResourceId()
                             {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke4"
-                            },
-                        new ResourceId()
-                            {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke5"
-                            },
-                        new ResourceId()
-                            {
                                 Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Hub"
                             }
                     }
@@ -239,14 +213,6 @@ namespace ManagedNetwork.Tests
                         new ResourceId()
                             {
                                 Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke3"
-                            },
-                        new ResourceId()
-                            {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke4"
-                            },
-                        new ResourceId()
-                            {
-                                Id = "subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-Portal/providers/Microsoft.Network/virtualNetworks/Spoke5"
                             }
                     }
                 };

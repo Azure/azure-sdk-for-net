@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f91e7b6d-b72d-4a62-8793-e5f16e11431a"
+          "6fa5501c-5d21-4bee-a1e4-1ee49d61699b"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,16 +27,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14991"
         ],
         "x-ms-request-id": [
-          "5687c1da-11d2-40a6-9660-8c46a056b86c"
+          "9856d854-1a2b-4a2f-8a3a-c02ca8060049"
         ],
         "x-ms-correlation-request-id": [
-          "5687c1da-11d2-40a6-9660-8c46a056b86c"
+          "9856d854-1a2b-4a2f-8a3a-c02ca8060049"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190826T211751Z:5687c1da-11d2-40a6-9660-8c46a056b86c"
+          "NORTHEUROPE:20190826T232221Z:9856d854-1a2b-4a2f-8a3a-c02ca8060049"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 26 Aug 2019 21:17:51 GMT"
+          "Mon, 26 Aug 2019 23:22:20 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,10 +64,10 @@
       "RequestUri": "/subscriptions/0c8037cf-745c-47eb-94f0-565cb9250814/resourceGroups/MNC-Portal/providers/Microsoft.ManagedNetwork/managedNetworks/SDK_ManagedNetwork_Mesh1?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MDM3Y2YtNzQ1Yy00N2ViLTk0ZjAtNTY1Y2I5MjUwODE0L3Jlc291cmNlR3JvdXBzL01OQy1Qb3J0YWwvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvU0RLX01hbmFnZWROZXR3b3JrX01lc2gxP2FwaS12ZXJzaW9uPTIwMTktMDYtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh1\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh2\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh4\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh5\"\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh1\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh2\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3\"\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "28295c91-fa0b-4e4d-8698-9d9d4ee08559"
+          "66fec300-ed44-49a2-9fd3-4bc7198f1e11"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,7 +82,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "981"
+          "635"
         ]
       },
       "ResponseHeaders": {
@@ -93,7 +93,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1190"
+          "1197"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -102,22 +102,22 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "a909873d-6b7f-4019-bd67-925daa549485"
+          "f006de92-d779-45d1-b4b0-3d09f2a62675"
         ],
         "x-ms-correlation-request-id": [
-          "a909873d-6b7f-4019-bd67-925daa549485"
+          "f006de92-d779-45d1-b4b0-3d09f2a62675"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190826T211752Z:a909873d-6b7f-4019-bd67-925daa549485"
+          "NORTHEUROPE:20190826T232223Z:f006de92-d779-45d1-b4b0-3d09f2a62675"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 26 Aug 2019 21:17:52 GMT"
+          "Mon, 26 Aug 2019 23:22:23 GMT"
         ],
         "Content-Length": [
-          "1177"
+          "897"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -126,17 +126,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/0c8037cf-745c-47eb-94f0-565cb9250814/resourceGroups/MNC-Portal/providers/Microsoft.ManagedNetwork/managedNetworks/SDK_ManagedNetwork_Mesh1\",\r\n  \"name\": \"SDK_ManagedNetwork_Mesh1\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworks\",\r\n  \"location\": \"Central US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": [],\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh1\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh2\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh4\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh5\"\r\n        }\r\n      ],\r\n      \"managementGroups\": [],\r\n      \"subscriptions\": [],\r\n      \"subNets\": []\r\n    },\r\n    \"connectivity\": {\r\n      \"peerings\": [],\r\n      \"groups\": []\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/0c8037cf-745c-47eb-94f0-565cb9250814/resourceGroups/MNC-Portal/providers/Microsoft.ManagedNetwork/managedNetworks/SDK_ManagedNetwork_Mesh1\",\r\n  \"name\": \"SDK_ManagedNetwork_Mesh1\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworks\",\r\n  \"location\": \"Central US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": [],\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh1\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh2\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3\"\r\n        }\r\n      ],\r\n      \"managementGroups\": [],\r\n      \"subscriptions\": [],\r\n      \"subNets\": []\r\n    },\r\n    \"connectivity\": {\r\n      \"peerings\": [],\r\n      \"groups\": []\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/0c8037cf-745c-47eb-94f0-565cb9250814/resourceGroups/MNC-Portal/providers/Microsoft.ManagedNetwork/managedNetworks/SDK_ManagedNetwork_Mesh1/managedNetworkGroups/SDK_MeshGroup?api-version=2019-06-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MDM3Y2YtNzQ1Yy00N2ViLTk0ZjAtNTY1Y2I5MjUwODE0L3Jlc291cmNlR3JvdXBzL01OQy1Qb3J0YWwvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvU0RLX01hbmFnZWROZXR3b3JrX01lc2gxL21hbmFnZWROZXR3b3JrR3JvdXBzL1NES19NZXNoR3JvdXA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh1\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh2\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh4\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh5\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh1\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh2\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5f002da4-e459-4e56-89fb-d75191bbaac1"
+          "845633f4-53ca-41c6-a513-5c474e3d579c"
         ],
         "Accept-Language": [
           "en-US"
@@ -151,7 +151,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "895"
+          "561"
         ]
       },
       "ResponseHeaders": {
@@ -162,7 +162,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1189"
+          "1196"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -171,22 +171,22 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "c6c146e7-b831-441e-8b03-66370936d2d0"
+          "3478e3bb-3649-4074-a20c-f4eeff243b45"
         ],
         "x-ms-correlation-request-id": [
-          "c6c146e7-b831-441e-8b03-66370936d2d0"
+          "3478e3bb-3649-4074-a20c-f4eeff243b45"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190826T211754Z:c6c146e7-b831-441e-8b03-66370936d2d0"
+          "NORTHEUROPE:20190826T232224Z:3478e3bb-3649-4074-a20c-f4eeff243b45"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 26 Aug 2019 21:17:53 GMT"
+          "Mon, 26 Aug 2019 23:22:24 GMT"
         ],
         "Content-Length": [
-          "1143"
+          "863"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,7 +195,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/0c8037cf-745c-47eb-94f0-565cb9250814/resourceGroups/MNC-Portal/providers/Microsoft.ManagedNetwork/managedNetworks/SDK_ManagedNetwork_Mesh1/managedNetworkGroups/SDK_MeshGroup\",\r\n  \"name\": \"SDK_MeshGroup\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworkGroups\",\r\n  \"location\": \"\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": [],\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh1\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh2\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh4\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh5\"\r\n      }\r\n    ],\r\n    \"managementGroups\": [],\r\n    \"subscriptions\": [],\r\n    \"subNets\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/0c8037cf-745c-47eb-94f0-565cb9250814/resourceGroups/MNC-Portal/providers/Microsoft.ManagedNetwork/managedNetworks/SDK_ManagedNetwork_Mesh1/managedNetworkGroups/SDK_MeshGroup\",\r\n  \"name\": \"SDK_MeshGroup\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworkGroups\",\r\n  \"location\": \"\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": [],\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh1\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh2\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNC-PowerShell/providers/Microsoft.Network/virtualnetworks/Mesh3\"\r\n      }\r\n    ],\r\n    \"managementGroups\": [],\r\n    \"subscriptions\": [],\r\n    \"subNets\": []\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -205,7 +205,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"MeshTopology\",\r\n    \"mesh\": [\r\n      {\r\n        \"id\": \"subscriptions/0c8037cf-745c-47eb-94f0-565cb9250814/resourceGroups/MNC-Portal/providers/Microsoft.ManagedNetwork/managedNetworks/SDK_ManagedNetwork_Mesh1/managedNetworkGroups/SDK_MeshGroup\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "080dbfc6-ce35-44d8-88f8-44d9c1ac872b"
+          "a5df52f2-17a8-4f93-ab93-74c3016ae0e7"
         ],
         "Accept-Language": [
           "en-US"
@@ -231,7 +231,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1188"
+          "1195"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -240,19 +240,19 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "8631e1c8-46de-4678-8c26-a5ee551da8ea"
+          "b2fb3bb5-1ae9-4afe-8e1a-cad410832195"
         ],
         "x-ms-correlation-request-id": [
-          "8631e1c8-46de-4678-8c26-a5ee551da8ea"
+          "b2fb3bb5-1ae9-4afe-8e1a-cad410832195"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190826T211755Z:8631e1c8-46de-4678-8c26-a5ee551da8ea"
+          "NORTHEUROPE:20190826T232226Z:b2fb3bb5-1ae9-4afe-8e1a-cad410832195"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 26 Aug 2019 21:17:54 GMT"
+          "Mon, 26 Aug 2019 23:22:25 GMT"
         ],
         "Content-Length": [
           "627"
