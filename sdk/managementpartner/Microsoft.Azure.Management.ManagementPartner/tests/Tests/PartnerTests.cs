@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using ManagementPartner.Tests.Helpers;
@@ -33,7 +33,7 @@ namespace ManagementPartner.Tests
         {
             string partnerId = "123457";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementPartnerClient = ManagementPartnerTestUtilities.GetACEProvisioningManagementPartnerAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var partnerResponse = managementPartnerClient.Partner.GetAsync(partnerId).Result;
@@ -46,7 +46,7 @@ namespace ManagementPartner.Tests
         {
             string partnerId = "123456";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementPartnerClient = ManagementPartnerTestUtilities.GetACEProvisioningManagementPartnerAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var partner = managementPartnerClient.Partner.CreateAsync(partnerId).Result;
@@ -60,7 +60,7 @@ namespace ManagementPartner.Tests
         {
             string partnerId = "123457";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementPartnerClient = ManagementPartnerTestUtilities.GetACEProvisioningManagementPartnerAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var partner = managementPartnerClient.Partner.UpdateAsync(partnerId).Result;
@@ -74,7 +74,7 @@ namespace ManagementPartner.Tests
         {
             string partnerId = "123457";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementPartnerClient = ManagementPartnerTestUtilities.GetACEProvisioningManagementPartnerAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 managementPartnerClient.Partner.DeleteAsync(partnerId).Wait();

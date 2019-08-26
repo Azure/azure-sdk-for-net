@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.MixedReality;
+using Microsoft.Azure.Management.MixedReality;
 using Microsoft.Azure.Management.MixedReality.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
@@ -87,3 +87,4 @@ namespace MixedReality.Tests
         }
     }
 }
+

@@ -87,6 +87,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the proximity placement group that the virtual machine should be
         /// assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2018-04-01.</param>
+        /// <param name="priority">Specifies the priority for the virtual
+        /// machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01.
+        /// Possible values include: 'Regular', 'Low'</param>
+        /// <param name="evictionPolicy">Specifies the eviction policy for the
+        /// low priority virtual machine. Only supported value is 'Deallocate'.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. Possible
+        /// values include: 'Deallocate', 'Delete'</param>
+        /// <param name="billingProfile">Specifies the billing related details
+        /// of a low priority virtual machine. &lt;br&gt;&lt;br&gt;Minimum
+        /// api-version: 2019-03-01.</param>
         /// <param name="host">Specifies information about the dedicated host
         /// that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2018-10-01.</param>
@@ -113,7 +123,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
@@ -126,6 +136,9 @@ namespace Microsoft.Azure.Management.Compute.Models
             AvailabilitySet = availabilitySet;
             VirtualMachineScaleSet = virtualMachineScaleSet;
             ProximityPlacementGroup = proximityPlacementGroup;
+            Priority = priority;
+            EvictionPolicy = evictionPolicy;
+            BillingProfile = billingProfile;
             Host = host;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
@@ -239,6 +252,32 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the priority for the virtual machine.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2019-03-01. Possible values include: 'Regular', 'Low'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.priority")]
+        public string Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the eviction policy for the low priority
+        /// virtual machine. Only supported value is 'Deallocate'.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2019-03-01. Possible values include: 'Deallocate', 'Delete'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.evictionPolicy")]
+        public string EvictionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the billing related details of a low
+        /// priority virtual machine.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2019-03-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingProfile")]
+        public BillingProfile BillingProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies information about the dedicated host that

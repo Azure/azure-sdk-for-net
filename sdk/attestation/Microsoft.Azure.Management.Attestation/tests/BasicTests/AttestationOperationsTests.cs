@@ -23,7 +23,7 @@ namespace Attestation.Tests.ScenarioTests
         public void AttestationManagementAttestationCreateDelete()
         {
             var mode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new AttestationTestBase(context);
                 testBase.apiVersion = testBase.apiVersion;
@@ -31,7 +31,7 @@ namespace Attestation.Tests.ScenarioTests
                 var createdAttestation = testBase.client.AttestationProviders.Create(
                     resourceGroupName: testBase.rgName,
                     providerName: testBase.attestationName,
-                    creationParams: new AttestationServiceCreationParams {}
+                    creationParams: new AttestationServiceCreationParams { }
                 );
 
 
@@ -40,7 +40,7 @@ namespace Attestation.Tests.ScenarioTests
                     testBase.rgName,
                     testBase.subscriptionId);
                 //get
-                var retrievedAttestation= testBase.client.AttestationProviders.Get(
+                var retrievedAttestation = testBase.client.AttestationProviders.Get(
                     resourceGroupName: testBase.rgName,
                     providerName: testBase.attestationName);
 

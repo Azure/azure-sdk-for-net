@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.EdgeGateway;
+using Microsoft.Azure.Management.EdgeGateway;
 using Microsoft.Azure.Management.EdgeGateway.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,3 +52,4 @@ namespace EdgeGateway.Tests
 
     }
 }
+

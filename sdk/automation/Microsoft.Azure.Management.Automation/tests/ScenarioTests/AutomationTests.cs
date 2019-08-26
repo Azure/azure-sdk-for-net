@@ -14,12 +14,12 @@ namespace Automation.Tests.ScenarioTests
     using Xunit;
     using System.Threading;
 
-    public class AutomationTest 
+    public class AutomationTest
     {
         [Fact]
         public void CanCreateUpdateDeleteRunbook()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -63,7 +63,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact(Skip = "Waiting on webservice deployment")]
         public void CanCreateUpdateDeleteSchedule()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -100,7 +100,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteVariable()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -138,7 +138,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteWebhook()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -189,7 +189,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteCredential()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -229,7 +229,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteDscConfiguration()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -259,7 +259,7 @@ namespace Automation.Tests.ScenarioTests
                     Assert.Single(dscConfigurations.ToList());
                     configuration = dscConfigurations.ToList()[0];
                     Assert.Equal(configName, configuration.Name);
-                    
+
                     testFixture.DeleteDscConfiguration(configName);
 
                     Assert.Throws<ErrorResponseException>(() =>
@@ -273,7 +273,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteDscNodeConfiguration()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -284,7 +284,7 @@ namespace Automation.Tests.ScenarioTests
                     var nodeConfigContentHashValue = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ContentHashValue;
                     var nodeConfigContentHashAlgorithm = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ContentHashAlgorithm;
                     var nodeConfigContentType = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ContentType;
-                    var nodeConfigContentVersion = 
+                    var nodeConfigContentVersion =
                         DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ContentVersion;
                     const string updatedConfigurationVersion = "2.0";
 
@@ -298,14 +298,14 @@ namespace Automation.Tests.ScenarioTests
                         description, contentHashValue, contentHashAlgorithm, contentType);
 
                     var nodeConfiguration = testFixture.CreateDscNodeConfiguration(nodeConfigName, configName,
-                        nodeConfigurationContent, nodeConfigContentHashValue, nodeConfigContentHashAlgorithm, 
+                        nodeConfigurationContent, nodeConfigContentHashValue, nodeConfigContentHashAlgorithm,
                         nodeConfigContentType, nodeConfigContentVersion);
 
                     var nodeConfig = testFixture.GetDscNodeConfiguration(nodeConfigName);
                     Assert.NotNull(nodeConfig);
                     Assert.Equal(nodeConfig.Name, nodeConfiguration.Name);
 
-                    testFixture.UpdateDscNodeConfiguration(nodeConfig, nodeConfigurationContent, 
+                    testFixture.UpdateDscNodeConfiguration(nodeConfig, nodeConfigurationContent,
                         nodeConfigContentHashValue, nodeConfigContentHashAlgorithm, nodeConfigContentType,
                         updatedConfigurationVersion);
 
@@ -328,7 +328,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteAutomationModules()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -342,7 +342,7 @@ namespace Automation.Tests.ScenarioTests
 
                     var module = testFixture.CreateAutomationModule(moduleName, contentLink1);
 
-                    Assert.NotNull(module);                    
+                    Assert.NotNull(module);
                     Assert.Equal(ModuleProvisioningState.Creating, module.ProvisioningState);
                     module = EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture);
                     Assert.Equal(moduleName, module.Name);
@@ -376,7 +376,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeletePython2Packages()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -424,7 +424,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteSourceControl()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -441,7 +441,7 @@ namespace Automation.Tests.ScenarioTests
                     var updateBranchName = SourceControlDefinition.TestSimpleSourceControlDefinition.UpdateBranchName;
                     var updateAutoPublish = SourceControlDefinition.TestSimpleSourceControlDefinition.UpdateAutoPublish;
 
-                    var sourceControl = 
+                    var sourceControl =
                         testFixture.CreateSourceControl(sourceControlName, repoUrl, branch, folderPath, autoSync, publishRunbook,
                                                         sourceType, accessToken, description);
 
@@ -456,7 +456,7 @@ namespace Automation.Tests.ScenarioTests
                     Assert.Equal(retrievedSourceControl.SourceType, sourceControl.SourceType);
                     Assert.Equal(retrievedSourceControl.Description, sourceControl.Description);
 
-                    var updatedSourceControl = 
+                    var updatedSourceControl =
                         testFixture.UpdateSourceControl(sourceControlName, updateBranchName, updateAutoPublish);
 
                     Assert.NotNull(updatedSourceControl);
@@ -483,7 +483,7 @@ namespace Automation.Tests.ScenarioTests
         [Fact(Skip = "Waiting on webservice deployment")]
         public void CanCreateSourceControlSyncJob()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
@@ -542,7 +542,7 @@ namespace Automation.Tests.ScenarioTests
 
         private delegate Module GetModuleAction();
 
-        private Module TestProvisioningStateSucceeded (GetModuleAction action)
+        private Module TestProvisioningStateSucceeded(GetModuleAction action)
         {
             var startTime = DateTime.Now;
             var endTime = startTime.AddMinutes(5);
@@ -557,7 +557,7 @@ namespace Automation.Tests.ScenarioTests
                     success = true;
                     break;
                 }
-                
+
             } while (DateTime.Now < endTime);
             Assert.True(success);
             return module;

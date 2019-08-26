@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase(0)]
-        public void DefaultMaximumReceiveWaitTimeUsesNormalizesValueINotSpecified(int? noTimeoutValue)
+        public void DefaultMaximumReceiveWaitTimeUsesNormalizedValueIfNotSpecified(int? noTimeoutValue)
         {
             var options = new EventHubConsumerOptions();
             var timeoutValue = (noTimeoutValue.HasValue) ? TimeSpan.Zero : (TimeSpan?)null;

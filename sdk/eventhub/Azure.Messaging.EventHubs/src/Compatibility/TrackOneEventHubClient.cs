@@ -293,7 +293,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             return new EventHubProducer
             (
-                new TrackOneEventHubProducer(CreateSenderFactory, initialRetryPolicy), 
+                new TrackOneEventHubProducer(CreateSenderFactory, initialRetryPolicy),
                 TrackOneClient.ConnectionStringBuilder.Endpoint,
                 TrackOneClient.EventHubName,
                 producerOptions,

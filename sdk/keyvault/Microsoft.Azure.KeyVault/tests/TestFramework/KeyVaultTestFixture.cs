@@ -43,7 +43,7 @@ namespace KeyVault.TestFramework
 
         public KeyVaultTestFixture()
         {
-            Initialize(string.Empty);
+            Initialize(this.GetType());
 
             if (vaultAddress != null && HttpMockServer.Mode == HttpRecorderMode.Record)
             { 
@@ -65,10 +65,10 @@ namespace KeyVault.TestFramework
             }
         }
 
-        public void Initialize(string className)
+        public void Initialize(Type type)
         {
             HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
-            HttpMockServer.Initialize(className, "InitialCreation", HttpRecorderMode.Record);
+            HttpMockServer.Initialize(type, "InitialCreation", HttpRecorderMode.Record);
             HttpMockServer.CreateInstance();
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)

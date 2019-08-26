@@ -2,10 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Dynamic;
-using System.Threading;
-
 namespace Azure.Storage
 {
     internal static class Constants
@@ -36,7 +32,7 @@ namespace Azure.Storage
 
         // SASTimeFormat represents the format of a SAS start or expiry time. Use it when formatting/parsing a time.Time.
         // ISO 8601 uses "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
-        public const string TimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
+        public const string SasTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
 
         public const string SnapshotParameterName = "snapshot";
 
@@ -115,6 +111,7 @@ namespace Azure.Storage
 
             internal static class Block
             {
+                public const int DefaultParallelUploadCount = 4; // TODO What should the value really be?  Can we get rid of it with a different dispatch algorithm? (probably yes)
                 public const int MaxUploadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxStageBytes = 100 * Constants.MB; // 100MB
                 public const int MaxBlocks = 50000;
@@ -230,6 +227,13 @@ namespace Azure.Storage
         /// </summary>
         internal static class File
         {
+            public const string FileAttributesNone = "None";
+            public const string FileTimeNow = "Now";
+            public const string Preserve = "Preserve";
+            public const string FilePermissionInherit = "Inherit";
+            public const int MaxFilePermissionHeaderSize = 8 * KB;
+            public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
+
             public const string SetHttpHeadersOperationName =
                 "Azure.Storage.Files.FileClient.SetHttpHeaders";
             internal static class Directory
@@ -240,6 +244,8 @@ namespace Azure.Storage
                     "Azure.Storage.Files.DirectoryClient.Delete";
                 public const string GetPropertiesOperationName =
                     "Azure.Storage.Files.DirectoryClient.GetProperties";
+                public const string SetHttpHeadersOperationName =
+                    "Azure.Storage.Files.DirectoryClient.SetHttpHeaders";
                 public const string SetMetadataOperationName =
                     "Azure.Storage.Files.DirectoryClient.SetMetadata";
                 public const string ListFilesAndDirectoriesSegmentOperationName =

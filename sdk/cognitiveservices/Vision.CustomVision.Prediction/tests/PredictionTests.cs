@@ -12,9 +12,9 @@
         [Fact]
         public void ClassifyImage()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ClassifyImage", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ClassifyImage", RecorderMode);
 
                 ICustomVisionPredictionClient client = GetPredictionClientClient();
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "test_image.jpg"), FileMode.Open))
@@ -28,9 +28,9 @@
         [Fact]
         public void ClassifyImageNoStore()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ClassifyImageNoStore", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ClassifyImageNoStore", RecorderMode);
 
                 ICustomVisionPredictionClient client = GetPredictionClientClient();
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "test_image.jpg"), FileMode.Open))
@@ -45,9 +45,9 @@
         public void ClassifyImageUrl()
         {
             string testImageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ClassifyImageUrl", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ClassifyImageUrl", RecorderMode);
 
                 ICustomVisionPredictionClient client = GetPredictionClientClient();
                 ImageUrl url = new ImageUrl(testImageUrl);
@@ -61,9 +61,9 @@
         public void ClassifyImageUrlNoStore()
         {
             string testImageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ClassifyImageUrlNoStore", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ClassifyImageUrlNoStore", RecorderMode);
 
                 ICustomVisionPredictionClient client = GetPredictionClientClient();
                 ImageUrl url = new ImageUrl(testImageUrl);
@@ -76,9 +76,9 @@
         [Fact]
         public void DetectImage()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DetectImage", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "DetectImage", RecorderMode);
 
                 ICustomVisionPredictionClient client = GetPredictionClientClient();
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "test_image.jpg"), FileMode.Open))
@@ -92,9 +92,9 @@
         [Fact]
         public void DetectImageNoStore()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DetectImageNoStore", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "DetectImageNoStore", RecorderMode);
 
                 ICustomVisionPredictionClient client = GetPredictionClientClient();
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "test_image.jpg"), FileMode.Open))
@@ -109,9 +109,9 @@
         public void DetectImageUrl()
         {
             string testImageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DetectImageUrl", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "DetectImageUrl", RecorderMode);
 
                 ICustomVisionPredictionClient client = GetPredictionClientClient();
                 ImageUrl url = new ImageUrl(testImageUrl);
@@ -125,9 +125,9 @@
         public void DetectImageUrlNoStore()
         {
             string testImageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DetectImageUrlNoStore", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "DetectImageUrlNoStore", RecorderMode);
 
                 ICustomVisionPredictionClient client = GetPredictionClientClient();
                 ImageUrl url = new ImageUrl(testImageUrl);

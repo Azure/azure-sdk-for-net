@@ -39,17 +39,27 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// Possible values include: 'Http', 'Https'</param>
         /// <param name="intervalInSeconds">The number of seconds between
         /// health probes.</param>
+        /// <param name="healthProbeMethod">Configures which HTTP method to use
+        /// to probe the backends defined under backendPools. Possible values
+        /// include: 'GET', 'HEAD'</param>
+        /// <param name="enabledState">Whether to enable health probes to be
+        /// made against backends defined under backendPools. Health probes can
+        /// only be disabled if there is a single enabled backend in single
+        /// enabled backend pool. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="resourceState">Resource status. Possible values
         /// include: 'Creating', 'Enabling', 'Enabled', 'Disabling',
         /// 'Disabled', 'Deleting'</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public HealthProbeSettingsModel(string id = default(string), string path = default(string), string protocol = default(string), int? intervalInSeconds = default(int?), string resourceState = default(string), string name = default(string), string type = default(string))
+        public HealthProbeSettingsModel(string id = default(string), string path = default(string), string protocol = default(string), int? intervalInSeconds = default(int?), string healthProbeMethod = default(string), string enabledState = default(string), string resourceState = default(string), string name = default(string), string type = default(string))
             : base(id)
         {
             Path = path;
             Protocol = protocol;
             IntervalInSeconds = intervalInSeconds;
+            HealthProbeMethod = healthProbeMethod;
+            EnabledState = enabledState;
             ResourceState = resourceState;
             Name = name;
             Type = type;
@@ -79,6 +89,23 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.intervalInSeconds")]
         public int? IntervalInSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets configures which HTTP method to use to probe the
+        /// backends defined under backendPools. Possible values include:
+        /// 'GET', 'HEAD'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.healthProbeMethod")]
+        public string HealthProbeMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to enable health probes to be made against
+        /// backends defined under backendPools. Health probes can only be
+        /// disabled if there is a single enabled backend in single enabled
+        /// backend pool. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enabledState")]
+        public string EnabledState { get; set; }
 
         /// <summary>
         /// Gets or sets resource status. Possible values include: 'Creating',

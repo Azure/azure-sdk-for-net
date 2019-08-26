@@ -160,12 +160,12 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         internal EventHubConsumer(TransportEventHubConsumer transportConsumer,
-                                   string eventHubName,
-                                   string consumerGroup,
-                                   string partitionId,
-                                   EventPosition eventPosition,
-                                   EventHubConsumerOptions consumerOptions,
-                                   EventHubRetryPolicy retryPolicy)
+                                  string eventHubName,
+                                  string consumerGroup,
+                                  string partitionId,
+                                  EventPosition eventPosition,
+                                  EventHubConsumerOptions consumerOptions,
+                                  EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(transportConsumer), transportConsumer);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);

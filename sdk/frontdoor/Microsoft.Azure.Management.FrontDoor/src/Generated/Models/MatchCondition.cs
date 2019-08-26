@@ -32,18 +32,19 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <summary>
         /// Initializes a new instance of the MatchCondition class.
         /// </summary>
-        /// <param name="matchVariable">Match variable to compare against.
+        /// <param name="matchVariable">Request variable to compare with.
         /// Possible values include: 'RemoteAddr', 'RequestMethod',
         /// 'QueryString', 'PostArgs', 'RequestUri', 'RequestHeader',
         /// 'RequestBody', 'Cookies'</param>
-        /// <param name="operatorProperty">Describes operator to be matched.
-        /// Possible values include: 'Any', 'IPMatch', 'GeoMatch', 'Equal',
-        /// 'Contains', 'LessThan', 'GreaterThan', 'LessThanOrEqual',
-        /// 'GreaterThanOrEqual', 'BeginsWith', 'EndsWith', 'RegEx'</param>
+        /// <param name="operatorProperty">Comparison type to use for matching
+        /// with the variable value. Possible values include: 'Any', 'IPMatch',
+        /// 'GeoMatch', 'Equal', 'Contains', 'LessThan', 'GreaterThan',
+        /// 'LessThanOrEqual', 'GreaterThanOrEqual', 'BeginsWith', 'EndsWith',
+        /// 'RegEx'</param>
         /// <param name="matchValue">List of possible match values.</param>
-        /// <param name="selector">Selector can used to match against a
-        /// specific key from QueryString, PostArgs, RequestHeader or
-        /// Cookies.</param>
+        /// <param name="selector">Match against a specific key from the
+        /// QueryString, PostArgs, RequestHeader or Cookies variables. Default
+        /// is null.</param>
         /// <param name="negateCondition">Describes if the result of this
         /// condition should be negated.</param>
         /// <param name="transforms">List of transforms.</param>
@@ -64,7 +65,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets match variable to compare against. Possible values
+        /// Gets or sets request variable to compare with. Possible values
         /// include: 'RemoteAddr', 'RequestMethod', 'QueryString', 'PostArgs',
         /// 'RequestUri', 'RequestHeader', 'RequestBody', 'Cookies'
         /// </summary>
@@ -72,17 +73,17 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string MatchVariable { get; set; }
 
         /// <summary>
-        /// Gets or sets selector can used to match against a specific key from
-        /// QueryString, PostArgs, RequestHeader or Cookies.
+        /// Gets or sets match against a specific key from the QueryString,
+        /// PostArgs, RequestHeader or Cookies variables. Default is null.
         /// </summary>
         [JsonProperty(PropertyName = "selector")]
         public string Selector { get; set; }
 
         /// <summary>
-        /// Gets or sets describes operator to be matched. Possible values
-        /// include: 'Any', 'IPMatch', 'GeoMatch', 'Equal', 'Contains',
-        /// 'LessThan', 'GreaterThan', 'LessThanOrEqual', 'GreaterThanOrEqual',
-        /// 'BeginsWith', 'EndsWith', 'RegEx'
+        /// Gets or sets comparison type to use for matching with the variable
+        /// value. Possible values include: 'Any', 'IPMatch', 'GeoMatch',
+        /// 'Equal', 'Contains', 'LessThan', 'GreaterThan', 'LessThanOrEqual',
+        /// 'GreaterThanOrEqual', 'BeginsWith', 'EndsWith', 'RegEx'
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
         public string OperatorProperty { get; set; }
