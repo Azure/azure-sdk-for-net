@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
         internal static object ParseValueObject(XElement element)
         {
             var serializedPrefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.SerializationNamespace));
-            var type = element.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs)).Value;
+            var type = element.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace)).Value;
 
             if (!string.IsNullOrEmpty(serializedPrefix))
             {
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
                 }
             }
 
-            var prefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.XmlSchemaNs));
+            var prefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.XmlSchemaNamespace));
             if (string.IsNullOrWhiteSpace(prefix))
             {
                 return element.Value;
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.ServiceBus.Filters
                     "Only following types are supported through HTTP: string,int,long,bool,double,DateTime");
             }
 
-            var element = new XElement(XName.Get("Value", ManagementClientConstants.SbNs),
-                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs), type),
-                new XAttribute(XNamespace.Xmlns + prefix, ManagementClientConstants.XmlSchemaNs),
+            var element = new XElement(XName.Get("Value", ManagementClientConstants.ServiceBusNamespace),
+                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), type),
+                new XAttribute(XNamespace.Xmlns + prefix, ManagementClientConstants.XmlSchemaNamespace),
                 value);
 
             return element;
