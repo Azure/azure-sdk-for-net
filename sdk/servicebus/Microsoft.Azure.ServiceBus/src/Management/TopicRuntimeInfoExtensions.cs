@@ -31,11 +31,11 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         static TopicRuntimeInfo ParseFromEntryElement(XElement xEntry)
         {
-            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
             var topicRuntimeInfo = new TopicRuntimeInfo(name);
 
-            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                .Element(XName.Get("TopicDescription", ManagementClientConstants.SbNs));
+            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
+                .Element(XName.Get("TopicDescription", ManagementClientConstants.ServiceBusNamespace));
 
             if (qdXml == null)
             {
