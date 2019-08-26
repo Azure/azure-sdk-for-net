@@ -20,6 +20,7 @@
 
     <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,5 +31,9 @@
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="StyleCop.Analyzers" >
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>
