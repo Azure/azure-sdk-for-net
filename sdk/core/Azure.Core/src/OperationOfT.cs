@@ -16,8 +16,8 @@ namespace Azure
     /// <typeparam name="T">The final result of the LRO.</typeparam>
     public abstract class Operation<T> where T : notnull
     {
-        T _value;
-        Response _response;
+        private T _value;
+        private Response _response;
 
         /// <summary>
         /// Creates a new instance of the Operation representing the specified

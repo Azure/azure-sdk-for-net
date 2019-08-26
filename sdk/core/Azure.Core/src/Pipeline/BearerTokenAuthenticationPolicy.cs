@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
 
         private DateTimeOffset _refreshOn;
 
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new []{ scope })
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[]{ scope })
         {
         }
 

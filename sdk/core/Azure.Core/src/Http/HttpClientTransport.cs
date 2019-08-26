@@ -145,7 +145,7 @@ namespace Azure.Core.Pipeline
             return string.Join(",", values);
         }
 
-        sealed class PipelineRequest : Request
+        private sealed class PipelineRequest : Request
         {
             private bool _wasSent = false;
             private readonly HttpRequestMessage _requestMessage;
@@ -294,7 +294,7 @@ namespace Azure.Core.Pipeline
                 return _requestContent;
             }
 
-            sealed class PipelineContentAdapter : HttpContent
+            private sealed class PipelineContentAdapter : HttpContent
             {
                 public HttpPipelineRequestContent? PipelineContent { get; set; }
 
@@ -315,7 +315,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        sealed class PipelineResponse : Response
+        private sealed class PipelineResponse : Response
         {
             private readonly HttpResponseMessage _responseMessage;
 
