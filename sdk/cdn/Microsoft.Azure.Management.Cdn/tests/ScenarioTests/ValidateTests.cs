@@ -20,14 +20,13 @@ namespace Cdn.Tests.ScenarioTests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 // Create client
                 var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
 
                 //1. Validate probe with invalid URL should fail.
-                Assert.ThrowsAny<ErrorResponseException>(() =>
-                {
+                Assert.ThrowsAny<ErrorResponseException>(() => {
                     cdnMgmtClient.ValidateProbe("www.withoutHttp.com");
                 });
 
@@ -42,8 +41,7 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.True(output.IsValid);
 
                 //4. Validate probe with invalid ip address as host should fail.
-                Assert.ThrowsAny<ErrorResponseException>(() =>
-                {
+                Assert.ThrowsAny<ErrorResponseException>(() => {
                     cdnMgmtClient.ValidateProbe("http://999.999.999.999/nonexist.txt");
                 });
 

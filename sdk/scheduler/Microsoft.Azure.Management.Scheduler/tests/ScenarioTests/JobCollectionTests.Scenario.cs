@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Scheduler;
@@ -31,7 +31,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCollectionCreateUpdateDeleteP20Premium()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobCollectionTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName);
@@ -124,7 +124,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCollectionCreateUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobCollectionTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName);
@@ -217,7 +217,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCollectionPatch()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobCollectionTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName);
@@ -282,7 +282,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCollectionEnableDisable()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobCollectionTests"))
             {
                 string jobCollectionName1 = TestUtilities.GenerateName("jc1");
                 string jobCollectionName2 = TestUtilities.GenerateName("jc2");
@@ -410,7 +410,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCollectionListByResourceGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobCollectionTests"))
             {
                 string jobCollectionName1 = TestUtilities.GenerateName("jc1");
                 string jobCollectionName2 = TestUtilities.GenerateName("jc2");
@@ -511,7 +511,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCollectionListBySubscription()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobCollectionTests"))
             {
                 string jobCollectionName1 = TestUtilities.GenerateName("jc1");
                 string jobCollectionName2 = TestUtilities.GenerateName("jc2");
@@ -610,4 +610,3 @@ namespace Scheduler.Test.ScenarioTests
         }
     }
 }
-

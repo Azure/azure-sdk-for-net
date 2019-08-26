@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -22,22 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests
     [TestFixture]
     public class EventHubTokenCredentialTests
     {
-        /// <summary>
-        ///   The set of test cases for understanding whether a credential is considered to be
-        ///   based on a shared access signature.
-        /// </summary>
-        public static IEnumerable<object[]> SharedAccessSignatureCredentialTestCases()
-        {
-            var credentialMock = Mock.Of<TokenCredential>();
-            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", "TOkEn!", DateTimeOffset.UtcNow.AddHours(4));
-
-            yield return new object[] { new SharedAccessSignatureCredential(signature), true };
-            yield return new object[] { new EventHubSharedKeyCredential("blah", "foo"), true };
-            yield return new object[] { new EventHubTokenCredential(new EventHubSharedKeyCredential("blah", "foo"), "hub"), true };
-            yield return new object[] { new EventHubTokenCredential(credentialMock, "thing"), false };
-            yield return new object[] { credentialMock, false };
-        }
-
         /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
@@ -123,20 +106,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(tokenResult, Is.EqualTo(accessToken), "The access token should match the return of the delegated call.");
             mockCredential.VerifyAll();
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubTokenCredential.IsSharedAccessSignatureCredential" />
-        ///   property.
-        /// </summary>
-        ///
-        [Test]
-        [TestCaseSource(nameof(SharedAccessSignatureCredentialTestCases))]
-        public void IsSharedAccessSignatureCredentialRecognizesSasCredentials(TokenCredential credential,
-                                                                              bool expectedResult)
-        {
-            var eventHubsCredential = new EventHubTokenCredential(credential, "dummy");
-            Assert.That(eventHubsCredential.IsSharedAccessSignatureCredential, Is.EqualTo(expectedResult));
         }
     }
 }

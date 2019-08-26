@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.Azure.Management.StorSimple8000Series;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Network;

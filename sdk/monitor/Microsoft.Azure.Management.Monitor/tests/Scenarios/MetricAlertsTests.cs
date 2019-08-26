@@ -40,7 +40,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void MetricAlertRuleFlow()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
@@ -55,7 +55,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void DynamicMetricAlertRuleFlow()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
@@ -70,7 +70,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void MultiResResourceLevelMetricAlertRuleFlow()
         {
-            using(MockContext context = MockContext.Start(this.GetType()))
+            using(MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
@@ -85,7 +85,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void MultiResResourceLevelDynamicMetricAlertRuleFlow()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
@@ -100,7 +100,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         private void MultiResResourceGroupLevelMetricAlertRule()
         {
-            using(MockContext context = MockContext.Start(this.GetType()))
+            using(MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
@@ -115,7 +115,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         private void MultiResResourceGroupLevelDynamicMetricAlertRule()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
@@ -130,7 +130,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         private void MultiResSubscriptionLevelMetricAlertRule()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
@@ -145,7 +145,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         private void MultiResSubscriptionLevelDynamicMetricAlertRule()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);

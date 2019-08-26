@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.NetworkInformation;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.Test.HttpRecorder.ProcessRecordings;
 
@@ -38,7 +36,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             get
             {
-                if (_testFxEnvironment == null)
+                if(_testFxEnvironment == null)
                 {
                     string envStr = Environment.GetEnvironmentVariable(TestEnvironmentFactory.TestCSMOrgIdConnectionStringKey);
                     _testFxEnvironment = new TestEnvironment(envStr);
@@ -50,8 +48,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         }
 
         internal bool OptimizeTestRecordingFile { get; set; } = false;
-
-
+        
+        
         /// <summary>
         /// Return a new MockContext
         /// </summary>
@@ -133,8 +131,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             TestEnvironment currentEnvironment,
             bool internalBaseUri = false,
             params DelegatingHandler[] handlers) where T : class
-        {
-            if (!currentEnvironment.TokenInfo.ContainsKey(TokenAudience.Graph))
+        {            
+            if(!currentEnvironment.TokenInfo.ContainsKey(TokenAudience.Graph))
             {
                 throw new ArgumentNullException(
                     "currentEnvironment.TokenInfo[TokenAudience.Graph]",
@@ -160,7 +158,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             return GetServiceClientWithCredentials<T>(TestFxEnvironment, credentials, handlers: handlers);
         }
-
+        
         /// <summary>
         /// Get a test environment, allowing the test to customize the creation options
         /// </summary>
@@ -186,10 +184,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="handlers">Delegating existingHandlers</param>
         /// <returns></returns>
         public T GetServiceClientWithCredentials<T>(
-            TestEnvironment currentEnvironment,
+            TestEnvironment currentEnvironment, 
             object credentials,
             Uri baseUri,
-            bool internalBaseUri = false,
+            bool internalBaseUri = false, 
             params DelegatingHandler[] handlers) where T : class
         {
             T client;
@@ -277,7 +275,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        protected DelegatingHandler[] AddHandlers(TestEnvironment currentEnvironment,
+        protected DelegatingHandler[] AddHandlers(TestEnvironment currentEnvironment, 
             params DelegatingHandler[] existingHandlers)
         {
             HttpMockServer server;
@@ -313,7 +311,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {
-                foreach (var undoHandler in undoHandlers)
+                foreach(var undoHandler in undoHandlers)
                 {
                     undoHandler.DeleteResourceGroups().ConfigureAwait(false).GetAwaiter().GetResult();
                 }
@@ -324,7 +322,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 // this check should be removed once we make the optimizatoin default
-                if (OptimizeTestRecordingFile)
+                if(OptimizeTestRecordingFile)
                 {
                     ProcessRecordedFiles procRecFile = new ProcessRecordedFiles(recordedFilePath);
                     procRecFile.CompactLroPolling();
@@ -354,7 +352,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 && handler.InnerHandler is DelegatingHandler
                 && HandlerContains<T1>(handler.InnerHandler as DelegatingHandler)));
         }
-
+        
         /// <summary>
         /// Dispose only if we have not previously been disposed
         /// </summary>
@@ -374,6 +372,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         public void Dispose()
         {
             this.Dispose(true);
-        }
+        }        
     }
 }

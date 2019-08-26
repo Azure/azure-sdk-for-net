@@ -14,7 +14,7 @@ namespace Sql.Tests
         public void TestGetCapabilities()
         {
             Dictionary<string, string> tags = new Dictionary<string, string>();
-            string suiteName = this.GetType().Name;
+            string suiteName = this.GetType().FullName;
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {

@@ -1,4 +1,4 @@
-
+﻿
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
@@ -26,7 +26,7 @@ namespace Kusto.Tests.ScenarioTests
             string executingAssemblyPath = typeof(KustoOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new KustoTestBase(context);
                 var numOfOperations = 32;
@@ -60,7 +60,7 @@ namespace Kusto.Tests.ScenarioTests
             string runningState = "Running";
             string stoppedState = "Stopped";
 
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new KustoTestBase(context);
 
@@ -102,7 +102,7 @@ namespace Kusto.Tests.ScenarioTests
         [Fact]
         public void KustoDatabaseTests()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new KustoTestBase(context);
 
@@ -141,7 +141,7 @@ namespace Kusto.Tests.ScenarioTests
         [Fact]
         public void KustoDataConnectionTests()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new KustoTestBase(context);
 
@@ -204,7 +204,7 @@ namespace Kusto.Tests.ScenarioTests
         [Fact]
         public void KustoDatabasePrincipalsTests()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new KustoTestBase(context);
 
@@ -292,5 +292,4 @@ namespace Kusto.Tests.ScenarioTests
         }
     }
 }
-
 

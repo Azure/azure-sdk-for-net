@@ -28,7 +28,7 @@ namespace ApplicationInsights.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void CreateGetListUpdateDeleteComponents()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 ApplicationInsightsComponent bodyParameter = GetCreateComponentProperties(nameof(CreateGetListUpdateDeleteComponents));
 

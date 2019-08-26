@@ -28,7 +28,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanGetSearchResultsAndUpdate()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
 
@@ -61,7 +61,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanGetSchema()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
 
@@ -84,7 +84,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanGetSavedSearchesAndResults()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
 
@@ -126,7 +126,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanCreateOrUpdateAndDeleteSavedSearches()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
 

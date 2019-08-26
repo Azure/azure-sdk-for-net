@@ -18,7 +18,7 @@ namespace StreamAnalytics.Tests
         [Fact]
         public void OperationTest_List()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var streamAnalyticsManagementClient = this.GetStreamAnalyticsManagementClient(context);
 

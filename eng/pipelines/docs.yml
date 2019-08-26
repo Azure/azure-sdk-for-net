@@ -33,16 +33,14 @@ jobs:
           version: $(DotNetCoreSDKVersion)
       - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.ArtifactStagingDirectory)/dll-output /p:TargetFramework=netstandard2.0
         displayName: Build Packages
-      - pwsh: dotnet restore "$(Build.SourcesDirectory)/eng/docgeneration/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
-        displayName: Restore Nuget Packages Needed
       - task: CopyFiles@2
-        displayName: "Copy over Dlls"
+        displayName: 'Copy over Dlls'
         inputs:
-          SourceFolder: "$(Build.ArtifactStagingDirectory)/dll-output"
-          TargetFolder: "$(Build.BinariesDirectory)/dll-docs/my-api"
+          SourceFolder: '$(Build.ArtifactStagingDirectory)/dll-output'
+          TargetFolder: '$(Build.BinariesDirectory)/dll-docs/my-api'
           contents: |
             *.dll
-            *.xml
+            *.xml 
       - task: CmdLine@2
         displayName: Initialize Frameworks File
         inputs:
@@ -88,7 +86,7 @@ jobs:
       - pwsh: |
           Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/logo.svg" -Destination `
           "$(Build.BinariesDirectory)/docfx-output/docfx_project/_site" -Recurse -Force
-        displayName: "Copy over site logo"
+        displayName: 'Copy over site logo'
       - task: CopyFiles@2
         displayName: Copy HTML to Artificats Directory
         inputs:

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -19,7 +19,7 @@ namespace DataFactory.Tests.ScenarioTests
         private const string ResourceGroupNamePrefix = "sdktestingadfrg";
         protected const string DataFactoryNamePrefix = "sdktestingfactory";
         protected const string FactoryLocation = "West US";
-        protected static Type Type = typeof(T);
+        protected static string ClassName = typeof(T).FullName;
 
         protected string ResourceGroupName { get; private set; }
         protected string DataFactoryName { get; private set; }
@@ -31,7 +31,7 @@ namespace DataFactory.Tests.ScenarioTests
             const string modeEnvironmentVariableName = "AZURE_TEST_MODE";
             const string playback = "Playback";
 
-            using (MockContext mockContext = MockContext.Start(Type, methodName))
+            using (MockContext mockContext = MockContext.Start(ClassName, methodName))
             {
                 string mode = Environment.GetEnvironmentVariable(modeEnvironmentVariableName);
                 if (mode != null && mode.Equals(playback, StringComparison.OrdinalIgnoreCase))
@@ -69,4 +69,3 @@ namespace DataFactory.Tests.ScenarioTests
         }
     }
 }
-

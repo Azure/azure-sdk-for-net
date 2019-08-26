@@ -1,4 +1,4 @@
-using Microsoft.Azure.Management.Compute;
+﻿using Microsoft.Azure.Management.Compute;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace Compute.Tests
         [Fact(Skip = "ReRecord due to CR change")]
         public void TestVMScaleSetServiceFabric()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 TestVMScaleSetServiceFabricImpl(context);
             }
@@ -54,4 +54,3 @@ namespace Compute.Tests
         }
     }
 }
-

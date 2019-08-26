@@ -1,4 +1,4 @@
-namespace StorSimple1200Series.Tests
+﻿namespace StorSimple1200Series.Tests
 {
     using Microsoft.Azure.Management.StorSimple1200Series.Models;
     using Microsoft.Rest.Azure.OData;

@@ -18,7 +18,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateUpdateReset()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -28,7 +28,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.rgName,
                     testBase.serviceName);
                 Assert.NotNull(defaultSignupSettings);
-
+                
                 // check settings Etag
                 var signUpTag = await testBase.client.SignUpSettings.GetEntityTagAsync(
                     testBase.rgName,

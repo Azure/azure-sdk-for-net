@@ -1,4 +1,4 @@
-using Microsoft.Azure.Management.EdgeGateway;
+﻿using Microsoft.Azure.Management.EdgeGateway;
 using Microsoft.Azure.Management.EdgeGateway.Models;
 using System.Linq;
 using Xunit;
@@ -56,4 +56,3 @@ namespace EdgeGateway.Tests
 
     }
 }
-

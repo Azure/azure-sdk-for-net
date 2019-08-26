@@ -1,4 +1,4 @@
-using Microsoft.Azure.Management.DataBox;
+﻿using Microsoft.Azure.Management.DataBox;
 using Microsoft.Azure.Management.DataBox.Models;
 using Microsoft.Rest.Azure;
 using System;
@@ -35,4 +35,3 @@ namespace DataBox.Tests.Tests
         }
     }
 }
-

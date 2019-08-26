@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using Xunit;
@@ -179,4 +179,3 @@ namespace StorSimple8000Series.Tests
         }
     }
 }
-

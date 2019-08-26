@@ -17,9 +17,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceDetectionWithAttributes()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "FaceDetectionWithAttributes");
+                HttpMockServer.Initialize(this.GetType().FullName, "FaceDetectionWithAttributes");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "detection2.jpg"), FileMode.Open))
@@ -152,9 +152,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceDetectionNoFace()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "FaceDetectionNoFace");
+                HttpMockServer.Initialize(this.GetType().FullName, "FaceDetectionNoFace");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "NoFace.jpg"), FileMode.Open))

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
@@ -22,7 +22,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetWithApplciationGateway()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -80,7 +80,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetWithDnsSettings()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -138,7 +138,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetWithPublicIP()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -207,7 +207,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetWithPublicIPAndIPTags()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -286,7 +286,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetWithPublicIPAndPublicIPPrefix()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
                 if (originalTestLocation == null)
@@ -359,7 +359,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetWithnNsg()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -423,7 +423,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetWithnIpv6()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -484,7 +484,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMSSWithMultiCA()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -544,7 +544,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMSSAccelNtwkng()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 

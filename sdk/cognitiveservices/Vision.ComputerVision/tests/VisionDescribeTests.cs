@@ -13,9 +13,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void DescribeImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "DescribeImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType().FullName, "DescribeImageInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
@@ -60,9 +60,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void DescribeImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "DescribeImageTest");
+                HttpMockServer.Initialize(this.GetType().FullName, "DescribeImageTest");
 
                 string imageUrl = GetTestImageUrl("dog.jpg");
 
@@ -106,9 +106,9 @@ namespace ComputerVisionSDK.Tests
         [Fact]
         public void DescribeImageInJapaneseTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "DescribeImageInJapaneseTest");
+                HttpMockServer.Initialize(this.GetType().FullName, "DescribeImageInJapaneseTest");
 
                 string imageUrl = GetTestImageUrl("dog.jpg");
 

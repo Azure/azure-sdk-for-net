@@ -27,7 +27,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void SmartGroupStateChangeTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 

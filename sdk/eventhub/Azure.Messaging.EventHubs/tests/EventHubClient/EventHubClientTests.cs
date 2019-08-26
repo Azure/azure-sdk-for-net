@@ -144,25 +144,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorDoesNotAllowTheEventHubToBePassedTwiceIfDifferent()
+        public void ConstructoNotAllowTheEventHubToBePassedTwice()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.InstanceOf<ArgumentException>(), "The constructor without options should detect multiple different Event Hubs");
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should detect multiple different Event Hubs");
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubClient" />
-        ///    constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConstructorAllowsTheEventHubToBePassedTwiceIfEqual()
-        {
-            var eventHubName = "myHub";
-            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ eventHubName }";
-            Assert.That(() => new EventHubClient(fakeConnection, eventHubName), Throws.Nothing, "The constructor without options should allow the same Event Hub in multiple places");
-            Assert.That(() => new EventHubClient(fakeConnection, eventHubName, new EventHubClientOptions()), Throws.Nothing, "The constructor with options should allow the same Event Hub in multiple places");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.InstanceOf<ArgumentException>(), "The constructor without options should detect multiple Event Hubs");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should detect multiple Event Hubs");
         }
 
         /// <summary>
@@ -900,7 +886,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                      string host,
                                      string eventHubName) =>
              typeof(EventHubClient)
-                 .GetMethod("BuildAudienceResource", BindingFlags.Static | BindingFlags.NonPublic)
+                 .GetMethod("BuildResource", BindingFlags.Static | BindingFlags.NonPublic)
                  .Invoke(client, new object[] { transportType, host, eventHubName }) as string;
 
         /// <summary>

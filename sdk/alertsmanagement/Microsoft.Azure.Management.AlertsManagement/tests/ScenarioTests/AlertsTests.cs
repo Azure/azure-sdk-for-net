@@ -27,7 +27,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void AlertStateChangeTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
@@ -66,7 +66,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void FilterByParametersGetAlertsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
@@ -94,7 +94,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void AlertsSummaryTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 

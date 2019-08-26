@@ -32,7 +32,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void MetricBasedFixedAndRecurrent()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 // NOTE: checking the existence of the resource group here is not that useful since the scale set must also exist
                 var insightsClient = GetMonitorManagementClient(context, handler);

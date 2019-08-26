@@ -14,7 +14,7 @@ namespace StreamAnalytics.Tests
         [Fact]
         public void SubscriptionOperationsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var streamAnalyticsManagementClient = this.GetStreamAnalyticsManagementClient(context);
 

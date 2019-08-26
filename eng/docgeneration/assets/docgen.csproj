@@ -7,26 +7,34 @@
   <PropertyGroup>
     <ECMA2YmlVersion>1.0.644-alpha</ECMA2YmlVersion>
     <PopImportVersion>1.0.0</PopImportVersion>
+    <BclAsyncInterfacesVersion>1.0.0-preview8.19405.3</BclAsyncInterfacesVersion>
+    <NETStandardVersion>2.0.2</NETStandardVersion>
     <NuGetPackageRoot>$(UserProfile)\.nuget\packages</NuGetPackageRoot>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DocAsCode.ECMA2Yaml" Version="$(ECMA2YmlVersion)" />
     <PackageReference Include="PopImport" Version="$(PopImportVersion)" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="$(BclAsyncInterfacesVersion)" />
+    <PackageReference Include="NETStandard.Library" Version="$(NETStandardVersion)" />
   </ItemGroup>
   <Target Name="CopyTools" AfterTargets="Restore">
     <PropertyGroup>
+      <BclAsyncInterfacesPath>$(NuGetPackageRoot)\microsoft.bcl.asyncinterfaces\$(BclAsyncInterfacesVersion)\ref\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.dll</BclAsyncInterfacesPath>
+      <NETStandardPath>$(NuGetPackageRoot)\netstandard.library\$(NETStandardVersion)\build\netstandard2.0\ref\*</NETStandardPath>
       <ECMA2YmlPath>$(NuGetPackageRoot)\microsoft.docascode.ecma2yaml\$(ECMA2YmlVersion)\tools\*</ECMA2YmlPath>
       <PopImportPath>$(NuGetPackageRoot)\popimport\$(PopImportVersion)\Release\*</PopImportPath>
     </PropertyGroup>
 
     <ItemGroup>
+      <BclAsyncInterfacesFiles Include="$(BclAsyncInterfacesPath)" />
+      <NETStandardFiles Include="$(NETStandardPath)" />
       <ECMA2YmlFiles Include="$(ECMA2YmlPath)" />
       <PopImportFiles Include="$(PopImportPath)" />
-      <RestoredDlls Include="$(NuGetPackageRoot)\**\lib\**\*.dll" />
     </ItemGroup>
 
+    <Copy SourceFiles="@(BclAsyncInterfacesFiles)" DestinationFolder="$(BuildBinariesDirectory)\dll-docs\dependencies\my-api" />
+    <Copy SourceFiles="@(NETStandardFiles)" DestinationFolder="$(BuildBinariesDirectory)\dll-docs\dependencies\my-api" />
     <Copy SourceFiles="@(ECMA2YmlFiles)" DestinationFolder="$(BuildBinariesDirectory)\ECMA2Yml" />
     <Copy SourceFiles="@(PopImportFiles)" DestinationFolder="$(BuildBinariesDirectory)\PopImport" />
-    <Copy SourceFiles="@(RestoredDlls)" DestinationFolder="$(BuildBinariesDirectory)\dll-docs\dependencies\my-api" />
   </Target>
 </Project>

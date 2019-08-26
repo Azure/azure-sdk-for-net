@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
@@ -31,7 +31,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetScenarioOperations")]
         public void TestVMScaleSetScenarioOperations()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 TestScaleSetOperationsInternal(context);
             }
@@ -54,7 +54,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks")]
         public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false);
             }
@@ -71,7 +71,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
-                using (MockContext context = MockContext.Start(this.GetType()))
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
                 }
@@ -93,7 +93,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
-                using (MockContext context = MockContext.Start(this.GetType()))
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
                     TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
                         hasDiffDisks: true);
@@ -113,7 +113,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
-                using (MockContext context = MockContext.Start(this.GetType()))
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
                     TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS12V2, hasManagedDisks: true,
                         useVmssExtension: false, zones: new List<string> { "3" }, enableUltraSSD: true, osDiskSizeInGB: 175);
@@ -136,7 +136,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
-                using (MockContext context = MockContext.Start(this.GetType()))
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
                     TestScaleSetOperationsInternal(
                         context, 
@@ -163,7 +163,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
-                using (MockContext context = MockContext.Start(this.GetType()))
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, isPpgScenario: true);
                 }
@@ -182,7 +182,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-                using (MockContext context = MockContext.Start(this.GetType()))
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false,
                         vmScaleSetCustomizer:
@@ -317,4 +317,3 @@ namespace Compute.Tests
         }
     }
 }
-

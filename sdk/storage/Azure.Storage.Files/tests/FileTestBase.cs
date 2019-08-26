@@ -12,7 +12,6 @@ using Azure.Storage.Files.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using NUnit.Framework;
 
 namespace Azure.Storage.Files.Tests
 {
@@ -166,34 +165,6 @@ namespace Azure.Storage.Files.Tests
                         }
                 }
             };
-
-        public static void AssertValidStorageFileInfo(StorageFileInfo storageFileInfo)
-        {
-            Assert.IsNotNull(storageFileInfo.ETag);
-            Assert.IsNotNull(storageFileInfo.LastModified);
-            Assert.IsNotNull(storageFileInfo.IsServerEncrypted);
-            Assert.IsNotNull(storageFileInfo.SmbProperties);
-            AssertValidFileSmbProperties(storageFileInfo.SmbProperties.Value);
-        }
-
-        public static void AssertValidStorageDirectoryInfo(StorageDirectoryInfo storageDirectoryInfo)
-        {
-            Assert.IsNotNull(storageDirectoryInfo.ETag);
-            Assert.IsNotNull(storageDirectoryInfo.LastModified);
-            Assert.IsNotNull(storageDirectoryInfo.SmbProperties);
-            AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties.Value);
-        }
-
-        public static void AssertValidFileSmbProperties(FileSmbProperties fileSmbProperties)
-        {
-            Assert.IsNotNull(fileSmbProperties.FileAttributes);
-            Assert.IsNotNull(fileSmbProperties.FilePermissionKey);
-            Assert.IsNotNull(fileSmbProperties.FileCreationTime);
-            Assert.IsNotNull(fileSmbProperties.FileLastWriteTime);
-            Assert.IsNotNull(fileSmbProperties.FileChangeTime);
-            Assert.IsNotNull(fileSmbProperties.FileId);
-            Assert.IsNotNull(fileSmbProperties.ParentId);
-        }
 
         class DisposingShare : IDisposable
         {

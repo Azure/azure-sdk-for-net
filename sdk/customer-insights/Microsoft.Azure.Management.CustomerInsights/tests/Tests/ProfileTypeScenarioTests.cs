@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace CustomerInsights.Tests.Tests
@@ -35,7 +35,7 @@ namespace CustomerInsights.Tests.Tests
         [Fact]
         public void CreateAndReadProfileType()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
@@ -69,7 +69,7 @@ namespace CustomerInsights.Tests.Tests
         [Fact]
         public void ListProfileTypesInHub()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
@@ -96,7 +96,7 @@ namespace CustomerInsights.Tests.Tests
         [Fact]
         public void GetEnrichingKpis()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 

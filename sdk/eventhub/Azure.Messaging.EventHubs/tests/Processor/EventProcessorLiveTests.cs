@@ -668,7 +668,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                         for (int index = 1; index < partitionTimestamps.Count; index++)
                         {
-                            var elapsedTime = partitionTimestamps[index].Subtract(partitionTimestamps[index - 1]).TotalSeconds;
+                            var elapsedTime = partitionTimestamps[index].Subtract(partitionTimestamps[index-1]).TotalSeconds;
 
                             Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too short.");
                             Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too long.");

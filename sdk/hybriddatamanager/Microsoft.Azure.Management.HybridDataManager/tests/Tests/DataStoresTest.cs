@@ -1,4 +1,4 @@
-namespace HybridData.Tests.Tests
+﻿namespace HybridData.Tests.Tests
 {
     using Microsoft.Azure.Management.HybridData;
     using Microsoft.Azure.Management.HybridData.Models;
@@ -170,4 +170,3 @@ namespace HybridData.Tests.Tests
         }
     }
 }
-

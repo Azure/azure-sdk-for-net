@@ -19,7 +19,7 @@ namespace LUIS.Authoring.Tests.Luis
         protected const string AuthoringKey = "00000000000000000000000000000000";
 
 
-        private Type TypeName => GetType();
+        private string ClassName => GetType().FullName;
 
         private ILUISAuthoringClient GetClient(DelegatingHandler handler)
         {
@@ -29,11 +29,11 @@ namespace LUIS.Authoring.Tests.Luis
 
         }
 
-        protected async void UseClientFor(Func<ILUISAuthoringClient, Task> doTest, Type typeName = null, [CallerMemberName] string methodName = "")
+        protected async void UseClientFor(Func<ILUISAuthoringClient, Task> doTest, string className = null, [CallerMemberName] string methodName = "")
         {
-            using (MockContext context = MockContext.Start(typeName ?? TypeName, methodName))
+            using (MockContext context = MockContext.Start(className ?? ClassName, methodName))
             {
-                HttpMockServer.Initialize(typeName ?? TypeName, methodName, mode);
+                HttpMockServer.Initialize(className ?? ClassName, methodName, mode);
                 ILUISAuthoringClient client = GetClient(HttpMockServer.CreateInstance());
                 
                 await doTest(client);

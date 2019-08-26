@@ -1,4 +1,4 @@
-using Microsoft.Azure.Management.EdgeGateway.Models;
+﻿using Microsoft.Azure.Management.EdgeGateway.Models;
 using Xunit;
 using Xunit.Abstractions;
 using Microsoft.Azure.Management.EdgeGateway;
@@ -50,4 +50,3 @@ namespace EdgeGateway.Tests
 
     }
 }
-

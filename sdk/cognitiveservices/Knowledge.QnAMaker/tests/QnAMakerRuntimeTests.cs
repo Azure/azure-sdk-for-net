@@ -14,9 +14,9 @@ namespace QnAMaker.Tests
         [Fact]
         public void QnAMakerRuntimeGenerateAnswerTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "QnAMakerRuntimeGenerateAnswerTest");
+                HttpMockServer.Initialize(this.GetType().FullName, "QnAMakerRuntimeGenerateAnswerTest");
 
                 var client = GetQnAMakerRuntimeClient(HttpMockServer.CreateInstance());
                 var answer = client.Runtime.GenerateAnswer("8758c6af-fa29-4e03-a517-9c36927f558f", new QueryDTO(question: "good afternoon"));

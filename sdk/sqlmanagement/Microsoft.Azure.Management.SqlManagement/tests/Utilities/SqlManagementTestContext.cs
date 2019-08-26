@@ -32,7 +32,7 @@ namespace Sql.Tests
 
             HttpMockServer.Matcher = new PermissiveRecordMatcherWithApiExclusion(true, providersToIgnore, userAgentsToIgnore);
 
-            _mockContext = MockContext.Start(suiteObject.GetType().Name, testName);
+            _mockContext = MockContext.Start(suiteObject.GetType().FullName, testName);
         }
 
         private readonly MockContext _mockContext;

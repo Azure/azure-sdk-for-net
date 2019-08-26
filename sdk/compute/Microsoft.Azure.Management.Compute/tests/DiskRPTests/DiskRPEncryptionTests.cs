@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskEncryptionPositiveTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
                 string testVaultId = @"/subscriptions/" + m_CrpClient.SubscriptionId + "/resourceGroups/24/providers/Microsoft.KeyVault/vaults/swaggervault";
@@ -66,7 +66,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskEncryptionNegativeTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
                 string fakeTestVaultId =
@@ -141,4 +141,3 @@ namespace Compute.Tests.DiskRPTests
         }
     }
 }
-

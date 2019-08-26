@@ -19,9 +19,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceIdentificationPersonGroupPositive()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "FaceIdentificationPersonGroupPositive");
+                HttpMockServer.Initialize(this.GetType().FullName, "FaceIdentificationPersonGroupPositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId1 = null;
@@ -59,9 +59,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceIdentificationLargePersonGroupPositive()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "FaceIdentificationLargePersonGroupPositive");
+                HttpMockServer.Initialize(this.GetType().FullName, "FaceIdentificationLargePersonGroupPositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId1 = null;

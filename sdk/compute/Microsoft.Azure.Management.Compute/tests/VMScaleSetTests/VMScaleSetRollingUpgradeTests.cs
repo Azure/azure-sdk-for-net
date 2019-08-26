@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
@@ -30,7 +30,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetRollingUpgrade")]
         public void TestVMScaleSetRollingUpgrade()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -123,7 +123,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetRollingUpgradeAPIs")]
         public void TestVMScaleSetRollingUpgradeAPIs()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -199,7 +199,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetRollingUpgradeHistory")]
         public void TestVMScaleSetRollingUpgradeHistory()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -263,7 +263,7 @@ namespace Compute.Tests
         public void TestVMScaleSetAutomaticOSUpgradePolicies()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
                 EnsureClientsInitialized(context);
@@ -352,7 +352,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetExtensionUpgradeAPIs")]
         public void TestVMScaleSetExtensionUpgradeAPIs()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
                 
@@ -413,4 +413,3 @@ namespace Compute.Tests
         }
     }
 }
-

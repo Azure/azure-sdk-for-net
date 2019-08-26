@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
@@ -11,4 +11,3 @@ namespace Reservations.Tests.ScenarioTests
         public const string SubscriptionId = "796c84b3-7e3b-411a-a103-157a9ba99783";
     }
 }
-

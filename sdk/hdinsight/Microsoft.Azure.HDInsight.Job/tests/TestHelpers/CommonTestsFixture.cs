@@ -164,7 +164,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         /// </summary>
         public CommonTestsFixture()
         {
-            var context = MockContext.Start(this.GetType(), ".ctor");
+            var context = MockContext.Start(this.GetType().FullName, ".ctor");
             this.Initialize(context);
         }
 
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         {
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                HttpMockServer.Initialize(this.GetType(), ".cleanup");
+                HttpMockServer.Initialize(this.GetType().FullName, ".cleanup");
             }
             if (context != null)
             {

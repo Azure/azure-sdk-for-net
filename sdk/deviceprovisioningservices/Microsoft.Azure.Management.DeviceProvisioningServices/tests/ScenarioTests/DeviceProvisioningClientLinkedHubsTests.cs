@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.IotHub;
 using Microsoft.Azure.Management.IotHub.Models;
@@ -15,7 +15,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         [Fact]
         public void CreateAndDelete()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var testName = "unitTestingDPSLinkedHubCreateUpdateDelete";
                 this.Initialize(context);

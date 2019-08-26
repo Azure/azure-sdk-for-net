@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Media.Tests.Helpers;
@@ -9,7 +9,6 @@ using Microsoft.Azure.Management.Storage;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Net;
-using System;
 
 namespace Media.Tests.ScenarioTests
 {
@@ -29,13 +28,13 @@ namespace Media.Tests.ScenarioTests
 
         public string Location { get; private set; }
 
-        protected MockContext StartMockContextAndInitializeClients(Type typeName,
+        protected MockContext StartMockContextAndInitializeClients(string className,
             // Automatically populates the methodName parameter with the calling method, which
             // gets used to generate recorder file names.
             [System.Runtime.CompilerServices.CallerMemberName]
             string methodName = "")
         {
-            MockContext context = MockContext.Start(typeName, methodName);
+            MockContext context = MockContext.Start(className, methodName);
 
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -102,4 +101,3 @@ namespace Media.Tests.ScenarioTests
         }
     }
 }
-

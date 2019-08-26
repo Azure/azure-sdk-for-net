@@ -70,8 +70,8 @@ To use this option, set the following environment variable before starting Visua
 
 ## 4. Record/Playback Tests
 
-1. Run the test and make sure that you got a generated .json file that matches the test name in the SessionRecords folder (usually be $sdk/artifacts/bin/{YOUR TEST PROJECT NAME}/{Configuration}/{TargetFramework}/SessionRecords)
-2. Copy above SessionRecords folder back to the same level as test .csproj of your service, then add all *.json files to your test project in Visual Studio setting "Copy to Output Directory" property to "Copy if newer"
+1. Run the test and make sure that you got a generated .json file that matches the test name in the bin folder under *SessionRecords folder
+2. Copy SessionRecords folder inside the test project and add all *.json files in Visual Studio setting "Copy to Output Directory" property to "Copy if newer"
 3. To assure that the records work fine, delete the connection string (default mode is Playback mode) OR change HttpRecorderMode within the connection string to "Playback"
 
 ## 5. Change Test Environment settings at run-time

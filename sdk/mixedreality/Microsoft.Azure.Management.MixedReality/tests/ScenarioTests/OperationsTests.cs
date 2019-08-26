@@ -1,4 +1,4 @@
-using Microsoft.Azure.Management.MixedReality.Models;
+﻿using Microsoft.Azure.Management.MixedReality.Models;
 using System.Collections.Generic;
 using Xunit;
 
@@ -22,4 +22,3 @@ namespace MixedReality.Tests
         }
     }
 }
-

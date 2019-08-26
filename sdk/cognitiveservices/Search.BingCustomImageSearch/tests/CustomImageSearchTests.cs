@@ -15,9 +15,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void CustomImageSearch()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "CustomImageSearch");
+                HttpMockServer.Initialize(this.GetType().FullName, "CustomImageSearch");
                 
                 var client = new CustomImageSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
                 var resp = client.CustomInstance.ImageSearchAsync(query: "tom cruise", customConfig: "0").Result;

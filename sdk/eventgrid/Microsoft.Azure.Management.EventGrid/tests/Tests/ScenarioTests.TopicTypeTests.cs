@@ -19,7 +19,7 @@ namespace EventGrid.Tests.ScenarioTests
             const string StorageTopicType = "Microsoft.Storage.StorageAccounts";
             const string EventHubsTopicType = "Microsoft.EventHub.Namespaces";
 
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 InitializeClients(context);
 

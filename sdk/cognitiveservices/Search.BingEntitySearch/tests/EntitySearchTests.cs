@@ -14,9 +14,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void EntitySearch()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "EntitySearch");
+                HttpMockServer.Initialize(this.GetType().FullName, "EntitySearch");
 
                 IEntitySearchClient client = new EntitySearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 

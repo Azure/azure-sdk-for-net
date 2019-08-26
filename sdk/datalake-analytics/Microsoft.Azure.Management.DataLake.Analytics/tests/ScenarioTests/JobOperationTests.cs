@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure;
@@ -21,7 +21,7 @@ namespace DataLakeAnalytics.Tests
         [Fact] 
         public void USqlSubmitGetListCancelTest()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 commonData = new CommonTestFixture(context);
                 commonData.HostUrl =
@@ -234,7 +234,7 @@ namespace DataLakeAnalytics.Tests
         [Fact]
         public void USqlBuildTest()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 commonData = new CommonTestFixture(context);
                 commonData.HostUrl =
@@ -291,4 +291,3 @@ namespace DataLakeAnalytics.Tests
         }
     }
 }
-

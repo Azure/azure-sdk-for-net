@@ -27,7 +27,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void ListOperationsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var insightsClient = GetMonitorManagementClient(context, handler);
 

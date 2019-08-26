@@ -11,9 +11,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6213")]
         public async Task Reward()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "Reward");
+                HttpMockServer.Initialize(this.GetType().FullName, "Reward");
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 

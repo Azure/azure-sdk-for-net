@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -13,7 +13,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         [Fact]
         public void CreateAndDelete()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.Initialize(context);
                 var testName = "unitTestingDPSCertificatesCreateAndDelete";

@@ -1,4 +1,4 @@
-using Microsoft.Azure.Management.EdgeGateway;
+﻿using Microsoft.Azure.Management.EdgeGateway;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;

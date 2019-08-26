@@ -98,7 +98,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void Constructor()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 Initialize();
                 var httpClient = HttpClientFactory.Create(fixture.GetHandlers());
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EncryptDecryptRsaOaepTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EncryptDecryptRsa15Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EncryptDecryptRsaOaep256Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EncryptDecryptWithOlderKeyVersion()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EncryptDecryptWithDifferentKeyVersions()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void SignVerifyRS256Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void SignVerifyRS384Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void SignVerifyRS512Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void SignVerifyPS256Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void SignVerifyPS384Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void SignVerifyPS512Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void WrapUnwrapRsaOaepTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void WrapUnwrapRsa15Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void WrapUnwrapRsaOaep256Test()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EcKeyCreateSignVerifyP256()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
                 var curve = JsonWebKeyCurveName.P256;
                 var digestSize = 256;
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EcKeyCreateSignVerifyP384()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
                 var curve = JsonWebKeyCurveName.P384;
                 var digestSize = 384;
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EcKeyCreateSignVerifyP521()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
                 var curve = JsonWebKeyCurveName.P521;
                 var digestSize = 512;
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void EcKeyCreateSignVerifySECP256K1()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
                 var curve = JsonWebKeyCurveName.P256K;
                 var digestSize = 256;
@@ -407,7 +407,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 /*
         public void CreateGetDeleteKeyTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
                 bool recoveryLevelIsConsistent = true;
@@ -465,7 +465,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         {
             if (_standardVaultOnly) return;
 
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void ImportSoftKeyTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -562,7 +562,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void UpdateKeyAttributesTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -628,7 +628,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void UpdateKeyAttributesWithNoChangeTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -680,7 +680,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void KeyBackupRestoreTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -745,7 +745,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void SecretBackupRestoreTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -807,7 +807,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void ListKeysTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -870,7 +870,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void ListKeyVersionsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -930,7 +930,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void GetDeletedKeyTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -972,7 +972,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 /*
         public void KeyCreateDeleteRecoverPurgeTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -1071,7 +1071,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void ListDeletedKeysTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -1161,7 +1161,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 /*
         public void SecretCreateUpdateDeleteTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -1237,7 +1237,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void GetSecretVersionTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -1297,7 +1297,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void ListSecretsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -1359,7 +1359,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void ListSecretVersionsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -1409,7 +1409,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void TestSecretExtendedAttributes()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
                 var client = GetKeyVaultClient();
@@ -1505,7 +1505,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void GetDeletedSecretTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -1547,7 +1547,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 /*
         public void SecretCreateDeleteRecoverPurgeTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -1649,7 +1649,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void ListDeletedSecretsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -1739,7 +1739,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateImportTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -1861,7 +1861,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateImportTest2()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -1973,7 +1973,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateImportTest3()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2085,7 +2085,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateListTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2188,7 +2188,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateListVersionsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2283,7 +2283,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateCreateSelfSignedTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2361,7 +2361,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateCreateLongSelfSignedTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2442,7 +2442,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateCreateTestIssuerTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2533,7 +2533,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateAsyncRequestCancellationTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2606,7 +2606,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 /*
         public void CertificateAsyncDeleteOperationTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2701,7 +2701,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateUpdateTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2789,7 +2789,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificatePolicyTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2858,7 +2858,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateContactsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -2960,7 +2960,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void CertificateIssuersTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -3045,7 +3045,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact (Skip = "Asserts failing, need to be fixed")]
         public void CertificateCreateManualEnrolledTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -3111,7 +3111,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void GetDeletedCertificateTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -3206,7 +3206,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 /*
         public void CertificateCreateDeleteRecoverPurgeTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -3334,7 +3334,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void ListDeletedCertificatesTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultClient();
 
@@ -3454,7 +3454,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void StorageCreateTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3477,7 +3477,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void StorageReadTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3511,7 +3511,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void StorageDeleteTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3535,7 +3535,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void StorageUpdateTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3571,7 +3571,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void StorageListTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
                 var addedObjects = new HashSet<string>();
@@ -3619,7 +3619,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         [Fact]
         public void StorageRegenerateKeyTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3654,7 +3654,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 /*
         public void StorageSasDefCreateTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3678,7 +3678,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
         public void StorageSasDefReadTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3712,7 +3712,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
         public void StorageSasDefDeleteTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3736,7 +3736,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
         public void StorageSasDefUpdateTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
 
@@ -3791,7 +3791,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
         public void StorageSasDefListTest()
         {
-            using (MockContext.Start(this.GetType()))
+            using (MockContext.Start(this.GetType().FullName))
             {
                 var client = GetKeyVaultUserClient();
                 var addedObjects = new HashSet<string>();

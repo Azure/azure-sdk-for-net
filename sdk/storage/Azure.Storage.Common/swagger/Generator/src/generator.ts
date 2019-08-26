@@ -269,7 +269,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         use("_pair");
                     });
                 });
-            } else if (param.location === `header` && isPrimitiveType(param.model) && param.model.collectionFormat === `csv`) {
+            } else if (isPrimitiveType(param.model) && param.model.collectionFormat === `multi`) {
+                if (!param.model.itemType || param.model.itemType.type !== `string`) {
+                    throw `collectionFormat multi is only supported for strings, at the moment`;
+                }
                 w.scope(() => {
                     w.line(`foreach (string _item in ${naming.parameter(param.clientName)})`);
                     w.scope('{', '}', () => {
@@ -554,9 +557,9 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
                         w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
-                        if (isPrimitiveType(header.model) && header.model.collectionFormat === `csv`) {
+                        if (isPrimitiveType(header.model) && header.model.collectionFormat === `multi`) {
                             if (!header.model.itemType || header.model.itemType.type !== `string`) {
-                                throw `collectionFormat csv is only supported for strings, at the moment`;
+                                throw `collectionFormat multi is only supported for strings, at the moment`;
                             }
                             w.write(`(${headerName} ?? "").Split(',')`);
                         } else {

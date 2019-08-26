@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AzureRedisCache.Tests.ScenarioTests;
@@ -18,7 +18,7 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void PatchSchedules_PutGetDelete()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var _redisCacheManagementHelper = new RedisCacheManagementHelper(this, context);
                 _redisCacheManagementHelper.TryRegisterSubscriptionForResource();
@@ -109,4 +109,3 @@ namespace AzureRedisCache.Tests
         }
     }
 }
-

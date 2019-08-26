@@ -16,7 +16,7 @@ namespace ServiceBus.Tests.ScenarioTests
         [Fact]
         public void NamespaceCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 InitializeClients(context);
 

@@ -1,4 +1,4 @@
-namespace StorSimple1200Series.Tests
+﻿namespace StorSimple1200Series.Tests
 {
     using System;
     using System.Collections.Generic;

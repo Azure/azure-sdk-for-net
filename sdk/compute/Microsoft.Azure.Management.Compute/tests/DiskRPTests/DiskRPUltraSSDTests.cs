@@ -1,4 +1,4 @@
-using System.Net;
+﻿using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -18,7 +18,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void UltraSSD_CRUD_EmptyDisk()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -85,4 +85,3 @@ namespace Compute.Tests.DiskRPTests
         }
     }
 }
-

@@ -16,7 +16,7 @@ namespace Sql.Tests
         [Fact]
         public void TestListOperations()
         {
-            string suiteName = this.GetType().Name;
+            string suiteName = this.GetType().FullName;
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 var sqlClient = context.GetClient<SqlManagementClient>();

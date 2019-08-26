@@ -1,4 +1,4 @@
-//  
+﻿//  
 //  
 // Copyright (c) Microsoft.  All rights reserved.
 // 
@@ -32,7 +32,7 @@ namespace Relay.Tests.ScenarioTests
         [Fact]
         public void NamespaceCreateGetUpdateDeleteAuthorizationRules()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 InitializeClients(context);
 
@@ -176,4 +176,3 @@ namespace Relay.Tests.ScenarioTests
         }
     }
 }
-

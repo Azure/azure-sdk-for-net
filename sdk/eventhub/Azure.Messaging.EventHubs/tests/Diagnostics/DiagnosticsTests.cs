@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(m => m.TryAdd(It.IsAny<EventData>()))
                 .Returns(() =>
                 {
-                    eventCount++;
+                    eventCount ++;
                     return eventCount <= 3;
                 });
 
@@ -137,12 +137,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             transportMock
                 .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
-                .Callback<IEnumerable<EventData>, SendOptions, CancellationToken>((e, _, __) => writtenEventsData = e.ToArray())
+                .Callback<IEnumerable<EventData>, SendOptions, CancellationToken>((e, _, __)=> writtenEventsData = e.ToArray())
                 .Returns(Task.CompletedTask);
 
             var producer = new EventHubProducer(transportMock.Object, endpoint, eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
-            await producer.SendAsync(new[]
+            await producer.SendAsync(new []
             {
                 new EventData(ReadOnlyMemory<byte>.Empty),
                 new EventData(ReadOnlyMemory<byte>.Empty)

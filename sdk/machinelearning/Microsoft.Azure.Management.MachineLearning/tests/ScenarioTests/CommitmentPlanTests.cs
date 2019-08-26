@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -180,7 +180,7 @@ namespace MachineLearning.Tests.ScenarioTests
             [System.Runtime.CompilerServices.CallerMemberName]
             string methodName = "testframework_failed")
         {
-            using (var context = MockContext.Start(this.GetType(), methodName))
+            using (var context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 bool testIsSuccessfull = true;
                 string cpRpApiVersion = string.Empty;
@@ -255,4 +255,3 @@ namespace MachineLearning.Tests.ScenarioTests
         }
     }
 }
-

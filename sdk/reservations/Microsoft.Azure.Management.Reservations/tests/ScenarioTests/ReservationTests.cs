@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Reservations.Tests.Helpers;
@@ -42,7 +42,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestSplitAndMerge(string reservationOrderId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservations = reservationsClient.Reservation.List(reservationOrderId);
@@ -122,7 +122,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestGetReservation(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservation = reservationsClient.Reservation.Get(reservationId, reservationOrderId);
@@ -133,7 +133,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestUpdateReservationToShared(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservations = reservationsClient.Reservation.List(reservationOrderId);
@@ -160,7 +160,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestUpdateReservationToSingle(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservations = reservationsClient.Reservation.List(reservationOrderId);
@@ -187,7 +187,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestListReservations(string reservationOrderId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var ReservationList = reservationsClient.Reservation.List(reservationOrderId);
@@ -204,7 +204,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestListReservationRevisions(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var revisions = reservationsClient.Reservation.ListRevisions(reservationId, reservationOrderId);

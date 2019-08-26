@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,7 +36,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetVMDiskEncryptionOperation")]
         public void TestVMScaleSetVMDiskEncryptionOperation()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 TestDiskEncryptionOnScaleSetVMInternal(context, hasManagedDisks: true, useVmssExtension: true);
             }
@@ -123,4 +123,3 @@ namespace Compute.Tests
         }
     }
 }
-

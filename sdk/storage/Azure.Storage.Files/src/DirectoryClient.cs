@@ -220,12 +220,6 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
         /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set on the directory.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -240,13 +234,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<StorageDirectoryInfo> Create(
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
-            string filePermission = default,
             CancellationToken cancellationToken = default) =>
             this.CreateInternal(
                 metadata,
-                smbProperties,
-                filePermission,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -259,12 +249,6 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
-        /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -280,13 +264,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<StorageDirectoryInfo>> CreateAsync(
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
-            string filePermission = default,
             CancellationToken cancellationToken = default) =>
             await this.CreateInternal(
                 metadata,
-                smbProperties,
-                filePermission,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -299,12 +279,6 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
-        /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -323,8 +297,6 @@ namespace Azure.Storage.Files
         /// </remarks>
         private async Task<Response<StorageDirectoryInfo>> CreateInternal(
             Metadata metadata,
-            FileSmbProperties? smbProperties,
-            string filePermission,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -335,27 +307,18 @@ namespace Azure.Storage.Files
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
-                    var smbProps = smbProperties ?? new FileSmbProperties();
-
-                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
-
-                    var response = await FileRestClient.Directory.CreateAsync(
+                    return await FileRestClient.Directory.CreateAsync(
                         this.Pipeline,
                         this.Uri,
                         metadata: metadata,
-                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
-                        filePermission: filePermission ?? Constants.File.FilePermissionInherit,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
-                        filePermissionKey: smbProps.FilePermissionKey,
+                        fileAttributes: "None", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        filePermission: "inherit", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        fileCreationTime: "Now", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
+                        fileLastWriteTime: "Now", // JUST ADDING TO COMPILE - REPLACE THIS WHEN IMPLEMENTING FEATURES
                         async: async,
                         operationName: Constants.File.Directory.CreateOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-
-                    return new Response<StorageDirectoryInfo>(
-                        response.GetRawResponse(),
-                        new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -577,7 +540,7 @@ namespace Azure.Storage.Files
                     $"{nameof(shareSnapshot)}: {shareSnapshot}");
                 try
                 {
-                    var response = await FileRestClient.Directory.GetPropertiesAsync(
+                    return await FileRestClient.Directory.GetPropertiesAsync(
                         this.Pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
@@ -585,10 +548,6 @@ namespace Azure.Storage.Files
                         operationName: Constants.File.Directory.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-
-                    return new Response<StorageDirectoryProperties>(
-                        response.GetRawResponse(),
-                        new StorageDirectoryProperties(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -602,153 +561,6 @@ namespace Azure.Storage.Files
             }
         }
         #endregion GetProperties
-
-        #region SetHttpHeaders
-        /// <summary>
-        /// The <see cref="SetHttpHeaders"/> operation sets system
-        /// properties on the directory.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-properties"/>.
-        /// </summary>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set for the directory.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileInfo}"/> describing the
-        /// state of the file.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<StorageDirectoryInfo> SetHttpHeaders(
-            FileSmbProperties? smbProperties = default,
-            string filePermission = default,
-            CancellationToken cancellationToken = default) =>
-            this.SetHttpHeadersInternal(
-                smbProperties,
-                filePermission,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="SetHttpHeadersAsync"/> operation sets system
-        /// properties on the directory.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-properties"/>.
-        /// </summary>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set for the directory.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileInfo}"/> describing the
-        /// state of the file.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<StorageDirectoryInfo>> SetHttpHeadersAsync(
-            FileSmbProperties? smbProperties = default,
-            string filePermission = default,
-            CancellationToken cancellationToken = default) =>
-            await this.SetHttpHeadersInternal(
-                smbProperties,
-                filePermission,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="SetHttpHeadersInternal"/> operation sets system
-        /// properties on the directory.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-properties"/>.
-        /// </summary>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set ofr the directory.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileInfo}"/> describing the
-        /// state of the file.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        private async Task<Response<StorageDirectoryInfo>> SetHttpHeadersInternal(
-            FileSmbProperties? smbProperties,
-            string filePermission,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
-            {
-                this.Pipeline.LogMethodEnter(
-                    nameof(DirectoryClient),
-                    message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n");
-                try
-                {
-                    var smbProps = smbProperties ?? new FileSmbProperties();
-
-                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
-
-                    var response = await FileRestClient.Directory.SetPropertiesAsync(
-                        this.Pipeline,
-                        this.Uri,
-                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
-                        filePermission: filePermission ?? Constants.File.Preserve,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
-                        filePermissionKey: smbProps.FilePermissionKey,
-                        async: async,
-                        operationName: Constants.File.Directory.SetHttpHeadersOperationName,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-
-                    return new Response<StorageDirectoryInfo>(
-                        response.GetRawResponse(),
-                        new StorageDirectoryInfo(response.Value));
-                }
-                catch (Exception ex)
-                {
-                    this.Pipeline.LogException(ex);
-                    throw;
-                }
-                finally
-                {
-                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
-                }
-            }
-        }
-
-        #endregion SetHttpHeaders
 
         #region SetMetadata
         /// <summary>
@@ -844,7 +656,7 @@ namespace Azure.Storage.Files
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
-                    var response = await FileRestClient.Directory.SetMetadataAsync(
+                    return await FileRestClient.Directory.SetMetadataAsync(
                         this.Pipeline,
                         this.Uri,
                         metadata: metadata,
@@ -852,10 +664,6 @@ namespace Azure.Storage.Files
                         operationName: Constants.File.Directory.SetMetadataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-
-                    return new Response<StorageDirectoryInfo>(
-                        response.GetRawResponse(),
-                        new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1352,12 +1160,6 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
         /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the subdirectory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set for the subdirectory.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1374,16 +1176,10 @@ namespace Azure.Storage.Files
         public virtual Response<DirectoryClient> CreateSubdirectory(
             string subdirectoryName,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
-            string filePermission = default,
             CancellationToken cancellationToken = default)
         {
             var subdir = this.GetSubdirectoryClient(subdirectoryName);
-            var response = subdir.Create(
-                metadata,
-                smbProperties,
-                filePermission,
-                cancellationToken);
+            var response = subdir.Create(metadata, cancellationToken);
             return new Response<DirectoryClient>(response.GetRawResponse(), subdir);
         }
 
@@ -1395,13 +1191,7 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for the subdirectory.
-        /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the subdirectory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set for the subdirectory.
+        /// Optional custom metadata to set for this directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1419,17 +1209,10 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<DirectoryClient>> CreateSubdirectoryAsync(
             string subdirectoryName,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
-            string filePermission = default,
             CancellationToken cancellationToken = default)
         {
             var subdir = this.GetSubdirectoryClient(subdirectoryName);
-            var response = await subdir.CreateAsync(
-                    metadata,
-                    smbProperties,
-                    filePermission,
-                    cancellationToken)
-                .ConfigureAwait(false);
+            var response = await subdir.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
             return new Response<DirectoryClient>(response.GetRawResponse(), subdir);
         }
         #endregion CreateSubdirectory
@@ -1504,12 +1287,6 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the file.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set for the file.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1527,18 +1304,10 @@ namespace Azure.Storage.Files
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
-            string filePermission = default,
             CancellationToken cancellationToken = default)
         {
             var file = this.GetFileClient(fileName);
-            var response = file.Create(
-                maxSize,
-                httpHeaders,
-                metadata,
-                smbProperties,
-                filePermission,
-                cancellationToken);
+            var response = file.Create(maxSize, httpHeaders, metadata, cancellationToken);
             return new Response<FileClient>(response.GetRawResponse(), file);
         }
 
@@ -1561,12 +1330,6 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the file.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set for the file.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1584,18 +1347,10 @@ namespace Azure.Storage.Files
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
-            FileSmbProperties? smbProperties = default,
-            string filePermission = default,
             CancellationToken cancellationToken = default)
         {
             var file = this.GetFileClient(fileName);
-            var response = await file.CreateAsync(
-                maxSize,
-                httpHeaders,
-                metadata,
-                smbProperties,
-                filePermission,
-                cancellationToken).ConfigureAwait(false);
+            var response = await file.CreateAsync(maxSize, httpHeaders, metadata, cancellationToken).ConfigureAwait(false);
             return new Response<FileClient>(response.GetRawResponse(), file);
         }
         #endregion CreateFile

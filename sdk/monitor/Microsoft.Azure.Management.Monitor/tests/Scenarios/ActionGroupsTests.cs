@@ -29,7 +29,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void CreateEnableListDeleteActionGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: "Global");

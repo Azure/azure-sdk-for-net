@@ -18,7 +18,7 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task GetLocationQuotasAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
             {
                 BatchLocationQuota quotas = await this.BatchManagementClient.Location.GetQuotasAsync(this.Location);
 

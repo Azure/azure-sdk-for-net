@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e?restype=share",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e?restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|b06e0384-41c66f948391e8eb.",
+        "Request-Id": "|38307a99-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "6c2aeaaa46b73fa15d70382bfa5b48bc",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "1",
         "x-ms-version": "2019-02-02"
@@ -20,35 +20,35 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 23 Aug 2019 21:51:16 GMT",
-        "ETag": "\u00220x8D72814066B324C\u0022",
-        "Last-Modified": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
+        "ETag": "\u00220x8D722AD4E6D2375\u0022",
+        "Last-Modified": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "6c2aeaaa46b73fa15d70382bfa5b48bc",
-        "x-ms-request-id": "1a938f8d-201a-0071-69fc-597833000000",
+        "x-ms-request-id": "89535903-701a-0092-3f96-54c9d8000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c?restype=directory",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c?restype=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|b06e0385-41c66f948391e8eb.",
+        "Request-Id": "|38307a9a-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "dbcb43096ee7bb6238e754508735adde",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-file-attributes": "None",
         "x-ms-file-creation-time": "Now",
         "x-ms-file-last-write-time": "Now",
-        "x-ms-file-permission": "Inherit",
+        "x-ms-file-permission": "inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -56,40 +56,40 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 23 Aug 2019 21:51:16 GMT",
-        "ETag": "\u00220x8D72814066FC744\u0022",
-        "Last-Modified": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
+        "ETag": "\u00220x8D722AD4E6FAB5A\u0022",
+        "Last-Modified": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "dbcb43096ee7bb6238e754508735adde",
         "x-ms-file-attributes": "Directory",
-        "x-ms-file-change-time": "2019-08-23T21:51:16.8660292Z",
-        "x-ms-file-creation-time": "2019-08-23T21:51:16.8660292Z",
+        "x-ms-file-change-time": "2019-08-17T00:53:23.6842330Z",
+        "x-ms-file-creation-time": "2019-08-17T00:53:23.6842330Z",
         "x-ms-file-id": "13835128424026341376",
-        "x-ms-file-last-write-time": "2019-08-23T21:51:16.8660292Z",
+        "x-ms-file-last-write-time": "2019-08-17T00:53:23.6842330Z",
         "x-ms-file-parent-id": "0",
-        "x-ms-file-permission-key": "5337567907660077720*2506815767522118929",
-        "x-ms-request-id": "1a938f8f-201a-0071-6afc-597833000000",
+        "x-ms-file-permission-key": "5551277012781935673*2725028605417700272",
+        "x-ms-request-id": "89535905-701a-0092-4096-54c9d8000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "1024",
-        "Request-Id": "|b06e0386-41c66f948391e8eb.",
+        "Request-Id": "|38307a9b-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "44004fc19c210ecb15e05a711502a4db",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-range": "bytes=1024-2047",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02",
@@ -100,35 +100,35 @@
       "ResponseHeaders": {
         "Content-Length": "223",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "44004fc19c210ecb15e05a711502a4db",
         "x-ms-error-code": "ResourceNotFound",
-        "x-ms-request-id": "1a938f90-201a-0071-6bfc-597833000000",
+        "x-ms-request-id": "89535906-701a-0092-4196-54c9d8000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eResourceNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
-        "RequestId:1a938f90-201a-0071-6bfc-597833000000\n",
-        "Time:2019-08-23T21:51:16.8990430Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "RequestId:89535906-701a-0092-4196-54c9d8000000\n",
+        "Time:2019-08-17T00:53:23.8908595Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "1024",
-        "Request-Id": "|b06e0387-41c66f948391e8eb.",
+        "Request-Id": "|38307a9c-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "124e676c335badc8629ae263baa34c07",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-range": "bytes=1024-2047",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02",
@@ -139,35 +139,35 @@
       "ResponseHeaders": {
         "Content-Length": "223",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "124e676c335badc8629ae263baa34c07",
         "x-ms-error-code": "ResourceNotFound",
-        "x-ms-request-id": "1a938f91-201a-0071-6cfc-597833000000",
+        "x-ms-request-id": "89535907-701a-0092-4296-54c9d8000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eResourceNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
-        "RequestId:1a938f91-201a-0071-6cfc-597833000000\n",
-        "Time:2019-08-23T21:51:16.9230589Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "RequestId:89535907-701a-0092-4296-54c9d8000000\n",
+        "Time:2019-08-17T00:53:23.9028705Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "1024",
-        "Request-Id": "|b06e0388-41c66f948391e8eb.",
+        "Request-Id": "|38307a9d-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "9af6f5283470fa7e452c20b018c826ea",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-range": "bytes=1024-2047",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02",
@@ -178,35 +178,35 @@
       "ResponseHeaders": {
         "Content-Length": "223",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "9af6f5283470fa7e452c20b018c826ea",
         "x-ms-error-code": "ResourceNotFound",
-        "x-ms-request-id": "1a938f92-201a-0071-6dfc-597833000000",
+        "x-ms-request-id": "89535908-701a-0092-4396-54c9d8000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eResourceNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
-        "RequestId:1a938f92-201a-0071-6dfc-597833000000\n",
-        "Time:2019-08-23T21:51:16.9470749Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "RequestId:89535908-701a-0092-4396-54c9d8000000\n",
+        "Time:2019-08-17T00:53:23.9138815Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "1024",
-        "Request-Id": "|b06e0389-41c66f948391e8eb.",
+        "Request-Id": "|38307a9e-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "74e4b9ec18d38e3c8752e186ba675471",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-range": "bytes=1024-2047",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02",
@@ -217,35 +217,35 @@
       "ResponseHeaders": {
         "Content-Length": "223",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "74e4b9ec18d38e3c8752e186ba675471",
         "x-ms-error-code": "ResourceNotFound",
-        "x-ms-request-id": "1a938f93-201a-0071-6efc-597833000000",
+        "x-ms-request-id": "89535909-701a-0092-4496-54c9d8000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eResourceNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
-        "RequestId:1a938f93-201a-0071-6efc-597833000000\n",
-        "Time:2019-08-23T21:51:16.9730923Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "RequestId:89535909-701a-0092-4496-54c9d8000000\n",
+        "Time:2019-08-17T00:53:23.9248920Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "1024",
-        "Request-Id": "|b06e038a-41c66f948391e8eb.",
+        "Request-Id": "|38307a9f-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "20485293090b376ae954cc2e12179599",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-range": "bytes=1024-2047",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02",
@@ -256,35 +256,35 @@
       "ResponseHeaders": {
         "Content-Length": "223",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 23 Aug 2019 21:51:16 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "20485293090b376ae954cc2e12179599",
         "x-ms-error-code": "ResourceNotFound",
-        "x-ms-request-id": "1a938f94-201a-0071-6ffc-597833000000",
+        "x-ms-request-id": "8953590a-701a-0092-4596-54c9d8000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eResourceNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
-        "RequestId:1a938f94-201a-0071-6ffc-597833000000\n",
-        "Time:2019-08-23T21:51:16.9971078Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "RequestId:8953590a-701a-0092-4596-54c9d8000000\n",
+        "Time:2019-08-17T00:53:23.9369034Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e\u002ftest-directory-42835409-0941-a7e0-ba11-54063011532c\u002ftest-file-0116f437-a57d-a0dd-0a82-b2a5f29b0f4c?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "1024",
-        "Request-Id": "|b06e038b-41c66f948391e8eb.",
+        "Request-Id": "|38307aa0-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "0177f774d8be1034b867121e52f73fdd",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:17 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-range": "bytes=1024-2047",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02",
@@ -295,34 +295,34 @@
       "ResponseHeaders": {
         "Content-Length": "223",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 23 Aug 2019 21:51:17 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "0177f774d8be1034b867121e52f73fdd",
         "x-ms-error-code": "ResourceNotFound",
-        "x-ms-request-id": "1a938f95-201a-0071-70fc-597833000000",
+        "x-ms-request-id": "8953590b-701a-0092-4696-54c9d8000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eResourceNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
-        "RequestId:1a938f95-201a-0071-70fc-597833000000\n",
-        "Time:2019-08-23T21:51:17.0211242Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "RequestId:8953590b-701a-0092-4696-54c9d8000000\n",
+        "Time:2019-08-17T00:53:23.9489144Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fseandevtest.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e?restype=share",
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002ftest-share-b226da02-bfc1-a860-3a80-b01f5500e71e?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|b06e038c-41c66f948391e8eb.",
+        "Request-Id": "|38307aa1-498d0b09a1fa9f82.",
         "User-Agent": [
-          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190823.1\u002b5d1adc9e780ddad85dab0c608c4fad05ab097b18",
+          "azsdk-net-Storage.Files\u002f12.0.0-dev.20190816.1\u002bf7717178bb2ed9e0b85144949d3624f75e24f4a0",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "c51daed70580e2de4eac8b7f4b0e7b6f",
-        "x-ms-date": "Fri, 23 Aug 2019 21:51:17 GMT",
+        "x-ms-date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -330,13 +330,13 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 23 Aug 2019 21:51:17 GMT",
+        "Date": "Sat, 17 Aug 2019 00:53:23 GMT",
         "Server": [
           "Windows-Azure-File\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "c51daed70580e2de4eac8b7f4b0e7b6f",
-        "x-ms-request-id": "1a938f96-201a-0071-71fc-597833000000",
+        "x-ms-request-id": "8953590c-701a-0092-4796-54c9d8000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
@@ -344,6 +344,6 @@
   ],
   "Variables": {
     "RandomSeed": "905695585",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttp:\u002f\u002fseandevtest.blob.core.windows.net\nhttp:\u002f\u002fseandevtest.file.core.windows.net\nhttp:\u002f\u002fseandevtest.queue.core.windows.net\nhttp:\u002f\u002fseandevtest.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fseandevtest-secondary.blob.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.file.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.queue.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fseandevtest.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fseandevtest.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fseandevtest.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fseandevtest.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.file.core.windows.net\u002f;AccountName=seandevtest;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

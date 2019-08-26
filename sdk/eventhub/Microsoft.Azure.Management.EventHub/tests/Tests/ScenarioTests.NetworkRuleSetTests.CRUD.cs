@@ -19,7 +19,7 @@ namespace EventHub.Tests.ScenarioTests
         [Fact]
         public void NetworkRuleSetCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 InitializeClients(context);
 

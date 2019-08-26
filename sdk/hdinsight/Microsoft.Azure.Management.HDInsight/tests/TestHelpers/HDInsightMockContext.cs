@@ -41,13 +41,13 @@ namespace Management.HDInsight.Tests
         /// </summary>
         /// <returns></returns>
         public new static HDInsightMockContext Start(
-            Type typeName,
+            string className,
             [System.Runtime.CompilerServices.CallerMemberName]
             string methodName= "testframework_failed")
         {
             var context = new HDInsightMockContext
             {
-                innerContext = MockContext.Start(typeName, methodName)
+                innerContext = MockContext.Start(className, methodName)
             };
 
             return context;

@@ -33,7 +33,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string tagName = TestUtilities.GenerateName("csmtg");
 
@@ -54,7 +54,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string tagName = TestUtilities.GenerateName("csmtg");
                 string tagValue = TestUtilities.GenerateName("csmtgv");
@@ -79,7 +79,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string tagName = TestUtilities.GenerateName("csmtg");
                 string tagValue = TestUtilities.GenerateName("csmtgv");
@@ -90,4 +90,3 @@ namespace ResourceGroups.Tests
         }
     }
 }
-

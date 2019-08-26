@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
@@ -170,7 +170,7 @@ namespace Compute.Tests
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false)
         {
-            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 EnsureClientsInitialized(context);
 
@@ -265,4 +265,3 @@ namespace Compute.Tests
         }
     }
 }
-

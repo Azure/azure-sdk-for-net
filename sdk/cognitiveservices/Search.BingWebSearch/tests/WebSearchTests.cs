@@ -14,9 +14,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void WebSearch()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "WebSearch");
+                HttpMockServer.Initialize(this.GetType().FullName, "WebSearch");
 
                 IWebSearchClient client = new WebSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 

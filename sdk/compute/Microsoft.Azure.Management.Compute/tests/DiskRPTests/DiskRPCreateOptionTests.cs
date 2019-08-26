@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
@@ -21,7 +21,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void UploadDiskPositiveTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
 
@@ -48,4 +48,3 @@ namespace Compute.Tests.DiskRPTests
         }
     }
 }
-

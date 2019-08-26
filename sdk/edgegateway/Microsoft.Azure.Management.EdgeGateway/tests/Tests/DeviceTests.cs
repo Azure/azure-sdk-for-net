@@ -1,4 +1,4 @@
-namespace EdgeGateway.Tests
+﻿namespace EdgeGateway.Tests
 {
     using Microsoft.Azure.Management.EdgeGateway.Models;
     using Xunit;
@@ -95,4 +95,3 @@ namespace EdgeGateway.Tests
 
     }
 }
-

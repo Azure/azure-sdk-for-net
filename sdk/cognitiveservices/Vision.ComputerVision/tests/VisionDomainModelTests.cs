@@ -13,9 +13,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void AnalyzeCelebritiesDomainImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "AnalyzeCelebritiesDomainImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeCelebritiesDomainImageInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("satya.jpg"), FileMode.Open))
@@ -41,9 +41,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void AnalyzeCelebritiesDomainImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "AnalyzeCelebritiesDomainTest");
+                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeCelebritiesDomainTest");
 
                 string celebrityUrl = GetTestImageUrl("satya.jpg");
 
@@ -70,9 +70,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void AnalyzeLandmarksDomainImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType(), "AnalyzeLandmarksDomainImageTest");
+                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeLandmarksDomainImageTest");
 
                 string landmarksUrl = GetTestImageUrl("spaceneedle.jpg");
                 const string Portuguese = "pt";

@@ -840,7 +840,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateEventFromMessagePopulatesAnArrayApplicationPropertyType()
+        public void  CreateEventFromMessagePopulatesAnArrayApplicationPropertyType()
         {
             using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
             using var message = AmqpMessage.Create(bodyStream, true);
@@ -867,7 +867,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateEventFromMessagePopulatesAFullArraySegmentApplicationPropertyType()
+        public void  CreateEventFromMessagePopulatesAFullArraySegmentApplicationPropertyType()
         {
             using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
             using var message = AmqpMessage.Create(bodyStream, true);
@@ -894,7 +894,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateEventFromMessagePopulatesAnArraySegmentApplicationPropertyType()
+        public void  CreateEventFromMessagePopulatesAnArraySegmentApplicationPropertyType()
         {
             using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
             using var message = AmqpMessage.Create(bodyStream, true);
@@ -921,7 +921,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateEventFromMessageDoesNotIncludeUnknownApplicationPropertyType()
+        public void  CreateEventFromMessageDoesNotIncludeUnknownApplicationPropertyType()
         {
             using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
             using var message = AmqpMessage.Create(bodyStream, true);
@@ -1020,7 +1020,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sourceEvent = new EventData(new byte[] { 0x11, 0x22, 0x33 })
             {
-                Properties = new Dictionary<string, object> { { "Test", 1234 } }
+                Properties = new Dictionary<string, object> {{ "Test", 1234 }}
             };
 
             var converter = new AmqpMessageConverter();
