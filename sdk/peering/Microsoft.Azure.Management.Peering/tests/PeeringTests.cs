@@ -66,7 +66,7 @@ namespace Peering.Tests
         [Fact]
         public void PeeringOperationsTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
                 var peeringLists = this.client.Operations.List();
@@ -77,7 +77,7 @@ namespace Peering.Tests
         [Fact]
         public void GetDirectLocations()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
                 var result = this.client.PeeringLocations.List("Direct");
@@ -88,7 +88,7 @@ namespace Peering.Tests
         [Fact]
         public void GetExchangeLocations()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
                 var result = this.client.PeeringLocations.List("Exchange");
@@ -100,7 +100,7 @@ namespace Peering.Tests
         public void UpdatePeerInfoTest()
         {
             int asn = 65000;
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.updatePeerAsn(context, asn);
                 Assert.True(this.DeletePeerAsn(context, $"Contoso{asn}"));
@@ -112,7 +112,7 @@ namespace Peering.Tests
         public void CreateGetRemovePeerAsn()
         {
             int asn = 65000;
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 try
                 {
@@ -138,7 +138,7 @@ namespace Peering.Tests
         [Fact]
         public void CreateDirectPeering()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
 
@@ -204,7 +204,7 @@ namespace Peering.Tests
         [Fact]
         public void CreateExchangePeering()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
 

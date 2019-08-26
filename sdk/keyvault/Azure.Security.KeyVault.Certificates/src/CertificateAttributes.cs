@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (json.TryGetProperty("nbf", out JsonElement nbf))
             {
-                if (nbf.Type == JsonValueType.Null)
+                if (nbf.ValueKind == JsonValueKind.Null)
                 {
                     NotBefore = null;
                 }
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (json.TryGetProperty("exp", out JsonElement exp))
             {
-                if (exp.Type == JsonValueType.Null)
+                if (exp.ValueKind == JsonValueKind.Null)
                 {
                     Expires = null;
                 }
@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (json.TryGetProperty("created", out JsonElement created))
             {
-                if (created.Type == JsonValueType.Null)
+                if (created.ValueKind == JsonValueKind.Null)
                 {
                     Created = null;
                 }
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (json.TryGetProperty("updated", out JsonElement updated))
             {
-                if (updated.Type == JsonValueType.Null)
+                if (updated.ValueKind == JsonValueKind.Null)
                 {
                     Updated = null;
                 }

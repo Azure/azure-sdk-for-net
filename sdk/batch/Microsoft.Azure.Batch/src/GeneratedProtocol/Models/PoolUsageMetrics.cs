@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Usage metrics for a pool across an aggregation interval.
+    /// Usage metrics for a Pool across an aggregation interval.
     /// </summary>
     public partial class PoolUsageMetrics
     {
@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolUsageMetrics class.
         /// </summary>
-        /// <param name="poolId">The ID of the pool whose metrics are
+        /// <param name="poolId">The ID of the Pool whose metrics are
         /// aggregated in this entry.</param>
         /// <param name="startTime">The start time of the aggregation interval
         /// covered by this entry.</param>
         /// <param name="endTime">The end time of the aggregation interval
         /// covered by this entry.</param>
-        /// <param name="vmSize">The size of virtual machines in the pool. All
-        /// VMs in a pool are the same size.</param>
-        /// <param name="totalCoreHours">The total core hours used in the pool
+        /// <param name="vmSize">The size of virtual machines in the Pool. All
+        /// VMs in a Pool are the same size.</param>
+        /// <param name="totalCoreHours">The total core hours used in the Pool
         /// during this aggregation interval.</param>
         public PoolUsageMetrics(string poolId, System.DateTime startTime, System.DateTime endTime, string vmSize, double totalCoreHours)
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the pool whose metrics are aggregated in
+        /// Gets or sets the ID of the Pool whose metrics are aggregated in
         /// this entry.
         /// </summary>
         [JsonProperty(PropertyName = "poolId")]
@@ -76,19 +76,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of virtual machines in the pool. All VMs in a
-        /// pool are the same size.
+        /// Gets or sets the size of virtual machines in the Pool. All VMs in a
+        /// Pool are the same size.
         /// </summary>
         /// <remarks>
-        /// For information about available sizes of virtual machines in pools,
-        /// see Choose a VM size for compute nodes in an Azure Batch pool
+        /// For information about available sizes of virtual machines in Pools,
+        /// see Choose a VM size for Compute Nodes in an Azure Batch Pool
         /// (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
         /// </remarks>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the total core hours used in the pool during this
+        /// Gets or sets the total core hours used in the Pool during this
         /// aggregation interval.
         /// </summary>
         [JsonProperty(PropertyName = "totalCoreHours")]

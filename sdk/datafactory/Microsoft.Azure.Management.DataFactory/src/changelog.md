@@ -3,6 +3,25 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.1.2
+###  Feature Additions
+- Added SapBwCube and Sybase dataset
+- Added support for the follwoing new datasets in ADF - AvroDataset, along with source and sink for Copy activity
+- AvroDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
+- Added support for Json dataset in ADF
+- Added support for the following new datasets in ADF - AmazonRedshiftTableDataset, AzureMySqlSink, Db2TableDataset
+- Split tableName to schema and table in multiple datasets
+- Added new API to rerun a trigger run
+- Added new API for subscribing and unsubscribing triggers to events, and getting a triggers event subscription status
+
+## Version 4.1.1
+###  Feature Additions
+- Add PostgreSql Sink
+- Add Partition settings for Oracle, SapTable
+- Add dedicated source and dataset for several relational sources including ODBC, MySql
+- Add Azure Data Explorer Command activity, which allows users executing Kusto Control Commands
+- Update PostgreSql Dataset to use a dedicated AzurePostgreSqlTableDatasetTypeProperties
+
 ## Version 4.1.0
 ###  Feature Additions
 ### Breaking Changes

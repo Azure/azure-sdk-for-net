@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies details of the jobs to be created on a schedule.
+    /// Specifies details of the Jobs to be created on a schedule.
     /// </summary>
     public partial class JobSpecification
     {
@@ -32,40 +32,40 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobSpecification class.
         /// </summary>
-        /// <param name="poolInfo">The pool on which the Batch service runs the
-        /// tasks of jobs created under this schedule.</param>
-        /// <param name="priority">The priority of jobs created under this
+        /// <param name="poolInfo">The Pool on which the Batch service runs the
+        /// Tasks of Jobs created under this schedule.</param>
+        /// <param name="priority">The priority of Jobs created under this
         /// schedule.</param>
-        /// <param name="displayName">The display name for jobs created under
+        /// <param name="displayName">The display name for Jobs created under
         /// this schedule.</param>
-        /// <param name="usesTaskDependencies">Whether tasks in the job can
+        /// <param name="usesTaskDependencies">Whether Tasks in the Job can
         /// define dependencies on each other. The default is false.</param>
         /// <param name="onAllTasksComplete">The action the Batch service
-        /// should take when all tasks in a job created under this schedule are
+        /// should take when all Tasks in a Job created under this schedule are
         /// in the completed state.</param>
         /// <param name="onTaskFailure">The action the Batch service should
-        /// take when any task fails in a job created under this schedule. A
-        /// task is considered to have failed if it have failed if has a
-        /// failureInfo. A failureInfo is set if the task completes with a
+        /// take when any Task fails in a Job created under this schedule. A
+        /// Task is considered to have failed if it have failed if has a
+        /// failureInfo. A failureInfo is set if the Task completes with a
         /// non-zero exit code after exhausting its retry count, or if there
-        /// was an error starting the task, for example due to a resource file
+        /// was an error starting the Task, for example due to a resource file
         /// download error.</param>
         /// <param name="networkConfiguration">The network configuration for
-        /// the job.</param>
-        /// <param name="constraints">The execution constraints for jobs
+        /// the Job.</param>
+        /// <param name="constraints">The execution constraints for Jobs
         /// created under this schedule.</param>
-        /// <param name="jobManagerTask">The details of a Job Manager task to
-        /// be launched when a job is started under this schedule.</param>
-        /// <param name="jobPreparationTask">The Job Preparation task for jobs
+        /// <param name="jobManagerTask">The details of a Job Manager Task to
+        /// be launched when a Job is started under this schedule.</param>
+        /// <param name="jobPreparationTask">The Job Preparation Task for Jobs
         /// created under this schedule.</param>
-        /// <param name="jobReleaseTask">The Job Release task for jobs created
+        /// <param name="jobReleaseTask">The Job Release Task for Jobs created
         /// under this schedule.</param>
         /// <param name="commonEnvironmentSettings">A list of common
         /// environment variable settings. These environment variables are set
-        /// for all tasks in jobs created under this schedule (including the
-        /// Job Manager, Job Preparation and Job Release tasks).</param>
+        /// for all Tasks in Jobs created under this schedule (including the
+        /// Job Manager, Job Preparation and Job Release Tasks).</param>
         /// <param name="metadata">A list of name-value pairs associated with
-        /// each job created under this schedule as metadata.</param>
+        /// each Job created under this schedule as metadata.</param>
         public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
@@ -90,20 +90,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the priority of jobs created under this schedule.
+        /// Gets or sets the priority of Jobs created under this schedule.
         /// </summary>
         /// <remarks>
         /// Priority values can range from -1000 to 1000, with -1000 being the
         /// lowest priority and 1000 being the highest priority. The default
-        /// value is 0. This priority is used as the default for all jobs under
-        /// the job schedule. You can update a job's priority after it has been
-        /// created using by using the update job API.
+        /// value is 0. This priority is used as the default for all Jobs under
+        /// the Job Schedule. You can update a Job's priority after it has been
+        /// created using by using the update Job API.
         /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name for jobs created under this schedule.
+        /// Gets or sets the display name for Jobs created under this schedule.
         /// </summary>
         /// <remarks>
         /// The name need not be unique and can contain any Unicode characters
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets whether tasks in the job can define dependencies on
+        /// Gets or sets whether Tasks in the Job can define dependencies on
         /// each other. The default is false.
         /// </summary>
         [JsonProperty(PropertyName = "usesTaskDependencies")]
@@ -121,28 +121,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the action the Batch service should take when all
-        /// tasks in a job created under this schedule are in the completed
+        /// Tasks in a Job created under this schedule are in the completed
         /// state.
         /// </summary>
         /// <remarks>
-        /// Note that if a job contains no tasks, then all tasks are considered
+        /// Note that if a Job contains no Tasks, then all Tasks are considered
         /// complete. This option is therefore most commonly used with a Job
-        /// Manager task; if you want to use automatic job termination without
+        /// Manager task; if you want to use automatic Job termination without
         /// a Job Manager, you should initially set onAllTasksComplete to
-        /// noaction and update the job properties to set onAllTasksComplete to
-        /// terminatejob once you have finished adding tasks. The default is
+        /// noaction and update the Job properties to set onAllTasksComplete to
+        /// terminatejob once you have finished adding Tasks. The default is
         /// noaction. Possible values include: 'noAction', 'terminateJob'
         /// </remarks>
         [JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
-        /// Gets or sets the action the Batch service should take when any task
-        /// fails in a job created under this schedule. A task is considered to
+        /// Gets or sets the action the Batch service should take when any Task
+        /// fails in a Job created under this schedule. A Task is considered to
         /// have failed if it have failed if has a failureInfo. A failureInfo
-        /// is set if the task completes with a non-zero exit code after
+        /// is set if the Task completes with a non-zero exit code after
         /// exhausting its retry count, or if there was an error starting the
-        /// task, for example due to a resource file download error.
+        /// Task, for example due to a resource file download error.
         /// </summary>
         /// <remarks>
         /// The default is noaction. Possible values include: 'noAction',
@@ -152,82 +152,82 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public OnTaskFailure? OnTaskFailure { get; set; }
 
         /// <summary>
-        /// Gets or sets the network configuration for the job.
+        /// Gets or sets the network configuration for the Job.
         /// </summary>
         [JsonProperty(PropertyName = "networkConfiguration")]
         public JobNetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution constraints for jobs created under this
+        /// Gets or sets the execution constraints for Jobs created under this
         /// schedule.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets the details of a Job Manager task to be launched when
-        /// a job is started under this schedule.
+        /// Gets or sets the details of a Job Manager Task to be launched when
+        /// a Job is started under this schedule.
         /// </summary>
         /// <remarks>
-        /// If the job does not specify a Job Manager task, the user must
-        /// explicitly add tasks to the job using the Task API. If the job does
-        /// specify a Job Manager task, the Batch service creates the Job
-        /// Manager task when the job is created, and will try to schedule the
-        /// Job Manager task before scheduling other tasks in the job.
+        /// If the Job does not specify a Job Manager Task, the user must
+        /// explicitly add Tasks to the Job using the Task API. If the Job does
+        /// specify a Job Manager Task, the Batch service creates the Job
+        /// Manager Task when the Job is created, and will try to schedule the
+        /// Job Manager Task before scheduling other Tasks in the Job.
         /// </remarks>
         [JsonProperty(PropertyName = "jobManagerTask")]
         public JobManagerTask JobManagerTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the Job Preparation task for jobs created under this
+        /// Gets or sets the Job Preparation Task for Jobs created under this
         /// schedule.
         /// </summary>
         /// <remarks>
-        /// If a job has a Job Preparation task, the Batch service will run the
-        /// Job Preparation task on a compute node before starting any tasks of
-        /// that job on that compute node.
+        /// If a Job has a Job Preparation Task, the Batch service will run the
+        /// Job Preparation Task on a Node before starting any Tasks of that
+        /// Job on that Compute Node.
         /// </remarks>
         [JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the Job Release task for jobs created under this
+        /// Gets or sets the Job Release Task for Jobs created under this
         /// schedule.
         /// </summary>
         /// <remarks>
-        /// The primary purpose of the Job Release task is to undo changes to
-        /// compute nodes made by the Job Preparation task. Example activities
-        /// include deleting local files, or shutting down services that were
-        /// started as part of job preparation. A Job Release task cannot be
-        /// specified without also specifying a Job Preparation task for the
-        /// job. The Batch service runs the Job Release task on the compute
-        /// nodes that have run the Job Preparation task.
+        /// The primary purpose of the Job Release Task is to undo changes to
+        /// Nodes made by the Job Preparation Task. Example activities include
+        /// deleting local files, or shutting down services that were started
+        /// as part of Job preparation. A Job Release Task cannot be specified
+        /// without also specifying a Job Preparation Task for the Job. The
+        /// Batch service runs the Job Release Task on the Compute Nodes that
+        /// have run the Job Preparation Task.
         /// </remarks>
         [JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary>
         /// Gets or sets a list of common environment variable settings. These
-        /// environment variables are set for all tasks in jobs created under
+        /// environment variables are set for all Tasks in Jobs created under
         /// this schedule (including the Job Manager, Job Preparation and Job
-        /// Release tasks).
+        /// Release Tasks).
         /// </summary>
         /// <remarks>
-        /// Individual tasks can override an environment setting specified here
+        /// Individual Tasks can override an environment setting specified here
         /// by specifying the same setting name with a different value.
         /// </remarks>
         [JsonProperty(PropertyName = "commonEnvironmentSettings")]
         public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool on which the Batch service runs the tasks of
-        /// jobs created under this schedule.
+        /// Gets or sets the Pool on which the Batch service runs the Tasks of
+        /// Jobs created under this schedule.
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with each job
+        /// Gets or sets a list of name-value pairs associated with each Job
         /// created under this schedule as metadata.
         /// </summary>
         /// <remarks>

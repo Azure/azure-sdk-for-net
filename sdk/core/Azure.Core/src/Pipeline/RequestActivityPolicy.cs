@@ -40,7 +40,8 @@ namespace Azure.Core.Pipeline
             var activity = new Activity("Azure.Core.Http.Request");
             activity.AddTag("http.method", message.Request.Method.Method);
             activity.AddTag("http.url", message.Request.UriBuilder.ToString());
-            if (message.Request.Headers.TryGetValue("User-Agent", out string userAgent))
+            activity.AddTag("requestId", message.Request.ClientRequestId);
+            if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
                 activity.AddTag("http.user_agent", userAgent);
             }
@@ -59,14 +60,15 @@ namespace Azure.Core.Pipeline
 
             if (isAsync)
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
             }
             else
             {
-                ProcessNext(message, pipeline);
+                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
             }
 
             activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
+            activity.AddTag("serviceRequestId", message.Response.Headers.RequestId);
 
             if (diagnosticSourceActivityEnabled)
             {

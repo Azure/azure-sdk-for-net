@@ -37,11 +37,21 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// Possible values include: 'Http', 'Https'</param>
         /// <param name="intervalInSeconds">The number of seconds between
         /// health probes.</param>
-        public HealthProbeSettingsUpdateParameters(string path = default(string), string protocol = default(string), int? intervalInSeconds = default(int?))
+        /// <param name="healthProbeMethod">Configures which HTTP method to use
+        /// to probe the backends defined under backendPools. Possible values
+        /// include: 'GET', 'HEAD'</param>
+        /// <param name="enabledState">Whether to enable health probes to be
+        /// made against backends defined under backendPools. Health probes can
+        /// only be disabled if there is a single enabled backend in single
+        /// enabled backend pool. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        public HealthProbeSettingsUpdateParameters(string path = default(string), string protocol = default(string), int? intervalInSeconds = default(int?), string healthProbeMethod = default(string), string enabledState = default(string))
         {
             Path = path;
             Protocol = protocol;
             IntervalInSeconds = intervalInSeconds;
+            HealthProbeMethod = healthProbeMethod;
+            EnabledState = enabledState;
             CustomInit();
         }
 
@@ -68,6 +78,23 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "intervalInSeconds")]
         public int? IntervalInSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets configures which HTTP method to use to probe the
+        /// backends defined under backendPools. Possible values include:
+        /// 'GET', 'HEAD'
+        /// </summary>
+        [JsonProperty(PropertyName = "healthProbeMethod")]
+        public string HealthProbeMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to enable health probes to be made against
+        /// backends defined under backendPools. Health probes can only be
+        /// disabled if there is a single enabled backend in single enabled
+        /// backend pool. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "enabledState")]
+        public string EnabledState { get; set; }
 
     }
 }

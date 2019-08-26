@@ -21,11 +21,11 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
-                
+
                 // list all the APIs
                 IPage<ApiContract> apiResponse = testBase.client.Api.ListByService(
                     testBase.rgName,
@@ -150,7 +150,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.ApiDiagnostic.GetEntityTag(
-                            testBase.rgName, 
+                            testBase.rgName,
                             testBase.serviceName,
                             apiToUse.Name,
                             apiDiagnosticId));
@@ -177,8 +177,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     testBase.client.ApiDiagnostic.Delete(
                         testBase.rgName,
-                        testBase.serviceName, 
-                        apiToUse.Name, 
+                        testBase.serviceName,
+                        apiToUse.Name,
                         apiDiagnosticId,
                         "*");
                     testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, loggerId, "*");

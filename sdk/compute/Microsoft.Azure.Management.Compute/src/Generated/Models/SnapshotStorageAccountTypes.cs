@@ -16,8 +16,17 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class SnapshotStorageAccountTypes
     {
+        /// <summary>
+        /// Standard HDD locally redundant storage
+        /// </summary>
         public const string StandardLRS = "Standard_LRS";
+        /// <summary>
+        /// Premium SSD locally redundant storage
+        /// </summary>
         public const string PremiumLRS = "Premium_LRS";
+        /// <summary>
+        /// Standard zone redundant storage
+        /// </summary>
         public const string StandardZRS = "Standard_ZRS";
     }
 }

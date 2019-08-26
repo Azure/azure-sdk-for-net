@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Networks.Tests
@@ -47,7 +47,7 @@ namespace Networks.Tests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
@@ -66,7 +66,7 @@ namespace Networks.Tests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
@@ -120,7 +120,7 @@ namespace Networks.Tests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
@@ -159,7 +159,7 @@ namespace Networks.Tests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
@@ -192,3 +192,4 @@ namespace Networks.Tests
         }
     }
 }
+

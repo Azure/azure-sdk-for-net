@@ -17,7 +17,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public KeyClientLiveTests(bool isAsync) : base(isAsync)
         {
-            TestDiagnostics = false;
+        }
+
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if (this.Mode == RecordedTestMode.Record || this.Mode == RecordedTestMode.Playback)
+            {
+                this.Client = this.GetClient();
+
+                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+            }
         }
 
         [Test]
@@ -73,10 +85,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task CreateEcWithCurveKey()
+        public async Task CreateEcWithCurveKey([Values]KeyCurveName curve)
         {
-            var ecCurveKey = new EcKeyCreateOptions(Recording.GenerateId(), hsm: false, KeyCurveName.P256);
+            var ecCurveKey = new EcKeyCreateOptions(Recording.GenerateId(), hsm: false, curve);
             Key keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);
+
             RegisterForCleanup(keyNoHsmCurve);
 
             Key keyReturned = await Client.GetKeyAsync(ecCurveKey.Name);

@@ -1,16 +1,21 @@
 # Contributing
 
-| Component            | Build Status                                                                                                                                                                                                        |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master) |
-| Client Libraries     | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/41?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=41&branchName=master)                           |
+| Component            | Build Status                                                                                                                                                                                                          |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master)   |
+| Client Libraries     | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20client%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=290&branchName=master) |
 
 # Prerequisites:
 
-Install VS 2019 (Professional or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
+- Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
+- Install the **.NET Core cross-platform development** workloads in VisualStudio
+- Install **.NET Core 3 preview 7** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
 
-**Client Libraries** are sdks used to interact with azure resources at application run time while **Management Libraries** are those used to manage (create/modify/delete) Azure resources.
-<br/><br/>
+> **Client Libraries** are sdks used to interact with azure resources at application run time while **Management Libraries** are those used to manage (create/modify/delete) Azure resources.
+<br/>
+To build all Client and Management libraries together. Invoke `dotnet build build.proj` from the root of the repo.</br>
+To scope to a single service supply a scope property e.g. `dotnet build build.proj /p:Scope=servicebus`. This will build both client and management projects in the specified service. If using msbuild you must run restore first.<br/>
+See below for how to build the libraries independently.
 
 # Management Libraries
 

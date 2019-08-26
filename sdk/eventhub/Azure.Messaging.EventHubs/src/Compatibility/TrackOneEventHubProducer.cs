@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
             Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
 
             _retryPolicy = retryPolicy;
-            _trackOneSender = new Lazy<TrackOne.EventDataSender>(() => trackOneSenderFactory(_retryPolicy), LazyThreadSafetyMode.PublicationOnly);
+            _trackOneSender = new Lazy<TrackOne.EventDataSender>(() => trackOneSenderFactory(_retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                              CancellationToken cancellationToken)
         {
             static TrackOne.EventData TransformMessage(AmqpMessage message) =>
-                new TrackOne.EventData(new byte[0])
+                new TrackOne.EventData(Array.Empty<byte>())
                 {
                     AmqpMessage = message
                 };

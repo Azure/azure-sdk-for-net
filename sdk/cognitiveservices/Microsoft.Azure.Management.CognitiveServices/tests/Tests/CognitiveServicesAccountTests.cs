@@ -25,7 +25,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -58,7 +58,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -90,7 +90,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -117,7 +117,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -145,7 +145,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -173,7 +173,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -206,7 +206,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -233,7 +233,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -263,7 +263,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -295,7 +295,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -342,7 +342,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -379,7 +379,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -412,7 +412,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -452,7 +452,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -479,7 +479,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -512,7 +512,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -532,7 +532,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -555,7 +555,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -578,7 +578,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -600,7 +600,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
@@ -620,7 +620,7 @@ namespace CognitiveServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);

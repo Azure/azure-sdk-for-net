@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.ServiceFabric;
+using Microsoft.Azure.Management.ServiceFabric;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace ServiceFabric.Tests.Tests
         public void TestList()
         {
             var location = "southcentralus";
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var serviceFabricClient = GetServiceFabricClient(context);
 
@@ -33,3 +33,4 @@ namespace ServiceFabric.Tests.Tests
 
     }
 }
+

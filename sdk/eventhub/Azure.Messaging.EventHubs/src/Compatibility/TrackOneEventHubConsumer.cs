@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
             Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
 
             _retryPolicy = retryPolicy;
-            _trackOneReceiver = new Lazy<TrackOne.PartitionReceiver>(() => trackOneReceiverFactory(_retryPolicy), LazyThreadSafetyMode.PublicationOnly);
+            _trackOneReceiver = new Lazy<TrackOne.PartitionReceiver>(() => trackOneReceiverFactory(_retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         }
 
         /// <summary>
-        ///   Receives a bach of <see cref="EventData" /> from the the Event Hub partition.
+        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
@@ -93,12 +93,12 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 {
                     Properties = eventData.Properties,
                     SystemProperties = new EventData.SystemEventProperties
-                    (
-                        eventData.SystemProperties.SequenceNumber,
-                        eventData.SystemProperties.EnqueuedTimeUtc,
-                        eventData.SystemProperties.Offset,
-                        eventData.SystemProperties.PartitionKey
-                    )
+                    {
+                        SequenceNumber = eventData.SystemProperties.SequenceNumber,
+                        EnqueuedTime = new DateTimeOffset(eventData.SystemProperties.EnqueuedTimeUtc),
+                        Offset = Int64.Parse(eventData.SystemProperties.Offset),
+                        PartitionKey = eventData.SystemProperties.PartitionKey
+                    }
                 };
 
             try

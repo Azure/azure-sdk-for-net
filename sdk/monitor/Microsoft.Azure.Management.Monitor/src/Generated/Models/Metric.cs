@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// i.e. it is localizable string.</param>
         /// <param name="unit">the unit of the metric. Possible values include:
         /// 'Count', 'Bytes', 'Seconds', 'CountPerSecond', 'BytesPerSecond',
-        /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified'</param>
+        /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified', 'Cores',
+        /// 'MilliCores', 'NanoCores', 'BitsPerSecond'</param>
         /// <param name="timeseries">the time series returned when a data query
         /// is performed.</param>
         public Metric(string id, string type, LocalizableString name, Unit unit, IList<TimeSeriesElement> timeseries)
@@ -79,7 +80,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Gets or sets the unit of the metric. Possible values include:
         /// 'Count', 'Bytes', 'Seconds', 'CountPerSecond', 'BytesPerSecond',
-        /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified'
+        /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified', 'Cores',
+        /// 'MilliCores', 'NanoCores', 'BitsPerSecond'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public Unit Unit { get; set; }

@@ -46,7 +46,7 @@ namespace Azure.Identity
         {
             _options = options ?? new IdentityClientOptions();
 
-            _pipeline = HttpPipelineBuilder.Build(_options, bufferResponse: true);
+            _pipeline = HttpPipelineBuilder.Build(_options);
         }
 
         private enum MsiType
@@ -486,8 +486,8 @@ namespace Azure.Identity
             {
                 // the seconds from epoch may be returned as a Json number or a Json string which is a number
                 // depending on the environment.  If neither of these are the case we throw an AuthException.
-                if (!(expiresOnProp.Type == JsonValueType.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) &&
-                    !(expiresOnProp.Type == JsonValueType.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
+                if (!(expiresOnProp.ValueKind == JsonValueKind.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) &&
+                    !(expiresOnProp.ValueKind == JsonValueKind.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }

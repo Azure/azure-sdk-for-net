@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -674,7 +674,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -925,7 +925,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 taskCreateParameters.Validate();
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1187,7 +1187,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1416,7 +1416,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskUpdateParameters");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

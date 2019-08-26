@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace ServiceFabric.Tests.Tests
@@ -19,7 +19,7 @@ namespace ServiceFabric.Tests.Tests
         [Fact]
         public void TestDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var serviceFabricClient = GetServiceFabricClient(context);
                 var resouceClient = GetResourceManagementClient(context);
@@ -46,3 +46,4 @@ namespace ServiceFabric.Tests.Tests
         }
     }
 }
+

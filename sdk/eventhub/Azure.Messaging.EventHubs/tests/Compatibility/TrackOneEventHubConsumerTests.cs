@@ -21,7 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class TrackOneEventHubConsumerTests
     {
         /// <summary>
@@ -239,7 +238,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   by accessing its private field.
         /// </summary>
         ///
-        /// <param name="policy">The ploicy to retrieve the source policy from.</param>
+        /// <param name="policy">The policy to retrieve the source policy from.</param>
         ///
         /// <returns>The retry policy</returns>
         ///
@@ -293,7 +292,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ClientMock : TrackOne.EventHubClient
         {
-            public ClientMock() : base(new TrackOne.EventHubsConnectionStringBuilder(new Uri("http://my.hub.com"), "aPath", "keyName", "KEY!"))
+            public ClientMock() : base(new TrackOne.EventHubsConnectionStringBuilder(new Uri("amqp://my.hub.com"), "aPath", "keyName", "KEY!"))
             {
             }
 

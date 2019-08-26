@@ -13,12 +13,13 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
 using Microsoft.Rest.Azure.OData;
+using System;
 
 namespace ResourceGroups.Tests
 {
     public class LiveResourceTests : TestBase
     {
-        const string WebResourceProviderVersion = "2016-08-01";
+        const string WebResourceProviderVersion = "2018-02-01";
         const string SendGridResourceProviderVersion = "2015-01-01";
 
         string ResourceGroupLocation
@@ -40,7 +41,7 @@ namespace ResourceGroups.Tests
 
         public string GetWebsiteLocation(ResourceManagementClient client)
         {
-            return "WestUS";
+            return "West US";
         }
 
         public string GetMySqlLocation(ResourceManagementClient client)
@@ -53,7 +54,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -103,45 +104,49 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(context, handler);
-                string websiteLocation = GetWebsiteLocation(client);
+                string location = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
-                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, "Microsoft.Web", "", "sites",resourceName, WebResourceProviderVersion,
+                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, "Microsoft.Web", "", "serverFarms",resourceName, WebResourceProviderVersion,
                     new GenericResource
                     {
-                        Location = websiteLocation,
-                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"),
+                        Location = location,
+                        Sku = new Sku
+                        {
+                            Name = "S1"
+                        },
+                        Properties = JObject.Parse("{}")
                     }
                 );
 
                 Assert.NotNull(createOrUpdateResult.Id);
                 Assert.Equal(resourceName, createOrUpdateResult.Name);
-                Assert.Equal("Microsoft.Web/sites", createOrUpdateResult.Type);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, createOrUpdateResult.Location),
-                    string.Format("Resource location for website '{0}' does not match expected location '{1}'", createOrUpdateResult.Location, websiteLocation));
+                Assert.True(string.Equals("Microsoft.Web/serverFarms", createOrUpdateResult.Type, StringComparison.InvariantCultureIgnoreCase));
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(location, createOrUpdateResult.Location),
+                    string.Format("Resource location for website '{0}' does not match expected location '{1}'", createOrUpdateResult.Location, location));
 
                 var listResult = client.Resources.ListByResourceGroup(groupName);
 
                 Assert.Single(listResult);
                 Assert.Equal(resourceName, listResult.First().Name);
-                Assert.Equal("Microsoft.Web/sites", listResult.First().Type);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, listResult.First().Location),
-                    string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.First().Location, websiteLocation));
+                Assert.True(string.Equals("Microsoft.Web/serverFarms", createOrUpdateResult.Type, StringComparison.InvariantCultureIgnoreCase));
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(location, listResult.First().Location),
+                    string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.First().Location, location));
 
                 listResult = client.Resources.ListByResourceGroup(groupName, new ODataQuery<GenericResourceFilter> { Top = 10 });
 
                 Assert.Single(listResult);
                 Assert.Equal(resourceName, listResult.First().Name);
-                Assert.Equal("Microsoft.Web/sites", listResult.First().Type);
-                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(websiteLocation, listResult.First().Location),
-                    string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.First().Location, websiteLocation));
+                Assert.True(string.Equals("Microsoft.Web/serverFarms", createOrUpdateResult.Type, StringComparison.InvariantCultureIgnoreCase));
+                Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(location, listResult.First().Location),
+                    string.Format("Resource list location for website '{0}' does not match expected location '{1}'", listResult.First().Location, location));
             }
         }
 
@@ -150,14 +155,14 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 string resourceNameNoTags = TestUtilities.GenerateName("csmr");
                 string tagName = TestUtilities.GenerateName("csmtn");
                 var client = GetResourceManagementClient(context, handler);
-                string websiteLocation = GetWebsiteLocation(client);
+                string location = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
@@ -166,26 +171,34 @@ namespace ResourceGroups.Tests
                     groupName,
                     "Microsoft.Web",
                     string.Empty,
-                    "sites",
+                    "serverFarms",
                     resourceName,
                     WebResourceProviderVersion,
                     new GenericResource
                     {
                         Tags = new Dictionary<string, string> { { tagName, "" } },
-                        Location = websiteLocation,
-                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Location = location,
+                        Sku = new Sku
+                        {
+                            Name = "S1"
+                        },
+                        Properties = JObject.Parse("{}")
                     });
                 client.Resources.CreateOrUpdate(
                     groupName,
                     "Microsoft.Web",
                     string.Empty,
-                    "sites",
+                    "serverFarms",
                     resourceNameNoTags,
                     WebResourceProviderVersion,
                     new GenericResource
                     {
-                        Location = websiteLocation,
-                        Properties = JObject.Parse("{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Location = location,
+                        Sku = new Sku
+                        {
+                            Name = "S1"
+                        },
+                        Properties = JObject.Parse("{}")
                     });
 
                 var listResult = client.Resources.ListByResourceGroup(groupName, new ODataQuery<GenericResourceFilter>(r => r.Tagname == tagName));
@@ -197,7 +210,7 @@ namespace ResourceGroups.Tests
                     groupName,
                     "Microsoft.Web",
                     string.Empty,
-                    "sites",
+                    "serverFarms",
                     resourceName,
                     WebResourceProviderVersion);
 
@@ -211,7 +224,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -219,7 +232,7 @@ namespace ResourceGroups.Tests
                 string tagName = TestUtilities.GenerateName("csmtn");
                 string tagValue = TestUtilities.GenerateName("csmtv");
                 var client = GetResourceManagementClient(context, handler);
-                string websiteLocation = GetWebsiteLocation(client);
+                string location = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
@@ -228,27 +241,35 @@ namespace ResourceGroups.Tests
                     groupName,
                     "Microsoft.Web",
                     "",
-                    "sites",
+                    "serverFarms",
                     resourceName,
                     WebResourceProviderVersion,
                     new GenericResource
                     {
                         Tags = new Dictionary<string, string> { { tagName, tagValue } },
-                        Location = websiteLocation,
-                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Location = location,
+                        Sku = new Sku
+                        {
+                            Name = "S1"
+                        },
+                        Properties = JObject.Parse("{}")
                     }
                 );
                 client.Resources.CreateOrUpdate(
                     groupName,
                     "Microsoft.Web",
                     "",
-                    "sites", 
+                    "serverFarms", 
                     resourceNameNoTags,
                     WebResourceProviderVersion,
                     new GenericResource
                     {
-                        Location = websiteLocation,
-                        Properties = JObject.Parse("{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Location = location,
+                        Sku = new Sku
+                        {
+                            Name = "S1"
+                        },
+                        Properties = JObject.Parse("{}")
                     }
                 );
 
@@ -262,7 +283,7 @@ namespace ResourceGroups.Tests
                     groupName,
                     "Microsoft.Web",
                     "",
-                    "sites",
+                    "serverFarms",
                     resourceName,
                     WebResourceProviderVersion);
 
@@ -276,7 +297,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -289,13 +310,17 @@ namespace ResourceGroups.Tests
                     groupName,
                     "Microsoft.Web",
                     "",
-                    "sites",
+                    "serverfarms",
                     resourceName,
                     WebResourceProviderVersion,
                     new GenericResource
                     {
                         Location = location,
-                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Sku = new Sku
+                        {
+                            Name = "S1"
+                        },
+                        Properties = JObject.Parse("{}")
                     }
                 );
 
@@ -307,7 +332,7 @@ namespace ResourceGroups.Tests
                     groupName,
                     "Microsoft.Web",
                     "",
-                    "sites",
+                    "serverfarms",
                     resourceName,
                     WebResourceProviderVersion);
             }
@@ -318,7 +343,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string subscriptionId = "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b";
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -328,7 +353,7 @@ namespace ResourceGroups.Tests
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
                 string location = this.GetWebsiteLocation(client);
 
-                string resourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}", subscriptionId, groupName, resourceName);
+                string resourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/serverFarms/{2}", subscriptionId, groupName, resourceName);
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
                 var createOrUpdateResult = client.Resources.CreateOrUpdateById(
                     resourceId,
@@ -336,7 +361,11 @@ namespace ResourceGroups.Tests
                     new GenericResource
                     {
                         Location = location,
-                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Sku = new Sku
+                        {
+                            Name = "S1"
+                        },
+                        Properties = JObject.Parse("{}")
                     }
                 );
 
@@ -355,7 +384,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -366,18 +395,22 @@ namespace ResourceGroups.Tests
                     groupName,
                     "Microsoft.Web",
                     "",
-                    "sites",
+                    "serverFarms",
                     resourceName,
                     WebResourceProviderVersion,
                     new GenericResource
                     {
-                        Location = location,
                         Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
-                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Location = location,
+                        Sku = new Sku
+                        {
+                            Name = "S1"
+                        },
+                        Properties = JObject.Parse("{}")
                     }
                 );
 
-                var listResult = client.Resources.List(new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Microsoft.Web/sites"));
+                var listResult = client.Resources.List(new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Microsoft.Web/serverFarms"));
 
                 Assert.NotEmpty(listResult);
                 Assert.Equal(2, listResult.First().Tags.Count);
@@ -385,3 +418,4 @@ namespace ResourceGroups.Tests
         }
     }
 }
+

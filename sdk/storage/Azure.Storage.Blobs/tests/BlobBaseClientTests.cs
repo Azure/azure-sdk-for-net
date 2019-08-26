@@ -517,7 +517,7 @@ namespace Azure.Storage.Blobs.Test
                         await destBlob.UploadAsync(stream);
                     }
 
-                    var duration = -1;
+                    var duration = Constants.Blob.Lease.InfiniteLeaseDuration;
                     var lease = this.InstrumentClient(destBlob.GetLeaseClient(this.Recording.Random.NewGuid().ToString()));
                     var leaseResponse = await lease.AcquireAsync(duration);
 
@@ -849,6 +849,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("#7309 - upgrading to 2019-02-02")]
         public async Task GetPropertiesAsync_ContainerIdentitySAS()
         {
             var oauthService = this.GetServiceClient_OauthAccount();
@@ -904,6 +905,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("#7309 - upgrading to 2019-02-02")]
         public async Task GetPropertiesAsync_BlobIdentitySAS()
         {
             var oauthService = this.GetServiceClient_OauthAccount();
@@ -963,6 +965,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("#7309 - upgrading to 2019-02-02")]
         public async Task GetPropertiesAsync_SnapshotIdentitySAS()
         {
             var oauthService = this.GetServiceClient_OauthAccount();

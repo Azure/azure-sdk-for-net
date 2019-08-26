@@ -22,12 +22,12 @@ namespace Microsoft.Azure.Batch.Protocol
     public static partial class JobOperationsExtensions
     {
             /// <summary>
-            /// Gets lifetime summary statistics for all of the jobs in the specified
-            /// account.
+            /// Gets lifetime summary statistics for all of the Jobs in the specified
+            /// Account.
             /// </summary>
             /// <remarks>
-            /// Statistics are aggregated across all jobs that have ever existed in the
-            /// account, from account creation to the last update time of the statistics.
+            /// Statistics are aggregated across all Jobs that have ever existed in the
+            /// Account, from Account creation to the last update time of the statistics.
             /// The statistics may not be immediately available. The Batch service performs
             /// periodic roll-up of statistics. The typical delay is about 30 minutes.
             /// </remarks>
@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets lifetime summary statistics for all of the jobs in the specified
-            /// account.
+            /// Gets lifetime summary statistics for all of the Jobs in the specified
+            /// Account.
             /// </summary>
             /// <remarks>
-            /// Statistics are aggregated across all jobs that have ever existed in the
-            /// account, from account creation to the last update time of the statistics.
+            /// Statistics are aggregated across all Jobs that have ever existed in the
+            /// Account, from Account creation to the last update time of the statistics.
             /// The statistics may not be immediately available. The Batch service performs
             /// periodic roll-up of statistics. The typical delay is about 30 minutes.
             /// </remarks>
@@ -70,23 +70,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes a job.
+            /// Deletes a Job.
             /// </summary>
             /// <remarks>
-            /// Deleting a job also deletes all tasks that are part of that job, and all
-            /// job statistics. This also overrides the retention period for task data;
-            /// that is, if the job contains tasks which are still retained on compute
-            /// nodes, the Batch services deletes those tasks' working directories and all
+            /// Deleting a Job also deletes all Tasks that are part of that Job, and all
+            /// Job statistics. This also overrides the retention period for Task data;
+            /// that is, if the Job contains Tasks which are still retained on Compute
+            /// Nodes, the Batch services deletes those Tasks' working directories and all
             /// their contents.  When a Delete Job request is received, the Batch service
-            /// sets the job to the deleting state. All update operations on a job that is
+            /// sets the Job to the deleting state. All update operations on a Job that is
             /// in deleting state will fail with status code 409 (Conflict), with
-            /// additional information indicating that the job is being deleted.
+            /// additional information indicating that the Job is being deleted.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job to delete.
+            /// The ID of the Job to delete.
             /// </param>
             /// <param name='jobDeleteOptions'>
             /// Additional parameters for the operation
@@ -97,23 +97,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes a job.
+            /// Deletes a Job.
             /// </summary>
             /// <remarks>
-            /// Deleting a job also deletes all tasks that are part of that job, and all
-            /// job statistics. This also overrides the retention period for task data;
-            /// that is, if the job contains tasks which are still retained on compute
-            /// nodes, the Batch services deletes those tasks' working directories and all
+            /// Deleting a Job also deletes all Tasks that are part of that Job, and all
+            /// Job statistics. This also overrides the retention period for Task data;
+            /// that is, if the Job contains Tasks which are still retained on Compute
+            /// Nodes, the Batch services deletes those Tasks' working directories and all
             /// their contents.  When a Delete Job request is received, the Batch service
-            /// sets the job to the deleting state. All update operations on a job that is
+            /// sets the Job to the deleting state. All update operations on a Job that is
             /// in deleting state will fail with status code 409 (Conflict), with
-            /// additional information indicating that the job is being deleted.
+            /// additional information indicating that the Job is being deleted.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job to delete.
+            /// The ID of the Job to delete.
             /// </param>
             /// <param name='jobDeleteOptions'>
             /// Additional parameters for the operation
@@ -130,13 +130,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified job.
+            /// Gets information about the specified Job.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job.
+            /// The ID of the Job.
             /// </param>
             /// <param name='jobGetOptions'>
             /// Additional parameters for the operation
@@ -147,13 +147,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified job.
+            /// Gets information about the specified Job.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job.
+            /// The ID of the Job.
             /// </param>
             /// <param name='jobGetOptions'>
             /// Additional parameters for the operation
@@ -170,18 +170,18 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of the specified job.
+            /// Updates the properties of the specified Job.
             /// </summary>
             /// <remarks>
-            /// This replaces only the job properties specified in the request. For
-            /// example, if the job has constraints, and a request does not specify the
-            /// constraints element, then the job keeps the existing constraints.
+            /// This replaces only the Job properties specified in the request. For
+            /// example, if the Job has constraints, and a request does not specify the
+            /// constraints element, then the Job keeps the existing constraints.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job whose properties you want to update.
+            /// The ID of the Job whose properties you want to update.
             /// </param>
             /// <param name='jobPatchParameter'>
             /// The parameters for the request.
@@ -195,18 +195,18 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of the specified job.
+            /// Updates the properties of the specified Job.
             /// </summary>
             /// <remarks>
-            /// This replaces only the job properties specified in the request. For
-            /// example, if the job has constraints, and a request does not specify the
-            /// constraints element, then the job keeps the existing constraints.
+            /// This replaces only the Job properties specified in the request. For
+            /// example, if the Job has constraints, and a request does not specify the
+            /// constraints element, then the Job keeps the existing constraints.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job whose properties you want to update.
+            /// The ID of the Job whose properties you want to update.
             /// </param>
             /// <param name='jobPatchParameter'>
             /// The parameters for the request.
@@ -226,11 +226,11 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of the specified job.
+            /// Updates the properties of the specified Job.
             /// </summary>
             /// <remarks>
-            /// This fully replaces all the updatable properties of the job. For example,
-            /// if the job has constraints associated with it and if constraints is not
+            /// This fully replaces all the updatable properties of the Job. For example,
+            /// if the Job has constraints associated with it and if constraints is not
             /// specified with this request, then the Batch service will remove the
             /// existing constraints.
             /// </remarks>
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job whose properties you want to update.
+            /// The ID of the Job whose properties you want to update.
             /// </param>
             /// <param name='jobUpdateParameter'>
             /// The parameters for the request.
@@ -252,11 +252,11 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of the specified job.
+            /// Updates the properties of the specified Job.
             /// </summary>
             /// <remarks>
-            /// This fully replaces all the updatable properties of the job. For example,
-            /// if the job has constraints associated with it and if constraints is not
+            /// This fully replaces all the updatable properties of the Job. For example,
+            /// if the Job has constraints associated with it and if constraints is not
             /// specified with this request, then the Batch service will remove the
             /// existing constraints.
             /// </remarks>
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job whose properties you want to update.
+            /// The ID of the Job whose properties you want to update.
             /// </param>
             /// <param name='jobUpdateParameter'>
             /// The parameters for the request.
@@ -284,26 +284,26 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Disables the specified job, preventing new tasks from running.
+            /// Disables the specified Job, preventing new Tasks from running.
             /// </summary>
             /// <remarks>
-            /// The Batch Service immediately moves the job to the disabling state. Batch
+            /// The Batch Service immediately moves the Job to the disabling state. Batch
             /// then uses the disableTasks parameter to determine what to do with the
-            /// currently running tasks of the job. The job remains in the disabling state
-            /// until the disable operation is completed and all tasks have been dealt with
-            /// according to the disableTasks option; the job then moves to the disabled
-            /// state. No new tasks are started under the job until it moves back to active
-            /// state. If you try to disable a job that is in any state other than active,
+            /// currently running Tasks of the Job. The Job remains in the disabling state
+            /// until the disable operation is completed and all Tasks have been dealt with
+            /// according to the disableTasks option; the Job then moves to the disabled
+            /// state. No new Tasks are started under the Job until it moves back to active
+            /// state. If you try to disable a Job that is in any state other than active,
             /// disabling, or disabled, the request fails with status code 409.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job to disable.
+            /// The ID of the Job to disable.
             /// </param>
             /// <param name='disableTasks'>
-            /// What to do with active tasks associated with the job. Possible values
+            /// What to do with active Tasks associated with the Job. Possible values
             /// include: 'requeue', 'terminate', 'wait'
             /// </param>
             /// <param name='jobDisableOptions'>
@@ -315,26 +315,26 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Disables the specified job, preventing new tasks from running.
+            /// Disables the specified Job, preventing new Tasks from running.
             /// </summary>
             /// <remarks>
-            /// The Batch Service immediately moves the job to the disabling state. Batch
+            /// The Batch Service immediately moves the Job to the disabling state. Batch
             /// then uses the disableTasks parameter to determine what to do with the
-            /// currently running tasks of the job. The job remains in the disabling state
-            /// until the disable operation is completed and all tasks have been dealt with
-            /// according to the disableTasks option; the job then moves to the disabled
-            /// state. No new tasks are started under the job until it moves back to active
-            /// state. If you try to disable a job that is in any state other than active,
+            /// currently running Tasks of the Job. The Job remains in the disabling state
+            /// until the disable operation is completed and all Tasks have been dealt with
+            /// according to the disableTasks option; the Job then moves to the disabled
+            /// state. No new Tasks are started under the Job until it moves back to active
+            /// state. If you try to disable a Job that is in any state other than active,
             /// disabling, or disabled, the request fails with status code 409.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job to disable.
+            /// The ID of the Job to disable.
             /// </param>
             /// <param name='disableTasks'>
-            /// What to do with active tasks associated with the job. Possible values
+            /// What to do with active Tasks associated with the Job. Possible values
             /// include: 'requeue', 'terminate', 'wait'
             /// </param>
             /// <param name='jobDisableOptions'>
@@ -352,21 +352,21 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Enables the specified job, allowing new tasks to run.
+            /// Enables the specified Job, allowing new Tasks to run.
             /// </summary>
             /// <remarks>
-            /// When you call this API, the Batch service sets a disabled job to the
-            /// enabling state. After the this operation is completed, the job moves to the
-            /// active state, and scheduling of new tasks under the job resumes. The Batch
-            /// service does not allow a task to remain in the active state for more than
-            /// 180 days. Therefore, if you enable a job containing active tasks which were
-            /// added more than 180 days ago, those tasks will not run.
+            /// When you call this API, the Batch service sets a disabled Job to the
+            /// enabling state. After the this operation is completed, the Job moves to the
+            /// active state, and scheduling of new Tasks under the Job resumes. The Batch
+            /// service does not allow a Task to remain in the active state for more than
+            /// 180 days. Therefore, if you enable a Job containing active Tasks which were
+            /// added more than 180 days ago, those Tasks will not run.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job to enable.
+            /// The ID of the Job to enable.
             /// </param>
             /// <param name='jobEnableOptions'>
             /// Additional parameters for the operation
@@ -377,21 +377,21 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Enables the specified job, allowing new tasks to run.
+            /// Enables the specified Job, allowing new Tasks to run.
             /// </summary>
             /// <remarks>
-            /// When you call this API, the Batch service sets a disabled job to the
-            /// enabling state. After the this operation is completed, the job moves to the
-            /// active state, and scheduling of new tasks under the job resumes. The Batch
-            /// service does not allow a task to remain in the active state for more than
-            /// 180 days. Therefore, if you enable a job containing active tasks which were
-            /// added more than 180 days ago, those tasks will not run.
+            /// When you call this API, the Batch service sets a disabled Job to the
+            /// enabling state. After the this operation is completed, the Job moves to the
+            /// active state, and scheduling of new Tasks under the Job resumes. The Batch
+            /// service does not allow a Task to remain in the active state for more than
+            /// 180 days. Therefore, if you enable a Job containing active Tasks which were
+            /// added more than 180 days ago, those Tasks will not run.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job to enable.
+            /// The ID of the Job to enable.
             /// </param>
             /// <param name='jobEnableOptions'>
             /// Additional parameters for the operation
@@ -408,25 +408,25 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Terminates the specified job, marking it as completed.
+            /// Terminates the specified Job, marking it as completed.
             /// </summary>
             /// <remarks>
-            /// When a Terminate Job request is received, the Batch service sets the job to
-            /// the terminating state. The Batch service then terminates any running tasks
-            /// associated with the job and runs any required job release tasks. Then the
-            /// job moves into the completed state. If there are any tasks in the job in
-            /// the active state, they will remain in the active state. Once a job is
-            /// terminated, new tasks cannot be added and any remaining active tasks will
+            /// When a Terminate Job request is received, the Batch service sets the Job to
+            /// the terminating state. The Batch service then terminates any running Tasks
+            /// associated with the Job and runs any required Job release Tasks. Then the
+            /// Job moves into the completed state. If there are any Tasks in the Job in
+            /// the active state, they will remain in the active state. Once a Job is
+            /// terminated, new Tasks cannot be added and any remaining active Tasks will
             /// not be scheduled.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job to terminate.
+            /// The ID of the Job to terminate.
             /// </param>
             /// <param name='terminateReason'>
-            /// The text you want to appear as the job's TerminateReason. The default is
+            /// The text you want to appear as the Job's TerminateReason. The default is
             /// 'UserTerminate'.
             /// </param>
             /// <param name='jobTerminateOptions'>
@@ -438,25 +438,25 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Terminates the specified job, marking it as completed.
+            /// Terminates the specified Job, marking it as completed.
             /// </summary>
             /// <remarks>
-            /// When a Terminate Job request is received, the Batch service sets the job to
-            /// the terminating state. The Batch service then terminates any running tasks
-            /// associated with the job and runs any required job release tasks. Then the
-            /// job moves into the completed state. If there are any tasks in the job in
-            /// the active state, they will remain in the active state. Once a job is
-            /// terminated, new tasks cannot be added and any remaining active tasks will
+            /// When a Terminate Job request is received, the Batch service sets the Job to
+            /// the terminating state. The Batch service then terminates any running Tasks
+            /// associated with the Job and runs any required Job release Tasks. Then the
+            /// Job moves into the completed state. If there are any Tasks in the Job in
+            /// the active state, they will remain in the active state. Once a Job is
+            /// terminated, new Tasks cannot be added and any remaining active Tasks will
             /// not be scheduled.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job to terminate.
+            /// The ID of the Job to terminate.
             /// </param>
             /// <param name='terminateReason'>
-            /// The text you want to appear as the job's TerminateReason. The default is
+            /// The text you want to appear as the Job's TerminateReason. The default is
             /// 'UserTerminate'.
             /// </param>
             /// <param name='jobTerminateOptions'>
@@ -474,16 +474,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Adds a job to the specified account.
+            /// Adds a Job to the specified Account.
             /// </summary>
             /// <remarks>
             /// The Batch service supports two ways to control the work done as part of a
-            /// job. In the first approach, the user specifies a Job Manager task. The
-            /// Batch service launches this task when it is ready to start the job. The Job
-            /// Manager task controls all other tasks that run under this job, by using the
+            /// Job. In the first approach, the user specifies a Job Manager Task. The
+            /// Batch service launches this Task when it is ready to start the Job. The Job
+            /// Manager Task controls all other Tasks that run under this Job, by using the
             /// Task APIs. In the second approach, the user directly controls the execution
-            /// of tasks under an active job, by using the Task APIs. Also note: when
-            /// naming jobs, avoid including sensitive information such as user names or
+            /// of Tasks under an active Job, by using the Task APIs. Also note: when
+            /// naming Jobs, avoid including sensitive information such as user names or
             /// secret project names. This information may appear in telemetry logs
             /// accessible to Microsoft Support engineers.
             /// </remarks>
@@ -491,7 +491,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='job'>
-            /// The job to be added.
+            /// The Job to be added.
             /// </param>
             /// <param name='jobAddOptions'>
             /// Additional parameters for the operation
@@ -502,16 +502,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Adds a job to the specified account.
+            /// Adds a Job to the specified Account.
             /// </summary>
             /// <remarks>
             /// The Batch service supports two ways to control the work done as part of a
-            /// job. In the first approach, the user specifies a Job Manager task. The
-            /// Batch service launches this task when it is ready to start the job. The Job
-            /// Manager task controls all other tasks that run under this job, by using the
+            /// Job. In the first approach, the user specifies a Job Manager Task. The
+            /// Batch service launches this Task when it is ready to start the Job. The Job
+            /// Manager Task controls all other Tasks that run under this Job, by using the
             /// Task APIs. In the second approach, the user directly controls the execution
-            /// of tasks under an active job, by using the Task APIs. Also note: when
-            /// naming jobs, avoid including sensitive information such as user names or
+            /// of Tasks under an active Job, by using the Task APIs. Also note: when
+            /// naming Jobs, avoid including sensitive information such as user names or
             /// secret project names. This information may appear in telemetry logs
             /// accessible to Microsoft Support engineers.
             /// </remarks>
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='job'>
-            /// The job to be added.
+            /// The Job to be added.
             /// </param>
             /// <param name='jobAddOptions'>
             /// Additional parameters for the operation
@@ -536,7 +536,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the jobs in the specified account.
+            /// Lists all of the Jobs in the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -550,7 +550,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the jobs in the specified account.
+            /// Lists all of the Jobs in the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -570,13 +570,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the jobs that have been created under the specified job schedule.
+            /// Lists the Jobs that have been created under the specified Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule from which you want to get a list of jobs.
+            /// The ID of the Job Schedule from which you want to get a list of Jobs.
             /// </param>
             /// <param name='jobListFromJobScheduleOptions'>
             /// Additional parameters for the operation
@@ -587,13 +587,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the jobs that have been created under the specified job schedule.
+            /// Lists the Jobs that have been created under the specified Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule from which you want to get a list of jobs.
+            /// The ID of the Job Schedule from which you want to get a list of Jobs.
             /// </param>
             /// <param name='jobListFromJobScheduleOptions'>
             /// Additional parameters for the operation
@@ -610,22 +610,22 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the execution status of the Job Preparation and Job Release task for
-            /// the specified job across the compute nodes where the job has run.
+            /// Lists the execution status of the Job Preparation and Job Release Task for
+            /// the specified Job across the Compute Nodes where the Job has run.
             /// </summary>
             /// <remarks>
-            /// This API returns the Job Preparation and Job Release task status on all
-            /// compute nodes that have run the Job Preparation or Job Release task. This
-            /// includes nodes which have since been removed from the pool. If this API is
-            /// invoked on a job which has no Job Preparation or Job Release task, the
-            /// Batch service returns HTTP status code 409 (Conflict) with an error code of
-            /// JobPreparationTaskNotSpecified.
+            /// This API returns the Job Preparation and Job Release Task status on all
+            /// Compute Nodes that have run the Job Preparation or Job Release Task. This
+            /// includes Compute Nodes which have since been removed from the Pool. If this
+            /// API is invoked on a Job which has no Job Preparation or Job Release Task,
+            /// the Batch service returns HTTP status code 409 (Conflict) with an error
+            /// code of JobPreparationTaskNotSpecified.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job.
+            /// The ID of the Job.
             /// </param>
             /// <param name='jobListPreparationAndReleaseTaskStatusOptions'>
             /// Additional parameters for the operation
@@ -636,22 +636,22 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the execution status of the Job Preparation and Job Release task for
-            /// the specified job across the compute nodes where the job has run.
+            /// Lists the execution status of the Job Preparation and Job Release Task for
+            /// the specified Job across the Compute Nodes where the Job has run.
             /// </summary>
             /// <remarks>
-            /// This API returns the Job Preparation and Job Release task status on all
-            /// compute nodes that have run the Job Preparation or Job Release task. This
-            /// includes nodes which have since been removed from the pool. If this API is
-            /// invoked on a job which has no Job Preparation or Job Release task, the
-            /// Batch service returns HTTP status code 409 (Conflict) with an error code of
-            /// JobPreparationTaskNotSpecified.
+            /// This API returns the Job Preparation and Job Release Task status on all
+            /// Compute Nodes that have run the Job Preparation or Job Release Task. This
+            /// includes Compute Nodes which have since been removed from the Pool. If this
+            /// API is invoked on a Job which has no Job Preparation or Job Release Task,
+            /// the Batch service returns HTTP status code 409 (Conflict) with an error
+            /// code of JobPreparationTaskNotSpecified.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job.
+            /// The ID of the Job.
             /// </param>
             /// <param name='jobListPreparationAndReleaseTaskStatusOptions'>
             /// Additional parameters for the operation
@@ -668,18 +668,18 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the task counts for the specified job.
+            /// Gets the Task counts for the specified Job.
             /// </summary>
             /// <remarks>
-            /// Task counts provide a count of the tasks by active, running or completed
-            /// task state, and a count of tasks which succeeded or failed. Tasks in the
+            /// Task counts provide a count of the Tasks by active, running or completed
+            /// Task state, and a count of Tasks which succeeded or failed. Tasks in the
             /// preparing state are counted as running.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job.
+            /// The ID of the Job.
             /// </param>
             /// <param name='jobGetTaskCountsOptions'>
             /// Additional parameters for the operation
@@ -690,18 +690,18 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the task counts for the specified job.
+            /// Gets the Task counts for the specified Job.
             /// </summary>
             /// <remarks>
-            /// Task counts provide a count of the tasks by active, running or completed
-            /// task state, and a count of tasks which succeeded or failed. Tasks in the
+            /// Task counts provide a count of the Tasks by active, running or completed
+            /// Task state, and a count of Tasks which succeeded or failed. Tasks in the
             /// preparing state are counted as running.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The ID of the job.
+            /// The ID of the Job.
             /// </param>
             /// <param name='jobGetTaskCountsOptions'>
             /// Additional parameters for the operation
@@ -718,7 +718,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the jobs in the specified account.
+            /// Lists all of the Jobs in the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -735,7 +735,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the jobs in the specified account.
+            /// Lists all of the Jobs in the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -758,7 +758,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the jobs that have been created under the specified job schedule.
+            /// Lists the Jobs that have been created under the specified Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -775,7 +775,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the jobs that have been created under the specified job schedule.
+            /// Lists the Jobs that have been created under the specified Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -798,16 +798,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the execution status of the Job Preparation and Job Release task for
-            /// the specified job across the compute nodes where the job has run.
+            /// Lists the execution status of the Job Preparation and Job Release Task for
+            /// the specified Job across the Compute Nodes where the Job has run.
             /// </summary>
             /// <remarks>
-            /// This API returns the Job Preparation and Job Release task status on all
-            /// compute nodes that have run the Job Preparation or Job Release task. This
-            /// includes nodes which have since been removed from the pool. If this API is
-            /// invoked on a job which has no Job Preparation or Job Release task, the
-            /// Batch service returns HTTP status code 409 (Conflict) with an error code of
-            /// JobPreparationTaskNotSpecified.
+            /// This API returns the Job Preparation and Job Release Task status on all
+            /// Compute Nodes that have run the Job Preparation or Job Release Task. This
+            /// includes Compute Nodes which have since been removed from the Pool. If this
+            /// API is invoked on a Job which has no Job Preparation or Job Release Task,
+            /// the Batch service returns HTTP status code 409 (Conflict) with an error
+            /// code of JobPreparationTaskNotSpecified.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -824,16 +824,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the execution status of the Job Preparation and Job Release task for
-            /// the specified job across the compute nodes where the job has run.
+            /// Lists the execution status of the Job Preparation and Job Release Task for
+            /// the specified Job across the Compute Nodes where the Job has run.
             /// </summary>
             /// <remarks>
-            /// This API returns the Job Preparation and Job Release task status on all
-            /// compute nodes that have run the Job Preparation or Job Release task. This
-            /// includes nodes which have since been removed from the pool. If this API is
-            /// invoked on a job which has no Job Preparation or Job Release task, the
-            /// Batch service returns HTTP status code 409 (Conflict) with an error code of
-            /// JobPreparationTaskNotSpecified.
+            /// This API returns the Job Preparation and Job Release Task status on all
+            /// Compute Nodes that have run the Job Preparation or Job Release Task. This
+            /// includes Compute Nodes which have since been removed from the Pool. If this
+            /// API is invoked on a Job which has no Job Preparation or Job Release Task,
+            /// the Batch service returns HTTP status code 409 (Conflict) with an error
+            /// code of JobPreparationTaskNotSpecified.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

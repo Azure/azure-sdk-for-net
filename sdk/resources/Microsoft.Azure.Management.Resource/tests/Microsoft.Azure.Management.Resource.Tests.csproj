@@ -8,13 +8,13 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <ExcludeFromBuild>true</ExcludeFromBuild>
-    <ExcludeFromTest>true</ExcludeFromTest>
+    <ExcludeFromBuild>false</ExcludeFromBuild>
+    <ExcludeFromTest>false</ExcludeFromTest>
   </PropertyGroup>
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.5.0-preview" />-->
-    <ProjectReference Include="..\..\..\ManagementGroups\Microsoft.Azure.Management.ManagementGroups\src\Microsoft.Azure.Management.ManagementGroups.csproj" />
+    <ProjectReference Include="..\..\..\managementgroups\Microsoft.Azure.Management.ManagementGroups\src\Microsoft.Azure.Management.ManagementGroups.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.Management.ResourceManager.csproj" />
   </ItemGroup>
 
@@ -29,16 +29,7 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="ScenarioTests\simple-storage-account-parameters.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="ScenarioTests\simple-storage-account.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="ScenarioTests\management_group_level_template.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ScenarioTests\subscription_level_template.json">
+    <None Update="ScenarioTests\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

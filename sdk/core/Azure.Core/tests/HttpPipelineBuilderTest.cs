@@ -26,7 +26,7 @@ namespace Azure.Core.Tests
             options.AddPolicy(position, policy);
             options.Transport = transport;
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, false);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
             var options = new TestOptions();
             options.Transport = transport;
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, false);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
