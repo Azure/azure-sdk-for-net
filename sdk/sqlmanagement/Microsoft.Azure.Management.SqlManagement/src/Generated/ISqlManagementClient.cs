@@ -477,5 +477,10 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IManagedInstancesOperations ManagedInstances { get; }
 
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
     }
 }
