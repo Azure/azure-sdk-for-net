@@ -20,7 +20,7 @@ namespace LUIS.Authoring.Tests.Luis
         protected readonly string OwnerEmail = "a-omsami@microsoft.com";
 
 
-        private string ClassName => GetType().FullName;
+        private Type TypeName => GetType();
 
         private ILUISAuthoringClient GetClient(DelegatingHandler handler)
         {
@@ -30,11 +30,11 @@ namespace LUIS.Authoring.Tests.Luis
 
         }
 
-        protected async void UseClientFor(Func<ILUISAuthoringClient, Task> doTest, string className = null, [CallerMemberName] string methodName = "")
+        protected async void UseClientFor(Func<ILUISAuthoringClient, Task> doTest, Type typeName = null, [CallerMemberName] string methodName = "")
         {
-            using (MockContext context = MockContext.Start(className ?? ClassName, methodName))
+            using (MockContext context = MockContext.Start(typeName ?? TypeName, methodName))
             {
-                HttpMockServer.Initialize(className ?? ClassName, methodName, mode);
+                HttpMockServer.Initialize(typeName ?? TypeName, methodName, mode);
                 ILUISAuthoringClient client = GetClient(HttpMockServer.CreateInstance());
                 
                 await doTest(client);
