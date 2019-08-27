@@ -179,6 +179,8 @@ namespace Microsoft.Azure.EventHubs
         /// <returns>An asynchronous operation</returns>
         public override async Task CloseAsync()
         {
+            this.closeCalled  = true;
+
             EventHubsEventSource.Log.ClientCloseStart(this.ClientId);
             try
             {

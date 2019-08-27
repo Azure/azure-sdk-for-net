@@ -1,4 +1,8 @@
-﻿using Azure.Storage.Blobs.Models;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
+using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
@@ -34,7 +38,7 @@ namespace SmokeTest
     class CosmosDBTest
     {
         private static DocumentClient client;
-        private const string DataBaseName = "netSolarSystemDB";
+        private static string DataBaseName = $"netSolarSystemDB-{Guid.NewGuid()}";
         private const string CollectionName = "PlanetsCollection";
         private static List<Planet> planets = new List<Planet>();
 

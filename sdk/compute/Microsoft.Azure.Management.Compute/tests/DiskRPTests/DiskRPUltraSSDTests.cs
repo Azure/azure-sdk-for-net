@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -18,7 +18,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void UltraSSD_CRUD_EmptyDisk()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
 
@@ -28,9 +28,9 @@ namespace Compute.Tests.DiskRPTests
                 Disk disk = GenerateBaseDisk("Empty");
                 disk.Sku = new DiskSku(DiskStorageAccountTypes.UltraSSDLRS, "Ultra");
                 disk.DiskSizeGB = 256;
-                disk.Zones = new List<string> { "2" };
+                disk.Zones = new List<string> { "1" };
                 disk.DiskMBpsReadWrite = 8;
-                disk.DiskIOPSReadWrite = 500;
+                disk.DiskIOPSReadWrite = 512;
                 disk.Location = DiskRPLocation;
 
                 try
@@ -85,3 +85,4 @@ namespace Compute.Tests.DiskRPTests
         }
     }
 }
+

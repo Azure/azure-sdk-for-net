@@ -19,7 +19,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -96,7 +96,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // get to check it was updated
                     var getUpdatedResponse = testBase.client.Product.Get(
-                        testBase.rgName, 
+                        testBase.rgName,
                         testBase.serviceName,
                         productId);
 
@@ -120,7 +120,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(productList);
                     Assert.Single(productList);
                     // first is the product in Test due to alphabetical order of name
-                    Assert.Equal(patchedName, productList.First().DisplayName); 
+                    Assert.Equal(patchedName, productList.First().DisplayName);
                     Assert.NotEmpty(productList.NextPageLink);
 
                     // check the next link returned from above query works
@@ -151,12 +151,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         productId,
                         productTag.ETag,
-                        deleteSubscriptions:true);
+                        deleteSubscriptions: true);
 
                     // get the deleted product to make sure it was deleted
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.Product.Get(
-                            testBase.rgName, 
+                            testBase.rgName,
                             testBase.serviceName,
                             productId));
                 }
@@ -176,7 +176,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public void ApisListAddRemove()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -192,7 +192,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Filter = "name eq 'Starter'"
                     });
 
-                Assert.NotNull(getProductsResponse);                
+                Assert.NotNull(getProductsResponse);
                 Assert.Single(getProductsResponse);
 
                 var product = getProductsResponse.Single();
@@ -204,7 +204,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     product.Name,
                     null);
 
-                Assert.NotNull(listApisResponse);                
+                Assert.NotNull(listApisResponse);
                 Assert.Single(listApisResponse);
 
                 // get api
@@ -221,7 +221,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName,
                     product.Name,
                     listApisResponse.Single().Name);
-                
+
                 // list to check it was removed
                 listApisResponse = testBase.client.ProductApi.ListByProduct(
                     testBase.rgName,
@@ -229,7 +229,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     product.Name,
                     null);
 
-                Assert.NotNull(listApisResponse);                
+                Assert.NotNull(listApisResponse);
                 Assert.Empty(listApisResponse);
 
                 // add the api to product
@@ -248,7 +248,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     product.Name,
                     null);
 
-                Assert.NotNull(listApisResponse);                
+                Assert.NotNull(listApisResponse);
                 Assert.Single(listApisResponse);
             }
         }
@@ -257,7 +257,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public void GroupsListAddRemove()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -273,7 +273,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Filter = "name eq 'Starter'"
                     });
 
-                Assert.NotNull(getProductsResponse);                
+                Assert.NotNull(getProductsResponse);
                 Assert.Single(getProductsResponse);
 
                 var product = getProductsResponse.Single();
@@ -302,7 +302,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName,
                     product.Name,
                     getResponse.Name);
-                
+
                 // list to check it was removed
                 listGroupsResponse = testBase.client.ProductGroup.ListByProduct(
                     testBase.rgName,
@@ -310,7 +310,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     product.Name,
                     null);
 
-                Assert.NotNull(listGroupsResponse);                
+                Assert.NotNull(listGroupsResponse);
                 Assert.Equal(2, listGroupsResponse.Count());
 
                 // assign the group to the product
@@ -330,7 +330,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     product.Name,
                     null);
 
-                Assert.NotNull(listGroupsResponse);                
+                Assert.NotNull(listGroupsResponse);
                 Assert.Equal(3, listGroupsResponse.Count());
             }
         }
@@ -340,7 +340,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -363,7 +363,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     product.Name,
                     null);
 
-                Assert.NotNull(listSubscriptionsResponse);                
+                Assert.NotNull(listSubscriptionsResponse);
                 Assert.Single(listSubscriptionsResponse);
             }
         }

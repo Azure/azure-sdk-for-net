@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   Calculates the amount of time to allow the curent attempt for an operation to
+        ///   Calculates the amount of time to allow the current attempt for an operation to
         ///   complete before considering it to be timed out.
         /// </summary>
         ///
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Core
                     break;
 
                 case RetryMode.Exponential:
-                    retryDelay = CalculateExponentiayDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, s_random.Value);
+                    retryDelay = CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, s_random.Value);
                     break;
 
                 default:
@@ -137,7 +137,6 @@ namespace Azure.Messaging.EventHubs.Core
                     return ex.IsTransient;
 
                 case TimeoutException _:
-                case OperationCanceledException _:
                 case SocketException _:
                     return true;
 
@@ -157,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The recommended duration to delay before retrying; this value does not take the maximum delay or eligibility for retry into account.</returns>
         ///
-        private static TimeSpan CalculateExponentiayDelay(int attemptCount,
+        private static TimeSpan CalculateExponentialDelay(int attemptCount,
                                                           double baseDelaySeconds,
                                                           double baseJitterSeconds,
                                                           Random random) =>

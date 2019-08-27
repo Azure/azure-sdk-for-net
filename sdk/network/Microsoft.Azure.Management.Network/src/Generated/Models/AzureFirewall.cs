@@ -53,11 +53,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="threatIntelMode">The operation mode for Threat
         /// Intelligence. Possible values include: 'Alert', 'Deny',
         /// 'Off'</param>
+        /// <param name="virtualHub">The virtualHub to which the firewall
+        /// belongs.</param>
+        /// <param name="firewallPolicy">The firewallPolicy associated with
+        /// this azure firewall.</param>
+        /// <param name="hubIpAddresses">IP addresses associated with
+        /// AzureFirewall.</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), string provisioningState = default(string), string threatIntelMode = default(string), IList<string> zones = default(IList<string>), string etag = default(string))
+        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), string provisioningState = default(string), string threatIntelMode = default(string), SubResource virtualHub = default(SubResource), SubResource firewallPolicy = default(SubResource), HubIPAddresses hubIpAddresses = default(HubIPAddresses), IList<string> zones = default(IList<string>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ApplicationRuleCollections = applicationRuleCollections;
@@ -66,6 +72,9 @@ namespace Microsoft.Azure.Management.Network.Models
             IpConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
             ThreatIntelMode = threatIntelMode;
+            VirtualHub = virtualHub;
+            FirewallPolicy = firewallPolicy;
+            HubIpAddresses = hubIpAddresses;
             Zones = zones;
             Etag = etag;
             CustomInit();
@@ -116,6 +125,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.threatIntelMode")]
         public string ThreatIntelMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtualHub to which the firewall belongs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualHub")]
+        public SubResource VirtualHub { get; set; }
+
+        /// <summary>
+        /// Gets or sets the firewallPolicy associated with this azure
+        /// firewall.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallPolicy")]
+        public SubResource FirewallPolicy { get; set; }
+
+        /// <summary>
+        /// Gets IP addresses associated with AzureFirewall.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hubIpAddresses")]
+        public HubIPAddresses HubIpAddresses { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting where the

@@ -33,7 +33,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteLinkedService()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
                 var subId = client.SubscriptionId;
@@ -77,7 +77,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void LinkedServiceCreateFailsWithoutWorkspace()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
                 var subId = client.SubscriptionId;

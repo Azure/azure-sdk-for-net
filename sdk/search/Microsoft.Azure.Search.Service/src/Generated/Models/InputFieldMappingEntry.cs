@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Search.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,10 +34,16 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">The name of the input.</param>
         /// <param name="source">The source of the input.</param>
-        public InputFieldMappingEntry(string name, string source)
+        /// <param name="sourceContext">The source context used for selecting
+        /// recursive inputs.</param>
+        /// <param name="inputs">The recursive inputs used when creating a
+        /// complex type.</param>
+        public InputFieldMappingEntry(string name, string source = default(string), string sourceContext = default(string), IList<InputFieldMappingEntry> inputs = default(IList<InputFieldMappingEntry>))
         {
             Name = name;
             Source = source;
+            SourceContext = sourceContext;
+            Inputs = inputs;
             CustomInit();
         }
 
@@ -57,6 +65,20 @@ namespace Microsoft.Azure.Search.Models
         public string Source { get; set; }
 
         /// <summary>
+        /// Gets or sets the source context used for selecting recursive
+        /// inputs.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceContext")]
+        public string SourceContext { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recursive inputs used when creating a complex
+        /// type.
+        /// </summary>
+        [JsonProperty(PropertyName = "inputs")]
+        public IList<InputFieldMappingEntry> Inputs { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -68,9 +90,15 @@ namespace Microsoft.Azure.Search.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Source == null)
+            if (Inputs != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Source");
+                foreach (var element in Inputs)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

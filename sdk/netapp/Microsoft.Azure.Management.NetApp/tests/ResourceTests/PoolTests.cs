@@ -20,7 +20,7 @@ namespace NetApp.Tests.ResourceTests
         public void CreateDeletePool()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -47,7 +47,7 @@ namespace NetApp.Tests.ResourceTests
         public void ListPools()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -77,7 +77,7 @@ namespace NetApp.Tests.ResourceTests
         public void GetPoolByName()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -98,7 +98,7 @@ namespace NetApp.Tests.ResourceTests
         public void GetPoolByNameNotFound()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -125,7 +125,7 @@ namespace NetApp.Tests.ResourceTests
         public void GetPoolByNameAccountNotFound()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -153,7 +153,7 @@ namespace NetApp.Tests.ResourceTests
         public void DeleteAccountWithPoolPresent()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -185,7 +185,7 @@ namespace NetApp.Tests.ResourceTests
         public void UpdatePool()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -217,7 +217,7 @@ namespace NetApp.Tests.ResourceTests
         public void PatchPool()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 

@@ -413,7 +413,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Files.FileServiceClient.GetProperties",
+                        operationName: Constants.File.Service.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -535,7 +535,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         properties: properties,
                         async: async,
-                        operationName: "Azure.Storage.Files.FileServiceClient.SetProperties",
+                        operationName: Constants.File.Service.SetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

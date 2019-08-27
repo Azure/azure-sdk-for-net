@@ -32,7 +32,7 @@ namespace Monitor.Tests.Scenarios
         {
             // The second argument in the call to Start (missing in this case) controls the name of the output file.
             // By default the system will use the name of the current method as file for the output (when recording.)
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 LogProfileResource expResponse = CreateLogProfile();
 

@@ -17,9 +17,6 @@ namespace Azure.Storage.Files
     /// </summary>
     internal struct FileUriBuilder : IEquatable<FileUriBuilder>
     {
-        const string SnapshotParameterName = "snapshot";
-        const string SasVersionKey = "sv";
-
         /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
@@ -144,15 +141,15 @@ namespace Azure.Storage.Files
 
             var paramsMap = new UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
             {
                 this.Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(SnapshotParameterName);
+                paramsMap.Remove(Constants.SnapshotParameterName);
             }
 
-            if (paramsMap.ContainsKey(SasVersionKey))
+            if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
                 this.Sas = new SasQueryParameters(paramsMap);
             }
@@ -196,7 +193,7 @@ namespace Azure.Storage.Files
                     rawQuery += "&";
                 }
 
-                rawQuery += SnapshotParameterName + "=" + this.Snapshot;
+                rawQuery += Constants.SnapshotParameterName + "=" + this.Snapshot;
             }
 
             if (this.Sas != null)

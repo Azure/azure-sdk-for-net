@@ -4,43 +4,44 @@
 namespace Microsoft.Azure.EventHubs.Tests.Processor
 {
     using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Processor;
     using Xunit;
 
     public class NegativeCases : ProcessorTestBase
     {
+
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task HostReregisterShouldFail()
         {
-            var eventProcessorHost = new EventProcessorHost(
-                string.Empty,
-                PartitionReceiver.DefaultConsumerGroupName,
-                TestUtility.EventHubsConnectionString,
-                TestUtility.StorageConnectionString,
-                this.LeaseContainerName);
-
-            try
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                // Calling register for the first time should succeed.
-                TestUtility.Log("Registering EventProcessorHost for the first time.");
-                await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var eventProcessorHost = new EventProcessorHost(
+                    string.Empty,
+                    PartitionReceiver.DefaultConsumerGroupName,
+                    connectionString,
+                    TestUtility.StorageConnectionString,
+                    scope.EventHubName.ToLower());
 
-                await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                try
                 {
-                    TestUtility.Log("Registering EventProcessorHost for the second time which should fail.");
+                    // Calling register for the first time should succeed.
+                    TestUtility.Log("Registering EventProcessorHost for the first time.");
                     await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
-                });
-            }
-            finally
-            {
-                await eventProcessorHost.UnregisterEventProcessorAsync();
+
+                    await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    {
+                        TestUtility.Log("Registering EventProcessorHost for the second time which should fail.");
+                        await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
+                    });
+                }
+                finally
+                {
+                    await eventProcessorHost.UnregisterEventProcessorAsync();
+                }
             }
         }
 
@@ -49,25 +50,29 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task NonexsistentEntity()
         {
-            // Rebuild connection string with a nonexistent entity.
-            var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            csb.EntityPath = Guid.NewGuid().ToString();
-
-            var eventProcessorHost = new EventProcessorHost(
-                string.Empty,
-                PartitionReceiver.DefaultConsumerGroupName,
-                csb.ToString(),
-                TestUtility.StorageConnectionString,
-                this.LeaseContainerName);
-
-            TestUtility.Log("Calling RegisterEventProcessorAsync for a nonexistent entity.");
-            var ex = await Assert.ThrowsAsync<EventProcessorConfigurationException>(async () =>
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
-            });
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                // Rebuild connection string with a nonexistent entity.
+                var csb = new EventHubsConnectionStringBuilder(connectionString);
+                csb.EntityPath = Guid.NewGuid().ToString();
 
-            Assert.NotNull(ex.InnerException);
-            Assert.IsType<MessagingEntityNotFoundException>(ex.InnerException);
+                var eventProcessorHost = new EventProcessorHost(
+                    string.Empty,
+                    PartitionReceiver.DefaultConsumerGroupName,
+                    csb.ToString(),
+                    TestUtility.StorageConnectionString,
+                    scope.EventHubName.ToLower());
+
+                TestUtility.Log("Calling RegisterEventProcessorAsync for a nonexistent entity.");
+                var ex = await Assert.ThrowsAsync<EventProcessorConfigurationException>(async () =>
+                {
+                    await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
+                });
+
+                Assert.NotNull(ex.InnerException);
+                Assert.IsType<MessagingEntityNotFoundException>(ex.InnerException);
+            }
         }
 
         [Fact]

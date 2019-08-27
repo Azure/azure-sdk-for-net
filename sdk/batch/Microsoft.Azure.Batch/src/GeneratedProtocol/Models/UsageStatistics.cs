@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Statistics related to pool usage information.
+    /// Statistics related to Pool usage information.
     /// </summary>
     public partial class UsageStatistics
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// last updated. All statistics are limited to the range between
         /// startTime and lastUpdateTime.</param>
         /// <param name="dedicatedCoreTime">The aggregated wall-clock time of
-        /// the dedicated compute node cores being part of the pool.</param>
+        /// the dedicated Compute Node cores being part of the Pool.</param>
         public UsageStatistics(System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan dedicatedCoreTime)
         {
             StartTime = startTime;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the aggregated wall-clock time of the dedicated
-        /// compute node cores being part of the pool.
+        /// Compute Node cores being part of the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "dedicatedCoreTime")]
         public System.TimeSpan DedicatedCoreTime { get; set; }

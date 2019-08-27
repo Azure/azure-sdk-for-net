@@ -191,6 +191,16 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteLinksOperations ExpressRouteLinks { get; }
 
         /// <summary>
+        /// Gets the IFirewallPoliciesOperations.
+        /// </summary>
+        IFirewallPoliciesOperations FirewallPolicies { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyRuleGroupsOperations.
+        /// </summary>
+        IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; }
+
+        /// <summary>
         /// Gets the ILoadBalancersOperations.
         /// </summary>
         ILoadBalancersOperations LoadBalancers { get; }

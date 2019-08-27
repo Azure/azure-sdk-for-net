@@ -108,8 +108,8 @@ namespace TrackOne.Amqp
                 return;
             }
 
-            await this.SendLinkManager.GetOrCreateAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
-            await Task.Delay(TimeSpan.FromMilliseconds(5)).ConfigureAwait(false);
+            await this.SendLinkManager.GetOrCreateAsync(TimeSpan.FromSeconds(AmqpClientConstants.AmqpSessionTimeoutInSeconds)).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromMilliseconds(15)).ConfigureAwait(false);
 
         }
 

@@ -14,8 +14,6 @@ namespace Azure.Storage.Queues
     /// </summary>
     internal struct QueueUriBuilder : IEquatable<QueueUriBuilder>
     {
-        const string SasVersionKey = "sv";
-
         /// <summary>
         /// Scheme.
         /// Example: "http"
@@ -135,7 +133,7 @@ namespace Azure.Storage.Queues
 
             // Convert the query parameters to a case-sensitive map & trim whitespace
             var paramsMap = new UriQueryParamsCollection(uri.Query);
-            if(paramsMap.ContainsKey(SasVersionKey))
+            if(paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
                 this.Sas = new SasQueryParameters(paramsMap);
             }

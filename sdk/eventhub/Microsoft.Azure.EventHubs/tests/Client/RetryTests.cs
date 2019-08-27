@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.EventHubs.Tests.Client
 {
     using System;
+    using System.Threading.Tasks;
     using Xunit;
 
     public class RetryTests
@@ -91,24 +92,28 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public void ChildEntityShouldInheritRetryPolicyFromParent()
+        public async Task ChildEntityShouldInheritRetryPolicyFromParent()
         {
             var testMaxRetryCount = 99;
 
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            ehClient.RetryPolicy = new RetryPolicyCustom(testMaxRetryCount);
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                ehClient.RetryPolicy = new RetryPolicyCustom(testMaxRetryCount);
 
-            // Validate partition sender inherits.
-            var sender = ehClient.CreateEventSender("0");
-            Assert.True(sender.RetryPolicy is RetryPolicyCustom, "Sender failed to inherit parent client's RetryPolicy setting.");
-            Assert.True((sender.RetryPolicy as RetryPolicyCustom).maximumRetryCount == testMaxRetryCount,
-                $"Retry policy on the sender shows testMaxRetryCount as {(sender.RetryPolicy as RetryPolicyCustom).maximumRetryCount}");
+                // Validate partition sender inherits.
+                var sender = ehClient.CreateEventSender("0");
+                Assert.True(sender.RetryPolicy is RetryPolicyCustom, "Sender failed to inherit parent client's RetryPolicy setting.");
+                Assert.True((sender.RetryPolicy as RetryPolicyCustom).maximumRetryCount == testMaxRetryCount,
+                    $"Retry policy on the sender shows testMaxRetryCount as {(sender.RetryPolicy as RetryPolicyCustom).maximumRetryCount}");
 
-            // Validate partition receiver inherits.
-            var receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
-            Assert.True(receiver.RetryPolicy is RetryPolicyCustom, "Receiver failed to inherit parent client's RetryPolicy setting.");
-            Assert.True((receiver.RetryPolicy as RetryPolicyCustom).maximumRetryCount == testMaxRetryCount,
-                $"Retry policy on the receiver shows testMaxRetryCount as {(receiver.RetryPolicy as RetryPolicyCustom).maximumRetryCount}");
+                // Validate partition receiver inherits.
+                var receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
+                Assert.True(receiver.RetryPolicy is RetryPolicyCustom, "Receiver failed to inherit parent client's RetryPolicy setting.");
+                Assert.True((receiver.RetryPolicy as RetryPolicyCustom).maximumRetryCount == testMaxRetryCount,
+                    $"Retry policy on the receiver shows testMaxRetryCount as {(receiver.RetryPolicy as RetryPolicyCustom).maximumRetryCount}");
+            }
         }
 
         public sealed class RetryPolicyCustom : RetryPolicy

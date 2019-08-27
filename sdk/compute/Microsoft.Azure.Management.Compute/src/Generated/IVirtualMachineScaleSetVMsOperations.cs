@@ -180,6 +180,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on the operation. Possible values
+        /// include: 'instanceView'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -195,7 +199,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualMachineScaleSetVM>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineScaleSetVM>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, InstanceViewTypes? expand = default(InstanceViewTypes?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the status of a virtual machine from a VM scale set.
         /// </summary>

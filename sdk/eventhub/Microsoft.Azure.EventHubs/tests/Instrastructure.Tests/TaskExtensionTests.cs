@@ -4,7 +4,6 @@
 namespace Microsoft.Azure.EventHubs.Tests
 {
     using System;
-    using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
@@ -12,7 +11,7 @@ namespace Microsoft.Azure.EventHubs.Tests
     public class TaskExtensionsTests
     {
         // It has been observed during the CI build that test runs can cause delays that were noted at
-        // 1-2 seconds and were causing intermitten failures as a result.  The long delay has been set at 5
+        // 1-2 seconds and were causing intermittent failures as a result.  The long delay has been set at 5
         // seconds arbitrarily, which may delay results should tests fail but is otherwise not expected to
         // be an actual wait time under normal circumstances.
         private readonly TimeSpan LongDelay = TimeSpan.FromSeconds(5);
@@ -44,7 +43,7 @@ namespace Microsoft.Azure.EventHubs.Tests
         {
             Func<Task> actionUnderTest = async () =>
                 await Task.Delay(LongDelay)
-                    .ContinueWith( _ => "blue")
+                    .ContinueWith(_ => "blue")
                     .WithTimeout(TinyDelay);
 
             await Assert.ThrowsAsync<TimeoutException>(actionUnderTest);
@@ -63,7 +62,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             };
 
             var result = await Task.Delay(LongDelay)
-                .ContinueWith( _ => "blue")
+                .ContinueWith(_ => "blue")
                 .WithTimeout(TinyDelay, null, timeoutCallback);
 
             Assert.True(timeoutActionInvoked, "The timeout action should have been invoked.");
@@ -94,7 +93,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             try
             {
-                await Task.Delay(TinyDelay).ContinueWith( _ => "blue").WithTimeout(LongDelay);
+                await Task.Delay(TinyDelay).ContinueWith(_ => "blue").WithTimeout(LongDelay);
             }
             catch (TimeoutException)
             {
@@ -108,7 +107,7 @@ namespace Microsoft.Azure.EventHubs.Tests
         public async Task WithTimeoutGenericReturnsTheValueWhenATimeoutDoesNotOccur()
         {
             var expected = "hello";
-            var result = await  Task.Delay(TinyDelay).ContinueWith( _ => expected).WithTimeout(LongDelay);
+            var result = await Task.Delay(TinyDelay).ContinueWith(_ => expected).WithTimeout(LongDelay);
             Assert.Equal(result, expected);
         }
 
@@ -127,7 +126,7 @@ namespace Microsoft.Azure.EventHubs.Tests
         {
             Func<Task> actionUnderTest = async () =>
                 await Task.Delay(TinyDelay)
-                    .ContinueWith( _ => throw new MissingMemberException("oh no"))
+                    .ContinueWith(_ => throw new MissingMemberException("oh no"))
                     .WithTimeout(LongDelay);
 
             await Assert.ThrowsAsync<MissingMemberException>(actionUnderTest);
@@ -136,10 +135,10 @@ namespace Microsoft.Azure.EventHubs.Tests
         [Fact]
         public async Task WithTimeoutGenericPropagatesAnExceptionThatCompletesBeforeTimeout()
         {
-           Func<Task> actionUnderTest = async () =>
-               await Task.Delay(TinyDelay)
-                   .ContinueWith<string>( _ => throw new MissingMemberException("oh no"))
-                   .WithTimeout(LongDelay);
+            Func<Task> actionUnderTest = async () =>
+                await Task.Delay(TinyDelay)
+                    .ContinueWith<string>(_ => throw new MissingMemberException("oh no"))
+                    .WithTimeout(LongDelay);
 
             await Assert.ThrowsAsync<MissingMemberException>(actionUnderTest);
         }
@@ -175,12 +174,12 @@ namespace Microsoft.Azure.EventHubs.Tests
         [Fact]
         public async Task WithTimeoutGenericInvokesTheCancellationTokenWhenATimeoutOccurs()
         {
-            var token  = new CancellationTokenSource();
+            var token = new CancellationTokenSource();
 
             try
             {
                 await Task.Delay(LongDelay)
-                    .ContinueWith( _ => "hello")
+                    .ContinueWith(_ => "hello")
                     .WithTimeout(TinyDelay, token);
             }
 

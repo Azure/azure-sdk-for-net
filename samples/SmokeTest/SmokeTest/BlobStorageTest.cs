@@ -1,8 +1,11 @@
-﻿using Azure.Storage.Blobs;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using System;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,7 +30,7 @@ namespace SmokeTest
 
             string connectionString = Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING");
             string containerName = "mycontainer"; //The container must exists, this sample is not creating it.
-            string blobName = "netSmokeTestBlob";
+            string blobName = $"netSmokeTestBlob-{Guid.NewGuid()}.txt";
             serviceClient = new BlobServiceClient(connectionString);
             blobClient = serviceClient.GetBlobContainerClient(containerName).GetBlockBlobClient(blobName);
 

@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// task to complete. In this case, other tasks can start executing on
         /// the compute node while the start task is still running; and even if
         /// the start task fails, new tasks will continue to be scheduled on
-        /// the node. The default is false.
+        /// the node. The default is true.
         /// </remarks>
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace HybridData.Tests.Tests
+namespace HybridData.Tests.Tests
 {
     public static class TestConstants
     {

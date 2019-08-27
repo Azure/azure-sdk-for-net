@@ -63,13 +63,15 @@ namespace Azure.Core.Tests
             var exception = new Exception();
             scope.Failed(exception);
             scope.Dispose();
-
+            
+            KeyValuePair<string, object> exceptionEvent = testListener.Events.Dequeue();
             KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
 
             Assert.Null(Activity.Current);
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
-            Assert.AreEqual("ActivityName.Exception", stopEvent.Key);
-            Assert.AreEqual(exception, stopEvent.Value);
+            Assert.AreEqual("ActivityName.Exception", exceptionEvent.Key);
+            Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
+            Assert.AreEqual(exception, exceptionEvent.Value);
             Assert.AreEqual(0, testListener.Events.Count);
 
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));

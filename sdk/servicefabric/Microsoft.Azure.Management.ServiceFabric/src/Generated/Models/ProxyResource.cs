@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="id">Azure resource identifier.</param>
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
-        /// <param name="location">Azure resource location.</param>
+        /// <param name="location">It will be deprecated in New API, resource
+        /// location depends on the parent resource.</param>
         /// <param name="tags">Azure resource tags.</param>
         /// <param name="etag">Azure resource etag.</param>
         public ProxyResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
@@ -74,7 +75,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets azure resource location.
+        /// Gets or sets it will be deprecated in New API, resource location
+        /// depends on the parent resource.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

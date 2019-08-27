@@ -21,7 +21,7 @@ using Microsoft.Rest.Azure.OData;
 
 namespace Authorization.Tests
 {
-	public class TestExecutionContext : GraphTestBase, IDisposable
+    public class TestExecutionContext : GraphTestBase, IDisposable
     {
         private List<User> createdUsers;
 
@@ -29,11 +29,11 @@ namespace Authorization.Tests
 
         private bool disposed = false;
 
-		private GraphRbacManagementClient GraphClient { get; set; }
-        
+        private GraphRbacManagementClient GraphClient { get; set; }
+
         public IReadOnlyCollection<User> Users
         {
-            get 
+            get
             {
                 return this.createdUsers.AsReadOnly();
             }
@@ -53,19 +53,19 @@ namespace Authorization.Tests
             this.createdUsers = new List<User>();
             this.createdGroups = new List<ADGroup>();
 
-            if(HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record )
+            if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
             {
-                this.CleanupTestData(MockContext.Start(this.GetType().FullName));
+                this.CleanupTestData(MockContext.Start(this.GetType()));
             }
 
-			using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {                
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
                 this.GraphClient = (GetGraphClient(context));
 
                 this.CreateGroups(context, 10);
                 this.CreateUsers(context, 10);
 
-                TestUtilities.Wait(1000*10);
+                TestUtilities.Wait(1000 * 10);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Authorization.Tests
             return context.GetServiceClient<AuthorizationManagementClient>();
         }
 
-		public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -113,7 +113,7 @@ namespace Authorization.Tests
         {
             for (int i = 0; i < number; i++)
             {
-                User user = CreateUser(context,"testUser" + i + Guid.NewGuid());
+                User user = CreateUser(context, "testUser" + i + Guid.NewGuid());
                 this.createdUsers.Add(user);
             }
         }
@@ -122,7 +122,7 @@ namespace Authorization.Tests
         {
             for (int i = 0; i < number; i++)
             {
-				ADGroup group = CreateGroup(context, "testGroup" + i + Guid.NewGuid());
+                ADGroup group = CreateGroup(context, "testGroup" + i + Guid.NewGuid());
                 this.createdGroups.Add(group);
             }
         }
@@ -143,19 +143,19 @@ namespace Authorization.Tests
 
             foreach (var group in this.createdGroups)
             {
-                DeleteGroup(context,group.ObjectId);
+                DeleteGroup(context, group.ObjectId);
             }
 
             createdGroups.Clear();
-			foreach (var user in this.GraphClient.Users.List(new ODataQuery<User>(f => f.DisplayName.Contains("testUser"))))
-			{
-				DeleteUser(context, user.ObjectId);
-			}
+            foreach (var user in this.GraphClient.Users.List(new ODataQuery<User>(f => f.DisplayName.Contains("testUser"))))
+            {
+                DeleteUser(context, user.ObjectId);
+            }
 
-			foreach (var group in this.GraphClient.Groups.List(new ODataQuery<ADGroup>(f => f.DisplayName.Contains("testGroup"))))
-			{
-				DeleteGroup(context, group.ObjectId);
-			}
+            foreach (var group in this.GraphClient.Groups.List(new ODataQuery<ADGroup>(f => f.DisplayName.Contains("testGroup"))))
+            {
+                DeleteGroup(context, group.ObjectId);
+            }
 
             var env = TestEnvironmentFactory.GetTestEnvironment();
             var cred = env.TokenInfo[TokenAudience.Management];

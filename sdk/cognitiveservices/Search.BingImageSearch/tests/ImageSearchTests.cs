@@ -16,9 +16,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void ImageSearch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "ImageSearch");
+                HttpMockServer.Initialize(this.GetType(), "ImageSearch");
 
                 IImageSearchClient client = new ImageSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -45,9 +45,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void ImageDetail()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "ImageDetail");
+                HttpMockServer.Initialize(this.GetType(), "ImageDetail");
 
                 IImageSearchClient client = new ImageSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -81,9 +81,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void ImageTrending()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "ImageTrending");
+                HttpMockServer.Initialize(this.GetType(), "ImageTrending");
 
                 IImageSearchClient client = new ImageSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
