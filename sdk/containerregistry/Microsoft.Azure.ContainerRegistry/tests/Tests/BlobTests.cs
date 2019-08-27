@@ -122,16 +122,10 @@
                 cpy.Position = 0;
 
                 var uploadInfo = await client.StartBlobUploadAsync(ACRTestUtil.BlobTestRepository);
-                try
-                {
-                    var uploadedLayer = await client.UploadBlobChunkAsync(cpy, "bytes=0-300", uploadInfo.Location.Substring(1));
-                    var status = await client.GetBlobStatusAsync(uploadInfo.Location.Substring(1));
-                    Assert.Equal("bytes=0-300", status.Range);
-                    await client.CancelBlobUploadAsync(uploadInfo.Location.Substring(1));
-                }
-                catch (Exception e) {
-                    Console.WriteLine(e);
-                }
+                var uploadedChunk = await client.UploadBlobChunkAsync(cpy, "0-299", uploadInfo.Location.Substring(1));
+                var status = await client.GetBlobStatusAsync(uploadedChunk.Location.Substring(1));
+                Assert.Equal("0-299", status.Range);
+                await client.CancelBlobUploadAsync(uploadedChunk.Location.Substring(1));
 
             }
         }

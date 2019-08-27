@@ -9,6 +9,7 @@ namespace ContainerRegistry.Tests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -189,6 +190,50 @@ namespace ContainerRegistry.Tests
             }
         };
 
+        private static readonly OCIManifest ExpectedOCIManifestProd = new OCIManifest()
+        {
+            Config = new Descriptor
+            {
+                MediaType = "application/vnd.oci.image.config.v1+json",
+                Size = 2,
+                Digest = "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                Urls = null,
+                Annotations = null
+            },
+            Layers = new List<Descriptor>
+            {
+                new Descriptor
+                {
+                    MediaType = "application/vnd.oci.image.layer.v1.tar+gzip",
+                    Size = 236004,
+                    Digest = "sha256:2d1fb76c10e805cf3d8d130a2921b89721bc83867855aa4608811f57c03599ea",
+                    Urls = null,
+                    Annotations = new Annotations
+                    {
+                        AdditionalProperties = new Dictionary<string, object>
+                        {
+                            {"io.deis.oras.content.digest", "sha256:d4d3bda3e64bbc1d8550a6ed8d09324a39a75c8687ab5f6e06b2e9baee29a00c" },
+                            {"io.deis.oras.content.unpack", "true"}
+                        },
+                        Created = null,
+                        Authors = null,
+                        Url = null,
+                        Documentation = null,
+                        Source = null,
+                        Version = null,
+                        Revision = null,
+                        Vendor = null,
+                        Licenses = null,
+                        Name = null,
+                        Title = ".",
+                        Description = null
+                    }
+                }
+            },
+            Annotations = null,
+            SchemaVersion = 2
+        };
+
         private static readonly ManifestAttributes ExpectedAttributesChangeableRepository = new ManifestAttributes()
         {
             Registry = ACRTestUtil.ManagedTestRegistryForChangesFullName,
@@ -269,11 +314,11 @@ namespace ContainerRegistry.Tests
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var manifest = (OCIManifest)await client.GetManifestAsync(ACRTestUtil.OCITestRepository, tag, ACRTestUtil.MediatypeV2Manifest);
-                VerifyManifest(ExpectedV2ManifestProd, manifest);
+                var manifest = (OCIManifest)await client.GetManifestAsync(ACRTestUtil.OCITestRepository, tag, ACRTestUtil.MediatypeOCIManifest);
+                VerifyManifest(ExpectedOCIManifestProd, manifest);
             }
         }
-
+        /*
         [Fact]
         public async Task GetOCIIndex()
         {
@@ -297,7 +342,7 @@ namespace ContainerRegistry.Tests
                 VerifyManifest(ExpectedV2ManifestProd, manifest);
             }
         }
-
+        */
         [Fact]
         public async Task GetV2Manifest()
         {
@@ -345,8 +390,8 @@ namespace ContainerRegistry.Tests
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
                 await client.CreateManifestAsync(ACRTestUtil.changeableRepository, "temporary", ExpectedV2ManifestProd);
-                
-                var newManifest = (V2Manifest) await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", ACRTestUtil.MediatypeV2Manifest);
+
+                var newManifest = (V2Manifest)await client.GetManifestAsync(ACRTestUtil.changeableRepository, "temporary", ACRTestUtil.MediatypeV2Manifest);
                 var tag = await client.GetTagAttributesAsync(ACRTestUtil.changeableRepository, "temporary");
 
                 VerifyManifest(ExpectedV2ManifestProd, newManifest);
@@ -375,7 +420,8 @@ namespace ContainerRegistry.Tests
             Assert.Equal(baseManifest.GetType(), actualManifest.GetType());
             Assert.Equal(baseManifest.SchemaVersion, actualManifest.SchemaVersion);
 
-            if (baseManifest.GetType() == typeof(V2Manifest)) {
+            if (baseManifest.GetType() == typeof(V2Manifest))
+            {
                 var baseManifestV2 = (V2Manifest)baseManifest;
                 var actualManifestV2 = (V2Manifest)baseManifest;
                 Assert.Equal(baseManifestV2.Layers.Count, actualManifestV2.Layers.Count);
@@ -407,6 +453,51 @@ namespace ContainerRegistry.Tests
                 for (int i = 0; i < baseManifestV1.History.Count; i++)
                 {
                     Assert.Equal(baseManifestV1.History[i].V1Compatibility, actualManifestV1.History[i].V1Compatibility);
+                }
+            }
+            if (baseManifest.GetType() == typeof(OCIManifest))
+            {
+                var baseManifestOCI = (OCIManifest)baseManifest;
+                var actualManifestOCI = (OCIManifest)baseManifest;
+                Assert.Equal(baseManifestOCI.Layers.Count, actualManifestOCI.Layers.Count);
+                for (int i = 0; i < baseManifestOCI.Layers.Count; i++)
+                {
+                    Assert.Equal(baseManifestOCI.Layers[i].Digest, actualManifestOCI.Layers[i].Digest);
+                    Assert.Equal(baseManifestOCI.Layers[i].MediaType, actualManifestOCI.Layers[i].MediaType);
+                    Assert.Equal(baseManifestOCI.Layers[i].Size, actualManifestOCI.Layers[i].Size);
+                    Assert.Equal(baseManifestOCI.Layers[i].Annotations, actualManifestOCI.Layers[i].Annotations);
+                    VerifyAnnotations(baseManifestOCI.Layers[i].Annotations, actualManifestOCI.Layers[i].Annotations);
+                }
+                Assert.Equal(baseManifestOCI.Config.Digest, actualManifestOCI.Config.Digest);
+                Assert.Equal(baseManifestOCI.Config.MediaType, actualManifestOCI.Config.MediaType);
+                Assert.Equal(baseManifestOCI.Config.Size, actualManifestOCI.Config.Size);
+                VerifyAnnotations(baseManifestOCI.Annotations, actualManifestOCI.Annotations);
+            }
+        }
+
+        private void VerifyAnnotations(Annotations expected, Annotations actual) {
+            if ((expected == null) && (actual == null)) { return; };
+            Assert.True((expected == null) == (actual == null));
+            Assert.Equal(expected.Authors, actual.Authors);
+            Assert.Equal(expected.Created, actual.Created);
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.Documentation, actual.Documentation);
+            Assert.Equal(expected.Licenses, actual.Licenses);
+            Assert.Equal(expected.Revision, actual.Revision);
+            Assert.Equal(expected.Source, actual.Source);
+            Assert.Equal(expected.Title, actual.Title);
+            Assert.Equal(expected.Url, actual.Url);
+            Assert.Equal(expected.Vendor, actual.Vendor);
+            Assert.Equal(expected.Version, actual.Version);
+            Assert.True((expected.AdditionalProperties == null) == (actual.AdditionalProperties == null));
+            if (expected.AdditionalProperties != null)
+            {
+                Assert.Equal(expected.AdditionalProperties.Count, actual.AdditionalProperties.Count);
+
+                var keys = actual.AdditionalProperties.Keys.ToList();
+                foreach (var key in keys)
+                {
+                    Assert.Equal(expected.AdditionalProperties[key], actual.AdditionalProperties[key]);
                 }
             }
         }

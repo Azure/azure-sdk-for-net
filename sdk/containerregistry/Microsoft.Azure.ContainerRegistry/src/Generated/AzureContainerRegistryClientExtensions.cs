@@ -796,6 +796,46 @@ namespace Microsoft.Azure.ContainerRegistry
             }
 
             /// <summary>
+            /// Upload a chunk of data to specified upload without completing the upload.
+            /// The data will be uploaded to the specified Content Range.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='value'>
+            /// </param>
+            /// <param name='contentRange'>
+            /// Range of bytes identifying the desired block of content represented by the
+            /// body. Start must the end offset retrieved via status check plus one. Note
+            /// that this is a non-standard use of the `Content-Range` header.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='uuid'>
+            /// A uuid identifying the upload.
+            /// </param>
+            /// <param name='chunk'>
+            /// Initiate Chunk Blob Upload
+            /// </param>
+            /// <param name='_state'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='_nouploadcache'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UploadBlobChunkSpecifiedHeaders> UploadBlobChunkSpecifiedAsync(this IAzureContainerRegistryClient operations, Stream value, string contentRange, string name, string uuid, string chunk = default(string), string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UploadBlobChunkSpecifiedWithHttpMessagesAsync(value, contentRange, name, uuid, chunk, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
             /// Retrieve the blob from the registry identified by `digest`. This endpoint
             /// may also support RFC7233 compliant range requests. Support can be detected
             /// by issuing a HEAD request. If the header `Accept-Range: bytes` is returned,
@@ -858,6 +898,41 @@ namespace Microsoft.Azure.ContainerRegistry
             public static async Task<CheckBlobChunkHeaders> CheckBlobChunkAsync(this IAzureContainerRegistryClient operations, string name, string digest, string range, string chunk = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckBlobChunkWithHttpMessagesAsync(name, digest, range, chunk, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Upload a chunk of data to specified upload without completing the upload.
+            /// The data will be uploaded to the specified Content Range.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='value'>
+            /// </param>
+            /// <param name='contentRange'>
+            /// Range of bytes identifying the desired block of content represented by the
+            /// body. Start must the end offset retrieved via status check plus one. Note
+            /// that this is a non-standard use of the `Content-Range` header.
+            /// </param>
+            /// <param name='location'>
+            /// Link acquired from upload start or previous chunk. Note, do not include
+            /// initial / (must do substring(1) )
+            /// </param>
+            /// <param name='chunk'>
+            /// Acquire only chunks of a blob. This endpoint may also support RFC7233
+            /// compliant range requests. Support can be detected by issuing a HEAD
+            /// request. If the header `Accept-Range: bytes` is returned, range requests
+            /// can be used to fetch partial content
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UploadBlobChunkHeaders> UploadBlobChunkAsync(this IAzureContainerRegistryClient operations, Stream value, string contentRange, string location, string chunk = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UploadBlobChunkWithHttpMessagesAsync(value, contentRange, location, chunk, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
