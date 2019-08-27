@@ -58,7 +58,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task RequestContentAsync(Request request, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (request.Content != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContent(request.ClientRequestId, await FormatContentAsync(request.Content, cancellationToken).ConfigureAwait(false));
             }
@@ -67,7 +67,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void RequestContent(Request request, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (request.Content != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContent(request.ClientRequestId, FormatContent(request.Content, cancellationToken));
             }
@@ -76,7 +76,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task RequestContentTextAsync(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (request.Content != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContentText(request.ClientRequestId, await FormatContentStringAsync(request.Content, encoding, cancellationToken).ConfigureAwait(false));
             }
@@ -85,7 +85,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void RequestContentText(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (request.Content != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContentText(request.ClientRequestId, FormatContentString(request.Content, encoding, cancellationToken));
             }
@@ -103,7 +103,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task ResponseContentAsync(Response response, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContent(response.ClientRequestId, await FormatContentAsync(response.ContentStream, cancellationToken).ConfigureAwait(false));
             }
@@ -112,7 +112,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void ResponseContent(Response response)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContent(response.ClientRequestId, FormatContent(response.ContentStream));
             }
@@ -130,7 +130,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task ResponseContentTextAsync(Response response, Encoding encoding, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContentText(response.ClientRequestId, await FormatContentStringAsync(response.ContentStream, encoding, cancellationToken).ConfigureAwait(false));
             }
@@ -139,7 +139,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void ResponseContentText(Response response, Encoding encoding)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContentText(response.ClientRequestId, FormatContentString(response.ContentStream, encoding));
             }
@@ -157,7 +157,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task ErrorResponseContentAsync(Response response, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContent(response.ClientRequestId, await FormatContentAsync(response.ContentStream, cancellationToken).ConfigureAwait(false));
             }
@@ -166,7 +166,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void ErrorResponseContent(Response response)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContent(response.ClientRequestId, FormatContent(response.ContentStream));
             }
@@ -175,7 +175,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task ErrorResponseContentTextAsync(Response response, Encoding encoding, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContentText(response.ClientRequestId, await FormatContentStringAsync(response.ContentStream, encoding, cancellationToken).ConfigureAwait(false));
             }
@@ -184,7 +184,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void ErrorResponseContentText(Response response, Encoding encoding)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContentText(response.ClientRequestId, FormatContentString(response.ContentStream, encoding));
             }

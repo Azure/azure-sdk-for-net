@@ -18,7 +18,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class BasicRetryPolicyTests
     {
         /// <summary>
@@ -28,7 +27,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public static IEnumerable<object[]> RetriableExceptionTestCases()
         {
             yield return new object[] { new TimeoutException() };
-            yield return new object[] { new OperationCanceledException() };
             yield return new object[] { new SocketException(500) };
 
             // Task Canceled should use the inner exception as the decision point.

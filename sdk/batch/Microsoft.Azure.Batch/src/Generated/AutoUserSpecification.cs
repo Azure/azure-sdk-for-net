@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoUserSpecification"/> class.
         /// </summary>
-        /// <param name='scope'>The scope for the auto user. If omitted, the default is <see cref="Common.AutoUserScope.Task"/>.</param>
+        /// <param name='scope'>The scope for the auto user. If omitted, the default is <see cref="Common.AutoUserScope.Pool"/>.</param>
         /// <param name='elevationLevel'>The elevation level of the auto user. If omitted, the default is <see cref="Common.ElevationLevel.NonAdmin"/>.</param>
         public AutoUserSpecification(
             Common.AutoUserScope? scope = default(Common.AutoUserScope?),
@@ -52,8 +52,14 @@ namespace Microsoft.Azure.Batch
         public Common.ElevationLevel? ElevationLevel { get; }
 
         /// <summary>
-        /// Gets the scope for the auto user. If omitted, the default is <see cref="Common.AutoUserScope.Task"/>.
+        /// Gets the scope for the auto user. If omitted, the default is <see cref="Common.AutoUserScope.Pool"/>.
         /// </summary>
+        /// <remarks>
+        /// If the pool is running Windows a value of <see cref="Common.AutoUserScope.Task"/> should be specified if stricter 
+        /// isolation between tasks is required. For example, if the Task mutates the registry in a way which could impact 
+        /// other Tasks, or if Certificates have been specified on the pool which should not be accessible by normal tasks 
+        /// but should be accessible by StartTasks.
+        /// </remarks>
         public Common.AutoUserScope? Scope { get; }
 
         #endregion // AutoUserSpecification

@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override bool TryAdd(EventData eventData)
         {
             Guard.ArgumentNotNull(nameof(eventData), eventData);
-            GuardDisposed();
+            Guard.NotDisposed(nameof(EventDataBatch), _disposed);
 
             var eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
 
@@ -172,19 +172,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             BatchMessages.Clear();
             _sizeBytes = 0;
-        }
-
-        /// <summary>
-        ///   Ensures that the batch has not already been disposed, throwing an exception
-        ///   if it has.
-        /// </summary>
-        ///
-        private void GuardDisposed()
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(nameof(AmqpEventBatch));
-            }
         }
     }
 }

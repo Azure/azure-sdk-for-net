@@ -23,7 +23,8 @@ namespace Azure.Storage.Test
         public static void AssertSequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
             Assert.AreEqual(expected.Count(), actual.Count(), "Actual sequence length does not match expected sequence length");
-            Assert.IsTrue(actual.SequenceEqual(expected), "Actual sequence does not match expected sequence");
+            var firstErrors = expected.Zip(actual, (e, a) => (expected: e, actual: a)).Select((x, i) => (index: i, x.expected, x.actual)).Where(x => !x.expected.Equals(x.actual)).Take(5).ToArray();
+            Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{String.Join("\n", firstErrors.Select(e => $"{e.index} => expected = {e.expected}, actual = {e.actual}"))}");
         }
 
         internal static Action<T, T> GetDefaultExceptionAssertion<T>(Func<T, T, bool> predicate)

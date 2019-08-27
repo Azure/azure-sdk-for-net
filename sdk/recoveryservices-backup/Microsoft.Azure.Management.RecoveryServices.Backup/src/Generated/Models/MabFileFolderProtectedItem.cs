@@ -50,6 +50,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="createMode">Create mode to indicate recovery of
         /// existing soft deleted data source or creation of new data source.
         /// Possible values include: 'Invalid', 'Default', 'Recover'</param>
+        /// <param name="deferredDeleteTimeInUTC">Time for deferred deletion in
+        /// UTC</param>
+        /// <param name="isScheduledForDeferredDelete">Flag to identify whether
+        /// the DS is scheduled for deferred delete</param>
+        /// <param name="deferredDeleteTimeRemaining">Time remaining before the
+        /// DS marked for deferred delete is permanently deleted</param>
+        /// <param name="isDeferredDeleteScheduleUpcoming">Flag to identify
+        /// whether the deferred deleted DS is to be purged soon</param>
+        /// <param name="isRehydrate">Flag to identify that deferred deleted DS
+        /// is to be moved into Pause state</param>
         /// <param name="friendlyName">Friendly name of this backup
         /// item.</param>
         /// <param name="computerName">Name of the computer associated with
@@ -58,20 +68,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// operation.</param>
         /// <param name="protectionState">Protected, ProtectionStopped,
         /// IRPending or ProtectionError</param>
-        /// <param name="isScheduledForDeferredDelete">Specifies if the item is
-        /// scheduled for deferred deletion.</param>
         /// <param name="deferredDeleteSyncTimeInUTC">Sync time for deferred
         /// deletion.</param>
         /// <param name="extendedInfo">Additional information with this backup
         /// item.</param>
-        public MabFileFolderProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), string friendlyName = default(string), string computerName = default(string), string lastBackupStatus = default(string), string protectionState = default(string), bool? isScheduledForDeferredDelete = default(bool?), long? deferredDeleteSyncTimeInUTC = default(long?), MabFileFolderProtectedItemExtendedInfo extendedInfo = default(MabFileFolderProtectedItemExtendedInfo))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode)
+        public MabFileFolderProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string computerName = default(string), string lastBackupStatus = default(string), string protectionState = default(string), long? deferredDeleteSyncTimeInUTC = default(long?), MabFileFolderProtectedItemExtendedInfo extendedInfo = default(MabFileFolderProtectedItemExtendedInfo))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
         {
             FriendlyName = friendlyName;
             ComputerName = computerName;
             LastBackupStatus = lastBackupStatus;
             ProtectionState = protectionState;
-            IsScheduledForDeferredDelete = isScheduledForDeferredDelete;
             DeferredDeleteSyncTimeInUTC = deferredDeleteSyncTimeInUTC;
             ExtendedInfo = extendedInfo;
             CustomInit();
@@ -106,13 +113,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
         public string ProtectionState { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies if the item is scheduled for deferred
-        /// deletion.
-        /// </summary>
-        [JsonProperty(PropertyName = "isScheduledForDeferredDelete")]
-        public bool? IsScheduledForDeferredDelete { get; set; }
 
         /// <summary>
         /// Gets or sets sync time for deferred deletion.

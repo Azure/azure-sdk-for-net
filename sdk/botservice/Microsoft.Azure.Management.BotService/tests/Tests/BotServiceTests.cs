@@ -28,7 +28,7 @@ namespace BotService.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = BotServiceManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var botServiceMgmtClient = BotServiceManagementTestUtilities.GetBotServiceManagementClient(context, handler);
@@ -58,7 +58,7 @@ namespace BotService.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = BotServiceManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var botServiceMgmtClient = BotServiceManagementTestUtilities.GetBotServiceManagementClient(context, handler);
@@ -88,7 +88,7 @@ namespace BotService.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = BotServiceManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var botServiceMgmtClient = BotServiceManagementTestUtilities.GetBotServiceManagementClient(context, handler);
@@ -118,7 +118,7 @@ namespace BotService.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = BotServiceManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var botServiceMgmtClient = BotServiceManagementTestUtilities.GetBotServiceManagementClient(context, handler);
@@ -181,7 +181,7 @@ namespace BotService.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = BotServiceManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var botServiceMgmtClient = BotServiceManagementTestUtilities.GetBotServiceManagementClient(context, handler);
@@ -221,7 +221,7 @@ namespace BotService.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = BotServiceManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var botServiceMgmtClient = BotServiceManagementTestUtilities.GetBotServiceManagementClient(context, handler);

@@ -214,7 +214,7 @@ namespace ServerManagement.Tests
             // ensure known state before starting.
             await EnsurePrerequisites();
 
-            using (var context = MockContext.Start("ServerManagement.Tests"))
+            using (var context = MockContext.Start("Tests"))
             {
                 var client = GetServerManagementClient(context);
 
@@ -237,7 +237,7 @@ namespace ServerManagement.Tests
             // ensure known state before starting.
             await EnsurePrerequisites();
 
-            using (var context = MockContext.Start("ServerManagement.Tests"))
+            using (var context = MockContext.Start("Tests"))
             {
                 var client = GetServerManagementClient(context);
 
@@ -312,7 +312,7 @@ namespace ServerManagement.Tests
             // ensure known state before starting.
             await EnsurePrerequisites();
 
-            using (var context = MockContext.Start("ServerManagement.Tests"))
+            using (var context = MockContext.Start("Tests"))
             {
                 var client = GetServerManagementClient(context);
                 GatewayResource gateway = null;
@@ -426,7 +426,7 @@ namespace ServerManagement.Tests
             // ensure known state before starting.
             await EnsurePrerequisites();
 
-            using (var context = MockContext.Start("ServerManagement.Tests"))
+            using (var context = MockContext.Start("Tests"))
             {
                 var client = GetServerManagementClient(context);
                 GatewayResource gateway = null;
@@ -514,7 +514,7 @@ namespace ServerManagement.Tests
             // ensure known state before starting.
             await EnsurePrerequisites();
 
-            using (var context = MockContext.Start("ServerManagement.Tests"))
+            using (var context = MockContext.Start("Tests"))
             {
                 var client = GetServerManagementClient(context);
                 GatewayResource gateway = null;

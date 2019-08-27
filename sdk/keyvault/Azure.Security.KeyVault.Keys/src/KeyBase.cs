@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Key identifier.
         /// </summary>
-        public Uri VaultId { get; private set; }
+        public Uri Id { get; private set; }
 
         /// <summary>
         /// Vault base URL.
@@ -115,6 +115,7 @@ namespace Azure.Security.KeyVault.Keys
             if (!string.Equals(idToParse.Segments[1], "keys" + "/", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'keys/', found '{1}'", id, idToParse.Segments[1]));
 
+            Id = idToParse;
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;

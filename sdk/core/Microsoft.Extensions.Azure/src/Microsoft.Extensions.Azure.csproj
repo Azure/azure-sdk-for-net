@@ -7,8 +7,9 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Client Pipeline AspNetCore Extensions</PackageTags>
     <PackageReleaseNotes>
-      <![CDATA[
-      ]]>
+      Added TokenCredential support.
+      Added client version support.
+      Added default client support.
     </PackageReleaseNotes>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
@@ -31,7 +32,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
+  
+  <Import Project="..\..\Azure.Core\src\Azure.Core.props" />
 
 </Project>

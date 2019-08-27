@@ -15,11 +15,11 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchCertificateEndToEndAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();
-                string batchCertName = "SHA1-cff2ab63c8c955aaf71989efa641b906558d9fb7";
+                string batchCertName = "sha1-cff2ab63c8c955aaf71989efa641b906558d9fb7";
 
                 ResourceGroup group = new ResourceGroup(this.Location);
                 await this.ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
@@ -38,12 +38,12 @@ namespace Batch.Tests.ScenarioTests
                     param.ThumbprintAlgorithm = "sha1";
 
                     var certResponse = await this.BatchManagementClient.Certificate.CreateAsync(resourceGroupName, batchAccountName, batchCertName, param);
-                    Assert.Equal("CFF2AB63C8C955AAF71989EFA641B906558D9FB7", certResponse.Thumbprint);
+                    Assert.Equal(param.Thumbprint, certResponse.Thumbprint);
                     var referenceId =
-                        $"/subscriptions/{this.BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{batchAccountName}/certificates/{batchCertName.ToUpperInvariant()}";
+                        $"/subscriptions/{this.BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{batchAccountName}/certificates/{batchCertName}";
                     Assert.Equal(referenceId, certResponse.Id);
                     Assert.Equal(CertificateProvisioningState.Succeeded, certResponse.ProvisioningState);
-                    Assert.Equal("SHA1", certResponse.ThumbprintAlgorithm);
+                    Assert.Equal("sha1", certResponse.ThumbprintAlgorithm);
                     Assert.Equal(CertificateFormat.Pfx, certResponse.Format);
 
                     // List the certificates
@@ -52,10 +52,10 @@ namespace Batch.Tests.ScenarioTests
 
                     // Get the cert
                     var cert = await this.BatchManagementClient.Certificate.GetAsync(resourceGroupName, batchAccountName, batchCertName);
-                    Assert.Equal("CFF2AB63C8C955AAF71989EFA641B906558D9FB7", cert.Thumbprint);
+                    Assert.Equal(param.Thumbprint, cert.Thumbprint);
                     Assert.Equal(referenceId, cert.Id);
                     Assert.Equal(CertificateProvisioningState.Succeeded, cert.ProvisioningState);
-                    Assert.Equal("SHA1", cert.ThumbprintAlgorithm);
+                    Assert.Equal("sha1", cert.ThumbprintAlgorithm);
                     Assert.Equal(CertificateFormat.Pfx, cert.Format);
                     Assert.Null(cert.DeleteCertificateError);
 

@@ -19,11 +19,11 @@ namespace Authorization.Tests
 {
     public class PermissionsTests : TestBase
     {
-        const string RESOURCE_TEST_LOCATION = "westus"; 
+        const string RESOURCE_TEST_LOCATION = "westus";
         const string WEBSITE_RP_VERSION = "2014-04-01";
         public static ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
-            var client = context.GetServiceClient<ResourceManagementClient>(); 
+            var client = context.GetServiceClient<ResourceManagementClient>();
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationRetryTimeout = 0;
@@ -51,14 +51,14 @@ namespace Authorization.Tests
         [Fact]
         public void GetResourceGroupPermissions()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 var resourceClient = GetResourceManagementClient(context);
                 var authzClient = GetAuthorizationManagementClient(context);
 
                 resourceClient.ResourceGroups.CreateOrUpdate(groupName, new Microsoft.Azure.Management.Resources.Models.ResourceGroup
-                    { Location = RESOURCE_TEST_LOCATION });
+                { Location = RESOURCE_TEST_LOCATION });
                 var resourcePermissions = authzClient.Permissions
                     .ListForResourceGroupWithHttpMessagesAsync(groupName)
                     .ConfigureAwait(false).GetAwaiter().GetResult();
@@ -78,7 +78,7 @@ namespace Authorization.Tests
         [Fact]
         public void GetNonExistentResourceGroupPermissions()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var authzClient = GetAuthorizationManagementClient(context);
 
@@ -99,14 +99,14 @@ namespace Authorization.Tests
         {
             // NEXT environment variables used to record the mock
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "resourceId").ToString();
                 var client = GetResourceManagementClient(context);
                 var location = RESOURCE_TEST_LOCATION;
 
-                client.ResourceGroups.CreateOrUpdate(groupName, 
+                client.ResourceGroups.CreateOrUpdate(groupName,
                     new Microsoft.Azure.Management.Resources.Models.ResourceGroup { Location = location });
 
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName,
@@ -121,7 +121,7 @@ namespace Authorization.Tests
                         Properties = JObject.Parse("{'roleDefinitionId':'/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7','principalId':'f8d526a0-54eb-4941-ae69-ebf4a334d0f0'}")
                     }
                 );
-                
+
                 var authzClient = GetAuthorizationManagementClient(context);
 
                 var resourcePermissions = authzClient.Permissions.ListForResource(groupName,
@@ -145,7 +145,7 @@ namespace Authorization.Tests
         {
             // NEXT environment variables used to record the mock
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var authzClient = GetAuthorizationManagementClient(context);

@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Retrieves information about a specific partiton for an Event Hub, including elements that describe the available
+        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
         ///   events in the partition event stream.
         /// </summary>
         ///

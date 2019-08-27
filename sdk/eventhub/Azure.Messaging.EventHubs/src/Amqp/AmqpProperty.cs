@@ -23,16 +23,36 @@ namespace Azure.Messaging.EventHubs
         public static readonly AmqpSymbol Timeout = AmqpConstants.Vendor + ":timeout";
 
         /// <summary>The identifier of the consumer to associate with a link.</summary>
-        public static readonly AmqpSymbol ReceiverIdentifier = AmqpConstants.Vendor + ":receiver-name";
+        public static readonly AmqpSymbol ConsumerIdentifier = AmqpConstants.Vendor + ":receiver-name";
 
-        /// <summary>A type annotation for representing a <see cref="System.TimeSpan" /> in a message.</summary>
-        public static readonly AmqpSymbol TimeSpan = AmqpConstants.Vendor + ":timespan";
+        /// <summary>The date and time, in UTC, that a message was enqueued.</summary>
+        public static readonly AmqpSymbol EnqueuedTime = "x-opt-enqueued-time";
 
-        /// <summary>A type annotation for representing a <see cref="System.Uri" /> in a message.</summary>
-        public static readonly AmqpSymbol Uri = AmqpConstants.Vendor + ":uri";
+        /// <summary>The sequence number assigned to a message.</summary>
+        public static readonly AmqpSymbol SequenceNumber = "x-opt-sequence-number";
 
-        /// <summary>A type annotation for representing a <see cref="System.DateTimeOffset" /> in a message.</summary>
-        public static readonly AmqpSymbol DateTimeOffset = AmqpConstants.Vendor + ":datetime-offset";
+        /// <summary>The offset of a message within a given partition.</summary>
+        public static readonly AmqpSymbol Offset = "x-opt-offset";
+
+        /// <summary>The partition hashing key used for grouping a batch of events together with the intent of routing to a single partition.</summary>
+        public static readonly AmqpSymbol PartitionKey = "x-opt-partition-key";
+
+        /// <summary>
+        ///   The set of descriptors for well-known <see cref="DescribedType" />
+        ///   property types.
+        /// </summary>
+        ///
+        public static class Descriptor
+        {
+            /// <summary>A type annotation for representing a <see cref="System.TimeSpan" /> in a message.</summary>
+            public static readonly AmqpSymbol TimeSpan = AmqpConstants.Vendor + ":timespan";
+
+            /// <summary>A type annotation for representing a <see cref="System.Uri" /> in a message.</summary>
+            public static readonly AmqpSymbol Uri = AmqpConstants.Vendor + ":uri";
+
+            /// <summary>A type annotation for representing a <see cref="System.DateTimeOffset" /> in a message.</summary>
+            public static readonly AmqpSymbol DateTimeOffset = AmqpConstants.Vendor + ":datetime-offset";
+        }
 
         /// <summary>
         ///   Represents the type mapping for AMQP properties between the client library and
@@ -41,7 +61,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   WARNING:
-        ///     These values are synchonized between the Event Hubs service and the client
+        ///     These values are synchronized between the Event Hubs service and the client
         ///     library.  You must consult with the Event Hubs service team before making
         ///     changes, including adding a new member.
         ///

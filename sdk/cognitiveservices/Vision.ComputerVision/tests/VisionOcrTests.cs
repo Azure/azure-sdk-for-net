@@ -12,9 +12,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void OcrImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "OcrImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "OcrImageInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("signage.jpg"), FileMode.Open))
@@ -38,9 +38,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void OcrImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "OcrImageTest");
+                HttpMockServer.Initialize(this.GetType(), "OcrImageTest");
 
                 string germanTextUrl = GetTestImageUrl("achtung.jpg");
 

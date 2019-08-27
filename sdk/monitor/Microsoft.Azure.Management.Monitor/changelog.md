@@ -1,5 +1,25 @@
 ## Microsoft.Azure.Management.Monitor release notes
 
+### Changes in 0.24.1-preview
+
+**Notes**
+
+- Adding some metric unit names to the **Metrics API 2018-01-01**. The complete list now includes the following: "Count", "Bytes", "Seconds", "CountPerSecond", "BytesPerSecond", "Percent", "MilliSeconds", "ByteSeconds", "Unspecified", "Cores", "MilliCores", "NanoCores", "BitsPerSecond"
+- Adding support for a new attribute in the DiagnosticSettings object (**Diagnostic Settings API 2017-05-01-preview**,) i.e.: the attribute is "logAnalyticsDestinationType," which is a string that accepts the following values: Dedicated or null
+- Minor modification to the documentation
+
+### Changes in 0.24.0-preview
+
+**Notes**
+
+- Added Dynamic Threshold for Metric Alert API and its Unit tests and Scenario Tests
+
+### Changes in 0.22.0-preview
+
+**Notes**
+
+- Changes effected by the SDK team. No change in functionality is expected.
+
 ### Changes in 0.20.1-preview
 
 **Notes**

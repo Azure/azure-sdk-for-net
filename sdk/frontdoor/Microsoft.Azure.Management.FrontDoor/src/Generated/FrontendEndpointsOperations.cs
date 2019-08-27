@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontendEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -724,7 +724,11 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "frontendEndpointParameters");
             }
-            string apiVersion = "2019-04-01";
+            if (frontendEndpointParameters != null)
+            {
+                frontendEndpointParameters.Validate();
+            }
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1007,7 +1011,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontendEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1236,7 +1240,11 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "customHttpsConfiguration");
             }
-            string apiVersion = "2019-04-01";
+            if (customHttpsConfiguration != null)
+            {
+                customHttpsConfiguration.Validate();
+            }
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1465,7 +1473,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontendEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

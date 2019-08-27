@@ -43,7 +43,7 @@ namespace Azure.Core.Pipeline
 
             s_eventSource.Request(message.Request);
 
-            Encoding requestTextEncoding = null;
+            Encoding? requestTextEncoding = null;
 
             bool textRequest = message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) &&
                 ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
@@ -54,11 +54,11 @@ namespace Azure.Core.Pipeline
                 {
                     if (async)
                     {
-                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.CancellationToken).ConfigureAwait(false);
+                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding!, message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        s_eventSource.RequestContentText(message.Request, requestTextEncoding, message.CancellationToken);
+                        s_eventSource.RequestContentText(message.Request, requestTextEncoding!, message.CancellationToken);
                     }
                 }
                 else
@@ -84,18 +84,20 @@ namespace Azure.Core.Pipeline
                 ProcessNext(message, pipeline);
             }
 
+            
+
             var after = Stopwatch.GetTimestamp();
 
             bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
 
-            var textResponse = ContentTypeUtilities.TryGetTextEncoding(message.Response.Headers.ContentType, out Encoding responseTextEncoding);
+            var textResponse = ContentTypeUtilities.TryGetTextEncoding(message.Response.Headers.ContentType, out Encoding? responseTextEncoding);
 
-            bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ContentStream?.CanSeek == false;
+            bool wrapResponseStream = message.Response.ContentStream != null && message.Response.ContentStream?.CanSeek == false && s_eventSource.ShouldLogContent(isError);
 
             if (wrapResponseStream)
             {
                 message.Response.ContentStream = new LoggingStream(
-                    message.Response.ClientRequestId, s_eventSource, message.Response.ContentStream, isError, responseTextEncoding);
+                    message.Response.ClientRequestId, s_eventSource, message.Response.ContentStream!, isError, responseTextEncoding);
             }
 
             if (isError)
@@ -108,11 +110,11 @@ namespace Azure.Core.Pipeline
                     {
                         if (async)
                         {
-                            await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding, message.CancellationToken).ConfigureAwait(false);
+                            await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding!, message.CancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
-                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding);
+                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding!);
                         }
                     }
                     else
@@ -137,11 +139,11 @@ namespace Azure.Core.Pipeline
                 {
                     if (async)
                     {
-                        await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.CancellationToken).ConfigureAwait(false);
+                        await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding!, message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        s_eventSource.ResponseContentText(message.Response, responseTextEncoding);
+                        s_eventSource.ResponseContentText(message.Response, responseTextEncoding!);
                     }
                 }
                 else
@@ -179,11 +181,11 @@ namespace Azure.Core.Pipeline
 
             private readonly bool _error;
 
-            private readonly Encoding _textEncoding;
+            private readonly Encoding? _textEncoding;
 
             private int _blockNumber;
 
-            public LoggingStream(string requestId, HttpPipelineEventSource eventSource, Stream originalStream, bool error, Encoding textEncoding)
+            public LoggingStream(string requestId, HttpPipelineEventSource eventSource, Stream originalStream, bool error, Encoding? textEncoding)
             {
                 // Should only wrap non-seekable streams
                 Debug.Assert(!originalStream.CanSeek);

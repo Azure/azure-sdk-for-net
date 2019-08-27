@@ -107,14 +107,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 (
                     new SharedAccessSignature
                     (
-                        $"{ clientOptions.TransportType.GetUriScheme() }://{ connectionProperties.Endpoint.Host }/{ connectionProperties.EventHubPath }".ToLowerInvariant(),
+                        $"{ clientOptions.TransportType.GetUriScheme() }://{ connectionProperties.Endpoint.Host }/{ connectionProperties.EventHubName }".ToLowerInvariant(),
                         connectionProperties.SharedAccessKeyName,
                         connectionProperties.SharedAccessKey,
                         TimeSpan.FromHours(4)
                     )
                 );
 
-                await using (var client = new EventHubClient(connectionProperties.Endpoint.Host, connectionProperties.EventHubPath, credential))
+                await using (var client = new EventHubClient(connectionProperties.Endpoint.Host, connectionProperties.EventHubName, credential))
                 {
                     Assert.That(() => client.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var properties = await client.GetPropertiesAsync();
 
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
-                    Assert.That(properties.Path, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
+                    Assert.That(properties.Name, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
                     Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
                     Assert.That(properties.CreatedAt, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(10)), "The Event Hub should have been created just about now.");
                 }
@@ -171,14 +171,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 (
                     new SharedAccessSignature
                     (
-                        $"{ clientOptions.TransportType.GetUriScheme() }://{ connectionProperties.Endpoint.Host }/{ connectionProperties.EventHubPath }".ToLowerInvariant(),
+                        $"{ clientOptions.TransportType.GetUriScheme() }://{ connectionProperties.Endpoint.Host }/{ connectionProperties.EventHubName }".ToLowerInvariant(),
                         connectionProperties.SharedAccessKeyName,
                         connectionProperties.SharedAccessKey,
                         TimeSpan.FromHours(4)
                     )
                 );
 
-                await using (var client = new EventHubClient(connectionProperties.Endpoint.Host, connectionProperties.EventHubPath, credential, new EventHubClientOptions { TransportType = transportType }))
+                await using (var client = new EventHubClient(connectionProperties.Endpoint.Host, connectionProperties.EventHubName, credential, new EventHubClientOptions { TransportType = transportType }))
                 {
                     var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                     var properties = await client.GetPropertiesAsync();
@@ -187,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
                     Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
-                    Assert.That(partitionProperties.EventHubPath, Is.EqualTo(connectionProperties.EventHubPath).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
+                    Assert.That(partitionProperties.EventHubName, Is.EqualTo(connectionProperties.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(Int64)), "The beginning sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(Int64)), "The last sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(Int64)), "The last offset should have been populated.");

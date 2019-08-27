@@ -11,7 +11,7 @@ namespace LUIS.Authoring.Tests.Luis
 
     public class EntityRolesTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddSimpleEntityRole()
         {
             UseClientFor(async client =>
@@ -31,7 +31,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPrebuiltEntityRole()
         {
             UseClientFor(async client =>
@@ -48,7 +48,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddClosedListEntityRole()
         {
             UseClientFor(async client =>
@@ -72,7 +72,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddRegexEntityRole()
         {
             UseClientFor(async client =>
@@ -93,7 +93,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCompositeEntityRole()
         {
             UseClientFor(async client =>
@@ -124,7 +124,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -145,7 +145,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddHierarchicalEntityRole()
         {
             UseClientFor(async client =>
@@ -167,7 +167,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltDomainEntityRole()
         {
             UseClientFor(async client =>
@@ -189,7 +189,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetSimpleEntityRole()
         {
             UseClientFor(async client =>
@@ -209,7 +209,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPrebuiltEntityRole()
         {
             UseClientFor(async client =>
@@ -226,7 +226,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetClosedListEntityRole()
         {
             UseClientFor(async client =>
@@ -250,7 +250,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetRegexEntityRole()
         {
             UseClientFor(async client =>
@@ -271,7 +271,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetCompositeEntityRole()
         {
             UseClientFor(async client =>
@@ -302,7 +302,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -323,7 +323,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetHierarchicalEntityRole()
         {
             UseClientFor(async client =>
@@ -345,7 +345,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetCustomPrebuiltDomainEntityRole()
         {
             UseClientFor(async client =>
@@ -367,7 +367,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetSimpleEntityRoles()
         {
             UseClientFor(async client =>
@@ -387,7 +387,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPrebuiltEntityRoles()
         {
             UseClientFor(async client =>
@@ -404,7 +404,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetClosedListEntityRoles()
         {
             UseClientFor(async client =>
@@ -428,7 +428,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetRegexEntityRoles()
         {
             UseClientFor(async client =>
@@ -449,7 +449,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetCompositeEntityRoles()
         {
             UseClientFor(async client =>
@@ -480,7 +480,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPatternAnyEntityRoles()
         {
             UseClientFor(async client =>
@@ -501,7 +501,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetHierarchicalEntityRoles()
         {
             UseClientFor(async client =>
@@ -523,7 +523,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetCustomPrebuiltDomainEntityRoles()
         {
             UseClientFor(async client =>
@@ -545,7 +545,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateSimpleEntityRole()
         {
             UseClientFor(async client =>
@@ -569,7 +569,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePrebuiltEntityRole()
         {
             UseClientFor(async client =>
@@ -590,7 +590,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateClosedListEntityRole()
         {
             UseClientFor(async client =>
@@ -618,7 +618,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateRegexEntityRole()
         {
             UseClientFor(async client =>
@@ -643,7 +643,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateCompositeEntityRole()
         {
             UseClientFor(async client =>
@@ -678,7 +678,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -703,7 +703,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateHierarchicalEntityRole()
         {
             UseClientFor(async client =>
@@ -729,7 +729,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateCustomPrebuiltDomainEntityRole()
         {
             UseClientFor(async client =>
@@ -755,7 +755,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteSimpleEntityRole()
         {
             UseClientFor(async client =>
@@ -776,7 +776,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePrebuiltEntityRole()
         {
             UseClientFor(async client =>
@@ -794,7 +794,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteClosedListEntityRole()
         {
             UseClientFor(async client =>
@@ -819,7 +819,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteRegexEntityRole()
         {
             UseClientFor(async client =>
@@ -841,7 +841,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteCompositeEntityRole()
         {
             UseClientFor(async client =>
@@ -873,7 +873,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -895,7 +895,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteHierarchicalEntityRole()
         {
             UseClientFor(async client =>
@@ -918,7 +918,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteCustomPrebuiltDomainEntityRole()
         {
             UseClientFor(async client =>

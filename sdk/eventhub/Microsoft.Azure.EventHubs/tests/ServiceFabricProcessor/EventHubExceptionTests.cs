@@ -4,8 +4,6 @@
 namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.ServiceFabricProcessor;
@@ -359,7 +357,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             EventHubReceiveFailure("NonTransient", new ReceiverDisconnectedException("ErrorInjector"), true);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/7335")]
         [DisplayTestMethodName]
         public void HardEventHubReceiveFailure()
         {
@@ -490,8 +488,11 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             }
         }
 
-        private enum EHErrorLocation { EventHubClientCreation, GetRuntimeInformation, CreateReceiver, Receiving,
-            ReceiverClosing, EventHubClientClosing };
+        private enum EHErrorLocation
+        {
+            EventHubClientCreation, GetRuntimeInformation, CreateReceiver, Receiving,
+            ReceiverClosing, EventHubClientClosing
+        };
 
         private abstract class EHErrorInjector
         {

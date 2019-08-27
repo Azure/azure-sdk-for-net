@@ -38,7 +38,7 @@ namespace Azure.Identity
         {
             _options = options ?? new IdentityClientOptions();
 
-            _pipeline = HttpPipelineBuilder.Build(_options, bufferResponse: true);
+            _pipeline = HttpPipelineBuilder.Build(_options);
         }
 
         public static AadIdentityClient SharedClient { get { return s_sharedClient.Value; } }

@@ -173,5 +173,24 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => _storage.GetOutputAsync(TaskOutputKind.TaskLog, ""));
             Assert.Equal("filePath", ex.ParamName);
         }
+
+        [Fact]
+        public void GetTaskOutputStoragePathReturnsExpectedValue()
+        {
+            const string taskId = "test-task";
+            var taskStorage = new TaskOutputStorage(new Uri("http://example.test/"), taskId);
+
+            var taskLogPath = taskStorage.GetOutputStoragePath(TaskOutputKind.TaskLog);
+            Assert.Equal($"{taskId}/${TaskOutputKind.TaskLog.ToString()}", taskLogPath);
+
+            taskLogPath = taskStorage.GetOutputStoragePath(TaskOutputKind.TaskOutput);
+            Assert.Equal($"{taskId}/${TaskOutputKind.TaskOutput.ToString()}", taskLogPath);
+
+            taskLogPath = taskStorage.GetOutputStoragePath(TaskOutputKind.TaskPreview);
+            Assert.Equal($"{taskId}/${TaskOutputKind.TaskPreview.ToString()}", taskLogPath);
+
+            taskLogPath = taskStorage.GetOutputStoragePath(TaskOutputKind.Custom("foo"));
+            Assert.Equal($"{taskId}/${TaskOutputKind.Custom("foo").ToString()}", taskLogPath);
+        }
     }
 }

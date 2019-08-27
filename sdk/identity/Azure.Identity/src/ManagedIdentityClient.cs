@@ -46,7 +46,7 @@ namespace Azure.Identity
         {
             _options = options ?? new IdentityClientOptions();
 
-            _pipeline = HttpPipelineBuilder.Build(_options, bufferResponse: true);
+            _pipeline = HttpPipelineBuilder.Build(_options);
         }
 
         private enum MsiType

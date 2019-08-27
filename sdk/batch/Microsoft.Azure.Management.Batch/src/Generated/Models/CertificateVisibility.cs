@@ -23,7 +23,9 @@ namespace Microsoft.Azure.Management.Batch.Models
     {
         /// <summary>
         /// The certificate should be visible to the user account under which
-        /// the start task is run.
+        /// the start task is run. Note that if AutoUser Scope is Pool for both
+        /// the StartTask and a Task, this certificate will be visible to the
+        /// Task as well.
         /// </summary>
         [EnumMember(Value = "StartTask")]
         StartTask,

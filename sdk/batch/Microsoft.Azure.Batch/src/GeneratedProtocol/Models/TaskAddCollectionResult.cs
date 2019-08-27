@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The result of adding a collection of tasks to a job.
+    /// The result of adding a collection of Tasks to a Job.
     /// </summary>
     public partial class TaskAddCollectionResult
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionResult class.
         /// </summary>
-        /// <param name="value">The results of the add task collection
+        /// <param name="value">The results of the add Task collection
         /// operation.</param>
         public TaskAddCollectionResult(IList<TaskAddResult> value = default(IList<TaskAddResult>))
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the results of the add task collection operation.
+        /// Gets or sets the results of the add Task collection operation.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<TaskAddResult> Value { get; set; }

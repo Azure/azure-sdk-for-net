@@ -23,7 +23,7 @@ namespace ContainerInstance.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = ContainerInstanceTestUtilities.GetResourceManagementClient(context, handler);
                 var containerInstanceClient = ContainerInstanceTestUtilities.GetContainerInstanceManagementClient(context, handler);
@@ -48,7 +48,7 @@ namespace ContainerInstance.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = ContainerInstanceTestUtilities.GetResourceManagementClient(context, handler);
                 var containerInstanceClient = ContainerInstanceTestUtilities.GetContainerInstanceManagementClient(context, handler);
@@ -77,7 +77,7 @@ namespace ContainerInstance.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = ContainerInstanceTestUtilities.GetResourceManagementClient(context, handler);
                 var containerInstanceClient = ContainerInstanceTestUtilities.GetContainerInstanceManagementClient(context, handler);
@@ -111,7 +111,7 @@ namespace ContainerInstance.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = ContainerInstanceTestUtilities.GetResourceManagementClient(context, handler);
                 var containerInstanceClient = ContainerInstanceTestUtilities.GetContainerInstanceManagementClient(context, handler);

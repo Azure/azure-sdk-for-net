@@ -22,7 +22,7 @@ namespace Cdn.Tests.ScenarioTests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
@@ -94,7 +94,8 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.Equal(2, customDomains.Count());
 
                 // Disable custom https on custom domain that is not enabled should fail
-                Assert.ThrowsAny<ErrorResponseException>(() => {
+                Assert.ThrowsAny<ErrorResponseException>(() =>
+                {
                     cdnMgmtClient.CustomDomains.DisableCustomHttps(resourceGroupName, profileName, endpointName, customDomainName2);
                 });
 
@@ -102,8 +103,10 @@ namespace Cdn.Tests.ScenarioTests
                 cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName2);
 
                 // Get deleted custom domain should fail
-                Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.CustomDomains.Get(resourceGroupName, profileName, endpointName, customDomainName2); });
+                Assert.ThrowsAny<ErrorResponseException>(() =>
+                {
+                    cdnMgmtClient.CustomDomains.Get(resourceGroupName, profileName, endpointName, customDomainName2);
+                });
 
                 // List custom domains on endpoint should return one
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
@@ -129,12 +132,13 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 cdnMgmtClient.CustomDomains.EnableCustomHttps(resourceGroupName, profileName, endpointName, customDomainName2, new UserManagedHttpsParameters(ProtocolType.ServerNameIndication, byocParameters));
-                
+
                 // Delete first custom domain should succeed
                 cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName1);
 
                 // Get deleted custom domain should fail
-                Assert.ThrowsAny<ErrorResponseException>(() => {
+                Assert.ThrowsAny<ErrorResponseException>(() =>
+                {
                     cdnMgmtClient.CustomDomains.Get(resourceGroupName, profileName, endpointName, customDomainName1);
                 });
 
@@ -142,7 +146,8 @@ namespace Cdn.Tests.ScenarioTests
                 cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName2);
 
                 // Get deleted custom domain should fail
-                Assert.ThrowsAny<ErrorResponseException>(() => {
+                Assert.ThrowsAny<ErrorResponseException>(() =>
+                {
                     cdnMgmtClient.CustomDomains.Get(resourceGroupName, profileName, endpointName, customDomainName2);
                 });
 

@@ -31,6 +31,7 @@ namespace Azure.Storage.Common.Test
         /// </summary>
         [Test]
         [Explicit]
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
         public async Task CollectGarbage_Explicit()
         {
             // Get all of our configs

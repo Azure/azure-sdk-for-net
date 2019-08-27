@@ -13,7 +13,7 @@ namespace Data.ApplicationInsights.Tests.Events
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetTraceEvents()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 var timespan = "PT12H";
                 var top = 10;

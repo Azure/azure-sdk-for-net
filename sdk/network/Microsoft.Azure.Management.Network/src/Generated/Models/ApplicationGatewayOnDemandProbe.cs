@@ -45,11 +45,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// value is false.</param>
         /// <param name="match">Criterion for classifying a healthy probe
         /// response.</param>
-        /// <param name="backendPoolName">Name of backend pool of application
-        /// gateway to which probe request will be sent.</param>
-        /// <param name="backendHttpSettingName">Name of backend http setting
+        /// <param name="backendAddressPool">Reference of backend pool of
+        /// application gateway to which probe request will be sent.</param>
+        /// <param name="backendHttpSettings">Reference of backend http setting
         /// of application gateway to be used for test probe.</param>
-        public ApplicationGatewayOnDemandProbe(string protocol = default(string), string host = default(string), string path = default(string), int? timeout = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), ApplicationGatewayProbeHealthResponseMatch match = default(ApplicationGatewayProbeHealthResponseMatch), string backendPoolName = default(string), string backendHttpSettingName = default(string))
+        public ApplicationGatewayOnDemandProbe(string protocol = default(string), string host = default(string), string path = default(string), int? timeout = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), ApplicationGatewayProbeHealthResponseMatch match = default(ApplicationGatewayProbeHealthResponseMatch), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource))
         {
             Protocol = protocol;
             Host = host;
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Network.Models
             Timeout = timeout;
             PickHostNameFromBackendHttpSettings = pickHostNameFromBackendHttpSettings;
             Match = match;
-            BackendPoolName = backendPoolName;
-            BackendHttpSettingName = backendHttpSettingName;
+            BackendAddressPool = backendAddressPool;
+            BackendHttpSettings = backendHttpSettings;
             CustomInit();
         }
 
@@ -110,18 +110,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
 
         /// <summary>
-        /// Gets or sets name of backend pool of application gateway to which
-        /// probe request will be sent.
+        /// Gets or sets reference of backend pool of application gateway to
+        /// which probe request will be sent.
         /// </summary>
-        [JsonProperty(PropertyName = "backendPoolName")]
-        public string BackendPoolName { get; set; }
+        [JsonProperty(PropertyName = "backendAddressPool")]
+        public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets or sets name of backend http setting of application gateway to
-        /// be used for test probe.
+        /// Gets or sets reference of backend http setting of application
+        /// gateway to be used for test probe.
         /// </summary>
-        [JsonProperty(PropertyName = "backendHttpSettingName")]
-        public string BackendHttpSettingName { get; set; }
+        [JsonProperty(PropertyName = "backendHttpSettings")]
+        public SubResource BackendHttpSettings { get; set; }
 
     }
 }

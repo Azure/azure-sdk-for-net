@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         [Fact]
         public void GetDefaultGeographicHierarchy()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
@@ -46,3 +46,4 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         }
     }
 }
+

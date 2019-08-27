@@ -27,13 +27,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [EnumMember(Value = "none")]
         None,
         /// <summary>
-        /// Disable the job. This is equivalent to calling the disable job API,
+        /// Disable the Job. This is equivalent to calling the disable Job API,
         /// with a disableTasks value of requeue.
         /// </summary>
         [EnumMember(Value = "disable")]
         Disable,
         /// <summary>
-        /// Terminate the job. The terminateReason in the job's executionInfo
+        /// Terminate the Job. The terminateReason in the Job's executionInfo
         /// is set to "TaskFailed".
         /// </summary>
         [EnumMember(Value = "terminate")]

@@ -12,10 +12,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         public const int SubscriptionNameMaximumLength = 50;
         public const int RuleNameMaximumLength = 50;
 
-        public const string AtomNs = "http://www.w3.org/2005/Atom";
-        public const string SbNs = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect";
-        public const string XmlSchemaInstanceNs = "http://www.w3.org/2001/XMLSchema-instance";
-        public const string XmlSchemaNs = "http://www.w3.org/2001/XMLSchema";
+        public const string AtomNamespace = "http://www.w3.org/2005/Atom";
+        public const string ServiceBusNamespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect";
+        public const string XmlSchemaInstanceNamespace = "http://www.w3.org/2001/XMLSchema-instance";
+        public const string XmlSchemaNamespace = "http://www.w3.org/2001/XMLSchema";
+        public const string SerializationNamespace = "http://schemas.microsoft.com/2003/10/Serialization/";
         public const string AtomContentType = "application/atom+xml";
         public const string apiVersionQuery = "api-version=" + ApiVersion;
         public const string ApiVersion = "2017-04";
