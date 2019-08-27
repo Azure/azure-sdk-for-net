@@ -10,14 +10,14 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ExponentialPolicyTest: RetryPolicyTestBase
+    public class ExponentialPolicyTest : RetryPolicyTestBase
     {
         public ExponentialPolicyTest(bool isAsync) : base(RetryMode.Exponential, isAsync) { }
 
         [Test]
         public async Task WaitsBetweenRetries()
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
@@ -36,7 +36,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitsSameAmountEveryTime()
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RespectsMaxDelay()
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, maxRetries: 6, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(5));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
@@ -85,7 +85,7 @@ namespace Azure.Core.Tests
         [TestCase(3, 10, 10)]
         public async Task UsesLargerOfDelayAndServerDelay(int delay, int retryAfter, int expected)
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Exponential, delay: TimeSpan.FromSeconds(delay), maxDelay: TimeSpan.FromSeconds(5));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);

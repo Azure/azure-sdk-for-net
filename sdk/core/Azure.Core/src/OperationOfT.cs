@@ -43,9 +43,11 @@ namespace Azure
         /// </remarks>
         public T Value
         {
-            get {
+            get
+            {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                if (!HasValue) throw new InvalidOperationException("operation has not completed");
+                if (!HasValue)
+                    throw new InvalidOperationException("operation has not completed");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 return _value;
             }

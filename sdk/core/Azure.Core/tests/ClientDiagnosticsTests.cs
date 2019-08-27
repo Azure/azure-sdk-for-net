@@ -63,7 +63,7 @@ namespace Azure.Core.Tests
             var exception = new Exception();
             scope.Failed(exception);
             scope.Dispose();
-            
+
             KeyValuePair<string, object> exceptionEvent = testListener.Events.Dequeue();
             KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
 

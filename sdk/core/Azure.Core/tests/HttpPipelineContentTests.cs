@@ -16,7 +16,7 @@ namespace Azure.Core.Tests
         [Test]
         public void StreamCopyToCancellation()
         {
-            int size = 100; 
+            int size = 100;
             var source = new MemoryStream(size);
             var destination = new MemoryStream(size);
             var content = HttpPipelineRequestContent.Create(source);
@@ -39,10 +39,12 @@ namespace Azure.Core.Tests
 
             content.WriteTo(destination, default);
 
-            for(int i=0; i<size; i++){
+            for (int i = 0; i < size; i++)
+            {
                 Assert.AreEqual(sourceArray[i], destinationArray[i]);
             }
-            for (int i = size; i < destinationArray.Length; i++) {
+            for (int i = size; i < destinationArray.Length; i++)
+            {
                 Assert.AreEqual(0, destinationArray[i]);
             }
         }

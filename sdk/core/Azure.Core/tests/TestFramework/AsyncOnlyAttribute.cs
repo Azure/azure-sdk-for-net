@@ -11,7 +11,7 @@ using NUnit.Framework.Internal;
 namespace Azure.Core.Testing
 {
 
-    [AttributeUsage(AttributeTargets.Method|AttributeTargets.Class|AttributeTargets.Assembly, AllowMultiple=false, Inherited=false)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
     public class AsyncOnlyAttribute : NUnitAttribute, IApplyToTest
     {
         #region IApplyToTest members

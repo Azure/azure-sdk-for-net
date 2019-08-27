@@ -26,11 +26,13 @@ namespace Azure.Core.Samples
 
             Response response = await pipeline.SendRequestAsync(request, cancellationToken: default).ConfigureAwait(false);
 
-            if (response.Status == 200) {
+            if (response.Status == 200)
+            {
                 var reader = new StreamReader(response.ContentStream);
                 string responseText = reader.ReadToEnd();
             }
-            else throw await response.CreateRequestFailedExceptionAsync();
+            else
+                throw await response.CreateRequestFailedExceptionAsync();
         }
     }
 }

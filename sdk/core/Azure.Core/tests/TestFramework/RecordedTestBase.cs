@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Azure.Core.Testing
 {
     [Category("Recorded")]
-    public abstract class RecordedTestBase: ClientTestBase
+    public abstract class RecordedTestBase : ClientTestBase
     {
         private const string ModeEnvironmentVariableName = "AZURE_TEST_MODE";
 

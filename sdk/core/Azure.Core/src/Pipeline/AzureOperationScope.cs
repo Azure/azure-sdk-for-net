@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
-    public readonly struct DiagnosticScope: IDisposable
+    public readonly struct DiagnosticScope : IDisposable
     {
         private readonly Activity? _activity;
 

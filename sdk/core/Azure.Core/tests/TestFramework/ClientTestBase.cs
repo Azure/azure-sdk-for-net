@@ -29,13 +29,13 @@ namespace Azure.Core.Testing
             IsAsync = isAsync;
         }
 
-        public virtual TClient CreateClient<TClient>(params object[] args) where TClient: class
+        public virtual TClient CreateClient<TClient>(params object[] args) where TClient : class
         {
 
             return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
-        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient: class
+        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class
         {
             Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
 
