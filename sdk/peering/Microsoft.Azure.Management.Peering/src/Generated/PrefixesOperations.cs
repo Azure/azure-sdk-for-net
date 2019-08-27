@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Peering
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PeeringLocationsOperations operations.
+    /// PrefixesOperations operations.
     /// </summary>
-    internal partial class PeeringLocationsOperations : IServiceOperations<PeeringManagementClient>, IPeeringLocationsOperations
+    internal partial class PrefixesOperations : IServiceOperations<PeeringManagementClient>, IPrefixesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PeeringLocationsOperations class.
+        /// Initializes a new instance of the PrefixesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PeeringLocationsOperations(PeeringManagementClient client)
+        internal PrefixesOperations(PeeringManagementClient client)
         {
             if (client == null)
             {
@@ -47,15 +47,13 @@ namespace Microsoft.Azure.Management.Peering
         public PeeringManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available peering locations for the specified kind of
-        /// peering.
+        /// Lists the peerings prefix in the resource group.
         /// </summary>
-        /// <param name='kind'>
-        /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
         /// </param>
-        /// <param name='directPeeringType'>
-        /// The type of direct peering. Possible values include: 'Edge', 'Transit',
-        /// 'Cdn', 'Internal'
+        /// <param name='peeringServiceName'>
+        /// The peering service name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -78,11 +76,15 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PeeringLocation>>> ListWithHttpMessagesAsync(string kind, string directPeeringType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (kind == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "kind");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (peeringServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "peeringServiceName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -99,24 +101,18 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("kind", kind);
-                tracingParameters.Add("directPeeringType", directPeeringType);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("peeringServiceName", peeringServiceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPeeringService", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringLocations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{peeringServiceName}", System.Uri.EscapeDataString(peeringServiceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (kind != null)
-            {
-                _queryParameters.Add(string.Format("kind={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(kind, Client.SerializationSettings).Trim('"'))));
-            }
-            if (directPeeringType != null)
-            {
-                _queryParameters.Add(string.Format("directPeeringType={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(directPeeringType, Client.SerializationSettings).Trim('"'))));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -209,7 +205,7 @@ namespace Microsoft.Azure.Management.Peering
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PeeringLocation>>();
+            var _result = new AzureOperationResponse<IPage<PeeringServicePrefix>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -222,7 +218,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringLocation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringServicePrefix>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -242,8 +238,7 @@ namespace Microsoft.Azure.Management.Peering
         }
 
         /// <summary>
-        /// Lists all of the available peering locations for the specified kind of
-        /// peering.
+        /// Lists the peerings prefix in the resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -269,7 +264,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PeeringLocation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -284,7 +279,7 @@ namespace Microsoft.Azure.Management.Peering
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPeeringServiceNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -378,7 +373,7 @@ namespace Microsoft.Azure.Management.Peering
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PeeringLocation>>();
+            var _result = new AzureOperationResponse<IPage<PeeringServicePrefix>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -391,7 +386,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringLocation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringServicePrefix>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

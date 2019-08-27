@@ -15,21 +15,18 @@ namespace Microsoft.Azure.Management.Peering
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PeeringLocationsOperations operations.
+    /// PrefixesOperations operations.
     /// </summary>
-    public partial interface IPeeringLocationsOperations
+    public partial interface IPrefixesOperations
     {
         /// <summary>
-        /// Lists all of the available peering locations for the specified kind
-        /// of peering.
+        /// Lists the peerings prefix in the resource group.
         /// </summary>
-        /// <param name='kind'>
-        /// The kind of the peering. Possible values include: 'Direct',
-        /// 'Exchange'
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
         /// </param>
-        /// <param name='directPeeringType'>
-        /// The type of direct peering. Possible values include: 'Edge',
-        /// 'Transit', 'Cdn', 'Internal'
+        /// <param name='peeringServiceName'>
+        /// The peering service name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,10 +43,9 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PeeringLocation>>> ListWithHttpMessagesAsync(string kind, string directPeeringType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the available peering locations for the specified kind
-        /// of peering.
+        /// Lists the peerings prefix in the resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -69,6 +65,6 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PeeringLocation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
