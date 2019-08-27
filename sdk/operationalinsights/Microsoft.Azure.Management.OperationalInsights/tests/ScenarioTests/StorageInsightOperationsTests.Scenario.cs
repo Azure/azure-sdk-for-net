@@ -30,7 +30,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteStorageInsight()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = TestHelper.GetResourceManagementClient(this, context);
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
@@ -123,7 +123,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void StorageInsightCreateFailsWithoutWorkspace()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = TestHelper.GetResourceManagementClient(this, context);
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);

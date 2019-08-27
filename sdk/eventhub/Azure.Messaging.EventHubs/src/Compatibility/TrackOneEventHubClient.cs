@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requeseted Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="clientOptions" />.</param>
         ///
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requeseted Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="clientOptions" />.</param>
         /// <param name="eventHubClientFactory">A delegate that can be used for creation of the <see cref="TrackOne.EventHubClient" /> to which operations are delegated to.</param>
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
             Guard.ArgumentNotNull(nameof(defaultRetryPolicy), defaultRetryPolicy);
 
             _retryPolicy = defaultRetryPolicy;
-            _trackOneClient = new Lazy<TrackOne.EventHubClient>(() => eventHubClientFactory(host, eventHubName, credential, clientOptions, () => _retryPolicy), LazyThreadSafetyMode.PublicationOnly);
+            _trackOneClient = new Lazy<TrackOne.EventHubClient>(() => eventHubClientFactory(host, eventHubName, credential, clientOptions, () => _retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requeseted Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         /// <param name="defaultRetryPolicyFactory">A function that retrieves a default retry policy to use if no retry options were specified in the <paramref name="clientOptions" />.</param>
         ///
@@ -294,6 +294,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
             return new EventHubProducer
             (
                 new TrackOneEventHubProducer(CreateSenderFactory, initialRetryPolicy),
+                TrackOneClient.ConnectionStringBuilder.Endpoint,
                 TrackOneClient.EventHubName,
                 producerOptions,
                 initialRetryPolicy

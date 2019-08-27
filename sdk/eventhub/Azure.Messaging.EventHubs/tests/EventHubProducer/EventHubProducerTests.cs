@@ -28,7 +28,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheProducer()
         {
-            Assert.That(() => new EventHubProducer(null, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+            Assert.That(() => new EventHubProducer(null, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorValidatesTheEndpoint()
+        {
+            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), null, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -40,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHubName(string eventHubName)
         {
-            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), new Uri("amqp://some.endpoint.com/path"), eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -50,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheOptions()
         {
-            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), "dummy", null, Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), new Uri("amqp://some.endpoint.com/path"), "dummy", null, Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -60,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheDefaultRetryPolicy()
         {
-            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), "dummy", new EventHubProducerOptions(), null), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubProducer(new ObservableTransportProducerMock(), new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), null), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -73,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("someValue")]
         public void ConstructorSetsTheEventHubName(string eventHubName)
         {
-            var producer = new EventHubProducer(new ObservableTransportProducerMock(), eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(new ObservableTransportProducerMock(), new Uri("amqp://some.endpoint.com/path"), eventHubName, new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
             Assert.That(producer.EventHubName, Is.EqualTo(eventHubName));
         }
 
@@ -85,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorSetsTheRetryPolicy()
         {
             var retryPolicy = Mock.Of<EventHubRetryPolicy>();
-            var producer = new EventHubProducer(new ObservableTransportProducerMock(), "path", new EventHubProducerOptions(), retryPolicy);
+            var producer = new EventHubProducer(new ObservableTransportProducerMock(), new Uri("amqp://some.endpoint.com/path"), "path", new EventHubProducerOptions(), retryPolicy);
             Assert.That(producer.RetryPolicy, Is.SameAs(retryPolicy));
         }
 
@@ -108,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var customRetry = Mock.Of<EventHubRetryPolicy>();
             var producerOptions = new EventHubProducerOptions { RetryOptions = retryOptions };
-            var producer = new EventHubProducer(new ObservableTransportProducerMock(), "dummy", producerOptions, new BasicRetryPolicy(retryOptions));
+            var producer = new EventHubProducer(new ObservableTransportProducerMock(), new Uri("amqp://some.endpoint.com/path"), "dummy", producerOptions, new BasicRetryPolicy(retryOptions));
 
             Assert.That(producer.RetryPolicy, Is.InstanceOf<BasicRetryPolicy>(), "The retry policy should have been created from options");
 
@@ -134,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var customRetry = Mock.Of<EventHubRetryPolicy>();
             var transportProducer = new ObservableTransportProducerMock();
             var producerOptions = new EventHubProducerOptions();
-            var producer = new EventHubProducer(transportProducer, "dummy", producerOptions, Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", producerOptions, Mock.Of<EventHubRetryPolicy>());
 
             producer.RetryPolicy = customRetry;
             Assert.That(transportProducer.UpdateRetryPolicyCalledWith, Is.SameAs(customRetry), "The custom retry policy should have been passed to the transport producer.");
@@ -148,7 +158,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendSingleWithoutOptionsRequiresAnEvent()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(EventData)), Throws.ArgumentNullException);
         }
@@ -161,7 +171,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendSingleRequiresAnEvent()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(EventData), new SendOptions()), Throws.ArgumentNullException);
         }
@@ -210,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendWithoutOptionsRequiresEvents()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(IEnumerable<EventData>)), Throws.ArgumentNullException);
         }
@@ -223,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendRequiresEvents()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(IEnumerable<EventData>), new SendOptions()), Throws.ArgumentNullException);
         }
@@ -236,7 +246,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendRequiresTheBatch()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(default(EventDataBatch)), Throws.ArgumentNullException);
         }
@@ -251,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sendOptions = new SendOptions { PartitionKey = "testKey" };
             var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(events, sendOptions), Throws.Nothing);
         }
@@ -266,7 +276,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new BatchOptions { PartitionKey = "testKey" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
         }
@@ -281,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sendOptions = new SendOptions { PartitionKey = "testKey" };
             var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(events, sendOptions), Throws.InvalidOperationException);
         }
@@ -296,7 +306,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new BatchOptions { PartitionKey = "testKey" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.SendAsync(batch), Throws.InvalidOperationException);
         }
@@ -308,15 +318,15 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendWithoutOptionsInvokesTheTransportProducer()
         {
-            var events = Mock.Of<IEnumerable<EventData>>();
+            var events = new EventData[0];
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.SendAsync(events);
 
             (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWith;
 
-            Assert.That(calledWithEvents, Is.SameAs(events), "The events should be the same instance.");
+            Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
             Assert.That(calledWithOptions, Is.Not.Null, "A default set of options should be used.");
         }
 
@@ -327,16 +337,16 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendInvokesTheTransportProducer()
         {
-            var events = Mock.Of<IEnumerable<EventData>>();
+            var events = new EventData[0];
             var options = new SendOptions();
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.SendAsync(events, options);
 
             (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWith;
 
-            Assert.That(calledWithEvents, Is.SameAs(events), "The events should be the same instance.");
+            Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
             Assert.That(calledWithOptions, Is.SameAs(options), "The options should be the same instance");
         }
 
@@ -350,7 +360,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new BatchOptions { PartitionKey = "testKey" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions);
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.SendAsync(batch);
             Assert.That(transportProducer.SendBatchCalledWith, Is.SameAs(batch), "The batch should be the same instance.");
@@ -365,7 +375,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var batchOptions = new BatchOptions { PartitionKey = "testKey" };
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
 
             Assert.That(async () => await producer.CreateBatchAsync(batchOptions), Throws.InvalidOperationException);
         }
@@ -379,7 +389,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.CreateBatchAsync(batchOptions);
 
@@ -398,7 +408,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedOptions = new BatchOptions();
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.CreateBatchAsync();
 
@@ -417,7 +427,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
             var eventBatch = await producer.CreateBatchAsync(batchOptions);
 
             Assert.That(eventBatch.SendOptions, Is.SameAs(transportProducer.CreateBatchCalledWith), "The batch options should have used for the send options.");
@@ -433,7 +443,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheTransportProducer()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             await producer.CloseAsync();
 
@@ -449,7 +459,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloseClosesTheTransportProducer()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var producer = new EventHubProducer(transportProducer, "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
             producer.Close();
 

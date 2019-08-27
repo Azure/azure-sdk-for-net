@@ -23,7 +23,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDeleteEventHub()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -31,7 +31,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 string newloggerId = TestUtilities.GenerateName("newlogger");
                 string eventHubNameSpaceName = TestUtilities.GenerateName("eventHubNamespace");
                 string eventHubName = TestUtilities.GenerateName("eventhubname");
-                
+
                 try
                 {
                     // first create the event hub namespace
@@ -172,19 +172,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                             testBase.rgName,
                             testBase.serviceName,
                             property.Name,
-                            "*");                    
+                            "*");
                     }
                     testBase.eventHubClient.EventHubs.Delete(testBase.rgName, eventHubNameSpaceName, eventHubName);
                     testBase.eventHubClient.Namespaces.Delete(testBase.rgName, eventHubNameSpaceName);
                 }
             }
-        }        
+        }
 
         [Fact]
         public async Task CreateListUpdateDeleteApplicationInsights()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -216,7 +216,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(1, loggerContract.Credentials.Keys.Count);
 
                     var listLoggers = testBase.client.Logger.ListByService(
-                        testBase.rgName, 
+                        testBase.rgName,
                         testBase.serviceName,
                         null);
 
@@ -246,7 +246,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // get to check it was patched
                     loggerContract = await testBase.client.Logger.GetAsync(
-                        testBase.rgName, 
+                        testBase.rgName,
                         testBase.serviceName,
                         newloggerId);
 
@@ -299,6 +299,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                     }
                 }
             }
-        }        
+        }
     }
 }

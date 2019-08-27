@@ -106,7 +106,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void Remediations_SubscriptionCrud()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 
@@ -166,7 +166,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void Remediations_PaginatedListing()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 
@@ -202,7 +202,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void Remediations_ResourceGroupCrud()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 
@@ -266,7 +266,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void Remediations_IndividualResourceCrud()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 
@@ -330,7 +330,7 @@ namespace PolicyInsights.Tests
         [Fact]
         public void Remediations_ManagementGroupCrud()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>();
 

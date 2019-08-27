@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Compute.Tests
         [Trait("Name", "TestCrpOperations")]
         public void TestCrpOperations()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, "TestCrpOperations"))
+            using (MockContext context = MockContext.Start(this.GetType(), "TestCrpOperations"))
             {
                 EnsureClientsInitialized(context);
                 AzureOperationResponse<IEnumerable<ComputeOperationValue>> operations = m_CrpClient.Operations.ListWithHttpMessagesAsync().GetAwaiter().GetResult();
@@ -23,3 +23,4 @@ namespace Compute.Tests
         }
     }
 }
+

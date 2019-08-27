@@ -27,9 +27,13 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='kind'>
             /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
             /// </param>
-            public static IPage<PeeringLocation> List(this IPeeringLocationsOperations operations, string kind)
+            /// <param name='directPeeringType'>
+            /// The type of direct peering. Possible values include: 'Edge', 'Transit',
+            /// 'Cdn', 'Internal'
+            /// </param>
+            public static IPage<PeeringLocation> List(this IPeeringLocationsOperations operations, string kind, string directPeeringType = default(string))
             {
-                return operations.ListAsync(kind).GetAwaiter().GetResult();
+                return operations.ListAsync(kind, directPeeringType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -42,12 +46,16 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='kind'>
             /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
             /// </param>
+            /// <param name='directPeeringType'>
+            /// The type of direct peering. Possible values include: 'Edge', 'Transit',
+            /// 'Cdn', 'Internal'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringLocation>> ListAsync(this IPeeringLocationsOperations operations, string kind, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PeeringLocation>> ListAsync(this IPeeringLocationsOperations operations, string kind, string directPeeringType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(kind, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(kind, directPeeringType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

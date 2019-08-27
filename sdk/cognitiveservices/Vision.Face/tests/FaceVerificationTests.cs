@@ -17,9 +17,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceVerificationFacePositive()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationFacePositive");
+                HttpMockServer.Initialize(this.GetType(), "FaceVerificationFacePositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
 
@@ -46,9 +46,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceVerificationPersonGroupPositive()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationPersonGroupPositive");
+                HttpMockServer.Initialize(this.GetType(), "FaceVerificationPersonGroupPositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId2 = null;
@@ -83,9 +83,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceVerificationLargePersonGroupPositive()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationLargePersonGroupPositive");
+                HttpMockServer.Initialize(this.GetType(), "FaceVerificationLargePersonGroupPositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId2 = null;
@@ -120,9 +120,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceVerificationFaceNegative()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationFaceNegative");
+                HttpMockServer.Initialize(this.GetType(), "FaceVerificationFaceNegative");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
 
@@ -149,9 +149,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceVerificationPersonGroupNegative()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationPersonGroupNegative");
+                HttpMockServer.Initialize(this.GetType(), "FaceVerificationPersonGroupNegative");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId2 = null;
@@ -186,9 +186,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceVerificationLargePersonGroupNegative()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationLargePersonGroupNegative");
+                HttpMockServer.Initialize(this.GetType(), "FaceVerificationLargePersonGroupNegative");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId2 = null;

@@ -14,9 +14,9 @@ namespace SpellCheckSDK.Tests
         [Fact]
         public void SpellCheck()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "SpellCheck");
+                HttpMockServer.Initialize(this.GetType(), "SpellCheck");
 
                 ISpellCheckClient client = new SpellCheckClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 

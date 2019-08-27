@@ -56,7 +56,7 @@ namespace Azure.Core.Testing
                         {
                             if (!diagnosticListener.Events.Any(e => e.Key == expectedEvent))
                             {
-                                throw new InvalidOperationException($"Expected diagnostic event not fired {expectedEvent} {Environment.NewLine}    fired events {string.Join(", ", diagnosticListener.Events)}");
+                                throw new InvalidOperationException($"Expected diagnostic event not fired {expectedEvent} {Environment.NewLine}    fired events {string.Join(", ", diagnosticListener.Events)} {Environment.NewLine}    You may have forgotten to set your operationId to {expectedEvent} in {methodName} or applied the Azure.Core.ForwardsClientCallsAttribute to {methodName}.");
                             }
                         }
                     }

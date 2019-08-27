@@ -357,7 +357,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             EventHubReceiveFailure("NonTransient", new ReceiverDisconnectedException("ErrorInjector"), true);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/7335")]
         [DisplayTestMethodName]
         public void HardEventHubReceiveFailure()
         {

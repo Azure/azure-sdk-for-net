@@ -62,19 +62,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{794500
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{69A8687B-B040-451E-A72E-295C6CFC1B8B}"
 	ProjectSection(SolutionItems) = preProject
-		Azure.Storage.Blobs\swagger\blob.json = Azure.Storage.Blobs\swagger\blob.json
 		Azure.Storage.Blobs\swagger\readme.md = Azure.Storage.Blobs\swagger\readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{AD85524A-FB82-475C-9907-27DBC2BE2945}"
 	ProjectSection(SolutionItems) = preProject
-		Azure.Storage.Files\swagger\file.json = Azure.Storage.Files\swagger\file.json
 		Azure.Storage.Files\swagger\readme.md = Azure.Storage.Files\swagger\readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{6EEF892F-E4EE-4610-9C94-4B206D9E7152}"
 	ProjectSection(SolutionItems) = preProject
-		Azure.Storage.Queues\swagger\queue.json = Azure.Storage.Queues\swagger\queue.json
 		Azure.Storage.Queues\swagger\readme.md = Azure.Storage.Queues\swagger\readme.md
 	EndProjectSection
 EndProject

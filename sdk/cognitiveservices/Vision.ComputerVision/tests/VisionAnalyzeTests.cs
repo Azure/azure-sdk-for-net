@@ -14,9 +14,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void AnalyzeImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeImageInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
@@ -52,9 +52,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void AnalyzeImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeImageTest");
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeImageTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
@@ -89,9 +89,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void AnalyzeBrandsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeBrandsTest");
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeBrandsTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("MicrosoftRealMadrid.jpg"), FileMode.Open))
@@ -119,9 +119,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void AnalyzeImageNullImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeImageNullImageTest");
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeImageNullImageTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {

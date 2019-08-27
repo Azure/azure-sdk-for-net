@@ -97,8 +97,8 @@ namespace Azure.Messaging.EventHubs.Processor
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
-            Guard.ArgumentNotNull(nameof(eventHubClient), eventHubClient);
             Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
+            Guard.ArgumentNotNull(nameof(eventHubClient), eventHubClient);
             Guard.ArgumentNotNull(nameof(partitionProcessorFactory), partitionProcessorFactory);
             Guard.ArgumentNotNull(nameof(partitionManager), partitionManager);
 

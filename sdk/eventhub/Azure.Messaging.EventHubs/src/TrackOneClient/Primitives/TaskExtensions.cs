@@ -27,7 +27,7 @@ namespace TrackOne.Primitives
         /// </summary>
         /// <param name="task">The task. May not be <c>null</c>.</param>
         /// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
-        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was cancelled before the <paramref name="task"/> completed, or the <paramref name="task"/> raised an <see cref="OperationCanceledException"/>.</exception>
+        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was canceled before the <paramref name="task"/> completed, or the <paramref name="task"/> raised an <see cref="OperationCanceledException"/>.</exception>
         public static void WaitAndUnwrapException(this Task task, CancellationToken cancellationToken)
         {
             Guard.ArgumentNotNull(nameof(task), task);
@@ -61,7 +61,7 @@ namespace TrackOne.Primitives
         /// <param name="task">The task. May not be <c>null</c>.</param>
         /// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
         /// <returns>The result of the task.</returns>
-        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was cancelled before the <paramref name="task"/> completed, or the <paramref name="task"/> raised an <see cref="OperationCanceledException"/>.</exception>
+        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was canceled before the <paramref name="task"/> completed, or the <paramref name="task"/> raised an <see cref="OperationCanceledException"/>.</exception>
         public static TResult WaitAndUnwrapException<TResult>(this Task<TResult> task, CancellationToken cancellationToken)
         {
             Guard.ArgumentNotNull(nameof(task), task);
@@ -99,7 +99,7 @@ namespace TrackOne.Primitives
         /// </summary>
         /// <param name="task">The task. May not be <c>null</c>.</param>
         /// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
-        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was cancelled before the <paramref name="task"/> completed.</exception>
+        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was canceled before the <paramref name="task"/> completed.</exception>
         public static void WaitWithoutException(this Task task, CancellationToken cancellationToken)
         {
             Guard.ArgumentNotNull(nameof(task), task);

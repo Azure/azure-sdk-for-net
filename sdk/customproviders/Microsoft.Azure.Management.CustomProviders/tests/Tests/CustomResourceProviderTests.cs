@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using CustomProviders.Tests.Helpers;
@@ -20,7 +20,7 @@ namespace CustomProviders.Tests
         [Fact]
         public void CustomProvider_CRUD()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new CustomProvidersTestBase(context))
                 {
@@ -64,3 +64,5 @@ namespace CustomProviders.Tests
         }
     }
 }
+
+

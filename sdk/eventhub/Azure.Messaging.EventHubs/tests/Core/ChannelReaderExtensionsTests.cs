@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -200,15 +199,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void EnumerateChannelRespectsTheMaximumWaitTime()
         {
-            var forcedAbort = false;
             var channelIndex = -1;
             var readCount = 0;
             var iterateCount = 0;
             var maxReadItems = 2;
             var currentItem = 0;
-            var maxWaitTime = TimeSpan.FromMilliseconds(2);
-            var cancelTimeout = TimeSpan.FromSeconds(1);
-            var abortTimeout = cancelTimeout.Add(TimeSpan.FromSeconds(10));
+            var maxWaitTime = TimeSpan.FromMilliseconds(1);
+            var abortTimeout = TimeSpan.FromSeconds(15);
             var channelItems = new[] { 1, 4, 7, 9 };
             var mockReader = new Mock<ChannelReader<int>>();
 
@@ -224,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockReader
               .SetupGet(reader => reader.Completion)
-              .Returns(new Task(async () => await Task.Delay(5)));
+              .Returns(new Task(async () => await Task.Delay(10)));
 
             mockReader
                 .Setup(reader => reader.TryRead(out currentItem))
@@ -237,9 +234,8 @@ namespace Azure.Messaging.EventHubs.Tests
             // Create the subscription and deliberately do not dispose; the common usage will be in immediate foreach call,
             // which should trigger disposal after iterating.
 
-            var readCancellation = new CancellationTokenSource(cancelTimeout);
+            var readCancellation = new CancellationTokenSource(abortTimeout);
             var subscription = mockReader.Object.EnumerateChannel(maxWaitTime, readCancellation.Token);
-            var stopWatch = Stopwatch.StartNew();
 
             Assert.That(async () =>
             {
@@ -252,27 +248,21 @@ namespace Azure.Messaging.EventHubs.Tests
                         ++readCount;
                     }
 
-                    if (stopWatch.Elapsed > abortTimeout)
+                    if (iterateCount > maxReadItems)
                     {
-                        readCancellation.Cancel();
-                        forcedAbort = true;
                         break;
                     }
                 }
-            }, Throws.InstanceOf<TaskCanceledException>(), "Task cancellation should result in an exception");
-
-            stopWatch.Stop();
+            }, Throws.Nothing, "Iteration should have ended naturally, rather than by cancellation.");
 
             // Due to the random delay applied while waiting for items without the maximum wait time, the
             // actual iteration count is non-deterministic.  It is known, however, that it will be greater than the
             // channel read count, as the wait time accounts for the maximum random period; at least one default item
             // will be emitted.
 
-            Assert.That(forcedAbort, Is.False, "The timeout should have occurred due to the cancellation token, not have been forced.");
-            Assert.That(readCancellation.Token.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
+            Assert.That(readCancellation.Token.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
             Assert.That(readCount, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
             Assert.That(iterateCount, Is.GreaterThan(readCount), "There should have been default items returned due to the wait time expiring.");
-            Assert.That(stopWatch.Elapsed, Is.EqualTo(cancelTimeout).Within(TimeSpan.FromSeconds(5)), "The elapsed time should be close to the duration set for the cancel timeout.");
         }
 
         /// <summary>
@@ -283,14 +273,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void EnumerateChannelRespectsWhenThereIsNoMaximumWaitTime()
         {
-            var forcedAbort = false;
             var channelIndex = -1;
             var readCount = 0;
             var iterateCount = 0;
-            var maxReadItems = 2;
+            var maxReadItems = 3;
             var currentItem = 0;
-            var cancelTimeout = TimeSpan.FromMilliseconds(280);
-            var abortTimeout = cancelTimeout.Add(TimeSpan.FromSeconds(1));
+            var cancelTimeout = TimeSpan.FromMilliseconds(300);
             var channelItems = new[] { 1, 4, 7, 9 };
             var mockReader = new Mock<ChannelReader<int>>();
 
@@ -318,7 +306,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var readCancellation = new CancellationTokenSource(cancelTimeout);
             var subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
-            var stopWatch = Stopwatch.StartNew();
 
             Assert.That(async () =>
             {
@@ -330,22 +317,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         ++readCount;
                     }
-
-                    if (stopWatch.Elapsed > abortTimeout)
-                    {
-                        forcedAbort = true;
-                        break;
-                    }
                 }
             }, Throws.InstanceOf<TaskCanceledException>(), "Task cancellation should result in an exception");
 
-            stopWatch.Stop();
-
-            Assert.That(forcedAbort, Is.False, "The timeout should have occurred due to the cancellation token, not have been forced.");
             Assert.That(readCancellation.Token.IsCancellationRequested, Is.True, "Cancellation should have been requested.");
             Assert.That(readCount, Is.EqualTo(maxReadItems), "The number of items read should have stopped increasing when cancellation was requested.");
             Assert.That(iterateCount, Is.EqualTo(readCount), "There should have been no items returned; all iterations should have been reading actual values.");
-            Assert.That(stopWatch.Elapsed, Is.EqualTo(cancelTimeout).Within(TimeSpan.FromSeconds(2)), "The elapsed time should be close to the duration set for the cancel timeout.");
         }
 
         /// <summary>
