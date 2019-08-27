@@ -103,6 +103,8 @@ namespace Azure.Storage
         /// </summary>
         internal static class Blob
         {
+            public const string Https = "https";
+
             internal static class Append
             {
                 public const int MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
