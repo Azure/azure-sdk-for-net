@@ -5,6 +5,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelSimpleEntitiesTests : BaseTest
     {
         private const string versionId = "0.1";

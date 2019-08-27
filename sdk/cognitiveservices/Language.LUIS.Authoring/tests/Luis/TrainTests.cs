@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class TrainTests : BaseTest
     {
         [Fact]

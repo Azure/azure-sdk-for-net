@@ -7,6 +7,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ExamplesTests : BaseTest
     {
         private const string versionId = "0.1";
