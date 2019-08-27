@@ -557,7 +557,7 @@ namespace Azure.Storage.Blobs
 
             #region Service.GetUserDelegationKeyAsync
             /// <summary>
-            /// Retrieves a user delgation key for the Blob service. This is only a valid operation when using bearer token authentication.
+            /// Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
