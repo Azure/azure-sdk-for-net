@@ -46,27 +46,27 @@ namespace ContainerRegistry.Tests
         {
             SchemaVersion = 2,
             MediaType = ACRTestUtil.MediatypeV2Manifest,
-            Config = new V2Descriptor
+            Config = new Descriptor
             {
                 MediaType = ACRTestUtil.MediatypeV1Manifest,
                 Size = 5635,
                 Digest = "sha256:16463e0c481e161aabb735437d30b3c9c7391c2747cc564bb927e843b73dcb39"
             },
-            Layers = new List<V2Descriptor>
+            Layers = new List<Descriptor>
             {
-                new V2Descriptor
+                new Descriptor
                 {
                     MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip",
                     Size = 2789742,
                     Digest = "sha256:0503825856099e6adb39c8297af09547f69684b7016b7f3680ed801aa310baaa"
                 },
-                new V2Descriptor
+                new Descriptor
                 {
                     MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip",
                     Size = 3174556,
                     Digest = "sha256:7bf5420b55e6bbefb64ddb4fbb98ef094866f3a3facda638a155715ab6002d9b"
                 },
-                new V2Descriptor
+                new Descriptor
                 {
                     MediaType = "application/vnd.docker.image.rootfs.diff.tar.gzip",
                     Size = 344,
@@ -263,6 +263,42 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
+        public async Task GetOCIManifest()
+        {
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetOCIManifest)))
+            {
+                var tag = "latest";
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                var manifest = (OCIManifest)await client.GetManifestAsync(ACRTestUtil.OCITestRepository, tag, ACRTestUtil.MediatypeV2Manifest);
+                VerifyManifest(ExpectedV2ManifestProd, manifest);
+            }
+        }
+
+        [Fact]
+        public async Task GetOCIIndex()
+        {
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetOCIIndex)))
+            {
+                var tag = "latest";
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                var manifest = (OCIIndex)await client.GetManifestAsync(ACRTestUtil.OCIIndexTestRepository, tag, ACRTestUtil.MediatypeV2Manifest);
+                VerifyManifest(ExpectedV2ManifestProd, manifest);
+            }
+        }
+
+        [Fact]
+        public async Task GetManifestList()
+        {
+            using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestList)))
+            {
+                var tag = "latest";
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                var manifest = (ManifestList)await client.GetManifestAsync(ACRTestUtil.ManifestListTestRepository, tag, ACRTestUtil.MediatypeV2Manifest);
+                VerifyManifest(ExpectedV2ManifestProd, manifest);
+            }
+        }
+
+        [Fact]
         public async Task GetV2Manifest()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetV2Manifest)))
@@ -273,6 +309,7 @@ namespace ContainerRegistry.Tests
                 VerifyManifest(ExpectedV2ManifestProd, manifest);
             }
         }
+
 
         [Fact]
         public async Task UpdateAcrManifestAttributes()

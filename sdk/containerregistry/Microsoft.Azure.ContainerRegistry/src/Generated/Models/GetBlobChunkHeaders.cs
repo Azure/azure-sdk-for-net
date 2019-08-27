@@ -14,27 +14,25 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CheckBlobPartExistence operation.
+    /// Defines headers for GetBlobChunk operation.
     /// </summary>
-    public partial class CheckBlobPartExistenceHeaders
+    public partial class GetBlobChunkHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the CheckBlobPartExistenceHeaders
-        /// class.
+        /// Initializes a new instance of the GetBlobChunkHeaders class.
         /// </summary>
-        public CheckBlobPartExistenceHeaders()
+        public GetBlobChunkHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CheckBlobPartExistenceHeaders
-        /// class.
+        /// Initializes a new instance of the GetBlobChunkHeaders class.
         /// </summary>
         /// <param name="contentLength">The length of the requested blob
         /// content.</param>
         /// <param name="contentRange">Content range of blob chunk.</param>
-        public CheckBlobPartExistenceHeaders(long? contentLength = default(long?), string contentRange = default(string))
+        public GetBlobChunkHeaders(long? contentLength = default(long?), string contentRange = default(string))
         {
             ContentLength = contentLength;
             ContentRange = contentRange;

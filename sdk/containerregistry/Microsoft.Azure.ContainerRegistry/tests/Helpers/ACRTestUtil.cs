@@ -37,6 +37,10 @@ namespace ContainerRegistry.Tests
         public static readonly string Scope = "registry:catalog:*";
         public static readonly string MediatypeV2Manifest = "application/vnd.docker.distribution.manifest.v2+json";
         public static readonly string MediatypeV1Manifest = "application/vnd.docker.container.image.v1+json";
+        internal static readonly string OCIIndexTestRepository = "";
+        internal static readonly string ManifestListTestRepository = "";
+        internal static readonly string BlobTestRepository = "blobland";
+        internal static string OCITestRepository = "";
 
 
         /* Acquires an ACR client setup for the testing network. Note acquisition of credentials from registry

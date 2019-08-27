@@ -14,32 +14,28 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CheckBlobExistence operation.
+    /// Defines headers for CheckBlobChunk operation.
     /// </summary>
-    public partial class CheckBlobExistenceHeaders
+    public partial class CheckBlobChunkHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the CheckBlobExistenceHeaders class.
+        /// Initializes a new instance of the CheckBlobChunkHeaders class.
         /// </summary>
-        public CheckBlobExistenceHeaders()
+        public CheckBlobChunkHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CheckBlobExistenceHeaders class.
+        /// Initializes a new instance of the CheckBlobChunkHeaders class.
         /// </summary>
         /// <param name="contentLength">The length of the requested blob
         /// content.</param>
-        /// <param name="dockerContentDigest">Digest of the targeted content
-        /// for the request.</param>
-        /// <param name="location">The location where the layer should be
-        /// accessible.</param>
-        public CheckBlobExistenceHeaders(long? contentLength = default(long?), string dockerContentDigest = default(string), string location = default(string))
+        /// <param name="contentRange">Content range of blob chunk.</param>
+        public CheckBlobChunkHeaders(long? contentLength = default(long?), string contentRange = default(string))
         {
             ContentLength = contentLength;
-            DockerContentDigest = dockerContentDigest;
-            Location = location;
+            ContentRange = contentRange;
             CustomInit();
         }
 
@@ -55,16 +51,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         public long? ContentLength { get; set; }
 
         /// <summary>
-        /// Gets or sets digest of the targeted content for the request.
+        /// Gets or sets content range of blob chunk.
         /// </summary>
-        [JsonProperty(PropertyName = "Docker-Content-Digest")]
-        public string DockerContentDigest { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location where the layer should be accessible.
-        /// </summary>
-        [JsonProperty(PropertyName = "Location")]
-        public string Location { get; set; }
+        [JsonProperty(PropertyName = "Content-Range")]
+        public string ContentRange { get; set; }
 
     }
 }

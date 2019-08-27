@@ -14,28 +14,32 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for GetBlobPart operation.
+    /// Defines headers for CheckBlob operation.
     /// </summary>
-    public partial class GetBlobPartHeaders
+    public partial class CheckBlobHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the GetBlobPartHeaders class.
+        /// Initializes a new instance of the CheckBlobHeaders class.
         /// </summary>
-        public GetBlobPartHeaders()
+        public CheckBlobHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GetBlobPartHeaders class.
+        /// Initializes a new instance of the CheckBlobHeaders class.
         /// </summary>
         /// <param name="contentLength">The length of the requested blob
         /// content.</param>
-        /// <param name="contentRange">Content range of blob chunk.</param>
-        public GetBlobPartHeaders(long? contentLength = default(long?), string contentRange = default(string))
+        /// <param name="dockerContentDigest">Digest of the targeted content
+        /// for the request.</param>
+        /// <param name="location">The location where the layer should be
+        /// accessible.</param>
+        public CheckBlobHeaders(long? contentLength = default(long?), string dockerContentDigest = default(string), string location = default(string))
         {
             ContentLength = contentLength;
-            ContentRange = contentRange;
+            DockerContentDigest = dockerContentDigest;
+            Location = location;
             CustomInit();
         }
 
@@ -51,10 +55,16 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         public long? ContentLength { get; set; }
 
         /// <summary>
-        /// Gets or sets content range of blob chunk.
+        /// Gets or sets digest of the targeted content for the request.
         /// </summary>
-        [JsonProperty(PropertyName = "Content-Range")]
-        public string ContentRange { get; set; }
+        [JsonProperty(PropertyName = "Docker-Content-Digest")]
+        public string DockerContentDigest { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location where the layer should be accessible.
+        /// </summary>
+        [JsonProperty(PropertyName = "Location")]
+        public string Location { get; set; }
 
     }
 }

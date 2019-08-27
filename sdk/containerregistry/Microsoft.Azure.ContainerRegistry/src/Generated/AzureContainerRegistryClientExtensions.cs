@@ -153,9 +153,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckBlobExistenceHeaders> CheckBlobExistenceAsync(this IAzureContainerRegistryClient operations, string name, string digest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckBlobHeaders> CheckBlobAsync(this IAzureContainerRegistryClient operations, string name, string digest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckBlobExistenceWithHttpMessagesAsync(name, digest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckBlobWithHttpMessagesAsync(name, digest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -198,9 +198,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StartBlobUploadHeaders> StartBlobUploadAsync(this IAzureContainerRegistryClient operations, string name, string fromParameter, string mount, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MountBlobHeaders> MountBlobAsync(this IAzureContainerRegistryClient operations, string name, string fromParameter, string mount, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.StartBlobUploadWithHttpMessagesAsync(name, fromParameter, mount, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.MountBlobWithHttpMessagesAsync(name, fromParameter, mount, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -228,9 +228,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GetBlobUploadStatusSpecifiedHeaders> GetBlobUploadStatusSpecifiedAsync(this IAzureContainerRegistryClient operations, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GetBlobStatusSpecifiedHeaders> GetBlobStatusSpecifiedAsync(this IAzureContainerRegistryClient operations, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetBlobUploadStatusSpecifiedWithHttpMessagesAsync(name, uuid, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetBlobStatusSpecifiedWithHttpMessagesAsync(name, uuid, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -260,9 +260,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UploadBlobContentSpecifiedHeaders> UploadBlobContentSpecifiedAsync(this IAzureContainerRegistryClient operations, Stream value, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UploadBlobSpecifiedHeaders> UploadBlobSpecifiedAsync(this IAzureContainerRegistryClient operations, Stream value, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UploadBlobContentSpecifiedWithHttpMessagesAsync(value, name, uuid, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UploadBlobSpecifiedWithHttpMessagesAsync(value, name, uuid, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -285,20 +285,20 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='uuid'>
             /// A uuid identifying the upload.
             /// </param>
+            /// <param name='value'>
+            /// </param>
             /// <param name='_state'>
             /// Acquired from NextLink
             /// </param>
             /// <param name='_nouploadcache'>
             /// Acquired from NextLink
             /// </param>
-            /// <param name='value'>
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EndBlobUploadSpecifiedHeaders> EndBlobUploadSpecifiedAsync(this IAzureContainerRegistryClient operations, string digest, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Stream value = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EndBlobUploadSpecifiedHeaders> EndBlobUploadSpecifiedAsync(this IAzureContainerRegistryClient operations, string digest, string name, string uuid, Stream value = default(Stream), string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.EndBlobUploadSpecifiedWithHttpMessagesAsync(digest, name, uuid, _state, _nouploadcache, value, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.EndBlobUploadSpecifiedWithHttpMessagesAsync(digest, name, uuid, value, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -317,12 +317,40 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='uuid'>
             /// A uuid identifying the upload.
             /// </param>
+            /// <param name='_state'>
+            /// Acquired from NextLink
+            /// </param>
+            /// <param name='_nouploadcache'>
+            /// Acquired from NextLink
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelBlobUploadAsync(this IAzureContainerRegistryClient operations, string name, string uuid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelBlobUploadSpecifiedAsync(this IAzureContainerRegistryClient operations, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CancelBlobUploadWithHttpMessagesAsync(name, uuid, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.CancelBlobUploadSpecifiedWithHttpMessagesAsync(name, uuid, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Retrieve status of upload identified by uuid. The primary purpose of this
+            /// endpoint is to resolve the current status of a resumable upload.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Link acquired from upload start or previous chunk. Note, do not include
+            /// initial / (must do substring(1) )
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GetBlobStatusHeaders> GetBlobStatusAsync(this IAzureContainerRegistryClient operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBlobStatusWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -340,9 +368,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UploadBlobContentFromNextHeaders> UploadBlobContentFromNextAsync(this IAzureContainerRegistryClient operations, Stream value, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UploadBlobHeaders> UploadBlobAsync(this IAzureContainerRegistryClient operations, Stream value, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UploadBlobContentFromNextWithHttpMessagesAsync(value, location, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UploadBlobWithHttpMessagesAsync(value, location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -368,17 +396,17 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EndBlobUploadFromNextHeaders> EndBlobUploadFromNextAsync(this IAzureContainerRegistryClient operations, string digest, string location, Stream value = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EndBlobUploadHeaders> EndBlobUploadAsync(this IAzureContainerRegistryClient operations, string digest, string location, Stream value = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.EndBlobUploadFromNextWithHttpMessagesAsync(digest, location, value, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.EndBlobUploadWithHttpMessagesAsync(digest, location, value, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
             }
 
             /// <summary>
-            /// Retrieve status of upload identified by uuid. The primary purpose of this
-            /// endpoint is to resolve the current status of a resumable upload.
+            /// Cancel outstanding upload processes, releasing associated resources. If
+            /// this is not called, the unfinished uploads will eventually timeout.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -387,21 +415,12 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Link acquired from upload start or previous chunk. Note, do not include
             /// initial / (must do substring(1) )
             /// </param>
-            /// <param name='_state'>
-            /// Acquired from NextLink
-            /// </param>
-            /// <param name='_nouploadcache'>
-            /// Acquired from NextLink
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GetBlobUploadStatusFromNextHeaders> GetBlobUploadStatusFromNextAsync(this IAzureContainerRegistryClient operations, string location, string _state = default(string), bool? _nouploadcache = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelBlobUploadAsync(this IAzureContainerRegistryClient operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetBlobUploadStatusFromNextWithHttpMessagesAsync(location, _state, _nouploadcache, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Headers;
-                }
+                (await operations.CancelBlobUploadWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -768,43 +787,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StartEmptyResumableBlobUploadHeaders> StartEmptyResumableBlobUploadAsync(this IAzureContainerRegistryClient operations, string name, string resumable = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StartBlobUploadHeaders> StartBlobUploadAsync(this IAzureContainerRegistryClient operations, string name, string resumable = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.StartEmptyResumableBlobUploadWithHttpMessagesAsync(name, resumable, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Headers;
-                }
-            }
-
-            /// <summary>
-            /// Upload a chunk of data to specified upload without completing the upload.
-            /// The data will be uploaded to the specified Content Range.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='value'>
-            /// </param>
-            /// <param name='contentRange'>
-            /// Range of bytes identifying the desired block of content represented by the
-            /// body. Start must the end offset retrieved via status check plus one. Note
-            /// that this is a non-standard use of the `Content-Range` header.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the image (including the namespace)
-            /// </param>
-            /// <param name='uuid'>
-            /// A uuid identifying the upload.
-            /// </param>
-            /// <param name='chunk'>
-            /// Initiate Chunk Blob Upload
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<UploadBlobContentChunkHeaders> UploadBlobContentChunkAsync(this IAzureContainerRegistryClient operations, Stream value, string contentRange, string name, string uuid, string chunk = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UploadBlobContentChunkWithHttpMessagesAsync(value, contentRange, name, uuid, chunk, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.StartBlobUploadWithHttpMessagesAsync(name, resumable, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -829,8 +814,8 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying
             /// blob chunk.
             /// </param>
-            /// <param name='part'>
-            /// Acquire only part of a blob. This endpoint may also support RFC7233
+            /// <param name='chunk'>
+            /// Acquire only chunks of a blob. This endpoint may also support RFC7233
             /// compliant range requests. Support can be detected by issuing a HEAD
             /// request. If the header `Accept-Range: bytes` is returned, range requests
             /// can be used to fetch partial content
@@ -838,9 +823,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GetBlobPartAsync(this IAzureContainerRegistryClient operations, string name, string digest, string range, string part = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> GetBlobChunkAsync(this IAzureContainerRegistryClient operations, string name, string digest, string range, string chunk = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetBlobPartWithHttpMessagesAsync(name, digest, range, part, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.GetBlobChunkWithHttpMessagesAsync(name, digest, range, chunk, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -861,8 +846,8 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying
             /// blob chunk.
             /// </param>
-            /// <param name='part'>
-            /// Acquire only part of a blob. This endpoint may also support RFC7233
+            /// <param name='chunk'>
+            /// Acquire only chunks of a blob. This endpoint may also support RFC7233
             /// compliant range requests. Support can be detected by issuing a HEAD
             /// request. If the header `Accept-Range: bytes` is returned, range requests
             /// can be used to fetch partial content
@@ -870,9 +855,9 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckBlobPartExistenceHeaders> CheckBlobPartExistenceAsync(this IAzureContainerRegistryClient operations, string name, string digest, string range, string part = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckBlobChunkHeaders> CheckBlobChunkAsync(this IAzureContainerRegistryClient operations, string name, string digest, string range, string chunk = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckBlobPartExistenceWithHttpMessagesAsync(name, digest, range, part, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckBlobChunkWithHttpMessagesAsync(name, digest, range, chunk, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

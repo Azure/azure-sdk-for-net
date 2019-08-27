@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="mediaType">Media type for this Manifest</param>
         /// <param name="config">V2 image config descriptor</param>
         /// <param name="layers">List of V2 image layer information</param>
-        public V2Manifest(int? schemaVersion = default(int?), string mediaType = default(string), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>))
+        public V2Manifest(int? schemaVersion = default(int?), string mediaType = default(string), Descriptor config = default(Descriptor), IList<Descriptor> layers = default(IList<Descriptor>))
             : base(schemaVersion)
         {
             MediaType = mediaType;
@@ -59,13 +59,13 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets V2 image config descriptor
         /// </summary>
         [JsonProperty(PropertyName = "config")]
-        public V2Descriptor Config { get; set; }
+        public Descriptor Config { get; set; }
 
         /// <summary>
         /// Gets or sets list of V2 image layer information
         /// </summary>
         [JsonProperty(PropertyName = "layers")]
-        public IList<V2Descriptor> Layers { get; set; }
+        public IList<Descriptor> Layers { get; set; }
 
     }
 }

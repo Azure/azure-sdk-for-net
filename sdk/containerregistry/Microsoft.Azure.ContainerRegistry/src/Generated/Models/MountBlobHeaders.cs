@@ -14,30 +14,27 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for GetBlobUploadStatusSpecified operation.
+    /// Defines headers for MountBlob operation.
     /// </summary>
-    public partial class GetBlobUploadStatusSpecifiedHeaders
+    public partial class MountBlobHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// GetBlobUploadStatusSpecifiedHeaders class.
+        /// Initializes a new instance of the MountBlobHeaders class.
         /// </summary>
-        public GetBlobUploadStatusSpecifiedHeaders()
+        public MountBlobHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// GetBlobUploadStatusSpecifiedHeaders class.
+        /// Initializes a new instance of the MountBlobHeaders class.
         /// </summary>
-        /// <param name="range">Range indicating the current progress of the
-        /// upload.</param>
+        /// <param name="location">Provided location for blob</param>
         /// <param name="dockerUploadUUID">Identifies the docker upload uuid
         /// for the current request.</param>
-        public GetBlobUploadStatusSpecifiedHeaders(string range = default(string), string dockerUploadUUID = default(string))
+        public MountBlobHeaders(string location = default(string), string dockerUploadUUID = default(string))
         {
-            Range = range;
+            Location = location;
             DockerUploadUUID = dockerUploadUUID;
             CustomInit();
         }
@@ -48,10 +45,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets range indicating the current progress of the upload.
+        /// Gets or sets provided location for blob
         /// </summary>
-        [JsonProperty(PropertyName = "Range")]
-        public string Range { get; set; }
+        [JsonProperty(PropertyName = "Location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets identifies the docker upload uuid for the current

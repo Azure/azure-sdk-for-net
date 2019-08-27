@@ -50,7 +50,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="fsLayers">(V1) List of layer information</param>
         /// <param name="history">(V1) Image history</param>
         /// <param name="signatures">(V1) Image signature</param>
-        public ManifestWrapper(int? schemaVersion = default(int?), string mediaType = default(string), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>), Annotations annotations = default(Annotations), string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>))
+        public ManifestWrapper(int? schemaVersion = default(int?), string mediaType = default(string), IList<ManifestListAttributes> manifests = default(IList<ManifestListAttributes>), Descriptor config = default(Descriptor), IList<Descriptor> layers = default(IList<Descriptor>), Annotations annotations = default(Annotations), string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>))
             : base(schemaVersion)
         {
             MediaType = mediaType;
@@ -92,13 +92,13 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets (V2, OCI) Image config descriptor
         /// </summary>
         [JsonProperty(PropertyName = "config")]
-        public V2Descriptor Config { get; set; }
+        public Descriptor Config { get; set; }
 
         /// <summary>
         /// Gets or sets (V2, OCI) List of V2 image layer information
         /// </summary>
         [JsonProperty(PropertyName = "layers")]
-        public IList<V2Descriptor> Layers { get; set; }
+        public IList<Descriptor> Layers { get; set; }
 
         /// <summary>
         /// Gets or sets (OCI, OCIIndex) Additional metadata

@@ -67,6 +67,15 @@ namespace Microsoft.Azure.ContainerRegistry
             {
                 throw new Exception("AAD token authorization requires you to provide the AAD_access_token");
             }
+            // Proofing in case passed in loginurl includes https start.
+            if (loginUrl.StartsWith("https://")) {
+                loginUrl.Substring("https://".Length);
+            }
+            if (loginUrl.EndsWith("/"))
+            {
+                loginUrl.Substring(0, loginUrl.Length -1 );
+            }
+
             LoginUrl = loginUrl;
             Username = username;
             Password = password;
@@ -81,6 +90,16 @@ namespace Microsoft.Azure.ContainerRegistry
             AcrScopes = new Dictionary<string, string>();
             AcrAccessTokens = new Dictionary<string, AcrAccessToken>();
             Mode = LoginMode.TokenAad;
+
+            // Proofing in case passed in loginurl includes https start.
+            if (loginUrl.StartsWith("https://"))
+            {
+                loginUrl.Substring("https://".Length);
+            }
+            if (loginUrl.EndsWith("/"))
+            {
+                loginUrl.Substring(0, loginUrl.Length - 1);
+            }
             LoginUrl = loginUrl;
             RequestCancellationToken = cancellationToken;
             AadAccess = new AuthToken(aadAccessToken, acquireNewAad);

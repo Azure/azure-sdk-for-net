@@ -1183,7 +1183,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<CheckBlobExistenceHeaders>> CheckBlobExistenceWithHttpMessagesAsync(string name, string digest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<CheckBlobHeaders>> CheckBlobWithHttpMessagesAsync(string name, string digest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -1207,7 +1207,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("digest", digest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CheckBlobExistence", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CheckBlob", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -1304,7 +1304,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<CheckBlobExistenceHeaders>();
+            var _result = new AzureOperationHeaderResponse<CheckBlobHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1313,7 +1313,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CheckBlobExistenceHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CheckBlobHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -1449,7 +1449,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1492,7 +1492,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)_statusCode == 200)
+            if ((int)_statusCode == 202)
             {
                 _result.Body = await _httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
@@ -1546,7 +1546,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<StartBlobUploadHeaders>> StartBlobUploadWithHttpMessagesAsync(string name, string fromParameter, string mount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<MountBlobHeaders>> MountBlobWithHttpMessagesAsync(string name, string fromParameter, string mount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -1575,7 +1575,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 tracingParameters.Add("fromParameter", fromParameter);
                 tracingParameters.Add("mount", mount);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "StartBlobUpload", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "MountBlob", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -1679,7 +1679,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<StartBlobUploadHeaders>();
+            var _result = new AzureOperationHeaderResponse<MountBlobHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1688,7 +1688,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<StartBlobUploadHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<MountBlobHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -1740,7 +1740,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<GetBlobUploadStatusSpecifiedHeaders>> GetBlobUploadStatusSpecifiedWithHttpMessagesAsync(string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<GetBlobStatusSpecifiedHeaders>> GetBlobStatusSpecifiedWithHttpMessagesAsync(string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -1761,12 +1761,12 @@ namespace Microsoft.Azure.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("_state", _state);
-                tracingParameters.Add("_nouploadcache", _nouploadcache);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("uuid", uuid);
+                tracingParameters.Add("_state", _state);
+                tracingParameters.Add("_nouploadcache", _nouploadcache);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetBlobUploadStatusSpecified", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetBlobStatusSpecified", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -1871,7 +1871,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<GetBlobUploadStatusSpecifiedHeaders>();
+            var _result = new AzureOperationHeaderResponse<GetBlobStatusSpecifiedHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1880,7 +1880,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GetBlobUploadStatusSpecifiedHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GetBlobStatusSpecifiedHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -1934,7 +1934,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<UploadBlobContentSpecifiedHeaders>> UploadBlobContentSpecifiedWithHttpMessagesAsync(Stream value, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<UploadBlobSpecifiedHeaders>> UploadBlobSpecifiedWithHttpMessagesAsync(Stream value, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -1960,12 +1960,12 @@ namespace Microsoft.Azure.ContainerRegistry
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("value", value);
-                tracingParameters.Add("_state", _state);
-                tracingParameters.Add("_nouploadcache", _nouploadcache);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("uuid", uuid);
+                tracingParameters.Add("_state", _state);
+                tracingParameters.Add("_nouploadcache", _nouploadcache);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UploadBlobContentSpecified", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UploadBlobSpecified", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -2079,7 +2079,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<UploadBlobContentSpecifiedHeaders>();
+            var _result = new AzureOperationHeaderResponse<UploadBlobSpecifiedHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2088,7 +2088,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<UploadBlobContentSpecifiedHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<UploadBlobSpecifiedHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -2120,13 +2120,13 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='uuid'>
         /// A uuid identifying the upload.
         /// </param>
+        /// <param name='value'>
+        /// </param>
         /// <param name='_state'>
         /// Acquired from NextLink
         /// </param>
         /// <param name='_nouploadcache'>
         /// Acquired from NextLink
-        /// </param>
-        /// <param name='value'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2146,7 +2146,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<EndBlobUploadSpecifiedHeaders>> EndBlobUploadSpecifiedWithHttpMessagesAsync(string digest, string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Stream value = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<EndBlobUploadSpecifiedHeaders>> EndBlobUploadSpecifiedWithHttpMessagesAsync(string digest, string name, string uuid, Stream value = default(Stream), string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -2171,12 +2171,12 @@ namespace Microsoft.Azure.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("_state", _state);
-                tracingParameters.Add("_nouploadcache", _nouploadcache);
                 tracingParameters.Add("digest", digest);
                 tracingParameters.Add("value", value);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("uuid", uuid);
+                tracingParameters.Add("_state", _state);
+                tracingParameters.Add("_nouploadcache", _nouploadcache);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "EndBlobUploadSpecified", tracingParameters);
             }
@@ -2187,6 +2187,10 @@ namespace Microsoft.Azure.ContainerRegistry
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{uuid}", System.Uri.EscapeDataString(uuid));
             List<string> _queryParameters = new List<string>();
+            if (digest != null)
+            {
+                _queryParameters.Add(string.Format("digest={0}", System.Uri.EscapeDataString(digest)));
+            }
             if (_state != null)
             {
                 _queryParameters.Add(string.Format("_state={0}", System.Uri.EscapeDataString(_state)));
@@ -2194,10 +2198,6 @@ namespace Microsoft.Azure.ContainerRegistry
             if (_nouploadcache != null)
             {
                 _queryParameters.Add(string.Format("_nouploadcache={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(_nouploadcache, SerializationSettings).Trim('"'))));
-            }
-            if (digest != null)
-            {
-                _queryParameters.Add(string.Format("digest={0}", System.Uri.EscapeDataString(digest)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2329,6 +2329,12 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <param name='uuid'>
         /// A uuid identifying the upload.
         /// </param>
+        /// <param name='_state'>
+        /// Acquired from NextLink
+        /// </param>
+        /// <param name='_nouploadcache'>
+        /// Acquired from NextLink
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2347,7 +2353,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CancelBlobUploadWithHttpMessagesAsync(string name, string uuid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CancelBlobUploadSpecifiedWithHttpMessagesAsync(string name, string uuid, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -2370,8 +2376,10 @@ namespace Microsoft.Azure.ContainerRegistry
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("uuid", uuid);
+                tracingParameters.Add("_state", _state);
+                tracingParameters.Add("_nouploadcache", _nouploadcache);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CancelBlobUpload", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CancelBlobUploadSpecified", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -2380,6 +2388,14 @@ namespace Microsoft.Azure.ContainerRegistry
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{uuid}", System.Uri.EscapeDataString(uuid));
             List<string> _queryParameters = new List<string>();
+            if (_state != null)
+            {
+                _queryParameters.Add(string.Format("_state={0}", System.Uri.EscapeDataString(_state)));
+            }
+            if (_nouploadcache != null)
+            {
+                _queryParameters.Add(string.Format("_nouploadcache={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(_nouploadcache, SerializationSettings).Trim('"'))));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -2483,6 +2499,174 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
+        /// Retrieve status of upload identified by uuid. The primary purpose of this
+        /// endpoint is to resolve the current status of a resumable upload.
+        /// </summary>
+        /// <param name='location'>
+        /// Link acquired from upload start or previous chunk. Note, do not include
+        /// initial / (must do substring(1) )
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AcrErrorsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationHeaderResponse<GetBlobStatusHeaders>> GetBlobStatusWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
+            if (location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("location", location);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetBlobStatus", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{nextBlobUuidLink}";
+            _url = _url.Replace("{url}", LoginUri);
+            _url = _url.Replace("{nextBlobUuidLink}", location);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 204)
+            {
+                var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AcrErrors _errorBody =  SafeJsonConvert.DeserializeObject<AcrErrors>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationHeaderResponse<GetBlobStatusHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GetBlobStatusHeaders>(JsonSerializer.Create(DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Upload a stream of data without completing the upload.
         /// </summary>
         /// <param name='value'>
@@ -2509,7 +2693,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<UploadBlobContentFromNextHeaders>> UploadBlobContentFromNextWithHttpMessagesAsync(Stream value, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<UploadBlobHeaders>> UploadBlobWithHttpMessagesAsync(Stream value, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -2533,7 +2717,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 tracingParameters.Add("value", value);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UploadBlobContentFromNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UploadBlob", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -2638,7 +2822,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<UploadBlobContentFromNextHeaders>();
+            var _result = new AzureOperationHeaderResponse<UploadBlobHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2647,7 +2831,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<UploadBlobContentFromNextHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<UploadBlobHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -2697,7 +2881,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<EndBlobUploadFromNextHeaders>> EndBlobUploadFromNextWithHttpMessagesAsync(string digest, string location, Stream value = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<EndBlobUploadHeaders>> EndBlobUploadWithHttpMessagesAsync(string digest, string location, Stream value = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -2722,7 +2906,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 tracingParameters.Add("value", value);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "EndBlobUploadFromNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "EndBlobUpload", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -2827,7 +3011,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<EndBlobUploadFromNextHeaders>();
+            var _result = new AzureOperationHeaderResponse<EndBlobUploadHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2836,7 +3020,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<EndBlobUploadFromNextHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<EndBlobUploadHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -2855,18 +3039,12 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Retrieve status of upload identified by uuid. The primary purpose of this
-        /// endpoint is to resolve the current status of a resumable upload.
+        /// Cancel outstanding upload processes, releasing associated resources. If
+        /// this is not called, the unfinished uploads will eventually timeout.
         /// </summary>
         /// <param name='location'>
         /// Link acquired from upload start or previous chunk. Note, do not include
         /// initial / (must do substring(1) )
-        /// </param>
-        /// <param name='_state'>
-        /// Acquired from NextLink
-        /// </param>
-        /// <param name='_nouploadcache'>
-        /// Acquired from NextLink
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2886,7 +3064,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<GetBlobUploadStatusFromNextHeaders>> GetBlobUploadStatusFromNextWithHttpMessagesAsync(string location, string _state = default(string), bool? _nouploadcache = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CancelBlobUploadWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -2903,11 +3081,9 @@ namespace Microsoft.Azure.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("_state", _state);
-                tracingParameters.Add("_nouploadcache", _nouploadcache);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetBlobUploadStatusFromNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CancelBlobUpload", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -2915,14 +3091,6 @@ namespace Microsoft.Azure.ContainerRegistry
             _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{nextBlobUuidLink}", location);
             List<string> _queryParameters = new List<string>();
-            if (_state != null)
-            {
-                _queryParameters.Add(string.Format("_state={0}", System.Uri.EscapeDataString(_state)));
-            }
-            if (_nouploadcache != null)
-            {
-                _queryParameters.Add(string.Format("_nouploadcache={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(_nouploadcache, SerializationSettings).Trim('"'))));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -2930,7 +3098,7 @@ namespace Microsoft.Azure.ContainerRegistry
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
@@ -3011,25 +3179,12 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<GetBlobUploadStatusFromNextHeaders>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GetBlobUploadStatusFromNextHeaders>(JsonSerializer.Create(DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -5673,7 +5828,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<StartEmptyResumableBlobUploadHeaders>> StartEmptyResumableBlobUploadWithHttpMessagesAsync(string name, string resumable = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<StartBlobUploadHeaders>> StartBlobUploadWithHttpMessagesAsync(string name, string resumable = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -5693,7 +5848,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("resumable", resumable);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "StartEmptyResumableBlobUpload", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "StartBlobUpload", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -5793,7 +5948,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<StartEmptyResumableBlobUploadHeaders>();
+            var _result = new AzureOperationHeaderResponse<StartBlobUploadHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -5802,225 +5957,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<StartEmptyResumableBlobUploadHeaders>(JsonSerializer.Create(DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Upload a chunk of data to specified upload without completing the upload.
-        /// The data will be uploaded to the specified Content Range.
-        /// </summary>
-        /// <param name='value'>
-        /// </param>
-        /// <param name='contentRange'>
-        /// Range of bytes identifying the desired block of content represented by the
-        /// body. Start must the end offset retrieved via status check plus one. Note
-        /// that this is a non-standard use of the `Content-Range` header.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='uuid'>
-        /// A uuid identifying the upload.
-        /// </param>
-        /// <param name='chunk'>
-        /// Initiate Chunk Blob Upload
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="AcrErrorsException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationHeaderResponse<UploadBlobContentChunkHeaders>> UploadBlobContentChunkWithHttpMessagesAsync(Stream value, string contentRange, string name, string uuid, string chunk = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (LoginUri == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
-            }
-            if (value == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "value");
-            }
-            if (contentRange == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "contentRange");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (uuid == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "uuid");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("value", value);
-                tracingParameters.Add("contentRange", contentRange);
-                tracingParameters.Add("chunk", chunk);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("uuid", uuid);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UploadBlobContentChunk", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2/{name}/blobs/uploads/{uuid}";
-            _url = _url.Replace("{url}", LoginUri);
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
-            _url = _url.Replace("{uuid}", System.Uri.EscapeDataString(uuid));
-            List<string> _queryParameters = new List<string>();
-            if (chunk != null)
-            {
-                _queryParameters.Add(string.Format("chunk={0}", System.Uri.EscapeDataString(chunk)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (contentRange != null)
-            {
-                if (_httpRequest.Headers.Contains("Content-Range"))
-                {
-                    _httpRequest.Headers.Remove("Content-Range");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Content-Range", contentRange);
-            }
-            if (AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(value == null)
-            {
-              throw new System.ArgumentNullException("value");
-            }
-            if (value != null && value != Stream.Null)
-            {
-                _httpRequest.Content = new StreamContent(value);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
-            }
-            // Set Credentials
-            if (Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 202)
-            {
-                var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AcrErrors _errorBody =  SafeJsonConvert.DeserializeObject<AcrErrors>(_responseContent, DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationHeaderResponse<UploadBlobContentChunkHeaders>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<UploadBlobContentChunkHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<StartBlobUploadHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -6054,8 +5991,8 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying
         /// blob chunk.
         /// </param>
-        /// <param name='part'>
-        /// Acquire only part of a blob. This endpoint may also support RFC7233
+        /// <param name='chunk'>
+        /// Acquire only chunks of a blob. This endpoint may also support RFC7233
         /// compliant range requests. Support can be detected by issuing a HEAD
         /// request. If the header `Accept-Range: bytes` is returned, range requests
         /// can be used to fetch partial content
@@ -6081,7 +6018,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Stream,GetBlobPartHeaders>> GetBlobPartWithHttpMessagesAsync(string name, string digest, string range, string part = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Stream,GetBlobChunkHeaders>> GetBlobChunkWithHttpMessagesAsync(string name, string digest, string range, string chunk = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -6109,9 +6046,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("digest", digest);
                 tracingParameters.Add("range", range);
-                tracingParameters.Add("part", part);
+                tracingParameters.Add("chunk", chunk);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetBlobPart", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetBlobChunk", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -6120,9 +6057,9 @@ namespace Microsoft.Azure.ContainerRegistry
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{digest}", System.Uri.EscapeDataString(digest));
             List<string> _queryParameters = new List<string>();
-            if (part != null)
+            if (chunk != null)
             {
-                _queryParameters.Add(string.Format("part={0}", System.Uri.EscapeDataString(part)));
+                _queryParameters.Add(string.Format("chunk={0}", System.Uri.EscapeDataString(chunk)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -6190,7 +6127,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 206)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -6225,7 +6162,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Stream,GetBlobPartHeaders>();
+            var _result = new AzureOperationResponse<Stream,GetBlobChunkHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6233,13 +6170,13 @@ namespace Microsoft.Azure.ContainerRegistry
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)_statusCode == 206)
+            if ((int)_statusCode == 200)
             {
                 _result.Body = await _httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GetBlobPartHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GetBlobChunkHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -6270,8 +6207,8 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Format : bytes=&lt;start&gt;-&lt;end&gt;,  HTTP Range header specifying
         /// blob chunk.
         /// </param>
-        /// <param name='part'>
-        /// Acquire only part of a blob. This endpoint may also support RFC7233
+        /// <param name='chunk'>
+        /// Acquire only chunks of a blob. This endpoint may also support RFC7233
         /// compliant range requests. Support can be detected by issuing a HEAD
         /// request. If the header `Accept-Range: bytes` is returned, range requests
         /// can be used to fetch partial content
@@ -6294,7 +6231,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<CheckBlobPartExistenceHeaders>> CheckBlobPartExistenceWithHttpMessagesAsync(string name, string digest, string range, string part = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<CheckBlobChunkHeaders>> CheckBlobChunkWithHttpMessagesAsync(string name, string digest, string range, string chunk = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (LoginUri == null)
             {
@@ -6322,9 +6259,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("digest", digest);
                 tracingParameters.Add("range", range);
-                tracingParameters.Add("part", part);
+                tracingParameters.Add("chunk", chunk);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CheckBlobPartExistence", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CheckBlobChunk", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
@@ -6333,9 +6270,9 @@ namespace Microsoft.Azure.ContainerRegistry
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{digest}", System.Uri.EscapeDataString(digest));
             List<string> _queryParameters = new List<string>();
-            if (part != null)
+            if (chunk != null)
             {
-                _queryParameters.Add(string.Format("part={0}", System.Uri.EscapeDataString(part)));
+                _queryParameters.Add(string.Format("chunk={0}", System.Uri.EscapeDataString(chunk)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -6403,7 +6340,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 206)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -6433,7 +6370,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<CheckBlobPartExistenceHeaders>();
+            var _result = new AzureOperationHeaderResponse<CheckBlobChunkHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6442,7 +6379,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CheckBlobPartExistenceHeaders>(JsonSerializer.Create(DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CheckBlobChunkHeaders>(JsonSerializer.Create(DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -6459,6 +6396,5 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             return _result;
         }
-
     }
 }

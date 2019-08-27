@@ -11,32 +11,38 @@
 namespace Microsoft.Azure.ContainerRegistry.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Docker V2 image layer descriptor including config and layers
     /// </summary>
-    public partial class V2Descriptor
+    public partial class Descriptor
     {
         /// <summary>
-        /// Initializes a new instance of the V2Descriptor class.
+        /// Initializes a new instance of the Descriptor class.
         /// </summary>
-        public V2Descriptor()
+        public Descriptor()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the V2Descriptor class.
+        /// Initializes a new instance of the Descriptor class.
         /// </summary>
         /// <param name="mediaType">Layer media type</param>
         /// <param name="size">Layer size</param>
         /// <param name="digest">Layer digest</param>
-        public V2Descriptor(string mediaType = default(string), long? size = default(long?), string digest = default(string))
+        /// <param name="urls">Specifies a list of URIs from which this object
+        /// may be downloaded.</param>
+        public Descriptor(string mediaType = default(string), long? size = default(long?), string digest = default(string), IList<string> urls = default(IList<string>), Annotations annotations = default(Annotations))
         {
             MediaType = mediaType;
             Size = size;
             Digest = digest;
+            Urls = urls;
+            Annotations = annotations;
             CustomInit();
         }
 
@@ -62,6 +68,18 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "digest")]
         public string Digest { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies a list of URIs from which this object may be
+        /// downloaded.
+        /// </summary>
+        [JsonProperty(PropertyName = "urls")]
+        public IList<string> Urls { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "annotations")]
+        public Annotations Annotations { get; set; }
 
     }
 }

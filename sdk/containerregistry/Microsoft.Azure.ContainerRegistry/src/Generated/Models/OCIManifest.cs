@@ -34,7 +34,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="schemaVersion">Schema version</param>
         /// <param name="config">V2 image config descriptor</param>
         /// <param name="layers">List of V2 image layer information</param>
-        public OCIManifest(int? schemaVersion = default(int?), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>), Annotations annotations = default(Annotations))
+        public OCIManifest(int? schemaVersion = default(int?), Descriptor config = default(Descriptor), IList<Descriptor> layers = default(IList<Descriptor>), Annotations annotations = default(Annotations))
             : base(schemaVersion)
         {
             Config = config;
@@ -52,13 +52,13 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets V2 image config descriptor
         /// </summary>
         [JsonProperty(PropertyName = "config")]
-        public V2Descriptor Config { get; set; }
+        public Descriptor Config { get; set; }
 
         /// <summary>
         /// Gets or sets list of V2 image layer information
         /// </summary>
         [JsonProperty(PropertyName = "layers")]
-        public IList<V2Descriptor> Layers { get; set; }
+        public IList<Descriptor> Layers { get; set; }
 
         /// <summary>
         /// </summary>

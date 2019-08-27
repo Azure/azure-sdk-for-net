@@ -14,31 +14,27 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for UploadBlobContentChunk operation.
+    /// Defines headers for GetBlobStatus operation.
     /// </summary>
-    public partial class UploadBlobContentChunkHeaders
+    public partial class GetBlobStatusHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the UploadBlobContentChunkHeaders
-        /// class.
+        /// Initializes a new instance of the GetBlobStatusHeaders class.
         /// </summary>
-        public UploadBlobContentChunkHeaders()
+        public GetBlobStatusHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UploadBlobContentChunkHeaders
-        /// class.
+        /// Initializes a new instance of the GetBlobStatusHeaders class.
         /// </summary>
-        /// <param name="location">Provided location for blob</param>
         /// <param name="range">Range indicating the current progress of the
         /// upload.</param>
         /// <param name="dockerUploadUUID">Identifies the docker upload uuid
         /// for the current request.</param>
-        public UploadBlobContentChunkHeaders(string location = default(string), string range = default(string), string dockerUploadUUID = default(string))
+        public GetBlobStatusHeaders(string range = default(string), string dockerUploadUUID = default(string))
         {
-            Location = location;
             Range = range;
             DockerUploadUUID = dockerUploadUUID;
             CustomInit();
@@ -48,12 +44,6 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets provided location for blob
-        /// </summary>
-        [JsonProperty(PropertyName = "Location")]
-        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets range indicating the current progress of the upload.

@@ -14,27 +14,27 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for StartBlobUpload operation.
+    /// Defines headers for UploadBlobSpecified operation.
     /// </summary>
-    public partial class StartBlobUploadHeaders
+    public partial class UploadBlobSpecifiedHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the StartBlobUploadHeaders class.
+        /// Initializes a new instance of the UploadBlobSpecifiedHeaders class.
         /// </summary>
-        public StartBlobUploadHeaders()
+        public UploadBlobSpecifiedHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StartBlobUploadHeaders class.
+        /// Initializes a new instance of the UploadBlobSpecifiedHeaders class.
         /// </summary>
         /// <param name="location">Provided location for blob</param>
         /// <param name="range">Range indicating the current progress of the
         /// upload.</param>
         /// <param name="dockerUploadUUID">Identifies the docker upload uuid
         /// for the current request.</param>
-        public StartBlobUploadHeaders(string location = default(string), string range = default(string), string dockerUploadUUID = default(string))
+        public UploadBlobSpecifiedHeaders(string location = default(string), string range = default(string), string dockerUploadUUID = default(string))
         {
             Location = location;
             Range = range;

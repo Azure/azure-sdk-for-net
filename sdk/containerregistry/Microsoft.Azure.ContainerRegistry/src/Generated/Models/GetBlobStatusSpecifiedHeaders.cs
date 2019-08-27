@@ -14,33 +14,31 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for EndBlobUploadFromNext operation.
+    /// Defines headers for GetBlobStatusSpecified operation.
     /// </summary>
-    public partial class EndBlobUploadFromNextHeaders
+    public partial class GetBlobStatusSpecifiedHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the EndBlobUploadFromNextHeaders
+        /// Initializes a new instance of the GetBlobStatusSpecifiedHeaders
         /// class.
         /// </summary>
-        public EndBlobUploadFromNextHeaders()
+        public GetBlobStatusSpecifiedHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EndBlobUploadFromNextHeaders
+        /// Initializes a new instance of the GetBlobStatusSpecifiedHeaders
         /// class.
         /// </summary>
-        /// <param name="location">Provided location for blob</param>
         /// <param name="range">Range indicating the current progress of the
         /// upload.</param>
-        /// <param name="dockerContentDigest">Digest of the targeted content
-        /// for the request.</param>
-        public EndBlobUploadFromNextHeaders(string location = default(string), string range = default(string), string dockerContentDigest = default(string))
+        /// <param name="dockerUploadUUID">Identifies the docker upload uuid
+        /// for the current request.</param>
+        public GetBlobStatusSpecifiedHeaders(string range = default(string), string dockerUploadUUID = default(string))
         {
-            Location = location;
             Range = range;
-            DockerContentDigest = dockerContentDigest;
+            DockerUploadUUID = dockerUploadUUID;
             CustomInit();
         }
 
@@ -50,22 +48,17 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets provided location for blob
-        /// </summary>
-        [JsonProperty(PropertyName = "Location")]
-        public string Location { get; set; }
-
-        /// <summary>
         /// Gets or sets range indicating the current progress of the upload.
         /// </summary>
         [JsonProperty(PropertyName = "Range")]
         public string Range { get; set; }
 
         /// <summary>
-        /// Gets or sets digest of the targeted content for the request.
+        /// Gets or sets identifies the docker upload uuid for the current
+        /// request.
         /// </summary>
-        [JsonProperty(PropertyName = "Docker-Content-Digest")]
-        public string DockerContentDigest { get; set; }
+        [JsonProperty(PropertyName = "Docker-Upload-UUID")]
+        public string DockerUploadUUID { get; set; }
 
     }
 }
