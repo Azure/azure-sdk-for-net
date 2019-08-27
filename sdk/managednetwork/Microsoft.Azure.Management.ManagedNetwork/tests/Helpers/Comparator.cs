@@ -1,8 +1,6 @@
 namespace ManagedNetwork.Tests.Helpers
 {
-    using Microsoft.Azure.Management.ManagedNetwork;
     using Microsoft.Azure.Management.ManagedNetwork.Models;
-    using ManagedNetwork;
     using Xunit;
     using System.Collections.Generic;
 
