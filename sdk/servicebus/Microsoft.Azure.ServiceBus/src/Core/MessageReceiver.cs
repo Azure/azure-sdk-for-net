@@ -782,8 +782,10 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             var lockedUntilUtcTimes = await this.RenewLockAsync(lockTokens).ConfigureAwait(false);
 
-            // BLOCKER:  Ensure code owners are okay with use of Zip like this.
-            messageList.Zip(lockedUntilUtcTimes, (message, lockedUntilUtc) => message.SystemProperties.LockedUntilUtc = lockedUntilUtc);
+            for (int i = 0; i < messageList.Count; i++)
+            {
+                messageList[i].SystemProperties.LockedUntilUtc = lockedUntilUtcTimes[i];
+            }
         }
 
         /// <summary>
@@ -815,7 +817,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
-        public async Task<IEnumerable<DateTime>> RenewLockAsync(IEnumerable<string> lockTokens)
+        public async Task<DateTime[]> RenewLockAsync(IEnumerable<string> lockTokens)
         {
             this.ThrowIfClosed();
             this.ThrowIfNotPeekLockMode();
@@ -834,7 +836,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.RenewLockStart(lockTokenList) : null;
             Task renewTask = null;
 
-            IEnumerable<DateTime> lockedUntilUtcTimes = null;
+            DateTime[] lockedUntilUtcTimes = null;
 
             try
             {
@@ -1329,9 +1331,9 @@ namespace Microsoft.Azure.ServiceBus.Core
             return this.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription));
         }
 
-        protected virtual async Task<IEnumerable<DateTime>> OnRenewLockAsync(IEnumerable<string> lockTokens)
+        protected virtual async Task<DateTime[]> OnRenewLockAsync(IEnumerable<string> lockTokens)
         {
-            IEnumerable<DateTime> lockedUntilUtcTimes;
+            DateTime[] lockedUntilUtcTimes;
             try
             {
                 // Create an AmqpRequest Message to renew  lock
@@ -1347,7 +1349,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
-                    lockedUntilUtcTimes = amqpResponseMessage.GetValue<IEnumerable<DateTime>>(ManagementConstants.Properties.Expirations);
+                    lockedUntilUtcTimes = amqpResponseMessage.GetValue<DateTime[]>(ManagementConstants.Properties.Expirations);
                 }
                 else
                 {
@@ -1411,7 +1413,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessageBatchHandlerOptions registerBatchHandlerOptions,
             Func<IList<Message>, CancellationToken, Task> callback)
         {
-            // BLOCKER:  Should make new event instead of using existing?  Same for other similar events below?
             MessagingEventSource.Log.RegisterOnMessageHandlerStart(this.ClientId, registerBatchHandlerOptions);
 
             lock (this.messageReceivePumpSyncLock)

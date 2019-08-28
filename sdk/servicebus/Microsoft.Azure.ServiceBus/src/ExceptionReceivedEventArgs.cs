@@ -11,8 +11,6 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>Provides data for the <see cref="MessageHandlerOptions.ExceptionReceivedHandler" /> event.</summary>
     public sealed class ExceptionReceivedEventArgs : EventArgs
     {
-        // BLOCKER: Potential breaking change.
-
         /// <summary>Initializes a new instance of the <see cref="ExceptionReceivedEventArgs" /> class.</summary>
         /// <param name="exception">The exception that this event data belongs to.</param>
         /// <param name="messages">The messages associated with the event, if applicable.</param>

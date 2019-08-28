@@ -11,8 +11,6 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>Context provided for <see cref="ExceptionReceivedEventArgs"/> exception raised by the client.</summary>
     public class ExceptionReceivedContext
     {
-        // BLOCKER: Potential breaking change.
-
         /// <summary>Initializes a new instance of the <see cref="ExceptionReceivedContext" /> class.</summary>
         /// <param name="messages">The messages associated with the exception, if applicable.</param>
         /// <param name="action">The action associated with the exception.</param>

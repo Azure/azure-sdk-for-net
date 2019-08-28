@@ -275,6 +275,45 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(count == messageCount);
         }
 
+        internal async Task OnMessageBatchAsyncTestCase(
+            IMessageSender messageSender,
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int messageCount,
+            int batchSize)
+        {
+            var count = 0;
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            messageReceiver.RegisterMessageBatchHandler(
+                async (messages, token) =>
+                {
+                    foreach (var message in messages)
+                    {
+                        TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                        Interlocked.Increment(ref count);
+                        if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                        {
+                            await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                        }
+                    }
+                },
+                new MessageBatchHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete, MaxBatchSize = batchSize });
+
+            // Wait for the OnMessage Tasks to finish
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (count == messageCount)
+                {
+                    TestUtility.Log($"All '{messageCount}' messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            Assert.True(count == messageCount);
+        }
+
         internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(
             IMessageSender messageSender,
             IMessageReceiver messageReceiver,
@@ -290,6 +329,44 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await Task.CompletedTask;
                 },
                 new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+            await TestUtility.SendMessagesAsync(messageSender, 1);
+
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 20)
+            {
+                if (count == 1)
+                {
+                    TestUtility.Log($"All messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+
+            TestUtility.Log($"{DateTime.Now}: MessagesReceived: {count}");
+            Assert.True(count == 1);
+        }
+
+        internal async Task OnMessageBatchRegistrationWithoutPendingMessagesTestCase(
+            IMessageSender messageSender,
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int batchSize)
+        {
+            var count = 0;
+            messageReceiver.RegisterMessageBatchHandler(
+                async (messages, token) =>
+                {
+                    foreach (var message in messages)
+                    {
+                        TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                        Interlocked.Increment(ref count);
+                    }
+
+                    await Task.CompletedTask;
+                },
+                new MessageBatchHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete, MaxBatchSize = batchSize });
 
             await TestUtility.SendMessagesAsync(messageSender, 1);
 

@@ -113,7 +113,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.Abandon.Start", eventName);
             AssertCommonPayloadProperties(entityName, payload);
-            GetPropertyValueFromAnonymousTypeInstance<string>(payload, "LockToken");
+            GetPropertyValueFromAnonymousTypeInstance<IEnumerable<string>>(payload, "LockTokens");
 
             Assert.NotNull(activity);
             Assert.Equal(parentActivity, activity.Parent);
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 Assert.Equal(abandonActivity, activity);
             }
 
-            GetPropertyValueFromAnonymousTypeInstance<string>(payload, "LockToken");
+            GetPropertyValueFromAnonymousTypeInstance<IEnumerable<string>>(payload, "LockTokens");
         }
 
         #endregion
@@ -399,7 +399,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.RenewLock.Start", eventName);
             AssertCommonPayloadProperties(entityName, payload);
-            GetPropertyValueFromAnonymousTypeInstance<string>(payload, "LockToken");
+            GetPropertyValueFromAnonymousTypeInstance<IEnumerable<string>>(payload, "LockTokens");
 
             Assert.NotNull(activity);
             Assert.Equal(parentActivity, activity.Parent);
@@ -415,8 +415,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 Assert.Equal(renewLockActivity, activity);
             }
 
-            GetPropertyValueFromAnonymousTypeInstance<string>(payload, "LockToken");
-            GetPropertyValueFromAnonymousTypeInstance<DateTime>(payload, "LockedUntilUtc");
+            GetPropertyValueFromAnonymousTypeInstance<IEnumerable<string>>(payload, "LockTokens");
+            GetPropertyValueFromAnonymousTypeInstance<IEnumerable<DateTime>>(payload, "LockedUntilUtcTimes");
         }
 
         #endregion

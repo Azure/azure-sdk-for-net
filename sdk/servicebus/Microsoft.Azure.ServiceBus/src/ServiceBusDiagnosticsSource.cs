@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// BLOCKER:  Potential breaking changes
-
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
@@ -803,7 +801,6 @@ namespace Microsoft.Azure.ServiceBus
             if (message != null && DiagnosticListener.IsEnabled(activityName, entityPath))
             {
                 var tmpActivity = new Activity(operationName);
-                // BLOCKER: Should we add tmpActivity.AddBaggage("Count", messages.Count)?
                 setTags?.Invoke(tmpActivity);
 
                 if (DiagnosticListener.IsEnabled(activityName, entityPath, tmpActivity))

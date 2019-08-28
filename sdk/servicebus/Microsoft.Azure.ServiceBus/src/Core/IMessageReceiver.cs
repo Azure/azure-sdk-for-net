@@ -180,7 +180,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
-        Task<IEnumerable<DateTime>> RenewLockAsync(IEnumerable<string> lockTokens);
+        Task<DateTime[]> RenewLockAsync(IEnumerable<string> lockTokens);
 
         /// <summary>
         /// Fetches the next active message without changing the state of the receiver or the message source.
