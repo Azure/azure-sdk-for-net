@@ -1,0 +1,24 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/reservations/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\rd\azure-sdk-for-net\sdk
+2019-08-28 05:18:42 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      9b465d1b55843352ace3386b6ac7da3308c9504d
+AutoRest information
+Requested version: latest
+Bootstrapper version:    autorest@2.0.4283
+(node:20852) UnhandledPromiseRejectionWarning: TypeError: volume[member].bind is not a function
+    at patchFilesystem (C:\Users\kgautam\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:277:43)
+    at C:\Users\kgautam\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:281:18
+    at Object.global.staticloader.undo (C:\Users\kgautam\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:163:7)
+    at process.exit.n [as exit] (C:\Users\kgautam\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:170:27)
+    at main (C:\Users\kgautam\.autorest\@microsoft.azure_autorest-core@2.0.4390\node_modules\@microsoft.azure\autorest-core\dist\app.js:517:21)
+(node:20852) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 20)
+(node:20852) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+Shutting Down
+Shutting Down
