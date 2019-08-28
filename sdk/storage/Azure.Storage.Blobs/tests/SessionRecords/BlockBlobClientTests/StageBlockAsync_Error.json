@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0?restype=container",
+      "RequestUri": "http:\u002f\u002fseandevtest.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|584d25eb-4110f39a1cab3ec1.",
+        "Request-Id": "|e89c9d37-4b9a805b74fb6c6f.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190827.1\u002b0e7ec14e46f8c7f678ed0e2ea6e77a7f9147ebc5",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "30a59e47929a4a877fe730ce428c399a",
-        "x-ms-date": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "x-ms-date": "Tue, 27 Aug 2019 19:47:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -20,32 +20,32 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 16 Aug 2019 17:03:55 GMT",
-        "ETag": "\u00220x8D7226BB992E6C5\u0022",
-        "Last-Modified": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "Date": "Tue, 27 Aug 2019 19:47:10 GMT",
+        "ETag": "\u00220x8D72B275A2939CF\u0022",
+        "Last-Modified": "Tue, 27 Aug 2019 19:47:11 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "30a59e47929a4a877fe730ce428c399a",
-        "x-ms-request-id": "3cb2e6a4-301e-0067-2854-545df2000000",
+        "x-ms-request-id": "28870fb4-d01e-0064-1110-5dbaaa000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
+      "RequestUri": "http:\u002f\u002fseandevtest.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "4096",
-        "Request-Id": "|584d25ec-4110f39a1cab3ec1.",
+        "Request-Id": "|e89c9d38-4b9a805b74fb6c6f.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190827.1\u002b0e7ec14e46f8c7f678ed0e2ea6e77a7f9147ebc5",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "ab2051c45980a62ea636c81b286c41ee",
-        "x-ms-date": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "x-ms-date": "Tue, 27 Aug 2019 19:47:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -54,35 +54,35 @@
       "ResponseHeaders": {
         "Content-Length": "454",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 16 Aug 2019 17:03:55 GMT",
+        "Date": "Tue, 27 Aug 2019 19:47:10 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "ab2051c45980a62ea636c81b286c41ee",
         "x-ms-error-code": "InvalidQueryParameterValue",
-        "x-ms-request-id": "3cb2e6b7-301e-0067-3954-545df2000000",
+        "x-ms-request-id": "28871001-d01e-0064-5710-5dbaaa000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidQueryParameterValue\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:3cb2e6b7-301e-0067-3954-545df2000000\n",
-        "Time:2019-08-16T17:03:56.6612014Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
+        "RequestId:28871001-d01e-0064-5710-5dbaaa000000\n",
+        "Time:2019-08-27T19:47:11.3115013Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
+      "RequestUri": "http:\u002f\u002fseandevtest.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "4096",
-        "Request-Id": "|584d25ed-4110f39a1cab3ec1.",
+        "Request-Id": "|e89c9d39-4b9a805b74fb6c6f.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190827.1\u002b0e7ec14e46f8c7f678ed0e2ea6e77a7f9147ebc5",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "94a4439a96b6999f9507d4bbb1e2fe4f",
-        "x-ms-date": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "x-ms-date": "Tue, 27 Aug 2019 19:47:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -91,35 +91,35 @@
       "ResponseHeaders": {
         "Content-Length": "454",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 16 Aug 2019 17:03:55 GMT",
+        "Date": "Tue, 27 Aug 2019 19:47:10 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "94a4439a96b6999f9507d4bbb1e2fe4f",
         "x-ms-error-code": "InvalidQueryParameterValue",
-        "x-ms-request-id": "3cb2e6c3-301e-0067-4554-545df2000000",
+        "x-ms-request-id": "28871056-d01e-0064-2210-5dbaaa000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidQueryParameterValue\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:3cb2e6c3-301e-0067-4554-545df2000000\n",
-        "Time:2019-08-16T17:03:56.6732124Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
+        "RequestId:28871056-d01e-0064-2210-5dbaaa000000\n",
+        "Time:2019-08-27T19:47:11.3355176Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
+      "RequestUri": "http:\u002f\u002fseandevtest.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "4096",
-        "Request-Id": "|584d25ee-4110f39a1cab3ec1.",
+        "Request-Id": "|e89c9d3a-4b9a805b74fb6c6f.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190827.1\u002b0e7ec14e46f8c7f678ed0e2ea6e77a7f9147ebc5",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "89064ee477964490b6c03cd5a472b177",
-        "x-ms-date": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "x-ms-date": "Tue, 27 Aug 2019 19:47:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -128,35 +128,35 @@
       "ResponseHeaders": {
         "Content-Length": "454",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 16 Aug 2019 17:03:55 GMT",
+        "Date": "Tue, 27 Aug 2019 19:47:10 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "89064ee477964490b6c03cd5a472b177",
         "x-ms-error-code": "InvalidQueryParameterValue",
-        "x-ms-request-id": "3cb2e6cc-301e-0067-4e54-545df2000000",
+        "x-ms-request-id": "2887108b-d01e-0064-4e10-5dbaaa000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidQueryParameterValue\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:3cb2e6cc-301e-0067-4e54-545df2000000\n",
-        "Time:2019-08-16T17:03:56.6822210Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
+        "RequestId:2887108b-d01e-0064-4e10-5dbaaa000000\n",
+        "Time:2019-08-27T19:47:11.3585339Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
+      "RequestUri": "http:\u002f\u002fseandevtest.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "4096",
-        "Request-Id": "|584d25ef-4110f39a1cab3ec1.",
+        "Request-Id": "|e89c9d3b-4b9a805b74fb6c6f.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190827.1\u002b0e7ec14e46f8c7f678ed0e2ea6e77a7f9147ebc5",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "29f86b5144a42e3eb28715798473f5c4",
-        "x-ms-date": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "x-ms-date": "Tue, 27 Aug 2019 19:47:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -165,35 +165,35 @@
       "ResponseHeaders": {
         "Content-Length": "454",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 16 Aug 2019 17:03:55 GMT",
+        "Date": "Tue, 27 Aug 2019 19:47:10 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "29f86b5144a42e3eb28715798473f5c4",
         "x-ms-error-code": "InvalidQueryParameterValue",
-        "x-ms-request-id": "3cb2e6d4-301e-0067-5654-545df2000000",
+        "x-ms-request-id": "288710c7-d01e-0064-0210-5dbaaa000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidQueryParameterValue\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:3cb2e6d4-301e-0067-5654-545df2000000\n",
-        "Time:2019-08-16T17:03:56.6922305Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
+        "RequestId:288710c7-d01e-0064-0210-5dbaaa000000\n",
+        "Time:2019-08-27T19:47:11.3825497Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
+      "RequestUri": "http:\u002f\u002fseandevtest.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "4096",
-        "Request-Id": "|584d25f0-4110f39a1cab3ec1.",
+        "Request-Id": "|e89c9d3c-4b9a805b74fb6c6f.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190827.1\u002b0e7ec14e46f8c7f678ed0e2ea6e77a7f9147ebc5",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "da377938b8662258b360def559c9f423",
-        "x-ms-date": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "x-ms-date": "Tue, 27 Aug 2019 19:47:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -202,35 +202,35 @@
       "ResponseHeaders": {
         "Content-Length": "454",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 16 Aug 2019 17:03:55 GMT",
+        "Date": "Tue, 27 Aug 2019 19:47:10 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "da377938b8662258b360def559c9f423",
         "x-ms-error-code": "InvalidQueryParameterValue",
-        "x-ms-request-id": "3cb2e6da-301e-0067-5c54-545df2000000",
+        "x-ms-request-id": "28871105-d01e-0064-3d10-5dbaaa000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidQueryParameterValue\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:3cb2e6da-301e-0067-5c54-545df2000000\n",
-        "Time:2019-08-16T17:03:56.7012391Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
+        "RequestId:28871105-d01e-0064-3d10-5dbaaa000000\n",
+        "Time:2019-08-27T19:47:11.4065665Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
+      "RequestUri": "http:\u002f\u002fseandevtest.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0\u002ftest-blob-b8feea8b-7d40-b81e-c0c1-7edbb52bdf53?comp=block\u0026blockid=test-block-e266e59e-6d0c-da8e-e492-59936c49d9f4",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "4096",
-        "Request-Id": "|584d25f1-4110f39a1cab3ec1.",
+        "Request-Id": "|e89c9d3d-4b9a805b74fb6c6f.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190827.1\u002b0e7ec14e46f8c7f678ed0e2ea6e77a7f9147ebc5",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "45695c55d4e99faa10d7d60f6216c042",
-        "x-ms-date": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "x-ms-date": "Tue, 27 Aug 2019 19:47:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -239,34 +239,34 @@
       "ResponseHeaders": {
         "Content-Length": "454",
         "Content-Type": "application\u002fxml",
-        "Date": "Fri, 16 Aug 2019 17:03:55 GMT",
+        "Date": "Tue, 27 Aug 2019 19:47:10 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "45695c55d4e99faa10d7d60f6216c042",
         "x-ms-error-code": "InvalidQueryParameterValue",
-        "x-ms-request-id": "3cb2e6e3-301e-0067-6454-545df2000000",
+        "x-ms-request-id": "28871154-d01e-0064-0110-5dbaaa000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidQueryParameterValue\u003c\u002fCode\u003e\u003cMessage\u003eValue for one of the query parameters specified in the request URI is invalid.\n",
-        "RequestId:3cb2e6e3-301e-0067-6454-545df2000000\n",
-        "Time:2019-08-16T17:03:56.7102477Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
+        "RequestId:28871154-d01e-0064-0110-5dbaaa000000\n",
+        "Time:2019-08-27T19:47:11.4295823Z\u003c\u002fMessage\u003e\u003cQueryParameterName\u003eblockid\u003c\u002fQueryParameterName\u003e\u003cQueryParameterValue\u003etest-block-e266e59e-6d0c-da8e-e492-59936c49d9f4\u003c\u002fQueryParameterValue\u003e\u003cReason\u003eNot a valid base64 string.\u003c\u002fReason\u003e\u003c\u002fError\u003e"
       ]
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0?restype=container",
+      "RequestUri": "http:\u002f\u002fseandevtest.blob.core.windows.net\u002ftest-container-5fcf6964-fc38-d19b-e7da-7360f78bb6c0?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|584d25f2-4110f39a1cab3ec1.",
+        "Request-Id": "|e89c9d3e-4b9a805b74fb6c6f.",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190827.1\u002b0e7ec14e46f8c7f678ed0e2ea6e77a7f9147ebc5",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "2b9d78cbd73a981112d576446648d4e8",
-        "x-ms-date": "Fri, 16 Aug 2019 17:03:56 GMT",
+        "x-ms-date": "Tue, 27 Aug 2019 19:47:11 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -274,13 +274,13 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 16 Aug 2019 17:03:55 GMT",
+        "Date": "Tue, 27 Aug 2019 19:47:10 GMT",
         "Server": [
           "Windows-Azure-Blob\u002f1.0",
           "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-client-request-id": "2b9d78cbd73a981112d576446648d4e8",
-        "x-ms-request-id": "3cb2e6ea-301e-0067-6b54-545df2000000",
+        "x-ms-request-id": "2887118b-d01e-0064-3210-5dbaaa000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
@@ -288,6 +288,6 @@
   ],
   "Variables": {
     "RandomSeed": "1404803902",
-    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttp:\u002f\u002fseandevtest.blob.core.windows.net\nhttp:\u002f\u002fseandevtest.file.core.windows.net\nhttp:\u002f\u002fseandevtest.queue.core.windows.net\nhttp:\u002f\u002fseandevtest.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fseandevtest-secondary.blob.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.file.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.queue.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fseandevtest.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fseandevtest.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fseandevtest.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fseandevtest.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.file.core.windows.net\u002f;AccountName=seandevtest;AccountKey=Sanitized"
   }
 }
