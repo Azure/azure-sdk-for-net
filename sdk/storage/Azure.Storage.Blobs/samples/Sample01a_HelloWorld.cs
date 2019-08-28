@@ -113,9 +113,12 @@ namespace Azure.Storage.Blobs.Samples
         [Test]
         public void DownloadImage()
         {
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+
             // Download the public blob at https://aka.ms/bloburl
             BlobDownloadInfo download = new BlobClient(new Uri("https://aka.ms/bloburl")).Download();
-            using (FileStream file = File.OpenWrite(Path.GetTempPath() + "hello.jpg"))
+            using (FileStream file = File.OpenWrite(downloadPath))
             {
                 download.Content.CopyTo(file);
             }

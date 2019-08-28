@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         public static Filter ParseFromXElement(XElement xElement)
         {
-            var expression = xElement.Element(XName.Get("SqlExpression", ManagementClientConstants.SbNs))?.Value;
+            var expression = xElement.Element(XName.Get("SqlExpression", ManagementClientConstants.ServiceBusNamespace))?.Value;
             if (string.IsNullOrWhiteSpace(expression))
             {
                 return null;
@@ -19,13 +19,13 @@ namespace Microsoft.Azure.ServiceBus
 
             var filter = new SqlFilter(expression);
 
-            var parameters = xElement.Element(XName.Get("Parameters", ManagementClientConstants.SbNs));
+            var parameters = xElement.Element(XName.Get("Parameters", ManagementClientConstants.ServiceBusNamespace));
             if (parameters != null && parameters.HasElements)
             {
-                foreach(var param in parameters.Elements(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.SbNs)))
+                foreach(var param in parameters.Elements(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.ServiceBusNamespace)))
                 {
-                    var key = param.Element(XName.Get("Key", ManagementClientConstants.SbNs))?.Value;
-                    var value = XmlObjectConvertor.ParseValueObject(param.Element(XName.Get("Value", ManagementClientConstants.SbNs)));
+                    var key = param.Element(XName.Get("Key", ManagementClientConstants.ServiceBusNamespace))?.Value;
+                    var value = XmlObjectConvertor.ParseValueObject(param.Element(XName.Get("Value", ManagementClientConstants.ServiceBusNamespace)));
                     filter.Parameters.Add(key, value);
                 }
             }
@@ -38,20 +38,20 @@ namespace Microsoft.Azure.ServiceBus
             XElement parameterElement = null;
             if (filter.parameters != null)
             {
-                parameterElement = new XElement(XName.Get("Parameters", ManagementClientConstants.SbNs));
+                parameterElement = new XElement(XName.Get("Parameters", ManagementClientConstants.ServiceBusNamespace));
                 foreach (var param in filter.Parameters)
                 {
                     parameterElement.Add(
-                        new XElement(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.SbNs),
-                            new XElement(XName.Get("Key", ManagementClientConstants.SbNs), param.Key),
+                        new XElement(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.ServiceBusNamespace),
+                            new XElement(XName.Get("Key", ManagementClientConstants.ServiceBusNamespace), param.Key),
                             XmlObjectConvertor.SerializeObject(param.Value)));
                 }
             }
             
             return new XElement(
-                XName.Get("Filter", ManagementClientConstants.SbNs),
-                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs), filterName),
-                new XElement(XName.Get("SqlExpression", ManagementClientConstants.SbNs), filter.SqlExpression),
+                XName.Get("Filter", ManagementClientConstants.ServiceBusNamespace),
+                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), filterName),
+                new XElement(XName.Get("SqlExpression", ManagementClientConstants.ServiceBusNamespace), filter.SqlExpression),
                 parameterElement);
         }
     }

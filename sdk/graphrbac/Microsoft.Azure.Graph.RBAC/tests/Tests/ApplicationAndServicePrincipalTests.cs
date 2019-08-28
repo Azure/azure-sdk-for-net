@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Graph.RBAC.Models;
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [LiveTest]
         public void CRUDApplicationTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var passwordCredential = CreatePasswordCredential();
                 var keyCredential = CreateKeyCredential();
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [LiveTest]
         public void CreateDeleteAppCredentialTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 Application application = null;
                 try
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [LiveTest]
         public void GetServicePrincipalsIdByAppIdTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 Application application = null;
                 ServicePrincipal servicePrincipal = null;
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [LiveTest]
         public void CreateDeleteSpCredentialTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 Application application = null;
                 ServicePrincipal sp = null;
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [LiveTest]
         public void NegativeCredentialTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Get App credentials on a random app- should fail
                 var randomObjectId = "bb66c9c6-7101-4a84-9bd1-c7aef0a561b1";
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6557")]
         public void CreateDeleteServicePrincipalTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 ServicePrincipal sp = null;
 
@@ -375,3 +375,4 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         }
     }
 }
+

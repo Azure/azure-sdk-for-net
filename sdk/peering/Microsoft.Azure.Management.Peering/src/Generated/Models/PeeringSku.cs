@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         /// <param name="name">The name of the peering SKU. Possible values
         /// include: 'Basic_Exchange_Free', 'Basic_Direct_Free',
-        /// 'Premium_Direct_Free', 'Premium_Exchange_Metered'</param>
+        /// 'Premium_Direct_Free', 'Premium_Exchange_Metered',
+        /// 'Premium_Direct_Metered', 'Premium_Direct_Unlimited'</param>
         /// <param name="tier">The tier of the peering SKU. Possible values
         /// include: 'Basic', 'Premium'</param>
         /// <param name="family">The family of the peering SKU. Possible values
@@ -51,7 +52,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Gets or sets the name of the peering SKU. Possible values include:
         /// 'Basic_Exchange_Free', 'Basic_Direct_Free', 'Premium_Direct_Free',
-        /// 'Premium_Exchange_Metered'
+        /// 'Premium_Exchange_Metered', 'Premium_Direct_Metered',
+        /// 'Premium_Direct_Unlimited'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -105,7 +105,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDeleteSwaggerSchema()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -121,7 +121,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     string newApiPath = "newapiPath";
                     string newApiServiceUrl = "http://newechoapi.cloudapp.net/api";
                     string subscriptionKeyParametersHeader = TestUtilities.GenerateName("header");
-                    string subscriptionKeyQueryStringParamName = TestUtilities.GenerateName("query");                    
+                    string subscriptionKeyQueryStringParamName = TestUtilities.GenerateName("query");
 
                     var createdApiContract = testBase.client.Api.CreateOrUpdate(
                         testBase.rgName,
@@ -203,7 +203,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     // check the entity is deleted
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.ApiSchema.Get(testBase.rgName, testBase.serviceName, newApiId, newSchemaId));
-                                        
+
                     // delete the api
                     testBase.client.Api.Delete(
                         testBase.rgName,
@@ -247,7 +247,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDeleteOpenApiSchema()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -389,7 +389,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDeleteWsdlSchema()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -444,7 +444,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var schemaContractParams = new SchemaCreateOrUpdateContract()
                     {
                         ContentType = "application/vnd.ms-azure-apim.xsd+xml",
-                        Value = schemaXDoc.ToString()                       
+                        Value = schemaXDoc.ToString()
                     };
 
                     var schemaContract = await testBase.client.ApiSchema.CreateOrUpdateAsync(

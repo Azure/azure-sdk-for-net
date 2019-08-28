@@ -16,7 +16,7 @@ namespace LUIS.Runtime.Tests
         protected const string appId = "0894d430-8f00-4bcd-8153-45e06a1feca1";
         protected const string subscriptionKey = "00000000000000000000000000000000";
 
-        private string ClassName => GetType().FullName;
+        private Type TypeName => GetType();
 
         private ILUISRuntimeClient GetClient(DelegatingHandler handler, string subscriptionKey = subscriptionKey)
         {
@@ -25,11 +25,11 @@ namespace LUIS.Runtime.Tests
             return client;
         }
 
-        protected async void UseClientFor(Func<ILUISRuntimeClient, Task> doTest, string className = null, [CallerMemberName] string methodName = "")
+        protected async void UseClientFor(Func<ILUISRuntimeClient, Task> doTest, Type typeName = null, [CallerMemberName] string methodName = "")
         {
-            using (MockContext context = MockContext.Start(className ?? ClassName, methodName))
+            using (MockContext context = MockContext.Start(typeName ?? TypeName, methodName))
             {
-                HttpMockServer.Initialize(className ?? ClassName, methodName, mode);
+                HttpMockServer.Initialize(typeName ?? TypeName, methodName, mode);
                 ILUISRuntimeClient client = GetClient(HttpMockServer.CreateInstance());
                 await doTest(client);
                 context.Stop();

@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.Backup</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.</Description>
-		<Version>3.1.1-preview</Version>
+		<Version>3.1.2-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.Backup</AssemblyName>
 		<PackageTags>Recoveryservices;Backup;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Adding back the VaultId property to Backup status related classes.
+- Adding Soft delete properties to protectedItem.
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

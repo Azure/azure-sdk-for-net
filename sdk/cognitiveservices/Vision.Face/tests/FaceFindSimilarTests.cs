@@ -19,9 +19,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceFindSimilarFacePositive()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceFindSimilarFacePositive");
+                HttpMockServer.Initialize(this.GetType(), "FaceFindSimilarFacePositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId1 = null;
@@ -47,9 +47,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceFindSimilarFaceListPositive()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceFindSimilarFaceListPositive");
+                HttpMockServer.Initialize(this.GetType(), "FaceFindSimilarFaceListPositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId1 = null;
@@ -81,9 +81,9 @@ namespace FaceSDK.Tests
         [Fact]
         public void FaceFindSimilarLargeFaceListPositive()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceFindSimilarLargeFaceListPositive");
+                HttpMockServer.Initialize(this.GetType(), "FaceFindSimilarLargeFaceListPositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId1 = null;

@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
 using Microsoft.Azure.Management.Resources;
@@ -84,3 +84,4 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         }
     }
 }
+

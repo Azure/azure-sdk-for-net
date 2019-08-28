@@ -26,7 +26,7 @@ namespace Billing.Tests.ScenarioTests
         public void ListInvoicesTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var invoices = billingMgmtClient.Invoices.List();
@@ -40,7 +40,7 @@ namespace Billing.Tests.ScenarioTests
         public void ListInvoicesWithQueryParametersTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var invoices = billingMgmtClient.Invoices.List(DownloadUrlExpand, RangeFilter, null, 1);
@@ -56,7 +56,7 @@ namespace Billing.Tests.ScenarioTests
         [Fact]
         public void GetLatestInvoice()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var invoice = billingMgmtClient.Invoices.GetLatest();
@@ -72,7 +72,7 @@ namespace Billing.Tests.ScenarioTests
         public void GetInvoiceWithName()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var invoice = billingMgmtClient.Invoices.Get(InvoiceName);
@@ -90,7 +90,7 @@ namespace Billing.Tests.ScenarioTests
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             string rangeFilter = "invoicePeriodEndDate lt 2016-01-31";
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 try
                 {
@@ -98,7 +98,7 @@ namespace Billing.Tests.ScenarioTests
                     billingMgmtClient.Invoices.List(DownloadUrlExpand, rangeFilter, null, 1);
                     Assert.False(true, "ErrorResponseException should have been thrown");
                 }
-                catch(ErrorResponseException e)
+                catch (ErrorResponseException e)
                 {
                     Assert.NotNull(e.Body);
                     Assert.NotNull(e.Body.Error);
