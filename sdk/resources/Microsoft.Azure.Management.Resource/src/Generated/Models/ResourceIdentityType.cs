@@ -23,10 +23,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     {
         [EnumMember(Value = "SystemAssigned")]
         SystemAssigned,
-        [EnumMember(Value = "UserAssigned")]
-        UserAssigned,
-        [EnumMember(Value = "SystemAssigned, UserAssigned")]
-        SystemAssignedUserAssigned,
         [EnumMember(Value = "None")]
         None
     }
@@ -43,10 +39,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             {
                 case ResourceIdentityType.SystemAssigned:
                     return "SystemAssigned";
-                case ResourceIdentityType.UserAssigned:
-                    return "UserAssigned";
-                case ResourceIdentityType.SystemAssignedUserAssigned:
-                    return "SystemAssigned, UserAssigned";
                 case ResourceIdentityType.None:
                     return "None";
             }
@@ -59,10 +51,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             {
                 case "SystemAssigned":
                     return ResourceIdentityType.SystemAssigned;
-                case "UserAssigned":
-                    return ResourceIdentityType.UserAssigned;
-                case "SystemAssigned, UserAssigned":
-                    return ResourceIdentityType.SystemAssignedUserAssigned;
                 case "None":
                     return ResourceIdentityType.None;
             }

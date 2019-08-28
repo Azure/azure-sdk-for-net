@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,22 +29,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
-        /// <param name="principalId">The principal ID of resource
+        /// <param name="principalId">The principal ID of the resource
         /// identity.</param>
-        /// <param name="tenantId">The tenant ID of resource.</param>
+        /// <param name="tenantId">The tenant ID of the resource
+        /// identity.</param>
         /// <param name="type">The identity type. Possible values include:
-        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned',
-        /// 'None'</param>
-        /// <param name="userAssignedIdentities">The list of user identities
-        /// associated with the resource. The user identity dictionary key
-        /// references will be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
-        public Identity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IDictionary<string, IdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, IdentityUserAssignedIdentitiesValue>))
+        /// 'SystemAssigned', 'None'</param>
+        public Identity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
-            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -56,33 +49,23 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the principal ID of resource identity.
+        /// Gets the principal ID of the resource identity.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets the tenant ID of resource.
+        /// Gets the tenant ID of the resource identity.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; private set; }
 
         /// <summary>
         /// Gets or sets the identity type. Possible values include:
-        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned',
-        /// 'None'
+        /// 'SystemAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ResourceIdentityType? Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of user identities associated with the
-        /// resource. The user identity dictionary key references will be ARM
-        /// resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-        /// </summary>
-        [JsonProperty(PropertyName = "userAssignedIdentities")]
-        public IDictionary<string, IdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
 
     }
 }
