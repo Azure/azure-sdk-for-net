@@ -288,7 +288,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1473",
+        "Content-Length": "1467",
         "Content-Type": "application\u002fjson; charset=utf-8",
         "Date": "Tue, 06 Aug 2019 17:45:00 GMT",
         "Expires": "-1",
@@ -336,7 +336,7 @@
             "kid": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fkeys\u002fCloudECKey-f4230c5f-348f-4f2d-8aa0-80f4d3ac727d",
             "attributes": {
               "enabled": true,
-              "exp": 1596705912685,
+              "exp": 1596705912,
               "created": 1565083512,
               "updated": 1565083512,
               "recoveryLevel": "Recoverable\u002bPurgeable"
@@ -349,7 +349,7 @@
             "kid": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fkeys\u002fCloudRsaKey-f989e30d-d2db-4f87-bd23-ba28ca528ae4",
             "attributes": {
               "enabled": true,
-              "exp": 1596705913280,
+              "exp": 1596705913,
               "created": 1565083516,
               "updated": 1565083516,
               "recoveryLevel": "Recoverable\u002bPurgeable"
