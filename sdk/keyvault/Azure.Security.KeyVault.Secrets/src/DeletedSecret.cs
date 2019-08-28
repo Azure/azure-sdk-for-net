@@ -32,9 +32,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
-            base.WriteProperties(ref json);
+            base.WriteProperties(json);
 
             if (RecoveryId != null)
             {
