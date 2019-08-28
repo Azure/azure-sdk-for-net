@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
@@ -138,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         await PartitionProcessor.InitializeAsync().ConfigureAwait(false);
 
                         // Before closing, the running task will set the close reason.  When something unexpected happens
-                        // and it's not set, the default value (Unknown) is used.
+                        // and it's not set, the default value (Unknown) is used. TODO.
 
                         CloseReason = default;
 
@@ -158,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task StopAsync()
+        public async Task StopAsync(PartitionProcessorCloseReason? reason)
         {
             if (RunningTask != null)
             {
@@ -192,9 +191,9 @@ namespace Azure.Messaging.EventHubs.Processor
                         await InnerConsumer.CloseAsync().ConfigureAwait(false);
 
                         // In case an exception is encountered while partition processor is closing, don't catch it and
-                        // let the event processor handle it.
+                        // let the event processor handle it. TODO (better name).
 
-                        await PartitionProcessor.CloseAsync(CloseReason).ConfigureAwait(false);
+                        await PartitionProcessor.CloseAsync(reason ?? CloseReason).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -252,11 +251,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
             }
 
-            if (unrecoverableException == null)
-            {
-                CloseReason = PartitionProcessorCloseReason.Shutdown;
-            }
-            else
+            if (unrecoverableException != null)
             {
                 // In case an exception is encountered while partition processor is processing the error, don't
                 // catch it and let the calling method (StopAsync) handle it.

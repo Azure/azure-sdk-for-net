@@ -184,7 +184,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         var ownedPartitionIds = PartitionPumps.Keys;
 
                         await Task.WhenAll(ownedPartitionIds
-                            .Select(partitionId => TryRemovePartitionPumpAsync(partitionId)))
+                            .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.Shutdown)))
                             .ConfigureAwait(false);
 
                         InstanceOwnership.Clear();
@@ -217,17 +217,28 @@ namespace Azure.Messaging.EventHubs.Processor
 
             while (!cancellationToken.IsCancellationRequested)
             {
+                // Renew ownership.
+
                 await RenewOwnershipAsync();
 
-                await CheckPartitionPumps();
+                // Remove lost partitions.
 
-                // TODO: LastModifiedTime should be mandatory.
-                // TODO: 30?
+                await Task.WhenAll(PartitionPumps.Keys
+                    .Except(InstanceOwnership.Keys)
+                    .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.OwnershipLost)));
+
+                // Restart failed pumps.
+
+                await Task.WhenAll(PartitionPumps
+                    .Where(kvp => !kvp.Value.IsRunning)
+                    .Select(kvp => AddOrOverwritePartitionPumpAsync(kvp.Key)));
 
                 var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
 
+                // TODO: set 30s constant.
+
                 var ownershipList = (await Manager.ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup).ConfigureAwait(false)).ToList();
-                var filteredOwnershipList = ownershipList
+                var activeOwnership = ownershipList
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < 30)
                     .ToList();
 
@@ -236,7 +247,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     { Identifier, 0 }
                 };
 
-                foreach (var ownership in filteredOwnershipList)
+                foreach (var ownership in activeOwnership)
                 {
                     if (partitionDistribution.TryGetValue(ownership.OwnerIdentifier, out var value))
                     {
@@ -258,10 +269,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     var unclaimedPartitions = new List<string>();
 
-                    if (filteredOwnershipList.Count < partitionIds.Length)
+                    if (activeOwnership.Count < partitionIds.Length)
                     {
                         unclaimedPartitions = partitionIds
-                            .Where(partitionId => !filteredOwnershipList.Any(ownership => ownership.PartitionId == partitionId))
+                            .Where(partitionId => !activeOwnership.Any(ownership => ownership.PartitionId == partitionId))
                             .ToList();
                     }
 
@@ -271,25 +282,25 @@ namespace Azure.Messaging.EventHubs.Processor
                         var expiredOwnership = ownershipList.Where(ownership => ownership.PartitionId == unclaimedPartitions[index]);
                         var eTag = expiredOwnership.FirstOrDefault()?.ETag;
 
-                        var claimedOwnership = await TryClaimOwnershipAsync(unclaimedPartitions[index], eTag).ConfigureAwait(false);
+                        var claimedOwnership = await ClaimOwnershipAsync(unclaimedPartitions[index], ownershipList).ConfigureAwait(false);
 
                         if (claimedOwnership != null)
                         {
                             InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
-                            await AddOrUpdatePartitionPumpAsync(claimedOwnership.PartitionId);
+                            await AddOrOverwritePartitionPumpAsync(claimedOwnership.PartitionId);
                         }
                     }
                     else if (ownedPartitions < minimumPartitionCount)
                     {
                         // TODO: other case should steal as well (n, ..., n, n+1, ..., n+1, n+2)
 
-                        var stealableOwnership = filteredOwnershipList
+                        var stealableOwnership = activeOwnership
                             .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] > minimumPartitionCount + 1)
                             .ToList();
 
                         if (stealableOwnership.Count == 0)
                         {
-                            stealableOwnership = filteredOwnershipList
+                            stealableOwnership = activeOwnership
                                 .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] == minimumPartitionCount + 1)
                                 .ToList();
                         }
@@ -297,12 +308,12 @@ namespace Azure.Messaging.EventHubs.Processor
                         if (stealableOwnership.Count > 0)
                         {
                             var index = random.Next(stealableOwnership.Count);
-                            var claimedOwnership = await TryClaimOwnershipAsync(stealableOwnership[index].PartitionId, stealableOwnership[index].ETag).ConfigureAwait(false);
+                            var claimedOwnership = await ClaimOwnershipAsync(stealableOwnership[index].PartitionId, ownershipList).ConfigureAwait(false);
 
                             if (claimedOwnership != null)
                             {
                                 InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
-                                await AddOrUpdatePartitionPumpAsync(claimedOwnership.PartitionId);
+                                await AddOrOverwritePartitionPumpAsync(claimedOwnership.PartitionId);
                             }
                         }
                     }
@@ -311,6 +322,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 try
                 {
                     // Wait 0.5 seconds before the next verification.
+                    // TODO: update value to 10s.
 
                     await Task.Delay(500, cancellationToken).ConfigureAwait(false);
                 }
@@ -324,26 +336,26 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task AddOrUpdatePartitionPumpAsync(string partitionId)
+        private async Task AddOrOverwritePartitionPumpAsync(string partitionId)
         {
-            await TryRemovePartitionPumpAsync(partitionId).ConfigureAwait(false);
+            await RemovePartitionPumpIfItExistsAsync(partitionId).ConfigureAwait(false);
 
             var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId);
             var checkpointManager = new CheckpointManager(partitionContext, Manager, Identifier);
 
-            var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
-
-            // TODO: tryAdd?
-
-            var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
-            PartitionPumps[partitionId] = partitionPump;
-
             try
             {
+                var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
+                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
+
                 await partitionPump.StartAsync().ConfigureAwait(false);
+
+                PartitionPumps[partitionId] = partitionPump;
             }
             catch (Exception)
             {
+                // If partition pump creation fails, we'll try again on the next time this method is called.  This should happen
+                // on the next event processor main loop as long as this instance still owns the partition.
                 // TODO: delegate the exception handling to an Exception Callback.
             }
         }
@@ -354,13 +366,13 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>TODO.</returns>
         ///
-        private async Task TryRemovePartitionPumpAsync(string partitionId)
+        private async Task RemovePartitionPumpIfItExistsAsync(string partitionId, PartitionProcessorCloseReason? reason = null)
         {
             if (PartitionPumps.TryRemove(partitionId, out var pump))
             {
                 try
                 {
-                    await pump.StopAsync().ConfigureAwait(false);
+                    await pump.StopAsync(reason).ConfigureAwait(false);
                 }
                 catch (Exception)
                 {
@@ -375,9 +387,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>TODO.</returns>
         ///
-        private async Task<PartitionOwnership> TryClaimOwnershipAsync(string partitionId, string eTag)
+        private async Task<PartitionOwnership> ClaimOwnershipAsync(string partitionId, List<PartitionOwnership> completeOwnershipList)
         {
-            // TODO: offset and sequenceNumber?
+            var oldOwnership = completeOwnershipList.FirstOrDefault(ownership => ownership.PartitionId == partitionId);
 
             var newOwnership = new PartitionOwnership
                 (
@@ -385,8 +397,10 @@ namespace Azure.Messaging.EventHubs.Processor
                     ConsumerGroup,
                     Identifier,
                     partitionId,
-                    lastModifiedTime: DateTimeOffset.UtcNow,
-                    eTag: eTag
+                    oldOwnership?.Offset,
+                    oldOwnership?.SequenceNumber,
+                    DateTimeOffset.UtcNow,
+                    oldOwnership?.ETag
                 );
 
             var claimedOwnership = (await Manager
@@ -422,34 +436,12 @@ namespace Azure.Messaging.EventHubs.Processor
                 .ConfigureAwait(false))
                 .ToDictionary(ownership => ownership.PartitionId);
 
-            var lostPartitions = InstanceOwnership.Keys.Except(renewedOwnership.Keys);
-
             InstanceOwnership.Clear();
 
             foreach (var partitionId in renewedOwnership.Keys)
             {
                 InstanceOwnership[partitionId] = renewedOwnership[partitionId];
             }
-
-            // TODO: return lost partitions?
-
-            foreach (var partitionId in lostPartitions)
-            {
-                await TryRemovePartitionPumpAsync(partitionId).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        ///   TODO.
-        /// </summary>
-        ///
-        /// <returns>TODO.</returns>
-        ///
-        private Task CheckPartitionPumps()
-        {
-            return Task.WhenAll(PartitionPumps
-                .Where(kvp => !kvp.Value.IsRunning)
-                .Select(kvp => AddOrUpdatePartitionPumpAsync(kvp.Key)));
         }
     }
 }
