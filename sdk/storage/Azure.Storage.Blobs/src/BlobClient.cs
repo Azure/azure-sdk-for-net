@@ -439,7 +439,7 @@ namespace Azure.Storage.Blobs
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKeyInfo?, IProgress{StorageProgress}, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, ParallelTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -495,7 +495,7 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
@@ -512,7 +512,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Upload(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKeyInfo?, IProgress{StorageProgress}, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, ParallelTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -568,7 +568,7 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
@@ -585,7 +585,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKeyInfo?, IProgress{StorageProgress}, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, ParallelTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -641,7 +641,7 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
@@ -657,7 +657,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKeyInfo?, IProgress{StorageProgress}, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, ParallelTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -713,7 +713,7 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
@@ -783,7 +783,7 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders? blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
-            CustomerProvidedKeyInfo? customerProvidedKey,
+            CustomerProvidedKey? customerProvidedKey,
             IProgress<StorageProgress> progressHandler,
             long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
             ParallelTransferOptions parallelTransferOptions = default,
@@ -953,7 +953,7 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders? blobHttpHeaders,
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
-            CustomerProvidedKeyInfo? customerProvidedKey,
+            CustomerProvidedKey? customerProvidedKey,
             IProgress<StorageProgress> progressHandler,
             long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
             ParallelTransferOptions parallelTransferOptions = default,

@@ -242,7 +242,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
             AppendBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             this.CreateInternal(
                 httpHeaders,
@@ -292,7 +292,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
             AppendBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await this.CreateInternal(
                 httpHeaders,
@@ -345,7 +345,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders,
             Metadata metadata,
             AppendBlobAccessConditions? accessConditions,
-            CustomerProvidedKeyInfo? customerProvidedKey,
+            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -359,7 +359,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobExtensions.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
 
                     return await BlobRestClient.AppendBlob.CreateAsync(
                         this.Pipeline,
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs.Specialized
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         blobContentDisposition: httpHeaders?.ContentDisposition,
                         encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeySha256,
+                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
@@ -448,7 +448,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             this.AppendBlockInternal(
@@ -510,7 +510,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await this.AppendBlockInternal(
@@ -575,7 +575,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash,
             AppendBlobAccessConditions? accessConditions,
-            CustomerProvidedKeyInfo? customerProvidedKey,
+            CustomerProvidedKey? customerProvidedKey,
             IProgress<StorageProgress> progressHandler,
             bool async,
             CancellationToken cancellationToken)
@@ -589,7 +589,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobExtensions.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var appendAttempt = 0;
@@ -611,7 +611,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                                     maxSize: accessConditions?.IfMaxSizeLessThanOrEqual,
                                     encryptionKey: customerProvidedKey?.EncryptionKey,
-                                    encryptionKeySha256: customerProvidedKey?.EncryptionKeySha256,
+                                    encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
                                     encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
                                     appendPosition: accessConditions?.IfAppendPositionEqual,
                                     ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
@@ -701,7 +701,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
             AppendBlobAccessConditions? sourceAccessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             this.AppendBlockFromUriInternal(
                 sourceUri,
@@ -776,7 +776,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
             AppendBlobAccessConditions? sourceAccessConditions = default,
-            CustomerProvidedKeyInfo? customerProvidedKey = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await this.AppendBlockFromUriInternal(
                 sourceUri,
@@ -854,7 +854,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             AppendBlobAccessConditions? accessConditions,
             AppendBlobAccessConditions? sourceAccessConditions,
-            CustomerProvidedKeyInfo? customerProvidedKey,
+            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken = default)
         {
@@ -868,7 +868,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobExtensions.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
 
                     return await BlobRestClient.AppendBlob.AppendBlockFromUriAsync(
                         this.Pipeline,
@@ -878,7 +878,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceContentHash: sourceContentHash,
                         contentLength: default,
                         encryptionKey: customerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: customerProvidedKey?.EncryptionKeySha256,
+                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         maxSize: accessConditions?.IfMaxSizeLessThanOrEqual,

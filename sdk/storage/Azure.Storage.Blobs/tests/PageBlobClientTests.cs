@@ -118,14 +118,14 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
-                blob = new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline);
+                blob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
 
                 // Act
                 var response = await blob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
 
                 // Assert
-                Assert.AreEqual(customerProvidedKey.EncryptionKeySha256, response.Value.EncryptionKeySha256);
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
             }
         }
 
@@ -137,6 +137,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var blobName = this.GetNewBlobName();
                 var blob = this.InstrumentClient(container.GetPageBlobClient(blobName));
+                Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
                 var customerProvidedKey = this.GetCustomerProvidedKey();
 
                 // Act
@@ -327,7 +328,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var blobName = this.GetNewBlobName();
                 var blob = this.InstrumentClient(container.GetPageBlobClient(blobName));
-                blob = new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline);
+                blob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 var data = this.GetRandomBuffer(Constants.KB);
                 await blob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
@@ -341,7 +342,7 @@ namespace Azure.Storage.Blobs.Test
                     customerProvidedKey: customerProvidedKey);
 
                 // Assert
-                Assert.AreEqual(customerProvidedKey.EncryptionKeySha256, response.Value.EncryptionKeySha256);
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
             }
         }
 
@@ -353,7 +354,8 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var blobName = this.GetNewBlobName();
                 var httpBlob = this.InstrumentClient(container.GetPageBlobClient(blobName));
-                var httpsBlob = new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline);
+                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+                var httpsBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 var data = this.GetRandomBuffer(Constants.KB);
                 await httpsBlob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
@@ -562,7 +564,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("Possible backend bug")]
+        [Ignore("Backend bug")]
         [Test]
         public async Task ClearPagesAsync_CPK()
         {
@@ -570,7 +572,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
-                blob = new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline);
+                blob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 await blob.CreateAsync(4 * Constants.KB, customerProvidedKey: customerProvidedKey);
                 var data = this.GetRandomBuffer(4 * Constants.KB);
@@ -596,7 +598,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var httpBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
-                var httpsBlob = new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline);
+                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+                var httpsBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 await httpsBlob.CreateAsync(4 * Constants.KB, customerProvidedKey: customerProvidedKey);
                 var data = this.GetRandomBuffer(4 * Constants.KB);
@@ -978,7 +981,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
-                blob = new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline);
+                blob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 await blob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
                 var newSize = 8 * Constants.KB;
@@ -998,7 +1001,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var httpBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
-                var httpsBlob = new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline);
+                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+                var httpsBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 await httpsBlob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
                 var newSize = 8 * Constants.KB;
@@ -1421,7 +1425,7 @@ namespace Azure.Storage.Blobs.Test
                 await sourceBlob.UploadPagesAsync(stream, 0);
 
                 var destBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
-                destBlob = new PageBlobClient(this.GetHttpsUri(destBlob.Uri), destBlob.Pipeline);
+                destBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(destBlob.Uri), destBlob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 await destBlob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
                 var range = new HttpRange(0, Constants.KB);
@@ -1451,7 +1455,8 @@ namespace Azure.Storage.Blobs.Test
                 await sourceBlob.UploadPagesAsync(stream, 0);
 
                 var httpDestBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
-                var httpsDestBlob = new PageBlobClient(this.GetHttpsUri(httpDestBlob.Uri), httpDestBlob.Pipeline);
+                Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
+                var httpsDestBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(httpDestBlob.Uri), httpDestBlob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 await httpsDestBlob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
                 var range = new HttpRange(0, Constants.KB);

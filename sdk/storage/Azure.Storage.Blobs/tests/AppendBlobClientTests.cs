@@ -128,14 +128,14 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var blobName = this.GetNewBlobName();
                 var blob = this.InstrumentClient(container.GetAppendBlobClient(blobName));
-                blob = new AppendBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline);
+                blob = this.InstrumentClient(new AppendBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
 
                 // Act
                 var response = await blob.CreateAsync(customerProvidedKey: customerProvidedKey);
 
                 // Assert
-                Assert.AreEqual(customerProvidedKey.EncryptionKeySha256, response.Value.EncryptionKeySha256);
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
             }
         }
 
@@ -147,6 +147,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var blobName = this.GetNewBlobName();
                 var blob = this.InstrumentClient(container.GetAppendBlobClient(blobName));
+                Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
                 var customerProvidedKey = this.GetCustomerProvidedKey();
 
                 // Act
@@ -286,7 +287,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var blobName = this.GetNewBlobName();
                 var blob = this.InstrumentClient(container.GetAppendBlobClient(blobName));
-                blob = new AppendBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline);
+                blob = this.InstrumentClient(new AppendBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 var data = this.GetRandomBuffer(Constants.KB);
                 await blob.CreateAsync(customerProvidedKey: customerProvidedKey);
@@ -298,7 +299,7 @@ namespace Azure.Storage.Blobs.Test
                     customerProvidedKey: customerProvidedKey);
 
                 // Assert
-                Assert.AreEqual(customerProvidedKey.EncryptionKeySha256, response.Value.EncryptionKeySha256);
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
             }
         }
 
@@ -310,7 +311,8 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var blobName = this.GetNewBlobName();
                 var httpBlob = this.InstrumentClient(container.GetAppendBlobClient(blobName));
-                var httpsBlob = new AppendBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline);
+                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+                var httpsBlob = this.InstrumentClient(new AppendBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline));
                 var customerProvidedKey = this.GetCustomerProvidedKey();
                 var data = this.GetRandomBuffer(Constants.KB);
                 await httpsBlob.CreateAsync(customerProvidedKey: customerProvidedKey);
@@ -318,7 +320,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using var stream = new MemoryStream(data);
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    httpBlob.CreateAsync(customerProvidedKey: customerProvidedKey),
+                    httpBlob.AppendBlockAsync(stream, customerProvidedKey: customerProvidedKey),
                     actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
             }
         }
@@ -560,7 +562,7 @@ namespace Azure.Storage.Blobs.Test
                     await sourceBlob.AppendBlockAsync(stream);
 
                     var destBlob = this.InstrumentClient(container.GetAppendBlobClient(this.GetNewBlobName()));
-                    destBlob = new AppendBlobClient(this.GetHttpsUri(destBlob.Uri), destBlob.Pipeline);
+                    destBlob = this.InstrumentClient(new AppendBlobClient(this.GetHttpsUri(destBlob.Uri), destBlob.Pipeline));
                     var customerProvidedKey = this.GetCustomerProvidedKey();
                     await destBlob.CreateAsync(customerProvidedKey: customerProvidedKey);
 
@@ -570,7 +572,7 @@ namespace Azure.Storage.Blobs.Test
                         new HttpRange(0, Constants.KB), 
                         customerProvidedKey: customerProvidedKey);
 
-                    Assert.AreEqual(customerProvidedKey.EncryptionKeySha256, response.Value.EncryptionKeySha256);
+                    Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
                 }
             }
         }
@@ -592,7 +594,8 @@ namespace Azure.Storage.Blobs.Test
                     await sourceBlob.AppendBlockAsync(stream);
 
                     var httpDestBlob = this.InstrumentClient(container.GetAppendBlobClient(this.GetNewBlobName()));
-                    var httpsDestBlob = new AppendBlobClient(this.GetHttpsUri(httpDestBlob.Uri), httpDestBlob.Pipeline);
+                    Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
+                    var httpsDestBlob = this.InstrumentClient(new AppendBlobClient(this.GetHttpsUri(httpDestBlob.Uri), httpDestBlob.Pipeline));
                     var customerProvidedKey = this.GetCustomerProvidedKey();
                     await httpsDestBlob.CreateAsync(customerProvidedKey: customerProvidedKey);
 

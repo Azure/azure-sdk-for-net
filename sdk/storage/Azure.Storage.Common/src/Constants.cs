@@ -104,6 +104,7 @@ namespace Azure.Storage
         internal static class Blob
         {
             public const string Https = "https";
+            public const string Http = "http";
 
             internal static class Append
             {

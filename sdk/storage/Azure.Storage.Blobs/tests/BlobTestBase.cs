@@ -250,11 +250,11 @@ namespace Azure.Storage.Test.Shared
             return Convert.ToBase64String(bytes);
         }
 
-        public CustomerProvidedKeyInfo GetCustomerProvidedKey()
+        public CustomerProvidedKey GetCustomerProvidedKey()
         {
             var bytes = new byte[32];
             this.Recording.Random.NextBytes(bytes);
-            return new CustomerProvidedKeyInfo(bytes);
+            return new CustomerProvidedKey(bytes);
         }
 
         public Uri GetHttpsUri(Uri uri)
