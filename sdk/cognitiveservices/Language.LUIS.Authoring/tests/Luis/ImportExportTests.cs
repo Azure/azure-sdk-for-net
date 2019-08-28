@@ -6,6 +6,7 @@
     using Newtonsoft.Json;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ImportExportTests : BaseTest
     {
         private const string versionId = "0.1";

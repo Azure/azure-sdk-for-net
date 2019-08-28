@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     internal class PartitionPump
     {
-        /// <summary>The <see cref="EventHubRetryPolicy" /> used to verify whether an exception is retryable or not.</summary>
+        /// <summary>The <see cref="EventHubRetryPolicy" /> used to verify whether an exception is retriable or not.</summary>
         private static readonly BasicRetryPolicy RetryPolicy = new BasicRetryPolicy(new RetryOptions());
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
@@ -209,7 +209,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     await PartitionProcessor.ProcessErrorAsync(exception, cancellationToken).ConfigureAwait(false);
 
-                    // Stop the pump if it's not a retryable exception.
+                    // Stop the pump if it's not a retriable exception.
 
                     if (RetryPolicy.CalculateRetryDelay(exception, 1) == null)
                     {

@@ -27,6 +27,10 @@ namespace Microsoft.Azure.Management.Peering
         /// The kind of the peering. Possible values include: 'Direct',
         /// 'Exchange'
         /// </param>
+        /// <param name='directPeeringType'>
+        /// The type of direct peering. Possible values include: 'Edge',
+        /// 'Transit', 'Cdn', 'Internal'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -42,7 +46,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PeeringLocation>>> ListWithHttpMessagesAsync(string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PeeringLocation>>> ListWithHttpMessagesAsync(string kind, string directPeeringType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the available peering locations for the specified kind
         /// of peering.

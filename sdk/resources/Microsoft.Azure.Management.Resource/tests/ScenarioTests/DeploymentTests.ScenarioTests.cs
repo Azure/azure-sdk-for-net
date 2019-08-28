@@ -51,7 +51,7 @@ namespace ResourceGroups.Tests
                     }}
                 };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -83,7 +83,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -111,7 +111,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -160,7 +160,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -201,7 +201,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -238,7 +238,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
 
@@ -285,7 +285,7 @@ namespace ResourceGroups.Tests
                     }}
                 };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -325,7 +325,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -373,7 +373,7 @@ namespace ResourceGroups.Tests
         public void CreateLargeWebDeploymentTemplateWorks()
         {
             var handler = new RecordedDelegatingHandler();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceName = TestUtilities.GenerateName("csmr");
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -410,7 +410,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = "SDK-test";
@@ -452,7 +452,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupId = "tiano-mgtest01";
@@ -491,7 +491,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
@@ -532,7 +532,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
@@ -573,7 +573,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupId = "tiano-mgtest01";
@@ -617,7 +617,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = "SDK-test";
@@ -663,7 +663,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = "SDK-test-01";
@@ -704,3 +704,4 @@ namespace ResourceGroups.Tests
         }
     }
 }
+

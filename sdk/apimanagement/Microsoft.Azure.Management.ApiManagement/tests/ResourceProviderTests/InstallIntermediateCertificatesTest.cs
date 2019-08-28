@@ -22,7 +22,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         public void InstallIntermediateCertificatesTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.serviceProperties.Sku.Name = SkuType.Basic;

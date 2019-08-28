@@ -21,7 +21,7 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchAccountEndToEndAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();
@@ -107,7 +107,7 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchAccountCanCreateWithBYOSEnabled()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();

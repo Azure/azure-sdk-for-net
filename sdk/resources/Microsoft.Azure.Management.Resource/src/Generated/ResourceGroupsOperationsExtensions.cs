@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceGroupName'>
             /// The name of the resource group to check. The name is case insensitive.
             /// </param>
-            public static void CheckExistence(this IResourceGroupsOperations operations, string resourceGroupName)
+            public static bool CheckExistence(this IResourceGroupsOperations operations, string resourceGroupName)
             {
-                operations.CheckExistenceAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.CheckExistenceAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -48,9 +48,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckExistenceAsync(this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckExistenceAsync(this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

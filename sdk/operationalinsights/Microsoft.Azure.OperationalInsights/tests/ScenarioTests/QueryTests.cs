@@ -27,7 +27,7 @@ namespace OperationalInsights.Data.Test.ScenarioTests
         [Fact]
         public async Task CanExecuteSimplePostQuery_DemoWorkspace()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 await ExecuteAndVerify(async (client) => await client.QueryWithHttpMessagesAsync(SimpleQuery), ctx);
             }
@@ -36,7 +36,7 @@ namespace OperationalInsights.Data.Test.ScenarioTests
         [Fact]
         public async Task CanExecutePostQueryWithTimespan_DemoWorkspace()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 await ExecuteAndVerify(async (client) => await client.QueryWithHttpMessagesAsync(SimpleQuery, PastHourTimespan), ctx);
             }
@@ -45,7 +45,7 @@ namespace OperationalInsights.Data.Test.ScenarioTests
         [Fact]
         public async Task GetsExceptionWithSyntaxError()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 var client = GetClient(ctx);
                 var badQuery = "union * | foobar";
@@ -71,7 +71,7 @@ namespace OperationalInsights.Data.Test.ScenarioTests
         [Fact]
         public async Task GetsExceptionWithShortWait()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 var client = GetClient(ctx);
                 client.Preferences.Wait = 1;

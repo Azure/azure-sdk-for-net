@@ -28,7 +28,7 @@ namespace AlertsManagement.Tests.ScenarioTests
         [Trait("Category", "Scenario")]
         public void ListOperationsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 

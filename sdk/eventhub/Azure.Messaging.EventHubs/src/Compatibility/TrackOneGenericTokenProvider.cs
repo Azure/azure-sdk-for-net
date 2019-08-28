@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
     ///
     internal sealed class TrackOneGenericTokenProvider : TokenProvider
     {
-        /// <summary>The default scope to use for token aquisition with the Event Hubs service.</summary>
+        /// <summary>The default scope to use for token acquisition with the Event Hubs service.</summary>
         private static readonly string[] EventHubsDefaultScopes = new[] { "https://eventhubs.azure.net/.default" };
 
         /// <summary>

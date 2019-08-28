@@ -14,9 +14,9 @@ namespace ComputerVisionSDK.Tests
         [Fact]
         public void ThumbnailImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "ThumbnailImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "ThumbnailImageInStreamTest");
 
                 IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
@@ -41,9 +41,9 @@ namespace ComputerVisionSDK.Tests
         [Fact]
         public void ThumbnailImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "ThumbnailImageTest");
+                HttpMockServer.Initialize(this.GetType(), "ThumbnailImageTest");
 
                 string ImageUrl = GetTestImageUrl("house.jpg");
 
@@ -66,9 +66,9 @@ namespace ComputerVisionSDK.Tests
         [Fact]
         public void ThumbnailInvalidSizeTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "ThumbnailInvalidSizeTest");
+                HttpMockServer.Initialize(this.GetType(), "ThumbnailInvalidSizeTest");
 
                 string imageUrl = GetTestImageUrl("house.jpg");
 

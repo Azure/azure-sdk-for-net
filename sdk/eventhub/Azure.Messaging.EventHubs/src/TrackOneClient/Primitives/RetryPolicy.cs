@@ -47,7 +47,7 @@ namespace TrackOne
                 return fltAggException.InnerException != null && IsRetryableException(fltAggException.InnerException);
             }
 
-            // Other retryable exceptions here.
+            // Other retriable exceptions here.
             if (exception is OperationCanceledException || exception is SocketException)
             {
                 return true;

@@ -6,9 +6,9 @@ using System.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
-    public struct DiagnosticScope: IDisposable
+    public readonly struct DiagnosticScope: IDisposable
     {
-        private Activity? _activity;
+        private readonly Activity? _activity;
 
         private readonly string _name;
 
@@ -77,9 +77,6 @@ namespace Azure.Core.Pipeline
             }
 
             _source?.Write(_activity.OperationName + ".Exception", e);
-            _activity?.Stop();
-
-            _activity = null;
 
         }
     }

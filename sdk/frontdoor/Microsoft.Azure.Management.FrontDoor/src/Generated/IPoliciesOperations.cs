@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// </exception>
         Task<AzureOperationResponse<WebApplicationFirewallPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update policy with specified ruleset name within a
+        /// Create or update policy with specified rule set name within a
         /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update policy with specified ruleset name within a
+        /// Create or update policy with specified rule set name within a
         /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>

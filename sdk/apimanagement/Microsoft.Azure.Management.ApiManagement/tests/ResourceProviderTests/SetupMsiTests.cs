@@ -19,7 +19,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         public void SetupMsiTests()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 string consumptionSkuRegion = "West US";
@@ -45,7 +45,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
 
                 Assert.NotNull(createdService.Identity);
                 Assert.NotNull(createdService.Identity.PrincipalId);
-                Assert.NotNull(createdService.Identity.TenantId);               
+                Assert.NotNull(createdService.Identity.TenantId);
 
                 // Delete
                 testBase.client.ApiManagementService.Delete(

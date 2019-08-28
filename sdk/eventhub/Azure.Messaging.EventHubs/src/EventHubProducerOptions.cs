@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   The set of options to use for determining whether a failed operation should be retried and,
         ///   if so, the amount of time to wait between retry attempts.  If not specified, the retry policy from
-        ///   the associcated <see cref="EventHubClient" /> will be used.
+        ///   the associated <see cref="EventHubClient" /> will be used.
         /// </summary>
         ///
         public RetryOptions RetryOptions { get; set; }

@@ -27,7 +27,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyDefinition()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -81,7 +81,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicySetDefinition()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -178,7 +178,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyAssignment()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -258,7 +258,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyAssignmentAtResourceGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var resourceGroupClient = context.GetServiceClient<ResourceManagementClient>();
@@ -304,7 +304,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyAssignmentAtResource()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var resourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
@@ -354,7 +354,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyDefinitionAtManagementGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var delegatingHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -401,7 +401,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicySetDefinitionAtManagementGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var delegatingHandler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
@@ -504,7 +504,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyAssignmentAtManagementGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var delegatingHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -545,7 +545,7 @@ namespace Policy.Tests
         [Fact]
         public void ValidatePolicyAssignmentErrorHandling()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -595,7 +595,7 @@ namespace Policy.Tests
         [Fact]
         public void ValidatePolicyDefinitionErrorHandling()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -632,7 +632,7 @@ namespace Policy.Tests
         [Fact]
         public void ValidatePolicySetDefinitionErrorHandling()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -699,7 +699,7 @@ namespace Policy.Tests
         [Fact]
         public void CanListAndGetBuiltinPolicyDefinitions()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -722,7 +722,7 @@ namespace Policy.Tests
         [Fact]
         public void CannotDeleteBuiltInPolicyDefinitions()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -749,7 +749,7 @@ namespace Policy.Tests
         [Fact]
         public void CanListAndGetBuiltinPolicySetDefinitions()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -782,7 +782,7 @@ namespace Policy.Tests
         [Fact]
         public void CannotDeleteBuiltInPolicySetDefinitions()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -857,13 +857,17 @@ namespace Policy.Tests
                 resourceGroup.Name,
                 "Microsoft.Web",
                 string.Empty,
-                "sites",
+                "serverFarms",
                 resourceName,
-                "2016-08-01",
+                "2018-02-01",
                 new GenericResource
                 {
                     Location = resourceGroup.Location,
-                    Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}")
+                    Sku = new Sku
+                    {
+                        Name = "S1"
+                    },
+                    Properties = JObject.Parse("{}")
                 });
         }
 

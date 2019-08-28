@@ -32,7 +32,7 @@ namespace SqlVirtualMachine.Tests
         public SqlVirtualMachineTestContext(object suiteObject, [CallerMemberName] string testName = "error_determining_test_name")
         {
             location = Constants.location;
-            _mockContext = MockContext.Start(suiteObject.GetType().FullName, testName);
+            _mockContext = MockContext.Start(suiteObject.GetType(), testName);
             client = new MockClient(_mockContext);
             resourceGroup = CreateResourceGroup(location);
         }

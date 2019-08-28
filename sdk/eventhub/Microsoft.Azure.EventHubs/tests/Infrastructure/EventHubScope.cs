@@ -23,7 +23,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 {
     internal sealed class EventHubScope : IAsyncDisposable
     {
-        private const int RetryMaximumAttemps = 12;
+        private const int RetryMaximumAttemps = 15;
         private const double RetryExponentialBackoffSeconds = 1.5;
         private const double RetryBaseJitterSeconds = 7.0;
 
@@ -62,6 +62,15 @@ namespace Microsoft.Azure.EventHubs.Tests
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.EventHubs.DeleteAsync(resourceGroup, eventHubNamespace, EventHubName));
             }
+            catch
+            {
+                // This should not be considered a critical failure that results in a test failure.  Due
+                // to ARM being temperamental, some management operations may be rejected.  Throwing here
+                // does not help to ensure resource cleanup only flags the test itself as a failure.
+                //
+                // If an Event Hub fails to be deleted, removing of the associated namespace at the end of the
+                // test run will also remove the orphan.
+            }
             finally
             {
                 client?.Dispose();
@@ -71,14 +80,14 @@ namespace Microsoft.Azure.EventHubs.Tests
         }
 
         internal static Task<EventHubScope> CreateAsync(int partitionCount,
-                                                      [CallerMemberName] string caller = "") => CreateAsync(partitionCount, Enumerable.Empty<string>(), caller);
+                                                       [CallerMemberName] string caller = "") => CreateAsync(partitionCount, Enumerable.Empty<string>(), caller);
 
         internal static Task<EventHubScope> CreateAsync(int partitionCount,
-                                                      string consumerGroup,
-                                                      [CallerMemberName] string caller = "") => CreateAsync(partitionCount, new[] { consumerGroup }, caller);
+                                                        string consumerGroup,
+                                                        [CallerMemberName] string caller = "") => CreateAsync(partitionCount, new[] { consumerGroup }, caller);
         internal static async Task<EventHubScope> CreateAsync(int partitionCount,
-                                                            IEnumerable<string> consumerGroups,
-                                                            [CallerMemberName] string caller = "")
+                                                              IEnumerable<string> consumerGroups,
+                                                              [CallerMemberName] string caller = "")
         {
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 

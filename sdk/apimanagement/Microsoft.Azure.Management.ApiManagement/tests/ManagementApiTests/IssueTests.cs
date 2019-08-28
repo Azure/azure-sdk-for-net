@@ -22,7 +22,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -85,7 +85,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiIssueContract);
                     Assert.Equal(echoApi.Id, apiIssueContract.ApiId);
                     Assert.Equal(State.Proposed, apiIssueContract.State);
-                    Assert.Equal(issueContract.Title, apiIssueContract.Title);                    
+                    Assert.Equal(issueContract.Title, apiIssueContract.Title);
                     // get the issue
                     var issueData = await testBase.client.ApiIssue.GetAsync(
                         testBase.rgName,
@@ -131,7 +131,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
-                        newissueId, 
+                        newissueId,
                         null);
 
                     Assert.Empty(emptyCommentList);
@@ -173,7 +173,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         echoApi.Name,
                         newissueId,
                         newcommentId,
-                        commentEntityTag.ETag);                    
+                        commentEntityTag.ETag);
 
                     try
                     {
@@ -332,6 +332,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                         "*");
                 }
             }
-        }        
+        }
     }
 }

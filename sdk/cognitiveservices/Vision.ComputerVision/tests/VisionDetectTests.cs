@@ -12,9 +12,9 @@ namespace ComputerVisionSDK.Tests
         [Fact]
         public void DetectImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DetectImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "DetectImageInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("people.jpg"), FileMode.Open))
@@ -48,9 +48,9 @@ namespace ComputerVisionSDK.Tests
         [Fact]
         public void DetectImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DetectImageTest");
+                HttpMockServer.Initialize(this.GetType(), "DetectImageTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
