@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,10 +48,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task CreateKeyWithOptions()
         {
+            var exp = new DateTimeOffset(new DateTime(637027248120000000, DateTimeKind.Utc));
+            var nbf = exp.AddDays(-30);
+
             var keyOptions = new KeyCreateOptions()
             {
                 KeyOperations = new List<KeyOperations>() { KeyOperations.Verify },
-                Enabled = false
+                Enabled = false,
+                Expires = exp,
+                NotBefore = nbf,
             };
 
             Key key = await Client.CreateKeyAsync(Recording.GenerateId(), KeyType.EllipticCurve, keyOptions);
