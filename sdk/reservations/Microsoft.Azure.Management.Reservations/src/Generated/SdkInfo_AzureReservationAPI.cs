@@ -34,16 +34,7 @@ namespace Microsoft.Azure.Management.Reservations
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
       public static readonly String GithubCommidId = "08e29aba646dd8bdf542c7733f1b62a6a4d88171";
-      public static readonly String CodeGenerationErrors = "(node:32168) UnhandledPromiseRejectionWarning: TypeError: volume[member].bind is not a function
-    at patchFilesystem (C:\Users\kgautam\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:277:43)
-    at C:\Users\kgautam\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:281:18
-    at Object.global.staticloader.undo (C:\Users\kgautam\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:163:7)
-    at process.exit.n [as exit] (C:\Users\kgautam\AppData\Roaming\npm\node_modules\autorest\dist\static-loader.js:170:27)
-    at main (C:\Users\kgautam\.autorest\@microsoft.azure_autorest-core@2.0.4390\node_modules\@microsoft.azure\autorest-core\dist\app.js:517:21)
-(node:32168) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 20)
-(node:32168) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
-Shutting Down
-Shutting Down"
+        public static readonly String CodeGenerationErrors = "(node:32168) UnhandledPromiseRejectionWarning: TypeError: volume[member].bind is not a function";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
