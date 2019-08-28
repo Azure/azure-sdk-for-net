@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        internal void WriteProperties(ref Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (Enabled.HasValue)
             {
