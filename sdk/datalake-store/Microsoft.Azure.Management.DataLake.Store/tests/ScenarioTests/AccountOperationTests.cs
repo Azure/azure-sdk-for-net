@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Store;
@@ -20,7 +20,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void AccountCRUDTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
@@ -228,7 +228,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void FirewallAndTrustedProviderCRUDTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
@@ -453,7 +453,7 @@ namespace DataLakeStore.Tests
         [Fact]
         public void VirtualNetworkRulesCRUDTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
@@ -561,3 +561,4 @@ namespace DataLakeStore.Tests
         }
     }
 }
+

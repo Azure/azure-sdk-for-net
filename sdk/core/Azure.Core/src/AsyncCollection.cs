@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure
 {
@@ -12,7 +13,7 @@ namespace Azure
     /// iterate over.
     /// </summary>
     /// <typeparam name="T">The type of the values.</typeparam>
-    public abstract class AsyncCollection<T> : IAsyncEnumerable<Response<T>>
+    public abstract class AsyncCollection<T> : IAsyncEnumerable<Response<T>> where T : notnull
     {
         /// <summary>
         /// Gets a <see cref="CancellationToken"/> used for requests made while
@@ -54,7 +55,7 @@ namespace Azure
         /// An async sequence of <see cref="Page{T}"/>s.
         /// </returns>
         public abstract IAsyncEnumerable<Page<T>> ByPage(
-            string continuationToken = default,
+            string? continuationToken = default,
             int? pageSizeHint = default);
 
         /// <summary>
@@ -66,7 +67,16 @@ namespace Azure
         /// enumerating asynchronously.
         /// </param>
         /// <returns>An async sequence of values.</returns>
-        public abstract IAsyncEnumerator<Response<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default);
+        public virtual async IAsyncEnumerator<Response<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            await foreach (Page<T> page in ByPage().ConfigureAwait(false).WithCancellation(cancellationToken))
+            {
+                foreach (T value in page.Values)
+                {
+                    yield return new Response<T>(page.GetRawResponse(), value);
+                }
+            }
+        }
 
         /// <summary>
         /// Creates a string representation of an <see cref="AsyncCollection{T}"/>.

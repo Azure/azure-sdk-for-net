@@ -14,13 +14,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A range of task IDs that a task can depend on. All tasks with IDs in
-    /// the range must complete successfully before the dependent task can be
+    /// A range of Task IDs that a Task can depend on. All Tasks with IDs in
+    /// the range must complete successfully before the dependent Task can be
     /// scheduled.
     /// </summary>
     /// <remarks>
     /// The start and end of the range are inclusive. For example, if a range
-    /// has start 9 and end 12, then it represents tasks '9', '10', '11' and
+    /// has start 9 and end 12, then it represents Tasks '9', '10', '11' and
     /// '12'.
     /// </remarks>
     public partial class TaskIdRange
@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskIdRange class.
         /// </summary>
-        /// <param name="start">The first task ID in the range.</param>
-        /// <param name="end">The last task ID in the range.</param>
+        /// <param name="start">The first Task ID in the range.</param>
+        /// <param name="end">The last Task ID in the range.</param>
         public TaskIdRange(int start, int end)
         {
             Start = start;
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the first task ID in the range.
+        /// Gets or sets the first Task ID in the range.
         /// </summary>
         [JsonProperty(PropertyName = "start")]
         public int Start { get; set; }
 
         /// <summary>
-        /// Gets or sets the last task ID in the range.
+        /// Gets or sets the last Task ID in the range.
         /// </summary>
         [JsonProperty(PropertyName = "end")]
         public int End { get; set; }

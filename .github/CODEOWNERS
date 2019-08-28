@@ -14,7 +14,7 @@
 # Service teams
 /sdk/appconfiguration/ @annelo-msft
 
-/sdk/batch/ @matthchr 
+/sdk/batch/ @xingwu1 @matthchr @bgklein
 
 /sdk/cognitiveservices/language.textanalytics/ @assafi 
 /sdk/cognitiveservices/vision.computervision/ @toothache
@@ -22,16 +22,16 @@
 
 /sdk/eventgrid/ @kalyanaj 
 
-/sdk/eventhub/ @serkantkaraca 
+/sdk/eventhub/ @serkantkaraca @jsquire @kinelski
 /sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
 
-/sdk/identity/azure.identity/ @shaabs
+/sdk/identity/azure.identity/ @schaabs
 
 /sdk/keyvault/ @schaabs 
 /sdk/keyvault/azure.*/ @schaabs @shahabhijeet 
 
 /sdk/search/ @brjohnstmsft
-/sdk/servicebus/ @nemakam 
+/sdk/servicebus/ @nemakam @jsquire
 /sdk/storage/ @kfarmer-msft @seanmcc-msft @tg-msft
 # Management Plane
 /**/*Management*/ @erich-wang

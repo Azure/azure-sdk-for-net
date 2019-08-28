@@ -19,7 +19,6 @@ namespace Microsoft.Azure.EventHubs
     public abstract class EventHubClient : ClientEntity
     {
         readonly Lazy<EventDataSender> innerSender;
-        bool closeCalled = false;
 
         internal EventHubClient(EventHubsConnectionStringBuilder csb)
             : base($"{nameof(EventHubClient)}{ClientEntity.GetNextId()}({csb.EntityPath})")
@@ -447,8 +446,6 @@ namespace Microsoft.Azure.EventHubs
         /// If not set, systemwide proxy settings will be honored.
         /// </summary>
         public IWebProxy WebProxy { get; set; }
-
-        internal bool CloseCalled => this.closeCalled;
 
         internal EventDataSender CreateEventSender(string partitionId = null)
         {

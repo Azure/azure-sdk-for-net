@@ -20,6 +20,9 @@ namespace Microsoft.Azure.EventHubs
         static int nextId;
         RetryPolicy retryPolicy;
 
+        /// <summary />
+        protected bool closeCalled = false;
+
         /// <summary></summary>
         /// <param name="clientId"></param>
         protected ClientEntity(string clientId)
@@ -60,6 +63,12 @@ namespace Microsoft.Azure.EventHubs
         /// </summary>
         /// <returns>The asynchronous operation</returns>
         public abstract Task CloseAsync();
+
+        /// <summary>
+        /// Returns a boolean representing whether client object is closed or not.
+        /// </summary>
+        /// <value>Returns <see cref="System.Boolean" />.</value>
+        public bool IsClosed => this.closeCalled;
 
         /// <summary>
         /// Registers a <see cref="EventHubsPlugin"/> to be used with this client.

@@ -38,11 +38,11 @@ namespace ApiManagement.Tests.ResourceProviderTests
             // No Portal, Management URL and SCM endpoint for Consumption SKU.
             if (service.Sku.Name != SkuType.Consumption)
             {
-                Assert.NotNull(service.PortalUrl);             
+                Assert.NotNull(service.PortalUrl);
                 Assert.NotNull(service.ManagementApiUrl);
                 Assert.NotNull(service.ScmUrl);
                 Assert.NotNull(service.PublicIPAddresses);
-            }            
+            }
             Assert.Equal(expectedPublisherName, service.PublisherName);
             Assert.Equal(expectedPublisherEmail, service.PublisherEmail);
         }

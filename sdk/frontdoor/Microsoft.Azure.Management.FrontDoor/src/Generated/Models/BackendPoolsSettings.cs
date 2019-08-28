@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.FrontDoor.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -33,9 +34,13 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// certificate name check on HTTPS requests to all backend pools. No
         /// effect on non-HTTPS requests. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        public BackendPoolsSettings(string enforceCertificateNameCheck = default(string))
+        /// <param name="sendRecvTimeoutSeconds">Send and receive timeout on
+        /// forwarding request to the backend. When timeout is reached, the
+        /// request fails and returns.</param>
+        public BackendPoolsSettings(string enforceCertificateNameCheck = default(string), int? sendRecvTimeoutSeconds = default(int?))
         {
             EnforceCertificateNameCheck = enforceCertificateNameCheck;
+            SendRecvTimeoutSeconds = sendRecvTimeoutSeconds;
             CustomInit();
         }
 
@@ -52,5 +57,25 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         [JsonProperty(PropertyName = "enforceCertificateNameCheck")]
         public string EnforceCertificateNameCheck { get; set; }
 
+        /// <summary>
+        /// Gets or sets send and receive timeout on forwarding request to the
+        /// backend. When timeout is reached, the request fails and returns.
+        /// </summary>
+        [JsonProperty(PropertyName = "sendRecvTimeoutSeconds")]
+        public int? SendRecvTimeoutSeconds { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (SendRecvTimeoutSeconds < 16)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "SendRecvTimeoutSeconds", 16);
+            }
+        }
     }
 }

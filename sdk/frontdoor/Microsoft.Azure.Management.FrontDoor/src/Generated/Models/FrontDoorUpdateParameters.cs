@@ -118,5 +118,28 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         [JsonProperty(PropertyName = "enabledState")]
         public string EnabledState { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (FrontendEndpoints != null)
+            {
+                foreach (var element in FrontendEndpoints)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (BackendPoolsSettings != null)
+            {
+                BackendPoolsSettings.Validate();
+            }
+        }
     }
 }

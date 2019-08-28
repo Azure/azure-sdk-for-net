@@ -138,9 +138,6 @@
   <data name="InvalidTimePeriod" xml:space="preserve">
     <value>The time period may not be Zero or Infinite.</value>
   </data>
-  <data name="MissingSystemProperty" xml:space="preserve">
-    <value>System property '{0}' is missing in the event.</value>
-  </data>
   <data name="ConsumerIdentifierOverMaxValue" xml:space="preserve">
     <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
   </data>
@@ -206,5 +203,14 @@
   </data>
   <data name="UnsupportedTransportEventType" xml:space="preserve">
     <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
+  </data>
+  <data name="FailedToCreateEventSubscription" xml:space="preserve">
+    <value>Could not create a subscription for events for Event Hub: '{0}', partition: '{1}', consumer group: '{2}'.</value>
+  </data>
+  <data name="UnrecoverableException" xml:space="preserve">
+    <value>An unrecoverable exception was encountered that left the environment in a bad state.</value>
+  </data>
+  <data name="DisposedInstanceCannotPerformOperation" xml:space="preserve">
+    <value>{0} has already been disposed and cannot perform the requested operation.</value>
   </data>
 </root>

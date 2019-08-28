@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.HybridData.Models;
+using Microsoft.Azure.Management.HybridData.Models;
 using Microsoft.Azure.Management.HybridData;
 using System;
 using System.Collections.Generic;
@@ -59,3 +59,4 @@ namespace HybridData.Tests.Tests
         #endregion
     }
 }
+

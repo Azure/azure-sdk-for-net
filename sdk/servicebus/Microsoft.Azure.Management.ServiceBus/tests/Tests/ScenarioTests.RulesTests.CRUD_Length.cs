@@ -30,7 +30,7 @@ namespace ServiceBus.Tests.ScenarioTests
         [Fact]
         public void RulesCreateGetUpdateDelete_Length()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 

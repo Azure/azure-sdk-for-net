@@ -14,9 +14,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void NewsSearch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "NewsSearch");
+                HttpMockServer.Initialize(this.GetType(), "NewsSearch");
 
                 INewsSearchClient client = new NewsSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -39,9 +39,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void NewsCategory()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "NewsCategory");
+                HttpMockServer.Initialize(this.GetType(), "NewsCategory");
 
                 INewsSearchClient client = new NewsSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -65,9 +65,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void NewsTrending()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "NewsTrending");
+                HttpMockServer.Initialize(this.GetType(), "NewsTrending");
 
                 INewsSearchClient client = new NewsSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 

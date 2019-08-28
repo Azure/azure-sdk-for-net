@@ -13,15 +13,12 @@
     <VersionPrefix>12.0.0</VersionPrefix>
 
     <!--
-    The Client SDK Analyzers are based on Design Guidelines that haven't been
-    disable some of them
+    These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127
      -->
     <NoWarn>
       $(NoWarn);
-      AZC0001;
-      AZC0002;
-      AZC0007;
       AZC0006;
+      AZC0007;
     </NoWarn>
 
     <!--

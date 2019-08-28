@@ -47,7 +47,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         public event EventHandler<NotifyStateManagerChangedEventArgs> StateManagerChanged;
 #pragma warning restore 67
 
-        public IAsyncEnumerator<IReliableState> GetAsyncEnumerator()
+        public ServiceFabric.Data.IAsyncEnumerator<IReliableState> GetAsyncEnumerator()
         {
             // Unused
             throw new NotImplementedException();
@@ -152,6 +152,11 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         public Task<ConditionalValue<T>> TryGetAsync<T>(Uri name) where T : IReliableState
         {
             // Unused
+            throw new NotImplementedException();
+        }
+
+        ServiceFabric.Data.IAsyncEnumerator<IReliableState> ServiceFabric.Data.IAsyncEnumerable<IReliableState>.GetAsyncEnumerator()
+        {
             throw new NotImplementedException();
         }
         #endregion

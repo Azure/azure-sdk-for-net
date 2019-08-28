@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -39,7 +39,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]        
         public async Task GetAcrManifestAttributesMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetAcrManifestAttributesMR)))
             {                
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var repositoryAttributes = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository, 
@@ -54,7 +54,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrManifestAttributesCRReturnsNull()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesCRReturnsNull)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetAcrManifestAttributesCRReturnsNull)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
                 var manifestAttributes = await client.GetAcrManifestAttributesAsync(ACRTestUtil.ProdRepository,
@@ -67,7 +67,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrManifestsMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestsMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetAcrManifestsMR)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
                 var manifests = await client.GetAcrManifestsAsync(ACRTestUtil.ProdRepository);
@@ -82,7 +82,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrManifestsCRThrowException()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestsCRThrowException)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetAcrManifestsCRThrowException)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
                 await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrManifestsAsync(ACRTestUtil.ProdRepository));
@@ -92,7 +92,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetManifestMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetManifestMR)))
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
@@ -119,7 +119,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetManifestCR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestCR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(GetManifestCR)))
             {
                 var tag = "latest";
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
@@ -146,7 +146,7 @@ namespace ContainerRegistry.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task UpdateAcrManifestAttributesMR()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrManifestAttributesMR)))
+            using (var context = MockContext.Start(this.GetType(), nameof(UpdateAcrManifestAttributesMR)))
             {
                 var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
                 var digest = "sha256:eabe547f78d4c18c708dd97ec3166cf7464cc651f1cbb67e70d407405b7ad7b6";
@@ -181,3 +181,5 @@ namespace ContainerRegistry.Tests
         }
     }
 }
+
+

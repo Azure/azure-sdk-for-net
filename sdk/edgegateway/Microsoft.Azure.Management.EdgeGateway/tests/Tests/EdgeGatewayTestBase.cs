@@ -1,4 +1,4 @@
-﻿namespace EdgeGateway.Tests
+namespace EdgeGateway.Tests
 {
     using Microsoft.Azure.Management.EdgeGateway;
     using Microsoft.Azure.Management.EdgeGateway.Models;
@@ -45,7 +45,7 @@
             var helper = (TestOutputHelper)testOutputHelper;
             ITest test = (ITest)helper.GetType().GetField("test", BindingFlags.NonPublic | BindingFlags.Instance)
                                   .GetValue(helper);
-            this.Context = MockContext.Start(this.GetType().FullName, test.TestCase.TestMethod.Method.Name);
+            this.Context = MockContext.Start(this.GetType(), test.TestCase.TestMethod.Method.Name);
 
             this.Client = this.Context.GetServiceClient<DataBoxEdgeManagementClient>();
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
@@ -109,3 +109,4 @@
 
     }
 }
+

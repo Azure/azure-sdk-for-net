@@ -1,5 +1,15 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 13.0.0
+
+- Add back StorageManagementClient constructor that takes HttpClient as a parameter
+- Support List Blob Service on a Storage account
+
+**Breaking changes**
+
+- ManagementPolicy child property type DateAfterModification.DaysAfterModificationGreaterThan, DateAfterCreation.DaysAfterCreationGreaterThan, changed from int to double.
+- Class ListContainerItems is removed, since BlobContainers.List() return value type change from ListContainerItems to IPage<ListContainerItem>.
+
 ### Changes in 12.0.0
 
 - Support Create or Update Storage Account with AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions as 'AADDS' or 'None'.

@@ -210,17 +210,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to System property &apos;{0}&apos; is missing in the event..
-        /// </summary>
-        internal static string MissingSystemProperty
-        {
-            get
-            {
-                return ResourceManager.GetString("MissingSystemProperty", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to A proxy may only be used for a websockets connection..
         /// </summary>
         internal static string ProxyMustUseWebsockets
@@ -393,6 +382,39 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("UnsupportedTransportEventType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Could not create a subscription for events for Event Hub: '{0}', partition: '{1}'..
+        /// </summary>
+        internal static string FailedToCreateEventSubscription
+        {
+            get
+            {
+                return ResourceManager.GetString("FailedToCreateEventSubscription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to An unrecoverable exception was encountered that left the environment in a bad state..
+        /// </summary>
+        internal static string UnrecoverableException
+        {
+            get
+            {
+                return ResourceManager.GetString("UnrecoverableException", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has already been disposed and cannot perform the requested operation..
+        /// </summary>
+        internal static string DisposedInstanceCannotPerformOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("DisposedInstanceCannotPerformOperation", resourceCulture);
             }
         }
     }

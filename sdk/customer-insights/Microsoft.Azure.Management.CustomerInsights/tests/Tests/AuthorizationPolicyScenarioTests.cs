@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace CustomerInsights.Tests.Tests
@@ -55,7 +55,7 @@ namespace CustomerInsights.Tests.Tests
         [Fact]
         public void CreateAndReadAuthorizationPolicy()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
@@ -87,7 +87,7 @@ namespace CustomerInsights.Tests.Tests
         [Fact]
         public void ListAuthorizationPolicies()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
@@ -111,7 +111,7 @@ namespace CustomerInsights.Tests.Tests
         [Fact]
         public void RegeneratePrimaryKey()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 
@@ -137,7 +137,7 @@ namespace CustomerInsights.Tests.Tests
         [Fact]
         public void RegenerateSecondaryKey()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
 

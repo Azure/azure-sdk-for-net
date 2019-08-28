@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace ServiceFabric.Tests.Tests
@@ -107,7 +107,7 @@ namespace ServiceFabric.Tests.Tests
                 rg,
                 new ResourceGroup(rgLocation));
 
-            var cluster = serviceFabricClient.Clusters.Create(rg, clusterName, newCluster);
+            var cluster = serviceFabricClient.Clusters.CreateOrUpdate(rg, clusterName, newCluster);
             Assert.NotNull(cluster);
 
             cluster = serviceFabricClient.Clusters.Get(rg, clusterName);
@@ -116,3 +116,4 @@ namespace ServiceFabric.Tests.Tests
         }
     }
 }
+

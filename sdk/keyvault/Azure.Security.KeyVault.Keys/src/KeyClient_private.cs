@@ -161,7 +161,7 @@ namespace Azure.Security.KeyVault.Keys
             return new Response<T>(response, result);
         }
 
-        private async Task<PageResponse<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
+        private async Task<Page<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
                 where T : Model
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
@@ -180,11 +180,11 @@ namespace Azure.Security.KeyVault.Keys
                     Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                     // read the respose
-                    Page<T> responseAsPage = new Page<T>(itemFactory);
+                    KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                     responseAsPage.Deserialize(response.ContentStream);
 
                     // convert from the Page<T> to PageResponse<T>
-                    return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink?.ToString());
+                    return new Page<T>(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
                 }
             }
             catch (Exception e)
@@ -194,7 +194,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        private PageResponse<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
+        private Page<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
             where T : Model
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
@@ -213,11 +213,11 @@ namespace Azure.Security.KeyVault.Keys
                     Response response = SendRequest(request, cancellationToken);
 
                     // read the respose
-                    Page<T> responseAsPage = new Page<T>(itemFactory);
+                    KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                     responseAsPage.Deserialize(response.ContentStream);
 
                     // convert from the Page<T> to PageResponse<T>
-                    return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink?.ToString());
+                    return new Page<T>(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
                 }
             }
             catch (Exception e)

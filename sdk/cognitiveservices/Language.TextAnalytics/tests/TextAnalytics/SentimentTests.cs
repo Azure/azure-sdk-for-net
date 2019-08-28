@@ -16,9 +16,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public async Task SentimentBatchAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "SentimentBatchAsync");
+                HttpMockServer.Initialize(this.GetType(), "SentimentBatchAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 SentimentBatchResult result = await client.SentimentBatchAsync(
                     new MultiLanguageBatchInput(
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public async Task SentimentAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "SentimentAsync");
+                HttpMockServer.Initialize(this.GetType(), "SentimentAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 SentimentResult result = await client.SentimentAsync("I love my team mates");
 
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public void SentimentBatch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "SentimentBatch");
+                HttpMockServer.Initialize(this.GetType(), "SentimentBatch");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 SentimentBatchResult result = client.SentimentBatch(
                     new MultiLanguageBatchInput(
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public void Sentiment()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "Sentiment");
+                HttpMockServer.Initialize(this.GetType(), "Sentiment");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 SentimentResult result = client.Sentiment("I love my team mates");
 

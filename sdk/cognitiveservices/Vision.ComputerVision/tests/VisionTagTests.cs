@@ -13,9 +13,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void TagImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "TagImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "TagImageInStreamTest");
 
                 const string Chinese = "zh";
 
@@ -34,9 +34,9 @@ namespace ComputerVisionSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void TagImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "TagImageTest");
+                HttpMockServer.Initialize(this.GetType(), "TagImageTest");
 
                 string imageUrl = GetTestImageUrl("house.jpg");
 

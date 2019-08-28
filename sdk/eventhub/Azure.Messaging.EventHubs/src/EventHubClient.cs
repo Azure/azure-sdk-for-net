@@ -28,11 +28,11 @@ namespace Azure.Messaging.EventHubs
         private EventHubRetryPolicy _retryPolicy;
 
         /// <summary>
-        ///   The path of the specific Event Hub that the client is connected to, relative
-        ///   to the Event Hubs namespace that contains it.
+        ///   The name of the Event Hub that the client is connected to, specific to the
+        ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public string EventHubPath { get; }
+        public string EventHubName { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -71,15 +71,15 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub path and the shared key properties are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the path to the desired Event Hub,
-        ///   which is needed.  In this case, the path can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
+        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
         ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
-        ///   Event Hub will result in a connection string that contains the path.
+        ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
         public EventHubClient(string connectionString) : this(connectionString, null, null)
@@ -90,16 +90,16 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub path and SAS token are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the path to the desired Event Hub,
-        ///   which is needed.  In this case, the path can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
+        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
         ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
-        ///   Event Hub will result in a connection string that contains the path.
+        ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
         public EventHubClient(string connectionString,
@@ -111,17 +111,17 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub path.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hub itself, it will contain the path to the desired Event Hub,
-        ///   and can be used directly without passing the <paramref name="eventHubPath" />.  The path to the Event Hub should be
+        ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
+        ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
         public EventHubClient(string connectionString,
-                              string eventHubPath) : this(connectionString, eventHubPath, null)
+                              string eventHubName) : this(connectionString, eventHubName, null)
         {
         }
 
@@ -129,18 +129,18 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub path and SAS token are contained in this connection string.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hub itself, it will contain the path to the desired Event Hub,
-        ///   and can be used directly without passing the <paramref name="eventHubPath" />.  The path to the Event Hub should be
+        ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
+        ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
         public EventHubClient(string connectionString,
-                              string eventHubPath,
+                              string eventHubName,
                               EventHubClientOptions clientOptions)
         {
             clientOptions = clientOptions?.Clone() ?? new EventHubClientOptions();
@@ -149,26 +149,26 @@ namespace Azure.Messaging.EventHubs
             ValidateClientOptions(clientOptions);
 
             var connectionStringProperties = ParseConnectionString(connectionString);
-            ValidateConnectionProperties(connectionStringProperties, eventHubPath, nameof(connectionString));
+            ValidateConnectionProperties(connectionStringProperties, eventHubName, nameof(connectionString));
 
             var eventHubsHostName = connectionStringProperties.Endpoint.Host;
 
-            if (String.IsNullOrEmpty(eventHubPath))
+            if (String.IsNullOrEmpty(eventHubName))
             {
-                eventHubPath = connectionStringProperties.EventHubPath;
+                eventHubName = connectionStringProperties.EventHubName;
             }
 
             var sharedAccessSignature = new SharedAccessSignature
             (
-                 BuildResource(clientOptions.TransportType, eventHubsHostName, eventHubPath),
+                 BuildAudienceResource(clientOptions.TransportType, eventHubsHostName, eventHubName),
                  connectionStringProperties.SharedAccessKeyName,
                  connectionStringProperties.SharedAccessKey
             );
 
             _retryPolicy = new BasicRetryPolicy(clientOptions.RetryOptions);
             ClientOptions = clientOptions;
-            EventHubPath = eventHubPath;
-            InnerClient = BuildTransportClient(eventHubsHostName, eventHubPath, new SharedAccessSignatureCredential(sharedAccessSignature), clientOptions, _retryPolicy);
+            EventHubName = eventHubName;
+            InnerClient = BuildTransportClient(eventHubsHostName, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), clientOptions, _retryPolicy);
         }
 
         /// <summary>
@@ -176,19 +176,19 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requeseted Event Hub, depending on Azure configuration.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
         public EventHubClient(string host,
-                              string eventHubPath,
+                              string eventHubName,
                               TokenCredential credential,
                               EventHubClientOptions clientOptions = default)
         {
             clientOptions = clientOptions?.Clone() ?? new EventHubClientOptions();
 
             Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
             Guard.ArgumentNotNull(nameof(credential), credential);
             ValidateClientOptions(clientOptions);
 
@@ -198,18 +198,18 @@ namespace Azure.Messaging.EventHubs
                     break;
 
                 case EventHubSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildResource(clientOptions.TransportType, host, eventHubPath));
+                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(clientOptions.TransportType, host, eventHubName));
                     break;
 
                 default:
-                    credential = new EventHubTokenCredential(credential, BuildResource(clientOptions.TransportType, host, eventHubPath));
+                    credential = new EventHubTokenCredential(credential, BuildAudienceResource(clientOptions.TransportType, host, eventHubName));
                     break;
             }
 
             _retryPolicy = new BasicRetryPolicy(clientOptions.RetryOptions);
-            EventHubPath = eventHubPath;
+            EventHubName = eventHubName;
             ClientOptions = clientOptions;
-            InnerClient = BuildTransportClient(host, eventHubPath, credential, clientOptions, _retryPolicy);
+            InnerClient = BuildTransportClient(host, eventHubName, credential, clientOptions, _retryPolicy);
         }
 
         /// <summary>
@@ -258,8 +258,8 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
         ///
         /// <remarks>
-        ///   This method is synonomous with invoking <see cref="GetPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
-        ///   property that is returned. It is offered as a convienience for quick access to the set of partition identifiers for the associated Event Hub.
+        ///   This method is synonymous with invoking <see cref="GetPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
+        ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
         ///   No new or extended information is presented.
         /// </remarks>
         ///
@@ -267,7 +267,7 @@ namespace Azure.Messaging.EventHubs
             (await GetPropertiesAsync(cancellationToken).ConfigureAwait(false))?.PartitionIds;
 
         /// <summary>
-        ///   Retrieves information about a specific partiton for an Event Hub, including elements that describe the available
+        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
         ///   events in the partition event stream.
         /// </summary>
         ///
@@ -407,12 +407,12 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.</param>
-        /// <param name="eventHubPath">The path to a specific Event Hub.</param>
+        /// <param name="eventHubName">The name of a specific Event Hub.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
         /// <param name="options">The set of options to use for the client.</param>
         /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="options" />.</param>
         ///
-        /// <returns>A client generalization spcecific to the specified protocol/transport to which operations may be delegated.</returns>
+        /// <returns>A client generalization specific to the specified protocol/transport to which operations may be delegated.</returns>
         ///
         /// <remarks>
         ///   As an internal method, only basic sanity checks are performed against arguments.  It is
@@ -423,7 +423,7 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         internal virtual TransportEventHubClient BuildTransportClient(string host,
-                                                                      string eventHubPath,
+                                                                      string eventHubName,
                                                                       TokenCredential credential,
                                                                       EventHubClientOptions options,
                                                                       EventHubRetryPolicy defaultRetryPolicy)
@@ -432,7 +432,7 @@ namespace Azure.Messaging.EventHubs
             {
                 case TransportType.AmqpTcp:
                 case TransportType.AmqpWebSockets:
-                    return new TrackOneEventHubClient(host, eventHubPath, credential, options, defaultRetryPolicy);
+                    return new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetryPolicy);
 
                 default:
                     throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
@@ -445,18 +445,18 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Event Hubs service.</param>
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
-        private static string BuildResource(TransportType transportType,
-                                            string host,
-                                            string eventHubPath)
+        private static string BuildAudienceResource(TransportType transportType,
+                                                    string host,
+                                                    string eventHubName)
         {
             var builder = new UriBuilder(host)
             {
                 Scheme = transportType.GetUriScheme(),
-                Path = eventHubPath,
+                Path = eventHubName,
                 Port = -1,
                 Fragment = String.Empty,
                 Password = String.Empty,
@@ -477,29 +477,32 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
-        /// <param name="eventHubPath">The path of the Event Hub passed independent of the connection string, allowing easier use of a namespace-level connection string.</param>
+        /// <param name="eventHubName">The name of the Event Hub passed independent of the connection string, allowing easier use of a namespace-level connection string.</param>
         /// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
         ///
         /// <remarks>
-        ///   In the case that the prioperties violate an invariant or otherwise represent a combination that
+        ///   In the case that the properties violate an invariant or otherwise represent a combination that
         ///   is not permissible, an appropriate exception will be thrown.
         /// </remarks>
         ///
         private static void ValidateConnectionProperties(ConnectionStringProperties properties,
-                                                         string eventHubPath,
+                                                         string eventHubName,
                                                          string connectionStringArgumentName)
         {
-            // The Event Hub path may only be specified in one of the possible forms, either as part of the
-            // connection string or as a stand-alone parameter, but not both.
+            // The Event Hub name may only be specified in one of the possible forms, either as part of the
+            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
+            // value, then do not consider this a failure.
 
-            if ((!String.IsNullOrEmpty(eventHubPath)) && (!String.IsNullOrEmpty(properties.EventHubPath)))
+            if ((!String.IsNullOrEmpty(eventHubName))
+                && (!String.IsNullOrEmpty(properties.EventHubName))
+                && (!String.Equals(eventHubName, properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new ArgumentException(Resources.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
             }
 
             // Ensure that each of the needed components are present for connecting.
 
-            if ((String.IsNullOrEmpty(eventHubPath)) && (String.IsNullOrEmpty(properties.EventHubPath))
+            if ((String.IsNullOrEmpty(eventHubName)) && (String.IsNullOrEmpty(properties.EventHubName))
                 || (String.IsNullOrEmpty(properties.Endpoint?.Host))
                 || (String.IsNullOrEmpty(properties.SharedAccessKeyName))
                 || (String.IsNullOrEmpty(properties.SharedAccessKey)))
@@ -540,7 +543,7 @@ namespace Azure.Messaging.EventHubs
                 return;
             }
 
-            // A proxy is only valid when websockets is used as the transport.
+            // A proxy is only valid when web sockets is used as the transport.
 
             if ((clientOptions.TransportType == TransportType.AmqpTcp) && (clientOptions.Proxy != null))
             {

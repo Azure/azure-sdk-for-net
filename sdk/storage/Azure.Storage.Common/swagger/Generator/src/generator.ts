@@ -269,10 +269,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         use("_pair");
                     });
                 });
-            } else if (isPrimitiveType(param.model) && param.model.collectionFormat === `multi`) {
-                if (!param.model.itemType || param.model.itemType.type !== `string`) {
-                    throw `collectionFormat multi is only supported for strings, at the moment`;
-                }
+            } else if (param.location === `header` && isPrimitiveType(param.model) && param.model.collectionFormat === `csv`) {
                 w.scope(() => {
                     w.line(`foreach (string _item in ${naming.parameter(param.clientName)})`);
                     w.scope('{', '}', () => {
@@ -557,9 +554,9 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
                         w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
-                        if (isPrimitiveType(header.model) && header.model.collectionFormat === `multi`) {
+                        if (isPrimitiveType(header.model) && header.model.collectionFormat === `csv`) {
                             if (!header.model.itemType || header.model.itemType.type !== `string`) {
-                                throw `collectionFormat multi is only supported for strings, at the moment`;
+                                throw `collectionFormat csv is only supported for strings, at the moment`;
                             }
                             w.write(`(${headerName} ?? "").Split(',')`);
                         } else {
@@ -596,7 +593,12 @@ function generateValidation(w: IndentWriter, operation: IOperation, parameter: I
 function generateModels(w: IndentWriter, model: IServiceModel): void {
     w.line(`#region Models`);
     const fencepost = IndentWriter.createFenceposter();
-    for (const [name, def] of <[string, IModelType][]>Object.entries(model.models)) {
+    const types = <[string, IModelType][]>Object.entries(model.models);
+    types.sort((a, b) =>
+        a[0] < b[0] ? -1 :
+        a[0] > b[0] ? 1 :
+        0);
+    for (const [name, def] of types) {
         if (fencepost()) { w.line(); }
         if (isEnumType(def) && !def.modelAsString) { generateEnum(w, model, def); }
         else if (isEnumType(def) && def.modelAsString) { generateEnumStrings(w, model, def); }

@@ -34,7 +34,7 @@ namespace ObjectModelCodeGenerator
                 }
                 seen.Add(type.Name);
 
-                string outputDirectory = "../../../../../../Microsoft.Azure.Batch/src/Generated";
+                string outputDirectory = "../../../../../sdk/batch/Microsoft.Azure.Batch/src/Generated";
                 string outputFilePath = Path.Combine(outputDirectory, type.Name + ".cs");
 
                 string innerClassString;

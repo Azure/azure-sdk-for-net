@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
                 try
                 {
-                    var authResult = await tokenProvider.GetAuthResultAsync(challenge.AuthorizationServer,
-                        challenge.Resource, challenge.Scope, cancellationToken).ConfigureAwait(false);
+                    var authResult = await tokenProvider.GetAuthResultAsync(challenge.Resource,
+                        challenge.AuthorizationServer, cancellationToken).ConfigureAwait(false);
 
                     PrincipalUsed = tokenProvider.PrincipalUsed;
 

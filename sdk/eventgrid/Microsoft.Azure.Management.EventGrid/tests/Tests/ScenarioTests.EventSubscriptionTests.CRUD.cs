@@ -18,7 +18,7 @@ namespace EventGrid.Tests.ScenarioTests
         [Fact]
         public void EventSubscriptionToCustomTopicCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.InitializeClients(context);
 
@@ -162,7 +162,7 @@ namespace EventGrid.Tests.ScenarioTests
         [Fact]
         public void EventSubscriptionToDomainCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.InitializeClients(context);
 
@@ -348,7 +348,7 @@ namespace EventGrid.Tests.ScenarioTests
         [Fact(Skip = "This is not yet enabled for the new API version, will re-record once it is enabled")]
         public void EventSubscriptionToAzureSubscriptionCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
@@ -406,7 +406,7 @@ namespace EventGrid.Tests.ScenarioTests
         [Fact(Skip = "This is not yet enabled for the new API version, will re-record once it is enabled")]
         public void EventSubscriptionToResourceGroupCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
@@ -473,7 +473,7 @@ namespace EventGrid.Tests.ScenarioTests
         [Fact]
         public void EventSubscriptionCreateGetUpdateDeleteWithDeadLettering()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.InitializeClients(context);
 
@@ -575,7 +575,7 @@ namespace EventGrid.Tests.ScenarioTests
         [Fact]
         public void EventSubscriptionCreateGetUpdateDeleteWithDlqAdvancedFilterServiceBusAsDestination()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.InitializeClients(context);
 

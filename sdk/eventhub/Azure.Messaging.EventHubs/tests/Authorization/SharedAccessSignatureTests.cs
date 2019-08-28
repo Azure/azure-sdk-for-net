@@ -7,7 +7,7 @@ using System.Reflection;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests.Authorization
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of unit tests for the <see cref="SharedAccessSignature" />
@@ -15,7 +15,6 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class SharedAccessSignatureTests
     {
         /// <summary>A string that is 300 characters long, breaking invariants for argument maximum lengths.</summary>

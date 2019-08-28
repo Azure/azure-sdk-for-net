@@ -16,9 +16,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public async Task LanguageBatchAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "LanguageBatchAsync");
+                HttpMockServer.Initialize(this.GetType(), "LanguageBatchAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 LanguageBatchResult result = await client.DetectLanguageBatchAsync(
                     new LanguageBatchInput(
@@ -37,9 +37,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public async Task DetectLanguageAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguageAsync");
+                HttpMockServer.Initialize(this.GetType(), "DetectLanguageAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 LanguageResult result = await client.DetectLanguageAsync(
                     "I love my team mates");
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public void DetectLanguageBatch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguageBatch");
+                HttpMockServer.Initialize(this.GetType(), "DetectLanguageBatch");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 LanguageBatchResult result = client.DetectLanguageBatch(
                     new LanguageBatchInput(
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public void DetectLanguage()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguage");
+                HttpMockServer.Initialize(this.GetType(), "DetectLanguage");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 LanguageResult result = client.DetectLanguage(
                     "I love my team mates");

@@ -19,7 +19,7 @@ namespace EventHub.Tests.ScenarioTests
         [Fact]
         public void ConsumerGroupsCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 

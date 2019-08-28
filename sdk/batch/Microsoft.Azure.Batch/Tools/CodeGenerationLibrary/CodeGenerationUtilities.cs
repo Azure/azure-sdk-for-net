@@ -162,8 +162,18 @@
                         return omPropertyData.GenericTypeParameter +
                             ".ConvertFromProtocolCollection(" + protocolObjectSimpleGetter + ")";
                     }
-                    return omPropertyData.GenericTypeParameter + ".ConvertFromProtocolCollectionAndFreeze(" +
-                        protocolObjectSimpleGetter + ")";
+
+                    // If the name of the type and the name of the property happen to match, we need to disambiguate
+                    if(string.Equals(omPropertyData.Name, omPropertyData.GenericTypeParameter))
+                    {
+                        // This is a bit of a hack...
+                        const string prefix = "Batch";
+                        return $"{prefix}.{omPropertyData.GenericTypeParameter}.ConvertFromProtocolCollectionAndFreeze({protocolObjectSimpleGetter})";
+                    }
+                    else
+                    {
+                        return $"{omPropertyData.GenericTypeParameter}.ConvertFromProtocolCollectionAndFreeze({protocolObjectSimpleGetter})";
+                    }
                 }
                 return omPropertyData.GenericTypeParameter + ".ConvertFromProtocolCollectionReadOnly(" + protocolObjectSimpleGetter + ")";
             }

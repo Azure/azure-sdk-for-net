@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The settings for an authentication token that the task can use to
+    /// The settings for an authentication token that the Task can use to
     /// perform Batch service operations.
     /// </summary>
     public partial class AuthenticationTokenSettings
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The authentication token grants access to a limited set of Batch
         /// service operations. Currently the only supported value for the
         /// access property is 'job', which grants access to all operations
-        /// related to the job which contains the task.
+        /// related to the Job which contains the Task.
         /// </remarks>
         [JsonProperty(PropertyName = "access")]
         public IList<AccessScope> Access { get; set; }

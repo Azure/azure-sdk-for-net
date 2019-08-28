@@ -22,7 +22,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class EventHubClientTests
     {
         /// <summary>
@@ -145,11 +144,25 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructoNotAllowTheEventHubToBePassedTwice()
+        public void ConstructorDoesNotAllowTheEventHubToBePassedTwiceIfDifferent()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.InstanceOf<ArgumentException>(), "The constructor without options should detect multiple Event Hubs");
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should detect multiple Event Hubs");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.InstanceOf<ArgumentException>(), "The constructor without options should detect multiple different Event Hubs");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should detect multiple different Event Hubs");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorAllowsTheEventHubToBePassedTwiceIfEqual()
+        {
+            var eventHubName = "myHub";
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ eventHubName }";
+            Assert.That(() => new EventHubClient(fakeConnection, eventHubName), Throws.Nothing, "The constructor without options should allow the same Event Hub in multiple places");
+            Assert.That(() => new EventHubClient(fakeConnection, eventHubName, new EventHubClientOptions()), Throws.Nothing, "The constructor with options should allow the same Event Hub in multiple places");
         }
 
         /// <summary>
@@ -160,10 +173,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCaseSource(nameof(ConstructorExpandedArgumentInvalidCases))]
         public void ConstructorValidatesExpandedArguments(string host,
-                                                          string eventHubPath,
+                                                          string eventHubName,
                                                           TokenCredential credential)
         {
-            Assert.That(() => new EventHubClient(host, eventHubPath, credential), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubClient(host, eventHubName, credential), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -218,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityPath }";
             var client = new EventHubClient(fakeConnection);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -233,7 +246,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
             var client = new EventHubClient(fakeConnection, entityPath);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -249,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = Mock.Of<TokenCredential>();
             var client = new EventHubClient(host, entityPath, credential);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -286,7 +299,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ContructorWithConnectionStringCreatesTheTransportClient()
         {
-
             var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubClientOptions());
             Assert.That(GetTransportClient(client), Is.Not.Null);
         }
@@ -886,10 +898,10 @@ namespace Azure.Messaging.EventHubs.Tests
         private string BuildResource(EventHubClient client,
                                      TransportType transportType,
                                      string host,
-                                     string eventHubPath) =>
+                                     string eventHubName) =>
              typeof(EventHubClient)
-                 .GetMethod("BuildResource", BindingFlags.Static | BindingFlags.NonPublic)
-                 .Invoke(client, new object[] { transportType, host, eventHubPath }) as string;
+                 .GetMethod("BuildAudienceResource", BindingFlags.Static | BindingFlags.NonPublic)
+                 .Invoke(client, new object[] { transportType, host, eventHubName }) as string;
 
         /// <summary>
         ///   Provides a test shim for retrieving the transport client contained by an
@@ -930,13 +942,13 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public ReadableOptionsMock(string host,
-                                       string eventHubPath,
+                                       string eventHubName,
                                        TokenCredential credential,
-                                       EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                       EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
             }
 
-            internal override TransportEventHubClient BuildTransportClient(string host, string eventHubPath, TokenCredential credential, EventHubClientOptions options, EventHubRetryPolicy defaultRetry)
+            internal override TransportEventHubClient BuildTransportClient(string host, string eventHubName, TokenCredential credential, EventHubClientOptions options, EventHubRetryPolicy defaultRetry)
             {
                 TransportClientOptions = options;
                 _transportClient = new ObservableTransportClientMock();
@@ -958,9 +970,9 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public ObservableOperationsMock(string host,
-                                       string eventHubPath,
+                                       string eventHubName,
                                        TokenCredential credential,
-                                       EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                       EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
             }
 
@@ -991,16 +1003,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public InjectableTransportClientMock(TransportEventHubClient transportClient,
                                                  string host,
-                                                 string eventHubPath,
+                                                 string eventHubName,
                                                  TokenCredential credential,
-                                                 EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                                 EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
                 TransportClient = transportClient;
                 SetTransportClient(transportClient);
             }
 
             internal override TransportEventHubClient BuildTransportClient(string host,
-                                                                           string eventHubPath,
+                                                                           string eventHubName,
                                                                            TokenCredential credential,
                                                                            EventHubClientOptions options,
                                                                            EventHubRetryPolicy defaultRetry) => TransportClient;
