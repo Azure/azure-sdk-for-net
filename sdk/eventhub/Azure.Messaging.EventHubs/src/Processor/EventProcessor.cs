@@ -219,10 +219,7 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 await RenewOwnershipAsync();
 
-                await Task.WhenAll(PartitionPumps
-                    .Where(kvp => !kvp.Value.IsRunning)
-                    .Select(kvp => AddOrUpdatePartitionPumpAsync(kvp.Key)))
-                    .ConfigureAwait(false);
+                await CheckPartitionPumps();
 
                 // TODO: LastModifiedTime should be mandatory.
                 // TODO: 30?
@@ -341,7 +338,14 @@ namespace Azure.Messaging.EventHubs.Processor
             var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
             PartitionPumps[partitionId] = partitionPump;
 
-            await partitionPump.StartAsync().ConfigureAwait(false);
+            try
+            {
+                await partitionPump.StartAsync().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                // TODO: delegate the exception handling to an Exception Callback.
+            }
         }
 
         /// <summary>
@@ -360,8 +364,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 catch (Exception)
                 {
-                    // We're catching every possible unhandled exception that may have happened during Partition Pump execution.
-                    // TODO: delegate the exception handling to an Exception Callback
+                    // TODO: delegate the exception handling to an Exception Callback.
                 }
             }
         }
@@ -434,6 +437,19 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 await TryRemovePartitionPumpAsync(partitionId).ConfigureAwait(false);
             }
+        }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <returns>TODO.</returns>
+        ///
+        private Task CheckPartitionPumps()
+        {
+            return Task.WhenAll(PartitionPumps
+                .Where(kvp => !kvp.Value.IsRunning)
+                .Select(kvp => AddOrUpdatePartitionPumpAsync(kvp.Key)));
         }
     }
 }
