@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 json.WriteStartObject();
 
-                WriteProperties(ref json);
+                WriteProperties(json);
 
                 json.WriteEndObject();
 
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        internal abstract void WriteProperties(ref Utf8JsonWriter json);
+        internal abstract void WriteProperties(Utf8JsonWriter json);
 
         internal abstract void ReadProperties(JsonElement json);
     }

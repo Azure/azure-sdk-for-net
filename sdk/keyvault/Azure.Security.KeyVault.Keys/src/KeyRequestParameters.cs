@@ -123,7 +123,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 json.WriteStartObject(AttributesPropertyNameBytes);
 
-                _attributes.WriteProperties(ref json);
+                _attributes.WriteProperties(json);
 
                 json.WriteEndObject();
             }
