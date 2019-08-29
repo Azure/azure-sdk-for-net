@@ -155,21 +155,23 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task WaitLoadBalancing(int partitionCount, TimeSpan maximumWaitTime)
+        public async Task WaitStabilization(int partitions)
         {
-            var loadBalanceAchieved = false;
-            var consecutiveBalancedStatus = 0;
+            var stabilizedStatusAchieved = false;
+            var consecutiveStabilizedStatus = 0;
             List<PartitionOwnership> previousActiveOwnership = null;
+
+            var maximumWaitTime = TimeSpan.FromSeconds(60 + 10 * partitions / EventProcessors.Count);
 
             var startTime = DateTimeOffset.UtcNow;
 
-            while (!loadBalanceAchieved)
+            while (!stabilizedStatusAchieved)
             {
                 var ellapsedTime = DateTimeOffset.UtcNow.Subtract(startTime);
 
                 if (ellapsedTime > maximumWaitTime)
                 {
-                    throw new TimeoutException("Load balancing took too long to finish.");
+                    throw new TimeoutException("Stabilization took too long to finish.");
                 }
 
                 // Remember to filter expired ownership.
@@ -180,23 +182,21 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < 30)
                     .ToList();
 
-                // Reset balanced status if current partition distribution differs from the previous one.
+                // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
+                // otherwise.
 
-                if (!AreDistributionsEquivalent(previousActiveOwnership, activeOwnership))
+                if (AreOwnersTheSame(previousActiveOwnership, activeOwnership))
                 {
-                    consecutiveBalancedStatus = 0;
+                    ++consecutiveStabilizedStatus;
+                }
+                else
+                {
+                    consecutiveStabilizedStatus = 1;
                 }
 
                 previousActiveOwnership = activeOwnership;
 
-                // Increment consecutive balanced status if we have a balanced load.
-
-                if (IsLoadBalanced(partitionCount, activeOwnership))
-                {
-                    ++consecutiveBalancedStatus;
-                }
-
-                if (consecutiveBalancedStatus < 6)
+                if (consecutiveStabilizedStatus < 6)
                 {
                     // Wait 5 seconds before the next verification.  The event processors wait 10 seconds between updates
                     // so there's no need to verify it too often.  We may end up waiting a bit more than the maximum wait
@@ -206,53 +206,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
                 else
                 {
-                    // We'll consider the load stabilized only if its balanced status doesn't change after 6 verifications.
-                    // This measure is necessary to avoid exiting the loop when an unstable balanced status is reached by
-                    // chance.
+                    // We'll consider the load stabilized only if its status doesn't change after 6 verifications.
 
-                    loadBalanceAchieved = true;
+                    stabilizedStatusAchieved = true;
                 }
             }
-        }
-
-        /// <summary>
-        ///   TODO.
-        /// </summary>
-        ///
-        /// <returns>TODO.</returns>
-        ///
-        private bool IsLoadBalanced(int partitionCount, IEnumerable<PartitionOwnership> activeOwnership)
-        {
-            var eventProcessorCount = EventProcessors.Count;
-
-            if (eventProcessorCount == 0)
-            {
-                return true;
-            }
-
-            var ownershipDistribution = activeOwnership.GroupBy
-                (
-                    ownership => ownership.OwnerIdentifier,
-                    (ownerIdentifier, ownershipGroup) => ownershipGroup.Count()
-                );
-
-            var minimumOwnedPartitionCount = partitionCount / eventProcessorCount;
-            var maximumOwnedPartitionCount = minimumOwnedPartitionCount + 1;
-
-            var totalOwnedPartitionCount = 0;
-            
-            foreach (var ownedPartitionCount in ownershipDistribution)
-            {
-                if (ownedPartitionCount < minimumOwnedPartitionCount ||
-                    ownedPartitionCount > maximumOwnedPartitionCount)
-                {
-                    return false;
-                }
-
-                totalOwnedPartitionCount += ownedPartitionCount;
-            }
-
-            return totalOwnedPartitionCount == partitionCount;
         }
 
         /// <summary>
@@ -261,7 +219,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>TODO.</returns>
         ///
-        private bool AreDistributionsEquivalent(IEnumerable<PartitionOwnership> first,
+        private bool AreOwnersTheSame(IEnumerable<PartitionOwnership> first,
             IEnumerable<PartitionOwnership> second)
         {
             if (first == null && second == null)
