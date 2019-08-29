@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         internal static string ToSerializedValue(this ResourceIdentityType value)
         {
-            switch (value)
+            switch( value )
             {
                 case ResourceIdentityType.SystemAssigned:
                     return "SystemAssigned";
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         internal static ResourceIdentityType? ParseResourceIdentityType(this string value)
         {
-            switch (value)
+            switch( value )
             {
                 case "SystemAssigned":
                     return ResourceIdentityType.SystemAssigned;
