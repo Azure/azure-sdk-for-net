@@ -81,7 +81,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudDataPlanePolicyDefinition()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
