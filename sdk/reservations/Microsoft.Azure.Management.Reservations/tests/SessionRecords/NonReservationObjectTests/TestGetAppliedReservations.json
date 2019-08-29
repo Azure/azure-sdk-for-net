@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a150050d-a793-4d6a-b00c-9264e011d22f"
+          "aef22358-ff22-444f-bb67-55620346e5ab"
         ],
         "accept-language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.10.0.0"
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Aug 2019 02:44:54 GMT"
+          "Thu, 29 Aug 2019 18:29:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,22 +39,22 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "westus:27a58a1b-ffac-41b3-9edf-c662a6f5b83c"
+          "westus:58824c51-cdad-407a-aa07-ce87bd5fd20b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-correlation-request-id": [
-          "2ea86140-976b-4578-9ec2-e6a9739432c6"
+          "1acc775e-1242-4566-8271-f959515630f0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190823T024454Z:2ea86140-976b-4578-9ec2-e6a9739432c6"
+          "WESTUS:20190829T182940Z:1acc775e-1242-4566-8271-f959515630f0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "1710"
+          "1971"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/microsoft.capacity/AppliedReservations/default\",\r\n  \"type\": \"Microsoft.Capacity/AppliedReservations\",\r\n  \"name\": \"default\",\r\n  \"properties\": {\r\n    \"reservationOrderIds\": {\r\n      \"value\": [\r\n        \"/providers/Microsoft.Capacity/reservationorders/5f47bc68-c4dc-465c-8ccf-59a60155821e\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/1ce5c506-dc1a-4529-9e8a-ce71a3fce011\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/5097858c-9ee1-4e1f-9115-e778bc9f07f8\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/f83755e0-cbcc-4dd6-a381-cd1022e9374f\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/2c777d7f-2b8f-4249-ac3e-b704bfc9646b\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/ddc21f31-8ec3-4ecb-a6db-d9c4fa0f1d4d\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/97460b12-886c-4388-ac53-43740663802b\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/13c2133e-9d20-4908-8def-965b521bf9b7\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/451d0d8f-6aff-4b52-a4c8-44d10a4e8b9a\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/e742d109-1e57-4054-b9d3-dd18548a0256\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/84586bd7-adae-4f62-b87f-b5a36c219d44\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/5af652ab-8a38-4821-a88d-9f552037fd86\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/37fdc3cd-7016-4711-9bb9-c8976367197a\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/1933daea-fa47-4883-b228-ebdcc345a9d1\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/f311bbb7-9010-4327-a4cb-81efc96850e0\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/d983fd17-f9d5-4990-8a28-067d9368c5fd\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/0107376d-9008-461d-bf44-e0ae83716cf5\"\r\n      ]\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/microsoft.capacity/AppliedReservations/default\",\r\n  \"type\": \"Microsoft.Capacity/AppliedReservations\",\r\n  \"name\": \"default\",\r\n  \"properties\": {\r\n    \"reservationOrderIds\": {\r\n      \"value\": [\r\n        \"/providers/Microsoft.Capacity/reservationorders/5f47bc68-c4dc-465c-8ccf-59a60155821e\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/1ce5c506-dc1a-4529-9e8a-ce71a3fce011\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/5097858c-9ee1-4e1f-9115-e778bc9f07f8\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/f83755e0-cbcc-4dd6-a381-cd1022e9374f\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/2c777d7f-2b8f-4249-ac3e-b704bfc9646b\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/ddc21f31-8ec3-4ecb-a6db-d9c4fa0f1d4d\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/97460b12-886c-4388-ac53-43740663802b\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/13c2133e-9d20-4908-8def-965b521bf9b7\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/451d0d8f-6aff-4b52-a4c8-44d10a4e8b9a\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/e742d109-1e57-4054-b9d3-dd18548a0256\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/84586bd7-adae-4f62-b87f-b5a36c219d44\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/5af652ab-8a38-4821-a88d-9f552037fd86\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/37fdc3cd-7016-4711-9bb9-c8976367197a\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/1933daea-fa47-4883-b228-ebdcc345a9d1\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/f311bbb7-9010-4327-a4cb-81efc96850e0\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/d983fd17-f9d5-4990-8a28-067d9368c5fd\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/0107376d-9008-461d-bf44-e0ae83716cf5\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/0dc0d697-97d8-4546-87eb-7ae8a84c286c\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/0a47417c-cd30-4f67-add6-d631583e09f3\",\r\n        \"/providers/Microsoft.Capacity/reservationorders/6dbddcad-2aa5-4305-8429-4a0c6f31b869\"\r\n      ]\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
