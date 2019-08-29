@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -114,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             for (int i = 0; i < amount; i++)
             {
-                EventProcessors.Add(new EventProcessor
+                EventProcessors.Add(new ShortWaitTimeMock
                     (
                         ConsumerGroup,
                         InnerClient,
@@ -376,6 +374,37 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 OnProcessError?.Invoke(AssociatedPartitionContext, AssociatedCheckpointManager, exception, cancellationToken);
                 return Task.CompletedTask;
+            }
+        }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        private class ShortWaitTimeMock : EventProcessor
+        {
+            /// <summary>
+            ///   TODO.
+            /// </summary>
+            ///
+            protected override int LoopTimeInMilliseconds => 500;
+
+            /// <summary>
+            ///   TODO.
+            /// </summary>
+            ///
+            protected override int ExpirationTimeInMilliseconds => 1500;
+
+            /// <summary>
+            ///   TODO.
+            /// </summary>
+            ///
+            public ShortWaitTimeMock(string consumerGroup,
+                                     EventHubClient eventHubClient,
+                                     Func<PartitionContext, CheckpointManager, IPartitionProcessor> partitionProcessorFactory,
+                                     PartitionManager partitionManager,
+                                     EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager, options)
+            {
             }
         }
     }
