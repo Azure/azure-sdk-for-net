@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -145,6 +147,150 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             return Task.WhenAll(EventProcessors
                 .Select(eventProcessor => eventProcessor.StopAsync()));
+        }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public async Task WaitLoadBalancing(int partitionCount, TimeSpan maximumWaitTime)
+        {
+            var loadBalanceAchieved = false;
+            var consecutiveBalancedStatus = 0;
+            List<PartitionOwnership> previousActiveOwnership = null;
+
+            var startTime = DateTimeOffset.UtcNow;
+
+            while (!loadBalanceAchieved)
+            {
+                var ellapsedTime = DateTimeOffset.UtcNow.Subtract(startTime);
+
+                if (ellapsedTime > maximumWaitTime)
+                {
+                    throw new TimeoutException("Load balancing took too long to finish.");
+                }
+
+                // Remember to filter expired ownership.
+
+                var activeOwnership = (await InnerPartitionManager
+                    .ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup)
+                    .ConfigureAwait(false))
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < 30)
+                    .ToList();
+
+                // Reset balanced status if current partition distribution differs from the previous one.
+
+                if (!AreDistributionsEquivalent(previousActiveOwnership, activeOwnership))
+                {
+                    consecutiveBalancedStatus = 0;
+                }
+
+                previousActiveOwnership = activeOwnership;
+
+                // Increment consecutive balanced status if we have a balanced load.
+
+                if (IsLoadBalanced(partitionCount, activeOwnership))
+                {
+                    ++consecutiveBalancedStatus;
+                }
+
+                if (consecutiveBalancedStatus < 6)
+                {
+                    // Wait 5 seconds before the next verification.  The event processors wait 10 seconds between updates
+                    // so there's no need to verify it too often.  We may end up waiting a bit more than the maximum wait
+                    // time, but this is no reason for concern as the only purpose of the timeout is to avoid an endless loop.
+
+                    await Task.Delay(5000);
+                }
+                else
+                {
+                    // We'll consider the load stabilized only if its balanced status doesn't change after 6 verifications.
+                    // This measure is necessary to avoid exiting the loop when an unstable balanced status is reached by
+                    // chance.
+
+                    loadBalanceAchieved = true;
+                }
+            }
+        }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <returns>TODO.</returns>
+        ///
+        private bool IsLoadBalanced(int partitionCount, IEnumerable<PartitionOwnership> activeOwnership)
+        {
+            var eventProcessorCount = EventProcessors.Count;
+
+            if (eventProcessorCount == 0)
+            {
+                return true;
+            }
+
+            var ownershipDistribution = activeOwnership.GroupBy
+                (
+                    ownership => ownership.OwnerIdentifier,
+                    (ownerIdentifier, ownershipGroup) => ownershipGroup.Count()
+                );
+
+            var minimumOwnedPartitionCount = partitionCount / eventProcessorCount;
+            var maximumOwnedPartitionCount = minimumOwnedPartitionCount + 1;
+
+            var totalOwnedPartitionCount = 0;
+            
+            foreach (var ownedPartitionCount in ownershipDistribution)
+            {
+                if (ownedPartitionCount < minimumOwnedPartitionCount ||
+                    ownedPartitionCount > maximumOwnedPartitionCount)
+                {
+                    return false;
+                }
+
+                totalOwnedPartitionCount += ownedPartitionCount;
+            }
+
+            return totalOwnedPartitionCount == partitionCount;
+        }
+
+        /// <summary>
+        ///   TODO. (no filter) (rename)
+        /// </summary>
+        ///
+        /// <returns>TODO.</returns>
+        ///
+        private bool AreDistributionsEquivalent(IEnumerable<PartitionOwnership> first,
+            IEnumerable<PartitionOwnership> second)
+        {
+            if (first == null && second == null)
+            {
+                return true;
+            }
+
+            if (first == null || second == null)
+            {
+                return false;
+            }
+
+            var firstOrderedDistribution = first.OrderBy(ownership => ownership.PartitionId).ToList();
+            var secondOrderedDistribution = second.OrderBy(ownership => ownership.PartitionId).ToList();
+
+            if (firstOrderedDistribution.Count != secondOrderedDistribution.Count)
+            {
+                return false;
+            }
+
+            for (var index = 0; index < firstOrderedDistribution.Count; ++index)
+            {
+                if (firstOrderedDistribution[index].OwnerIdentifier != secondOrderedDistribution[index].OwnerIdentifier)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
