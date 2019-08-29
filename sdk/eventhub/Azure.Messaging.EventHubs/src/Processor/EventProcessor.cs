@@ -21,6 +21,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
         private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
 
+        /// <summary>TODO.</summary>
+        protected virtual int LoopTimeInMilliseconds => 10000;
+
+        /// <summary>TODO.</summary>
+        protected virtual int ExpirationTimeInMilliseconds => 30000;
+
         /// <summary>
         ///   A unique name used to identify this event processor.
         /// </summary>
@@ -235,11 +241,9 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
 
-                // TODO: set 30s constant.
-
                 var ownershipList = (await Manager.ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup).ConfigureAwait(false)).ToList();
                 var activeOwnership = ownershipList
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < 30)
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < ExpirationTimeInMilliseconds)
                     .ToList();
 
                 var partitionDistribution = new Dictionary<string, int>
@@ -321,10 +325,9 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 try
                 {
-                    // Wait 0.5 seconds before the next verification.
-                    // TODO: update value to 10s.
+                    // Wait 10 seconds before the next verification.
 
-                    await Task.Delay(500, cancellationToken).ConfigureAwait(false);
+                    await Task.Delay(LoopTimeInMilliseconds, cancellationToken).ConfigureAwait(false);
                 }
                 catch (TaskCanceledException) { }
             }
