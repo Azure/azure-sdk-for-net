@@ -73,22 +73,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "formatSettings")]
         public JsonWriteSettings FormatSettings { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (StoreSettings != null)
-            {
-                StoreSettings.Validate();
-            }
-            if (FormatSettings != null)
-            {
-                FormatSettings.Validate();
-            }
-        }
     }
 }
