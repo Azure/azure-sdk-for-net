@@ -592,7 +592,7 @@ namespace Azure.Storage.Blobs.Test
             var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
             await container.CreateAsync();
             var id = this.Recording.Random.NewGuid().ToString();
-            var duration = 15;
+            var duration = TimeSpan.FromSeconds(15);
 
             // Act
             var response = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
@@ -617,7 +617,7 @@ namespace Azure.Storage.Blobs.Test
             var service = this.GetServiceClient_SharedKey();
             var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
             var id = this.Recording.Random.NewGuid().ToString();
-            var duration = 15;
+            var duration = TimeSpan.FromSeconds(15);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -640,7 +640,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 // Act
                 var response = await container.GetLeaseClient(id).AcquireAsync(
@@ -675,7 +675,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: false);
 
                     var id = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -696,7 +696,7 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync();
 
             var id = this.Recording.Random.NewGuid().ToString();
-            var duration = 15;
+            var duration = TimeSpan.FromSeconds(15);
 
             var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(
                 duration: duration);
@@ -746,7 +746,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 var lease = container.GetLeaseClient(id);
                 _ = await lease.AcquireAsync(duration: duration);
 
@@ -782,7 +782,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var lease = container.GetLeaseClient(id);
                 var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
@@ -810,7 +810,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration);
 
                 // Act
@@ -852,7 +852,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: false);
 
                     var id = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     var lease = container.GetLeaseClient(id);
                     var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
@@ -881,7 +881,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var lease = container.GetLeaseClient(id); ;
                 var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
@@ -909,7 +909,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 await container.GetLeaseClient(id).AcquireAsync(duration);
                 var breakPeriod = 0;
 
@@ -953,7 +953,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
@@ -990,7 +990,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
@@ -1018,7 +1018,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration);
                 var newId = this.Recording.Random.NewGuid().ToString();
 
@@ -1064,7 +1064,7 @@ namespace Azure.Storage.Blobs.Test
 
                 var id = this.Recording.Random.NewGuid().ToString();
                 var newId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
@@ -1103,7 +1103,7 @@ namespace Azure.Storage.Blobs.Test
 
                 var id = this.Recording.Random.NewGuid().ToString();
                 var newId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
