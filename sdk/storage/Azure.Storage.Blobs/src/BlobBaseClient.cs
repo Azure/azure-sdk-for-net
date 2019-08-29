@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -667,6 +668,573 @@ namespace Azure.Storage.Blobs.Specialized
             return response;
         }
         #endregion Download
+
+        #region Parallel Download
+        /// <summary>
+        /// The <see cref="Download(Stream)"/> operation downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Response<BlobProperties> Download(Stream destination) =>
+            this.Download(destination, CancellationToken.None);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// The <see cref="Download(FileInfo)"/> operation downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="FileInfo"/> representing a file to write the downloaded content to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Response<BlobProperties> Download(FileInfo destination) =>
+            this.Download(destination, CancellationToken.None);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(Stream)"/> downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Task<Response<BlobProperties>> DownloadAsync(Stream destination) =>
+            this.DownloadAsync(destination, CancellationToken.None);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(FileInfo)"/> downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="FileInfo"/> representing a file to write the downloaded content to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Task<Response<BlobProperties>> DownloadAsync(FileInfo destination) =>
+            this.DownloadAsync(destination, CancellationToken.None);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// The <see cref="Download(Stream, CancellationToken)"/> operation 
+        /// downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Response<BlobProperties> Download(
+            Stream destination,
+            CancellationToken cancellationToken) =>
+            this.Download(
+                destination,
+                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// The <see cref="Download(FileInfo, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="FileInfo"/> representing a file to write the downloaded content to.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Response<BlobProperties> Download(
+            FileInfo destination,
+            CancellationToken cancellationToken) =>
+            this.Download(
+                destination,
+                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(Stream, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Task<Response<BlobProperties>> DownloadAsync(
+            Stream destination,
+            CancellationToken cancellationToken) =>
+            this.DownloadAsync(
+                destination,
+                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(FileInfo, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="FileInfo"/> representing a file to write the downloaded content to.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
+        public virtual Task<Response<BlobProperties>> DownloadAsync(
+            FileInfo destination,
+            CancellationToken cancellationToken) =>
+            this.DownloadAsync(
+                destination,
+                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken);
+#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
+
+        /// <summary>
+        /// The <see cref="Download(Stream, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="blobAccessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="parallelTransferOptions">
+        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobProperties> Download(
+            Stream destination,
+            BlobAccessConditions? blobAccessConditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<StorageProgress> progressHandler = default,
+            ParallelTransferOptions parallelTransferOptions = default,
+            CancellationToken cancellationToken = default) =>
+            this.StagedDownloadAsync(
+                destination,
+                blobAccessConditions,
+                //progressHandler,
+                parallelTransferOptions: parallelTransferOptions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Download(FileInfo, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="FileInfo"/> representing a file to write the downloaded content to.
+        /// </param>
+        /// <param name="blobAccessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="parallelTransferOptions">
+        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobProperties> Download(
+            FileInfo destination,
+            BlobAccessConditions? blobAccessConditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<StorageProgress> progressHandler = default,
+            ParallelTransferOptions parallelTransferOptions = default,
+            CancellationToken cancellationToken = default) =>
+            this.StagedDownloadAsync(
+                destination,
+                blobAccessConditions,
+                //progressHandler,
+                parallelTransferOptions: parallelTransferOptions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(Stream, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="blobAccessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="parallelTransferOptions">
+        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Task<Response<BlobProperties>> DownloadAsync(
+            Stream destination,
+            BlobAccessConditions? blobAccessConditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param> 
+            //IProgress<StorageProgress> progressHandler = default,
+            ParallelTransferOptions parallelTransferOptions = default,
+            CancellationToken cancellationToken = default) =>
+            this.StagedDownloadAsync(
+                destination,
+                blobAccessConditions,
+                //progressHandler,
+                parallelTransferOptions: parallelTransferOptions,
+                async: true,
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(FileInfo, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests, 
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="FileInfo"/> representing a file to write the downloaded content to.
+        /// </param>
+        /// <param name="blobAccessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="parallelTransferOptions">
+        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Task<Response<BlobProperties>> DownloadAsync(
+            FileInfo destination,
+            BlobAccessConditions? blobAccessConditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<StorageProgress> progressHandler = default,
+            ParallelTransferOptions parallelTransferOptions = default,
+            CancellationToken cancellationToken = default) =>
+            this.StagedDownloadAsync(
+                destination,
+                blobAccessConditions,
+                //progressHandler,
+                parallelTransferOptions: parallelTransferOptions,
+                async: true,
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// This operation will download a blob of arbitrary size by downloading it as indiviually staged
+        /// partitions if it's larger than the
+        /// <paramref name="singleBlockThreshold"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="blobAccessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="singleBlockThreshold">
+        /// The maximum size stream that we'll download as a single block.  The
+        /// default value is 256MB.
+        /// </param>
+        /// <param name="parallelTransferOptions">
+        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal Task<Response<BlobProperties>> StagedDownloadAsync(
+            Stream destination,
+            BlobAccessConditions? blobAccessConditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<StorageProgress> progressHandler,
+            long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
+            ParallelTransferOptions parallelTransferOptions = default,
+            bool async = true,
+            CancellationToken cancellationToken = default)
+        {
+            Debug.Assert(singleBlockThreshold <= Constants.Blob.Block.MaxDownloadBytes);
+
+            var client = new BlobBaseClient(this.Uri, this.Pipeline);
+            var downloadTask =
+                PartitionedDownloader.DownloadAsync(
+                    destination,
+                    GetPropertiesAsync,
+                    GetEtag,
+                    GetLength,
+                    DownloadStreamAsync,
+                    DownloadPartitionAsync,
+                    WritePartitionAsync,
+                    singleBlockThreshold,
+                    parallelTransferOptions,
+                    async,
+                    cancellationToken
+                    );
+
+            return downloadTask;
+
+            Task<Response<BlobProperties>> GetPropertiesAsync(bool async, CancellationToken ct)
+                =>
+                client.GetPropertiesAsync(
+                        accessConditions: blobAccessConditions,
+                        cancellationToken: ct
+                        );
+
+            static ETag GetEtag(BlobProperties blobProperties) => blobProperties.ETag;
+
+            static long GetLength(BlobProperties blobProperties) => blobProperties.ContentLength;
+
+            // Download the entire stream
+            async Task<Response<BlobDownloadInfo>> DownloadStreamAsync(bool async, CancellationToken ct)
+            {
+                var response = await client.DownloadAsync(accessConditions: blobAccessConditions, cancellationToken: ct).ConfigureAwait(false);
+                await response.Value.Content.CopyToAsync(destination, 81920 /* default value */, ct).ConfigureAwait(false);
+
+                return response;
+            }
+
+            Task<Response<BlobDownloadInfo>> DownloadPartitionAsync(ETag eTag, HttpRange httpRange, bool async, CancellationToken ct)
+            {
+                // copy ETag to the access conditions
+
+                var accessConditions = blobAccessConditions ?? new BlobAccessConditions();
+                accessConditions.HttpAccessConditions ??= new HttpAccessConditions();
+
+                var httpAccessConditions = accessConditions.HttpAccessConditions.Value;
+                httpAccessConditions.IfMatch = eTag;
+
+                accessConditions.HttpAccessConditions = httpAccessConditions;
+
+                return client.DownloadAsync(range: httpRange, accessConditions: accessConditions, cancellationToken: cancellationToken);
+            }
+
+            static Task WritePartitionAsync(Response<BlobDownloadInfo> response, Stream destination, bool async, CancellationToken ct)
+                => response.Value.Content.CopyToAsync(destination);
+        }
+
+        /// <summary>
+        /// This operation will download a blob of arbitrary size by downloading it as indiviually staged
+        /// partitions if it's larger than the
+        /// <paramref name="singleBlockThreshold"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="FileInfo"/> representing a file to write the downloaded content to.
+        /// </param>
+        /// <param name="blobAccessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="singleBlockThreshold">
+        /// The maximum size stream that we'll download as a single block.  The
+        /// default value is 256MB.
+        /// </param>
+        /// <param name="parallelTransferOptions">
+        /// Optional <see cref="ParallelTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal Task<Response<BlobProperties>> StagedDownloadAsync(
+            FileInfo destination,
+            BlobAccessConditions? blobAccessConditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<StorageProgress> progressHandler,
+            long singleBlockThreshold = Constants.Blob.Block.MaxDownloadBytes,
+            ParallelTransferOptions parallelTransferOptions = default,
+            bool async = true,
+            CancellationToken cancellationToken = default)
+        {
+            var stream = destination.OpenWrite();
+
+            return this.StagedDownloadAsync(
+                stream,
+                blobAccessConditions,
+                //progressHandler,
+                singleBlockThreshold,
+                parallelTransferOptions,
+                async,
+                cancellationToken
+                ).ContinueWith(
+                    t =>
+                    {
+                        stream.Flush();
+                        stream.Dispose();
+
+                        return t.Result;
+                    },
+                    CancellationToken.None,
+                    TaskContinuationOptions.RunContinuationsAsynchronously,
+                    TaskScheduler.Default
+                );
+        }
+        #endregion Parallel Download
 
         #region StartCopyFromUri
         /// <summary>
