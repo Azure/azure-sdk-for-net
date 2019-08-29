@@ -37,7 +37,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task StartAsyncCallsPartitionProcessorInitializeAsync()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            var partitions = 2;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -66,9 +68,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Validate results before calling stop.  This way, we can make sure the initialize calls were
                     // triggered by start.
@@ -98,7 +99,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task StopAsyncCallsPartitionProcessorCloseAsyncWithShutdownReason()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            var partitions = 2;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -127,9 +130,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // CloseAsync should have not been called when constructing the event processor or initializing the partition processors.
 
@@ -165,7 +167,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task PartitionProcessorProcessEventsAsyncReceivesAllEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            var partitions = 2;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -234,9 +238,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize and receive events.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Stop the event processors.
 
@@ -272,7 +275,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task PartitionProcessorProcessEventsAsyncIsCalledWithNoEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            var partitions = 1;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -297,9 +302,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Stop the event processors.
 
@@ -348,18 +352,16 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // We should be able to call StartAsync again without getting an exception.
 
                     Assert.That(async () => await hub.StartAllAsync(), Throws.Nothing);
 
                     // Give the event processors more time in case they try to initialize again, which shouldn't happen.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Stop the event processors.
 
@@ -413,9 +415,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Stop the event processors.
 
@@ -440,7 +441,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task EventProcessorCanStartAgainAfterStopping()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            var partitions = 2;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -495,9 +498,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                         await hub.StartAllAsync();
 
                         // Make sure the event processors have enough time to stabilize and receive events.
-                        // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                        await Task.Delay(5000);
+                        await hub.WaitStabilization(partitions);
 
                         // Stop the event processors.
 
@@ -519,7 +521,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task EventProcessorCanReceiveFromSpecifiedInitialEventPosition()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            var partitions = 2;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -543,6 +547,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                         }
 
                         // Wait a reasonable amount of time so the events are able to reach the service.
+                        // TODO: create a more reliable way to assert events were sent.
 
                         await Task.Delay(1000);
 
@@ -583,9 +588,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize and receive events.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Stop the event processors.
 
@@ -609,7 +613,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [TestCase(15)]
         public async Task EventProcessorWaitsMaximumReceiveWaitTimeForEvents(int maximumWaitTimeInSecs)
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            var partitions = 2;
+
+            await using (var scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -649,9 +655,9 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.  We are waiting a few times the maximum
                     // wait time span so we can have enough samples.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
+                    // TODO: find a way to ensure we have enough samples.
 
-                    await Task.Delay(4000 * maximumWaitTimeInSecs);
+                    await hub.WaitStabilization(partitions);
 
                     // Stop the event processors.
 
@@ -751,9 +757,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize and receive events.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Stop the event processors.
 
@@ -778,7 +783,6 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [TestCase(30, 10)]
         [TestCase(32, 7)]
         [TestCase(32, 32)]
-        [Ignore("Load balancing not supported yet")]
         public async Task PartitionDistributionIsEvenAfterLoadBalancing(int partitions, int eventProcessors)
         {
             await using (var scope = await EventHubScope.CreateAsync(partitions))
@@ -808,9 +812,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Take a snapshot of the current partition balancing status.
 
@@ -841,7 +844,6 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         /// </summary>
         ///
         [Test]
-        [Ignore("Load balancing not supported yet")]
         public async Task LoadBalancingIsEnforcedWhenDistributionIsUneven()
         {
             var partitions = 10;
@@ -873,9 +875,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Assert all partitions have been claimed.
 
@@ -888,9 +889,8 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     await hub.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
-                    // TODO: we'll probably need to extend this delay once load balancing is implemented.
 
-                    await Task.Delay(5000);
+                    await hub.WaitStabilization(partitions);
 
                     // Take a snapshot of the current partition balancing status.
 
