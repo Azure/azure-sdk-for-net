@@ -1,5 +1,5 @@
-﻿using Azure.Identity;
-using Azure.Security.KeyVault.Keys;
+﻿using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// Sample demonstrates how to encrypt and decrypt a single block of plain text with an RSA key using the synchronous methods of the CryptographyClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class Sample4_EncryptDecypt
     {
         [Test]

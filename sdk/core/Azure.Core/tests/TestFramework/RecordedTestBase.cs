@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.IO;
 using NUnit.Framework;
 
@@ -10,8 +9,6 @@ namespace Azure.Core.Testing
     [Category("Recorded")]
     public abstract class RecordedTestBase: ClientTestBase
     {
-        private const string ModeEnvironmentVariableName = "AZURE_TEST_MODE";
-
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
         protected RecordMatcher Matcher { get; set; }
@@ -20,7 +17,7 @@ namespace Azure.Core.Testing
 
         protected RecordedTestMode Mode { get; }
 
-        protected RecordedTestBase(bool isAsync) : this(isAsync, GetModeFromEnvironment())
+        protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
         }
 
@@ -29,19 +26,6 @@ namespace Azure.Core.Testing
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher(Sanitizer);
             Mode = mode;
-        }
-
-        internal static RecordedTestMode GetModeFromEnvironment()
-        {
-            string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
-
-            RecordedTestMode mode = RecordedTestMode.Playback;
-            if (!string.IsNullOrEmpty(modeString))
-            {
-                mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
-            }
-
-            return mode;
         }
 
         private string GetSessionFilePath(string name = null)

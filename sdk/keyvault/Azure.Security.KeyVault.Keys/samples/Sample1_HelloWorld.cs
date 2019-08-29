@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
-using System.Security.Cryptography;
 using System.Threading;
 
 namespace Azure.Security.KeyVault.Keys.Samples
@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// Sample demonstrates how to set, get, update and delete a key using the synchronous methods of the KeyClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class HelloWorld
     {
         [Test]
