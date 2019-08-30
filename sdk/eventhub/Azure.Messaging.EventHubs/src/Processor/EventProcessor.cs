@@ -29,16 +29,16 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>
-        ///   The minimum amount of time, in milliseconds, to be elapsed between two load balancing verifications.
+        ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
         ///
-        protected virtual int LoadBalanceUpdateTimeSpanInMilliseconds => 10000;
+        protected virtual TimeSpan LoadBalanceUpdate => TimeSpan.FromSeconds(10);
 
         /// <summary>
-        ///   The minimum amount of time, in milliseconds, for an ownership to be considered expired without further updates.
+        ///   The minimum amount of time for an ownership to be considered expired without further updates.
         /// </summary>
         ///
-        protected virtual int OwnershipExpirationTimeSpanInMilliseconds => 30000;
+        protected virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
 
         /// <summary>
         ///   A unique name used to identify this event processor.
@@ -298,9 +298,9 @@ namespace Azure.Messaging.EventHubs.Processor
                     // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
                     // but it may be overriden by a derived class.
 
-                    var remainingTimeUntilNextCycle = LoadBalanceUpdateTimeSpanInMilliseconds - (int)cycleDuration.ElapsedMilliseconds;
+                    TimeSpan remainingTimeUntilNextCycle = cycleDuration.Elapsed - LoadBalanceUpdate;
 
-                    if (remainingTimeUntilNextCycle > 0)
+                    if (remainingTimeUntilNextCycle > TimeSpan.Zero)
                     {
                         await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
                     }
@@ -335,7 +335,7 @@ namespace Azure.Messaging.EventHubs.Processor
             // but it may be overriden by a derived class.
 
             var activeOwnership = completeOwnershipList
-                .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < OwnershipExpirationTimeSpanInMilliseconds);
+                .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
 
             // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration

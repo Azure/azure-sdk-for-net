@@ -178,8 +178,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var activeOwnership = (await InnerPartitionManager
                     .ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds <
-                        ShortWaitTimeMock.ShortOwnershipExpirationTimeSpanInMilliseconds)
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
                     .ToList();
 
                 // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
@@ -200,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Wait a load balance update cycle before the next verification.
 
-                    await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdateTimeSpanInMilliseconds);
+                    await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdate);
                 }
                 else
                 {
@@ -409,22 +408,22 @@ namespace Azure.Messaging.EventHubs.Tests
         private class ShortWaitTimeMock : EventProcessor
         {
             /// <summary>A value used to override event processors' load balance update time span.</summary>
-            public static readonly int ShortLoadBalanceUpdateTimeSpanInMilliseconds = 1000;
+            public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
 
             /// <summary>A value used to override event processors' ownership expiration time span.</summary>
-            public static readonly int ShortOwnershipExpirationTimeSpanInMilliseconds = 3000;
+            public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
 
             /// <summary>
-            ///   The minimum amount of time, in milliseconds, to be elapsed between two load balancing verifications.
+            ///   The minimum amount of time to be elapsed between two load balancing verifications.
             /// </summary>
             ///
-            protected override int LoadBalanceUpdateTimeSpanInMilliseconds => ShortLoadBalanceUpdateTimeSpanInMilliseconds;
+            protected override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
 
             /// <summary>
-            ///   The minimum amount of time, in milliseconds, for an ownership to be considered expired without further updates.
+            ///   The minimum amount of time for an ownership to be considered expired without further updates.
             /// </summary>
             ///
-            protected override int OwnershipExpirationTimeSpanInMilliseconds => ShortOwnershipExpirationTimeSpanInMilliseconds;
+            protected override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
