@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration.Tests
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class ConfigurationMockTests: ClientTestBase
+    public partial class ConfigurationMockTests: ClientTestBase
     {
         static readonly string connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
@@ -33,10 +33,16 @@ namespace Azure.Data.AppConfiguration.Tests
 
         public ConfigurationMockTests(bool isAsync) : base(isAsync) { }
 
-        private ConfigurationClient CreateTestService(HttpPipelineTransport transport)
+        private ConfigurationClient CreateTestService(HttpPipelineTransport transport, bool headRequests = false)
         {
             var options = new ConfigurationClientOptions();
             options.Transport = transport;
+
+            if (headRequests)
+            {
+                options.AddPolicy(HttpPipelinePosition.PerCall, HeadRequestPolicy.Shared);
+            }
+
             return InstrumentClient(new ConfigurationClient(connectionString, options));
         }
 

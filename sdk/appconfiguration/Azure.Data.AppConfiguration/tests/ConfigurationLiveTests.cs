@@ -12,7 +12,7 @@ using Azure.Core.Testing;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
-    public class ConfigurationLiveTests: RecordedTestBase
+    public partial class ConfigurationLiveTests: RecordedTestBase
     {
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {

@@ -103,7 +103,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     case 200:
                     case 201:
-                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        return await CreateResponseAsync(response, request.Method, cancellationToken).ConfigureAwait(false);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -135,7 +135,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     case 200:
                     case 201:
-                        return CreateResponse(response);
+                        return CreateResponse(response, request.Method);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -217,7 +217,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        return await CreateResponseAsync(response, request.Method, cancellationToken).ConfigureAwait(false);
                     case 409:
                         throw await response.CreateRequestFailedExceptionAsync("The setting is locked").ConfigureAwait(false);
                     default:
@@ -251,7 +251,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateResponse(response);
+                        return CreateResponse(response, request.Method);
                     case 409:
                         throw response.CreateRequestFailedException("The setting is locked");
                     default:
@@ -336,7 +336,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        return await CreateResponseAsync(response, request.Method, cancellationToken).ConfigureAwait(false);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -367,7 +367,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateResponse(response);
+                        return CreateResponse(response, request.Method);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -517,7 +517,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        return await CreateResponseAsync(response, request.Method, cancellationToken).ConfigureAwait(false);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -551,7 +551,7 @@ namespace Azure.Data.AppConfiguration
                     switch (response.Status)
                     {
                         case 200:
-                            return CreateResponse(response);
+                            return CreateResponse(response, request.Method);
                         default:
                             throw response.CreateRequestFailedException();
                     }
