@@ -140,6 +140,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 await ehSender.CloseAsync();
                 Assert.True(ehSender.IsClosed, "ehSender.IsClosed is not true.");
                 Assert.True(!ehClient.IsClosed, "ehClient.IsClosed is not false.");
+
+                // Closing client at this point should be idempotent for child entity.
+                await ehClient.CloseAsync();
             }
         }
 
@@ -157,6 +160,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 await ehReceiver.CloseAsync();
                 Assert.True(ehReceiver.IsClosed, "ehReceiver.IsClosed is not true.");
                 Assert.True(!ehClient.IsClosed, "ehClient.IsClosed is not false.");
+
+                // Closing client at this point should be idempotent for child entity.
+                await ehClient.CloseAsync();
             }
         }
 
