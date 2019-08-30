@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -250,6 +251,10 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                Stopwatch cycleDuration = new Stopwatch();
+
+                cycleDuration.Start();
+
                 // Renew this instance's ownership so they don't expire.  This method call will fill the InstanceOwnership dictionary
                 // with the renewed ownership information.
 
@@ -294,10 +299,15 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 try
                 {
-                    // Wait 10 seconds before the next verification.
-                    // TODO: add a stop watch to avoid unnecessary wait.
+                    // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
+                    // but it may be overriden by a derived class.
 
-                    await Task.Delay(LoadBalanceUpdateTimeSpanInMilliseconds, cancellationToken).ConfigureAwait(false);
+                    var remainingTimeUntilNextCycle = LoadBalanceUpdateTimeSpanInMilliseconds - (int)cycleDuration.ElapsedMilliseconds;
+
+                    if (remainingTimeUntilNextCycle > 0)
+                    {
+                        await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
+                    }
                 }
                 catch (TaskCanceledException) { }
             }
