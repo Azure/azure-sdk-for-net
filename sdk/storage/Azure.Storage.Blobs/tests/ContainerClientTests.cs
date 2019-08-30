@@ -622,7 +622,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                 container.GetLeaseClient(id).AcquireAsync(duration: duration),
-                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode.Split('\n')[0]));
+                e => StringAssert.Contains("InvalidHeaderValue", e.ErrorCode));
         }
 
         [Test]

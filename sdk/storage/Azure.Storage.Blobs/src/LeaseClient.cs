@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify 
-        /// LeaseClient.InfiniteLeaseDuration for a lease that never expires.  
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
         /// A non-infinite lease can be between 15 and 60 seconds. 
         /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
@@ -182,7 +182,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify 
-        /// LeaseClient.InfiniteLeaseDuration for a lease that never expires.  
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
         /// A non-infinite lease can be between 15 and 60 seconds. 
         /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
@@ -227,7 +227,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify 
-        /// LeaseClient.InfiniteLeaseDuration for a lease that never expires.  
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
         /// A non-infinite lease can be between 15 and 60 seconds. 
         /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
@@ -256,6 +256,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             this.EnsureClient();
+            // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
             var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
             using (this.Pipeline.BeginLoggingScope(nameof(LeaseClient)))
             {
