@@ -224,9 +224,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         InstanceOwnership = null;
 
-                        var partitionPumpKeys = PartitionPumps.Keys;
-
-                        await Task.WhenAll(partitionPumpKeys
+                        await Task.WhenAll(PartitionPumps.Keys
                             .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.Shutdown)))
                             .ConfigureAwait(false);
                     }
