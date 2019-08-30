@@ -160,25 +160,15 @@ namespace Azure.Messaging.EventHubs.Tests
             var consecutiveStabilizedStatus = 0;
             List<PartitionOwnership> previousActiveOwnership = null;
 
-            var partitions = (await InnerClient.GetPartitionIdsAsync()).Length;
-
-            // Poorly estimate a maximum wait time upper bound we would need to wait until stabilization.  Assume one partition
-            // is claimed per load balancing cycle (100 milliseconds in the ShortWaitTimeMock class).  Also, give it extra time
-            // at the start to allow old ownership to expire (300 milliseconds in the ShortWaitTimeMock class).  Add exaggerated
-            // 5 seconds (50 extra cycles) to account for actual load balancing and delays caused by chance.
-
-            var loadBalanceUpdateTimeSpan = ShortWaitTimeMock.ShortLoadBalanceUpdateTimeSpanInMilliseconds;
-            var ownershipExpirationTimeSpan = ShortWaitTimeMock.ShortOwnershipExpirationTimeSpanInMilliseconds;
-
-            var maximumWaitTime = TimeSpan.FromMilliseconds(5000 + ownershipExpirationTimeSpan + loadBalanceUpdateTimeSpan * partitions);
-
             var startTime = DateTimeOffset.UtcNow;
 
             while (!stabilizedStatusAchieved)
             {
+                // Give up if it takes more than 1 minute.
+
                 var elapsedTime = DateTimeOffset.UtcNow.Subtract(startTime);
 
-                if (elapsedTime > maximumWaitTime)
+                if (elapsedTime > TimeSpan.FromMinutes(1))
                 {
                     throw new TimeoutException("Stabilization took too long to finish.");
                 }
@@ -188,7 +178,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 var activeOwnership = (await InnerPartitionManager
                     .ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < ownershipExpirationTimeSpan)
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds <
+                        ShortWaitTimeMock.ShortOwnershipExpirationTimeSpanInMilliseconds)
                     .ToList();
 
                 // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
@@ -211,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // the maximum wait time, but this is no reason for concern as the only purpose of the timeout is to avoid
                     // an endless loop.
 
-                    await Task.Delay(loadBalanceUpdateTimeSpan);
+                    await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdateTimeSpanInMilliseconds);
                 }
                 else
                 {
@@ -420,10 +411,10 @@ namespace Azure.Messaging.EventHubs.Tests
         private class ShortWaitTimeMock : EventProcessor
         {
             /// <summary>A value used to override event processors' load balance update time span.</summary>
-            public static readonly int ShortLoadBalanceUpdateTimeSpanInMilliseconds = 100;
+            public static readonly int ShortLoadBalanceUpdateTimeSpanInMilliseconds = 1000;
 
             /// <summary>A value used to override event processors' ownership expiration time span.</summary>
-            public static readonly int ShortOwnershipExpirationTimeSpanInMilliseconds = 300;
+            public static readonly int ShortOwnershipExpirationTimeSpanInMilliseconds = 3000;
 
             /// <summary>
             ///   The minimum amount of time, in milliseconds, to be elapsed between two load balancing verifications.
