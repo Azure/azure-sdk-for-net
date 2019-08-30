@@ -198,9 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (consecutiveStabilizedStatus < 10)
                 {
-                    // Wait a load balance update cycle before the next verification.  We may end up waiting a bit more than
-                    // the maximum wait time, but this is no reason for concern as the only purpose of the timeout is to avoid
-                    // an endless loop.
+                    // Wait a load balance update cycle before the next verification.
 
                     await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdateTimeSpanInMilliseconds);
                 }
