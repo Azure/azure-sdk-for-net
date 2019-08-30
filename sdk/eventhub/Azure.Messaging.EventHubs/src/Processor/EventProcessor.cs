@@ -499,17 +499,17 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the ownership is associated with.</param>
-        /// <param name="completeOwnershipList">A complete list of ownership obtained from the stored service provided by the user.</param>
+        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
         ///
         /// <returns>The claimed ownership. <c>null</c> if the claim attempt failed.</returns>
         ///
         private async Task<PartitionOwnership> ClaimOwnershipAsync(string partitionId,
-                                                                   List<PartitionOwnership> completeOwnershipList)
+                                                                   IEnumerable<PartitionOwnership> completeOwnershipEnumerable)
         {
             // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and
             // the sequence number as well.
 
-            var oldOwnership = completeOwnershipList.FirstOrDefault(ownership => ownership.PartitionId == partitionId);
+            var oldOwnership = completeOwnershipEnumerable.FirstOrDefault(ownership => ownership.PartitionId == partitionId);
 
             var newOwnership = new PartitionOwnership
                 (
