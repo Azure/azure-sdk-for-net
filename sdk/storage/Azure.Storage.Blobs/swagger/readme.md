@@ -1046,8 +1046,8 @@ directive:
 ```
 
 ### Make lease duration a long
-### Since TimeSpan.MaxValue would overflow an int, we add a swagger transform to make the duration used in the internal generated BlobRestClient be a long. 
-### TimeSpan is used within LeaseClient, and is transformed to a long before passing off to BlobRestClient.
+Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
 ``` yaml
 directive:
 - from: swagger-document

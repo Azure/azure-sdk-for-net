@@ -1,7 +1,7 @@
 Breaking Changes
 ================
 
-12.0.0-preview.2 (2019-08)
+Next Release
 --------------------------
 - Changed from int to TimeSpan for Lease durations.
 
