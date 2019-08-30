@@ -1,96 +1,45 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/741516ba-5148-4f5c-91cc-f25d10d3a22e/versions?skip=0&take=100",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy83NDE1MTZiYS01MTQ4LTRmNWMtOTFjYy1mMjVkMTBkM2EyMmUvdmVyc2lvbnM/c2tpcD0wJnRha2U9MTAw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, proxy-revalidate, no-cache, max-age=0, private"
-        ],
-        "Date": [
-          "Wed, 13 Feb 2019 00:15:46 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Apim-Request-Id": [
-          "f7837e59-2e74-4a15-b444-e310c766e15b"
-        ],
-        "Request-Id": [
-          "f7837e59-2e74-4a15-b444-e310c766e15b"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "Content-Length": [
-          "339"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ]
-      },
-      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2019-02-12T23:23:48Z\",\r\n    \"lastModifiedDateTime\": \"2019-02-13T00:15:45Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": \"2019-02-12T23:34:15Z\",\r\n    \"endpointUrl\": null,\r\n    \"assignedEndpointKey\": null,\r\n    \"externalApiKeys\": null,\r\n    \"intentsCount\": 1,\r\n    \"entitiesCount\": 1,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/luis/api/v2.0/apps/741516ba-5148-4f5c-91cc-f25d10d3a22e/versions/0.1/customprebuiltdomains",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy83NDE1MTZiYS01MTQ4LTRmNWMtOTFjYy1mMjVkMTBkM2EyMmUvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZG9tYWlucw==",
+      "RequestUri": "/luis/api/v2.0/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"domainName\": \"Gaming\"\r\n}",
+      "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"New LUIS App\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
+          "62b834e0069943d9b035f32abd230359"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27617.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "30"
+          "137"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
-        "Date": [
-          "Wed, 13 Feb 2019 00:15:47 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/2596f6bc-3103-4744-94f0-3515705b6803"
+        ],
         "Apim-Request-Id": [
-          "02a7aadd-4380-4104-bea3-40fd89f29dcf"
+          "ada33566-ce15-4929-8d50-47212163bf02"
         ],
         "Request-Id": [
-          "02a7aadd-4380-4104-bea3-40fd89f29dcf"
+          "ada33566-ce15-4929-8d50-47212163bf02"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/2596f6bc-3103-4744-94f0-3515705b6803"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -104,47 +53,47 @@
         "X-Frame-Options": [
           "SAMEORIGIN"
         ],
+        "Date": [
+          "Sun, 25 Aug 2019 19:19:06 GMT"
+        ],
         "Content-Length": [
-          "157"
+          "38"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  \"86dc2b49-7c0e-49f5-9e5f-2d9b7f9f53cb\",\r\n  \"0421d58a-a58b-4a65-83d8-1629e7c6dbbd\",\r\n  \"e797e70a-2206-4149-ba27-347c57c49313\",\r\n  \"e53a3c72-5641-4678-8e6a-ba96be111016\"\r\n]",
+      "ResponseBody": "\"2596f6bc-3103-4744-94f0-3515705b6803\"",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/741516ba-5148-4f5c-91cc-f25d10d3a22e/versions/0.1/customprebuiltentities",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy83NDE1MTZiYS01MTQ4LTRmNWMtOTFjYy1mMjVkMTBkM2EyMmUvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZW50aXRpZXM=",
+      "RequestUri": "/luis/api/v2.0/apps/2596f6bc-3103-4744-94f0-3515705b6803/versions?skip=0&take=100",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8yNTk2ZjZiYy0zMTAzLTQ3NDQtOTRmMC0zNTE1NzA1YjY4MDMvdmVyc2lvbnM/c2tpcD0wJnRha2U9MTAw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
+          "62b834e0069943d9b035f32abd230359"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27617.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
-        "Date": [
-          "Wed, 13 Feb 2019 00:15:47 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "086442b2-ae47-4bd3-985d-c498f567cad3"
+          "c0c1d513-6ebd-4b6a-9673-647cc6de6791"
         ],
         "Request-Id": [
-          "086442b2-ae47-4bd3-985d-c498f567cad3"
+          "c0c1d513-6ebd-4b6a-9673-647cc6de6791"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -158,14 +107,239 @@
         "X-Frame-Options": [
           "SAMEORIGIN"
         ],
+        "Date": [
+          "Sun, 25 Aug 2019 19:19:06 GMT"
+        ],
         "Content-Length": [
-          "397"
+          "321"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"fd354ff5-7152-4f3b-b396-3c9b8038f491\",\r\n    \"name\": \"Camera.AppName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Camera\",\r\n    \"customPrebuiltModelName\": \"AppName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"e53a3c72-5641-4678-8e6a-ba96be111016\",\r\n    \"name\": \"Gaming.Contact\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Gaming\",\r\n    \"customPrebuiltModelName\": \"Contact\",\r\n    \"roles\": []\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2019-08-25T19:19:06Z\",\r\n    \"lastModifiedDateTime\": \"2019-08-25T19:19:06Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": null,\r\n    \"endpointUrl\": null,\r\n    \"assignedEndpointKey\": null,\r\n    \"externalApiKeys\": null,\r\n    \"intentsCount\": 1,\r\n    \"entitiesCount\": 0,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/2596f6bc-3103-4744-94f0-3515705b6803/versions/0.1/customprebuiltdomains",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8yNTk2ZjZiYy0zMTAzLTQ3NDQtOTRmMC0zNTE1NzA1YjY4MDMvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZG9tYWlucw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"domainName\": \"Communication\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "62b834e0069943d9b035f32abd230359"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "37"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "6763fdab-2862-4b50-8d7b-36d4729b52ba"
+        ],
+        "Request-Id": [
+          "6763fdab-2862-4b50-8d7b-36d4729b52ba"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Sun, 25 Aug 2019 19:19:10 GMT"
+        ],
+        "Content-Length": [
+          "2341"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  \"6740b3b5-cba8-42d4-bd41-198eca21d5d7\",\r\n  \"b0b914be-024e-4580-89a0-995f34d25f6c\",\r\n  \"8e89acb3-b309-483d-ba44-8cc4da03c855\",\r\n  \"760b489b-076d-48ba-9836-bc7835521a1f\",\r\n  \"b9f7ae77-5dcf-4883-a07a-1d432a6c55f8\",\r\n  \"d2140155-2f8d-4f77-913b-c8a857a32c25\",\r\n  \"4a44d01d-28b5-4c5e-a468-d0b6d2d916c9\",\r\n  \"d49efd21-3a2b-4888-9863-e38844e60868\",\r\n  \"4e54d9ab-e8d3-4e08-9d98-31964e9c74c4\",\r\n  \"aa9d3803-f450-41f4-bdad-f166f1d44e98\",\r\n  \"69d2c158-367a-4edf-ae96-67ec4f079858\",\r\n  \"ec6f5793-df86-47cf-bdef-ec2678618927\",\r\n  \"8c8727c5-77bf-4ece-a4f7-ec53736c3679\",\r\n  \"43769c2a-6ed0-4d88-8ce7-ff19dbd336e2\",\r\n  \"c3848250-2077-422e-943a-42d870031666\",\r\n  \"ce28366c-a606-4a37-92d1-5ec7aeba8e0a\",\r\n  \"48235a36-160d-4570-8c79-045acb40528c\",\r\n  \"528b8088-1050-492e-bd8b-a611164d8d19\",\r\n  \"b2a868df-ef9c-452b-93b9-a6bc6a0bb595\",\r\n  \"d5a78bad-95fd-429b-80d7-16d7a816a60d\",\r\n  \"55bcbab9-de66-465b-9938-6a030ce4131a\",\r\n  \"047927ff-f68b-4e2e-a158-161a856705bc\",\r\n  \"65cd5c6a-815b-48f3-a2cc-c54674d3f22d\",\r\n  \"7b5e9a65-c9b0-4f99-91a5-81cc65c3004d\",\r\n  \"7dee2720-26f0-4c41-849e-60353599573f\",\r\n  \"35005c58-0073-466a-b72d-a3f93e5cf0fb\",\r\n  \"78258cca-91f5-49e1-81e3-83c2aa3d2553\",\r\n  \"705f0867-1aa1-45d9-be11-02765d89c088\",\r\n  \"2536e669-bf7d-43cb-8c62-ee6d92c49730\",\r\n  \"eb35a4f2-34ff-4e00-b04d-d4f092952363\",\r\n  \"5bdd0067-bae6-4efe-86b2-24156277631c\",\r\n  \"bfbdddbd-515f-47f0-ab2b-e77770290637\",\r\n  \"7fdd63d3-6762-493d-8a21-1e82b001909a\",\r\n  \"4f0fbc46-8671-4a34-9844-6746f917d814\",\r\n  \"3e2322e8-ad82-40a3-a7cd-a78b6cea4051\",\r\n  \"57afa160-74b7-4080-ad74-d6de6c552263\",\r\n  \"474d7b97-3246-4920-b43b-d2434e4991f7\",\r\n  \"98015143-7ef1-424a-bab4-f96777b759a9\",\r\n  \"5bf95b85-73bc-4d8f-b260-7b7113a711bc\",\r\n  \"81b34bb0-29a7-40fb-8826-e64dc9faa249\",\r\n  \"d17178d1-1c2a-435d-8ef1-fe8ff7245e4e\",\r\n  \"a34f7533-d7ac-4ae8-ab9a-968195140f43\",\r\n  \"adacf5f4-0dae-4523-b527-18fa22be9342\",\r\n  \"e1eaeb2c-88ab-41f5-aced-402c9e9198ed\",\r\n  \"c7cc8d3b-69c4-4c51-b8ff-980dc1995ba7\",\r\n  \"353559a8-80fd-4775-8c1d-20dfdedf9a32\",\r\n  \"e3b49142-b56e-4872-bb0b-1dc350fe04bf\",\r\n  \"d155e7c9-40d3-4ff2-a929-39cbaa4fd435\",\r\n  \"222a08b0-f7be-4e9a-93a7-2e0291fe502d\",\r\n  \"101df4cc-8036-41cd-9a39-9ecd1368506f\",\r\n  \"f73a656a-c1a9-4c6c-8e84-19d9e889bfff\",\r\n  \"09cbcc9c-a9da-4dc7-8814-62fe05685dea\",\r\n  \"548710a6-913d-48fd-9744-b611f9419728\",\r\n  \"b4ae87b4-111a-4eba-8272-864e837c68df\",\r\n  \"4807482a-d33a-40da-8f70-86b0cb199ed2\",\r\n  \"61443b67-bcb2-4297-9a7e-083094196ee4\",\r\n  \"bcc7bfed-e401-4f6c-abda-587d125d5e48\",\r\n  \"c2c88df2-d06c-4070-8951-853751001fe2\",\r\n  \"fc6e01cf-b75a-4a93-bebd-bbff82089f6c\",\r\n  \"db8852b1-327e-422a-90e8-8a38e782aef7\"\r\n]",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/2596f6bc-3103-4744-94f0-3515705b6803/versions/0.1/customprebuiltentities",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8yNTk2ZjZiYy0zMTAzLTQ3NDQtOTRmMC0zNTE1NzA1YjY4MDMvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZW50aXRpZXM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "62b834e0069943d9b035f32abd230359"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "ec325e9c-7bc4-4b26-b7ed-a4a385f518a9"
+        ],
+        "Request-Id": [
+          "ec325e9c-7bc4-4b26-b7ed-a4a385f518a9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Sun, 25 Aug 2019 19:19:11 GMT"
+        ],
+        "Content-Length": [
+          "4209"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"5bf95b85-73bc-4d8f-b260-7b7113a711bc\",\r\n    \"name\": \"Communication.Attachment\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Attachment\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"81b34bb0-29a7-40fb-8826-e64dc9faa249\",\r\n    \"name\": \"Communication.AudioDeviceType\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"AudioDeviceType\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"d17178d1-1c2a-435d-8ef1-fe8ff7245e4e\",\r\n    \"name\": \"Communication.Category\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Category\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"a34f7533-d7ac-4ae8-ab9a-968195140f43\",\r\n    \"name\": \"Communication.ContactAttribute\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"ContactAttribute\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"adacf5f4-0dae-4523-b527-18fa22be9342\",\r\n    \"name\": \"Communication.ContactName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"ContactName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"e1eaeb2c-88ab-41f5-aced-402c9e9198ed\",\r\n    \"name\": \"Communication.DestinationPhone\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"DestinationPhone\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"c7cc8d3b-69c4-4c51-b8ff-980dc1995ba7\",\r\n    \"name\": \"Communication.EmailPlatform\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"EmailPlatform\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"353559a8-80fd-4775-8c1d-20dfdedf9a32\",\r\n    \"name\": \"Communication.EmailSubject\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"EmailSubject\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"e3b49142-b56e-4872-bb0b-1dc350fe04bf\",\r\n    \"name\": \"Communication.FromRelationshipName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"FromRelationshipName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"d155e7c9-40d3-4ff2-a929-39cbaa4fd435\",\r\n    \"name\": \"Communication.Key\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Key\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"222a08b0-f7be-4e9a-93a7-2e0291fe502d\",\r\n    \"name\": \"Communication.Line\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Line\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"101df4cc-8036-41cd-9a39-9ecd1368506f\",\r\n    \"name\": \"Communication.Message\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Message\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"f73a656a-c1a9-4c6c-8e84-19d9e889bfff\",\r\n    \"name\": \"Communication.MessageType\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"MessageType\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"09cbcc9c-a9da-4dc7-8814-62fe05685dea\",\r\n    \"name\": \"Communication.OrderReference\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"OrderReference\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"548710a6-913d-48fd-9744-b611f9419728\",\r\n    \"name\": \"Communication.PositionReference\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"PositionReference\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"b4ae87b4-111a-4eba-8272-864e837c68df\",\r\n    \"name\": \"Communication.RelationshipName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"RelationshipName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"4807482a-d33a-40da-8f70-86b0cb199ed2\",\r\n    \"name\": \"Communication.SearchTexts\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SearchTexts\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"61443b67-bcb2-4297-9a7e-083094196ee4\",\r\n    \"name\": \"Communication.SenderName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SenderName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"bcc7bfed-e401-4f6c-abda-587d125d5e48\",\r\n    \"name\": \"Communication.SpeedDial\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SpeedDial\",\r\n    \"roles\": []\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/2596f6bc-3103-4744-94f0-3515705b6803/versions/0.1/customprebuiltdomains/Communication",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8yNTk2ZjZiYy0zMTAzLTQ3NDQtOTRmMC0zNTE1NzA1YjY4MDMvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZG9tYWlucy9Db21tdW5pY2F0aW9u",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "62b834e0069943d9b035f32abd230359"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "20aa55e1-19e6-4c28-ad50-4c1dd903e862"
+        ],
+        "Request-Id": [
+          "20aa55e1-19e6-4c28-ad50-4c1dd903e862"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Sun, 25 Aug 2019 19:19:27 GMT"
+        ],
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/2596f6bc-3103-4744-94f0-3515705b6803?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8yNTk2ZjZiYy0zMTAzLTQ3NDQtOTRmMC0zNTE1NzA1YjY4MDM/Zm9yY2U9ZmFsc2U=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "62b834e0069943d9b035f32abd230359"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "d6ecc58b-ce8d-4364-a4c6-e2ed79a597b0"
+        ],
+        "Request-Id": [
+          "d6ecc58b-ce8d-4364-a4c6-e2ed79a597b0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Sun, 25 Aug 2019 19:19:27 GMT"
+        ],
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "StatusCode": 200
     }
   ],

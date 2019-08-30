@@ -31,18 +31,20 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: $(DotNetCoreSDKVersion)
-      - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.ArtifactStagingDirectory)/dll-output /p:TargetFramework=netstandard2.0
+      - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.BinariesDirectory)/dll-docs/my-api /p:TargetFramework=netstandard2.0
         displayName: Build Packages
+      - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.BinariesDirectory)/dll-docs/dependencies/my-api /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
+        displayName: Build Packages, Include Dependencies
       - pwsh: dotnet restore "$(Build.SourcesDirectory)/eng/docgeneration/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
-        displayName: Restore Nuget Packages Needed
-      - task: CopyFiles@2
-        displayName: "Copy over Dlls"
+        displayName: Restore other Nuget Packages Needed
+      - task: DeleteFiles@1
+        displayName: "Delete files from $(Build.BinariesDirectory)/dll-docs/my-api"
         inputs:
-          SourceFolder: "$(Build.ArtifactStagingDirectory)/dll-output"
-          TargetFolder: "$(Build.BinariesDirectory)/dll-docs/my-api"
-          contents: |
-            *.dll
-            *.xml
+          SourceFolder: "$(Build.BinariesDirectory)/dll-docs/my-api"
+          Contents: |
+            *.json
+            *.pdb
+            *.config
       - task: CmdLine@2
         displayName: Initialize Frameworks File
         inputs:

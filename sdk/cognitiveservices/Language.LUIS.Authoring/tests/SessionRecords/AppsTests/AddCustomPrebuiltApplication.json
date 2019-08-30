@@ -7,13 +7,13 @@
       "RequestBody": "{\r\n  \"domainName\": \"Calendar\",\r\n  \"culture\": \"en-us\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
+          "62b834e0069943d9b035f32abd230359"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27617.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -26,23 +26,20 @@
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
-        "Date": [
-          "Tue, 12 Feb 2019 23:34:24 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/customprebuiltdomains/dbb10b9a-efed-432a-9155-450ab20d4f0a"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/customprebuiltdomains/e49fddaf-aa1f-4a29-ad2f-47bee94d69b0"
         ],
         "Apim-Request-Id": [
-          "eb7871e8-6811-4d8b-8264-bd3a79536e2c"
+          "d2e06f6d-3586-4108-934f-a68b9a985474"
         ],
         "Request-Id": [
-          "eb7871e8-6811-4d8b-8264-bd3a79536e2c"
+          "d2e06f6d-3586-4108-934f-a68b9a985474"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/customprebuiltdomains/dbb10b9a-efed-432a-9155-450ab20d4f0a"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/customprebuiltdomains/e49fddaf-aa1f-4a29-ad2f-47bee94d69b0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -55,6 +52,9 @@
         ],
         "X-Frame-Options": [
           "SAMEORIGIN"
+        ],
+        "Date": [
+          "Sun, 25 Aug 2019 19:16:30 GMT"
         ],
         "Content-Length": [
           "38"
@@ -63,40 +63,37 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "\"dbb10b9a-efed-432a-9155-450ab20d4f0a\"",
+      "ResponseBody": "\"e49fddaf-aa1f-4a29-ad2f-47bee94d69b0\"",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/dbb10b9a-efed-432a-9155-450ab20d4f0a?force=false",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9kYmIxMGI5YS1lZmVkLTQzMmEtOTE1NS00NTBhYjIwZDRmMGE/Zm9yY2U9ZmFsc2U=",
+      "RequestUri": "/luis/api/v2.0/apps/e49fddaf-aa1f-4a29-ad2f-47bee94d69b0?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9lNDlmZGRhZi1hYTFmLTRhMjktYWQyZi00N2JlZTk0ZDY5YjA/Zm9yY2U9ZmFsc2U=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
+          "62b834e0069943d9b035f32abd230359"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27617.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
-        "Date": [
-          "Tue, 12 Feb 2019 23:34:24 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "b6799559-67ff-46fd-aaf6-4bb7e28136fe"
+          "c4841908-777f-4768-81a4-660bba1e5869"
         ],
         "Request-Id": [
-          "b6799559-67ff-46fd-aaf6-4bb7e28136fe"
+          "c4841908-777f-4768-81a4-660bba1e5869"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -109,6 +106,9 @@
         ],
         "X-Frame-Options": [
           "SAMEORIGIN"
+        ],
+        "Date": [
+          "Sun, 25 Aug 2019 19:16:33 GMT"
         ],
         "Content-Length": [
           "51"

@@ -6,6 +6,7 @@
     using System.IO;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class FeaturesTests : BaseTest
     {
         [Fact]
