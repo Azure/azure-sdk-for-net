@@ -16,7 +16,6 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Moq;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
