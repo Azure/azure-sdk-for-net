@@ -263,7 +263,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.OwnershipLost)))
                     .ConfigureAwait(false);
 
-                // Now that we are left with the pumps that should be running, check their statuses.  If any has stopped, it means an
+                // Now that we are left with the pumps that should be running, check their status.  If any has stopped, it means an
                 // unexpected failure has happened.  In this situation, try closing the current pump and start a new one.
 
                 await Task.WhenAll(PartitionPumps
