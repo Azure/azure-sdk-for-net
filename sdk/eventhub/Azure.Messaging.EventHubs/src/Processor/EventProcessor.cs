@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> s_random = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
         private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
@@ -388,7 +388,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 if (unclaimedPartitions.Any())
                 {
-                    var index = s_random.Value.Next(unclaimedPartitions.Count);
+                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count);
 
                     return await ClaimOwnershipAsync(unclaimedPartitions[index], completeOwnershipList).ConfigureAwait(false);
                 }
@@ -419,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 if (stealablePartitions.Any())
                 {
-                    var index = s_random.Value.Next(stealablePartitions.Count);
+                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count);
 
                     return await ClaimOwnershipAsync(stealablePartitions[index], completeOwnershipList).ConfigureAwait(false);
                 }
