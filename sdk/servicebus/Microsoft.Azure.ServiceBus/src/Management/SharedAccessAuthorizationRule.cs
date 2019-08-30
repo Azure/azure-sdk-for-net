@@ -296,7 +296,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         break;
                     case "Rights":
                         var rights = new List<AccessRights>();
-                        var xRights = element.Elements(XName.Get("AccessRights", ManagementClientConstants.SbNs));
+                        var xRights = element.Elements(XName.Get("AccessRights", ManagementClientConstants.ServiceBusNamespace));
                         foreach (var xRight in xRights)
                         {
                             rights.Add((AccessRights)Enum.Parse(typeof(AccessRights), xRight.Value));
@@ -312,15 +312,15 @@ namespace Microsoft.Azure.ServiceBus.Management
         internal override XElement Serialize()
         {
             XElement rule = new XElement(
-                XName.Get("AuthorizationRule", ManagementClientConstants.SbNs),
-                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs), nameof(SharedAccessAuthorizationRule)),
-                new XElement(XName.Get("ClaimType", ManagementClientConstants.SbNs), this.ClaimType),
-                new XElement(XName.Get("ClaimValue", ManagementClientConstants.SbNs), this.ClaimValue),
-                new XElement(XName.Get("Rights", ManagementClientConstants.SbNs),
-                    this.Rights.Select(right => new XElement(XName.Get("AccessRights", ManagementClientConstants.SbNs), right.ToString()))),
-                new XElement(XName.Get("KeyName", ManagementClientConstants.SbNs), this.KeyName),
-                new XElement(XName.Get("PrimaryKey", ManagementClientConstants.SbNs), this.PrimaryKey),
-                new XElement(XName.Get("SecondaryKey", ManagementClientConstants.SbNs), this.SecondaryKey)
+                XName.Get("AuthorizationRule", ManagementClientConstants.ServiceBusNamespace),
+                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(SharedAccessAuthorizationRule)),
+                new XElement(XName.Get("ClaimType", ManagementClientConstants.ServiceBusNamespace), this.ClaimType),
+                new XElement(XName.Get("ClaimValue", ManagementClientConstants.ServiceBusNamespace), this.ClaimValue),
+                new XElement(XName.Get("Rights", ManagementClientConstants.ServiceBusNamespace),
+                    this.Rights.Select(right => new XElement(XName.Get("AccessRights", ManagementClientConstants.ServiceBusNamespace), right.ToString()))),
+                new XElement(XName.Get("KeyName", ManagementClientConstants.ServiceBusNamespace), this.KeyName),
+                new XElement(XName.Get("PrimaryKey", ManagementClientConstants.ServiceBusNamespace), this.PrimaryKey),
+                new XElement(XName.Get("SecondaryKey", ManagementClientConstants.ServiceBusNamespace), this.SecondaryKey)
             );
 
             return rule;

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         internal static AuthorizationRule ParseFromXElement(XElement xElement)
         {
-            var attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs));
+            var attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace));
             if (attribute == null)
             {
                 return null;

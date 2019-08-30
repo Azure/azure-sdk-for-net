@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate queue storage
-input-file: ./queue-2018-03-28.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.QueueStorage/preview/2018-03-28/queue.json
 output-folder: ../src/Generated
 clear-output-folder: false
 

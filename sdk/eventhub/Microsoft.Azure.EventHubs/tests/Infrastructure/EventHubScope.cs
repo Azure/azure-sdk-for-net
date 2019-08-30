@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Polly;
 
-using Storage = Microsoft.Azure.Management.Storage.Models;
+using StorageManagement = Microsoft.Azure.Management.Storage.Models;
 
 namespace Microsoft.Azure.EventHubs.Tests
 {
@@ -163,11 +163,11 @@ namespace Microsoft.Azure.EventHubs.Tests
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
-                var sku = new Storage.Sku(Storage.SkuName.StandardLRS, Storage.SkuTier.Standard);
-                var parameters = new Storage.StorageAccountCreateParameters(sku, Storage.Kind.BlobStorage, location: location, tags: GetResourceTags(), accessTier: Storage.AccessTier.Hot);
-                var storageAccount = await CreateRetryPolicy<Storage.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
+                var sku = new StorageManagement.Sku(StorageManagement.SkuName.StandardLRS, StorageManagement.SkuTier.Standard);
+                var parameters = new StorageManagement.StorageAccountCreateParameters(sku, StorageManagement.Kind.BlobStorage, location: location, tags: GetResourceTags(), accessTier: StorageManagement.AccessTier.Hot);
+                var storageAccount = await CreateRetryPolicy<StorageManagement.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
 
-                var storageKeys = await CreateRetryPolicy<Storage.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
+                var storageKeys = await CreateRetryPolicy<StorageManagement.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
                 return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
             }
         }

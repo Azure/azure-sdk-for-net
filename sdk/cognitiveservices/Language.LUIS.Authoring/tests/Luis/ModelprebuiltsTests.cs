@@ -5,6 +5,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelPrebuiltsTests : BaseTest
     {
         [Fact]

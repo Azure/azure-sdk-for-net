@@ -145,7 +145,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
             if (ContentType != null)
             {
@@ -156,7 +156,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 json.WriteStartObject("attributes");
 
-                _attributes.WriteProperties(ref json);
+                _attributes.WriteProperties(json);
 
                 json.WriteEndObject();
             }

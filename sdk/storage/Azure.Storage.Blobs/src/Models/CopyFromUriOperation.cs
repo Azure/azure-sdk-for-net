@@ -149,7 +149,7 @@ namespace Azure.Storage.Blobs.Models
             }
 
             // Get the latest status
-            var task = this._client.GetPropertiesAsync(null, cancellationToken);
+            var task = this._client.GetPropertiesAsync(cancellationToken: cancellationToken);
             var update = async ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
