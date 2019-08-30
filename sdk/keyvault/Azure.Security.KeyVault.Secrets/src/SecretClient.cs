@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Secrets
@@ -55,7 +54,9 @@ namespace Azure.Security.KeyVault.Secrets
         public SecretClient(Uri vaultUri, TokenCredential credential, SecretClientOptions options)
         {
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(vaultUri));
-            options = options ?? new SecretClientOptions();
+            if (credential is null) throw new ArgumentNullException(nameof(credential));
+
+            options ??= new SecretClientOptions();
             string apiVersion = options.GetVersionString();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,

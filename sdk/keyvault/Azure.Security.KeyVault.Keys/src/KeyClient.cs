@@ -53,7 +53,9 @@ namespace Azure.Security.KeyVault.Keys
         public KeyClient(Uri vaultUri, TokenCredential credential, KeyClientOptions options)
         {
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(vaultUri));
-            options = options ?? new KeyClientOptions();
+            if (credential is null) throw new ArgumentNullException(nameof(credential));
+
+            options ??= new KeyClientOptions();
             string apiVersion = options.GetVersionString();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,

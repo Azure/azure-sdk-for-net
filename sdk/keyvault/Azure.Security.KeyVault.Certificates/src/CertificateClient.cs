@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         public CertificateClient(Uri vaultUri, TokenCredential credential, CertificateClientOptions options)
         {
-            _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(vaultUri));
+            _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(credential));
             options = options ?? new CertificateClientOptions();
 
             _pipeline = HttpPipelineBuilder.Build(options,

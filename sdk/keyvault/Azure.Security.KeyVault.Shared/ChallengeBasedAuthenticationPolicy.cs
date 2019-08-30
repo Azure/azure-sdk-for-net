@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault
 
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential)
         {
-            _credential = credential ?? throw new ArgumentNullException(nameof(credential));
+            _credential = credential;
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
