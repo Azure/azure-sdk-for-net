@@ -1,4 +1,4 @@
-﻿using ManagedServiceIdentity.Tests.Helpers;
+using ManagedServiceIdentity.Tests.Helpers;
 using Microsoft.Azure.Management.ManagedServiceIdentity;
 using Microsoft.Azure.Management.ManagedServiceIdentity.Models;
 using Microsoft.Rest.Azure;
@@ -24,7 +24,7 @@ namespace ManagedServiceIdentity.Tests.Tests
         public void Dispose()
         {
             var handler = new RecordedDelegatingHandler { IsPassThrough = true };
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var msiMgmtClient = context.GetServiceClient<ManagedServiceIdentityClient>(handlers: handler);
                 msiMgmtClient.UserAssignedIdentities.Delete(ResourceGroupName, firstIdentityName);
@@ -36,7 +36,7 @@ namespace ManagedServiceIdentity.Tests.Tests
         public async Task TestIdentityCRUD()
         {
             var handler = new RecordedDelegatingHandler { IsPassThrough = true };
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var msiMgmtClient = context.GetServiceClient<ManagedServiceIdentityClient>(handlers: handler);
 
@@ -102,7 +102,7 @@ namespace ManagedServiceIdentity.Tests.Tests
         public async Task TestOperationsApi()
         {
             var handler = new RecordedDelegatingHandler { IsPassThrough = true };
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var msiMgmtClient = context.GetServiceClient<ManagedServiceIdentityClient>(handlers: handler);
                 var operationsResult = await msiMgmtClient.Operations.ListWithHttpMessagesAsync();
@@ -141,3 +141,4 @@ namespace ManagedServiceIdentity.Tests.Tests
         }
     }
 }
+

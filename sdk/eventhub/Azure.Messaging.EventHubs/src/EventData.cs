@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs
         ///   This property is only populated for events received from the Event Hubs service.
         /// </remarks>
         ///
-        public string PartitionKey => SystemProperties.PartitionKey;
+        public string PartitionKey => SystemProperties?.PartitionKey;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventData"/> class.
@@ -116,7 +116,7 @@ namespace Azure.Messaging.EventHubs
         ///   operations.
         /// </summary>
         ///
-        internal SystemEventProperties SystemProperties { get; set; }
+        protected internal SystemEventProperties SystemProperties { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -151,13 +151,13 @@ namespace Azure.Messaging.EventHubs
         ///   The set of event properties which are owned and populated by the Event Hubs service.
         /// </summary>
         ///
-        internal sealed class SystemEventProperties
+        protected internal sealed class SystemEventProperties
         {
             /// <summary>
             ///   Initializes a new instance of the <see cref="SystemEventProperties"/> class.
             /// </summary>
             ///
-            internal SystemEventProperties()
+            public SystemEventProperties()
             {
             }
 
@@ -165,13 +165,13 @@ namespace Azure.Messaging.EventHubs
             ///   The logical sequence number of the <see cref="EventData" /> within the partition stream of the Event Hub.
             /// </summary>
             ///
-            public long SequenceNumber { get; internal set; }
+            public long SequenceNumber { get; set; }
 
             /// <summary>
             ///   The date and time, in UTC, that the <see cref="EventData" /> was received by the partition.
             /// </summary>
             ///
-            public DateTimeOffset EnqueuedTime { get; internal set; }
+            public DateTimeOffset EnqueuedTime { get; set; }
 
             /// <summary>
             ///   The offset of the <see cref="EventData" /> relative to the Event Hub partition stream.
@@ -182,13 +182,13 @@ namespace Azure.Messaging.EventHubs
             ///   identifier is unique within a partition of the Event Hubs stream.
             /// </remarks>
             ///
-            public long Offset { get; internal set; }
+            public long Offset { get; set; }
 
             /// <summary>
             ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.
             /// </summary>
             ///
-            public string PartitionKey { get; internal set; }
+            public string PartitionKey { get; set; }
 
             /// <summary>
             ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

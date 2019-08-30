@@ -33,7 +33,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void CreateGetListUpdateDeleteActivityLogAlert()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);

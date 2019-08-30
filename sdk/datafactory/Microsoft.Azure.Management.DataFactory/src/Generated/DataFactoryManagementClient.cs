@@ -457,6 +457,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySource>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySource>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StoreWriteSettings>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StoreWriteSettings>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySink>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySink>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));

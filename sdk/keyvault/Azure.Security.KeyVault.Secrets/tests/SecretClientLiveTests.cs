@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Core.Testing;
 using System.Text;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Test
 {
@@ -54,12 +54,13 @@ namespace Azure.Security.KeyVault.Test
         public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1565114301));
 
             Secret setResult = null;
 
             try
             {
-                var exp = new DateTimeOffset(new DateTime(637027248124480000, DateTimeKind.Utc));
+                var exp = new DateTimeOffset(new DateTime(637027248120000000, DateTimeKind.Utc));
                 var nbf = exp.AddDays(-30);
 
                 var secret = new Secret(secretName, "CrudWithExtendedPropsValue1")
@@ -75,6 +76,11 @@ namespace Azure.Security.KeyVault.Test
                 };
 
                 setResult = await Client.SetAsync(secret);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    DateTimeOffset now = DateTimeOffset.UtcNow;
+                    createdUpdatedConstraint = Is.InRange(now.AddMinutes(-5), now.AddMinutes(5));
+                }
 
                 RegisterForCleanup(secret, delete: false);
 
@@ -89,8 +95,8 @@ namespace Azure.Security.KeyVault.Test
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
                 Assert.AreEqual(VaultUri, setResult.Vault);
                 Assert.AreEqual("Recoverable+Purgeable", setResult.RecoveryLevel);
-                Assert.NotNull(setResult.Created);
-                Assert.NotNull(setResult.Updated);
+                Assert.That(setResult.Created, createdUpdatedConstraint);
+                Assert.That(setResult.Updated, createdUpdatedConstraint);
 
                 Secret getResult = await Client.GetAsync(secretName);
 

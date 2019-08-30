@@ -30,7 +30,7 @@
     <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
-    <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.1, 2.0.0)" />
+    <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7" />
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Update="Microsoft.Build" Version="15.5.180" />
@@ -47,7 +47,7 @@
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Update="Microsoft.NETCore.Platforms" Version="2.2.1" />
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.5, 2.0.0)" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.7, 2.0.0)" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.18, 4.0.0)" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="[2.3.20, 3.0.0)" />
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
@@ -96,6 +96,7 @@
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
+    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
   <!-- Track 2 specific versions -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">

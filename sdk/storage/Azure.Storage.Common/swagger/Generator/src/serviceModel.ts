@@ -195,13 +195,13 @@ function createServiceInfo(project: IProject): IServiceInfo {
     const swaggerVersion = required(() => project.swagger.swagger);
     if (swaggerVersion !== `2.0`) { throw `Can only process swagger 2.0, not ${swaggerVersion}`; }
 
-    // x-ms-skip-path-components is designed to let you pass in the base URI
+    // x-az-skip-path-components is designed to let you pass in the base URI
     // and path components together as a formed URI rather than constructing it
     // via components.  
     const collapseResourceUris = optional(
-        () => project.swagger.info[`x-ms-code-generation-settings`][`x-ms-skip-path-components`]);
+        () => project.swagger.info[`x-ms-code-generation-settings`][`x-az-skip-path-components`]);
     if (!collapseResourceUris) {
-        throw `x-ms-skip-path-components is required (in project.swagger.info['x-ms-code-generation-settings'])`;
+        throw `x-az-skip-path-components is required (in project.swagger.info['x-ms-code-generation-settings'])`;
     }
 
     // Process info
@@ -259,7 +259,7 @@ function createServiceInfo(project: IProject): IServiceInfo {
         project.context.verbose(`project.swagger.securityDefinitions is being ignored`);
     }
 
-    let isPublic: boolean|undefined = project.swagger.info[`x-ms-code-generation-settings`][`x-ms-public`];
+    let isPublic: boolean|undefined = project.swagger.info[`x-ms-code-generation-settings`][`x-az-public`];
     if (isPublic === undefined) {
         isPublic = true;
     }
@@ -278,7 +278,7 @@ function createServiceInfo(project: IProject): IServiceInfo {
             title + ' ModelFactory'),
         versions: [ <string>required(() => project.swagger.info.version) ],
         public: isPublic,
-        sync: <boolean>optional(() => project.swagger.info[`x-ms-code-generation-settings`][`x-ms-include-sync-methods`], false),
+        sync: <boolean>optional(() => project.swagger.info[`x-ms-code-generation-settings`][`x-az-include-sync-methods`], false),
         consumes: [`application/xml`],
         produces: [`application/xml`],
         host: serviceHost,
@@ -320,7 +320,7 @@ function createParameter(project: IProject, swagger: any, location: string): IPa
         unsupported(() => grouping.postfix, `${location}['x-ms-parameter-grouping'].postfix`);
     }
 
-    const trace = optional(() => swagger[`x-ms-trace`], false);
+    const trace = optional(() => swagger[`x-az-trace`], false);
 
     unsupported(() => swagger[`x-ms-client-flatten`], location);
     unsupported(() => swagger[`x-ms-client-request-id`], location);
@@ -424,7 +424,7 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
     unsupported(() => swagger.readOnly, location);
     unsupported(() => swagger[`x-ms-azure-resource`], location);
     
-    let isPublic: boolean|undefined = swagger[`x-ms-public`];
+    let isPublic: boolean|undefined = swagger[`x-az-public`];
     if (isPublic === undefined) {
         isPublic = true;
     }
@@ -440,7 +440,7 @@ function createObjectType(project: IProject, name: string, swagger: any, locatio
         xml: swagger.xml || { },
         serialize: false,
         deserialize: false,
-        disableWarnings: swagger[`x-ms-disable-warnings`],
+        disableWarnings: swagger[`x-az-disable-warnings`],
         public: isPublic,
         extendedHeaders: []
     };
@@ -466,7 +466,7 @@ function createEnumType(project: IProject, name: string, swagger: any, location:
     // Check if we need a custom serializer
     const customSerialization = values.some(v => (v.value !== naming.enumField(v.name || v.value)));
 
-    let isPublic: boolean|undefined = swagger[`x-ms-public`];
+    let isPublic: boolean|undefined = swagger[`x-az-public`];
     if (isPublic === undefined) {
         isPublic = true;
     }
@@ -481,6 +481,7 @@ function createEnumType(project: IProject, name: string, swagger: any, location:
         constant: false,
         customSerialization,
         public: isPublic,
+        skipValue: swagger[`x-az-enum-skip-value`],
         values,
         extendedHeaders: []
     };
@@ -597,7 +598,7 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
 
     unsupported(() => swagger.examples, `${location}['${code}']`);
 
-    let isPublic: boolean|undefined = swagger[`x-ms-public`];
+    let isPublic: boolean|undefined = swagger[`x-az-public`];
     if (isPublic === undefined) {
         isPublic = true;
     }
@@ -605,11 +606,11 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
     return {
         code,
         description: swagger.description,
-        clientName: <string>optional(() => swagger[`x-ms-client-name`]),
+        clientName: <string>optional(() => swagger[`x-az-response-name`]),
         body: model,
-        bodyClientName: <string>optional(() => swagger[`x-ms-schema-client-name`], `Body`), // TODO: switch from 'Body' to body.name?
+        bodyClientName: <string>optional(() => swagger[`x-az-response-schema-name`], `Body`), // TODO: switch from 'Body' to body.name?
         headers,
-        exception: <boolean>optional(() => swagger[`x-ms-create-exception`]),
+        exception: <boolean>optional(() => swagger[`x-az-create-exception`]),
         public: isPublic
     };
 }
@@ -617,7 +618,7 @@ function createResponse(project: IProject, code: string, name: string, swagger: 
 function createHeaders(project: IProject, swagger: any, location: string): IHeaders {
     const headers: IHeaders = { };
     for (const [name, def] of <[string, any]>Object.entries(swagger || {})) {
-        let ignore = def[`x-ms-ignore`];
+        let ignore = def[`x-az-demote-header`];
         if (ignore === undefined) {
             ignore = false;
         }

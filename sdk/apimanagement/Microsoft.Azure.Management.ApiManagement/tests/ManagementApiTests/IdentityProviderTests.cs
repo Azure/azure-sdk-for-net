@@ -21,7 +21,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -40,7 +40,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         IdentityProviderType.Facebook,
                         identityProviderCreateParameters);
 
-                    Assert.NotNull(identityProviderContract);                    
+                    Assert.NotNull(identityProviderContract);
                     Assert.Equal(IdentityProviderType.Facebook, identityProviderContract.IdentityProviderContractType);
                     Assert.NotNull(identityProviderContract.ClientId);
                     Assert.NotNull(identityProviderContract.ClientSecret);
@@ -76,7 +76,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // get to check it was patched
                     identityProviderContract = await testBase.client.IdentityProvider.GetAsync(
-                        testBase.rgName, 
+                        testBase.rgName,
                         testBase.serviceName,
                         IdentityProviderType.Facebook);
 

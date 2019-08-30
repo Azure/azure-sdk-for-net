@@ -34,7 +34,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void MetricBasedRule()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
                 this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
@@ -135,7 +135,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void GetIncidentTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
 
@@ -165,7 +165,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void ListGetIncidentsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
 
