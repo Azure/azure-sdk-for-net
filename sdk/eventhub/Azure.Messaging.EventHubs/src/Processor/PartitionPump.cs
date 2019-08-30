@@ -140,8 +140,6 @@ namespace Azure.Messaging.EventHubs.Processor
                         // Before closing, the running task will set the close reason in case of failure.  When something
                         // unexpected happens and it's not set, the default value (Unknown) is kept.
 
-                        CloseReason = default;
-
                         RunningTask = RunAsync(RunningTaskTokenSource.Token);
                     }
                 }
