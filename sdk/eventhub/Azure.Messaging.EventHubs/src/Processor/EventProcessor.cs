@@ -256,7 +256,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Renew this instance's ownership so they don't expire.  This method call will fill the InstanceOwnership dictionary
                 // with the renewed ownership information.
 
-                await RenewOwnershipAsync();
+                await RenewOwnershipAsync().ConfigureAwait(false);
 
                 // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
                 // the pumps we don't need anymore.
