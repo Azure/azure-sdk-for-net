@@ -251,9 +251,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                Stopwatch cycleDuration = new Stopwatch();
-
-                cycleDuration.Start();
+                Stopwatch cycleDuration = Stopwatch.StartNew();
 
                 // Renew this instance's ownership so they don't expire.  This method call will fill the InstanceOwnership dictionary
                 // with the renewed ownership information.
