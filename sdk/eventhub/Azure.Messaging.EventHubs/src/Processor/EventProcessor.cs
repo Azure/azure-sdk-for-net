@@ -431,7 +431,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Creates a new partition pump associated with the specified partition.  Partition pumps that are overwritten by the creation
+        ///   Creates and starts a new partition pump associated with the specified partition.  Partition pumps that are overwritten by the creation
         ///   of a new one are properly stopped.
         /// </summary>
         ///
@@ -447,7 +447,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             await RemovePartitionPumpIfItExistsAsync(partitionId).ConfigureAwait(false);
 
-            // Create the new partition pump and add it to the dictionary.
+            // Create and start the new partition pump and add it to the dictionary.
 
             var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId);
             var checkpointManager = new CheckpointManager(partitionContext, Manager, Identifier);
