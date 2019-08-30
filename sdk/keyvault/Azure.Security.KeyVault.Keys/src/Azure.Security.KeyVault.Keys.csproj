@@ -17,6 +17,8 @@
 
   </PropertyGroup>
 
+  <Import Project="..\..\Azure.Security.KeyVault.Shared\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
+
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
@@ -29,7 +31,6 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
-    <Compile Include="..\..\Shared\ChallengeBasedAuthenticationPolicy.cs" />
   </ItemGroup>
 
 </Project>
