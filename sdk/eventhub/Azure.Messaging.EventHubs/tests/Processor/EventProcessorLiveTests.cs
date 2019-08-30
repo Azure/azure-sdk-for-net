@@ -37,9 +37,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task StartAsyncCallsPartitionProcessorInitializeAsync()
         {
-            var partitions = 2;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -69,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Validate results before calling stop.  This way, we can make sure the initialize calls were
                     // triggered by start.
@@ -99,9 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task StopAsyncCallsPartitionProcessorCloseAsyncWithShutdownReason()
         {
-            var partitions = 2;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -131,7 +127,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // CloseAsync should have not been called when constructing the event processor or initializing the partition processors.
 
@@ -167,9 +163,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task PartitionProcessorProcessEventsAsyncReceivesAllEvents()
         {
-            var partitions = 2;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -239,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize and receive events.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Stop the event processors.
 
@@ -275,9 +269,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task PartitionProcessorProcessEventsAsyncIsCalledWithNoEvents()
         {
-            var partitions = 1;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -303,7 +295,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Stop the event processors.
 
@@ -353,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // We should be able to call StartAsync again without getting an exception.
 
@@ -361,7 +353,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Give the event processors more time in case they try to initialize again, which shouldn't happen.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Stop the event processors.
 
@@ -416,7 +408,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Stop the event processors.
 
@@ -441,9 +433,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task EventProcessorCanStartAgainAfterStopping()
         {
-            var partitions = 2;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -499,7 +489,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                         // Make sure the event processors have enough time to stabilize and receive events.
 
-                        await hub.WaitStabilization(partitions);
+                        await hub.WaitStabilization();
 
                         // Stop the event processors.
 
@@ -521,9 +511,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [Test]
         public async Task EventProcessorCanReceiveFromSpecifiedInitialEventPosition()
         {
-            var partitions = 2;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -589,7 +577,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize and receive events.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Stop the event processors.
 
@@ -613,9 +601,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
         [TestCase(15)]
         public async Task EventProcessorWaitsMaximumReceiveWaitTimeForEvents(int maximumWaitTimeInSecs)
         {
-            var partitions = 2;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -657,7 +643,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
                     // wait time span so we can have enough samples.
                     // TODO: find a way to ensure we have enough samples.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Stop the event processors.
 
@@ -758,7 +744,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize and receive events.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Stop the event processors.
 
@@ -813,7 +799,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Take a snapshot of the current partition balancing status.
 
@@ -876,7 +862,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Assert all partitions have been claimed.
 
@@ -890,7 +876,7 @@ namespace Azure.Messaging.EventHubs.Tests.Processor
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization(partitions);
+                    await hub.WaitStabilization();
 
                     // Take a snapshot of the current partition balancing status.
 
