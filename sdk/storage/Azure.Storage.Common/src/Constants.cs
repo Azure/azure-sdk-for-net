@@ -109,6 +109,13 @@ namespace Azure.Storage
                 public const int MaxBlocks = 50000;
             }
 
+            internal static class Base
+            {
+                public const string SetTierOperationName =
+                    "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier";
+
+            }
+
             internal static class Block
             {
                 public const int DefaultParallelUploadCount = 4; // TODO What should the value really be?  Can we get rid of it with a different dispatch algorithm? (probably yes)
@@ -129,6 +136,7 @@ namespace Azure.Storage
                     "Azure.Storage.Blobs.Specialized.BlockBlobClient.CommitBlockList";
                 public const string GetBlockListOperationName =
                     "Azure.Storage.Blobs.Specialized.BlockBlobClient.GetBlockList";
+
             }
 
             internal static class Container

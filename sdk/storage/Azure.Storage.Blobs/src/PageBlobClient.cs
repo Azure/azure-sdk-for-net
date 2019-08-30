@@ -1658,7 +1658,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StartCopyIncremental(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
         /// the source blob is recreated using <see cref="UploadPages"/> or
-        /// <see cref="BlobBaseClient.StartCopyFromUri(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// <see cref="BlobBaseClient.StartCopyFromUri(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
         /// then  <see cref="StartCopyIncremental(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
         /// on new snapshots will fail.
         ///
@@ -1763,7 +1763,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
         /// the source blob is recreated using <see cref="UploadPagesAsync"/> or
-        /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
         /// then <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
         /// on new snapshots will fail.
         ///
@@ -1942,7 +1942,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>.
         /// Specifically, snapshots must be copied in ascending order and if
         /// the source blob is recreated using <see cref="UploadPagesAsync"/>
-        /// or  <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// or  <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, Metadata, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
         /// then <see cref="StartCopyIncrementalAsync(Uri, String, PageBlobAccessConditions?, CancellationToken)"/>
         /// on new snapshots will fail.
         ///

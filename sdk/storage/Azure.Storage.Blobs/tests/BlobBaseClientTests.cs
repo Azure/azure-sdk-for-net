@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Test
     public class BlobBaseClientTests : BlobTestBase
     {
         public BlobBaseClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -453,6 +453,30 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     destBlob.StartCopyFromUriAsync(srcBlob.Uri),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task StartCopyFromUriAsync_RehydratePriority()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var srcBlob = await this.GetNewBlobClient(container);
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+
+                // Act
+                var operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, rehydratePriority: RehydratePriority.Standard);
+
+                // Assert
+                // data copied within an account, so copy should be instantaneous
+                if (this.Mode == RecordedTestMode.Playback)
+                {
+                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                }
+                await operation.WaitCompletionAsync();
+                Assert.IsTrue(operation.HasCompleted);
+                Assert.IsTrue(operation.HasValue);
             }
         }
 
@@ -1907,6 +1931,25 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.SetTierAsync(AccessTier.Cool),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task SetTierAsync_Rehydrate()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+
+                // arrange
+                var blob = await this.GetNewBlobClient(container);
+
+                // Act
+                var response2 = await blob.SetTierAsync(
+                    accessTier: AccessTier.Cool,
+                    rehydratePriority: RehydratePriority.High);
+
+                // Assert
+                Assert.IsNotNull(response2.Headers.RequestId);
             }
         }
 
