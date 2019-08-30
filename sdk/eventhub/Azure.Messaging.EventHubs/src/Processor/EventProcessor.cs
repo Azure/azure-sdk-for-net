@@ -263,12 +263,21 @@ namespace Azure.Messaging.EventHubs.Processor
                     .Select(partitionId => RemovePartitionPumpIfItExistsAsync(partitionId, PartitionProcessorCloseReason.OwnershipLost)))
                     .ConfigureAwait(false);
 
-                // Now that we are left with the pumps that should be running, check their status.  If any has stopped, it means an
-                // unexpected failure has happened.  In this situation, try closing the current pump and start a new one.
+                // Now that we are left with pumps that should be running, check their status.  If any has stopped, it means an
+                // unexpected failure has happened, so try closing it and starting a new one.  In case we don't have a pump that
+                // should exist, create it.  This might happen when pump creation has failed in a previous cycle.
 
-                await Task.WhenAll(PartitionPumps
-                    .Where(kvp => !kvp.Value.IsRunning)
-                    .Select(kvp => AddOrOverwritePartitionPumpAsync(kvp.Key)))
+                await Task.WhenAll(InstanceOwnership.Keys
+                    .Where(partitionId =>
+                        {
+                            if (PartitionPumps.TryGetValue(partitionId, out var pump))
+                            {
+                                return !pump.IsRunning;
+                            }
+
+                            return true;
+                        })
+                    .Select(partitionId => AddOrOverwritePartitionPumpAsync(partitionId)))
                     .ConfigureAwait(false);
 
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
