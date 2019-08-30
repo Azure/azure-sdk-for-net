@@ -342,9 +342,9 @@ namespace Azure.Messaging.EventHubs.Processor
             // by others.
 
             var partitionDistribution = new Dictionary<string, int>
-                {
-                    { Identifier, 0 }
-                };
+            {
+                { Identifier, 0 }
+            };
 
             foreach (var ownership in activeOwnership)
             {
