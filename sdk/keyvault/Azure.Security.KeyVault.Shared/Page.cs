@@ -5,7 +5,7 @@
 using System;
 using System.Text.Json;
 
-namespace Azure.Security.KeyVault.Secrets
+namespace Azure.Security.KeyVault
 {
     /// <summary>
     /// Defines a page in Azure responses.
@@ -15,7 +15,6 @@ namespace Azure.Security.KeyVault.Secrets
         where T : Model
     {
         private T[] _items;
-        private Uri _nextLink;
         private Func<T> _itemFactory;
 
         internal KeyVaultPage(Func<T> itemFactory)
@@ -31,7 +30,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Gets the link to the next page.
         /// </summary>
-        public Uri NextLink { get => _nextLink; }
+        public Uri NextLink { get; private set; }
 
         internal override void ReadProperties(JsonElement json)
         {
@@ -60,7 +59,7 @@ namespace Azure.Security.KeyVault.Secrets
 
                 if (!string.IsNullOrEmpty(nextLinkUrl))
                 {
-                    _nextLink = new Uri(nextLinkUrl);
+                    NextLink = new Uri(nextLinkUrl);
                 }
             }
         }
