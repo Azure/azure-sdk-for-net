@@ -335,8 +335,7 @@ namespace Azure.Messaging.EventHubs.Processor
             // but it may be overriden by a derived class.
 
             var activeOwnership = completeOwnershipList
-                .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < OwnershipExpirationTimeSpanInMilliseconds)
-                .ToList();
+                .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value).TotalSeconds < OwnershipExpirationTimeSpanInMilliseconds);
 
             // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
