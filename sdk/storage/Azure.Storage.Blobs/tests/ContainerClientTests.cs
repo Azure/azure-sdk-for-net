@@ -611,6 +611,21 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task AcquireLeaseAsync_ErrorDurationTooLarge()
+        {
+            // Arrange
+            var service = this.GetServiceClient_SharedKey();
+            var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
+            var id = this.Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.MaxValue;
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                container.GetLeaseClient(id).AcquireAsync(duration: duration),
+                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode.Split('\n')[0]));
+        }
+
+        [Test]
         public async Task AcquireLeaseAsync_Error()
         {
             // Arrange

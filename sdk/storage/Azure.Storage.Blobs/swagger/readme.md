@@ -1044,3 +1044,12 @@ directive:
   transform: >
     $.description = $.description.replace("<GUID>", "{GUID}");
 ```
+
+### Make lease duration a long
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.LeaseDuration
+  transform: >
+    $.format = "int64";
+```

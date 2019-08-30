@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Specialized
         private HttpPipeline Pipeline => this.BlobClient?.Pipeline ?? this.ContainerClient.Pipeline;
 
         /// <summary>
-        /// 
+        /// The <see cref="TimeSpan"/> representing an infinite lease duration.
         /// </summary>
         public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Constants.Blob.Lease.InfiniteLeaseDuration);
 
@@ -226,10 +226,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or -1 for a lease
-        /// that never expires.  A non-infinite lease can be between 15 and
-        /// 60 seconds. A lease duration cannot be changed using
-        /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// Specifies the duration of the lease, in seconds, or specify 
+        /// LeaseClient.InfiniteLeaseDuration for a lease that never expires.  
+        /// A non-infinite lease can be between 15 and 60 seconds. 
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
@@ -256,7 +256,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             this.EnsureClient();
-            var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt32(duration.TotalSeconds);
+            var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
             using (this.Pipeline.BeginLoggingScope(nameof(LeaseClient)))
             {
                 this.Pipeline.LogMethodEnter(
