@@ -121,7 +121,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             RetryPolicy retryPolicy = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
-            : this(entityPath, null, receiveMode, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy, prefetchCount)
+            : this(entityPath, null, receiveMode, new ServiceBusConnection(endpoint, transportType, retryPolicy) { TokenProvider = tokenProvider }, null, retryPolicy, prefetchCount)
         {
             this.OwnsConnection = true;
         }
@@ -305,7 +305,18 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>Operation will time out after duration of <see cref="ClientEntity.OperationTimeout"/></remarks>
         public Task<Message> ReceiveAsync()
         {
-            return this.ReceiveAsync(this.OperationTimeout);
+            return this.ReceiveAsync(CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Receive a message from the entity defined by <see cref="Path"/> using <see cref="ReceiveMode"/> mode.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token to cancel the receive operation.</param>
+        /// <returns>The message received. Returns null if no message is found.</returns>
+        /// <remarks>Operation will time out after duration of <see cref="ClientEntity.OperationTimeout"/></remarks>
+        public Task<Message> ReceiveAsync(CancellationToken cancellationToken)
+        {
+            return this.ReceiveAsync(this.OperationTimeout, cancellationToken);
         }
 
         /// <summary>
@@ -318,9 +329,25 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// (either during the first receive or when connection needs to be re-established). If establishing the connection
         /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
         /// </remarks>
-        public async Task<Message> ReceiveAsync(TimeSpan operationTimeout)
+        public Task<Message> ReceiveAsync(TimeSpan operationTimeout)
         {
-            var messages = await this.ReceiveAsync(1, operationTimeout).ConfigureAwait(false);
+            return ReceiveAsync(operationTimeout, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Receive a message from the entity defined by <see cref="Path"/> using <see cref="ReceiveMode"/> mode.
+        /// </summary>
+        /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel the receive operation.</param>
+        /// <returns>The message received. Returns null if no message is found.</returns>
+        /// <remarks>
+        /// The parameter <paramref name="operationTimeout"/> includes the time taken by the receiver to establish a connection
+        /// (either during the first receive or when connection needs to be re-established). If establishing the connection
+        /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
+        /// </remarks>
+        public async Task<Message> ReceiveAsync(TimeSpan operationTimeout, CancellationToken cancellationToken)
+        {
+            var messages = await this.ReceiveAsync(1, operationTimeout, cancellationToken).ConfigureAwait(false);
             if (messages != null && messages.Count > 0)
             {
                 return messages[0];
@@ -337,7 +364,19 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
         public Task<IList<Message>> ReceiveAsync(int maxMessageCount)
         {
-            return this.ReceiveAsync(maxMessageCount, this.OperationTimeout);
+            return this.ReceiveAsync(maxMessageCount, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="Path"/> using <see cref="ReceiveMode"/> mode.
+        /// </summary>
+        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel the receive operation.</param>
+        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
+        public Task<IList<Message>> ReceiveAsync(int maxMessageCount, CancellationToken cancellationToken)
+        {
+            return this.ReceiveAsync(maxMessageCount, this.OperationTimeout, cancellationToken);
         }
 
         /// <summary>
@@ -351,7 +390,24 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// (either during the first receive or when connection needs to be re-established). If establishing the connection
         /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
         /// </remarks>
-        public async Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout)
+        public Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout)
+        {
+            return ReceiveAsync(maxMessageCount, operationTimeout, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="Path"/> using <see cref="ReceiveMode"/> mode.
+        /// </summary>
+        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
+        /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel the receive operation.</param>
+        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.
+        /// The parameter <paramref name="operationTimeout"/> includes the time taken by the receiver to establish a connection
+        /// (either during the first receive or when connection needs to be re-established). If establishing the connection
+        /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
+        /// </remarks>
+        public async Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout, CancellationToken cancellationToken)
         {
             this.ThrowIfClosed();
 
@@ -372,7 +428,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 receiveTask = this.RetryPolicy.RunOperation(
                     async () =>
                     {
-                        unprocessedMessageList = await this.OnReceiveAsync(maxMessageCount, operationTimeout)
+                        unprocessedMessageList = await this.OnReceiveAsync(maxMessageCount, operationTimeout, cancellationToken)
                             .ConfigureAwait(false);
                     }, operationTimeout);
                 await receiveTask.ConfigureAwait(false);
@@ -1011,7 +1067,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.requestResponseLockedMessages.Close();
         }
 
-        protected virtual async Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
+        protected virtual async Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime, CancellationToken cancellationToken)
         {
             ReceivingAmqpLink receiveLink = null;
 
@@ -1034,7 +1090,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
                 IEnumerable<AmqpMessage> amqpMessages = null;
                 var hasMessages = await Task.Factory.FromAsync(
-                    (c, s) => receiveLink.BeginReceiveRemoteMessages(maxMessageCount, DefaultBatchFlushInterval, timeoutHelper.RemainingTime(), c, s),
+                    (c, s) => receiveLink.BeginReceiveRemoteMessages(maxMessageCount, DefaultBatchFlushInterval, timeoutHelper.RemainingTime(), c, s, cancellationToken),
                     a => receiveLink.EndReceiveMessages(a, out amqpMessages),
                     this).ConfigureAwait(false);
                 Exception exception;
