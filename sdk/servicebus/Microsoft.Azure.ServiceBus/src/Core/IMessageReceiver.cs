@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -50,6 +51,14 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Receive a message from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
+        /// <param name="cancellationToken">The cancellation token to cancel the receive operation.</param>
+        /// <returns>The message received. Returns null if no message is found.</returns>
+        /// <remarks>Operation will time out after duration of <see cref="ClientEntity.OperationTimeout"/></remarks>
+        Task<Message> ReceiveAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Receive a message from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// </summary>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
         /// <returns>The message received. Returns null if no message is found.</returns>
         /// <remarks>
@@ -58,6 +67,19 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
         /// </remarks>
         Task<Message> ReceiveAsync(TimeSpan operationTimeout);
+
+        /// <summary>
+        /// Receive a message from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// </summary>
+        /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel the receive operation.</param>
+        /// <returns>The message received. Returns null if no message is found.</returns>
+        /// <remarks>
+        /// The parameter <paramref name="operationTimeout"/> includes the time taken by the receiver to establish a connection
+        /// (either during the first receive or when connection needs to be re-established). If establishing the connection
+        /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
+        /// </remarks>
+        Task<Message> ReceiveAsync(TimeSpan operationTimeout, CancellationToken cancellationToken);
 
         /// <summary>
         /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
@@ -71,6 +93,15 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel the receive operation.</param>
+        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
+        Task<IList<Message>> ReceiveAsync(int maxMessageCount, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// </summary>
+        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
         /// <returns>List of messages received. Returns null if no message is found.</returns>
         /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.
@@ -79,6 +110,20 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
         /// </remarks>
         Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout);
+
+        /// <summary>
+        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// </summary>
+        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
+        /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel the receive operation.</param>
+        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.
+        /// The parameter <paramref name="operationTimeout"/> includes the time taken by the receiver to establish a connection
+        /// (either during the first receive or when connection needs to be re-established). If establishing the connection
+        /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
+        /// </remarks>
+        Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout, CancellationToken cancellationToken);
 
         /// <summary>
         /// Receives a specific deferred message identified by <paramref name="sequenceNumber"/>.
