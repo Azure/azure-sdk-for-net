@@ -6,6 +6,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Text;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
@@ -526,6 +527,176 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await sender.SendAsync(new List<Message>());
                     var message = await receiver.ReceiveAsync(TimeSpan.FromSeconds(3));
                     Assert.True(message == null, "Expected not to find any messages, but a message was received.");
+                }
+                finally
+                {
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
+                }
+            });
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ReceiveShouldStopOnTimeout()
+        {
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+
+                try
+                {
+                    var stopwatch = Stopwatch.StartNew();
+                    var message = await receiver.ReceiveAsync(TimeSpan.FromSeconds(2));
+                    stopwatch.Stop();
+
+                    Assert.InRange(stopwatch.Elapsed, TimeSpan.FromSeconds(1.8), TimeSpan.FromSeconds(3));
+                    Assert.Null(message);
+                }
+                finally
+                {
+                    await receiver.CloseAsync();
+                }
+            });
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ReceiveShouldStopImmediatelyOnCancel()
+        {
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+
+                try
+                {
+                    Stopwatch stopwatch;
+                    Message message;
+
+                    using (var cancellationTokenSource = new CancellationTokenSource())
+                    {
+                        stopwatch = Stopwatch.StartNew();
+                        var task = receiver.ReceiveAsync(cancellationTokenSource.Token);
+                        cancellationTokenSource.Cancel();
+                        message = await task;
+                        stopwatch.Stop();
+                    }
+
+                    Assert.InRange(stopwatch.Elapsed, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
+                    Assert.Null(message);
+                }
+                finally
+                {
+                    await receiver.CloseAsync();
+                }
+            });
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ReceiveShouldStopOnDelayedCancellation()
+        {
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+
+                try
+                {
+                    Stopwatch stopwatch;
+                    Message message;
+
+                    using (var cancellationTokenSource = new CancellationTokenSource())
+                    {
+                        stopwatch = Stopwatch.StartNew();
+                        var task = receiver.ReceiveAsync(cancellationTokenSource.Token);
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        cancellationTokenSource.Cancel();
+                        message = await task;
+                        stopwatch.Stop();
+                    }
+
+                    Assert.InRange(stopwatch.Elapsed, TimeSpan.FromSeconds(0.8), TimeSpan.FromSeconds(2));
+                    Assert.Null(message);
+                }
+                finally
+                {
+                    await receiver.CloseAsync();
+                }
+            });
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ReceiveShouldStopOnTimeoutWithUncanceledCancellation()
+        {
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+
+                try
+                {
+                    Stopwatch stopwatch;
+                    Message message;
+
+                    using (var cancellationTokenSource = new CancellationTokenSource())
+                    {
+                        stopwatch = Stopwatch.StartNew();
+                        message = await receiver.ReceiveAsync(TimeSpan.FromSeconds(2), cancellationTokenSource.Token);
+                        stopwatch.Stop();
+                    }
+
+                    Assert.InRange(stopwatch.Elapsed, TimeSpan.FromSeconds(1.8), TimeSpan.FromSeconds(3));
+                    Assert.Null(message);
+                }
+                finally
+                {
+                    await receiver.CloseAsync();
+                }
+            });
+        }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ReceiveShouldReceiveMessageIfReceivedBeforeCancel()
+        {
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+
+                try
+                {
+                    Stopwatch stopwatch;
+                    Message message;
+
+                    using (var cancellationTokenSource = new CancellationTokenSource())
+                    {
+                        stopwatch = Stopwatch.StartNew();
+                        var task = receiver.ReceiveAsync(cancellationTokenSource.Token);
+
+                        var messageBody = Encoding.UTF8.GetBytes("Message");
+                        message = new Message(messageBody);
+
+                        await sender.SendAsync(message);
+
+                        // Give the receiver some time to receive the message, but
+                        // cancel the request before we check the result. The receive
+                        // task will have completed before the below delay completes,
+                        // so the cancellation should not have any effect.
+
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        cancellationTokenSource.Cancel();
+                        message = await task;
+                        stopwatch.Stop();
+                    }
+
+                    Assert.InRange(stopwatch.Elapsed, TimeSpan.FromSeconds(0.8), TimeSpan.FromSeconds(2));
+                    Assert.NotNull(message);
                 }
                 finally
                 {
