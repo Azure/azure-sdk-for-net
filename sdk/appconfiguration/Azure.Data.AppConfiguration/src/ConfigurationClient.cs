@@ -785,5 +785,195 @@ namespace Azure.Data.AppConfiguration
 
             return request;
         }
+
+        /// <summary>
+        /// Locks an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only locked if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always locked.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response> LockAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Lock");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateLockRequest(key, label, etag);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return response;
+                    case 404:
+                        throw await response.CreateRequestFailedExceptionAsync("Not found.").ConfigureAwait(false);
+                    case 412:
+                        throw await response.CreateRequestFailedExceptionAsync("The specified precondition failed.").ConfigureAwait(false);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Locks an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only locked if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always locked.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response Lock(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Lock");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateLockRequest(key, label, etag);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return response;
+                    case 404:
+                        throw response.CreateRequestFailedException("Not found.");
+                    case 412:
+                        throw response.CreateRequestFailedException("The specified precondition failed.");
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateLockRequest(string key, string label, ETag etag)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
+
+            Request request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Put;
+            BuildUriForLocksRoute(request.UriBuilder, key, label);
+
+            if (etag != default)
+            {
+                request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
+            }
+
+            return request;
+        }
+
+        /// <summary>
+        /// Unlocks an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only unlocked if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always unlocked.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response> UnlockAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Unlock");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateUnlockRequest(key, label, etag);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return response;
+                    case 404:
+                        throw await response.CreateRequestFailedExceptionAsync("Not found.").ConfigureAwait(false);
+                    case 412:
+                        throw await response.CreateRequestFailedExceptionAsync("The specified precondition failed.").ConfigureAwait(false);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Unlocks an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only unlocked if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always unlocked.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response Unlock(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Unlock");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateUnlockRequest(key, label, etag);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return response;
+                    case 404:
+                        throw response.CreateRequestFailedException("Not found.");
+                    case 412:
+                        throw response.CreateRequestFailedException("The specified precondition failed.");
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateUnlockRequest(string key, string label, ETag etag)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
+
+            Request request = _pipeline.CreateRequest();
+            request.Method = RequestMethod.Delete;
+            BuildUriForLocksRoute(request.UriBuilder, key, label);
+
+            if (etag != default)
+            {
+                request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
+            }
+
+            return request;
+        }
     }
 }
