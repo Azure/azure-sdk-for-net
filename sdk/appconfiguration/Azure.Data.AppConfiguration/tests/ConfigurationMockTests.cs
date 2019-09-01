@@ -265,6 +265,104 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(2, mockTransport.Requests.Count);
         }
+        
+        [Test]
+        public async Task Lock()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            await service.LockAsync(s_testSetting.Key);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual("https://contoso.appconfig.io/locks/test_key", request.UriBuilder.ToString());
+        }
+
+        [Test]
+        public async Task LockWithLabel()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual("https://contoso.appconfig.io/locks/test_key?label=test_label", request.UriBuilder.ToString());
+        }
+
+        [Test]
+        public void LockNotFound()
+        {
+            var response = new MockResponse(404);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await service.LockAsync(s_testSetting.Key);
+            });
+
+            Assert.AreEqual(404, exception.Status);
+        }
+
+        [Test]
+        public async Task Unlock()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            await service.UnlockAsync(s_testSetting.Key);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual("https://contoso.appconfig.io/locks/test_key", request.UriBuilder.ToString());
+        }
+
+        [Test]
+        public async Task UnlockWithLabel()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual("https://contoso.appconfig.io/locks/test_key?label=test_label", request.UriBuilder.ToString());
+        }
+
+        [Test]
+        public void UnlockNotFound()
+        {
+            var response = new MockResponse(404);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await service.UnlockAsync(s_testSetting.Key);
+            });
+
+            Assert.AreEqual(404, exception.Status);
+        }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
