@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration.Samples
         {
             // Retrieve the connection string from the configuration store. 
             // You can get the string from your Azure portal.
-            var connectionString = "Endpoint=https://annelo-azconfig-01.azconfig.io;Id=0-l1-s0:/y5OyUr3nLTJ2eLrWKWF;Secret=p3WLyeX2ad7m3y8i6LBbW9PfjeFulW/ZFqt73pfGd0E=";//Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
             // Instantiate a client that will be used to call the service.
             var client = new ConfigurationClient(connectionString);
