@@ -30,21 +30,22 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the AzureSku class.
         /// </summary>
-        /// <param name="name">SKU name. Possible values include: 'D13_v2',
-        /// 'D14_v2', 'L8', 'L16', 'D11_v2', 'D12_v2', 'L4'</param>
-        /// <param name="capacity">SKU capacity.</param>
-        public AzureSku(string name, int? capacity = default(int?))
+        /// <param name="name">SKU name. Possible values include:
+        /// 'Standard_DS13_v2+1TB_PS', 'Standard_DS13_v2+2TB_PS',
+        /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
+        /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
+        /// 'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
+        /// 'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2'</param>
+        /// <param name="tier">SKU tier. Possible values include: 'Basic',
+        /// 'Standard'</param>
+        /// <param name="capacity">The number of instances of the
+        /// cluster.</param>
+        public AzureSku(string name, string tier, int? capacity = default(int?))
         {
             Name = name;
             Capacity = capacity;
+            Tier = tier;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for AzureSku class.
-        /// </summary>
-        static AzureSku()
-        {
-            Tier = "Standard";
         }
 
         /// <summary>
@@ -53,23 +54,27 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SKU name. Possible values include: 'D13_v2', 'D14_v2',
-        /// 'L8', 'L16', 'D11_v2', 'D12_v2', 'L4'
+        /// Gets or sets SKU name. Possible values include:
+        /// 'Standard_DS13_v2+1TB_PS', 'Standard_DS13_v2+2TB_PS',
+        /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
+        /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
+        /// 'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
+        /// 'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets SKU capacity.
+        /// Gets or sets the number of instances of the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
 
         /// <summary>
-        /// SKU tier.
+        /// Gets or sets SKU tier. Possible values include: 'Basic', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public static string Tier { get; private set; }
+        public string Tier { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -82,6 +87,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Tier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Tier");
             }
         }
     }

@@ -95,8 +95,8 @@ namespace Kusto.Tests.ScenarioTests
             databaseName = TestUtilities.GenerateName("testdatabase");
             eventHubConnectionName = TestUtilities.GenerateName("eventhubConection");
 
-            sku1 = new AzureSku(name: "D13_v2", capacity: 2);
-            sku2 = new AzureSku(name: "D14_v2", capacity: 2);
+            sku1 = new AzureSku(name: "D13_v2", "Standard", capacity: 2);
+            sku2 = new AzureSku(name: "D14_v2", "Standard", capacity: 2);
 
             trustedExternalTenants = new List<TrustedExternalTenant>(1) { new TrustedExternalTenant(this.tenantId) };
 
@@ -107,7 +107,7 @@ namespace Kusto.Tests.ScenarioTests
             softDeletePeriod2 = TimeSpan.FromDays(6);
             dataFormat = "CSV";
 
-            cluster = new Cluster(sku: new AzureSku(name: "D13_v2"), location: this.location, trustedExternalTenants: trustedExternalTenants);
+            cluster = new Cluster(sku: new AzureSku(name: "D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
             database = new Database(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
             eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
 

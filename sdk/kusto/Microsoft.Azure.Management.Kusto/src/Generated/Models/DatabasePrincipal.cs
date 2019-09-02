@@ -40,7 +40,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="email">Database principal email if exists.</param>
         /// <param name="appId">Application id - relevant only for application
         /// principal type.</param>
-        public DatabasePrincipal(string role, string name, string type, string fqn = default(string), string email = default(string), string appId = default(string))
+        /// <param name="tenantName">The tenant name of the principal</param>
+        public DatabasePrincipal(string role, string name, string type, string fqn = default(string), string email = default(string), string appId = default(string), string tenantName = default(string))
         {
             Role = role;
             Name = name;
@@ -48,6 +49,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             Fqn = fqn;
             Email = email;
             AppId = appId;
+            TenantName = tenantName;
             CustomInit();
         }
 
@@ -95,6 +97,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "appId")]
         public string AppId { get; set; }
+
+        /// <summary>
+        /// Gets the tenant name of the principal
+        /// </summary>
+        [JsonProperty(PropertyName = "tenantName")]
+        public string TenantName { get; private set; }
 
         /// <summary>
         /// Validate the object.

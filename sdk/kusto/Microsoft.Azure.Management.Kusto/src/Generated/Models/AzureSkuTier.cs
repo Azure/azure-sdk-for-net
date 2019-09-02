@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for AzureSkuTier.
     /// </summary>
-    public static class ProvisioningState
+    public static class AzureSkuTier
     {
-        public const string Running = "Running";
-        public const string Creating = "Creating";
-        public const string Deleting = "Deleting";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Moving = "Moving";
+        public const string Basic = "Basic";
+        public const string Standard = "Standard";
     }
 }

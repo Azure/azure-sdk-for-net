@@ -18,26 +18,28 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using System.Linq;
 
     /// <summary>
-    /// Class representing an event hub data connection.
+    /// Class representing an iot hub data connection.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("EventHub")]
+    [Newtonsoft.Json.JsonObject("IotHub")]
     [Rest.Serialization.JsonTransformation]
-    public partial class EventHubDataConnection : DataConnection
+    public partial class IotHubDataConnection : DataConnection
     {
         /// <summary>
-        /// Initializes a new instance of the EventHubDataConnection class.
+        /// Initializes a new instance of the IotHubDataConnection class.
         /// </summary>
-        public EventHubDataConnection()
+        public IotHubDataConnection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHubDataConnection class.
+        /// Initializes a new instance of the IotHubDataConnection class.
         /// </summary>
-        /// <param name="eventHubResourceId">The resource ID of the event hub
-        /// to be used to create a data connection.</param>
-        /// <param name="consumerGroup">The event hub consumer group.</param>
+        /// <param name="iotHubResourceId">The resource ID of the Iot hub to be
+        /// used to create a data connection.</param>
+        /// <param name="consumerGroup">The iot hub consumer group.</param>
+        /// <param name="sharedAccessPolicyName">The name of the share access
+        /// policy name</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -55,17 +57,18 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// the data format can be added to each message. Possible values
         /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
         /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO'</param>
-        /// <param name="eventSystemProperties">System properties of the event
+        /// <param name="eventSystemProperties">System properties of the iot
         /// hub</param>
-        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>))
+        public IotHubDataConnection(string iotHubResourceId, string consumerGroup, string sharedAccessPolicyName, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>))
             : base(id, name, type, location)
         {
-            EventHubResourceId = eventHubResourceId;
+            IotHubResourceId = iotHubResourceId;
             ConsumerGroup = consumerGroup;
             TableName = tableName;
             MappingRuleName = mappingRuleName;
             DataFormat = dataFormat;
             EventSystemProperties = eventSystemProperties;
+            SharedAccessPolicyName = sharedAccessPolicyName;
             CustomInit();
         }
 
@@ -75,14 +78,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource ID of the event hub to be used to create
-        /// a data connection.
+        /// Gets or sets the resource ID of the Iot hub to be used to create a
+        /// data connection.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.eventHubResourceId")]
-        public string EventHubResourceId { get; set; }
+        [JsonProperty(PropertyName = "properties.iotHubResourceId")]
+        public string IotHubResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the event hub consumer group.
+        /// Gets or sets the iot hub consumer group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.consumerGroup")]
         public string ConsumerGroup { get; set; }
@@ -111,10 +114,16 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string DataFormat { get; set; }
 
         /// <summary>
-        /// Gets or sets system properties of the event hub
+        /// Gets or sets system properties of the iot hub
         /// </summary>
         [JsonProperty(PropertyName = "properties.eventSystemProperties")]
         public IList<string> EventSystemProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the share access policy name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sharedAccessPolicyName")]
+        public string SharedAccessPolicyName { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -124,13 +133,17 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (EventHubResourceId == null)
+            if (IotHubResourceId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "EventHubResourceId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "IotHubResourceId");
             }
             if (ConsumerGroup == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConsumerGroup");
+            }
+            if (SharedAccessPolicyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SharedAccessPolicyName");
             }
         }
     }
