@@ -3,6 +3,12 @@
     <Description>Microsoft.Azure.KeyVault.WebKey.Tests Class Library</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
+
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\src\Microsoft.Azure.KeyVault.WebKey.csproj" />

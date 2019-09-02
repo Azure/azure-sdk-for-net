@@ -21,6 +21,11 @@
     <PackageProjectUrl>http://customvision.ai</PackageProjectUrl>
   </PropertyGroup>
 
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>

@@ -10,6 +10,10 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Microsoft.Azure.ApplicationInsights.Query</RootNamespace>
   </PropertyGroup>
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 
   <!-- Please do not move/edit code below this line -->
   <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />

@@ -6,6 +6,11 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />

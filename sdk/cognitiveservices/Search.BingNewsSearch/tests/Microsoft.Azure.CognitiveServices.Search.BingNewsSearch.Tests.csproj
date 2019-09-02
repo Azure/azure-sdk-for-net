@@ -11,6 +11,11 @@
     <ProjectReference Include="..\src\Microsoft.Azure.CognitiveServices.Search.BingNewsSearch.csproj" />
   </ItemGroup>
 
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>

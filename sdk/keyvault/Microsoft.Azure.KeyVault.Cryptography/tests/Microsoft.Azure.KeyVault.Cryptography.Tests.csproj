@@ -5,6 +5,11 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Azure.KeyVault.Core\src\Microsoft.Azure.KeyVault.Core.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.KeyVault.Cryptography.csproj" />

@@ -8,6 +8,12 @@
     <AzureApiTag>EventGrid_2018-01-01;</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
+
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <PropertyGroup>
     <NoWarn>$(NoWarn);CS0618</NoWarn>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

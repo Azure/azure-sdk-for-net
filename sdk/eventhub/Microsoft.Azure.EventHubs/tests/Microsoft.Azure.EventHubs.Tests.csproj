@@ -7,6 +7,11 @@
     <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
 
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <!-- Because Service Fabric is involved, force the platform to x64. -->
   <PropertyGroup>
     <Platform>x64</Platform>

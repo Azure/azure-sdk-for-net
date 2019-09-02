@@ -40,6 +40,14 @@
     </PackageReference>
   </ItemGroup>
 
+  <!-- Enable StyleCop  -->
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" >
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
   <!-- Enable SourceLink  -->
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<RuleSet Name="StyleCop.Analyzers rules with selected rules set to warning." Description="StyleCop.Analyzers with selected rules enabled. Rules with IsEnabledByDefault = false are disabled." ToolsVersion="14.0">
+<RuleSet Name="StyleCop.Analyzers rules with all rules set to None" Description="StyleCop.Analyzers with None action. Rules with IsEnabledByDefault = false are disabled." ToolsVersion="14.0">
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.SpecialRules">
         <Rule Id="SA0001"  Action="None" />          <!-- XML comment analysis disabled -->
         <Rule Id="SA0002"  Action="None" />          <!-- Invalid settings file -->
     </Rules>
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.SpacingRules">
-        <Rule Id="SA1000"  Action="Warning" />       <!-- Keywords should be spaced correctly -->
+        <Rule Id="SA1000"  Action="None" />          <!-- Keywords should be spaced correctly -->
         <Rule Id="SA1001"  Action="None" />          <!-- Commas should be spaced correctly -->
         <Rule Id="SA1002"  Action="None" />          <!-- Semicolons should be spaced correctly -->
         <Rule Id="SA1003"  Action="None" />          <!-- Symbols should be spaced correctly -->
@@ -24,16 +24,16 @@
         <Rule Id="SA1016"  Action="None" />          <!-- Opening attribute brackets should be spaced correctly -->
         <Rule Id="SA1017"  Action="None" />          <!-- Closing attribute brackets should be spaced correctly -->
         <Rule Id="SA1018"  Action="None" />          <!-- Nullable type symbols should be spaced correctly -->
-        <Rule Id="SA1019"  Action="Warning" />       <!-- Member access symbols should be spaced correctly -->
-        <Rule Id="SA1020"  Action="Warning" />       <!-- Increment decrement symbols should be spaced correctly -->
+        <Rule Id="SA1019"  Action="None" />          <!-- Member access symbols should be spaced correctly -->
+        <Rule Id="SA1020"  Action="None" />          <!-- Increment decrement symbols should be spaced correctly -->
         <Rule Id="SA1021"  Action="None" />          <!-- Negative signs should be spaced correctly -->
         <Rule Id="SA1022"  Action="None" />          <!-- Positive signs should be spaced correctly -->
         <Rule Id="SA1023"  Action="None" />          <!-- Dereference and access of symbols should be spaced correctly -->
         <Rule Id="SA1024"  Action="None" />          <!-- Colons should be spaced correctly -->
         <Rule Id="SA1025"  Action="None" />          <!-- Code should not contain multiple whitespace in a row -->
-        <Rule Id="SA1026"  Action="Warning" />       <!-- Code should not contain space after new or stackalloc keyword in implicitly typed array allocation -->
+        <Rule Id="SA1026"  Action="None" />          <!-- Code should not contain space after new or stackalloc keyword in implicitly typed array allocation -->
         <Rule Id="SA1027"  Action="None" />          <!-- Use tabs correctly -->
-        <Rule Id="SA1028"  Action="Warning" />       <!-- Code should not contain trailing whitespace -->
+        <Rule Id="SA1028"  Action="None" />          <!-- Code should not contain trailing whitespace -->
     </Rules>
    
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.ReadabilityRules">
@@ -49,10 +49,10 @@
         <Rule Id="SA1109"  Action="None" />          <!-- Block statements should not contain embedded regions -->
         <Rule Id="SA1110"  Action="None" />          <!-- Opening parenthesis or bracket should be on declaration line -->
         <Rule Id="SA1111"  Action="None" />          <!-- Closing parenthesis should be on line of last parameter -->
-        <Rule Id="SA1112"  Action="Warning" />       <!-- Closing parenthesis should be on line of opening parenthesis -->
-        <Rule Id="SA1113"  Action="Warning" />       <!-- Comma should be on the same line as previous parameter -->
+        <Rule Id="SA1112"  Action="None" />          <!-- Closing parenthesis should be on line of opening parenthesis -->
+        <Rule Id="SA1113"  Action="None" />          <!-- Comma should be on the same line as previous parameter -->
         <Rule Id="SA1114"  Action="None" />          <!-- Parameter list should follow declaration -->
-        <Rule Id="SA1115"  Action="Warning" />       <!-- Parameter should follow comma -->
+        <Rule Id="SA1115"  Action="None" />          <!-- Parameter should follow comma -->
         <Rule Id="SA1116"  Action="None" />          <!-- Split parameters should start on line after declaration -->
         <Rule Id="SA1117"  Action="None" />          <!-- Parameters should be on same line or separate lines -->
         <Rule Id="SA1118"  Action="None" />          <!-- Parameter should not span multiple lines -->
@@ -84,14 +84,14 @@
         <Rule Id="SA1202"  Action="None" />          <!-- Elements should be ordered by access -->
         <Rule Id="SA1203"  Action="None" />          <!-- Constants should appear before fields -->
         <Rule Id="SA1204"  Action="None" />          <!-- Static elements should appear before instance elements -->
-        <Rule Id="SA1205"  Action="Warning" />       <!-- Partial elements should declare access -->
-        <Rule Id="SA1206"  Action="Warning" />       <!-- Declaration keywords should follow order -->
+        <Rule Id="SA1205"  Action="None" />          <!-- Partial elements should declare access -->
+        <Rule Id="SA1206"  Action="None" />          <!-- Declaration keywords should follow order -->
         <Rule Id="SA1207"  Action="None" />          <!-- Protected should come before internal -->
         <Rule Id="SA1208"  Action="None" />          <!-- System using directives should be placed before other using directives -->
         <Rule Id="SA1209"  Action="None" />          <!-- Using alias directives should be placed after other using directives -->
         <Rule Id="SA1210"  Action="None" />          <!-- Using directives should be ordered alphabetically by namespace -->
         <Rule Id="SA1211"  Action="None" />          <!-- Using alias directives should be ordered alphabetically by alias name -->
-        <Rule Id="SA1212"  Action="Warning" />       <!-- Property accessors should follow order -->
+        <Rule Id="SA1212"  Action="None" />          <!-- Property accessors should follow order -->
         <Rule Id="SA1213"  Action="None" />          <!-- Event accessors should follow order -->
         <Rule Id="SA1214"  Action="None" />          <!-- Readonly fields should appear before non-readonly fields -->
         <Rule Id="SA1216"  Action="None" />          <!-- Using static directives should be placed at the correct location -->
@@ -101,7 +101,7 @@
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.NamingRules">
         <Rule Id="SA1300"  Action="None" />          <!-- Element should begin with upper-case letter -->
         <Rule Id="SA1301"  Action="None" />          <!-- Element should begin with lower-case letter -->
-        <Rule Id="SA1302"  Action="Warning" />       <!-- Interface names should begin with I -->
+        <Rule Id="SA1302"  Action="None" />          <!-- Interface names should begin with I -->
         <Rule Id="SA1303"  Action="None" />          <!-- Const field names should begin with upper-case letter -->
         <Rule Id="SA1304"  Action="None" />          <!-- Non-private readonly fields should begin with upper-case letter -->
         <Rule Id="SA1305"  Action="None" />          <!-- Field names should not use Hungarian notation -->
@@ -120,7 +120,7 @@
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.MaintainabilityRules">
         <Rule Id="SA1119"  Action="None" />          <!-- Statement should not use unnecessary parenthesis -->
-        <Rule Id="SA1400"  Action="Warning" />       <!-- Access modifier should be declared -->
+        <Rule Id="SA1400"  Action="None" />          <!-- Access modifier should be declared -->
         <Rule Id="SA1401"  Action="None" />          <!-- Fields should be private -->
         <Rule Id="SA1402"  Action="None" />          <!-- File may only contain a single type -->
         <Rule Id="SA1403"  Action="None" />          <!-- File may only contain a single namespace -->
@@ -131,7 +131,7 @@
         <Rule Id="SA1408"  Action="None" />          <!-- Conditional expressions should declare precedence -->
         <Rule Id="SA1409"  Action="None" />          <!-- Remove unnecessary code -->
         <Rule Id="SA1410"  Action="None" />          <!-- Remove delegate parenthesis when possible -->
-        <Rule Id="SA1411"  Action="Warning" />       <!-- Attribute constructor should not use unnecessary parenthesis -->
+        <Rule Id="SA1411"  Action="None" />          <!-- Attribute constructor should not use unnecessary parenthesis -->
         <Rule Id="SA1412"  Action="None" />          <!-- Store files as UTF-8 with byte order mark -->
         <Rule Id="SA1413"  Action="None" />          <!-- Use trailing comma in multi-line initializers -->
     </Rules>
@@ -154,8 +154,8 @@
         <Rule Id="SA1514"  Action="None" />          <!-- Element documentation header should be preceded by blank line -->
         <Rule Id="SA1515"  Action="None" />          <!-- Single-line comment should be preceded by blank line -->
         <Rule Id="SA1516"  Action="None" />          <!-- Elements should be separated by blank line -->
-        <Rule Id="SA1517"  Action="Warning" />       <!-- Code should not contain blank lines at start of file -->
-        <Rule Id="SA1518"  Action="Warning" />       <!-- Use line endings correctly at end of file -->
+        <Rule Id="SA1517"  Action="None" />          <!-- Code should not contain blank lines at start of file -->
+        <Rule Id="SA1518"  Action="None" />          <!-- Use line endings correctly at end of file -->
         <Rule Id="SA1519"  Action="None" />          <!-- Braces should not be omitted from multi-line child statement -->
         <Rule Id="SA1520"  Action="None" />          <!-- Use braces consistently -->
     </Rules>
@@ -178,7 +178,7 @@
         <Rule Id="SA1614"  Action="None" />          <!-- Element parameter documentation should have text -->
         <Rule Id="SA1615"  Action="None" />          <!-- Element return value should be documented -->
         <Rule Id="SA1616"  Action="None" />          <!-- Element return value documentation should have text -->
-        <Rule Id="SA1617"  Action="Warning" />       <!-- Void return value should not be documented -->
+        <Rule Id="SA1617"  Action="None" />          <!-- Void return value should not be documented -->
         <Rule Id="SA1618"  Action="None" />          <!-- Generic type parameters should be documented -->
         <Rule Id="SA1619"  Action="None" />          <!-- Generic type parameters should be documented partial class -->
         <Rule Id="SA1620"  Action="None" />          <!-- Generic type parameter documentation should match type parameters -->

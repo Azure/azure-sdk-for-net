@@ -17,6 +17,11 @@
 
   </PropertyGroup>
 
+  <!-- Disable StyleCop -->
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysisDisabled.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <Import Project="..\..\Azure.Security.KeyVault.Shared\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
 
   <!-- Import the Azure.Core project -->
