@@ -5,7 +5,7 @@ jobs:
     variables:
       - template: templates/variables/globals.yml
     pool:
-      vmImage: vs2017-win2016
+      vmImage: windows-2019
     steps:
       - pwsh: |
           Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip" `
