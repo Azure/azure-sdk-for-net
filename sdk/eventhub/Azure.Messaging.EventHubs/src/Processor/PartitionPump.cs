@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
@@ -220,6 +221,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
+            IEnumerable<EventData> receivedEvents;
             Exception unrecoverableException = null;
 
             // We'll break from the loop upon encountering a non-retriable exception.  The event processor periodically
@@ -229,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 try
                 {
-                    var receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
+                    receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
 
                     try
                     {
