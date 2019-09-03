@@ -3,18 +3,14 @@
 // license information.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
     /// Represents information about an dencryption operation
     /// </summary>
-    public class DecryptResult : IJsonDeserializable
+    public class DecryptResult : Model
     {
         private const string KeyIdPropertyName = "kid";
         private const string PlaintextPropertyName = "value";
@@ -34,7 +30,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </summary>
         public EncryptionAlgorithm Algorithm { get; internal set; }
 
-        void IJsonDeserializable.ReadProperties(JsonElement json)
+        internal override void ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
             {
@@ -49,5 +45,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 }
             }
         }
+
+        internal override void WriteProperties(Utf8JsonWriter json) => throw new NotSupportedException();
     }
 }

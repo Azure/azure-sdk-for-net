@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Security.KeyVault.Keys.Cryptography;
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    internal struct KeyVerifyParameters : IJsonSerializable
+    internal class KeyVerifyParameters : Model
     {
         private static readonly JsonEncodedText AlgorithmPropertyNameBytes = JsonEncodedText.Encode("alg");
         private static readonly JsonEncodedText DigestPropertyNameBytes = JsonEncodedText.Encode("digest");
@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public byte[] Signature { get; set; }
 
-        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
             if (Algorithm != null)
             {
@@ -34,5 +34,7 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteString(SignaturePropertyNameBytes, Base64Url.Encode(Signature));
             }
         }
+
+        internal override void ReadProperties(JsonElement json) => throw new NotSupportedException();
     }
 }

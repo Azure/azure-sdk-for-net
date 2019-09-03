@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -9,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// Represents information about a sign operation
     /// </summary>
-    public class SignResult : IJsonDeserializable
+    public class SignResult : Model
     {
         private const string KeyIdPropertyName = "kid";
         private const string SignaturePropertyName = "value";
@@ -29,7 +30,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </summary>
         public SignatureAlgorithm Algorithm { get; internal set; }
 
-        void IJsonDeserializable.ReadProperties(JsonElement json)
+        internal override void ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
             {
@@ -44,5 +45,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 }
             }
         }
+
+        internal override void WriteProperties(Utf8JsonWriter json) => throw new NotSupportedException();
     }
 }

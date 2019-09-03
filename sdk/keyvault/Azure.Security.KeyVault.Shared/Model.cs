@@ -12,14 +12,12 @@ namespace Azure.Security.KeyVault
     /// <summary>
     /// Defines helpers for deserialize and serialize.
     /// </summary>
-    public abstract class Model
+    public abstract class Model : IJsonSerializable, IJsonDeserializable
     {
         internal void Deserialize(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                this.ReadProperties(json.RootElement);
-            }
+            using JsonDocument json = JsonDocument.Parse(content);
+            ReadProperties(json.RootElement);
         }
 
         internal ReadOnlyMemory<byte> Serialize()
@@ -43,5 +41,9 @@ namespace Azure.Security.KeyVault
         internal abstract void WriteProperties(Utf8JsonWriter json);
 
         internal abstract void ReadProperties(JsonElement json);
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
+
+        void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
     }
 }
