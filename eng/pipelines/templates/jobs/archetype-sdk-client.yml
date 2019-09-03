@@ -3,7 +3,7 @@ jobs:
     variables:
       - template: ../variables/globals.yml
     pool:
-      vmImage: vs2017-win2016
+      vmImage: windows-2019
     steps:
       - checkout: self
         path: AzureSDKEngSystem/Net/SourceDirectory
@@ -34,7 +34,7 @@ jobs:
     dependsOn:
       - Build
     pool:
-      vmImage: "vs2017-win2016"
+      vmImage: "windows-2019"
     steps:
       - checkout: self
         path: AzureSDKEngSystem/Net/SourceDirectory
@@ -95,11 +95,11 @@ jobs:
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
           OSName: "Windows"
-          OSVmImage: "vs2017-win2016"
+          OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
         Windows_NetFramework:
           OSName: "Windows"
-          OSVmImage: "vs2017-win2016"
+          OSVmImage: "windows-2019"
           TestTargetFramework: net461
         MacOs:
           OSName: "MacOS"
