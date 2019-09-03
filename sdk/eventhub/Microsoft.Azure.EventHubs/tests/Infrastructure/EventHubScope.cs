@@ -25,7 +25,7 @@ namespace Microsoft.Azure.EventHubs.Tests
     {
         private const int RetryMaximumAttemps = 15;
         private const double RetryExponentialBackoffSeconds = 2.5;
-        private const double RetryBaseJitterSeconds = 8.0;
+        private const double RetryBaseJitterSeconds = 10.0;
 
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
