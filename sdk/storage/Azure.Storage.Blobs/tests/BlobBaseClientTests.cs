@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Test
     public class BlobBaseClientTests : BlobTestBase
     {
         public BlobBaseClientTests(bool async)
-            : base(async, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -1950,6 +1950,21 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.IsNotNull(response2.Headers.RequestId);
+            }
+        }
+
+        [Test]
+        public async Task SetTierAsync_RehydrateFail()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+
+                // arrange
+                var blob = await this.GetNewBlobClient(container);
+                
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.SetTierAsync(accessTier: AccessTier.Cool, rehydratePriority: "None"),
+                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
             }
         }
 
