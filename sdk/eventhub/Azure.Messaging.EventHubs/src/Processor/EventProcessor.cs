@@ -212,6 +212,12 @@ namespace Azure.Messaging.EventHubs.Processor
                         {
                             await RunningTask.ConfigureAwait(false);
                         }
+                        catch (TaskCanceledException)
+                        {
+                            // The running task has an inner delay that is likely to throw a TaskCanceledException upon token cancellation.
+                            // The task might end up leaving its main loop gracefully by chance, so we won't necessarily reach this part of
+                            // the code.
+                        }
                         catch (Exception)
                         {
                             // TODO: delegate the exception handling to an Exception Callback.
@@ -293,19 +299,18 @@ namespace Azure.Messaging.EventHubs.Processor
                     await AddOrOverwritePartitionPumpAsync(claimedOwnership.PartitionId).ConfigureAwait(false);
                 }
 
-                try
+                // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
+                // but it may be overriden by a derived class.
+
+                TimeSpan remainingTimeUntilNextCycle = cycleDuration.Elapsed - LoadBalanceUpdate;
+
+                if (remainingTimeUntilNextCycle > TimeSpan.Zero)
                 {
-                    // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
-                    // but it may be overriden by a derived class.
+                    // If a stop request has been issued, Task.Delay will throw a TaskCanceledException.  This is expected and it
+                    // will be caught by the StopAsync method.
 
-                    TimeSpan remainingTimeUntilNextCycle = cycleDuration.Elapsed - LoadBalanceUpdate;
-
-                    if (remainingTimeUntilNextCycle > TimeSpan.Zero)
-                    {
-                        await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
-                    }
+                    await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
                 }
-                catch (TaskCanceledException) { }
             }
         }
 
