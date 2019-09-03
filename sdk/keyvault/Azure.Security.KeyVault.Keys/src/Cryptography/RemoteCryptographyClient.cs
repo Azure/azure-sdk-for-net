@@ -309,8 +309,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         private async Task<Response<TResult>> SendRequestAsync<TContent, TResult>(string operation, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken)
-            where TContent : Model
-            where TResult : Model
+            where TContent : IJsonSerializable
+            where TResult : IJsonDeserializable
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.{operation}");
             scope.AddAttribute("key", KeyId);
@@ -328,8 +328,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         private Response<TResult> SendRequest<TContent, TResult>(string operation, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken)
-            where TContent : Model
-            where TResult : Model
+            where TContent : IJsonSerializable
+            where TResult : IJsonDeserializable
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.{operation}");
             scope.AddAttribute("key", KeyId);

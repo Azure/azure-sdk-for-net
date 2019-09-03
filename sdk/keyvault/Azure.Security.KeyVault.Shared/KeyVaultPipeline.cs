@@ -71,10 +71,9 @@ namespace Azure.Security.KeyVault
         }
 
         public Response<T> CreateResponse<T>(Response response, T result)
-            where T : Model
+            where T : IJsonDeserializable
         {
             result.Deserialize(response.ContentStream);
-
             return new Response<T>(response, result);
         }
 
@@ -84,7 +83,7 @@ namespace Azure.Security.KeyVault
         }
 
         public async Task<Page<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
-                where T : Model
+                where T : IJsonDeserializable
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
             scope.Start();
@@ -115,7 +114,7 @@ namespace Azure.Security.KeyVault
         }
 
         public Page<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
-            where T : Model
+            where T : IJsonDeserializable
         {
             using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
             scope.Start();
@@ -146,8 +145,8 @@ namespace Azure.Security.KeyVault
         }
 
         public async Task<Response<TResult>> SendRequestAsync<TContent, TResult>(RequestMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
-            where TContent : Model
-            where TResult : Model
+            where TContent : IJsonSerializable
+            where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
             request.Content = HttpPipelineRequestContent.Create(content.Serialize());
@@ -158,8 +157,8 @@ namespace Azure.Security.KeyVault
         }
 
         public Response<TResult> SendRequest<TContent, TResult>(RequestMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
-            where TContent : Model
-            where TResult : Model
+            where TContent : IJsonSerializable
+            where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
             request.Content = HttpPipelineRequestContent.Create(content.Serialize());
@@ -170,7 +169,7 @@ namespace Azure.Security.KeyVault
         }
 
         public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
-            where TResult : Model
+            where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
             Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
@@ -179,7 +178,7 @@ namespace Azure.Security.KeyVault
         }
 
         public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
-            where TResult : Model
+            where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
             Response response = SendRequest(request, cancellationToken);
