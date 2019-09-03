@@ -1,5 +1,8 @@
 Breaking Changes
 ================
+Next Release
+--------------------------
+- PublicAccessType is no longer nullable. There is a new Enum value of None that replaces use of null.
 
 Next Release
 --------------------------
