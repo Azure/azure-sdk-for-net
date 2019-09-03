@@ -129,5 +129,24 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
                 Assert.Equal("expiryTime", ex.ParamName);
             }
         }
+
+        [Fact]
+        public void GetTaskOutputStoragePathReturnsExpectedValue()
+        {
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
+            {
+                CloudJob job = batchClient.JobOperations.CreateJob();
+                job.Id = "fakejob";
+
+                var path = job.GetOutputStoragePath(JobOutputKind.JobOutput);
+                Assert.Equal($"${JobOutputKind.JobOutput.ToString()}", path);
+
+                path = job.GetOutputStoragePath(JobOutputKind.JobPreview);
+                Assert.Equal($"${JobOutputKind.JobPreview.ToString()}", path);
+
+                path = job.GetOutputStoragePath(JobOutputKind.Custom("foo"));
+                Assert.Equal($"${JobOutputKind.Custom("foo").ToString()}", path);
+            }
+        }
     }
 }

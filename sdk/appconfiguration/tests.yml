@@ -6,4 +6,4 @@ jobs:
     MaxParallel: 1
     ServiceDirectory: appconfiguration
     EnvVars:
-      APP_CONFIG_CONNECTION: $(net-azconfig-test-connection-string)
+      APPCONFIGURATION_CONNECTION_STRING: $(net-azconfig-test-connection-string)

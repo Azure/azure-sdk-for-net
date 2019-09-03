@@ -1,16 +1,26 @@
 # Contributing
 
-| Component            | Build Status                                                                                                                                                                                                        |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master) |
-| Client Libraries     | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/41?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=41&branchName=master)                           |
+| Component            | Build Status                                                                                                                                                                                                          |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master)   |
+| Client Libraries     | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20client%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=290&branchName=master) |
 
 # Prerequisites:
 
-Install VS 2019 (Professional or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
+- Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
+- Install the **.NET Core cross-platform development** workloads in VisualStudio
+- Install **.NET Core 3 preview 7** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
+- Install the latest version of git (https://git-scm.com/downloads)
+
+## GENERAL THINGS TO KNOW:
 
 **Client Libraries** are sdks used to interact with azure resources at application run time while **Management Libraries** are those used to manage (create/modify/delete) Azure resources.
-<br/><br/>
+
+**Build Repo :** To build all Client and Management libraries together. Invoke `dotnet build build.proj` from the root of the repo.<br/>To scope to a single service supply a scope property e.g. `dotnet build build.proj /p:Scope=servicebus`. This will build both client and management projects in the specified service. If using msbuild you must run restore first. See below for how to build the [client](#client-libraries) or [management](#management-libraries) libraries independently.
+
+**Path Length :** To account for the **260 characters Path Length Limit** encountered on windows OS, file paths within the repo is keep below 210 characters. This gives you a runway of 49 characters as clone path for your repo. Paths longer that 260 characters will cause the build to break on windows OS and on CI. Assuming you clone to the default VisualStudio location such that the root of your clone is `C:\Users\\**USERNAME**\Source\Repos\azure-sdk-for-net` your username will have to be 9 characters long to avoid build errors caused by long paths. Consider using `C:\git` as you clone path.
+
+**Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
 
 # Management Libraries
 

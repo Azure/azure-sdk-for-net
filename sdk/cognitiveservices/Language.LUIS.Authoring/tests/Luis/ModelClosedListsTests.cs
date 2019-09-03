@@ -7,11 +7,12 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelClosedListsTests : BaseTest
     {
         private const string versionId = "0.1";
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListClosedLists()
         {
             UseClientFor(async client =>
@@ -24,7 +25,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddClosedList()
         {
             UseClientFor(async client =>
@@ -36,7 +37,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetClosedList()
         {
             UseClientFor(async client =>
@@ -51,7 +52,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateClosedList()
         {
             UseClientFor(async client =>
@@ -81,7 +82,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteClosedList()
         {
             UseClientFor(async client =>
@@ -95,7 +96,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void PatchClosedList()
         {
             UseClientFor(async client =>
@@ -128,7 +129,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddSubList()
         {
             UseClientFor(async client =>
@@ -149,7 +150,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteSubList()
         {
             UseClientFor(async client =>
@@ -167,7 +168,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateSubList()
         {
             UseClientFor(async client =>

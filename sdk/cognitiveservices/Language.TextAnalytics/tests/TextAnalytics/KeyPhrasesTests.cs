@@ -16,9 +16,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public async Task KeyPhrasesBatchAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrasesBatchAsync");
+                HttpMockServer.Initialize(this.GetType(), "KeyPhrasesBatchAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 KeyPhraseBatchResult result = await client.KeyPhrasesBatchAsync(
                     new MultiLanguageBatchInput(
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public async Task KeyPhrasesAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrasesAsync");
+                HttpMockServer.Initialize(this.GetType(), "KeyPhrasesAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 KeyPhraseResult result = await client.KeyPhrasesAsync("I love my team mates");
 
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public void KeyPhrasesBatch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrasesBatch");
+                HttpMockServer.Initialize(this.GetType(), "KeyPhrasesBatch");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 KeyPhraseBatchResult result = client.KeyPhrasesBatch(
                     new MultiLanguageBatchInput(
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
         [Fact]
         public void KeyPhrases()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrases");
+                HttpMockServer.Initialize(this.GetType(), "KeyPhrases");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 KeyPhraseResult result = client.KeyPhrases("I love my team mates");
 

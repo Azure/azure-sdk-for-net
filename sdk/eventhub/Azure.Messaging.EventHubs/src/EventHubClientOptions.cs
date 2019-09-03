@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs
         ///   Validates the retry options are specified, throwing an <see cref="ArgumentException" /> if it is not valid.
         /// </summary>
         ///
-        /// <param name="retryOptions">The set of retry options to validae.</param>
+        /// <param name="retryOptions">The set of retry options to validate.</param>
         ///
         private void ValidateRetryOptions(RetryOptions retryOptions)
         {

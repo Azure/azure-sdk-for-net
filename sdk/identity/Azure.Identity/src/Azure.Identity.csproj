@@ -2,11 +2,15 @@
 
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
-    <AssemblyTitle>Microsoft Azure.ApplicationModel.Configuration Component</AssemblyTitle>
+    <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
     <VersionPrefix>1.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Identity</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
+      Adding user authentication credential types:
+        - UsernamePasswordCredential
+        - DeviceCodeCredential
+        - InteractiveBrowserCredential
       ]]>
     </PackageReleaseNotes>
 
@@ -20,6 +24,8 @@
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="Microsoft.Identity.Client" />
+    
   </ItemGroup>
 
   <ItemGroup>

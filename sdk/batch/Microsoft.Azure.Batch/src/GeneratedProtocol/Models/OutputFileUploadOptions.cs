@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the OutputFileUploadOptions class.
         /// </summary>
-        /// <param name="uploadCondition">The conditions under which the task
+        /// <param name="uploadCondition">The conditions under which the Task
         /// output file or set of files should be uploaded.</param>
         public OutputFileUploadOptions(OutputFileUploadCondition uploadCondition)
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the conditions under which the task output file or set
+        /// Gets or sets the conditions under which the Task output file or set
         /// of files should be uploaded.
         /// </summary>
         /// <remarks>

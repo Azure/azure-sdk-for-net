@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The set of changes to be made to a task.
+    /// The set of changes to be made to a Task.
     /// </summary>
     public partial class TaskUpdateParameter
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the TaskUpdateParameter class.
         /// </summary>
         /// <param name="constraints">Constraints that apply to this
-        /// task.</param>
+        /// Task.</param>
         public TaskUpdateParameter(TaskConstraints constraints = default(TaskConstraints))
         {
             Constraints = constraints;
@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets constraints that apply to this task.
+        /// Gets or sets constraints that apply to this Task.
         /// </summary>
         /// <remarks>
-        /// If omitted, the task is given the default constraints. For
-        /// multi-instance tasks, updating the retention time applies only to
-        /// the primary task and not subtasks.
+        /// If omitted, the Task is given the default constraints. For
+        /// multi-instance Tasks, updating the retention time applies only to
+        /// the primary Task and not subtasks.
         /// </remarks>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }

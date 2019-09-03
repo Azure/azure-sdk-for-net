@@ -10,6 +10,10 @@ namespace Microsoft.Azure.Management.Peering
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// APIs to manage Peering resources through the Azure Resource Manager.
@@ -89,6 +93,47 @@ namespace Microsoft.Azure.Management.Peering
         /// Gets the IPeeringsOperations.
         /// </summary>
         IPeeringsOperations Peerings { get; }
+
+        /// <summary>
+        /// Gets the IPeeringServiceLocationsOperations.
+        /// </summary>
+        IPeeringServiceLocationsOperations PeeringServiceLocations { get; }
+
+        /// <summary>
+        /// Gets the IPeeringServicePrefixesOperations.
+        /// </summary>
+        IPeeringServicePrefixesOperations PeeringServicePrefixes { get; }
+
+        /// <summary>
+        /// Gets the IPrefixesOperations.
+        /// </summary>
+        IPrefixesOperations Prefixes { get; }
+
+        /// <summary>
+        /// Gets the IPeeringServiceProvidersOperations.
+        /// </summary>
+        IPeeringServiceProvidersOperations PeeringServiceProviders { get; }
+
+        /// <summary>
+        /// Gets the IPeeringServicesOperations.
+        /// </summary>
+        IPeeringServicesOperations PeeringServices { get; }
+
+        /// <summary>
+        /// Checks if the peering service provider is present within 1000 miles
+        /// of customer's location
+        /// </summary>
+        /// <param name='checkServiceProviderAvailabilityInput'>
+        /// The CheckServiceProviderAvailabilityInput
+        /// indicating customer location and service provider.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<string>> CheckServiceProviderAvailabilityWithHttpMessagesAsync(CheckServiceProviderAvailabilityInput checkServiceProviderAvailabilityInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

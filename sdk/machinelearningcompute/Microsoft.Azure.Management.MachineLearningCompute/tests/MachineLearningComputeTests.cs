@@ -23,7 +23,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void CreateCluster()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-create"))
             {
                 testBase.CreateResourceGroup();
@@ -37,7 +37,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void CreateClusterWithoutOrchestatorProperties()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-no-orch-prop"))
             {
                 testBase.CreateResourceGroup();
@@ -51,7 +51,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void GetCluster()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-get"))
             {
                 var resourceGroup = testBase.CreateResourceGroup();
@@ -72,7 +72,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void ListKeys()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-keys"))
             {
                 var resourceGroup = testBase.CreateResourceGroup();
@@ -95,7 +95,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void ListClustersInResourceGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-list-rg"))
             {
                 var resourceGroup = testBase.CreateResourceGroup();
@@ -110,7 +110,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void ListClustersBySubscriptionId()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-list-sub"))
             {
                 var resourceGroup = testBase.CreateResourceGroup();
@@ -125,7 +125,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void DeleteCluster()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-delete"))
             {
                 var resourceGroup = testBase.CreateResourceGroup();
@@ -142,7 +142,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void CheckSystemServicesUpdatesAvailable()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-checkupdate"))
             {
                 var resourceGroup = testBase.CreateResourceGroup();
@@ -157,7 +157,7 @@ namespace MachineLearningCompute.Tests
         [Fact(Skip = "ReRecord due to CR change")]
         public void UpdateSystemServices()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-update"))
             {
                 var resourceGroup = testBase.CreateResourceGroup();
@@ -174,7 +174,7 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void DeleteAllResources()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().Name))
             using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-deleteall"))
             {
                 var resourceGroup = testBase.CreateResourceGroup();

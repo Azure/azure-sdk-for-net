@@ -3,6 +3,8 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <VersionPrefix>2.2.0</VersionPrefix>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+    <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
 
   <!-- Because Service Fabric is involved, force the platform to x64. -->
@@ -18,6 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.EventHub"  />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="Polly" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.ServiceFabric.Data" />
     <PackageReference Include="System.Net.WebSockets.Client" />

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -19,7 +19,7 @@ namespace Compute.Tests.VMScaleSetTests
         [Fact]
         public void TestVMScaleSetWithLicenseType()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
 
                 EnsureClientsInitialized(context);
@@ -78,7 +78,7 @@ namespace Compute.Tests.VMScaleSetTests
         [Fact]
         public void TestVMScaleSetDiagnosticsProfile()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
 
                 EnsureClientsInitialized(context);

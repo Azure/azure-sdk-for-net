@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
     
     Version 2.0
     
-    The primary goals of this format is to allow a simple XML format 
+    The primary goals of this format is to allow a simple XML format
     that is mostly human readable. The generation and parsing of the 
     various data types are done through the TypeConverter classes 
     associated with the data types.
@@ -41,7 +41,7 @@
     extensible. For a given mimetype the value must be set accordingly:
     
     Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
     
     mimetype: application/x-microsoft.net.object.binary.base64
@@ -138,9 +138,6 @@
   <data name="InvalidTimePeriod" xml:space="preserve">
     <value>The time period may not be Zero or Infinite.</value>
   </data>
-  <data name="MissingSystemProperty" xml:space="preserve">
-    <value>System property '{0}' is missing in the event.</value>
-  </data>
   <data name="ConsumerIdentifierOverMaxValue" xml:space="preserve">
     <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
   </data>
@@ -156,8 +153,8 @@
   <data name="ValueMustBeAtLeast" xml:space="preserve">
     <value>The value supplied must be greater than or equal to {0}.</value>
   </data>
-  <data name="ProxyMustUseWebsockets" xml:space="preserve">
-    <value>A proxy may only be used for a websockets connection.</value>
+  <data name="ProxyMustUseWebSockets" xml:space="preserve">
+    <value>A proxy may only be used for a web sockets connection.</value>
   </data>
   <data name="RetryOptionsMustBeSet" xml:space="preserve">
     <value>Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly.</value>
@@ -206,5 +203,23 @@
   </data>
   <data name="UnsupportedTransportEventType" xml:space="preserve">
     <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
+  </data>
+  <data name="FailedToCreateEventSubscription" xml:space="preserve">
+    <value>Could not create a subscription for events for Event Hub: '{0}', partition: '{1}', consumer group: '{2}'.</value>
+  </data>
+  <data name="UnrecoverableException" xml:space="preserve">
+    <value>An unrecoverable exception was encountered that left the environment in a bad state.</value>
+  </data>
+  <data name="DisposedInstanceCannotPerformOperation" xml:space="preserve">
+    <value>{0} has already been disposed and cannot perform the requested operation.</value>
+  </data>
+  <data name="CouldNotAcquireAccessToken" xml:space="preserve">
+    <value>Unable to acquire an access token using the provided credential.</value>
+  </data>
+  <data name="UnknownCommunicationException" xml:space="preserve">
+    <value>An unknown error was encountered while communicating with the Event Hubs service.</value>
+  </data>
+  <data name="InvalidMessageBody" xml:space="preserve">
+    <value>An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}</value>
   </data>
 </root>

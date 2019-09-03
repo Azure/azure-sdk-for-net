@@ -16,27 +16,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A Job Release task to run on job completion on any compute node where
-    /// the job has run.
+    /// A Job Release Task to run on Job completion on any Compute Node where
+    /// the Job has run.
     /// </summary>
     /// <remarks>
-    /// The Job Release task runs when the job ends, because of one of the
+    /// The Job Release Task runs when the Job ends, because of one of the
     /// following: The user calls the Terminate Job API, or the Delete Job API
-    /// while the job is still active, the job's maximum wall clock time
-    /// constraint is reached, and the job is still active, or the job's Job
-    /// Manager task completed, and the job is configured to terminate when the
-    /// Job Manager completes. The Job Release task runs on each compute node
-    /// where tasks of the job have run and the Job Preparation task ran and
-    /// completed. If you reimage a compute node after it has run the Job
-    /// Preparation task, and the job ends without any further tasks of the job
-    /// running on that compute node (and hence the Job Preparation task does
-    /// not re-run), then the Job Release task does not run on that node. If a
-    /// compute node reboots while the Job Release task is still running, the
-    /// Job Release task runs again when the compute node starts up. The job is
-    /// not marked as complete until all Job Release tasks have completed. The
-    /// Job Release task runs in the background. It does not occupy a
-    /// scheduling slot; that is, it does not count towards the maxTasksPerNode
-    /// limit specified on the pool.
+    /// while the Job is still active, the Job's maximum wall clock time
+    /// constraint is reached, and the Job is still active, or the Job's Job
+    /// Manager Task completed, and the Job is configured to terminate when the
+    /// Job Manager completes. The Job Release Task runs on each Node where
+    /// Tasks of the Job have run and the Job Preparation Task ran and
+    /// completed. If you reimage a Node after it has run the Job Preparation
+    /// Task, and the Job ends without any further Tasks of the Job running on
+    /// that Node (and hence the Job Preparation Task does not re-run), then
+    /// the Job Release Task does not run on that Compute Node. If a Node
+    /// reboots while the Job Release Task is still running, the Job Release
+    /// Task runs again when the Compute Node starts up. The Job is not marked
+    /// as complete until all Job Release Tasks have completed. The Job Release
+    /// Task runs in the background. It does not occupy a scheduling slot; that
+    /// is, it does not count towards the maxTasksPerNode limit specified on
+    /// the Pool.
     /// </remarks>
     public partial class JobReleaseTask
     {
@@ -52,13 +52,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobReleaseTask class.
         /// </summary>
         /// <param name="commandLine">The command line of the Job Release
-        /// task.</param>
+        /// Task.</param>
         /// <param name="id">A string that uniquely identifies the Job Release
-        /// task within the job.</param>
+        /// Task within the Job.</param>
         /// <param name="containerSettings">The settings for the container
-        /// under which the Job Release task runs.</param>
+        /// under which the Job Release Task runs.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
-        /// will download to the compute node before running the command line.
+        /// will download to the Compute Node before running the command line.
         /// There is a maximum size for the list of resource files.  When the
         /// max size is exceeded, the request will fail and the response error
         /// code will be RequestEntityTooLarge. If this occurs, the collection
@@ -66,21 +66,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// using .zip files, Application Packages, or Docker
         /// Containers.</param>
         /// <param name="environmentSettings">A list of environment variable
-        /// settings for the Job Release task.</param>
+        /// settings for the Job Release Task.</param>
         /// <param name="maxWallClockTime">The maximum elapsed time that the
-        /// Job Release task may run on a given compute node, measured from the
-        /// time the task starts. If the task does not complete within the time
+        /// Job Release Task may run on a given Compute Node, measured from the
+        /// time the Task starts. If the Task does not complete within the time
         /// limit, the Batch service terminates it. The default value is 15
         /// minutes. You may not specify a timeout longer than 15 minutes. If
         /// you do, the Batch service rejects it with an error; if you are
         /// calling the REST API directly, the HTTP status code is 400 (Bad
         /// Request).</param>
-        /// <param name="retentionTime">The minimum time to retain the task
-        /// directory for the Job Release task on the compute node. After this
-        /// time, the Batch service may delete the task directory and all its
+        /// <param name="retentionTime">The minimum time to retain the Task
+        /// directory for the Job Release Task on the Compute Node. After this
+        /// time, the Batch service may delete the Task directory and all its
         /// contents.</param>
         /// <param name="userIdentity">The user identity under which the Job
-        /// Release task runs.</param>
+        /// Release Task runs.</param>
         public JobReleaseTask(string commandLine, string id = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), UserIdentity userIdentity = default(UserIdentity))
         {
             Id = id;
@@ -100,16 +100,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the Job Release task
-        /// within the job.
+        /// Gets or sets a string that uniquely identifies the Job Release Task
+        /// within the Job.
         /// </summary>
         /// <remarks>
         /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores and cannot contain more than 64
         /// characters. If you do not specify this property, the Batch service
-        /// assigns a default value of 'jobrelease'. No other task in the job
-        /// can have the same ID as the Job Release task. If you try to submit
-        /// a task with the same id, the Batch service rejects the request with
+        /// assigns a default value of 'jobrelease'. No other Task in the Job
+        /// can have the same ID as the Job Release Task. If you try to submit
+        /// a Task with the same id, the Batch service rejects the request with
         /// error code TaskIdSameAsJobReleaseTask; if you are calling the REST
         /// API directly, the HTTP status code is 409 (Conflict).
         /// </remarks>
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the command line of the Job Release task.
+        /// Gets or sets the command line of the Job Release Task.
         /// </summary>
         /// <remarks>
         /// The command line does not run under a shell, and therefore cannot
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using "cmd
         /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the
         /// command line refers to file paths, it should use a relative path
-        /// (relative to the task working directory), or use the Batch provided
+        /// (relative to the Task working directory), or use the Batch provided
         /// environment variable
         /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
@@ -135,13 +135,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the settings for the container under which the Job
-        /// Release task runs.
+        /// Release Task runs.
         /// </summary>
         /// <remarks>
         /// When this is specified, all directories recursively below the
         /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
-        /// node) are mapped into the container, all task environment variables
-        /// are mapped into the container, and the task command line is
+        /// node) are mapped into the container, all Task environment variables
+        /// are mapped into the container, and the Task command line is
         /// executed in the container. Files produced in the container outside
         /// of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk,
         /// meaning that Batch file APIs will not be able to access those
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
-        /// to the compute node before running the command line.  There is a
+        /// to the Compute Node before running the command line.  There is a
         /// maximum size for the list of resource files.  When the max size is
         /// exceeded, the request will fail and the response error code will be
         /// RequestEntityTooLarge. If this occurs, the collection of
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// .zip files, Application Packages, or Docker Containers.
         /// </summary>
         /// <remarks>
-        /// Files listed under this element are located in the task's working
+        /// Files listed under this element are located in the Task's working
         /// directory.
         /// </remarks>
         [JsonProperty(PropertyName = "resourceFiles")]
@@ -168,15 +168,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the Job
-        /// Release task.
+        /// Release Task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum elapsed time that the Job Release task may
-        /// run on a given compute node, measured from the time the task
-        /// starts. If the task does not complete within the time limit, the
+        /// Gets or sets the maximum elapsed time that the Job Release Task may
+        /// run on a given Compute Node, measured from the time the Task
+        /// starts. If the Task does not complete within the time limit, the
         /// Batch service terminates it. The default value is 15 minutes. You
         /// may not specify a timeout longer than 15 minutes. If you do, the
         /// Batch service rejects it with an error; if you are calling the REST
@@ -186,24 +186,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? MaxWallClockTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum time to retain the task directory for the
-        /// Job Release task on the compute node. After this time, the Batch
-        /// service may delete the task directory and all its contents.
+        /// Gets or sets the minimum time to retain the Task directory for the
+        /// Job Release Task on the Compute Node. After this time, the Batch
+        /// service may delete the Task directory and all its contents.
         /// </summary>
         /// <remarks>
-        /// The default is 7 days, i.e. the task directory will be retained for
-        /// 7 days unless the compute node is removed or the job is deleted.
+        /// The default is 7 days, i.e. the Task directory will be retained for
+        /// 7 days unless the Compute Node is removed or the Job is deleted.
         /// </remarks>
         [JsonProperty(PropertyName = "retentionTime")]
         public System.TimeSpan? RetentionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the user identity under which the Job Release task
+        /// Gets or sets the user identity under which the Job Release Task
         /// runs.
         /// </summary>
         /// <remarks>
-        /// If omitted, the task runs as a non-administrative user unique to
-        /// the task.
+        /// If omitted, the Task runs as a non-administrative user unique to
+        /// the Task.
         /// </remarks>
         [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }

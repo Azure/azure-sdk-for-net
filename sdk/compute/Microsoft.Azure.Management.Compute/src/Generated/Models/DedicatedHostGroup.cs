@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="hosts">A list of references to all dedicated hosts in
         /// the dedicated host group.</param>
-        /// <param name="zones">Availability Zone to use for this host group �
-        /// only single zone is supported. The zone can be assigned only during
+        /// <param name="zones">Availability Zone to use for this host group.
+        /// Only single zone is supported. The zone can be assigned only during
         /// creation. If not provided, the group supports all zones in the
         /// region. If provided, enforces each host in the group to be in the
         /// same zone.</param>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<SubResourceReadOnly> Hosts { get; private set; }
 
         /// <summary>
-        /// Gets or sets availability Zone to use for this host group � only
+        /// Gets or sets availability Zone to use for this host group. Only
         /// single zone is supported. The zone can be assigned only during
         /// creation. If not provided, the group supports all zones in the
         /// region. If provided, enforces each host in the group to be in the

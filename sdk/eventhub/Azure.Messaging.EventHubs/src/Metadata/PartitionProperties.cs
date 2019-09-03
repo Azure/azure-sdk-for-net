@@ -12,11 +12,11 @@ namespace Azure.Messaging.EventHubs.Metadata
     public sealed class PartitionProperties
     {
         /// <summary>
-        ///   The path of the Event Hub that contains the partitions, relative to the namespace
-        ///   that contains it.
+        ///   The name of the Event Hub where the partitions reside, specific to the
+        ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public string EventHubPath { get; }
+        public string EventHubName { get; }
 
         /// <summary>
         ///   The identifier of the partition, unique to the Event Hub which contains it.
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
         /// </summary>
         ///
-        /// <param name="path">The path of the Event Hub that contains the partitions.</param>
+        /// <param name="name">The name of the Event Hub that contains the partitions.</param>
         /// <param name="partitionId">The identifier of the partition.</param>
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
@@ -76,15 +76,15 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         ///
-        internal PartitionProperties(string path,
-                                      string partitionId,
-                                      long beginningSequenceNumber,
-                                      long lastSequenceNumber,
-                                      long lastOffset,
-                                      DateTimeOffset lastEnqueuedTime,
-                                      bool isEmpty)
+        internal PartitionProperties(string name,
+                                     string partitionId,
+                                     long beginningSequenceNumber,
+                                     long lastSequenceNumber,
+                                     long lastOffset,
+                                     DateTimeOffset lastEnqueuedTime,
+                                     bool isEmpty)
         {
-            EventHubPath = path;
+            EventHubName = name;
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;

@@ -49,7 +49,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets or sets the scope for the auto user
         /// </summary>
         /// <remarks>
-        /// The default value is task. Possible values include: 'Task', 'Pool'
+        /// The default value is Pool. If the pool is running Windows a value
+        /// of Task should be specified if stricter isolation between tasks is
+        /// required. For example, if the task mutates the registry in a way
+        /// which could impact other tasks, or if certificates have been
+        /// specified on the pool which should not be accessible by normal
+        /// tasks but should be accessible by start tasks. Possible values
+        /// include: 'Task', 'Pool'
         /// </remarks>
         [JsonProperty(PropertyName = "scope")]
         public AutoUserScope? Scope { get; set; }
@@ -58,10 +64,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets or sets the elevation level of the auto user.
         /// </summary>
         /// <remarks>
-        /// nonAdmin - The auto user is a standard user without elevated
-        /// access. admin - The auto user is a user with elevated access and
-        /// operates with full Administrator permissions. The default value is
-        /// nonAdmin. Possible values include: 'NonAdmin', 'Admin'
+        /// The default value is nonAdmin. Possible values include: 'NonAdmin',
+        /// 'Admin'
         /// </remarks>
         [JsonProperty(PropertyName = "elevationLevel")]
         public ElevationLevel? ElevationLevel { get; set; }

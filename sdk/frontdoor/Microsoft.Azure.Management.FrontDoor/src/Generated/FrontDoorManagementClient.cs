@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 checkFrontDoorNameAvailabilityInput.Validate();
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -629,7 +629,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

@@ -258,8 +258,17 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const useParameter = (param: IParameter, use: ((value: string) => void)) => {
             const constant = isEnumType(param.model) && param.model.constant;
             const nullable = !constant && !param.required;
+            const skipValue = isEnumType(param.model) ? param.model.skipValue : undefined;
             const name = naming.variable(param.clientName);
-            if (nullable) { w.write(`if (${name} != null) {`); }
+            if (nullable) {
+                w.write(`if (${name} != null) {`);
+            } else if (skipValue) {
+                const value = (<IEnumType>param.model).values.find(v => v.name == skipValue || v.value == skipValue);
+                if (!value) { throw `Cannot find a value for x-az-enum-skip-value ${skipValue} in ${types.getName(param.model)}`; }
+                const skipValueName = naming.enumField(value.name || value.value);
+                w.write(`if (${name} != ${types.getName(param.model)}.${skipValueName}) {`);
+            }
+            const indent = !!(nullable || skipValue);
             if (constant) {
                 use(`"${((<IEnumType>param.model).values[0].value || '').toString()}"`);
             } else if (param.model.type === 'dictionary') {
@@ -269,10 +278,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         use("_pair");
                     });
                 });
-            } else if (isPrimitiveType(param.model) && param.model.collectionFormat === `multi`) {
-                if (!param.model.itemType || param.model.itemType.type !== `string`) {
-                    throw `collectionFormat multi is only supported for strings, at the moment`;
-                }
+            } else if (param.location === `header` && isPrimitiveType(param.model) && param.model.collectionFormat === `csv`) {
                 w.scope(() => {
                     w.line(`foreach (string _item in ${naming.parameter(param.clientName)})`);
                     w.scope('{', '}', () => {
@@ -283,14 +289,14 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 if (param.model.type === `boolean`) {
                     w.line();
                     w.line(`#pragma warning disable CA1308 // Normalize strings to uppercase`);
-                } else if (nullable) { w.write(` `); }
+                } else if (indent) { w.write(` `); }
                 use(types.convertToString(name, param.model, service, param.required));
                 if (param.model.type === `boolean`) {
                     w.line();
                     w.line(`#pragma warning restore CA1308 // Normalize strings to uppercase`);
-                } else if (nullable) { w.write(` `); }
+                } else if (indent) { w.write(` `); }
             }
-            if (nullable) { w.write(`}`); }
+            if (indent) { w.write(`}`); }
             w.line();
         };        
 
@@ -557,9 +563,9 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
                         w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
-                        if (isPrimitiveType(header.model) && header.model.collectionFormat === `multi`) {
+                        if (isPrimitiveType(header.model) && header.model.collectionFormat === `csv`) {
                             if (!header.model.itemType || header.model.itemType.type !== `string`) {
-                                throw `collectionFormat multi is only supported for strings, at the moment`;
+                                throw `collectionFormat csv is only supported for strings, at the moment`;
                             }
                             w.write(`(${headerName} ?? "").Split(',')`);
                         } else {
@@ -596,7 +602,12 @@ function generateValidation(w: IndentWriter, operation: IOperation, parameter: I
 function generateModels(w: IndentWriter, model: IServiceModel): void {
     w.line(`#region Models`);
     const fencepost = IndentWriter.createFenceposter();
-    for (const [name, def] of <[string, IModelType][]>Object.entries(model.models)) {
+    const types = <[string, IModelType][]>Object.entries(model.models);
+    types.sort((a, b) =>
+        a[0] < b[0] ? -1 :
+        a[0] > b[0] ? 1 :
+        0);
+    for (const [name, def] of types) {
         if (fencepost()) { w.line(); }
         if (isEnumType(def) && !def.modelAsString) { generateEnum(w, model, def); }
         else if (isEnumType(def) && def.modelAsString) { generateEnumStrings(w, model, def); }
@@ -648,7 +659,7 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
                             // Write the values
                             for (const value of type.values) {
                                 w.write(`case ${types.getName(type)}.${naming.enumField(value.name || value.value)}:`);
-                                w.scope(() => w.line(`return "${value.value}";`));
+                                w.scope(() => w.line(`return ${value.value == null ? 'null' : '"' + value.value + '"'};`));
                             }
                             // Throw for random values
                             w.write(`default:`);
@@ -663,7 +674,7 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
                         w.scope('{', '}', () => {
                             // Write the values
                             for (const value of type.values) {
-                                w.write(`case "${value.value}":`);
+                                w.write(`case ${value.value == null ? 'null' : '"' + value.value + '"'}:`);
                                 w.scope(() => w.line(`return ${types.getName(type)}.${naming.enumField(value.name || value.value)};`));
                             }
                             // Throw for random values

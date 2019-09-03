@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An Azure Batch job to add.
+    /// An Azure Batch Job to add.
     /// </summary>
     public partial class JobAddParameter
     {
@@ -32,33 +32,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobAddParameter class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the job within
-        /// the account.</param>
-        /// <param name="poolInfo">The pool on which the Batch service runs the
-        /// job's tasks.</param>
-        /// <param name="displayName">The display name for the job.</param>
-        /// <param name="priority">The priority of the job.</param>
+        /// <param name="id">A string that uniquely identifies the Job within
+        /// the Account.</param>
+        /// <param name="poolInfo">The Pool on which the Batch service runs the
+        /// Job's Tasks.</param>
+        /// <param name="displayName">The display name for the Job.</param>
+        /// <param name="priority">The priority of the Job.</param>
         /// <param name="constraints">The execution constraints for the
-        /// job.</param>
-        /// <param name="jobManagerTask">Details of a Job Manager task to be
-        /// launched when the job is started.</param>
-        /// <param name="jobPreparationTask">The Job Preparation task.</param>
-        /// <param name="jobReleaseTask">The Job Release task.</param>
+        /// Job.</param>
+        /// <param name="jobManagerTask">Details of a Job Manager Task to be
+        /// launched when the Job is started.</param>
+        /// <param name="jobPreparationTask">The Job Preparation Task.</param>
+        /// <param name="jobReleaseTask">The Job Release Task.</param>
         /// <param name="commonEnvironmentSettings">The list of common
         /// environment variable settings. These environment variables are set
-        /// for all tasks in the job (including the Job Manager, Job
-        /// Preparation and Job Release tasks).</param>
+        /// for all Tasks in the Job (including the Job Manager, Job
+        /// Preparation and Job Release Tasks).</param>
         /// <param name="onAllTasksComplete">The action the Batch service
-        /// should take when all tasks in the job are in the completed
+        /// should take when all Tasks in the Job are in the completed
         /// state.</param>
         /// <param name="onTaskFailure">The action the Batch service should
-        /// take when any task in the job fails.</param>
+        /// take when any Task in the Job fails.</param>
         /// <param name="metadata">A list of name-value pairs associated with
-        /// the job as metadata.</param>
-        /// <param name="usesTaskDependencies">Whether tasks in the job can
+        /// the Job as metadata.</param>
+        /// <param name="usesTaskDependencies">Whether Tasks in the Job can
         /// define dependencies on each other. The default is false.</param>
         /// <param name="networkConfiguration">The network configuration for
-        /// the job.</param>
+        /// the Job.</param>
         public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration))
         {
             Id = id;
@@ -84,21 +84,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the job within the
-        /// account.
+        /// Gets or sets a string that uniquely identifies the Job within the
+        /// Account.
         /// </summary>
         /// <remarks>
         /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores, and cannot contain more than 64
         /// characters. The ID is case-preserving and case-insensitive (that
-        /// is, you may not have two IDs within an account that differ only by
+        /// is, you may not have two IDs within an Account that differ only by
         /// case).
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name for the job.
+        /// Gets or sets the display name for the Job.
         /// </summary>
         /// <remarks>
         /// The display name need not be unique and can contain any Unicode
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the priority of the job.
+        /// Gets or sets the priority of the Job.
         /// </summary>
         /// <remarks>
         /// Priority values can range from -1000 to 1000, with -1000 being the
@@ -119,103 +119,103 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution constraints for the job.
+        /// Gets or sets the execution constraints for the Job.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets details of a Job Manager task to be launched when the
-        /// job is started.
+        /// Gets or sets details of a Job Manager Task to be launched when the
+        /// Job is started.
         /// </summary>
         /// <remarks>
-        /// If the job does not specify a Job Manager task, the user must
-        /// explicitly add tasks to the job. If the job does specify a Job
-        /// Manager task, the Batch service creates the Job Manager task when
-        /// the job is created, and will try to schedule the Job Manager task
-        /// before scheduling other tasks in the job. The Job Manager task's
-        /// typical purpose is to control and/or monitor job execution, for
-        /// example by deciding what additional tasks to run, determining when
-        /// the work is complete, etc. (However, a Job Manager task is not
-        /// restricted to these activities - it is a fully-fledged task in the
-        /// system and perform whatever actions are required for the job.) For
-        /// example, a Job Manager task might download a file specified as a
+        /// If the Job does not specify a Job Manager Task, the user must
+        /// explicitly add Tasks to the Job. If the Job does specify a Job
+        /// Manager Task, the Batch service creates the Job Manager Task when
+        /// the Job is created, and will try to schedule the Job Manager Task
+        /// before scheduling other Tasks in the Job. The Job Manager Task's
+        /// typical purpose is to control and/or monitor Job execution, for
+        /// example by deciding what additional Tasks to run, determining when
+        /// the work is complete, etc. (However, a Job Manager Task is not
+        /// restricted to these activities - it is a fully-fledged Task in the
+        /// system and perform whatever actions are required for the Job.) For
+        /// example, a Job Manager Task might download a file specified as a
         /// parameter, analyze the contents of that file and submit additional
-        /// tasks based on those contents.
+        /// Tasks based on those contents.
         /// </remarks>
         [JsonProperty(PropertyName = "jobManagerTask")]
         public JobManagerTask JobManagerTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the Job Preparation task.
+        /// Gets or sets the Job Preparation Task.
         /// </summary>
         /// <remarks>
-        /// If a job has a Job Preparation task, the Batch service will run the
-        /// Job Preparation task on a compute node before starting any tasks of
-        /// that job on that compute node.
+        /// If a Job has a Job Preparation Task, the Batch service will run the
+        /// Job Preparation Task on a Node before starting any Tasks of that
+        /// Job on that Compute Node.
         /// </remarks>
         [JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
-        /// Gets or sets the Job Release task.
+        /// Gets or sets the Job Release Task.
         /// </summary>
         /// <remarks>
-        /// A Job Release task cannot be specified without also specifying a
-        /// Job Preparation task for the job. The Batch service runs the Job
-        /// Release task on the compute nodes that have run the Job Preparation
-        /// task. The primary purpose of the Job Release task is to undo
-        /// changes to compute nodes made by the Job Preparation task. Example
-        /// activities include deleting local files, or shutting down services
-        /// that were started as part of job preparation.
+        /// A Job Release Task cannot be specified without also specifying a
+        /// Job Preparation Task for the Job. The Batch service runs the Job
+        /// Release Task on the Nodes that have run the Job Preparation Task.
+        /// The primary purpose of the Job Release Task is to undo changes to
+        /// Compute Nodes made by the Job Preparation Task. Example activities
+        /// include deleting local files, or shutting down services that were
+        /// started as part of Job preparation.
         /// </remarks>
         [JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary>
         /// Gets or sets the list of common environment variable settings.
-        /// These environment variables are set for all tasks in the job
-        /// (including the Job Manager, Job Preparation and Job Release tasks).
+        /// These environment variables are set for all Tasks in the Job
+        /// (including the Job Manager, Job Preparation and Job Release Tasks).
         /// </summary>
         /// <remarks>
-        /// Individual tasks can override an environment setting specified here
+        /// Individual Tasks can override an environment setting specified here
         /// by specifying the same setting name with a different value.
         /// </remarks>
         [JsonProperty(PropertyName = "commonEnvironmentSettings")]
         public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool on which the Batch service runs the job's
-        /// tasks.
+        /// Gets or sets the Pool on which the Batch service runs the Job's
+        /// Tasks.
         /// </summary>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the action the Batch service should take when all
-        /// tasks in the job are in the completed state.
+        /// Tasks in the Job are in the completed state.
         /// </summary>
         /// <remarks>
-        /// Note that if a job contains no tasks, then all tasks are considered
+        /// Note that if a Job contains no Tasks, then all Tasks are considered
         /// complete. This option is therefore most commonly used with a Job
-        /// Manager task; if you want to use automatic job termination without
+        /// Manager task; if you want to use automatic Job termination without
         /// a Job Manager, you should initially set onAllTasksComplete to
-        /// noaction and update the job properties to set onAllTasksComplete to
-        /// terminatejob once you have finished adding tasks. The default is
+        /// noaction and update the Job properties to set onAllTasksComplete to
+        /// terminatejob once you have finished adding Tasks. The default is
         /// noaction. Possible values include: 'noAction', 'terminateJob'
         /// </remarks>
         [JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
-        /// Gets or sets the action the Batch service should take when any task
-        /// in the job fails.
+        /// Gets or sets the action the Batch service should take when any Task
+        /// in the Job fails.
         /// </summary>
         /// <remarks>
-        /// A task is considered to have failed if has a failureInfo. A
-        /// failureInfo is set if the task completes with a non-zero exit code
+        /// A Task is considered to have failed if has a failureInfo. A
+        /// failureInfo is set if the Task completes with a non-zero exit code
         /// after exhausting its retry count, or if there was an error starting
-        /// the task, for example due to a resource file download error. The
+        /// the Task, for example due to a resource file download error. The
         /// default is noaction. Possible values include: 'noAction',
         /// 'performExitOptionsJobAction'
         /// </remarks>
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public OnTaskFailure? OnTaskFailure { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the job as
+        /// Gets or sets a list of name-value pairs associated with the Job as
         /// metadata.
         /// </summary>
         /// <remarks>
@@ -234,14 +234,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
-        /// Gets or sets whether tasks in the job can define dependencies on
+        /// Gets or sets whether Tasks in the Job can define dependencies on
         /// each other. The default is false.
         /// </summary>
         [JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }
 
         /// <summary>
-        /// Gets or sets the network configuration for the job.
+        /// Gets or sets the network configuration for the Job.
         /// </summary>
         [JsonProperty(PropertyName = "networkConfiguration")]
         public JobNetworkConfiguration NetworkConfiguration { get; set; }

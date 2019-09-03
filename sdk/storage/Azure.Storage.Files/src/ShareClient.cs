@@ -340,7 +340,7 @@ namespace Azure.Storage.Files
                         metadata: metadata,
                         quota: quotaInBytes,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.Create",
+                        operationName: Constants.File.Share.CreateOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -456,7 +456,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.CreateSnapshot",
+                        operationName: Constants.File.Share.CreateSnapshotOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -580,7 +580,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.Delete",
+                        operationName: Constants.File.Share.DeleteOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -704,7 +704,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.GetProperties",
+                        operationName: Constants.File.Share.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -935,7 +935,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.SetMetadata",
+                        operationName: Constants.File.Share.SetMetadataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1042,7 +1042,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.GetAccessPolicy",
+                        operationName: Constants.File.Share.GetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1167,7 +1167,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         permissions: permissions,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.SetAccessPolicy",
+                        operationName: Constants.File.Share.SetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
-                        operationName: "Azure.Storage.Files.ShareClient.GetStatistics",
+                        operationName: Constants.File.Share.GetStatisticsOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1296,7 +1296,13 @@ namespace Azure.Storage.Files
         /// The name of the directory to create.
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this directory.
+        /// Optional custom metadata to set for the directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1314,10 +1320,16 @@ namespace Azure.Storage.Files
         public virtual Response<DirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
+           FileSmbProperties? smbProperties = default,
+           string filePermission = default,
            CancellationToken cancellationToken = default)
         {
             var directory = this.GetDirectoryClient(directoryName);
-            var response = directory.Create(metadata, cancellationToken);
+            var response = directory.Create(
+                metadata,
+                smbProperties,
+                filePermission,
+                cancellationToken);
             return new Response<DirectoryClient>(response.GetRawResponse(), directory);
         }
 
@@ -1331,7 +1343,13 @@ namespace Azure.Storage.Files
         /// The name of the directory to create.
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this directory.
+        /// Optional custom metadata to set for the directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1349,10 +1367,16 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
+           FileSmbProperties? smbProperties = default,
+           string filePermission = default,
            CancellationToken cancellationToken = default)
         {
             var directory = this.GetDirectoryClient(directoryName);
-            var response = await directory.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
+            var response = await directory.CreateAsync(
+                metadata,
+                smbProperties,
+                filePermission,
+                cancellationToken).ConfigureAwait(false);
             return new Response<DirectoryClient>(response.GetRawResponse(), directory);
         }
         #endregion CreateDirectory

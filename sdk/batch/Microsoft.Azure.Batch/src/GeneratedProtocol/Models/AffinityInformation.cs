@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
     /// <summary>
     /// A locality hint that can be used by the Batch service to select a
-    /// compute node on which to start a task.
+    /// Compute Node on which to start a Task.
     /// </summary>
     public partial class AffinityInformation
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the AffinityInformation class.
         /// </summary>
         /// <param name="affinityId">An opaque string representing the location
-        /// of a compute node or a task that has run previously.</param>
+        /// of a Compute Node or a Task that has run previously.</param>
         public AffinityInformation(string affinityId)
         {
             AffinityId = affinityId;
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets an opaque string representing the location of a
-        /// compute node or a task that has run previously.
+        /// Compute Node or a Task that has run previously.
         /// </summary>
         /// <remarks>
-        /// You can pass the affinityId of a compute node to indicate that this
-        /// task needs to run on that compute node. Note that this is just a
-        /// soft affinity. If the target node is busy or unavailable at the
-        /// time the task is scheduled, then the task will be scheduled
+        /// You can pass the affinityId of a Node to indicate that this Task
+        /// needs to run on that Compute Node. Note that this is just a soft
+        /// affinity. If the target Compute Node is busy or unavailable at the
+        /// time the Task is scheduled, then the Task will be scheduled
         /// elsewhere.
         /// </remarks>
         [JsonProperty(PropertyName = "affinityId")]

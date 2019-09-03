@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         internal static RuleAction ParseFromXElement(XElement xElement)
         {
-            var attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs));
+            var attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace));
             if (attribute == null)
             {
                 return null;
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.ServiceBus
 
         static RuleAction ParseFromXElementSqlRuleAction(XElement xElement)
         {
-            var expression = xElement.Element(XName.Get("SqlExpression", ManagementClientConstants.SbNs))?.Value;
+            var expression = xElement.Element(XName.Get("SqlExpression", ManagementClientConstants.ServiceBusNamespace))?.Value;
             if (string.IsNullOrWhiteSpace(expression))
             {
                 return null;
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.ServiceBus
 
             var action = new SqlRuleAction(expression);
 
-            var parameters = xElement.Element(XName.Get("Parameters", ManagementClientConstants.SbNs));
+            var parameters = xElement.Element(XName.Get("Parameters", ManagementClientConstants.ServiceBusNamespace));
             if (parameters != null && parameters.HasElements)
             {
-                foreach (var param in parameters.Elements(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.SbNs)))
+                foreach (var param in parameters.Elements(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.ServiceBusNamespace)))
                 {
-                    var key = param.Element(XName.Get("Key", ManagementClientConstants.SbNs))?.Value;
-                    var value = XmlObjectConvertor.ParseValueObject(param.Element(XName.Get("Value", ManagementClientConstants.SbNs)));
+                    var key = param.Element(XName.Get("Key", ManagementClientConstants.ServiceBusNamespace))?.Value;
+                    var value = XmlObjectConvertor.ParseValueObject(param.Element(XName.Get("Value", ManagementClientConstants.ServiceBusNamespace)));
                     action.Parameters.Add(key, value);
                 }
             }
@@ -66,20 +66,20 @@ namespace Microsoft.Azure.ServiceBus
                 XElement parameterElement = null;
                 if (sqlRuleAction.parameters != null)
                 {
-                    parameterElement = new XElement(XName.Get("Parameters", ManagementClientConstants.SbNs));
+                    parameterElement = new XElement(XName.Get("Parameters", ManagementClientConstants.ServiceBusNamespace));
                     foreach (var param in sqlRuleAction.Parameters)
                     {
                         parameterElement.Add(
-                            new XElement(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.SbNs),
-                                new XElement(XName.Get("Key", ManagementClientConstants.SbNs), param.Key),
+                            new XElement(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.ServiceBusNamespace),
+                                new XElement(XName.Get("Key", ManagementClientConstants.ServiceBusNamespace), param.Key),
                                 XmlObjectConvertor.SerializeObject(param.Value)));
                     }
                 }
 
                 return new XElement(
-                        XName.Get("Action", ManagementClientConstants.SbNs),
-                        new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs), nameof(SqlRuleAction)),
-                        new XElement(XName.Get("SqlExpression", ManagementClientConstants.SbNs), sqlRuleAction.SqlExpression),
+                        XName.Get("Action", ManagementClientConstants.ServiceBusNamespace),
+                        new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(SqlRuleAction)),
+                        new XElement(XName.Get("SqlExpression", ManagementClientConstants.ServiceBusNamespace), sqlRuleAction.SqlExpression),
                         parameterElement);
             }
             else

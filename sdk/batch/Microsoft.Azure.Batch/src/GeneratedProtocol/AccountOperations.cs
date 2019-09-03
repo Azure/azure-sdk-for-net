@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
-        /// Gets the number of nodes in each state, grouped by pool.
+        /// Gets the number of Compute Nodes in each state, grouped by Pool.
         /// </summary>
         /// <param name='accountListPoolNodeCountsOptions'>
         /// Additional parameters for the operation
@@ -800,7 +800,7 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
-        /// Gets the number of nodes in each state, grouped by pool.
+        /// Gets the number of Compute Nodes in each state, grouped by Pool.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -185,8 +185,8 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   Ensures that an argument's value is within a specified range, inclusive.
-        ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
+        ///   Ensures that an argument's value is within a specified range, inclusive,
+        ///   throwing an <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
         /// </summary>
         ///
         /// <param name="argumentName">The name of the argument being considered.</param>
@@ -202,6 +202,23 @@ namespace Azure.Messaging.EventHubs.Core
             if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
             {
                 throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
+            }
+        }
+
+        /// <summary>
+        ///   Ensures that an instance has not been disposed, throwing an
+        ///   <see cref="ObjectDisposedException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="targetName">The name of the target instance that is being verified.</param>
+        /// <param name="wasDisposed"><c>true</c> if the target instance has been disposed; otherwise, <c>false</c>.</param>
+        ///
+        public static void NotDisposed(string targetName,
+                                       bool wasDisposed)
+        {
+            if (wasDisposed)
+            {
+                throw new ObjectDisposedException(targetName, String.Format(CultureInfo.CurrentCulture, Resources.DisposedInstanceCannotPerformOperation, targetName));
             }
         }
     }

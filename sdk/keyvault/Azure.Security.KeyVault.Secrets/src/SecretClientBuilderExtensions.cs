@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// Registers a <see cref="SecretClient"/> instance with the provided <paramref name="vaultUri"/>
         /// </summary>
         public static IAzureClientBuilder<SecretClient, SecretClientOptions> AddSecretClient<TBuilder>(this TBuilder builder, Uri vaultUri)
-            where TBuilder: IAzureClientsBuilderWithCredential
+            where TBuilder: IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<SecretClient, SecretClientOptions>((options, cred) => new SecretClient(vaultUri, cred, options));
         }
