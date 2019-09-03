@@ -52,6 +52,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("accountName", builder.AccountName);
         }
 
+        #region Sequential Download
+
         [Test]
         public async Task DownloadAsync()
         {
@@ -307,6 +309,94 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
         }
+        #endregion Sequential Download
+
+        #region Parallel Download
+
+        private async Task ParallelDownloadFileAndVerify(
+            long size,
+            long singleBlockThreshold,
+            ParallelTransferOptions parallelTransferOptions)
+        {
+            var data = this.GetRandomBuffer(size);
+            var path = Path.GetTempFileName();
+
+            try
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    var name = this.GetNewBlobName();
+                    var blob = this.InstrumentClient(container.GetBlobClient(name));
+
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await blob.UploadAsync(stream);
+                    }
+
+                    var destination = new FileInfo(path);
+
+                    await blob.StagedDownloadAsync(
+                        destination,
+                        singleBlockThreshold: singleBlockThreshold,
+                        parallelTransferOptions: parallelTransferOptions
+                        );
+
+                    using (var resultStream = destination.OpenRead())
+                    {
+                        TestHelper.AssertSequenceEqual(data, resultStream.AsBytes());
+                    }
+                }
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [Test]
+        [TestCase(512)]
+        [TestCase(1 * Constants.KB)]
+        [TestCase(2 * Constants.KB)]
+        [TestCase(4 * Constants.KB)]
+        [TestCase(10 * Constants.KB)]
+        [TestCase(20 * Constants.KB)]
+        [TestCase(30 * Constants.KB)]
+        [TestCase(50 * Constants.KB)]
+        [TestCase(501 * Constants.KB)]
+        public async Task DownloadFileAsync_Parallel_SmallBlobs(long size) =>
+            // Use a 1KB threshold so we get a lot of individual blocks
+            await this.ParallelDownloadFileAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
+
+        [Test]
+        [Category("Live")]
+        [TestCase(33 * Constants.MB, 1)]
+        [TestCase(33 * Constants.MB, 4)]
+        [TestCase(33 * Constants.MB, 8)]
+        [TestCase(33 * Constants.MB, 16)]
+        [TestCase(33 * Constants.MB, null)]
+        [TestCase(257 * Constants.MB, 1)]
+        [TestCase(257 * Constants.MB, 4)]
+        [TestCase(257 * Constants.MB, 8)]
+        [TestCase(257 * Constants.MB, 16)]
+        [TestCase(257 * Constants.MB, null)]
+        [TestCase(1 * Constants.GB, 1)]
+        [TestCase(1 * Constants.GB, 4)]
+        [TestCase(1 * Constants.GB, 8)]
+        [TestCase(1 * Constants.GB, 16)]
+        [TestCase(1 * Constants.GB, null)]
+        public async Task DownloadFileAsync_Parallel_LargeBlobs(long size, int? maximumThreadCount)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            if (this.Mode == RecordedTestMode.Live)
+            {
+                await this.ParallelDownloadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
+            }
+        }
+
+        #endregion Parallel Download
 
         [Test]
         public async Task StartCopyFromUriAsync()

@@ -15,13 +15,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Key
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys.Tests", "Azure.Security.KeyVault.Keys\tests\Azure.Security.KeyVault.Keys.Tests.csproj", "{C361B52F-CD94-465D-AA79-1B2C0461A166}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Keys.Samples", "Azure.Security.KeyVault.Keys\samples\Azure.Security.KeyVault.Keys.Samples.csproj", "{2115943B-E46D-483D-84F4-486285BA8864}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys.Samples", "Azure.Security.KeyVault.Keys\samples\Azure.Security.KeyVault.Keys.Samples.csproj", "{2115943B-E46D-483D-84F4-486285BA8864}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\identity\Azure.Identity\src\Azure.Identity.csproj", "{EBCE8579-EB89-4CDF-A9F6-5F74FE08E933}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Certificates", "Azure.Security.KeyVault.Certificates\src\Azure.Security.KeyVault.Certificates.csproj", "{E74DABDD-50B0-475C-B83A-44465CF5515C}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Shared", "Azure.Security.KeyVault.Shared\Azure.Security.KeyVault.Shared.shproj", "{1198491F-D3CD-4D23-B536-E89D65B9D965}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Azure.Security.KeyVault.Shared\Azure.Security.KeyVault.Shared.projitems*{1198491f-d3cd-4d23-b536-e89d65b9d965}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -51,6 +56,10 @@ Global
 		{C361B52F-CD94-465D-AA79-1B2C0461A166}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C361B52F-CD94-465D-AA79-1B2C0461A166}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C361B52F-CD94-465D-AA79-1B2C0461A166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2115943B-E46D-483D-84F4-486285BA8864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2115943B-E46D-483D-84F4-486285BA8864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2115943B-E46D-483D-84F4-486285BA8864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2115943B-E46D-483D-84F4-486285BA8864}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBCE8579-EB89-4CDF-A9F6-5F74FE08E933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBCE8579-EB89-4CDF-A9F6-5F74FE08E933}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBCE8579-EB89-4CDF-A9F6-5F74FE08E933}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,10 +68,6 @@ Global
 		{E74DABDD-50B0-475C-B83A-44465CF5515C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E74DABDD-50B0-475C-B83A-44465CF5515C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E74DABDD-50B0-475C-B83A-44465CF5515C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2115943B-E46D-483D-84F4-486285BA8864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2115943B-E46D-483D-84F4-486285BA8864}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2115943B-E46D-483D-84F4-486285BA8864}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2115943B-E46D-483D-84F4-486285BA8864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

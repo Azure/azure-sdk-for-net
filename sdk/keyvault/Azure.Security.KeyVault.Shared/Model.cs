@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Azure.Security.KeyVault.Keys
+namespace Azure.Security.KeyVault
 {
     /// <summary>
     /// Defines helpers for deserialize and serialize.
@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys
     {
         internal void Deserialize(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
+            using (JsonDocument json = JsonDocument.Parse(content))
             {
                 this.ReadProperties(json.RootElement);
             }
@@ -24,19 +24,20 @@ namespace Azure.Security.KeyVault.Keys
 
         internal ReadOnlyMemory<byte> Serialize()
         {
+            Utf8JsonWriter json;
             var writer = new ArrayBufferWriter<byte>();
-
-            using (var json = new Utf8JsonWriter(writer))
+            using (json = new Utf8JsonWriter(writer))
             {
                 json.WriteStartObject();
 
                 WriteProperties(json);
 
                 json.WriteEndObject();
-                json.Flush();
-            }
 
-            return writer.WrittenMemory;
+                json.Flush();
+
+                return writer.WrittenMemory;
+            }
         }
 
         internal abstract void WriteProperties(Utf8JsonWriter json);

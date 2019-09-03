@@ -5,7 +5,7 @@
 using System;
 using System.Text;
 
-namespace Azure.Security.KeyVault.Keys
+namespace Azure.Security.KeyVault
 {
     internal static class Base64Url
     {

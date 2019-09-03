@@ -48,6 +48,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("accountName", builder.AccountName);
         }
 
+        #region Upload
+
         [Test]
         public async Task UploadAsync_Stream()
         {
@@ -446,7 +448,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(501 * Constants.KB)]
         public async Task UploadStreamAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await this.UploadStreamAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumBlockLength = Constants.KB });
+            await this.UploadStreamAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
         [TestCase(512)]
@@ -460,7 +462,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(501 * Constants.KB)]
         public async Task UploadFileAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await this.UploadFileAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumBlockLength = Constants.KB });
+            await this.UploadFileAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
         [TestCase(33 * Constants.MB, 1)]
@@ -512,5 +514,7 @@ namespace Azure.Storage.Blobs.Test
                 await this.UploadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
             }
         }
+
+        #endregion Upload
     }
 }

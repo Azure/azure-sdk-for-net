@@ -65,6 +65,7 @@ namespace Microsoft.Azure.EventHubs
                 ? receiverOptions.Identifier
                 : null;
             this.RetryPolicy = eventHubClient.RetryPolicy.Clone();
+            eventHubClient.AddChildEntity(this);
 
             EventHubsEventSource.Log.ClientCreated(this.ClientId, this.FormatTraceDetails());
         }
@@ -224,7 +225,7 @@ namespace Microsoft.Azure.EventHubs
         /// <returns>An asynchronous operation</returns>
         public sealed override Task CloseAsync()
         {
-            this.closeCalled = true;
+            this.IsClosed = true;
 
             EventHubsEventSource.Log.ClientCloseStart(this.ClientId);
             try

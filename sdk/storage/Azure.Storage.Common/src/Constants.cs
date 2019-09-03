@@ -14,6 +14,11 @@ namespace Azure.Storage
         public const int MaxReliabilityRetries = 5;
 
         /// <summary>
+        /// The maximum allowed time between read or write calls to the stream for IdleCancellingStream.
+        /// </summary>
+        public const int MaxIdleTimeMs = 120000;
+
+        /// <summary>
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
@@ -114,8 +119,9 @@ namespace Azure.Storage
 
             internal static class Block
             {
-                public const int DefaultParallelUploadCount = 4; // TODO What should the value really be?  Can we get rid of it with a different dispatch algorithm? (probably yes)
+                public const int DefaultConcurrentTransfersCount = 4; // TODO What should the value really be?  Can we get rid of it with a different dispatch algorithm? (probably yes)
                 public const int MaxUploadBytes = 256 * Constants.MB; // 256MB
+                public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxStageBytes = 100 * Constants.MB; // 100MB
                 public const int MaxBlocks = 50000;
 
