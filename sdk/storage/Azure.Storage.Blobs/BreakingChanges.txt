@@ -2,7 +2,7 @@ Breaking Changes
 ================
 Next Release
 --------------------------
-- PublicAccessType is no longer nullable. There is a new Enum value of None that replaces use of null.
+- Changing from Nullable<PublicAccessType> to just PublicAccessType in all relevant APIs. Use PublicAccessType.None instead of null.
 
 Next Release
 --------------------------
