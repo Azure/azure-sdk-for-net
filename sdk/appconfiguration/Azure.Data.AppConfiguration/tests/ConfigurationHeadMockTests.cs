@@ -27,7 +27,12 @@ namespace Azure.Data.AppConfiguration.Tests
             private HeadRequestPolicy() { }
 
             public override void OnSendingRequest(HttpPipelineMessage message)
-                => message.Request.Method = RequestMethod.Head;          
+            {
+                if (message.Request.Method == RequestMethod.Get)
+                {
+                    message.Request.Method = RequestMethod.Head;
+                }
+            }
         }
 
         class HeadRequestTransport : MockTransport
