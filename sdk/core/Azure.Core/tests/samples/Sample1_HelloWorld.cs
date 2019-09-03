@@ -3,6 +3,7 @@
 // license information.
 
 using Azure.Core.Pipeline;
+using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Samples
 {
-    [Category("Live")]
+    [LiveOnly]
     public partial class BaseSamples
     {
         [Test]
