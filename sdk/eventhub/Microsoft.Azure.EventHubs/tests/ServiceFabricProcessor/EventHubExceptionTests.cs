@@ -191,15 +191,14 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         {
             GeneralStartupFailure("NontransientGetRuntimeInfoFailure", EHErrorLocation.GetRuntimeInformation, true);
         }
-#if !FullNetFx
-        // Issue https://github.com/Azure/azure-sdk-for-net/issues/5995 tracking this test being re-enabled for netfx
-        [Fact]
+
+        [Fact(Skip="Results have been non-deterministic in CI and nightly runs.  Tracking with #5995")]
         [DisplayTestMethodName]
         public void HardGetRuntimeInfoFailure()
         {
             GeneralStartupFailure("HardGetRuntimeInfoFailure", EHErrorLocation.GetRuntimeInformation, false);
         }
-#endif
+
         [Fact]
         [DisplayTestMethodName]
         public void NontransientReceiverCreationFailure()
