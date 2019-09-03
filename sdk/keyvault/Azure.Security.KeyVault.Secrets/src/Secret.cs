@@ -44,14 +44,14 @@ namespace Azure.Security.KeyVault.Secrets
             base.ReadProperties(json);
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
             if (Value != null)
             {
                 json.WriteString("value", Value);
             }
 
-            base.WriteProperties(ref json);
+            base.WriteProperties(json);
         }
     }
 }

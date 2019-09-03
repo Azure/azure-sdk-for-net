@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
             json.WriteString("value", Base64Url.Encode(Value));
         }

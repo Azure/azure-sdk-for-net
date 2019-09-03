@@ -258,8 +258,17 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const useParameter = (param: IParameter, use: ((value: string) => void)) => {
             const constant = isEnumType(param.model) && param.model.constant;
             const nullable = !constant && !param.required;
+            const skipValue = isEnumType(param.model) ? param.model.skipValue : undefined;
             const name = naming.variable(param.clientName);
-            if (nullable) { w.write(`if (${name} != null) {`); }
+            if (nullable) {
+                w.write(`if (${name} != null) {`);
+            } else if (skipValue) {
+                const value = (<IEnumType>param.model).values.find(v => v.name == skipValue || v.value == skipValue);
+                if (!value) { throw `Cannot find a value for x-az-enum-skip-value ${skipValue} in ${types.getName(param.model)}`; }
+                const skipValueName = naming.enumField(value.name || value.value);
+                w.write(`if (${name} != ${types.getName(param.model)}.${skipValueName}) {`);
+            }
+            const indent = !!(nullable || skipValue);
             if (constant) {
                 use(`"${((<IEnumType>param.model).values[0].value || '').toString()}"`);
             } else if (param.model.type === 'dictionary') {
@@ -280,14 +289,14 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 if (param.model.type === `boolean`) {
                     w.line();
                     w.line(`#pragma warning disable CA1308 // Normalize strings to uppercase`);
-                } else if (nullable) { w.write(` `); }
+                } else if (indent) { w.write(` `); }
                 use(types.convertToString(name, param.model, service, param.required));
                 if (param.model.type === `boolean`) {
                     w.line();
                     w.line(`#pragma warning restore CA1308 // Normalize strings to uppercase`);
-                } else if (nullable) { w.write(` `); }
+                } else if (indent) { w.write(` `); }
             }
-            if (nullable) { w.write(`}`); }
+            if (indent) { w.write(`}`); }
             w.line();
         };        
 
@@ -650,7 +659,7 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
                             // Write the values
                             for (const value of type.values) {
                                 w.write(`case ${types.getName(type)}.${naming.enumField(value.name || value.value)}:`);
-                                w.scope(() => w.line(`return "${value.value}";`));
+                                w.scope(() => w.line(`return ${value.value == null ? 'null' : '"' + value.value + '"'};`));
                             }
                             // Throw for random values
                             w.write(`default:`);
@@ -665,7 +674,7 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
                         w.scope('{', '}', () => {
                             // Write the values
                             for (const value of type.values) {
-                                w.write(`case "${value.value}":`);
+                                w.write(`case ${value.value == null ? 'null' : '"' + value.value + '"'}:`);
                                 w.scope(() => w.line(`return ${types.getName(type)}.${naming.enumField(value.name || value.value)};`));
                             }
                             // Throw for random values
