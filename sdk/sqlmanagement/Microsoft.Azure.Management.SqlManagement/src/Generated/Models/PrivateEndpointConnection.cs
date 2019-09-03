@@ -37,16 +37,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="type">Resource type.</param>
         /// <param name="privateEndpoint">Private endpoint which the connection
         /// belongs to.</param>
-        /// <param name="privateLinkServiceConnectionState">Connection State of
-        /// the Private Endpoint Connection.</param>
-        /// <param name="state">State of the Private Endpoint
-        /// Connection.</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), string state = default(string))
+        /// <param name="privateLinkServiceConnectionState">Connection state of
+        /// the private endpoint connection.</param>
+        /// <param name="provisioningState">State of the private endpoint
+        /// connection.</param>
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), string provisioningState = default(string))
             : base(id, name, type)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            State = state;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -62,16 +62,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         public PrivateEndpointProperty PrivateEndpoint { get; set; }
 
         /// <summary>
-        /// Gets or sets connection State of the Private Endpoint Connection.
+        /// Gets or sets connection state of the private endpoint connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
         public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary>
-        /// Gets or sets state of the Private Endpoint Connection.
+        /// Gets state of the private endpoint connection.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; set; }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

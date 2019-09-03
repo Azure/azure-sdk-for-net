@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// status.</param>
         /// <param name="description">The private link service connection
         /// description.</param>
-        public PrivateLinkServiceConnectionStateProperty(string status, string description)
+        /// <param name="actionsRequired">The actions required for private link
+        /// service connection.</param>
+        public PrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired = default(string))
         {
             Status = status;
             Description = description;
+            ActionsRequired = actionsRequired;
             CustomInit();
         }
 
@@ -56,6 +59,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets the actions required for private link service connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "actionsRequired")]
+        public string ActionsRequired { get; private set; }
 
         /// <summary>
         /// Validate the object.
