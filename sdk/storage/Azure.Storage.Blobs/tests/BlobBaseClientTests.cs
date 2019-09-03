@@ -270,7 +270,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var srcBlob = await this.GetNewBlobClient(container);
                 var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
-
+                
                 // Act
                 var operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
 
@@ -456,17 +456,34 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("Dependent on set tier")]
         [Test]
         public async Task StartCopyFromUriAsync_RehydratePriority()
         {
             using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var srcBlob = await this.GetNewBlobClient(container);
+                var data = this.GetRandomBuffer(Constants.KB);
+                var data2 = this.GetRandomBuffer(Constants.KB);
+                var srcBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await srcBlob.UploadAsync(stream);
+                }
+
+                // destBlob needs to exist so we can get its lease and etag
+                using (var stream = new MemoryStream(data2))
+                {
+                    await destBlob.UploadAsync(stream);
+                }
+
+                //await destBlob.SetTierAsync(AccessTier.Archive);
 
                 // Act
-                var operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, rehydratePriority: RehydratePriority.Standard);
+                var operation = await destBlob.StartCopyFromUriAsync(
+                    srcBlob.Uri,
+                    rehydratePriority: RehydratePriority.High);
 
                 // Assert
                 // data copied within an account, so copy should be instantaneous
@@ -477,6 +494,22 @@ namespace Azure.Storage.Blobs.Test
                 await operation.WaitCompletionAsync();
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);
+            }
+        }
+
+        [Test]
+        public async Task StartCopyFromUriAsync_RehydratePriorityFail()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var srcBlob = await this.GetNewBlobClient(container);
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    destBlob.StartCopyFromUriAsync(srcBlob.Uri, rehydratePriority: "None"),
+                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
             }
         }
 
@@ -1942,14 +1975,17 @@ namespace Azure.Storage.Blobs.Test
 
                 // arrange
                 var blob = await this.GetNewBlobClient(container);
+                await blob.SetTierAsync(AccessTier.Archive);
 
                 // Act
-                var response2 = await blob.SetTierAsync(
+                var setTierResponse = await blob.SetTierAsync(
                     accessTier: AccessTier.Cool,
                     rehydratePriority: RehydratePriority.High);
+                var propertiesResponse = await blob.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response2.Headers.RequestId);
+                Assert.AreEqual("rehydrate-pending-to-cool", propertiesResponse.Value.ArchiveStatus);
+
             }
         }
 
@@ -1961,7 +1997,8 @@ namespace Azure.Storage.Blobs.Test
 
                 // arrange
                 var blob = await this.GetNewBlobClient(container);
-                
+                await blob.SetTierAsync(AccessTier.Archive);
+
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.SetTierAsync(accessTier: AccessTier.Cool, rehydratePriority: "None"),
                     e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
