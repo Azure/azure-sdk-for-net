@@ -15,12 +15,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     internal class RemoteCryptographyClient : ICryptographyProvider
     {
-        private const string EncryptOperation = "/encrypt";
-        private const string DecryptOperation = "/decrypt";
-        private const string SignOperation = "/sign";
-        private const string VerifyOperation = "/verify";
-        private const string WrapOperation = "/wrapKey";
-        private const string UnwrapOperation = "/unwrapKey";
+        private const string EncryptOperation = "encrypt";
+        private const string DecryptOperation = "decrypt";
+        private const string SignOperation = "sign";
+        private const string VerifyOperation = "verify";
+        private const string WrapOperation = "wrapKey";
+        private const string UnwrapOperation = "unwrapKey";
 
         /// <summary>
         /// 
@@ -318,7 +318,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return await Pipeline.SendRequestAsync(RequestMethod.Post, content, resultFactory, cancellationToken, operation).ConfigureAwait(false);
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, content, resultFactory, cancellationToken, "/", operation).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -337,7 +337,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return Pipeline.SendRequest(RequestMethod.Post, content, resultFactory, cancellationToken, operation);
+                return Pipeline.SendRequest(RequestMethod.Post, content, resultFactory, cancellationToken, "/", operation);
             }
             catch (Exception e)
             {
