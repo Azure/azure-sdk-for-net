@@ -160,18 +160,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var consecutiveStabilizedStatus = 0;
             List<PartitionOwnership> previousActiveOwnership = null;
 
-            var startTime = DateTimeOffset.UtcNow;
+            var timeoutToken = (new CancellationTokenSource(TimeSpan.FromMinutes(1))).Token;
 
             while (!stabilizedStatusAchieved)
             {
                 // Give up if it takes more than 1 minute.
 
-                var elapsedTime = DateTimeOffset.UtcNow.Subtract(startTime);
-
-                if (elapsedTime > TimeSpan.FromMinutes(1))
-                {
-                    throw new TimeoutException("Stabilization took too long to finish.");
-                }
+                timeoutToken.ThrowIfCancellationRequested();
 
                 // Remember to filter expired ownership.
 
