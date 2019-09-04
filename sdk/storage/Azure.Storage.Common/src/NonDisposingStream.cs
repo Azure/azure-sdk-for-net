@@ -3,6 +3,7 @@
 // license information.
 
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Storage.Common
