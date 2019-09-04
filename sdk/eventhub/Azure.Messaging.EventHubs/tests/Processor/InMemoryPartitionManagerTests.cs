@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -364,6 +365,190 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(storedOwnership2, Is.Not.Null);
             Assert.That(storedOwnership2.Count, Is.EqualTo(1));
             Assert.That(storedOwnership2.Single(), Is.EqualTo(secondOwnership));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointUpdateFailsWhenAssociatedOwnershipDoesNotExist()
+        {
+            var partitionManager = new InMemoryPartitionManager();
+
+            await partitionManager.UpdateCheckpointAsync(new Checkpoint
+                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 10, sequenceNumber: 20));
+
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+
+            Assert.That(storedOwnership, Is.Not.Null);
+            Assert.That(storedOwnership, Is.Empty);
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointUpdateFailsWhenOwnerChanges()
+        {
+            var partitionManager = new InMemoryPartitionManager();
+            var originalOwnership = new PartitionOwnership
+                ("eventHubName", "consumerGroup", "ownerIdentifier1", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow);
+
+            await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
+            {
+                originalOwnership
+            });
+
+            // ETag must have been set by the partition manager.
+
+            var originalLastModifiedTime = originalOwnership.LastModifiedTime;
+            var originalETag = originalOwnership.ETag;
+
+            await partitionManager.UpdateCheckpointAsync(new Checkpoint
+                ("eventHubName", "consumerGroup", "ownerIdentifier2", "partitionId", 10, 20));
+
+            // Make sure the ownership hasn't changed.
+
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+
+            Assert.That(storedOwnership, Is.Not.Null);
+            Assert.That(storedOwnership.Count, Is.EqualTo(1));
+            Assert.That(storedOwnership.Single(), Is.EqualTo(originalOwnership));
+
+            Assert.That(originalOwnership.OwnerIdentifier, Is.EqualTo("ownerIdentifier1"));
+            Assert.That(originalOwnership.Offset, Is.EqualTo(1));
+            Assert.That(originalOwnership.SequenceNumber, Is.EqualTo(2));
+            Assert.That(originalOwnership.LastModifiedTime, Is.EqualTo(originalLastModifiedTime));
+            Assert.That(originalOwnership.ETag, Is.EqualTo(originalETag));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointUpdateUpdatesOwnershipInformation()
+        {
+            var partitionManager = new InMemoryPartitionManager();
+            var originalOwnership = new PartitionOwnership
+                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow);
+
+            await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
+            {
+                originalOwnership
+            });
+
+            // ETag must have been set by the partition manager.
+
+            var originalLastModifiedTime = originalOwnership.LastModifiedTime;
+            var originalETag = originalOwnership.ETag;
+
+            await partitionManager.UpdateCheckpointAsync(new Checkpoint
+                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
+
+            // Make sure the ownership has changed, even though the instance should be the same.
+
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+
+            Assert.That(storedOwnership, Is.Not.Null);
+            Assert.That(storedOwnership.Count, Is.EqualTo(1));
+            Assert.That(storedOwnership.Single(), Is.EqualTo(originalOwnership));
+
+            Assert.That(originalOwnership.Offset, Is.EqualTo(10));
+            Assert.That(originalOwnership.SequenceNumber, Is.EqualTo(20));
+            Assert.That(originalOwnership.LastModifiedTime, Is.GreaterThan(originalLastModifiedTime));
+            Assert.That(originalOwnership.ETag, Is.Not.EqualTo(originalETag));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        [Ignore("Failing test: current implementation only uses partition id as key")]
+        public async Task CheckpointUpdateDoesNotInterfereWithOtherConsumerGroups()
+        {
+            var partitionManager = new InMemoryPartitionManager();
+
+            var ownership1 = new PartitionOwnership
+                ("eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", offset: 1);
+            var ownership2 = new PartitionOwnership
+                ("eventHubName", "consumerGroup2", "ownerIdentifier", "partitionId", offset: 1);
+
+            await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
+            {
+                ownership1,
+                ownership2
+            });
+
+            await partitionManager.UpdateCheckpointAsync(new Checkpoint
+                ("eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", 10, 20));
+
+            Assert.That(ownership1.Offset, Is.EqualTo(10));
+            Assert.That(ownership2.Offset, Is.EqualTo(1));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        [Ignore("Failing test: current implementation only uses partition id as key")]
+        public async Task CheckpointUpdateDoesNotInterfereWithOtherEventHubs()
+        {
+            var partitionManager = new InMemoryPartitionManager();
+
+            var ownership1 = new PartitionOwnership
+                ("eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
+            var ownership2 = new PartitionOwnership
+                ("eventHubName2", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
+
+            await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
+            {
+                ownership1,
+                ownership2
+            });
+
+            await partitionManager.UpdateCheckpointAsync(new Checkpoint
+                ("eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
+
+            Assert.That(ownership1.Offset, Is.EqualTo(10));
+            Assert.That(ownership2.Offset, Is.EqualTo(1));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointUpdateDoesNotInterfereWithOtherPartitions()
+        {
+            var partitionManager = new InMemoryPartitionManager();
+
+            var ownership1 = new PartitionOwnership
+                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", offset: 1);
+            var ownership2 = new PartitionOwnership
+                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId2", offset: 1);
+
+            await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
+            {
+                ownership1,
+                ownership2
+            });
+
+            await partitionManager.UpdateCheckpointAsync(new Checkpoint
+                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", 10, 20));
+
+            Assert.That(ownership1.Offset, Is.EqualTo(10));
+            Assert.That(ownership2.Offset, Is.EqualTo(1));
         }
     }
 }
