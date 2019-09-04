@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Errors;
+using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -947,6 +948,160 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             Assert.That(await consumer.ReceiveAsync(10, TimeSpan.FromSeconds(2)), Is.Empty);
                         }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConsumerCanReceivePartitionMetrics()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var consumerOptions = new EventHubConsumerOptions { TrackLastEnqueuedEventInformation = true };
+
+                var eventSet = new[]
+                {
+                    new EventData(Encoding.UTF8.GetBytes("One")),
+                    new EventData(Encoding.UTF8.GetBytes("Two")),
+                    new EventData(Encoding.UTF8.GetBytes("Three"))
+                };
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest, consumerOptions))
+                    {
+                        // Initiate an operation to force the consumer to connect and set its position at the
+                        // end of the event stream.
+
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                        // Send the batch of events.
+
+                        await producer.SendAsync(eventSet);
+
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while ((receivedEvents.Count < eventSet.Length) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventSet.Length + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        // Validate the partition metrics were received and populated.
+
+                        Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
+                        Assert.That(consumer.LastEnqueuedEventInformation, Is.Not.Null, "There should be a partition metrics instance.");
+                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber.HasValue, Is.True, "There should be a last sequence number populated.");
+                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset.HasValue, Is.True, "There should be a last offset populated.");
+                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedTime.HasValue, Is.True, "There should be a last enqueued time populated.");
+                        Assert.That(consumer.LastEnqueuedEventInformation.InformationReceived.HasValue, Is.True, "There should be a last update time populated.");
+
+                        // Capture the metrics update time for comparison against the second batch in order to
+                        // ensure that metrics are updated each time events are received.  Pause for a moment to
+                        // be sure that receiving has some delta in time stamp.
+
+                        var previousMetrics = new LastEnqueuedEventProperties(
+                            consumer.LastEnqueuedEventInformation.EventHubName,
+                            consumer.LastEnqueuedEventInformation.PartitionId,
+                            consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber,
+                            consumer.LastEnqueuedEventInformation.LastEnqueuedOffset,
+                            consumer.LastEnqueuedEventInformation.LastEnqueuedTime,
+                            consumer.LastEnqueuedEventInformation.InformationReceived);
+
+                        await Task.Delay(TimeSpan.FromSeconds(15));
+
+                        // Send another batch of events and receive them.
+
+                        await producer.SendAsync(eventSet);
+
+                        receivedEvents.Clear();
+                        index = 0;
+
+                        while ((receivedEvents.Count < eventSet.Length) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventSet.Length + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        // Validate that metrics have been updated or remain stable.
+
+                        Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
+                        Assert.That(consumer.LastEnqueuedEventInformation, Is.Not.Null, "There should be a partition metrics instance.");
+                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedSequenceNumber.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedSequenceNumber), "The last sequence number should have been updated.");
+                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedOffset.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedOffset), "The last offset should have been updated.");
+                        Assert.That(consumer.LastEnqueuedEventInformation.LastEnqueuedTime.Value, Is.Not.EqualTo(previousMetrics.LastEnqueuedTime), "The last enqueue time should have been updated.");
+                        Assert.That(consumer.LastEnqueuedEventInformation.InformationReceived.Value, Is.GreaterThan(previousMetrics.InformationReceived), "The last update time should have been incremented.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConsumerReceivesSystemProperties()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var eventSet = new[]
+                {
+                    new EventData(Encoding.UTF8.GetBytes("One")),
+                    new EventData(Encoding.UTF8.GetBytes("Two")),
+                    new EventData(Encoding.UTF8.GetBytes("Three"))
+                };
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
+                    {
+                        // Initiate an operation to force the consumer to connect and set its position at the
+                        // end of the event stream.
+
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                        // Send the batch of events.
+
+                        await producer.SendAsync(eventSet);
+
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while ((receivedEvents.Count < eventSet.Length) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventSet.Length + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        // Validate the partition metrics were received and populated.
+
+                        Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
+                        Assert.That(receivedEvents[0].SequenceNumber.HasValue, Is.True, "There should be a sequence number populated.");
+                        Assert.That(receivedEvents[0].Offset.HasValue, Is.True, "There should be an offset populated.");
+                        Assert.That(receivedEvents[0].EnqueuedTime.HasValue, Is.True, "There should be an enqueued time populated.");
                     }
                 }
             }

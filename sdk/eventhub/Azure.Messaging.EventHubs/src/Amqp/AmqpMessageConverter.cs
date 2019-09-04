@@ -374,7 +374,10 @@ namespace Azure.Messaging.EventHubs.Amqp
                 sequenceNumber: systemAnnotations.SequenceNumber,
                 offset: systemAnnotations.Offset,
                 enqueuedTime: systemAnnotations.EnqueuedTime,
-                partitionKey: systemAnnotations.PartitionKey);
+                partitionKey: systemAnnotations.PartitionKey,
+                lastPartitionSequenceNumber: systemAnnotations.LastSequenceNumber,
+                lastPartitionOffset: systemAnnotations.LastOffset,
+                lastPartitionEnqueuedTime: systemAnnotations.LastEnqueuedTime);
         }
 
         /// <summary>
@@ -442,6 +445,30 @@ namespace Azure.Messaging.EventHubs.Amqp
                         systemProperties.ServiceAnnotations.Add(key, propertyValue);
                         processed.Add(key);
                     }
+                }
+            }
+
+            // Process the delivery annotations.
+
+            if (source.Sections.HasFlag(SectionFlag.DeliveryAnnotations))
+            {
+                if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc, out amqpValue))
+                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
+                {
+                    systemProperties.LastEnqueuedTime = (DateTimeOffset)propertyValue;
+                }
+
+                if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber, out amqpValue))
+                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
+                {
+                    systemProperties.LastSequenceNumber = (long)propertyValue;
+                }
+
+                if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, out amqpValue))
+                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue))
+                    && (Int64.TryParse((string)propertyValue, out var offset)))
+                {
+                    systemProperties.LastOffset = offset;
                 }
             }
 
@@ -737,6 +764,15 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             /// <summary>The partition key that the event associated with the message was published with.</summary>
             public string PartitionKey;
+
+            /// <summary>The sequence number of the event that was last enqueued in the partition.</summary>
+            public long? LastSequenceNumber;
+
+            /// <summary>The offset of the event that was last enqueued in the partition.</summary>
+            public long? LastOffset;
+
+            /// <summary>The date and time, in UTC, that an event was last enqueued in the partition.</summary>
+            public DateTimeOffset? LastEnqueuedTime;
         }
     }
 }

@@ -189,6 +189,105 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void IsEventDataEquivalentDetectsWhenLastSequenceNumberDiffers()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var offset = 27;
+            var trackTwoSystemProperties = new Dictionary<string, object>();
+
+            var trackTwoEvent = new EventData(
+                eventBody: (byte[])body.Clone(),
+                offset: offset,
+                systemProperties: trackTwoSystemProperties,
+                lastPartitionSequenceNumber: 9765551212,
+                lastPartitionOffset: 54321,
+                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+
+            trackTwoEvent.Properties["test"] = "same";
+
+            var trackOneEvent = new TrackOne.EventData((byte[])body.Clone());
+            trackOneEvent.Properties["test"] = trackTwoEvent.Properties["test"];
+            trackOneEvent.SystemProperties = new TrackOne.EventData.SystemPropertiesCollection();
+            trackOneEvent.SystemProperties[TrackOne.ClientConstants.OffsetName] = offset.ToString();
+            trackOneEvent.LastEnqueuedOffset = trackTwoEvent.LastPartitionOffset.ToString();
+            trackOneEvent.LastSequenceNumber = 1;
+            trackOneEvent.LastEnqueuedTime = trackTwoEvent.LastPartitionEnqueuedTime.Value.UtcDateTime;
+
+            Assert.That(TrackOneComparer.IsEventDataEquivalent(trackOneEvent, trackTwoEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="IsEventDataEquivalent" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEventDataEquivalentDetectsWhenLastOffsetDiffers()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var offset = 27;
+            var trackTwoSystemProperties = new Dictionary<string, object>();
+
+            var trackTwoEvent = new EventData(
+                eventBody: (byte[])body.Clone(),
+                offset: offset,
+                systemProperties: trackTwoSystemProperties,
+                lastPartitionSequenceNumber: 9765551212,
+                lastPartitionOffset: 54321,
+                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+
+            trackTwoEvent.Properties["test"] = "same";
+
+            var trackOneEvent = new TrackOne.EventData((byte[])body.Clone());
+            trackOneEvent.Properties["test"] = trackTwoEvent.Properties["test"];
+            trackOneEvent.SystemProperties = new TrackOne.EventData.SystemPropertiesCollection();
+            trackOneEvent.SystemProperties[TrackOne.ClientConstants.OffsetName] = offset.ToString();
+            trackOneEvent.LastEnqueuedOffset = "1";
+            trackOneEvent.LastSequenceNumber = trackTwoEvent.LastPartitionSequenceNumber.Value;;
+            trackOneEvent.LastEnqueuedTime = trackTwoEvent.LastPartitionEnqueuedTime.Value.UtcDateTime;
+
+            Assert.That(TrackOneComparer.IsEventDataEquivalent(trackOneEvent, trackTwoEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="IsEventDataEquivalent" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEventDataEquivalentDetectsWhenLastEnqueuedTimeDiffers()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var offset = 27;
+            var trackTwoSystemProperties = new Dictionary<string, object>();
+
+            var trackTwoEvent = new EventData(
+                eventBody: (byte[])body.Clone(),
+                offset: offset,
+                systemProperties: trackTwoSystemProperties,
+                lastPartitionSequenceNumber: 9765551212,
+                lastPartitionOffset: 54321,
+                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+
+            trackTwoEvent.Properties["test"] = "same";
+
+            var trackOneEvent = new TrackOne.EventData((byte[])body.Clone());
+            trackOneEvent.Properties["test"] = trackTwoEvent.Properties["test"];
+            trackOneEvent.SystemProperties = new TrackOne.EventData.SystemPropertiesCollection();
+            trackOneEvent.SystemProperties[TrackOne.ClientConstants.OffsetName] = offset.ToString();
+            trackOneEvent.LastEnqueuedOffset = trackTwoEvent.LastPartitionOffset.ToString();
+            trackOneEvent.LastSequenceNumber = trackTwoEvent.LastPartitionSequenceNumber.Value;;
+            trackOneEvent.LastEnqueuedTime = DateTime.Parse("2012-03-04T08:46:00Z").ToUniversalTime();
+
+            Assert.That(TrackOneComparer.IsEventDataEquivalent(trackOneEvent, trackTwoEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="IsEventDataEquivalent" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
         public void IsEventDataEquivalentDetectsEqualEvents()
         {
             var body = new byte[] { 0x22, 0x44, 0x88 };
@@ -198,13 +297,20 @@ namespace Azure.Messaging.EventHubs.Tests
             var trackTwoEvent = new EventData(
                 eventBody: (byte[])body.Clone(),
                 offset: offset,
-                systemProperties: trackTwoSystemProperties);
+                systemProperties: trackTwoSystemProperties,
+                lastPartitionSequenceNumber: 9765551212,
+                lastPartitionOffset: 54321,
+                lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+
+            trackTwoEvent.Properties["test"] = "same";
 
             var trackOneEvent = new TrackOne.EventData((byte[])body.Clone());
-            trackOneEvent.Properties["test"] = "same";
-            trackTwoEvent.Properties["test"] = "same";
+            trackOneEvent.Properties["test"] = trackTwoEvent.Properties["test"];
             trackOneEvent.SystemProperties = new TrackOne.EventData.SystemPropertiesCollection();
             trackOneEvent.SystemProperties[TrackOne.ClientConstants.OffsetName] = offset.ToString();
+            trackOneEvent.LastEnqueuedOffset = trackTwoEvent.LastPartitionOffset.ToString();
+            trackOneEvent.LastSequenceNumber = trackTwoEvent.LastPartitionSequenceNumber.Value;
+            trackOneEvent.LastEnqueuedTime = trackTwoEvent.LastPartitionEnqueuedTime.Value.UtcDateTime;
 
             Assert.That(TrackOneComparer.IsEventDataEquivalent(trackOneEvent, trackTwoEvent), Is.True);
         }
