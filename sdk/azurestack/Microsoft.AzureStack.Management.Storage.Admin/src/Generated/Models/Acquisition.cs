@@ -10,13 +10,15 @@
 
 namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The acquisition of the page BLOB.
     /// </summary>
-    public partial class Acquisition
+    public partial class Acquisition : IResource
     {
         /// <summary>
         /// Initializes a new instance of the Acquisition class.

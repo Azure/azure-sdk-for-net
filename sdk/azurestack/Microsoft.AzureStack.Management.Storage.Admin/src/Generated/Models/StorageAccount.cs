@@ -21,7 +21,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
     /// Properties of the storage account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageAccount
+    public partial class StorageAccount : Resource
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccount class.
@@ -34,6 +34,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccount class.
         /// </summary>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource Name.</param>
+        /// <param name="type">Resource Type.</param>
+        /// <param name="location">Resource Location.</param>
         /// <param name="tenantViewId">Resource URI of storage account from
         /// tenant view.</param>
         /// <param name="accountType">Storage account type. Possible values
@@ -76,12 +80,9 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// <param name="encryption">The storage encryption setting</param>
         /// <param name="supportsHttpsTrafficOnly">Storage account supports
         /// https traffic only or not</param>
-        /// <param name="name">account name, a unique account id</param>
-        /// <param name="location">resource location</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="type">Resource type.</param>
-        public StorageAccount(string tenantViewId = default(string), string accountType = default(string), string provisioningState = default(string), IDictionary<string, string> primaryEndpoints = default(IDictionary<string, string>), string creationTime = default(string), string alternateName = default(string), string primaryLocation = default(string), string faultDomain = default(string), string statusOfPrimary = default(string), string tenantSubscriptionId = default(string), string tenantStorageAccountName = default(string), string tenantResourceGroupName = default(string), System.DateTime? deletedTime = default(System.DateTime?), string accountStatus = default(string), string permissions = default(string), string accountId = default(string), string wacInternalState = default(string), StorageEncryption encryption = default(StorageEncryption), bool? supportsHttpsTrafficOnly = default(bool?), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string type = default(string))
+        public StorageAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tenantViewId = default(string), string accountType = default(string), string provisioningState = default(string), IDictionary<string, string> primaryEndpoints = default(IDictionary<string, string>), string creationTime = default(string), string alternateName = default(string), string primaryLocation = default(string), string faultDomain = default(string), string statusOfPrimary = default(string), string tenantSubscriptionId = default(string), string tenantStorageAccountName = default(string), string tenantResourceGroupName = default(string), System.DateTime? deletedTime = default(System.DateTime?), string accountStatus = default(string), string permissions = default(string), string accountId = default(string), string wacInternalState = default(string), StorageEncryption encryption = default(StorageEncryption), bool? supportsHttpsTrafficOnly = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, type, location)
         {
             TenantViewId = tenantViewId;
             AccountType = accountType;
@@ -102,11 +103,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
             WacInternalState = wacInternalState;
             Encryption = encryption;
             SupportsHttpsTrafficOnly = supportsHttpsTrafficOnly;
-            Name = name;
-            Location = location;
             Tags = tags;
-            Id = id;
-            Type = type;
             CustomInit();
         }
 
@@ -241,34 +238,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public bool? SupportsHttpsTrafficOnly { get; private set; }
 
         /// <summary>
-        /// Gets account name, a unique account id
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource location
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
-
-        /// <summary>
         /// Gets resource tags.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; private set; }
-
-        /// <summary>
-        /// Gets resource ID.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
     }
 }

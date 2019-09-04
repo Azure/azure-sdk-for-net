@@ -26,8 +26,8 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <summary>
         /// Returns a list of storage accounts.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
         /// <param name='filter'>
         /// Filter string
@@ -41,7 +41,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -50,12 +50,12 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<StorageAccount>>> ListWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<StorageAccount>>> ListWithHttpMessagesAsync(string location, string filter = default(string), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns the requested storage account.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
         /// <param name='accountId'>
         /// Internal storage account ID, which is not visible to tenant.
@@ -66,7 +66,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -75,17 +75,18 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccount>> GetWithHttpMessagesAsync(string location, string accountId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Undelete a deleted storage account.
+        /// Undelete a deleted storage account with new account name if the a
+        /// new name is provided.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
         /// <param name='accountId'>
         /// Internal storage account ID, which is not visible to tenant.
         /// </param>
-        /// <param name='newaccountname'>
+        /// <param name='newAccountName'>
         /// New storage account name when doing undelete storage account
         /// operation.
         /// </param>
@@ -95,7 +96,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -104,12 +105,12 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UndeleteStorageAccount>> UndeleteWithHttpMessagesAsync(string resourceGroupName, string accountId, string newaccountname = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UndeleteStorageAccount>> UndeleteWithHttpMessagesAsync(string location, string accountId, string newAccountName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Start garbage collection on deleted storage objects.
+        /// Start reclaim storage capacity on deleted storage objects.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -117,23 +118,24 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> OnDemandGCWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ReclaimStorageCapacityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Undelete a deleted storage account.
+        /// Undelete a deleted storage account with new account name if the a
+        /// new name is provided.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
         /// <param name='accountId'>
         /// Internal storage account ID, which is not visible to tenant.
         /// </param>
-        /// <param name='newaccountname'>
+        /// <param name='newAccountName'>
         /// New storage account name when doing undelete storage account
         /// operation.
         /// </param>
@@ -143,7 +145,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -152,12 +154,12 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UndeleteStorageAccount>> BeginUndeleteWithHttpMessagesAsync(string resourceGroupName, string accountId, string newaccountname = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UndeleteStorageAccount>> BeginUndeleteWithHttpMessagesAsync(string location, string accountId, string newAccountName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Start garbage collection on deleted storage objects.
+        /// Start reclaim storage capacity on deleted storage objects.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,13 +167,13 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginOnDemandGCWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginReclaimStorageCapacityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a list of storage accounts.
         /// </summary>
@@ -184,7 +186,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

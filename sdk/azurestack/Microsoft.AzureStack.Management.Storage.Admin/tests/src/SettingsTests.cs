@@ -11,7 +11,7 @@ namespace Storage.Tests
         public void GetSettings()
         {
             RunTest((client) => {
-                var storageSettings = client.StorageSettings.Get(ResourceGroupName);
+                var storageSettings = client.StorageSettings.Get(Location);
                 Assert.NotNull(storageSettings.RetentionPeriodForDeletedStorageAccountsInDays);
             });
         }
@@ -20,9 +20,9 @@ namespace Storage.Tests
         public void UpdateSettings()
         {
             RunTest((client) => {
-                int? originalStorageSettings = client.StorageSettings.Get(ResourceGroupName).RetentionPeriodForDeletedStorageAccountsInDays;
+                int? originalStorageSettings = client.StorageSettings.Get(Location).RetentionPeriodForDeletedStorageAccountsInDays;
                 int targetStorageSettings = originalStorageSettings.GetValueOrDefault() + 1;
-                Settings storageSettings = client.StorageSettings.Update(ResourceGroupName, targetStorageSettings);
+                Settings storageSettings = client.StorageSettings.Update(Location, targetStorageSettings);
                 Assert.Equal(targetStorageSettings, storageSettings.RetentionPeriodForDeletedStorageAccountsInDays.Value);
             });
         }

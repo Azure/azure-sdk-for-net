@@ -70,6 +70,11 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
 
 
         /// <summary>
+        /// Gets the IStorageAccountsOperations.
+        /// </summary>
+        IStorageAccountsOperations StorageAccounts { get; }
+
+        /// <summary>
         /// Gets the IStorageQuotasOperations.
         /// </summary>
         IStorageQuotasOperations StorageQuotas { get; }
@@ -78,11 +83,6 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// Gets the IStorageSettingsOperations.
         /// </summary>
         IStorageSettingsOperations StorageSettings { get; }
-
-        /// <summary>
-        /// Gets the IStorageAccountsOperations.
-        /// </summary>
-        IStorageAccountsOperations StorageAccounts { get; }
 
         /// <summary>
         /// Gets the IOperations.

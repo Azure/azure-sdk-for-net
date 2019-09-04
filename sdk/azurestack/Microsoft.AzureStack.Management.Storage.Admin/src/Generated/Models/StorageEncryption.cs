@@ -31,7 +31,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// </summary>
         /// <param name="services">Services for which encryption setting is
         /// mentioned</param>
-        /// <param name="keySource">Encryption keysource. Possible values
+        /// <param name="keySource">Encryption keySource. Possible values
         /// include: 'Microsoft.Storage'</param>
         public StorageEncryption(StorageEncryptionServices services = default(StorageEncryptionServices), string keySource = default(string))
         {
@@ -52,7 +52,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public StorageEncryptionServices Services { get; private set; }
 
         /// <summary>
-        /// Gets encryption keysource. Possible values include:
+        /// Gets encryption keySource. Possible values include:
         /// 'Microsoft.Storage'
         /// </summary>
         [JsonProperty(PropertyName = "keySource")]

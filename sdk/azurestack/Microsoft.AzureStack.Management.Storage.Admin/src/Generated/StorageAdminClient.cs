@@ -75,6 +75,11 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IStorageAccountsOperations.
+        /// </summary>
+        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
+
+        /// <summary>
         /// Gets the IStorageQuotasOperations.
         /// </summary>
         public virtual IStorageQuotasOperations StorageQuotas { get; private set; }
@@ -83,11 +88,6 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// Gets the IStorageSettingsOperations.
         /// </summary>
         public virtual IStorageSettingsOperations StorageSettings { get; private set; }
-
-        /// <summary>
-        /// Gets the IStorageAccountsOperations.
-        /// </summary>
-        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -340,9 +340,9 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// </summary>
         private void Initialize()
         {
+            StorageAccounts = new StorageAccountsOperations(this);
             StorageQuotas = new StorageQuotasOperations(this);
             StorageSettings = new StorageSettingsOperations(this);
-            StorageAccounts = new StorageAccountsOperations(this);
             Operations = new Operations(this);
             Acquisitions = new AcquisitionsOperations(this);
             BaseUri = new System.Uri("https://adminmanagement.local.azurestack.external");

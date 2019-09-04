@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/461f4ede-f131-4f95-9a35-7cefb88a6f77/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota?api-version=2019-08-08-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxZjRlZGUtZjEzMS00Zjk1LTlhMzUtN2NlZmI4OGE2Zjc3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RVcGRhdGVRdW90YT9hcGktdmVyc2lvbj0yMDE5LTA4LTA4LXByZXZpZXc=",
+      "RequestUri": "/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDQ3ZTg3ZTYtMzI3Zi00YzQ0LTgxODQtZmI2YmMzNWU4YjM4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RVcGRhdGVRdW90YT9hcGktdmVyc2lvbj0yMDE5LTA4LTA4LXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cd50238f-a0b5-4671-9626-937c2a3d3426"
+          "0fda8aa0-13e8-4d68-9883-8b7e71e28234"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,22 +27,22 @@
           "no-cache"
         ],
         "x-ms-correlation-request-id": [
-          "4f0632ea-1323-4f55-9ca6-9a4c3d5f6f0d"
+          "b8aa2aef-fca6-43e0-ab4e-76930a6adcaa"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvA+p1VNNnjYvDOqAEWR/Ym0U+3xCEtTF5n7gVdA2m2+Ch1b9Lx/fpEYJ+OnXrHfYjOF6Sd/DXwHTD0RIVyrey9hruCjNd/La/DVXGdUvfjQlA2zDydCtOOLNuR3bmGI/tVHIFbzoR3TNNKCA6Pkwo"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvs6h9xikM/irY53jQdAe6GjY3lB77XL7mbMmCffzr+fL7XBzT1hQJvjOy5N2N9R0mO609HkudHBwsaYbGCsIrO7z4s763KLbhVkd5j2NqyAxk8Zd5qziDsSHlEx6O+kiqI3W+fv97+vSXNvb0+UcJ"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14995"
         ],
         "x-ms-request-id": [
-          "4f0632ea-1323-4f55-9ca6-9a4c3d5f6f0d"
+          "b8aa2aef-fca6-43e0-ab4e-76930a6adcaa"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20190808T015040Z:4f0632ea-1323-4f55-9ca6-9a4c3d5f6f0d"
+          "LOCAL:20190904T050511Z:b8aa2aef-fca6-43e0-ab4e-76930a6adcaa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 08 Aug 2019 01:50:40 GMT"
+          "Wed, 04 Sep 2019 05:05:11 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -67,13 +67,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/461f4ede-f131-4f95-9a35-7cefb88a6f77/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota?api-version=2019-08-08-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxZjRlZGUtZjEzMS00Zjk1LTlhMzUtN2NlZmI4OGE2Zjc3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RVcGRhdGVRdW90YT9hcGktdmVyc2lvbj0yMDE5LTA4LTA4LXByZXZpZXc=",
+      "RequestUri": "/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDQ3ZTg3ZTYtMzI3Zi00YzQ0LTgxODQtZmI2YmMzNWU4YjM4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RVcGRhdGVRdW90YT9hcGktdmVyc2lvbj0yMDE5LTA4LTA4LXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8bcf24ae-3982-457f-86a5-2c8b337add1e"
+          "2539d0a8-33a3-45a0-a019-6112e2e1f4a9"
         ],
         "Accept-Language": [
           "en-US"
@@ -93,22 +93,22 @@
           "no-cache"
         ],
         "x-ms-correlation-request-id": [
-          "519a90bc-ff5b-4ef4-a4bd-9d88c432ffc8"
+          "8cbc6799-2884-48b5-a032-1f18223564c2"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv9M7W4uxjxT2YaBM028qN6H2qbrekicqTUr/ta86Pc0loZAVTdVd0dBj9djZt6ZvvZxhCiPTfATQ4eylC0/JOjaX+8oj6UKBPR827D9J4VM2+qFnnlXtcjz/WSqBEfdmJL3GgYx0itS1ANGU58yqG"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRviICthksTdQLj53S5R4L4w7M8vOpbcfaKr60K0pbEPS93U67iLifYj166P1RuWdrVLS/L5HRXQLhx0JINKulbISUqS5sSi7v1Nu41jVtLP5ad5tOoxzdiDufQRStTiJpui8sh/SqrFPf/4U0j+mZN"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14994"
         ],
         "x-ms-request-id": [
-          "519a90bc-ff5b-4ef4-a4bd-9d88c432ffc8"
+          "8cbc6799-2884-48b5-a032-1f18223564c2"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20190808T015041Z:519a90bc-ff5b-4ef4-a4bd-9d88c432ffc8"
+          "LOCAL:20190904T050512Z:8cbc6799-2884-48b5-a032-1f18223564c2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,7 +117,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 08 Aug 2019 01:50:40 GMT"
+          "Wed, 04 Sep 2019 05:05:11 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -133,13 +133,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/461f4ede-f131-4f95-9a35-7cefb88a6f77/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota?api-version=2019-08-08-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxZjRlZGUtZjEzMS00Zjk1LTlhMzUtN2NlZmI4OGE2Zjc3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RVcGRhdGVRdW90YT9hcGktdmVyc2lvbj0yMDE5LTA4LTA4LXByZXZpZXc=",
+      "RequestUri": "/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDQ3ZTg3ZTYtMzI3Zi00YzQ0LTgxODQtZmI2YmMzNWU4YjM4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RVcGRhdGVRdW90YT9hcGktdmVyc2lvbj0yMDE5LTA4LTA4LXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"numberOfStorageAccounts\": 100,\r\n    \"capacityInGb\": 50\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f96e39a6-16aa-49bd-9b66-e8cd5bb71184"
+          "a87da7b6-c3b1-4ccf-8c6b-52e165cbeb17"
         ],
         "Accept-Language": [
           "en-US"
@@ -165,22 +165,22 @@
           "no-cache"
         ],
         "x-ms-correlation-request-id": [
-          "8a78d716-6f2d-4b9d-8727-e11939d634e9"
+          "3743d52c-99f3-4af1-92fa-367ec8820057"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvhjTyJ1SRSDsJ+zQPyHppveHTe79nLRIOiagF3PyPjRDabH/AIGQwHIm1k1bWBiIlioUmdNDMJdjT14SGTzZFtLH+I4ycIEKCoz3rCb9eXkpWF5xPO3GIERnS/8vyJQoz9uUuBrewyncSmj+pIFOM"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvGwRoLbym2G/rNw91z0KGASaQhkl1JhgsBaNGgMktAgaotdo+VmNr9TEQ17Gh+mSjz/uQf3eJncgvOYmakCDOfot3N5h5Z1wgN7FlhBePEbDyDBemfABzr3/gORrb1CKOt1Nck43JS2qLYQC+edoQ"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1196"
         ],
         "x-ms-request-id": [
-          "8a78d716-6f2d-4b9d-8727-e11939d634e9"
+          "3743d52c-99f3-4af1-92fa-367ec8820057"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20190808T015041Z:8a78d716-6f2d-4b9d-8727-e11939d634e9"
+          "LOCAL:20190904T050511Z:3743d52c-99f3-4af1-92fa-367ec8820057"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -189,7 +189,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 08 Aug 2019 01:50:40 GMT"
+          "Wed, 04 Sep 2019 05:05:11 GMT"
         ],
         "Content-Length": [
           "341"
@@ -201,17 +201,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/461f4ede-f131-4f95-9a35-7cefb88a6f77/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota\",\r\n  \"name\": \"local/TestUpdateQuota\",\r\n  \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"numberOfStorageAccounts\": 100,\r\n    \"capacityInGb\": 50\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota\",\r\n  \"name\": \"local/TestUpdateQuota\",\r\n  \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"numberOfStorageAccounts\": 100,\r\n    \"capacityInGb\": 50\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/461f4ede-f131-4f95-9a35-7cefb88a6f77/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota?api-version=2019-08-08-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxZjRlZGUtZjEzMS00Zjk1LTlhMzUtN2NlZmI4OGE2Zjc3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RVcGRhdGVRdW90YT9hcGktdmVyc2lvbj0yMDE5LTA4LTA4LXByZXZpZXc=",
+      "RequestUri": "/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDQ3ZTg3ZTYtMzI3Zi00YzQ0LTgxODQtZmI2YmMzNWU4YjM4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RVcGRhdGVRdW90YT9hcGktdmVyc2lvbj0yMDE5LTA4LTA4LXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"numberOfStorageAccounts\": 10,\r\n    \"capacityInGb\": 123\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3f7dcf18-7186-43fd-9d54-2d80714db774"
+          "d63b2a65-eb63-4ea1-98d0-deef2df0620d"
         ],
         "Accept-Language": [
           "en-US"
@@ -237,22 +237,22 @@
           "no-cache"
         ],
         "x-ms-correlation-request-id": [
-          "2f6b0aac-abe4-4a9a-9927-5a586b6f8a15"
+          "e9f9013f-ef12-43d9-8025-8175d628ef59"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv+BwZ8uK6UYeDiyjlDH5eWf4owwSFeH/nCOXqzTK+/93Bo6OdHq5a2BkPwiL0tmFRQOyWAN7tSdLjUsjC5Ikl77ZUD5bDajJDY9HDA+n0J1vhHpTcL3Nr538m5wPsn501aHARQPD0EnijrGE5tfzi"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvqyTlIllIl5W4vlsh4+Q3atRNpLulxXTjQ/TNcVD6SvXCQgj8BwN4N2OLleCTLb/FveCU9rQ+GCN80mboOD01pHqODLo8Fql0VmbTs7SOgn7HdvVmYmA5oOuKoa0uBCnQM1EJ7sswQ4d3VJsTjpYF"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1195"
         ],
         "x-ms-request-id": [
-          "2f6b0aac-abe4-4a9a-9927-5a586b6f8a15"
+          "e9f9013f-ef12-43d9-8025-8175d628ef59"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20190808T015041Z:2f6b0aac-abe4-4a9a-9927-5a586b6f8a15"
+          "LOCAL:20190904T050511Z:e9f9013f-ef12-43d9-8025-8175d628ef59"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -261,7 +261,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 08 Aug 2019 01:50:40 GMT"
+          "Wed, 04 Sep 2019 05:05:11 GMT"
         ],
         "Content-Length": [
           "341"
@@ -273,12 +273,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/461f4ede-f131-4f95-9a35-7cefb88a6f77/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota\",\r\n  \"name\": \"local/TestUpdateQuota\",\r\n  \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"numberOfStorageAccounts\": 10,\r\n    \"capacityInGb\": 123\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/quotas/TestUpdateQuota\",\r\n  \"name\": \"local/TestUpdateQuota\",\r\n  \"type\": \"Microsoft.Storage.Admin/locations/quotas\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"numberOfStorageAccounts\": 10,\r\n    \"capacityInGb\": 123\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "461f4ede-f131-4f95-9a35-7cefb88a6f77"
+    "SubscriptionId": "047e87e6-327f-4c44-8184-fb6bc35e8b38"
   }
 }

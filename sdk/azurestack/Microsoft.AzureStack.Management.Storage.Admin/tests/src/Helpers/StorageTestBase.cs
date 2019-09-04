@@ -11,7 +11,6 @@ namespace Storage.Tests
         {
         }
 
-        public string ResourceGroupName = "System.local";
         
         protected override void ValidateClient(StorageAdminClient client)
         {

@@ -34,7 +34,7 @@ namespace Storage.Tests
         [Fact]
         public void ListAllAcquisitions() {
             RunTest((client) => {
-                var acquisitions = client.Acquisitions.List(ResourceGroupName);
+                var acquisitions = client.Acquisitions.List(Location);
                 Common.WriteIEnumerableToFile<Acquisition>(acquisitions, "ListAllAcquisitions.txt");
             });
         }

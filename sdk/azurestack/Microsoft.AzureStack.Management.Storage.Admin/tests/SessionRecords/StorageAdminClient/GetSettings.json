@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/461f4ede-f131-4f95-9a35-7cefb88a6f77/resourcegroups/System.local/providers/Microsoft.Storage.Admin/settings?api-version=2019-08-08-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxZjRlZGUtZjEzMS00Zjk1LTlhMzUtN2NlZmI4OGE2Zjc3L3Jlc291cmNlZ3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2UuQWRtaW4vc2V0dGluZ3M/YXBpLXZlcnNpb249MjAxOS0wOC0wOC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/settings?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDQ3ZTg3ZTYtMzI3Zi00YzQ0LTgxODQtZmI2YmMzNWU4YjM4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvc2V0dGluZ3M/YXBpLXZlcnNpb249MjAxOS0wOC0wOC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b3d0ebc4-dfa6-4488-988c-662b4bdbbb0b"
+          "174eb45a-3c54-444d-95a9-ed93668cb72e"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,22 +27,22 @@
           "no-cache"
         ],
         "x-ms-correlation-request-id": [
-          "4315feb7-47e8-4023-9dfb-92ef2c3ea381"
+          "a2a1f966-1398-4e77-8358-ef163d425962"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvfQ4eOOx2kw8cor5Ok8vSmHDLTjJGBqlG4p0DH0gbnuXHi4iYBSq2tlUA8SKloWfOr7qpaXUfy35eHTVzNit3rnaHkrRr/AEi2Oxb3davjgDAw/L/cajLjqPgmXT9G7/qKliH+VT4c9d0DeGIEZ6m"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvJ36TzcnJgPHDKZ1dHiRyt5bNI1+Xf8wGbQdxnQ3hwzXv9/uC+gQ8zzGfQbevzvj6Q/8ouSjO5nDbFI7TVK8oNgmGM+l5bmdjEDQrvbWFfkhvxMcEBJob4JNU7IdB1ZL7voftsvvCB5Rv45iE3TLn"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "14998"
         ],
         "x-ms-request-id": [
-          "4315feb7-47e8-4023-9dfb-92ef2c3ea381"
+          "a2a1f966-1398-4e77-8358-ef163d425962"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20190808T015038Z:4315feb7-47e8-4023-9dfb-92ef2c3ea381"
+          "LOCAL:20190904T050456Z:a2a1f966-1398-4e77-8358-ef163d425962"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +51,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 08 Aug 2019 01:50:38 GMT"
+          "Wed, 04 Sep 2019 05:04:55 GMT"
         ],
         "Content-Length": [
-          "59"
+          "85"
         ],
         "Content-Type": [
           "application/json"
@@ -63,12 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"retentionPeriodForDeletedStorageAccountsInDays\": 1\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"retentionPeriodForDeletedStorageAccountsInDays\": 1\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "461f4ede-f131-4f95-9a35-7cefb88a6f77"
+    "SubscriptionId": "047e87e6-327f-4c44-8184-fb6bc35e8b38"
   }
 }

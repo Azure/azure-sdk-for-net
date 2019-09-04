@@ -27,12 +27,12 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
-            public static IPage<Acquisition> List(this IAcquisitionsOperations operations, string resourceGroupName)
+            public static IPage<Acquisition> List(this IAcquisitionsOperations operations, string location)
             {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -41,15 +41,15 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Acquisition>> ListAsync(this IAcquisitionsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Acquisition>> ListAsync(this IAcquisitionsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

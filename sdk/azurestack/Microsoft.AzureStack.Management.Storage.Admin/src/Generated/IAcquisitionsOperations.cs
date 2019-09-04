@@ -26,8 +26,8 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <summary>
         /// Returns a list of BLOB acquisitions.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -35,7 +35,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -44,7 +44,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Acquisition>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Acquisition>>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a list of BLOB acquisitions.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

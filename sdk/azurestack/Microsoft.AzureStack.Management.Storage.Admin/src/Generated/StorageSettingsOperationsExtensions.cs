@@ -22,40 +22,42 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
     public static partial class StorageSettingsOperationsExtensions
     {
             /// <summary>
-            /// Update storge resource provider settings.
+            /// Update storage resource provider settings.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='retentionPeriodForDeletedStorageAccountsInDays'>
-            /// Set the retention days for deleted storage accounts.
+            /// The number of days a deleted storage account is kept before being
+            /// permanently deleted.
             /// </param>
-            public static Settings Update(this IStorageSettingsOperations operations, string resourceGroupName, int? retentionPeriodForDeletedStorageAccountsInDays = default(int?))
+            public static Settings Update(this IStorageSettingsOperations operations, string location, int? retentionPeriodForDeletedStorageAccountsInDays = default(int?))
             {
-                return operations.UpdateAsync(resourceGroupName, retentionPeriodForDeletedStorageAccountsInDays).GetAwaiter().GetResult();
+                return operations.UpdateAsync(location, retentionPeriodForDeletedStorageAccountsInDays).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Update storge resource provider settings.
+            /// Update storage resource provider settings.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='retentionPeriodForDeletedStorageAccountsInDays'>
-            /// Set the retention days for deleted storage accounts.
+            /// The number of days a deleted storage account is kept before being
+            /// permanently deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Settings> UpdateAsync(this IStorageSettingsOperations operations, string resourceGroupName, int? retentionPeriodForDeletedStorageAccountsInDays = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Settings> UpdateAsync(this IStorageSettingsOperations operations, string location, int? retentionPeriodForDeletedStorageAccountsInDays = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, retentionPeriodForDeletedStorageAccountsInDays, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(location, retentionPeriodForDeletedStorageAccountsInDays, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -67,12 +69,12 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
-            public static Settings Get(this IStorageSettingsOperations operations, string resourceGroupName)
+            public static Settings Get(this IStorageSettingsOperations operations, string location)
             {
-                return operations.GetAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.GetAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -81,15 +83,15 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Settings> GetAsync(this IStorageSettingsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Settings> GetAsync(this IStorageSettingsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

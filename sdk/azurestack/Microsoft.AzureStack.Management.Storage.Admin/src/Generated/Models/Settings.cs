@@ -10,13 +10,16 @@
 
 namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Storage resource provider settings
     /// </summary>
-    public partial class Settings
+    [Rest.Serialization.JsonTransformation]
+    public partial class Settings : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Settings class.
@@ -29,9 +32,15 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the Settings class.
         /// </summary>
-        /// <param name="retentionPeriodForDeletedStorageAccountsInDays">Set
-        /// the retention days for deleted storage accounts.</param>
-        public Settings(int? retentionPeriodForDeletedStorageAccountsInDays = default(int?))
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource Name.</param>
+        /// <param name="type">Resource Type.</param>
+        /// <param name="location">Resource Location.</param>
+        /// <param name="retentionPeriodForDeletedStorageAccountsInDays">The
+        /// number of days a deleted storage account is kept before being
+        /// permanently deleted.</param>
+        public Settings(string id = default(string), string name = default(string), string type = default(string), string location = default(string), int? retentionPeriodForDeletedStorageAccountsInDays = default(int?))
+            : base(id, name, type, location)
         {
             RetentionPeriodForDeletedStorageAccountsInDays = retentionPeriodForDeletedStorageAccountsInDays;
             CustomInit();
@@ -43,9 +52,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets set the retention days for deleted storage accounts.
+        /// Gets or sets the number of days a deleted storage account is kept
+        /// before being permanently deleted.
         /// </summary>
-        [JsonProperty(PropertyName = "retentionPeriodForDeletedStorageAccountsInDays")]
+        [JsonProperty(PropertyName = "properties.retentionPeriodForDeletedStorageAccountsInDays")]
         public int? RetentionPeriodForDeletedStorageAccountsInDays { get; set; }
 
     }

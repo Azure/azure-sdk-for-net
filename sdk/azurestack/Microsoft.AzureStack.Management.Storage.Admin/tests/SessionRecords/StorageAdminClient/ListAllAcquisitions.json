@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/461f4ede-f131-4f95-9a35-7cefb88a6f77/resourcegroups/System.local/providers/Microsoft.Storage.Admin/acquisitions?api-version=2019-08-08-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDYxZjRlZGUtZjEzMS00Zjk1LTlhMzUtN2NlZmI4OGE2Zjc3L3Jlc291cmNlZ3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2UuQWRtaW4vYWNxdWlzaXRpb25zP2FwaS12ZXJzaW9uPTIwMTktMDgtMDgtcHJldmlldw==",
+      "RequestUri": "/subscriptions/047e87e6-327f-4c44-8184-fb6bc35e8b38/providers/Microsoft.Storage.Admin/locations/local/acquisitions?api-version=2019-08-08-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDQ3ZTg3ZTYtMzI3Zi00YzQ0LTgxODQtZmI2YmMzNWU4YjM4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYWNxdWlzaXRpb25zP2FwaS12ZXJzaW9uPTIwMTktMDgtMDgtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4b1f3189-0566-4bc5-9763-5062ea6f877b"
+          "c52e62e5-7190-4fe7-8f39-f170ef64f4a4"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,22 +27,22 @@
           "no-cache"
         ],
         "x-ms-correlation-request-id": [
-          "3b87a8a3-52bf-4cb5-b975-fa613931e5ef"
+          "97a2463e-39b0-470e-94e8-954d7bedf2bf"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvJj0yP61cA6yRwPT9d7QzVwYi+oMbRSUcObW9plRGGL+qTuYETb1FgeJE506YAM35leO7tC3uA8ScQw3cHRSL370IJ//SBo7z+eav0rZYnxUmXlXjcEL/vI9DirgmMfRSt2ESSG2gdDvUniOGQdoB"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvxpKIPse2aLjsjaLD3sUjzscXBviGffyL4NdN12jm67z1xRFgbKet73aq+q60CAevapU0ZruqySA40ip5L9C5Vcsryd44xKjuIOEqyfwn4roaVxU1xImoHyOy/nt3MP/GooO1t2kg10aRoBDNSF56"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14888"
         ],
         "x-ms-request-id": [
-          "3b87a8a3-52bf-4cb5-b975-fa613931e5ef"
+          "97a2463e-39b0-470e-94e8-954d7bedf2bf"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20190808T015038Z:3b87a8a3-52bf-4cb5-b975-fa613931e5ef"
+          "LOCAL:20190904T050512Z:97a2463e-39b0-470e-94e8-954d7bedf2bf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +51,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 08 Aug 2019 01:50:37 GMT"
+          "Wed, 04 Sep 2019 05:05:11 GMT"
         ],
         "Content-Length": [
-          "19"
+          "2958"
         ],
         "Content-Type": [
           "application/json"
@@ -63,12 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"susbcriptionid\": \"047e87e6-327f-4c44-8184-fb6bc35e8b38\",\r\n      \"storageaccount\": \"md-000ti1db\",\r\n      \"container\": \"7f1a91c5a6684f6dbdbb272a20c37a2d\",\r\n      \"blob\": \"abcd.vhd\",\r\n      \"acquisitionid\": \"aba2dee6-0a90-479a-9caa-a04b1a13db9b\",\r\n      \"filePath\": \"C:\\\\ClusterStorage\\\\SU1_Volume\\\\Shares\\\\SU1_ObjStore\\\\BlobService\\\\Partition_00001_{09451176-E87E-4610-A057-AFC103B3691A}\\\\md-000ti1db\\\\7f1a91c5a6_116\\\\f8b6b5ac-ecfc-4534-9050-837aa46bb033.vhd\",\r\n      \"filePathUnc\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\\\\BlobService\\\\Partition_00001_{09451176-E87E-4610-A057-AFC103B3691A}\\\\md-000ti1db\\\\7f1a91c5a6_116\\\\f8b6b5ac-ecfc-4534-9050-837aa46bb033.vhd\",\r\n      \"maximumblobsize\": 136365212160\r\n    },\r\n    {\r\n      \"susbcriptionid\": \"047e87e6-327f-4c44-8184-fb6bc35e8b38\",\r\n      \"storageaccount\": \"md-000ti1db\",\r\n      \"container\": \"8365a74d7033438dbc918da452bce807\",\r\n      \"blob\": \"abcd.vhd\",\r\n      \"acquisitionid\": \"d3fae079-1c16-432f-b2c4-5288089ed6b3\",\r\n      \"filePath\": \"C:\\\\ClusterStorage\\\\SU1_Volume\\\\Shares\\\\SU1_ObjStore\\\\BlobService\\\\Partition_00001_{09451176-E87E-4610-A057-AFC103B3691A}\\\\md-000ti1db\\\\8365a74d70_11a\\\\dadbd9ab-3905-4453-b2e7-9efb61269c00.vhd\",\r\n      \"filePathUnc\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\\\\BlobService\\\\Partition_00001_{09451176-E87E-4610-A057-AFC103B3691A}\\\\md-000ti1db\\\\8365a74d70_11a\\\\dadbd9ab-3905-4453-b2e7-9efb61269c00.vhd\",\r\n      \"maximumblobsize\": 5368709632\r\n    },\r\n    {\r\n      \"susbcriptionid\": \"047e87e6-327f-4c44-8184-fb6bc35e8b38\",\r\n      \"storageaccount\": \"md-000ti1db\",\r\n      \"container\": \"bc590dddcd71406581bba759510d48c3\",\r\n      \"blob\": \"abcd.vhd\",\r\n      \"acquisitionid\": \"2a0b7365-6a04-41b4-93a7-643eee6f1a5e\",\r\n      \"filePath\": \"C:\\\\ClusterStorage\\\\SU1_Volume\\\\Shares\\\\SU1_ObjStore\\\\BlobService\\\\Partition_00001_{09451176-E87E-4610-A057-AFC103B3691A}\\\\md-000ti1db\\\\bc590dddcd_117\\\\c12f5481-446e-4b74-81d9-2a7da55bd4d7.vhd\",\r\n      \"filePathUnc\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\\\\BlobService\\\\Partition_00001_{09451176-E87E-4610-A057-AFC103B3691A}\\\\md-000ti1db\\\\bc590dddcd_117\\\\c12f5481-446e-4b74-81d9-2a7da55bd4d7.vhd\",\r\n      \"maximumblobsize\": 136365212160\r\n    },\r\n    {\r\n      \"susbcriptionid\": \"047e87e6-327f-4c44-8184-fb6bc35e8b38\",\r\n      \"storageaccount\": \"md-000ti1db\",\r\n      \"container\": \"eec41a93821747d3880975038fa193da\",\r\n      \"blob\": \"abcd.vhd\",\r\n      \"acquisitionid\": \"d3fae079-1c16-432f-b2c4-5288089ed6b3\",\r\n      \"filePath\": \"C:\\\\ClusterStorage\\\\SU1_Volume\\\\Shares\\\\SU1_ObjStore\\\\BlobService\\\\Partition_00001_{09451176-E87E-4610-A057-AFC103B3691A}\\\\md-000ti1db\\\\eec41a9382_119\\\\52baa99e-0ec3-4df6-8d62-06902d9e98b9.vhd\",\r\n      \"filePathUnc\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\\\\BlobService\\\\Partition_00001_{09451176-E87E-4610-A057-AFC103B3691A}\\\\md-000ti1db\\\\eec41a9382_119\\\\52baa99e-0ec3-4df6-8d62-06902d9e98b9.vhd\",\r\n      \"maximumblobsize\": 5368709632\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "461f4ede-f131-4f95-9a35-7cefb88a6f77"
+    "SubscriptionId": "047e87e6-327f-4c44-8184-fb6bc35e8b38"
   }
 }

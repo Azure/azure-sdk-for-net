@@ -53,7 +53,7 @@ namespace Storage.Tests
         [Fact]
         public void ListAllStorageAccounts() {
             RunTest((client) => {
-                var storageAccounts = client.StorageAccounts.List(ResourceGroupName, summary: false);
+                var storageAccounts = client.StorageAccounts.List(Location, summary: false);
                 storageAccounts.ForEach(ValidateStorageAccount);
             });
         }
@@ -61,11 +61,11 @@ namespace Storage.Tests
         [Fact]
         public void GetStorageAccount() {
             RunTest((client) => {
-                var storageAccounts = client.StorageAccounts.List(ResourceGroupName, summary: false);
+                var storageAccounts = client.StorageAccounts.List(Location, summary: false);
                 foreach (var storageAccount in storageAccounts)
                 {
                     var sName = ExtractName(storageAccount.Name);
-                    var account = client.StorageAccounts.Get(ResourceGroupName, sName);
+                    var account = client.StorageAccounts.Get(Location, sName);
                     AssertAreEqual(storageAccount, account);
                     return;
                 }
@@ -75,11 +75,11 @@ namespace Storage.Tests
         [Fact]
         public void GetAllStorageAccounts() {
             RunTest((client) => {
-                var storageAccounts = client.StorageAccounts.List(ResourceGroupName, summary: false);
+                var storageAccounts = client.StorageAccounts.List(Location, summary: false);
                 foreach (var storageAccount in storageAccounts)
                 {
                     var sName = ExtractName(storageAccount.Name);
-                    var account = client.StorageAccounts.Get(ResourceGroupName, sName);
+                    var account = client.StorageAccounts.Get(Location, sName);
                     AssertAreEqual(storageAccount, account);
                 }
             });
