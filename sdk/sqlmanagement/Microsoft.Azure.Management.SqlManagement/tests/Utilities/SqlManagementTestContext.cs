@@ -23,7 +23,8 @@ namespace Sql.Tests
         {
             var providersToIgnore = new Dictionary<string, string>
             {
-                {"Microsoft.Sql", null}
+                {"Microsoft.Sql", null},
+                {"Microsoft.Network", null}
             };
 
             var userAgentsToIgnore = new Dictionary<string, string>
