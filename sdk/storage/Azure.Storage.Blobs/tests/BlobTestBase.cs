@@ -158,7 +158,7 @@ namespace Azure.Storage.Test.Shared
             return new DisposingContainer(
                 container,
                 metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
-                publicAccessType ?? PublicAccessType.Container);
+                publicAccessType );
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
@@ -358,7 +358,7 @@ namespace Azure.Storage.Test.Shared
         {
             public BlobContainerClient ContainerClient { get; }
 
-            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType)
+            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType? publicAccessType = default)
             {
                 container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
 
