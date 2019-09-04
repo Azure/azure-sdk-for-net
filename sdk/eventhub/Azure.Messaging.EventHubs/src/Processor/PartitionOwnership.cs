@@ -49,20 +49,20 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   upon ownership update.
         /// </summary>
         ///
-        public long? Offset { get; }
+        public long? Offset { get; set; }
 
         /// <summary>
         ///   The sequence number of the last <see cref="EventData" /> received by the associated <see cref="IPartitionProcessor" />
         ///   upon ownership update.
         /// </summary>
         ///
-        public long? SequenceNumber { get; }
+        public long? SequenceNumber { get; set; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last update was made to this ownership.
         /// </summary>
         ///
-        public DateTimeOffset? LastModifiedTime { get; }
+        public DateTimeOffset? LastModifiedTime { get; set; }
 
         /// <summary>
         ///   The entity tag needed to update this ownership.
