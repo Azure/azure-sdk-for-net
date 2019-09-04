@@ -3,6 +3,13 @@
 ## Current version
 ###  Feature Additions
 
+
+## Version 4.1.3
+###  Feature Additions
+- Added RunDimnesion to Pipeline
+- Added Chaining Trigger
+- Added Dependency Status property in Pipeline and Trigger Run
+
 ## Version 4.1.2
 ###  Feature Additions
 - Added SapBwCube and Sybase dataset
