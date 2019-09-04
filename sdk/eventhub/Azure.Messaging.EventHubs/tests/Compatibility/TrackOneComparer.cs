@@ -147,7 +147,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
-            return trackOneEvent.Properties.OrderBy(kvp => kvp.Key).SequenceEqual(trackTwoEvent.Properties.OrderBy(kvp => kvp.Key));
+            if (!trackOneEvent.Properties.OrderBy(kvp => kvp.Key).SequenceEqual(trackTwoEvent.Properties.OrderBy(kvp => kvp.Key)))
+            {
+                return false;
+            }
+
+            // Validate the runtime metrics properties.
+
+            return ((trackOneEvent.LastSequenceNumber != default ? trackOneEvent.LastSequenceNumber : default(long?)) == trackTwoEvent.LastPartitionSequenceNumber)
+                && ((trackOneEvent.LastEnqueuedTime != default ? new DateTimeOffset(trackOneEvent.LastEnqueuedTime) : default(DateTimeOffset?)) == trackTwoEvent.LastPartitionEnqueuedTime)
+                && ((trackOneEvent.LastEnqueuedOffset == trackTwoEvent.LastPartitionOffset?.ToString()));
         }
 
         /// <summary>

@@ -77,7 +77,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 if ((instance.Offset != other.Offset)
                     || (instance.EnqueuedTime != other.EnqueuedTime)
                     || (instance.PartitionKey != other.PartitionKey)
-                    || (instance.SequenceNumber != other.SequenceNumber))
+                    || (instance.SequenceNumber != other.SequenceNumber)
+                    || (instance.LastPartitionSequenceNumber != other.LastPartitionSequenceNumber)
+                    || (instance.LastPartitionOffset != other.LastPartitionOffset)
+                    || (instance.LastPartitionEnqueuedTime != other.LastPartitionEnqueuedTime))
                 {
                     return false;
                 }

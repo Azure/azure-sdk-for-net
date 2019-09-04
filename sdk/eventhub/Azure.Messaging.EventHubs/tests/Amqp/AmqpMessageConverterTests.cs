@@ -938,7 +938,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateEventFromMessagePopulatesSystemProperties()
+        public void CreateEventFromMessagePopulatesTypedSystemProperties()
         {
             var offset = 123;
             var sequenceNumber = (Int64.MaxValue - 10);
@@ -966,6 +966,92 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueuedTime), "The enqueue time should match.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
+            Assert.That(eventData.LastPartitionOffset.HasValue, Is.False, "The last offset should not be set.");
+            Assert.That(eventData.LastPartitionSequenceNumber.HasValue, Is.False, "The last sequence number should not be set.");
+            Assert.That(eventData.LastPartitionEnqueuedTime.HasValue, Is.False, "The last enqueued time should not be set.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateEventFromMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateEventFromMessagePopulatesMappedSystemProperties()
+        {
+            var firstMessageAnnotation = 456;
+            var secondMessageAnnotation = "hello";
+            var subjectValue = "Test";
+
+            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
+            using var message = AmqpMessage.Create(bodyStream, true);
+
+            message.ApplicationProperties.Map.Add("First", 1);
+            message.ApplicationProperties.Map.Add("Second", "2");
+
+            message.MessageAnnotations.Map.Add(nameof(firstMessageAnnotation), firstMessageAnnotation);
+            message.MessageAnnotations.Map.Add(nameof(secondMessageAnnotation), secondMessageAnnotation);
+
+            message.Properties.Subject = subjectValue;
+
+            var converter = new AmqpMessageConverter();
+            var eventData = converter.CreateEventFromMessage(message);
+
+            Assert.That(eventData, Is.Not.Null, "The event should have been created.");
+            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
+            Assert.That(eventData.SystemProperties.ContainsKey(nameof(firstMessageAnnotation)), Is.True, "The first annotation should be in the system properties.");
+            Assert.That(eventData.SystemProperties.ContainsKey(nameof(secondMessageAnnotation)), Is.True, "The second annotation should be in the system properties.");
+            Assert.That(eventData.SystemProperties.ContainsKey(Properties.SubjectName), Is.True, "The message subject should be in the system properties.");
+            Assert.That(eventData.SystemProperties[nameof(firstMessageAnnotation)], Is.EqualTo(firstMessageAnnotation), "The first annotation should match.");
+            Assert.That(eventData.SystemProperties[nameof(secondMessageAnnotation)], Is.EqualTo(secondMessageAnnotation), "The second annotation should match.");
+            Assert.That(eventData.SystemProperties[Properties.SubjectName], Is.EqualTo(subjectValue), "The message subject should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateEventFromMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateEventFromMessagePopulatesTypedSystemPropertiesAndMetrics()
+        {
+            var offset = 123;
+            var lastOffset = 987;
+            var sequenceNumber = (Int64.MaxValue - 10);
+            var lastSequenceNumber = (Int64.MaxValue - 100);
+            var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
+            var lastEnqueuedTime = DateTimeOffset.Parse("2012-03-04T08:42:00Z");
+            var partitionKey = "OMG! partition!";
+
+            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
+            using var message = AmqpMessage.Create(bodyStream, true);
+
+            message.ApplicationProperties.Map.Add("First", 1);
+            message.ApplicationProperties.Map.Add("Second", "2");
+
+            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset.ToString());
+            message.MessageAnnotations.Map.Add(AmqpProperty.SequenceNumber, sequenceNumber);
+            message.MessageAnnotations.Map.Add(AmqpProperty.EnqueuedTime, new DescribedType(AmqpProperty.Descriptor.DateTimeOffset, enqueuedTime.Ticks));
+            message.MessageAnnotations.Map.Add(AmqpProperty.PartitionKey, partitionKey);
+
+            message.DeliveryAnnotations.Map.Add(AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber, lastSequenceNumber);
+            message.DeliveryAnnotations.Map.Add(AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, lastOffset.ToString());
+            message.DeliveryAnnotations.Map.Add(AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc, new DescribedType(AmqpProperty.Descriptor.DateTimeOffset, lastEnqueuedTime.Ticks));
+
+            var converter = new AmqpMessageConverter();
+            var eventData = converter.CreateEventFromMessage(message);
+
+            Assert.That(eventData, Is.Not.Null, "The event should have been created.");
+            Assert.That(eventData.Body, Is.Not.Null, "The event should have a body.");
+            Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
+            Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should match.");
+            Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
+            Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueuedTime), "The enqueue time should match.");
+            Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
+            Assert.That(eventData.LastPartitionOffset, Is.EqualTo(lastOffset), "The last offset should match.");
+            Assert.That(eventData.LastPartitionSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should match.");
+            Assert.That(eventData.LastPartitionEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueued time should match.");
         }
 
         /// <summary>
