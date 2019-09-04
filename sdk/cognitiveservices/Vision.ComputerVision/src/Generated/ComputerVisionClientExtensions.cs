@@ -49,12 +49,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// coordinates, gender and age. ImageType - detects if image is clipart or a
             /// line drawing. Color - determines the accent color, dominant color, and
             /// whether an image is black&amp;white. Adult - detects if the image is
-            /// pornographic in nature (depicts nudity or a sex act).  Sexually suggestive
-            /// content is also detected. Objects - detects various objects within an
-            /// image, including the approximate location. The Objects argument is only
-            /// available in English. Brands - detects various brands within an image,
-            /// including the approximate location. The Brands argument is only available
-            /// in English.
+            /// pornographic in nature (depicts nudity or a sex act), or is gory (depicts
+            /// extreme violence or blood). Sexually suggestive content (aka racy content)
+            /// is also detected. Objects - detects various objects within an image,
+            /// including the approximate location. The Objects argument is only available
+            /// in English. Brands - detects various brands within an image, including the
+            /// approximate location. The Brands argument is only available in English.
             /// </param>
             /// <param name='details'>
             /// A string indicating which domain-specific details to return. Multiple
@@ -69,12 +69,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
             /// 'ja', 'pt', 'zh'
             /// </param>
+            /// <param name='descriptionExclude'>
+            /// Turn off specified domain models when generating the description.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionClient operations, string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionClient operations, string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -85,7 +88,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// language with complete sentences. The description is based on a collection
             /// of content tags, which are also returned by the operation. More than one
             /// description can be generated for each image. Descriptions are ordered by
-            /// their confidence score. All descriptions are in English.
+            /// their confidence score. Descriptions may include results from celebrity and
+            /// landmark domain models, if applicable.
             /// Two input methods are supported -- (1) Uploading an image or (2) specifying
             /// an image URL.
             /// A successful response will be returned in JSON. If the request failed, the
@@ -108,12 +112,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
             /// 'ja', 'pt', 'zh'
             /// </param>
+            /// <param name='descriptionExclude'>
+            /// Turn off specified domain models when generating the description.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, int? maxCandidates = 1, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -250,9 +257,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// based on objects, living beings, scenery or actions found in images. Unlike
             /// categories, tags are not organized according to a hierarchical
             /// classification system, but correspond to image content. Tags may contain
-            /// hints to avoid ambiguity or provide context, for example the tag "cello"
-            /// may be accompanied by the hint "musical instrument". All tags are in
-            /// English.
+            /// hints to avoid ambiguity or provide context, for example the tag
+            /// "ascomycete" may be accompanied by the hint "fungus".
             /// Two input methods are supported -- (1) Uploading an image or (2) specifying
             /// an image URL.
             /// A successful response will be returned in JSON. If the request failed, the
@@ -475,12 +481,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// coordinates, gender and age. ImageType - detects if image is clipart or a
             /// line drawing. Color - determines the accent color, dominant color, and
             /// whether an image is black&amp;white. Adult - detects if the image is
-            /// pornographic in nature (depicts nudity or a sex act).  Sexually suggestive
-            /// content is also detected. Objects - detects various objects within an
-            /// image, including the approximate location. The Objects argument is only
-            /// available in English. Brands - detects various brands within an image,
-            /// including the approximate location. The Brands argument is only available
-            /// in English.
+            /// pornographic in nature (depicts nudity or a sex act), or is gory (depicts
+            /// extreme violence or blood). Sexually suggestive content (aka racy content)
+            /// is also detected. Objects - detects various objects within an image,
+            /// including the approximate location. The Objects argument is only available
+            /// in English. Brands - detects various brands within an image, including the
+            /// approximate location. The Brands argument is only available in English.
             /// </param>
             /// <param name='details'>
             /// A string indicating which domain-specific details to return. Multiple
@@ -495,12 +501,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
             /// 'ja', 'pt', 'zh'
             /// </param>
+            /// <param name='descriptionExclude'>
+            /// Turn off specified domain models when generating the description.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -538,7 +547,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// language with complete sentences. The description is based on a collection
             /// of content tags, which are also returned by the operation. More than one
             /// description can be generated for each image. Descriptions are ordered by
-            /// their confidence score. All descriptions are in English.
+            /// their confidence score. Descriptions may include results from celebrity and
+            /// landmark domain models, if applicable.
             /// Two input methods are supported -- (1) Uploading an image or (2) specifying
             /// an image URL.
             /// A successful response will be returned in JSON. If the request failed, the
@@ -561,12 +571,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
             /// 'ja', 'pt', 'zh'
             /// </param>
+            /// <param name='descriptionExclude'>
+            /// Turn off specified domain models when generating the description.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, int? maxCandidates = 1, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -722,9 +735,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// based on objects, living beings, scenery or actions found in images. Unlike
             /// categories, tags are not organized according to a hierarchical
             /// classification system, but correspond to image content. Tags may contain
-            /// hints to avoid ambiguity or provide context, for example the tag "cello"
-            /// may be accompanied by the hint "musical instrument". All tags are in
-            /// English.
+            /// hints to avoid ambiguity or provide context, for example the tag
+            /// "ascomycete" may be accompanied by the hint "fungus".
             /// Two input methods are supported -- (1) Uploading an image or (2) specifying
             /// an image URL.
             /// A successful response will be returned in JSON. If the request failed, the
