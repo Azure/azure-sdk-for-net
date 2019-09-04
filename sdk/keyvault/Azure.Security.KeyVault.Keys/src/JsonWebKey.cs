@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys
     /// structure that represents a cryptographic key.
     /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18"/>.
     /// </summary>
-    public class JsonWebKey : IJsonDeserializable, IJsonSerializable
+    public partial class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
         /// <summary>
         /// The identifier of the key.
@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
-        public JsonWebKey(Aes aesProvider)
+        public JsonWebKey(Aes aesProvider) : this()
         {
             if (aesProvider is null) throw new ArgumentNullException(nameof(aesProvider));
 
@@ -53,9 +53,57 @@ namespace Azure.Security.KeyVault.Keys
             K = aesProvider.Key;
         }
 
-        //public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default)
-        //{
-        //}
+        /// <summary>
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Rsa"/>.
+        /// </summary>
+        /// <param name="rsaProvider">An <see cref="RSA"/> provider.</param>
+        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
+        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default)
+            : this(rsaProvider?.ExportParameters(includePrivateParameters) ?? throw new ArgumentNullException(nameof(rsaProvider)))
+        {
+        }
+
+        private JsonWebKey(RSAParameters rsaParameters) : this()
+        {
+            KeyType = KeyType.Rsa;
+
+            E = rsaParameters.Exponent;
+            N = rsaParameters.Modulus;
+
+            D = rsaParameters.D;
+            DP = rsaParameters.DP;
+            DQ = rsaParameters.DQ;
+            P = rsaParameters.P;
+            Q = rsaParameters.Q;
+            QI = rsaParameters.InverseQ;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="JsonWebKey"/> has a private key.
+        /// </summary>
+        public bool HasPrivateKey
+        {
+            get
+            {
+                switch (KeyType)
+                {
+                    case KeyType.Octet:
+                        return K != null;
+
+                    case KeyType.EllipticCurve:
+                    case KeyType.EllipticCurveHsm:
+                        return D != null;
+
+                    case KeyType.Rsa:
+                    case KeyType.RsaHsm:
+                        return D != null && DP != null && DQ != null && P != null && Q != null && QI != null;
+
+                    default:
+                        return false;
+                }
+            }
+        }
 
         #region RSA Public Key Parameters
 
@@ -141,6 +189,32 @@ namespace Azure.Security.KeyVault.Keys
         /// HSM Token, used with "Bring Your Own Key"
         /// </summary>
         public byte[] T { get; set; }
+
+        /// <summary>
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Octet"/> to an <see cref="Aes"/> object.
+        /// </summary>
+        /// <returns>An <see cref="Aes"/> object.</returns>
+        /// <exception cref="InvalidOperationException">This key is not oif type <see cref="KeyType.Octet"/> or <see cref="K"/> is null.</exception>
+        public Aes ToAes()
+        {
+            if (KeyType != KeyType.Octet)
+            {
+                throw new InvalidOperationException("key is not an octet key");
+            }
+
+            if (K is null)
+            {
+                throw new InvalidOperationException("key does not contain a value");
+            }
+
+            Aes key = Aes.Create();
+            if (key != null)
+            {
+                key.Key = K;
+            }
+
+            return key;
+        }
 
         private const string KeyIdPropertyName = "kid";
         private const string KeyTypePropertyName = "kty";

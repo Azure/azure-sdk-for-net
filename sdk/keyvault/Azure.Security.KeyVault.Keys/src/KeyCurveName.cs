@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys
 {

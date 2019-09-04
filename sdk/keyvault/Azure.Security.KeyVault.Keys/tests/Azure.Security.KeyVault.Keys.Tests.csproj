@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!-- Need to multitarget since ECParameters is not defined in net461 but introduced in net47. -->
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net47</TargetFrameworks>
   </PropertyGroup>
 
+  <Import Project="..\..\..\core\Azure.Core\src\Azure.Core.props" />
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 
   <ItemGroup>
@@ -18,5 +20,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Keys.csproj" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
   </ItemGroup>
 </Project>
