@@ -80,6 +80,13 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
+        ///   The reason why the partition processor is being closed.  This member is only used in case of failure, as a Shutdown
+        ///   or OwnershipLost close reason will be specified by the event processor.
+        /// </summary>
+        ///
+        private PartitionProcessorCloseReason CloseReason { get; set; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionPump"/> class.
         /// </summary>
         ///
@@ -118,12 +125,21 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     if (RunningTask == null)
                     {
+                        // We expect the token source to be null, but we are playing safe.
+
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
                         InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
 
+                        // In case an exception is encountered while partition processor is initializing, don't catch it
+                        // and let the event processor handle it.  The inner consumer hasn't connected to the service yet,
+                        // so there's no need to close it.
+
                         await PartitionProcessor.InitializeAsync().ConfigureAwait(false);
+
+                        // Before closing, the running task will set the close reason in case of failure.  When something
+                        // unexpected happens and it's not set, the default value (Unknown) is kept.
 
                         RunningTask = RunAsync(RunningTaskTokenSource.Token);
                     }
@@ -136,22 +152,14 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Stops the partition pump.  In case it hasn't been started, nothing happens.
+        ///   Stops the partition pump.  In case it isn't running, nothing happens.
         /// </summary>
+        ///
+        /// <param name="reason">The reason why the partition processor is being closed.  In case it's <c>null</c>, the internal close reason set by this pump is used.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task StopAsync() => StopAsync(PartitionProcessorCloseReason.Shutdown);
-
-        /// <summary>
-        ///   Stops the partition pump.  In case it hasn't been started, nothing happens.
-        /// </summary>
-        ///
-        /// <param name="reason">The reason why the partition pump is being closed.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        private async Task StopAsync(PartitionProcessorCloseReason reason)
+        public async Task StopAsync(PartitionProcessorCloseReason? reason)
         {
             if (RunningTask != null)
             {
@@ -166,17 +174,33 @@ namespace Azure.Messaging.EventHubs.Processor
 
                         try
                         {
+                            // RunningTask is only expected to fail when the partition processor throws while processing
+                            // an error, but unforeseen scenarios might happen.
+
                             await RunningTask.ConfigureAwait(false);
                         }
-                        finally
+                        catch (Exception)
                         {
-                            RunningTask = null;
+                            // TODO: delegate the exception handling to an Exception Callback.
                         }
 
-                        await InnerConsumer.CloseAsync().ConfigureAwait(false);
-                        InnerConsumer = null;
+                        RunningTask = null;
 
-                        await PartitionProcessor.CloseAsync(reason).ConfigureAwait(false);
+                        // It's important to close the consumer as soon as possible.  Failing to do so multiple times
+                        // would make it impossible to create more consumers for the associated partition as there's a
+                        // limit per client.
+
+                        await InnerConsumer.CloseAsync().ConfigureAwait(false);
+
+                        // In case an exception is encountered while partition processor is closing, don't catch it and
+                        // let the event processor handle it.  The pump has no way to guess when a partition was lost or
+                        // when a shutdown request was sent to the event processor, so it expects a "reason" parameter to
+                        // provide this information.  However, in case of pump failure, the external event processor does
+                        // not have enough information to figure out what failure reason to use, as this information is
+                        // only known by the pump.  In this case, we expect the processor-provided reason to be null, and
+                        // the private CloseReason is used instead.
+
+                        await PartitionProcessor.CloseAsync(reason ?? CloseReason).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -197,31 +221,50 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
+            IEnumerable<EventData> receivedEvents;
+            Exception unrecoverableException = null;
+
+            // We'll break from the loop upon encountering a non-retriable exception.  The event processor periodically
+            // checks its pumps' status, so it should be aware of when one of them stops working.
+
             while (!cancellationToken.IsCancellationRequested)
             {
-                IEnumerable<EventData> receivedEvents = null;
-
                 try
                 {
                     receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception exception)
-                {
-                    await PartitionProcessor.ProcessErrorAsync(exception, cancellationToken).ConfigureAwait(false);
 
-                    // Stop the pump if it's not a retriable exception.
-
-                    if (RetryPolicy.CalculateRetryDelay(exception, 1) == null)
+                    try
                     {
-                        // StopAsync cannot be awaited in this method because it awaits RunningTask, so we would have a deadlock.
-                        // For this reason, StopAsync starts to run concurrently with this task.
+                        await PartitionProcessor.ProcessEventsAsync(receivedEvents, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (Exception partitionProcessorException)
+                    {
+                        unrecoverableException = partitionProcessorException;
+                        CloseReason = PartitionProcessorCloseReason.PartitionProcessorException;
 
-                        _ = StopAsync(PartitionProcessorCloseReason.EventHubException);
                         break;
                     }
                 }
+                catch (Exception eventHubException)
+                {
+                    // Stop running only if it's not a retriable exception.
 
-                await PartitionProcessor.ProcessEventsAsync(receivedEvents, cancellationToken).ConfigureAwait(false);
+                    if (RetryPolicy.CalculateRetryDelay(eventHubException, 1) == null)
+                    {
+                        unrecoverableException = eventHubException;
+                        CloseReason = PartitionProcessorCloseReason.EventHubException;
+
+                        break;
+                    }
+                }
+            }
+
+            if (unrecoverableException != null)
+            {
+                // In case an exception is encountered while partition processor is processing the error, don't
+                // catch it and let the calling method (StopAsync) handle it.
+
+                await PartitionProcessor.ProcessErrorAsync(unrecoverableException, cancellationToken).ConfigureAwait(false);
             }
         }
     }

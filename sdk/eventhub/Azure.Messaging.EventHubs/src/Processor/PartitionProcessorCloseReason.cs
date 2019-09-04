@@ -19,6 +19,9 @@ namespace Azure.Messaging.EventHubs.Processor
         OwnershipLost,
 
         /// <summary>A non-retriable exception was thrown by the Event Hub Client.</summary>
-        EventHubException
+        EventHubException,
+
+        /// <summary>A non-retriable exception was thrown by the provided Partition Processor.</summary>
+        PartitionProcessorException
     }
 }

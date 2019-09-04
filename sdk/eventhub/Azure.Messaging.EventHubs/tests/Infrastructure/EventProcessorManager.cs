@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             for (int i = 0; i < amount; i++)
             {
-                EventProcessors.Add(new EventProcessor
+                EventProcessors.Add(new ShortWaitTimeMock
                     (
                         ConsumerGroup,
                         InnerClient,
@@ -145,6 +145,126 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             return Task.WhenAll(EventProcessors
                 .Select(eventProcessor => eventProcessor.StopAsync()));
+        }
+
+        /// <summary>
+        ///   Waits until the partition load distribution is stabilized.  Throws a <see cref="TimeoutException"/> if
+        ///   the load takes too long to stabilize.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public async Task WaitStabilization()
+        {
+            var stabilizedStatusAchieved = false;
+            var consecutiveStabilizedStatus = 0;
+            List<PartitionOwnership> previousActiveOwnership = null;
+
+            var timeoutToken = (new CancellationTokenSource(TimeSpan.FromMinutes(1))).Token;
+
+            while (!stabilizedStatusAchieved)
+            {
+                // Give up if it takes more than 1 minute.
+
+                timeoutToken.ThrowIfCancellationRequested();
+
+                // Remember to filter expired ownership.
+
+                var activeOwnership = (await InnerPartitionManager
+                    .ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup)
+                    .ConfigureAwait(false))
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
+                    .ToList();
+
+                // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
+                // otherwise.
+
+                if (AreOwnershipDistributionsTheSame(previousActiveOwnership, activeOwnership))
+                {
+                    ++consecutiveStabilizedStatus;
+                }
+                else
+                {
+                    consecutiveStabilizedStatus = 1;
+                }
+
+                previousActiveOwnership = activeOwnership;
+
+                if (consecutiveStabilizedStatus < 10)
+                {
+                    // Wait a load balance update cycle before the next verification.
+
+                    await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdate);
+                }
+                else
+                {
+                    // We'll consider the load stabilized only if its status doesn't change after 10 verifications.
+
+                    stabilizedStatusAchieved = true;
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Compares two ownership distributions among event processors to determine if they represent the same
+        ///   distribution.
+        /// </summary>
+        ///
+        /// <param name="first">The first distribution to consider.</param>
+        /// <param name="second">The second distribution to consider.</param>
+        ///
+        /// <returns><c>true</c>, if there are no owner changes between distributions; otherwise, <c>false</c>.</returns>
+        ///
+        /// <remarks>
+        ///   Filtering expired ownership is assumed to be responsability of the caller.
+        /// </remarks>
+        ///
+        private bool AreOwnershipDistributionsTheSame(IEnumerable<PartitionOwnership> first,
+                                                      IEnumerable<PartitionOwnership> second)
+        {
+            // If the distributions are the same instance, they're equal.  This should only happen
+            // if both are null or if they are the exact same instance.
+
+            if (Object.ReferenceEquals(first, second))
+            {
+                return true;
+            }
+
+            // If one or the other is null, then they cannot be equal, since we know that
+            // they are not both null.
+
+            if ((first == null) || (second == null))
+            {
+                return false;
+            }
+
+            // If the owners of each partition are equal, the instances are equal.
+
+            var firstOrderedDistribution = first.OrderBy(ownership => ownership.PartitionId).ToList();
+            var secondOrderedDistribution = second.OrderBy(ownership => ownership.PartitionId).ToList();
+
+            if (firstOrderedDistribution.Count != secondOrderedDistribution.Count)
+            {
+                return false;
+            }
+
+            for (var index = 0; index < firstOrderedDistribution.Count; ++index)
+            {
+                // We must check assert the partitions are the same as well, otherwise we might have matching
+                // owners by chance.
+
+                if (firstOrderedDistribution[index].PartitionId != secondOrderedDistribution[index].PartitionId)
+                {
+                    return false;
+                }
+
+                if (firstOrderedDistribution[index].OwnerIdentifier != secondOrderedDistribution[index].OwnerIdentifier)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -247,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Tests
             /// </summary>
             ///
             /// <param name="events">The received events to be processed.</param>
-            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
@@ -262,8 +382,8 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
             /// </summary>
             ///
-            /// <param name="exception">The exception to be processed.  It's not used in this sample.</param>
-            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
+            /// <param name="exception">The exception to be processed.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
@@ -272,6 +392,50 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 OnProcessError?.Invoke(AssociatedPartitionContext, AssociatedCheckpointManager, exception, cancellationToken);
                 return Task.CompletedTask;
+            }
+        }
+
+        /// <summary>
+        ///   Allows the load balance update and ownership expiration time spans to be overriden
+        ///   for testing purposes.
+        /// </summary>
+        ///
+        private class ShortWaitTimeMock : EventProcessor
+        {
+            /// <summary>A value used to override event processors' load balance update time span.</summary>
+            public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
+
+            /// <summary>A value used to override event processors' ownership expiration time span.</summary>
+            public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
+
+            /// <summary>
+            ///   The minimum amount of time to be elapsed between two load balancing verifications.
+            /// </summary>
+            ///
+            protected override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
+
+            /// <summary>
+            ///   The minimum amount of time for an ownership to be considered expired without further updates.
+            /// </summary>
+            ///
+            protected override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
+
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
+            /// </summary>
+            ///
+            /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
+            /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
+            /// <param name="partitionProcessorFactory">Creates an instance of a class implementing the <see cref="IPartitionProcessor" /> interface.</param>
+            /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
+            /// <param name="options">The set of options to use for this event processor.</param>
+            ///
+            public ShortWaitTimeMock(string consumerGroup,
+                                     EventHubClient eventHubClient,
+                                     Func<PartitionContext, CheckpointManager, IPartitionProcessor> partitionProcessorFactory,
+                                     PartitionManager partitionManager,
+                                     EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager, options)
+            {
             }
         }
     }
