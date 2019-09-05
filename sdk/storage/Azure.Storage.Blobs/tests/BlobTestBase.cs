@@ -85,6 +85,9 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_PreviewAccount_SharedKey()
             => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPreviewBlob);
 
+        public BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey()
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPremiumBlob);
+
         public BlobServiceClient GetServiceClient_OauthAccount() =>
             this.GetServiceClientFromOauthConfig(this.TestConfigOAuth);
 
