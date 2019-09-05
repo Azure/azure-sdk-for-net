@@ -49,8 +49,8 @@ namespace Azure.Messaging.EventHubs.Samples
                 // all partitions in the Event Hub, passing them to the user for processing.
                 //
                 // A partition processor is associated with a specific partition and is responsible for processing events when
-                // requested by the event processor.  An instance is provided to the event processor when requested from a
-                // factory function, and takes the form of a class which implements the IPartitionProcessor interface.
+                // requested by the event processor.  A BasePartitionProcessor instance is provided to the event processor when
+                // requested from a factory function.
                 //
                 // The factory function is provided to the event processor when it is created.  The factory is responsible for
                 // creating a partition processor based on a single argument:
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // We'll be using a SamplePartitionProcessor, whose implementation can be found at the end of this sample.  Its
                 // constructor takes the associated partition id so it can provide useful log messages.
 
-                Func<PartitionContext, IPartitionProcessor> partitionProcessorFactory =
+                Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory =
                     partitionContext => new SamplePartitionProcessor(partitionContext.PartitionId);
 
                 // A partition manager may create checkpoints and list/claim partition ownership.  The user can implement their
@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   to match the return type.
         /// </remarks>
         /// 
-        private class SamplePartitionProcessor : IPartitionProcessor
+        private class SamplePartitionProcessor : BasePartitionProcessor
         {
             /// <summary>Keeps track of the amount of received events across all existing instances of this class.</summary>
             private static int s_totalEventsCount = 0;
@@ -195,9 +195,11 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Initializes the partition processor.
             /// </summary>
             ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public Task InitializeAsync()
+            public override Task InitializeAsync(PartitionContext partitionContext)
             {
                 // This is the last piece of code guaranteed to run before event processing, so all initialization
                 // must be done by the moment this method returns.
@@ -213,11 +215,13 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Closes the partition processor.
             /// </summary>
             ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
             /// <param name="reason">The reason why the partition processor is being closed.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public Task CloseAsync(PartitionProcessorCloseReason reason)
+            public override Task CloseAsync(PartitionContext partitionContext,
+                                            PartitionProcessorCloseReason reason)
             {
                 // The code to be run when closing the partition processor.  This is the right place to dispose
                 // of objects that will no longer be used.
@@ -233,12 +237,15 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Processes a set of received <see cref="EventData" />.
             /// </summary>
             ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
             /// <param name="events">The received events to be processed.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public Task ProcessEventsAsync(IEnumerable<EventData> events, CancellationToken cancellationToken)
+            public override Task ProcessEventsAsync(PartitionContext partitionContext,
+                                                    IEnumerable<EventData> events,
+                                                    CancellationToken cancellationToken)
             {
                 // Here the user can specify what to do with the events received from the event processor.  We are counting how
                 // many events were received across all instances of this class so we can check whether all sent events were received.
@@ -263,12 +270,15 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
             /// </summary>
             ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
             /// <param name="exception">The exception to be processed.  It's not used in this sample.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public Task ProcessErrorAsync(Exception exception, CancellationToken cancellationToken)
+            public override Task ProcessErrorAsync(PartitionContext partitionContext,
+                                                   Exception exception,
+                                                   CancellationToken cancellationToken)
             {
                 // All the unhandled exceptions encountered during the event processor execution are passed to this method so
                 // the user can decide how to handle them.

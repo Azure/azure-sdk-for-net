@@ -4,7 +4,7 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   The reason for closing an <see cref="IPartitionProcessor" />.
+    ///   The reason for closing a <see cref="BasePartitionProcessor" />.
     /// </summary>
     ///
     public enum PartitionProcessorCloseReason

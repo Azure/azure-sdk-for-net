@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Constantly receives <see cref="EventData" /> from a single partition in the context of a given consumer
-    ///   group.  The received data is sent to an <see cref="IPartitionProcessor" /> to be processed.
+    ///   group.  The received data is sent to a <see cref="BasePartitionProcessor" /> to be processed.
     /// </summary>
     ///
     internal class PartitionPump
@@ -42,18 +42,17 @@ namespace Azure.Messaging.EventHubs.Processor
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   The identifier of the Event Hub partition this partition pump is associated with.  Events will be
+        ///   The context of the Event Hub partition this partition pump is associated with.  Events will be
         ///   read only from this partition.
         /// </summary>
         ///
-        private string PartitionId { get; }
+        private PartitionContext AssociatedPartitionContext { get; }
 
         /// <summary>
-        ///   An instance of a class that implements the <see cref="IPartitionProcessor" /> interface.
-        ///   It's provided by the constructor caller and it's used to process events and errors.
+        ///   Processes events and errors.
         /// </summary>
         ///
-        private IPartitionProcessor PartitionProcessor { get; }
+        private BasePartitionProcessor PartitionProcessor { get; }
 
         /// <summary>
         ///   The set of options to use for this partition pump.
@@ -92,19 +91,19 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition pump is associated with.  Events are read in the context of this group.</param>
-        /// <param name="partitionId">The identifier of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
+        /// <param name="partitionContext">The context of the Event Hub partition this partition pump is associated with.  Events will be read only from this partition.</param>
         /// <param name="partitionProcessor">A partition processor used to process events and errors.  Its implementation must be provided by the caller.</param>
         /// <param name="options">The set of options to use for this partition pump.</param>
         ///
         internal PartitionPump(EventHubClient eventHubClient,
                                string consumerGroup,
-                               string partitionId,
-                               IPartitionProcessor partitionProcessor,
+                               PartitionContext partitionContext,
+                               BasePartitionProcessor partitionProcessor,
                                EventProcessorOptions options)
         {
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
-            PartitionId = partitionId;
+            AssociatedPartitionContext = partitionContext;
             PartitionProcessor = partitionProcessor;
             Options = options;
         }
@@ -130,13 +129,13 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, PartitionId, Options.InitialEventPosition);
+                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, AssociatedPartitionContext.PartitionId, Options.InitialEventPosition);
 
                         // In case an exception is encountered while partition processor is initializing, don't catch it
                         // and let the event processor handle it.  The inner consumer hasn't connected to the service yet,
                         // so there's no need to close it.
 
-                        await PartitionProcessor.InitializeAsync().ConfigureAwait(false);
+                        await PartitionProcessor.InitializeAsync(AssociatedPartitionContext).ConfigureAwait(false);
 
                         // Before closing, the running task will set the close reason in case of failure.  When something
                         // unexpected happens and it's not set, the default value (Unknown) is kept.
@@ -200,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         // only known by the pump.  In this case, we expect the processor-provided reason to be null, and
                         // the private CloseReason is used instead.
 
-                        await PartitionProcessor.CloseAsync(reason ?? CloseReason).ConfigureAwait(false);
+                        await PartitionProcessor.CloseAsync(AssociatedPartitionContext, reason ?? CloseReason).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -235,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     try
                     {
-                        await PartitionProcessor.ProcessEventsAsync(receivedEvents, cancellationToken).ConfigureAwait(false);
+                        await PartitionProcessor.ProcessEventsAsync(AssociatedPartitionContext, receivedEvents, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception partitionProcessorException)
                     {
@@ -264,7 +263,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // In case an exception is encountered while partition processor is processing the error, don't
                 // catch it and let the calling method (StopAsync) handle it.
 
-                await PartitionProcessor.ProcessErrorAsync(unrecoverableException, cancellationToken).ConfigureAwait(false);
+                await PartitionProcessor.ProcessErrorAsync(AssociatedPartitionContext, unrecoverableException, cancellationToken).ConfigureAwait(false);
             }
         }
     }

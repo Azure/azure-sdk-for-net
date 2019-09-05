@@ -7,7 +7,7 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Contains all the information needed to store the state of an <see cref="IPartitionProcessor" />.
+    ///   Contains all the information needed to store the state of a partition's event processing.
     /// </summary>
     ///
     public class Checkpoint

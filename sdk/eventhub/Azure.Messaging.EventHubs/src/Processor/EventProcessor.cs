@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Constantly receives <see cref="EventData" /> from every partition in the context of a given consumer group.
-    ///   The received data is sent to an <see cref="IPartitionProcessor" /> to be processed.
+    ///   The received data is sent to a <see cref="BasePartitionProcessor" /> to be processed.
     /// </summary>
     ///
     public class EventProcessor
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   A factory used to create partition processors.
         /// </summary>
         ///
-        private Func<PartitionContext, IPartitionProcessor> PartitionProcessorFactory { get; }
+        private Func<PartitionContext, BasePartitionProcessor> PartitionProcessorFactory { get; }
 
         /// <summary>
         ///   Interacts with the storage system, dealing with ownership and checkpoints.
@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionProcessorFactory">Creates an instance of a class implementing the <see cref="IPartitionProcessor" /> interface.</param>
+        /// <param name="partitionProcessorFactory">Creates a <see cref="BasePartitionProcessor" /> instance.</param>
         /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public EventProcessor(string consumerGroup,
                               EventHubClient eventHubClient,
-                              Func<PartitionContext, IPartitionProcessor> partitionProcessorFactory,
+                              Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory,
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
@@ -456,7 +456,7 @@ namespace Azure.Messaging.EventHubs.Processor
             try
             {
                 var partitionProcessor = PartitionProcessorFactory(partitionContext);
-                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
+                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionContext, partitionProcessor, Options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 

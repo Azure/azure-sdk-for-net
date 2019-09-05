@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A factory used to create partition processors.
         /// </summary>
         ///
-        private Func<PartitionContext, IPartitionProcessor> PartitionProcessorFactory { get; }
+        private Func<PartitionContext, BasePartitionProcessor> PartitionProcessorFactory { get; }
 
         /// <summary>
         ///   The name of the consumer group the event processors are associated with.  Events will be
@@ -79,7 +79,6 @@ namespace Azure.Messaging.EventHubs.Tests
             PartitionProcessorFactory = partitionContext =>
                 new PartitionProcessor
                 (
-                    partitionContext,
                     onInitialize,
                     onClose,
                     onProcessEvents,
@@ -270,7 +269,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A test helper implementation of <see cref="IPartitionProcessor" />.
         /// </summary>
         ///
-        private class PartitionProcessor : IPartitionProcessor
+        private class PartitionProcessor : BasePartitionProcessor
         {
             /// <summary>
             ///   Contains information about the partition this partition processor will be processing
@@ -307,19 +306,16 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
             /// <param name="onInitialize">A callback action to be called on <see cref="InitializeAsync" />.</param>
             /// <param name="onClose">A callback action to be called on <see cref="CloseAsync" />.</param>
             /// <param name="onProcessEvents">A callback action to be called on <see cref="ProcessEventsAsync" />.</param>
             /// <param name="onProcessError">A callback action to be called on <see cref="ProcessErrorAsync" />.</param>
             ///
-            public PartitionProcessor(PartitionContext partitionContext,
-                                      Action<PartitionContext> onInitialize = null,
+            public PartitionProcessor(Action<PartitionContext> onInitialize = null,
                                       Action<PartitionContext, PartitionProcessorCloseReason> onClose = null,
                                       Action<PartitionContext, IEnumerable<EventData>, CancellationToken> onProcessEvents = null,
                                       Action<PartitionContext, Exception, CancellationToken> onProcessError = null)
             {
-                AssociatedPartitionContext = partitionContext;
                 OnInitialize = onInitialize;
                 OnClose = onClose;
                 OnProcessEvents = onProcessEvents;
@@ -330,11 +326,13 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Initializes the partition processor.
             /// </summary>
             ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public Task InitializeAsync()
+            public override Task InitializeAsync(PartitionContext partitionContext)
             {
-                OnInitialize?.Invoke(AssociatedPartitionContext);
+                OnInitialize?.Invoke(partitionContext);
                 return Task.CompletedTask;
             }
 
@@ -342,13 +340,15 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Closes the partition processor.
             /// </summary>
             ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
             /// <param name="reason">The reason why the partition processor is being closed.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public Task CloseAsync(PartitionProcessorCloseReason reason)
+            public override Task CloseAsync(PartitionContext partitionContext,
+                                            PartitionProcessorCloseReason reason)
             {
-                OnClose?.Invoke(AssociatedPartitionContext, reason);
+                OnClose?.Invoke(partitionContext, reason);
                 return Task.CompletedTask;
             }
 
@@ -356,15 +356,17 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Processes a set of received <see cref="EventData" />.
             /// </summary>
             ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
             /// <param name="events">The received events to be processed.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public Task ProcessEventsAsync(IEnumerable<EventData> events,
-                                           CancellationToken cancellationToken)
+            public override Task ProcessEventsAsync(PartitionContext partitionContext,
+                                                    IEnumerable<EventData> events,
+                                                    CancellationToken cancellationToken)
             {
-                OnProcessEvents?.Invoke(AssociatedPartitionContext, events, cancellationToken);
+                OnProcessEvents?.Invoke(partitionContext, events, cancellationToken);
                 return Task.CompletedTask;
             }
 
@@ -372,15 +374,17 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
             /// </summary>
             ///
+            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
             /// <param name="exception">The exception to be processed.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public Task ProcessErrorAsync(Exception exception,
-                                          CancellationToken cancellationToken)
+            public override Task ProcessErrorAsync(PartitionContext partitionContext,
+                                                   Exception exception,
+                                                   CancellationToken cancellationToken)
             {
-                OnProcessError?.Invoke(AssociatedPartitionContext, exception, cancellationToken);
+                OnProcessError?.Invoke(partitionContext, exception, cancellationToken);
                 return Task.CompletedTask;
             }
         }
@@ -422,7 +426,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             public ShortWaitTimeMock(string consumerGroup,
                                      EventHubClient eventHubClient,
-                                     Func<PartitionContext, IPartitionProcessor> partitionProcessorFactory,
+                                     Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory,
                                      PartitionManager partitionManager,
                                      EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager, options)
             {
