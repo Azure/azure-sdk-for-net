@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples.Infrastructure;
 
-namespace Azure.Messaging.EventHubs.Samples
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Samples
 {
     /// <summary>
     ///   The main entry point for executing the samples.
@@ -37,17 +37,17 @@ namespace Azure.Messaging.EventHubs.Samples
             // Display the welcome message.
 
             Console.WriteLine();
-            Console.WriteLine("=========================================");
-            Console.WriteLine("Welcome to the Event Hubs client library!");
-            Console.WriteLine("=========================================");
+            Console.WriteLine("=============================================================================");
+            Console.WriteLine("Welcome to the Event Hubs Checkpoint Storage client library for Blob Storage!");
+            Console.WriteLine("=============================================================================");
             Console.WriteLine();
 
-            // Prompt for the connection string, if it wasn't passed.
+            // Prompt for the Event Hubs connection string, if it wasn't passed.
 
-            while (String.IsNullOrEmpty(parsedArgs.ConnectionString))
+            while (String.IsNullOrEmpty(parsedArgs.EventHubsConnectionString))
             {
                 Console.Write("Please provide the connection string for the Event Hubs namespace that you'd like to use and then press Enter: ");
-                parsedArgs.ConnectionString = Console.ReadLine().Trim();
+                parsedArgs.EventHubsConnectionString = Console.ReadLine().Trim();
                 Console.WriteLine();
             }
 
@@ -57,6 +57,24 @@ namespace Azure.Messaging.EventHubs.Samples
             {
                 Console.Write("Please provide the name of the Event Hub that you'd like to use and then press Enter: ");
                 parsedArgs.EventHub = Console.ReadLine().Trim();
+                Console.WriteLine();
+            }
+
+            // Prompt for the storage connection string, if it wasn't passed.
+
+            while (String.IsNullOrEmpty(parsedArgs.StorageConnectionString))
+            {
+                Console.Write("Please provide the connection string for the Azure storage account that you'd like to use and then press Enter: ");
+                parsedArgs.StorageConnectionString = Console.ReadLine().Trim();
+                Console.WriteLine();
+            }
+
+            // Prompt for the blob container name, if it wasn't passed.
+
+            while (String.IsNullOrEmpty(parsedArgs.BlobContainer))
+            {
+                Console.Write("Please provide the name of the blob container that you'd like to use and then press Enter: ");
+                parsedArgs.BlobContainer = Console.ReadLine().Trim();
                 Console.WriteLine();
             }
 
@@ -96,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 Console.WriteLine("-------------------------------------------------------------------------");
                 Console.WriteLine();
 
-                await samples[choice.Value].RunAsync(parsedArgs.ConnectionString, parsedArgs.EventHub);
+                await samples[choice.Value].RunAsync(parsedArgs.EventHubsConnectionString, parsedArgs.EventHub, parsedArgs.StorageConnectionString, parsedArgs.BlobContainer);
                 return;
             }
         }
@@ -108,32 +126,41 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         private static void DisplayHelp()
         {
+            var eventHubsSample = "Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];";
+            var storageSample = "DefaultEndpointsProtocol=https;AccountName=NotReal;AccountKey=[FAKE];EndpointSuffix=core.windows.net";
+
             Console.WriteLine();
             Console.WriteLine($"{ typeof(Program).Namespace }");
             Console.WriteLine();
-            Console.WriteLine("This executable allows for running the Azure Event Hubs client library samples.  Because");
-            Console.WriteLine("the samples run against live Azure services, they require an Event Hubs namespace and an");
-            Console.WriteLine("Event Hub under it in order to run.");
+            Console.WriteLine("This executable allows for running the Azure Event Hubs Blob Checkpoint Store library samples.  Because");
+            Console.WriteLine("the samples run against live Azure services, they require an Event Hubs namespace, an Event Hub, an");
+            Console.WriteLine("Azure storage account, and a blob storage container to run.");
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Arguments:");
             Console.WriteLine($"\t{ nameof(CommandLineArguments.Help) }:");
             Console.WriteLine("\t\tDisplays this message.");
             Console.WriteLine();
-            Console.WriteLine($"\t{ nameof(CommandLineArguments.ConnectionString) }:");
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.EventHubsConnectionString) }:");
             Console.WriteLine("\t\tThe connection string to the Event Hubs namespace to use for the samples.");
             Console.WriteLine();
             Console.WriteLine($"\t{ nameof(CommandLineArguments.EventHub) }:");
             Console.WriteLine("\t\tThe name of the Event Hub under the namespace to use.");
             Console.WriteLine();
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.StorageConnectionString) }:");
+            Console.WriteLine("\t\tThe connection string to the Azure storage account to use for the samples.");
+            Console.WriteLine();
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.BlobContainer) }:");
+            Console.WriteLine("\t\tThe name of the blob container under the storage account to use for checkpoints.");
+            Console.WriteLine();
             Console.WriteLine("Usage:");
-            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.CheckpointStore.Blob.Samples.exe");
             Console.WriteLine();
-            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.ConnectionString) } \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHub) } \"SomeHub\"");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.CheckpointStore.Blob.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHubsConnectionString) } \"{ eventHubsSample }\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHub) } \"SomeHub\"{ CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.StorageConnectionString) } \"{ storageSample }\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.BlobContainer) } \"Checkpoints\"");
             Console.WriteLine();
-            Console.WriteLine("\tAzure.Messaging.EventHubs.Samples.exe \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" \"SomeHub\"");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.CheckpointStore.Blob.Samples.exe \"{ eventHubsSample}\" \"SomeHub\" \"{ storageSample }\" \"Checkpoints\"");
             Console.WriteLine();
-            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Help) }");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.CheckpointStore.Blob.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Help) }");
             Console.WriteLine();
         }
 
@@ -181,13 +208,18 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         private static CommandLineArguments ParseArguments(string[] args)
         {
-
-            // If at least two arguments were passed with no argument designator, then assume they're values and
+            // If at least four arguments were passed with no argument designator, then assume they're values and
             // accept them positionally.
 
-            if ((args.Length >= 2) && (!args[0].StartsWith(CommandLineArguments.ArgumentPrefix)) && (!args[1].StartsWith(CommandLineArguments.ArgumentPrefix)))
+            if ((args.Length >= 4) && (!args[0].StartsWith(CommandLineArguments.ArgumentPrefix)) && (!args[1].StartsWith(CommandLineArguments.ArgumentPrefix)))
             {
-                return new CommandLineArguments { ConnectionString = args[0], EventHub = args[1] };
+                return new CommandLineArguments
+                {
+                    EventHubsConnectionString = args[0],
+                    EventHub = args[1],
+                    StorageConnectionString = args[3],
+                    BlobContainer = args[4]
+                };
             }
 
             var parsedArgs = new CommandLineArguments();
@@ -223,13 +255,21 @@ namespace Azure.Messaging.EventHubs.Samples
                 // If the current token is one of our known arguments, capture the next token in sequence as it's
                 // value, since we've already ruled out that it is another argument name.
 
-                if (args[index].Equals($"{ CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.ConnectionString) }", StringComparison.OrdinalIgnoreCase))
+                if (args[index].Equals($"{ CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHubsConnectionString) }", StringComparison.OrdinalIgnoreCase))
                 {
-                    parsedArgs.ConnectionString = args[index + 1].Trim();
+                    parsedArgs.EventHubsConnectionString = args[index + 1].Trim();
                 }
                 else if (args[index].Equals($"--{ nameof(CommandLineArguments.EventHub) }", StringComparison.OrdinalIgnoreCase))
                 {
                     parsedArgs.EventHub = args[index + 1].Trim();
+                }
+                else if (args[index].Equals($"--{ nameof(CommandLineArguments.StorageConnectionString) }", StringComparison.OrdinalIgnoreCase))
+                {
+                    parsedArgs.StorageConnectionString = args[index + 1].Trim();
+                }
+                else if (args[index].Equals($"--{ nameof(CommandLineArguments.BlobContainer) }", StringComparison.OrdinalIgnoreCase))
+                {
+                    parsedArgs.BlobContainer = args[index + 1].Trim();
                 }
             }
 
@@ -243,12 +283,12 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         /// <returns>The set of samples defined in the solution.</returns>
         ///
-        private static IReadOnlyList<IEventHubsSample> LocateSamples() =>
+        private static IReadOnlyList<IEventHubsBlobCheckpointSample> LocateSamples() =>
             typeof(Program)
               .Assembly
               .ExportedTypes
-              .Where(type => (type.IsClass && typeof(IEventHubsSample).IsAssignableFrom(type)))
-              .Select(type => (IEventHubsSample)Activator.CreateInstance(type))
+              .Where(type => (type.IsClass && typeof(IEventHubsBlobCheckpointSample).IsAssignableFrom(type)))
+              .Select(type => (IEventHubsBlobCheckpointSample)Activator.CreateInstance(type))
               .ToList();
 
         /// <summary>
@@ -262,10 +302,16 @@ namespace Azure.Messaging.EventHubs.Samples
             public const string ArgumentPrefix = "--";
 
             /// <summary>The connection string to the Azure Event Hubs namespace for samples.</summary>
-            public string ConnectionString;
+            public string EventHubsConnectionString;
 
             /// <summary>The name of the Event Hub to use samples.</summary>
             public string EventHub;
+
+            /// <summary>The connection string to the Azure storage account for samples.</summary>
+            public string StorageConnectionString;
+
+            /// <summary>The name of the blob container to use samples.</summary>
+            public string BlobContainer;
 
             /// <summary>A flag indicating whether or not help was requested.</summary>
             public bool Help;

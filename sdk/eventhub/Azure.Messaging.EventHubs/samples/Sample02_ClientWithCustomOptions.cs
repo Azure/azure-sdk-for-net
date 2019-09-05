@@ -53,8 +53,8 @@ namespace Azure.Messaging.EventHubs.Samples
 
             var clientOptions = new EventHubClientOptions
             {
-               TransportType = TransportType.AmqpWebSockets,
-               Proxy = (IWebProxy)null
+                TransportType = TransportType.AmqpWebSockets,
+                Proxy = (IWebProxy)null
             };
 
             clientOptions.RetryOptions.MaximumRetries = 5;
