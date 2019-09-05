@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
         ///    constructor.
         /// </summary>
         ///
@@ -46,11 +46,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Func<PartitionContext, BasePartitionProcessor> mockFactory = context => Mock.Of<BasePartitionProcessor>();
             var mockPartitionManager = Mock.Of<PartitionManager>();
 
-            Assert.That(() => new EventProcessor(consumerGroup, mockClient, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessor<BasePartitionProcessor>(consumerGroup, mockClient, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
         ///    constructor.
         /// </summary>
         ///
@@ -60,11 +60,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Func<PartitionContext, BasePartitionProcessor> mockFactory = context => Mock.Of<BasePartitionProcessor>();
             var mockPartitionManager = Mock.Of<PartitionManager>();
 
-            Assert.That(() => new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, null, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessor<BasePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, null, mockFactory, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
         ///    constructor.
         /// </summary>
         ///
@@ -74,11 +74,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockClient = Mock.Of<EventHubClient>();
             var mockPartitionManager = Mock.Of<PartitionManager>();
 
-            Assert.That(() => new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, mockClient, null, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessor<BasePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, null, mockPartitionManager), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
         ///    constructor.
         /// </summary>
         ///
@@ -88,11 +88,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockClient = Mock.Of<EventHubClient>();
             Func<PartitionContext, BasePartitionProcessor> mockFactory = context => Mock.Of<BasePartitionProcessor>();
 
-            Assert.That(() => new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, null), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessor<BasePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, null), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
         ///    constructor.
         /// </summary>
         ///
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
         ///    constructor.
         /// </summary>
         ///
@@ -141,7 +141,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessor" />
+        ///    Verifies functionality of the <see cref="EventProcessor{T}" />
         ///    constructor.
         /// </summary>
         ///
@@ -152,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Func<PartitionContext, BasePartitionProcessor> mockFactory = context => Mock.Of<BasePartitionProcessor>();
             var mockPartitionManager = Mock.Of<PartitionManager>();
 
-            var eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager);
+            var eventProcessor = new EventProcessor<BasePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, mockClient, mockFactory, mockPartitionManager);
 
             Assert.That(eventProcessor.Identifier, Is.Not.Null);
             Assert.That(eventProcessor.Identifier, Is.Not.Empty);
@@ -162,10 +162,10 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Allows for the options used by the event processor to be exposed for testing purposes.
         /// </summary>
         ///
-        public class ReadableOptionsMock : EventProcessor
+        public class ReadableOptionsMock : EventProcessor<BasePartitionProcessor>
         {
             public EventProcessorOptions Options =>
-                typeof(EventProcessor)
+                typeof(EventProcessor<BasePartitionProcessor>)
                     .GetProperty(nameof(Options), BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(this) as EventProcessorOptions;
 

@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string ConsumerGroup { get; }
 
         /// <summary>
-        ///   The identifier of the associated <see cref="EventProcessor" /> instance.
+        ///   The identifier of the associated <see cref="EventProcessor{T}" /> instance.
         /// </summary>
         ///
         public string OwnerIdentifier { get; }
@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
+        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
         /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated <see cref="BasePartitionProcessor" />.</param>
         /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated <see cref="BasePartitionProcessor" />.</param>

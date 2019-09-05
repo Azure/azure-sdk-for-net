@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Processes events received from the Azure Event Hubs service.  An instance of this class or of a derived class
-    ///   will be created for every partition the associated <see cref="EventProcessor" /> owns.  This class does not
+    ///   will be created for every partition the associated <see cref="EventProcessor{T}" /> owns.  This class does not
     ///   perform any kind of processing by itself and a useful partition processor is expected to be derived from it. 
     /// </summary>
     ///
     /// <remarks>
-    ///   Every aforementioned instance is created by a factory provided by the user in the <see cref="EventProcessor" />
+    ///   Every aforementioned instance is created by a factory provided by the user in the <see cref="EventProcessor{T}" />
     ///   constructor.
     /// </remarks>
     ///
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
+        ///   Processes an unexpected exception thrown when <see cref="EventProcessor{T}" /> is running.
         /// </summary>
         ///
         /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>

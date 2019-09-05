@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   A non-volatile in-memory storage service that keeps track of checkpoints and ownership.  It must
-    ///   be used with a single <see cref="EventProcessor"/> instance.
+    ///   be used with a single <see cref="EventProcessor{T}"/> instance.
     /// </summary>
     ///
     public class InMemoryPartitionManager : PartitionManager

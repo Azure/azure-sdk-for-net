@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   The received data is sent to a <see cref="BasePartitionProcessor" /> to be processed.
     /// </summary>
     ///
-    public class EventProcessor
+    public class EventProcessor<T> where T : BasePartitionProcessor, new()
     {
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
@@ -102,7 +102,29 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
+        /// <param name="options">The set of options to use for this event processor.</param>
+        ///
+        /// <remarks>
+        ///   Ownership of the <paramref name="eventHubClient" /> is assumed to be responsibility of the caller; this
+        ///   processor will delegate operations to it, but will not perform any clean-up tasks, such as closing or
+        ///   disposing of the instance.
+        /// </remarks>
+        ///
+        public EventProcessor(string consumerGroup,
+                              EventHubClient eventHubClient,
+                              PartitionManager partitionManager,
+                              EventProcessorOptions options = default) : this(consumerGroup, eventHubClient, partitionContext => new T(), partitionManager, options)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
@@ -139,7 +161,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessor"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessor{T}"/> class.
         /// </summary>
         ///
         protected EventProcessor()
@@ -243,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Performs load balancing between multiple <see cref="EventProcessor" /> instances, claiming others' partitions to enforce
+        ///   Performs load balancing between multiple <see cref="EventProcessor{T}" /> instances, claiming others' partitions to enforce
         ///   a more equal distribution when necessary.  It also manages its own partition pumps and ownership.
         /// </summary>
         ///
@@ -315,7 +337,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Finds and tries to claim an ownership if this <see cref="EventProcessor" /> instance is eligible to increase its ownership
+        ///   Finds and tries to claim an ownership if this <see cref="EventProcessor{T}" /> instance is eligible to increase its ownership
         ///   list.
         /// </summary>
         ///

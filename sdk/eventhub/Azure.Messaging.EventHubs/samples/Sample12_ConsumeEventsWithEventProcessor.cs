@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-                EventProcessor eventProcessor = new EventProcessor(EventHubConsumer.DefaultConsumerGroupName, client, partitionProcessorFactory, partitionManager, eventProcessorOptions);
+                EventProcessor<SamplePartitionProcessor> eventProcessor = new EventProcessor<SamplePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, client, partitionManager, eventProcessorOptions);
 
                 // Once started, the event processor will start to receive events from all partitions.
 
@@ -177,6 +177,15 @@ namespace Azure.Messaging.EventHubs.Samples
             /// </summary>
             ///
             private readonly string PartitionId;
+
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.
+            /// </summary>
+            ///
+            public SamplePartitionProcessor()
+            {
+                Console.WriteLine($"\tPartition processor successfully created.");
+            }
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.

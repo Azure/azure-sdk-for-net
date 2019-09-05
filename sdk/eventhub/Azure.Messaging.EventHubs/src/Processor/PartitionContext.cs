@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string PartitionId { get; }
 
         /// <summary>
-        ///   The identifier of the associated <see cref="EventProcessor" /> instance.
+        ///   The identifier of the associated <see cref="EventProcessor{T}" /> instance.
         /// </summary>
         ///
         public string OwnerIdentifier { get; }
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         /// <param name="partitionManager">Interacts with the storage system, dealing with the creation of checkpoints.</param>
-        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
+        /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
         ///
         internal PartitionContext(string eventHubName,
                                   string consumerGroup,
