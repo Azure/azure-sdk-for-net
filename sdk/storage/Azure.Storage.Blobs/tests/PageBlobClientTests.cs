@@ -1425,7 +1425,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task StartCopyIncrementalAsync_AccessTier()
         {
-            using (this.GetNewContainer(out var container))
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service:premiumService))
             {
                 // Arrange
                 var data = this.GetRandomBuffer(Constants.KB);
@@ -1469,7 +1470,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
-            using (this.GetNewContainer(out var container))
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService))
             {
                 // Arrange
                 //await container.SetAccessPolicyAsync(PublicAccessType.Container);
@@ -1505,7 +1507,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetTierAsync_AccessTier()
         {
-            using (this.GetNewContainer(out var container))
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService))
             {
                 // Arrange
                 var blob = await this.CreatePageBlobClientAsync(container, Constants.KB);
@@ -1522,7 +1525,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetTierAsync_AccessTierFail()
         {
-            using (this.GetNewContainer(out var container))
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService))
             {
                 // Arrange
                 var blob = await this.CreatePageBlobClientAsync(container, Constants.KB);
