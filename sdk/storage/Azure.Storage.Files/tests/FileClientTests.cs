@@ -129,17 +129,22 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        //TODO add FilePermissionId once Share.CreateFilePermission is implemented.
         [Test]
         public async Task CreateAsync_SmbProperties()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
+                var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                var createPermissionResponse = await share.CreatePermissionAsync(permission);
+
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                await directory.CreateAsync();
+
                 var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
                 var smbProperties = new FileSmbProperties
                 {
-                    //TODO FilePermissionKey
+                    FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
                     FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
                     FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                     FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
@@ -401,17 +406,22 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        //TODO add FilePermissionId once Share.CreateFilePermission is implemented.
         [Test]
         public async Task SetPropertiesAsync_SmbProperties()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
+                var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                var createPermissionResponse = await share.CreatePermissionAsync(permission);
+
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                await directory.CreateAsync();
+
                 var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
                 var smbProperties = new FileSmbProperties
                 {
-                    //TODO FilePermissionKey
+                    FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
                     FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
                     FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                     FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),

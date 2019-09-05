@@ -382,9 +382,14 @@ namespace Azure.Storage.Files
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    var smbPrps = smbProperties ?? new FileSmbProperties();
+                    var smbProps = smbProperties ?? new FileSmbProperties();
 
-                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbPrps.FilePermissionKey);
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
+
+                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    {
+                        filePermission = Constants.File.FilePermissionInherit;
+                    }
 
                     var response = await FileRestClient.File.CreateAsync(
                         this.Pipeline,
@@ -397,11 +402,11 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         metadata: metadata,
-                        fileAttributes: smbPrps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
-                        filePermission: filePermission ?? Constants.File.FilePermissionInherit,
-                        fileCreationTime: smbPrps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
-                        fileLastWriteTime: smbPrps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
-                        filePermissionKey: smbPrps.FilePermissionKey,
+                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
+                        filePermission: filePermission,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1296,6 +1301,10 @@ namespace Azure.Storage.Files
                     var smbProps = smbProperties ?? new FileSmbProperties();
 
                     FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
+                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    {
+                        filePermission = Constants.File.Preserve;
+                    }
 
                     var response = await FileRestClient.File.SetPropertiesAsync(
                         this.Pipeline,
@@ -1308,7 +1317,7 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
-                        filePermission:  filePermission ?? Constants.File.Preserve,
+                        filePermission:  filePermission,
                         fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
                         fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,

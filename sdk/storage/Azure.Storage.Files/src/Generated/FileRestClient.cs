@@ -987,14 +987,16 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="sharePermissionJson">A permission (a security descriptor) at the share level.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareCreatePermissionResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult>> CreatePermissionAsync(
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.PermissionInfo}</returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.PermissionInfo>> CreatePermissionAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                string sharePermissionJson,
                 int? timeout = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.ShareClient.CreatePermission",
@@ -1008,6 +1010,7 @@ namespace Azure.Storage.Files
                     using (Azure.Core.Http.Request _request = CreatePermissionAsync_CreateRequest(
                         pipeline,
                         resourceUri,
+                        sharePermissionJson,
                         timeout))
                     {
                         Azure.Response _response = async ?
@@ -1036,17 +1039,23 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="sharePermissionJson">A permission (a security descriptor) at the share level.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <returns>The Share.CreatePermissionAsync Request.</returns>
             internal static Azure.Core.Http.Request CreatePermissionAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                string sharePermissionJson,
                 int? timeout = default)
             {
                 // Validation
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (sharePermissionJson == null)
+                {
+                    throw new System.ArgumentNullException(nameof(sharePermissionJson));
                 }
 
                 // Create the request
@@ -1062,6 +1071,12 @@ namespace Azure.Storage.Files
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
 
+                // Create the body
+                string _text = sharePermissionJson;
+                _request.Headers.SetValue("Content-Type", "application/json");
+                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+
                 return _request;
             }
 
@@ -1069,8 +1084,8 @@ namespace Azure.Storage.Files
             /// Create the Share.CreatePermissionAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.CreatePermissionAsync Azure.Response{Azure.Storage.Files.Models.ShareCreatePermissionResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult> CreatePermissionAsync_CreateResponse(
+            /// <returns>The Share.CreatePermissionAsync Azure.Response{Azure.Storage.Files.Models.PermissionInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Models.PermissionInfo> CreatePermissionAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1079,7 +1094,7 @@ namespace Azure.Storage.Files
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Files.Models.ShareCreatePermissionResult _value = new Azure.Storage.Files.Models.ShareCreatePermissionResult();
+                        Azure.Storage.Files.Models.PermissionInfo _value = new Azure.Storage.Files.Models.PermissionInfo();
 
                         // Get response headers
                         string _header;
@@ -1089,8 +1104,8 @@ namespace Azure.Storage.Files
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult> _result =
-                            new Azure.Response<Azure.Storage.Files.Models.ShareCreatePermissionResult>(
+                        Azure.Response<Azure.Storage.Files.Models.PermissionInfo> _result =
+                            new Azure.Response<Azure.Storage.Files.Models.PermissionInfo>(
                                 response,
                                 _value);
 
@@ -1119,8 +1134,8 @@ namespace Azure.Storage.Files
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> GetPermissionAsync(
+            /// <returns>A permission (a security descriptor) at the share level.</returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<string>> GetPermissionAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string filePermissionKey = default,
@@ -1202,8 +1217,8 @@ namespace Azure.Storage.Files
             /// Create the Share.GetPermissionAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.GetPermissionAsync Azure.Response.</returns>
-            internal static Azure.Response GetPermissionAsync_CreateResponse(
+            /// <returns>The Share.GetPermissionAsync Azure.Response{string}.</returns>
+            internal static Azure.Response<string> GetPermissionAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -1211,7 +1226,20 @@ namespace Azure.Storage.Files
                 {
                     case 200:
                     {
-                        return response;
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        // Create the response
+                        Azure.Response<string> _result =
+                            new Azure.Response<string>(
+                                response,
+                                _value);
+
+                        return _result;
                     }
                     default:
                     {
@@ -7221,6 +7249,39 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class Metrics
 
+#region class PermissionInfo
+namespace Azure.Storage.Files.Models
+{
+    /// <summary>
+    /// PermissionInfo
+    /// </summary>
+    public partial class PermissionInfo
+    {
+        /// <summary>
+        /// Key of the permission set for the directory/file.
+        /// </summary>
+        public string FilePermissionKey { get; internal set; }
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new PermissionInfo instance for mocking.
+        /// </summary>
+        public static PermissionInfo PermissionInfo(
+            string filePermissionKey)
+        {
+            var _model = new PermissionInfo();
+            _model.FilePermissionKey = filePermissionKey;
+            return _model;
+        }
+    }
+}
+#endregion class PermissionInfo
+
 #region class Range
 namespace Azure.Storage.Files.Models
 {
@@ -7854,39 +7915,6 @@ namespace Azure.Storage.Files.Models
     }
 }
 #endregion class RetentionPolicy
-
-#region class ShareCreatePermissionResult
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Share CreatePermissionResult
-    /// </summary>
-    public partial class ShareCreatePermissionResult
-    {
-        /// <summary>
-        /// Key of the permission set for the directory/file.
-        /// </summary>
-        public string FilePermissionKey { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new ShareCreatePermissionResult instance for mocking.
-        /// </summary>
-        public static ShareCreatePermissionResult ShareCreatePermissionResult(
-            string filePermissionKey)
-        {
-            var _model = new ShareCreatePermissionResult();
-            _model.FilePermissionKey = filePermissionKey;
-            return _model;
-        }
-    }
-}
-#endregion class ShareCreatePermissionResult
 
 #region class ShareInfo
 namespace Azure.Storage.Files.Models

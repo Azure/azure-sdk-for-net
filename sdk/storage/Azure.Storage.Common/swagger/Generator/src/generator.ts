@@ -352,7 +352,13 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         if (operation.request.body) {
             w.line(`// Create the body`);
             const bodyType = operation.request.body.model;
-            if (operation.consumes === `stream` || bodyType.type === `file`) {
+            if (bodyType.type === `string`) {
+                // Temporary Hack: Serialize string content as JSON
+                w.line(`string ${textName} = ${naming.parameter(operation.request.body.clientName)};`)
+                w.line(`${requestName}.Headers.SetValue("Content-Type", "application/json");`);
+                w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
+                w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
+            } else if (operation.consumes === `stream` || bodyType.type === `file`) {
                 // Serialize a file
                 w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(${naming.parameter(operation.request.body.clientName)});`);
             } else if (operation.consumes === `xml`) {
@@ -475,7 +481,14 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.line(`// Create the result`);
         if (response.body) {
             const responseType = response.body;
-            if (operation.produces === `stream` || responseType.type === `file`) {
+            if (responseType.type === `string`) {
+                const streamName = "_streamReader";
+                w.line(`${types.getName(model)} ${valueName};`);
+                w.line(`using (System.IO.StreamReader ${streamName} = new System.IO.StreamReader(${responseName}.ContentStream))`)
+                w.scope('{', '}', () => {
+                    w.line(`${valueName} = ${streamName}.ReadToEnd();`);
+                });
+            } else if (operation.produces === `stream` || responseType.type === `file`) {
                 // Deserialize a file
                 w.line(`${types.getName(model)} ${valueName} = new ${types.getName(model)}();`);
                 w.line(`${valueName}.${naming.property(response.bodyClientName)} = ${responseName}.ContentStream; // You should manually wrap with RetriableStream!`);
