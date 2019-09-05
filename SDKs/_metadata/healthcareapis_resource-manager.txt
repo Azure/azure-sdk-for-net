@@ -3,7 +3,7 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/healthcareapis/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:/Repo/azuresdk/sdk/healthcareapis/Microsoft.Azure.Management.HealthcareApis/src/Generated
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/healthcareapis/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:/Repo/azuresdk/sdk
 2019-09-04 23:43:07 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
