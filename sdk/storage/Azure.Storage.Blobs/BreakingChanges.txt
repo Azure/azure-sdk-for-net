@@ -1,6 +1,10 @@
 Breaking Changes
 ================
 
+Next Release
+--------------------------
+- Changed from int to TimeSpan for Lease durations.
+
 12.0.0-preview.2 (2019-08)
 --------------------------
 - Removed CopyFromUriOperation.  Use Operation<long> instead.

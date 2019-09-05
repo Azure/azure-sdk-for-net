@@ -1,0 +1,46 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-05574534-e0fd-8c40-9d72-ecdeee86d0fb?comp=lease\u0026restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190829.1\u002b9c9b09e2859fffb255b140dc8c3c68f2df2df67d",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "8803e39e8ad0cb286ae2fe12d84106e8",
+        "x-ms-date": "Fri, 30 Aug 2019 02:36:21 GMT",
+        "x-ms-lease-action": "acquire",
+        "x-ms-lease-duration": "922337203685",
+        "x-ms-proposed-lease-id": "a0d72343-8f76-3adf-7f80-3fb70e4074cf",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "337",
+        "Content-Type": "application\u002fxml",
+        "Date": "Fri, 30 Aug 2019 02:36:21 GMT",
+        "Server": [
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
+        ],
+        "x-ms-client-request-id": "8803e39e8ad0cb286ae2fe12d84106e8",
+        "x-ms-error-code": "InvalidHeaderValue",
+        "x-ms-request-id": "1c013ac4-a01e-0065-06db-5ee34a000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": [
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidHeaderValue\u003c\u002fCode\u003e\u003cMessage\u003eThe value for one of the HTTP headers is not in the correct format.\n",
+        "RequestId:1c013ac4-a01e-0065-06db-5ee34a000000\n",
+        "Time:2019-08-30T02:36:21.7401412Z\u003c\u002fMessage\u003e\u003cHeaderName\u003ex-ms-lease-duration\u003c\u002fHeaderName\u003e\u003cHeaderValue\u003e922337203685\u003c\u002fHeaderValue\u003e\u003c\u002fError\u003e"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1459625234",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
+  }
+}
