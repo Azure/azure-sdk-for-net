@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The version of the API.
+        /// Client Api Version.
         /// </summary>
         string ApiVersion { get; }
 
