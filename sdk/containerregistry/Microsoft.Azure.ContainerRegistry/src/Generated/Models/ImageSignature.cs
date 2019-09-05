@@ -32,12 +32,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="header">A JSON web signature</param>
         /// <param name="signature">A signature for the image manifest, signed
         /// by a libtrust private key</param>
-        /// <param name="protectedHeader">The signed protected header</param>
-        public ImageSignature(JWK header = default(JWK), string signature = default(string), string protectedHeader = default(string))
+        /// <param name="protectedProperty">The signed protected header</param>
+        public ImageSignature(JWK header = default(JWK), string signature = default(string), string protectedProperty = default(string))
         {
             Header = header;
             Signature = signature;
-            ProtectedHeader = protectedHeader;
+            ProtectedProperty = protectedProperty;
             CustomInit();
         }
 
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets the signed protected header
         /// </summary>
         [JsonProperty(PropertyName = "protected")]
-        public string ProtectedHeader { get; set; }
+        public string ProtectedProperty { get; set; }
 
     }
 }

@@ -14,20 +14,15 @@ namespace Microsoft.Azure.ContainerRegistry
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
-    /// V2 API definition for the Azure Container Registry runtime
+    /// Metadata API definition for the Azure Container Registry runtime
     /// </summary>
     public partial interface IAzureContainerRegistryClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -43,6 +38,11 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
         ServiceClientCredentials Credentials { get; }
+
+        /// <summary>
+        /// Registry login URL
+        /// </summary>
+        string LoginUri { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -64,267 +64,39 @@ namespace Microsoft.Azure.ContainerRegistry
 
 
         /// <summary>
-        /// Tells whether this Docker Registry instance supports Docker
-        /// Registry HTTP API v2
+        /// Gets the IV2SupportOperations.
         /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> GetDockerRegistryV2SupportWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IV2SupportOperations V2Support { get; }
 
         /// <summary>
-        /// Fetch the tags under the repository identified by 'name'
+        /// Gets the IManifestsOperations.
         /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<RepositoryTags>> GetTagListWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IManifestsOperations Manifests { get; }
 
         /// <summary>
-        /// Pulls the image manifest file associated with the specified name
-        /// and reference. Reference may be a tag or a digest
+        /// Gets the IBlobOperations.
         /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='reference'>
-        /// A tag or a digest, pointing to a specific image
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<Manifest>> GetManifestWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IBlobOperations Blob { get; }
 
         /// <summary>
-        /// List respositories
+        /// Gets the IRepositoryOperations.
         /// </summary>
-        /// <param name='last'>
-        /// query parameter for the last item in previou query
-        /// </param>
-        /// <param name='n'>
-        /// query parameter for max number of items
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<Repositories>> GetRepositoriesWithHttpMessagesAsync(string last = default(string), string n = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IRepositoryOperations Repository { get; }
 
         /// <summary>
-        /// List respositories
+        /// Gets the ITagOperations.
         /// </summary>
-        /// <param name='last'>
-        /// query parameter for the last item in previou query
-        /// </param>
-        /// <param name='n'>
-        /// query parameter for max number of items
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<Repositories>> GetAcrRepositoriesWithHttpMessagesAsync(string last = default(string), string n = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        ITagOperations Tag { get; }
 
         /// <summary>
-        /// Get respository attributes
+        /// Gets the IRefreshTokensOperations.
         /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<RepositoryAttributes>> GetAcrRepositoryAttributesWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IRefreshTokensOperations RefreshTokens { get; }
 
         /// <summary>
-        /// Delete a respository
+        /// Gets the IAccessTokensOperations.
         /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<DeletedRepository>> DeleteAcrRepositoryWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Update attributes of a repository
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='value'>
-        /// Repository attribute value
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> UpdateAcrRepositoryAttributesWithHttpMessagesAsync(string name, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// List tags of a repository
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='last'>
-        /// query parameter for the last item in previou query
-        /// </param>
-        /// <param name='n'>
-        /// query parameter for max number of items
-        /// </param>
-        /// <param name='orderby'>
-        /// orderby query parameter
-        /// </param>
-        /// <param name='digest'>
-        /// filter by digest
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<AcrRepositoryTags>> GetAcrTagsWithHttpMessagesAsync(string name, string last = default(string), string n = default(string), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get manifest attributes by tag
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='reference'>
-        /// A tag name of the image
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<AcrTagAttributes>> GetAcrTagAttributesWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Update tag attributes
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='reference'>
-        /// A tag name of the image
-        /// </param>
-        /// <param name='value'>
-        /// Changeable attribute value
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> UpdateAcrTagAttributesWithHttpMessagesAsync(string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Delete tag
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='reference'>
-        /// A tag name of the image
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> DeleteAcrTagWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// List manifests of a repository
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='last'>
-        /// query parameter for the last item in previou query
-        /// </param>
-        /// <param name='n'>
-        /// query parameter for max number of items
-        /// </param>
-        /// <param name='orderby'>
-        /// orderby query parameter
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<AcrManifests>> GetAcrManifestsWithHttpMessagesAsync(string name, string last = default(string), string n = default(string), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get manifest attributes
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='reference'>
-        /// A digest pointing to a specific image
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<AcrManifestAttributes>> GetAcrManifestAttributesWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Update attributes of a manifest
-        /// </summary>
-        /// <param name='name'>
-        /// Name of the image (including the namespace)
-        /// </param>
-        /// <param name='reference'>
-        /// A tag or a digest, pointing to a specific image
-        /// </param>
-        /// <param name='value'>
-        /// Changeable attribute value
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> UpdateAcrManifestAttributesWithHttpMessagesAsync(string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IAccessTokensOperations AccessTokens { get; }
 
     }
 }
