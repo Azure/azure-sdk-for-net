@@ -53,18 +53,17 @@ namespace Azure.Messaging.EventHubs.Samples
                 // factory function, and takes the form of a class which implements the IPartitionProcessor interface.
                 //
                 // The factory function is provided to the event processor when it is created.  The factory is responsible for
-                // creating a partition processor based on two arguments:
+                // creating a partition processor based on a single argument:
                 //
                 //   A partition context: contains information about the partition the partition processor will be processing
-                //   events from.  In this sample, we are only interested in its partition id.
-                //
-                //   A checkpoint manager: responsible for the creation of checkpoints.  It's not used in this sample.
+                //   events from.  It's also responsible for the creation of checkpoints.  In this sample, we are only interested
+                //   in its partition id.
                 //
                 // We'll be using a SamplePartitionProcessor, whose implementation can be found at the end of this sample.  Its
                 // constructor takes the associated partition id so it can provide useful log messages.
 
-                Func<PartitionContext, CheckpointManager, IPartitionProcessor> partitionProcessorFactory =
-                    (partitionContext, checkpointManager) => new SamplePartitionProcessor(partitionContext.PartitionId);
+                Func<PartitionContext, IPartitionProcessor> partitionProcessorFactory =
+                    partitionContext => new SamplePartitionProcessor(partitionContext.PartitionId);
 
                 // A partition manager may create checkpoints and list/claim partition ownership.  The user can implement their
                 // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating

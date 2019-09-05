@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   A factory used to create partition processors.
         /// </summary>
         ///
-        private Func<PartitionContext, CheckpointManager, IPartitionProcessor> PartitionProcessorFactory { get; }
+        private Func<PartitionContext, IPartitionProcessor> PartitionProcessorFactory { get; }
 
         /// <summary>
         ///   Interacts with the storage system, dealing with ownership and checkpoints.
@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public EventProcessor(string consumerGroup,
                               EventHubClient eventHubClient,
-                              Func<PartitionContext, CheckpointManager, IPartitionProcessor> partitionProcessorFactory,
+                              Func<PartitionContext, IPartitionProcessor> partitionProcessorFactory,
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
@@ -451,12 +451,11 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // Create and start the new partition pump and add it to the dictionary.
 
-            var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId);
-            var checkpointManager = new CheckpointManager(partitionContext, Manager, Identifier);
+            var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId, Identifier, Manager);
 
             try
             {
-                var partitionProcessor = PartitionProcessorFactory(partitionContext, checkpointManager);
+                var partitionProcessor = PartitionProcessorFactory(partitionContext);
                 var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionId, partitionProcessor, Options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);

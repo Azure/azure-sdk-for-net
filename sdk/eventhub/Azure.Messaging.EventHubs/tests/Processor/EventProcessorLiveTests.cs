@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onInitialize: (partitionContext, checkpointManager) =>
+                            onInitialize: partitionContext =>
                                 initializeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1)
                         );
 
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onClose: (partitionContext, checkpointManager, reason) =>
+                            onClose: (partitionContext, reason) =>
                                 {
                                     closeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1);
                                     closeReasons[partitionContext.PartitionId] = reason;
@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events, cancellationToken) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -283,7 +283,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events, cancellationToken) =>
                                 receivedEventSets.Add(events)
                         );
 
@@ -333,7 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onInitialize: (partitionContext, checkpointManager) =>
+                            onInitialize: partitionContext =>
                                 Interlocked.Increment(ref initializeCallsCount)
                         );
 
@@ -390,7 +390,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onClose: (partitionContext, checkpointManager, reason) =>
+                            onClose: (partitionContext, reason) =>
                                 Interlocked.Increment(ref closeCallsCount)
                         );
 
@@ -448,7 +448,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events, cancellationToken) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -556,7 +556,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
-                            onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events, cancellationToken) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -616,9 +616,9 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
-                            onInitialize: (partitionContext, checkpointManager) =>
+                            onInitialize: partitionContext =>
                                 timestamps.TryAdd(partitionContext.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                            onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events, cancellationToken) =>
                                 timestamps.AddOrUpdate
                                     (
                                         // The key already exists, so the 'addValue' factory will never be called.
@@ -718,7 +718,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
                             new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
-                            onProcessEvents: (partitionContext, checkpointManager, events, cancellationToken) =>
+                            onProcessEvents: (partitionContext, events, cancellationToken) =>
                             {
                                 // Make it a list so we can safely enumerate it.
 
@@ -783,10 +783,10 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onInitialize: (partitionContext, checkpointManager) =>
-                                ownedPartitionsCount.AddOrUpdate(checkpointManager.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            onClose: (partitionContext, checkpointManager, reason) =>
-                                ownedPartitionsCount.AddOrUpdate(checkpointManager.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                            onInitialize: partitionContext =>
+                                ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                            onClose: (partitionContext, reason) =>
+                                ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     hub.AddEventProcessors(eventProcessors);
@@ -846,10 +846,10 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            onInitialize: (partitionContext, checkpointManager) =>
-                                ownedPartitionsCount.AddOrUpdate(checkpointManager.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            onClose: (partitionContext, checkpointManager, reason) =>
-                                ownedPartitionsCount.AddOrUpdate(checkpointManager.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                            onInitialize: partitionContext =>
+                                ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                            onClose: (partitionContext, reason) =>
+                                ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     hub.AddEventProcessors(1);
