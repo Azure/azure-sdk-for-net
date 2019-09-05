@@ -16,6 +16,6 @@ namespace Microsoft.Azure.EventHubs.Tests
 
 
         // General
-        internal static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromSeconds(90);
+        internal static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromSeconds(180);
     }
 }
