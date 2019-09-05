@@ -55,7 +55,7 @@
       <FileServiceEndpoint>http://[OAUTH-ACCOUNT].file.core.windows.net</FileServiceEndpoint>
       <BlobServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
       <QueueServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondarys.file.core.windows.net</FileServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
 	

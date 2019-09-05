@@ -1243,48 +1243,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task StartCopyFromUriAsync()
-        {
-            using (this.GetNewContainer(out var container))
-            {
-                // Arrangepageblob
-                await container.SetAccessPolicyAsync(PublicAccessType.Container);
-                var data = this.GetRandomBuffer(Constants.KB);
-                var expectedData = new byte[4 * Constants.KB];
-                data.CopyTo(expectedData, 0);
-
-                // Create Page Blob
-                var sourceBlob = await this.CreatePageBlobClientAsync(container, 4 * Constants.KB);
-
-                // Update data to firstPageBlob
-                using (var stream = new MemoryStream(data))
-                {
-                    await sourceBlob.UploadPagesAsync(stream, Constants.KB);
-                }
-
-                // Create Snapshot
-                var snapshotResponse = await sourceBlob.CreateSnapshotAsync();
-
-                var snapshot = snapshotResponse.Value.Snapshot;
-
-                var destinationBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
-
-                // Act
-                var operation = await destinationBlob.StartCopyFromUriAsync(sourceBlob.Uri);
-
-                // Assert
-                // data copied within an account, so copy should be instantaneous
-                if (this.Mode == RecordedTestMode.Playback)
-                {
-                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
-                }
-                await operation.WaitCompletionAsync();
-                Assert.IsTrue(operation.HasCompleted);
-                Assert.IsTrue(operation.HasValue);
-            }
-        }
-
-        [Test]
         public async Task StartCopyIncrementalAsync_Error()
         {
             using (this.GetNewContainer(out var container))

@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Test
         const long Size = 4 * Constants.KB;
 
         public BlockBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -943,6 +943,9 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(this.ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
                 Assert.AreEqual(1, blobList.Value.UncommittedBlocks.Count());
                 Assert.AreEqual(this.ToBase64(thirdBlockName), blobList.Value.UncommittedBlocks.First().Name);
+
+                var response = await blob.GetPropertiesAsync();
+                Assert.AreEqual(AccessTierOptional.Cool.ToString(), response.Value.AccessTier);
             }
         }
 
