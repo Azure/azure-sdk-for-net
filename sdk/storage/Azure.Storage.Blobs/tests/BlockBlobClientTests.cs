@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Test
         const long Size = 4 * Constants.KB;
 
         public BlockBlobClientTests(bool async)
-            : base(async, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
