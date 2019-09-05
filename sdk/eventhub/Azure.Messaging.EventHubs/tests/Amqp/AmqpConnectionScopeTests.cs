@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheTransport()
         {
             var invalidTransport = (TransportType)(-2);
-            Assert.That(() => new AmqpConnectionScope(new Uri("amqp://some.place.com"),  "hun", Mock.Of<TokenCredential>(), invalidTransport, Mock.Of<IWebProxy>()), Throws.ArgumentException);
+            Assert.That(() => new AmqpConnectionScope(new Uri("amqp://some.place.com"), "hun", Mock.Of<TokenCredential>(), invalidTransport, Mock.Of<IWebProxy>()), Throws.ArgumentException);
         }
 
         /// <summary>
@@ -96,10 +96,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(mockConnection))
                 .Verifiable();
 
-           var connection = await GetActiveConnection(mockScope.Object).GetOrCreateAsync(TimeSpan.FromDays(1));
-           Assert.That(connection, Is.SameAs(mockConnection), "The connection instance should have been returned");
+            var connection = await GetActiveConnection(mockScope.Object).GetOrCreateAsync(TimeSpan.FromDays(1));
+            Assert.That(connection, Is.SameAs(mockConnection), "The connection instance should have been returned");
 
-           mockScope.VerifyAll();
+            mockScope.VerifyAll();
         }
 
         /// <summary>
@@ -186,10 +186,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(default(RequestResponseAmqpLink)))
                 .Verifiable();
 
-           var link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
-           Assert.That(link, Is.Null, "The mock return was null");
+            var link = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
+            Assert.That(link, Is.Null, "The mock return was null");
 
-           mockScope.VerifyAll();
+            mockScope.VerifyAll();
         }
 
         /// <summary>
