@@ -2,6 +2,7 @@
 
 ## Current version
 ###  Feature Additions
+- Added outputColumns property to Office365Source
 
 ## Version 4.1.2
 ###  Feature Additions
