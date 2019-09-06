@@ -2781,7 +2781,7 @@ namespace Azure.Storage.Blobs.Specialized
                     return await BlobRestClient.Blob.SetTierAsync(
                         this.Pipeline,
                         this.Uri,
-                        tier: accessTier.ToAccessTier(),
+                        tier: accessTier,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier",
