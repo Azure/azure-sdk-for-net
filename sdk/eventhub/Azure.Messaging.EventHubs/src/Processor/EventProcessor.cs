@@ -502,7 +502,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     options.InitialEventPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value);
                 }
 
-                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionContext, partitionProcessor, Options);
+                var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionContext, partitionProcessor, options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
 

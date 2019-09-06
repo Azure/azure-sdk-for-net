@@ -59,6 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
         /// <param name="client">The client used to interact with the Azure Event Hubs service.</param>
+        /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="PartitionProcessor.InitializeAsync" />.</param>
         /// <param name="onClose">A callback action to be called on <see cref="PartitionProcessor.CloseAsync" />.</param>
@@ -67,6 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public EventProcessorManager(string consumerGroup,
                                      EventHubClient client,
+                                     PartitionManager partitionManager = null,
                                      EventProcessorOptions options = null,
                                      Action<PartitionContext> onInitialize = null,
                                      Action<PartitionContext, PartitionProcessorCloseReason> onClose = null,
@@ -85,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     onProcessError
                 );
 
-            InnerPartitionManager = new InMemoryPartitionManager();
+            InnerPartitionManager = partitionManager ?? new InMemoryPartitionManager();
 
             // In case it has not been specified, set the maximum receive wait time to 2 seconds because the default
             // value (1 minute) would take too much time.

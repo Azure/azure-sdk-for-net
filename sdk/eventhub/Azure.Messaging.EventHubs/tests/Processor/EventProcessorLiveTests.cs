@@ -29,6 +29,9 @@ namespace Azure.Messaging.EventHubs.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class EventProcessorLiveTests
     {
+        /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>
+        private const int ReceiveRetryLimit = 10;
+
         /// <summary>
         ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
@@ -510,6 +513,224 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task EventProcessorCanReceiveFromCheckpointedEventPosition()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    int receivedEventsCount = 0;
+
+                    // Send some events.
+
+                    var expectedEventsCount = 20;
+                    var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
+                    long? checkpointedSequenceNumber = default;
+
+                    var partitionId = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer())
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionId, EventPosition.Earliest))
+                    {
+                        // Send a few dummy events.  We are not expecting to receive these.
+
+                        var dummyEventsCount = 30;
+
+                        for (int i = 0; i < dummyEventsCount; i++)
+                        {
+                            await producer.SendAsync(dummyEvent);
+                        }
+
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while ((receivedEvents.Count < dummyEventsCount) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        Assert.That(receivedEvents.Count, Is.EqualTo(dummyEventsCount));
+
+                        checkpointedSequenceNumber = receivedEvents.Last().SequenceNumber;
+
+                        // Send the events we expect to receive.
+
+                        for (int i = 0; i < expectedEventsCount; i++)
+                        {
+                            await producer.SendAsync(dummyEvent);
+                        }
+                    }
+
+                    // Create a partition manager and add an ownership with a checkpoint in it.
+
+                    var partitionManager = new InMemoryPartitionManager();
+
+                    await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
+                    {
+                        new PartitionOwnership(scope.EventHubName, EventHubConsumer.DefaultConsumerGroupName,
+                            "ownerIdentifier", partitionId, sequenceNumber: checkpointedSequenceNumber,
+                            lastModifiedTime: DateTimeOffset.UtcNow)
+                    });
+
+                    // Create the event processor manager to manage our event processors.
+
+                    var eventProcessorManager = new EventProcessorManager
+                        (
+                            EventHubConsumer.DefaultConsumerGroupName,
+                            client,
+                            partitionManager,
+                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            {
+                                // Make it a list so we can safely enumerate it.
+
+                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
+
+                                if (eventsList.Count > 0)
+                                {
+                                    Interlocked.Add(ref receivedEventsCount, eventsList.Count);
+                                }
+                            }
+                        );
+
+                    eventProcessorManager.AddEventProcessors(1);
+
+                    // Start the event processors.
+
+                    await eventProcessorManager.StartAllAsync();
+
+                    // Make sure the event processors have enough time to stabilize and receive events.
+
+                    await eventProcessorManager.WaitStabilization();
+
+                    // Stop the event processors.
+
+                    await eventProcessorManager.StopAllAsync();
+
+                    // Validate results.
+
+                    Assert.That(receivedEventsCount, Is.EqualTo(expectedEventsCount));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task PartitionProcessorCanCreateACheckpointFromPartitionContext()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    // Send some events.
+
+                    EventData lastEvent;
+                    var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
+
+                    var partitionId = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer())
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionId, EventPosition.Earliest))
+                    {
+                        // Send a few events.  We are only interested in the last one of them.
+
+                        var dummyEventsCount = 10;
+
+                        for (int i = 0; i < dummyEventsCount; i++)
+                        {
+                            await producer.SendAsync(dummyEvent);
+                        }
+
+                        // Receive the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while ((receivedEvents.Count < dummyEventsCount) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        Assert.That(receivedEvents.Count, Is.EqualTo(dummyEventsCount));
+
+                        lastEvent = receivedEvents.Last();
+                    }
+
+                    // Create a partition manager so we can retrieve the created checkpoint from it.
+
+                    var partitionManager = new InMemoryPartitionManager();
+
+                    // Create the event processor manager to manage our event processors.
+
+                    var eventProcessorManager = new EventProcessorManager
+                        (
+                            EventHubConsumer.DefaultConsumerGroupName,
+                            client,
+                            partitionManager,
+                            onProcessEvents: (partitionContext, events, cancellationToken) =>
+                            {
+                                // Make it a list so we can safely enumerate it.
+
+                                var eventsList = new List<EventData>(events ?? Enumerable.Empty<EventData>());
+
+                                if (eventsList.Any())
+                                {
+                                    partitionContext.UpdateCheckpointAsync(eventsList.Last());
+                                }
+                            }
+                        );
+
+                    eventProcessorManager.AddEventProcessors(1);
+
+                    // Start the event processors.
+
+                    await eventProcessorManager.StartAllAsync();
+
+                    // Make sure the event processors have enough time to stabilize and receive events.
+
+                    await eventProcessorManager.WaitStabilization();
+
+                    // Stop the event processors.
+
+                    await eventProcessorManager.StopAllAsync();
+
+                    // Validate results.
+
+                    var ownershipEnumerable = await partitionManager.ListOwnershipAsync(scope.EventHubName, EventHubConsumer.DefaultConsumerGroupName);
+
+                    Assert.That(ownershipEnumerable, Is.Not.Null);
+                    Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));
+
+                    var ownership = ownershipEnumerable.Single();
+
+                    Assert.That(ownership.Offset.HasValue, Is.True);
+                    Assert.That(ownership.Offset.Value, Is.EqualTo(lastEvent.Offset));
+
+                    Assert.That(ownership.SequenceNumber.HasValue, Is.True);
+                    Assert.That(ownership.SequenceNumber.Value, Is.EqualTo(lastEvent.SequenceNumber));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         public async Task EventProcessorCanReceiveFromSpecifiedInitialEventPosition()
         {
             await using (var scope = await EventHubScope.CreateAsync(2))
@@ -555,7 +776,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
+                            options: new EventProcessorOptions { InitialEventPosition = EventPosition.FromEnqueuedTime(enqueuedTime) },
                             onProcessEvents: (partitionContext, events, cancellationToken) =>
                             {
                                 // Make it a list so we can safely enumerate it.
@@ -615,7 +836,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
+                            options: new EventProcessorOptions { MaximumReceiveWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
                             onInitialize: partitionContext =>
                                 timestamps.TryAdd(partitionContext.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
                             onProcessEvents: (partitionContext, events, cancellationToken) =>
@@ -717,7 +938,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
-                            new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
+                            options: new EventProcessorOptions { MaximumMessageCount = maximumMessageCount },
                             onProcessEvents: (partitionContext, events, cancellationToken) =>
                             {
                                 // Make it a list so we can safely enumerate it.
