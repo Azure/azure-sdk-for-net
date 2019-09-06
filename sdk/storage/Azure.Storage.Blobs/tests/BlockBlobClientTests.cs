@@ -899,6 +899,93 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task CommitBlockListAsync_AccessTier()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var data = this.GetRandomBuffer(Size);
+                var firstBlockName = this.GetNewBlockName();
+                var secondBlockName = this.GetNewBlockName();
+                var thirdBlockName = this.GetNewBlockName();
+
+                // Act
+                // Stage blocks
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(firstBlockName), stream);
+                }
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(secondBlockName), stream);
+                }
+
+                // Commit first two Blocks
+                var commitList = new string[]
+                {
+                    this.ToBase64(firstBlockName),
+                    this.ToBase64(secondBlockName)
+                };
+
+                await blob.CommitBlockListAsync(commitList, accessTier: AccessTierOptional.Cool);
+
+                // Stage 3rd Block
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(thirdBlockName), stream);
+                }
+
+                // Assert
+                var blobList = await blob.GetBlockListAsync(BlockListType.All);
+                Assert.AreEqual(2, blobList.Value.CommittedBlocks.Count());
+                Assert.AreEqual(this.ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
+                Assert.AreEqual(this.ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
+                Assert.AreEqual(1, blobList.Value.UncommittedBlocks.Count());
+                Assert.AreEqual(this.ToBase64(thirdBlockName), blobList.Value.UncommittedBlocks.First().Name);
+
+                var response = await blob.GetPropertiesAsync();
+                Assert.AreEqual(AccessTierOptional.Cool.ToString(), response.Value.AccessTier);
+            }
+        }
+
+        [Test]
+        public async Task CommitBlockListAsync_AccessTierFail()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var data = this.GetRandomBuffer(Size);
+                var firstBlockName = this.GetNewBlockName();
+                var secondBlockName = this.GetNewBlockName();
+                var thirdBlockName = this.GetNewBlockName();
+
+                // Act
+                // Stage blocks
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(firstBlockName), stream);
+                }
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(secondBlockName), stream);
+                }
+
+                // Commit first two Blocks
+                var commitList = new string[]
+                {
+                    this.ToBase64(firstBlockName),
+                    this.ToBase64(secondBlockName)
+                };
+
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.CommitBlockListAsync(commitList, accessTier:AccessTierOptional.P10),
+                    e => Assert.IsTrue(true));
+            }
+        }
+
+        [Test]
         public async Task GetBlockListAsync()
         {
             using (this.GetNewContainer(out var container))

@@ -85,6 +85,9 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_PreviewAccount_SharedKey()
             => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPreviewBlob);
 
+        public BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey()
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPremiumBlob);
+
         public BlobServiceClient GetServiceClient_OauthAccount() =>
             this.GetServiceClientFromOauthConfig(this.TestConfigOAuth);
 
@@ -150,15 +153,22 @@ namespace Azure.Storage.Test.Shared
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType? publicAccessType = default)
+            PublicAccessType? publicAccessType = default,
+            bool premium = default)
         {
             containerName ??= this.GetNewContainerName();
             service ??= this.GetServiceClient_SharedKey();
             container = this.InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            if(publicAccessType == null)
+            {
+                publicAccessType = premium ? (PublicAccessType?)null : PublicAccessType.Container;
+            }
+
             return new DisposingContainer(
                 container,
                 metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
-                publicAccessType ?? PublicAccessType.Container);
+                publicAccessType);
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
@@ -358,7 +368,7 @@ namespace Azure.Storage.Test.Shared
         {
             public BlobContainerClient ContainerClient { get; }
 
-            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType)
+            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType? publicAccessType = default)
             {
                 container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
 

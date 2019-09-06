@@ -1381,6 +1381,122 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task StartCopyIncrementalAsync_AccessTier()
+        {
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service:premiumService, premium: true))
+            {
+                // Arrange
+                var data = this.GetRandomBuffer(Constants.KB);
+                var expectedData = new byte[4 * Constants.KB];
+                data.CopyTo(expectedData, 0);
+
+                // Create Page Blob
+                var sourceBlob = await this.CreatePageBlobClientAsync(container, 4 * Constants.KB);
+
+                // Update data to firstPageBlob
+                using (var stream = new MemoryStream(data))
+                {
+                    await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+                }
+
+                // Create Snapshot
+                var snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+                var snapshot = snapshotResponse.Value.Snapshot;
+
+                var destinationBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+
+                // Act
+                var operation = await destinationBlob.StartCopyFromUriAsync(
+                    sourceBlob.Uri,
+                    accessTier: AccessTierOptional.P20);
+
+                if (this.Mode == RecordedTestMode.Playback)
+                {
+                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                }
+                await operation.WaitCompletionAsync();
+                Assert.IsTrue(operation.HasCompleted);
+                Assert.IsTrue(operation.HasValue);
+
+                var response = await destinationBlob.GetPropertiesAsync();
+                Assert.AreEqual(AccessTierOptional.P20.ToString(), response.Value.AccessTier);
+            }
+        }
+
+        [Test]
+        public async Task StartCopyIncrementalAsync_AccessTierFail()
+        {
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService, premium: true))
+            {
+                // Arrange
+                //await container.SetAccessPolicyAsync(PublicAccessType.Container);
+                var data = this.GetRandomBuffer(Constants.KB);
+                var expectedData = new byte[4 * Constants.KB];
+                data.CopyTo(expectedData, 0);
+
+                // Create Page Blob
+                var sourceBlob = await this.CreatePageBlobClientAsync(container, 4 * Constants.KB);
+
+                // Update data to firstPageBlob
+                using (var stream = new MemoryStream(data))
+                {
+                    await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+                }
+
+                // Create Snapshot
+                var snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+                var snapshot = snapshotResponse.Value.Snapshot;
+
+                var destinationBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    destinationBlob.StartCopyFromUriAsync(
+                    sourceBlob.Uri,
+                    accessTier: AccessTierOptional.Cool),
+                    e => Assert.IsTrue(true));
+            }
+        }
+
+        [Test]
+        public async Task SetTierAsync_AccessTier()
+        {
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService, premium: true))
+            {
+                // Arrange
+                var blob = await this.CreatePageBlobClientAsync(container, Constants.KB);
+
+                // Act
+                var response = await blob.SetTierAsync(AccessTier.P20);
+
+                // Assert
+                var responseProperties = await blob.GetPropertiesAsync();
+                Assert.AreEqual(AccessTierOptional.P20.ToString(), responseProperties.Value.AccessTier);
+            }
+        }
+
+        [Test]
+        public async Task SetTierAsync_AccessTierFail()
+        {
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService, premium: true))
+            {
+                // Arrange
+                var blob = await this.CreatePageBlobClientAsync(container, Constants.KB);
+
+                // Assert
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.SetTierAsync(AccessTier.Cool),
+                    e => Assert.IsTrue(true));
+            }
+        }
+
+        [Test]
         public async Task UploadPagesFromUriAsync_Min()
         {
             using (this.GetNewContainer(out var container))
