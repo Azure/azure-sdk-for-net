@@ -75,6 +75,8 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedServerSecurityAlertPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Operations", "2015-05-01-preview"),
+                new Tuple<string, string, string>("Sql", "PrivateEndpointConnections", "2018-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "PrivateLinkResources", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "RecommendedElasticPools", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RecoverableDatabases", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RecoverableManagedDatabases", "2017-10-01-preview"),
@@ -116,7 +118,7 @@ namespace Microsoft.Azure.Management.Sql
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=.";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "23326b92394ef630c59833f27e512544162ef4dd";
+      public static readonly String GithubCommidId = "1dd4c34f14c951dbfa5458d0ff2efadf5d9ef702";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
