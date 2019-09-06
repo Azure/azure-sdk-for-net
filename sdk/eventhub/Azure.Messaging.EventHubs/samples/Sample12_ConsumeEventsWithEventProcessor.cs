@@ -53,12 +53,11 @@ namespace Azure.Messaging.EventHubs.Samples
                 // requested by the event processor.  In order to use it as the event processor's underlying type, two conditions
                 // must be met:
                 //
-                //     - It must be a BasePartitionProcessor or a class derived from it.
+                //     - It must be a class derived from BasePartitionProcessor.
                 //
                 //     - It must have a parameterless constructor.
                 //
-                // A BasePartitionProcessor can't do much because it doesn't provide any kind of event processing by itself, so
-                // we'll be using a SamplePartitionProcessor, whose implementation can be found at the end of this sample.
+                // We'll be using a SamplePartitionProcessor, whose implementation can be found at the end of this sample.
 
                 // A partition manager may create checkpoints and list/claim partition ownership.  The user can implement their
                 // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating

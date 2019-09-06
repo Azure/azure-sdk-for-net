@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   them to a partition processor instance to be processed.
     /// </summary>
     ///
-    /// <typeparam name="T">The type of partition processor used by this instance by default; the type must be a <see cref="BasePartitionProcessor" /> and must have a parameterless constructor.</typeparam>
+    /// <typeparam name="T">The type of partition processor used by this instance by default; the type must be derived from <see cref="BasePartitionProcessor" /> and must have a parameterless constructor.</typeparam>
     ///
     public class EventProcessor<T> where T : BasePartitionProcessor, new()
     {

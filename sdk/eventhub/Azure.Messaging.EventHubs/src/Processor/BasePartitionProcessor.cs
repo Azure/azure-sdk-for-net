@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   not perform any kind of processing by itself and a useful partition processor is expected to be derived from it.
     /// </summary>
     ///
-    public class BasePartitionProcessor
+    public abstract class BasePartitionProcessor
     {
         /// <summary>
         ///   Initializes the partition processor.
@@ -54,12 +54,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task ProcessEventsAsync(PartitionContext partitionContext,
-                                               IEnumerable<EventData> events,
-                                               CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
+        public abstract Task ProcessEventsAsync(PartitionContext partitionContext,
+                                                IEnumerable<EventData> events,
+                                                CancellationToken cancellationToken);
 
         /// <summary>
         ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor{T}" /> is running.
@@ -71,11 +68,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task ProcessErrorAsync(PartitionContext partitionContext,
-                                              Exception exception,
-                                              CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
+        public abstract Task ProcessErrorAsync(PartitionContext partitionContext,
+                                               Exception exception,
+                                               CancellationToken cancellationToken);
     }
 }
