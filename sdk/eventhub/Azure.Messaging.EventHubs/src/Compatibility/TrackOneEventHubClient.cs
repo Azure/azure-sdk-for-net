@@ -30,13 +30,20 @@ namespace Azure.Messaging.EventHubs.Compatibility
         private Lazy<TrackOne.EventHubClient> _trackOneClient;
 
         /// <summary>
+        ///   The name of the Event Hub that the consumer is connected to, specific to the
+        ///   Event Hubs namespace that contains it.
+        /// </summary>
+        ///
+        public string EventHubName { get; }
+
+        /// <summary>
         ///   Indicates whether or not this client has been closed.
-        ///   </summary>
-        ///   
+        /// </summary>
+        ///
         /// <value>
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        ///   
+        ///
         public override bool Closed => (_trackOneClient.IsValueCreated) ? _trackOneClient.Value.CloseCalled : false;
 
         /// <summary>
@@ -104,6 +111,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
             Guard.ArgumentNotNull(nameof(credential), credential);
             Guard.ArgumentNotNull(nameof(clientOptions), clientOptions);
             Guard.ArgumentNotNull(nameof(defaultRetryPolicy), defaultRetryPolicy);
+
+            EventHubName = eventHubName;
 
             _retryPolicy = defaultRetryPolicy;
             _trackOneClient = new Lazy<TrackOne.EventHubClient>(() => eventHubClientFactory(host, eventHubName, credential, clientOptions, () => _retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
@@ -353,7 +362,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
                 var trackOneOptions = new TrackOne.ReceiverOptions
                 {
-                    Identifier = consumerOptions.Identifier
+                    Identifier = consumerOptions.Identifier,
+                    EnableReceiverRuntimeMetric = consumerOptions.TrackLastEnqueuedEventInformation
                 };
 
                 PartitionReceiver consumer;
@@ -376,9 +386,13 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 ? new BasicRetryPolicy(consumerOptions.RetryOptions)
                 : defaultRetryPolicy;
 
+            var partitionMetrics = (consumerOptions.TrackLastEnqueuedEventInformation)
+                ? new LastEnqueuedEventProperties(EventHubName, partitionId)
+                : null;
+
             return new EventHubConsumer
             (
-                new TrackOneEventHubConsumer(CreateReceiverFactory, initialRetryPolicy),
+                new TrackOneEventHubConsumer(CreateReceiverFactory, initialRetryPolicy, partitionMetrics),
                 TrackOneClient.EventHubName,
                 partitionId,
                 consumerGroup,

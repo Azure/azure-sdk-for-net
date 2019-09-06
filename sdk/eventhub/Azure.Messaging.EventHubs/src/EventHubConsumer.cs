@@ -12,6 +12,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
+using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -103,6 +104,24 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         public string Identifier => Options?.Identifier;
+
+        /// <summary>
+        ///   A set of information about the enqueued state of a partition, as observed by the consumer as
+        ///   events are received from the Event Hubs service.
+        /// </summary>
+        ///
+        /// <value><c>null</c>, if the information was not requested; otherwise, the last observed set of partition metrics.</value>
+        ///
+        /// <remarks>
+        ///   When metrics are requested, each event received from the Event Hubs service will carry metadata
+        ///   about the state of a partition that it otherwise would not.  This results in a small amount of
+        ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
+        ///   against periodically making requests for partition properties using the Event Hub client.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
+        ///
+        public LastEnqueuedEventProperties LastEnqueuedEventInformation => InnerConsumer.LastEnqueuedEventInformation;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.

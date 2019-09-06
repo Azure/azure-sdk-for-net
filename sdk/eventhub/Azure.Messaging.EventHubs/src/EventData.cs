@@ -100,6 +100,48 @@ namespace Azure.Messaging.EventHubs
         public string PartitionKey { get; }
 
         /// <summary>
+        ///   The sequence number that was last enqueued into the Event Hub partition from which this
+        ///   event was received.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This property is only populated for events received from the Event Hubs service and when
+        ///   partition metrics have been requested.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
+        ///
+        protected internal long? LastPartitionSequenceNumber { get; }
+
+        /// <summary>
+        ///   The offset that was last enqueued into the Event Hub partition from which this event was
+        ///   received.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This property is only populated for events received from the Event Hubs service and when
+        ///   partition metrics have been requested.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
+        ///
+        protected internal long? LastPartitionOffset { get; }
+
+        /// <summary>
+        ///   The date and time, in UTC, that the last event was enqueued into the Event Hub partition from
+        ///   which this event was received.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This property is only populated for events received from the Event Hubs service and when
+        ///   partition metrics have been requested.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
+        ///
+        protected internal DateTimeOffset? LastPartitionEnqueuedTime { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventData"/> class.
         /// </summary>
         ///
@@ -121,6 +163,9 @@ namespace Azure.Messaging.EventHubs
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
+        /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         ///
         protected internal EventData(ReadOnlyMemory<byte> eventBody,
                                      IDictionary<string, object> properties = null,
@@ -128,7 +173,10 @@ namespace Azure.Messaging.EventHubs
                                      long? sequenceNumber = null,
                                      long? offset = null,
                                      DateTimeOffset? enqueuedTime = null,
-                                     string partitionKey = null)
+                                     string partitionKey = null,
+                                     long? lastPartitionSequenceNumber = null,
+                                     long? lastPartitionOffset = null,
+                                     DateTimeOffset? lastPartitionEnqueuedTime = null)
         {
             Body = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
@@ -137,6 +185,9 @@ namespace Azure.Messaging.EventHubs
             Offset = offset;
             EnqueuedTime = enqueuedTime;
             PartitionKey = partitionKey;
+            LastPartitionSequenceNumber = lastPartitionSequenceNumber;
+            LastPartitionOffset = lastPartitionOffset;
+            LastPartitionEnqueuedTime = lastPartitionEnqueuedTime;
         }
 
         /// <summary>

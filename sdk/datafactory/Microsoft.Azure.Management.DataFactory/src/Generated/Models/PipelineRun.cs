@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="pipelineName">The pipeline name.</param>
         /// <param name="parameters">The full or partial list of parameter
         /// name, value pair used in the pipeline run.</param>
+        /// <param name="runDimensions">Run dimensions emitted by Pipeline
+        /// run.</param>
         /// <param name="invokedBy">Entity that started the pipeline
         /// run.</param>
         /// <param name="lastUpdated">The last updated timestamp for the
@@ -52,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="durationInMs">The duration of a pipeline run.</param>
         /// <param name="status">The status of a pipeline run.</param>
         /// <param name="message">The message from a pipeline run.</param>
-        public PipelineRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string runId = default(string), string runGroupId = default(string), bool? isLatest = default(bool?), string pipelineName = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), PipelineRunInvokedBy invokedBy = default(PipelineRunInvokedBy), System.DateTime? lastUpdated = default(System.DateTime?), System.DateTime? runStart = default(System.DateTime?), System.DateTime? runEnd = default(System.DateTime?), int? durationInMs = default(int?), string status = default(string), string message = default(string))
+        public PipelineRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string runId = default(string), string runGroupId = default(string), bool? isLatest = default(bool?), string pipelineName = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), IDictionary<string, string> runDimensions = default(IDictionary<string, string>), PipelineRunInvokedBy invokedBy = default(PipelineRunInvokedBy), System.DateTime? lastUpdated = default(System.DateTime?), System.DateTime? runStart = default(System.DateTime?), System.DateTime? runEnd = default(System.DateTime?), int? durationInMs = default(int?), string status = default(string), string message = default(string))
         {
             AdditionalProperties = additionalProperties;
             RunId = runId;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             IsLatest = isLatest;
             PipelineName = pipelineName;
             Parameters = parameters;
+            RunDimensions = runDimensions;
             InvokedBy = invokedBy;
             LastUpdated = lastUpdated;
             RunStart = runStart;
@@ -114,6 +117,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IDictionary<string, string> Parameters { get; private set; }
+
+        /// <summary>
+        /// Gets run dimensions emitted by Pipeline run.
+        /// </summary>
+        [JsonProperty(PropertyName = "runDimensions")]
+        public IDictionary<string, string> RunDimensions { get; private set; }
 
         /// <summary>
         /// Gets entity that started the pipeline run.

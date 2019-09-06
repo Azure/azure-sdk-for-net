@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs.Test
                         await destBlob.UploadAsync(stream);
                     }
 
-                    var duration = Constants.Blob.Lease.InfiniteLeaseDuration;
+                    var duration = LeaseClient.InfiniteLeaseDuration;
                     var lease = this.InstrumentClient(destBlob.GetLeaseClient(this.Recording.Random.NewGuid().ToString()));
                     var leaseResponse = await lease.AcquireAsync(duration);
 
@@ -1585,7 +1585,7 @@ namespace Azure.Storage.Blobs.Test
                 var blob = await this.GetNewBlobClient(container);
 
                 var leaseId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 // Act
                 var response = await this.InstrumentClient(blob.GetLeaseClient(leaseId)).AcquireAsync(duration);
@@ -1606,7 +1606,7 @@ namespace Azure.Storage.Blobs.Test
                     var blob = await this.GetNewBlobClient(container);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
                     var accessConditions = this.BuildHttpAccessConditions(
@@ -1634,7 +1634,7 @@ namespace Azure.Storage.Blobs.Test
                     var blob = await this.GetNewBlobClient(container);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     var accessConditions = this.BuildHttpAccessConditions(parameters);
@@ -1657,7 +1657,7 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 var leaseId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1675,7 +1675,7 @@ namespace Azure.Storage.Blobs.Test
                 var blob = await this.GetNewBlobClient(container);
 
                 var leaseId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var lease = this.InstrumentClient(blob.GetLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
@@ -1699,7 +1699,7 @@ namespace Azure.Storage.Blobs.Test
                     var blob = await this.GetNewBlobClient(container);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
                     var accessConditions = this.BuildHttpAccessConditions(
@@ -1728,7 +1728,7 @@ namespace Azure.Storage.Blobs.Test
                     var blob = await this.GetNewBlobClient(container);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     var accessConditions = this.BuildHttpAccessConditions(parameters);
@@ -1769,7 +1769,7 @@ namespace Azure.Storage.Blobs.Test
                 var blob = await this.GetNewBlobClient(container);
 
                 var leaseId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var lease = this.InstrumentClient(blob.GetLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
@@ -1793,7 +1793,7 @@ namespace Azure.Storage.Blobs.Test
                     var blob = await this.GetNewBlobClient(container);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
                     var accessConditions = this.BuildHttpAccessConditions(
@@ -1822,7 +1822,7 @@ namespace Azure.Storage.Blobs.Test
                     var blob = await this.GetNewBlobClient(container);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     var accessConditions = this.BuildHttpAccessConditions(parameters);
@@ -1863,7 +1863,7 @@ namespace Azure.Storage.Blobs.Test
                 var blob = await this.GetNewBlobClient(container);
 
                 var leaseId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var lease = this.InstrumentClient(blob.GetLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
@@ -1885,7 +1885,7 @@ namespace Azure.Storage.Blobs.Test
                 var blob = await this.GetNewBlobClient(container);
 
                 var leaseId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 var breakPeriod = 5;
 
                 var lease = this.InstrumentClient(blob.GetLeaseClient(leaseId));
@@ -1910,7 +1910,7 @@ namespace Azure.Storage.Blobs.Test
                     var blob = await this.GetNewBlobClient(container);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
                     var accessConditions = this.BuildHttpAccessConditions(
@@ -1939,7 +1939,7 @@ namespace Azure.Storage.Blobs.Test
                     var blob = await this.GetNewBlobClient(container);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     var accessConditions = this.BuildHttpAccessConditions(parameters);
@@ -1980,7 +1980,7 @@ namespace Azure.Storage.Blobs.Test
 
                 var leaseId = this.Recording.Random.NewGuid().ToString();
                 var newLeaseId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var lease = this.InstrumentClient(blob.GetLeaseClient(leaseId));
                 await lease.AcquireAsync(duration);
@@ -2005,7 +2005,7 @@ namespace Azure.Storage.Blobs.Test
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
                     var newLeaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
                     var accessConditions = this.BuildHttpAccessConditions(
@@ -2037,7 +2037,7 @@ namespace Azure.Storage.Blobs.Test
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
                     var newLeaseId = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     var accessConditions = this.BuildHttpAccessConditions(parameters);
@@ -2097,7 +2097,7 @@ namespace Azure.Storage.Blobs.Test
                 var blob = await this.GetNewBlobClient(container);
 
                 var leaseId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 await this.InstrumentClient(blob.GetLeaseClient(leaseId)).AcquireAsync(duration);
 

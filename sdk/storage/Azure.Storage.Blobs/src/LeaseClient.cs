@@ -54,6 +54,11 @@ namespace Azure.Storage.Blobs.Specialized
         private HttpPipeline Pipeline => this.BlobClient?.Pipeline ?? this.ContainerClient.Pipeline;
 
         /// <summary>
+        /// The <see cref="TimeSpan"/> representing an infinite lease duration.
+        /// </summary>
+        public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Constants.Blob.Lease.InfiniteLeaseDuration);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LeaseClient"/> class
         /// for mocking.
         /// </summary>
@@ -131,10 +136,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or -1 for a lease
-        /// that never expires.  A non-infinite lease can be between 15 and
-        /// 60 seconds. A lease duration cannot be changed using
-        /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// Specifies the duration of the lease, in seconds, or specify 
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
+        /// A non-infinite lease can be between 15 and 60 seconds. 
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
@@ -152,7 +157,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<Lease> Acquire(
-            int duration,
+            TimeSpan duration,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             this.AcquireInternal(
@@ -176,10 +181,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or -1 for a lease
-        /// that never expires.  A non-infinite lease can be between 15 and
-        /// 60 seconds. A lease duration cannot be changed using
-        /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// Specifies the duration of the lease, in seconds, or specify 
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
+        /// A non-infinite lease can be between 15 and 60 seconds. 
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
@@ -197,7 +202,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<Lease>> AcquireAsync(
-            int duration,
+            TimeSpan duration,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             await this.AcquireInternal(
@@ -221,10 +226,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or -1 for a lease
-        /// that never expires.  A non-infinite lease can be between 15 and
-        /// 60 seconds. A lease duration cannot be changed using
-        /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// Specifies the duration of the lease, in seconds, or specify 
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires. 
+        /// A non-infinite lease can be between 15 and 60 seconds. 
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
@@ -245,12 +250,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<Lease>> AcquireInternal(
-            int duration,
+            TimeSpan duration,
             HttpAccessConditions? httpAccessConditions,
             bool async,
             CancellationToken cancellationToken)
         {
             this.EnsureClient();
+            // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
+            var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
             using (this.Pipeline.BeginLoggingScope(nameof(LeaseClient)))
             {
                 this.Pipeline.LogMethodEnter(
@@ -266,7 +273,7 @@ namespace Azure.Storage.Blobs.Specialized
                         return await BlobRestClient.Blob.AcquireLeaseAsync(
                             this.Pipeline,
                             this.Uri,
-                            duration: duration,
+                            duration: serviceDuration,
                             proposedLeaseId: this.LeaseId,
                             ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                             ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
@@ -288,7 +295,7 @@ namespace Azure.Storage.Blobs.Specialized
                         return await BlobRestClient.Container.AcquireLeaseAsync(
                             this.Pipeline,
                             this.Uri,
-                            duration: duration,
+                            duration: serviceDuration,
                             proposedLeaseId: this.LeaseId,
                             ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                             ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,

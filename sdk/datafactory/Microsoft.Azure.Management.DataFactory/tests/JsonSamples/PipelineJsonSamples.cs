@@ -3552,7 +3552,15 @@ namespace DataFactory.Tests.JsonSamples
             ""userScopeFilterUri"": ""https://graph.microsoft.com/v1.0/users?$filter=Department eq 'Finance'"",
             ""dateFilterColumn"": ""CreatedDateTime"",
             ""startTime"": ""2019-04-28T16:00:00.000Z"",
-            ""endTime"": ""2019-05-05T16:00:00.000Z""
+            ""endTime"": ""2019-05-05T16:00:00.000Z"",
+            ""outputColumns"": [
+              {
+                ""name"": ""Id""
+              },
+              {
+                ""name"": ""CreatedDateTime""
+              }
+            ]
           },
           ""sink"": {
             ""type"": ""AzureDataLakeStoreSink"",

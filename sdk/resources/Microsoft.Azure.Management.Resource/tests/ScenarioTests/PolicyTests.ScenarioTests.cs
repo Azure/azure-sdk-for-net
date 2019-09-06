@@ -79,6 +79,50 @@ namespace Policy.Tests
         }
 
         [Fact]
+        public void CanCrudDataPlanePolicyDefinition()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var client = context.GetServiceClient<PolicyClient>();
+
+                // First, create with minimal properties
+                var policyName = TestUtilities.GenerateName();
+                var thisTestName = TestUtilities.GetCurrentMethodName();
+                var policyDefinition = this.CreateDataPlanePolicyDefinition($"{thisTestName} Policy Definition ${LivePolicyTests.NameTag}");
+
+                var result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(result);
+
+                // Validate result
+                var getResult = client.PolicyDefinitions.Get(policyName);
+                Assert.NotNull(policyDefinition);
+                Assert.NotNull(policyDefinition.Mode);
+                Assert.Null(policyDefinition.Description);
+                Assert.Null(policyDefinition.Parameters);                
+                this.AssertValid(policyName, policyDefinition, getResult, false);                
+
+                var listResult = client.PolicyDefinitions.List();
+                this.AssertInList(policyName, policyDefinition, listResult);
+
+                // Update definition
+                policyDefinition.DisplayName = "Audit certificates that are not protected by RSA - v2";
+
+                result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(result);
+
+                // Validate result
+                getResult = client.PolicyDefinitions.Get(policyName);
+                this.AssertValid(policyName, policyDefinition, getResult, false);
+
+                Assert.Equal("Microsoft.KeyVault.Data", getResult.Mode);
+                Assert.Null(getResult.Parameters);
+
+                // Delete definition and validate
+                this.DeleteDefinitionAndValidate(client, policyName);                               
+            }
+        }
+
+        [Fact]
         public void CanCrudPolicySetDefinition()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -205,11 +249,15 @@ namespace Policy.Tests
 
                 // validate results
                 var getResult = client.PolicyAssignments.Get(assignmentScope, assignmentName);
+
+                // Default enforcement should be set even if not provided as input in PUT request.
+                policyAssignment.EnforcementMode = EnforcementMode.Default;
                 this.AssertValid(assignmentName, policyAssignment, getResult);
                 Assert.Null(getResult.NotScopes);
                 Assert.Null(getResult.Description);
                 AssertMetadataValid(getResult.Metadata);
                 Assert.Null(getResult.Parameters);
+                Assert.Equal(EnforcementMode.Default, getResult.EnforcementMode);
 
                 var listResult = client.PolicyAssignments.List();
                 this.AssertInList(assignmentName, policyAssignment, listResult);
@@ -221,6 +269,7 @@ namespace Policy.Tests
                 policyAssignment.Sku = LivePolicyTests.A1Standard;
                 policyAssignment.Location = "eastus";
                 policyAssignment.Identity = new Identity(type: ResourceIdentityType.SystemAssigned);
+                policyAssignment.EnforcementMode = EnforcementMode.DoNotEnforce;
 
                 result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
                 Assert.NotNull(result);
@@ -832,6 +881,24 @@ namespace Policy.Tests
             )
         };
 
+        // create a minimal dataplane policy definition model
+        private PolicyDefinition CreateDataPlanePolicyDefinition(string displayName) => new PolicyDefinition
+        {
+            DisplayName = displayName,
+            Mode = "Microsoft.KeyVault.Data",
+            PolicyRule = JToken.Parse(
+                @"{
+                    ""if"": {
+                        ""field"": ""Microsoft.KeyVault.Data/vaults/certificates/keyProperties.keyType"",
+                        ""notEquals"": ""RSA""
+                    },
+                    ""then"": {
+                        ""effect"": ""audit""
+                    }
+                }"
+            )
+        };
+
         // create a minimal policy definition model with parameter
         private PolicyDefinition CreatePolicyDefinitionWithParameters(string displayName) => new PolicyDefinition
         {
@@ -875,7 +942,7 @@ namespace Policy.Tests
         {
             // get an existing test management group to be parent
             var allManagementGroups = client.ManagementGroups.List();
-            var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals("AzGovLiveTest"));
+            var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals("AzGovTest5"));
 
             // make a management group using the given parameters
             var managementGroupDetails = new CreateManagementGroupDetails(parent: new CreateParentGroupInfo(id: parentManagementGroup.Id), updatedBy: displayName);
@@ -931,7 +998,13 @@ namespace Policy.Tests
             }
             if (result.Mode != null)
             {
-                Assert.True(result.Mode.Equals("NotSpecified") || result.Mode.Equals("All") || result.Mode.Equals("Indexed"));
+                Assert.True(result.Mode.Equals("NotSpecified") || 
+                            result.Mode.Equals("All") || 
+                            result.Mode.Equals("Indexed") ||
+                            result.Mode.Equals("Microsoft.KeyVault.Data") ||
+                            result.Mode.Equals("Microsoft.ContainerService.Data") ||
+                            result.Mode.Equals("Microsoft.CustomerLockbox.Data") ||
+                            result.Mode.Equals("Microsoft.DataCatalog.Data"));
             }
         }
 
@@ -1102,6 +1175,7 @@ namespace Policy.Tests
             Assert.Equal(model.Sku.Name, result.Sku.Name);
             Assert.Equal(model.Sku.Tier, result.Sku.Tier);
             Assert.Equal(model.Location, result.Location);
+            Assert.Equal(model.EnforcementMode, result.EnforcementMode);
             if (model.Identity != null)
             {
                 Assert.Equal(model.Identity.Type, result.Identity.Type);
