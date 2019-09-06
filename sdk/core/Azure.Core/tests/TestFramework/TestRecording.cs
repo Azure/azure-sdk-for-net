@@ -177,7 +177,7 @@ namespace Azure.Core.Testing
             Dispose(true);
         }
 
-        public T InstrumentClientOptions<T>(T clientOptions) where T: ClientOptions
+        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
         {
             clientOptions.Transport = CreateTransport(clientOptions.Transport);
             return clientOptions;
@@ -283,7 +283,7 @@ namespace Azure.Core.Testing
             return new DisableRecordingScope(this);
         }
 
-        public struct DisableRecordingScope: IDisposable
+        public struct DisableRecordingScope : IDisposable
         {
             private readonly TestRecording _testRecording;
 

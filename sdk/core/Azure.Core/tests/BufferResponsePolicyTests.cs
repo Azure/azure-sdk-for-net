@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class BufferResponsePolicyTests: SyncAsyncPolicyTestBase
+    public class BufferResponsePolicyTests : SyncAsyncPolicyTestBase
     {
         public BufferResponsePolicyTests(bool isAsync) : base(isAsync) { }
 
