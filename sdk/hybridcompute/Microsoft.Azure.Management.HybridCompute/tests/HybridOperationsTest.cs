@@ -52,6 +52,19 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         }
 
         [Fact]
+        public void DeleteMachine()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string resourceGroup = "hybridrptest";
+                string machineName = "testmachine6";
+                HybridComputeManagementClient hybridComputeManagementClient = this.GetHybridComputeManagementClient(context);
+                hybridComputeManagementClient.Machines.Delete(resourceGroup, machineName);
+                Assert.ThrowsAsync<System.Exception>(() => hybridComputeManagementClient.Machines.GetAsync(resourceGroup, machineName));           
+            }
+        }
+
+        [Fact]
         public void ListByResourceGroup()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

@@ -22,6 +22,43 @@ namespace Microsoft.Azure.Management.HybridCompute
     public static partial class MachinesOperationsExtensions
     {
             /// <summary>
+            /// The operation to remove a hybrid machine identity in Azure.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the hybrid machine.
+            /// </param>
+            public static void Delete(this IMachinesOperations operations, string resourceGroupName, string name)
+            {
+                operations.DeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to remove a hybrid machine identity in Azure.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the hybrid machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IMachinesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Retrieves information about the model view or the instance view of a hybrid
             /// machine.
             /// </summary>
