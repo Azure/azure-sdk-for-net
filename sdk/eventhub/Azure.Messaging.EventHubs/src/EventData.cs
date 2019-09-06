@@ -105,11 +105,9 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received using an EventHubConsumer which was created with the
-        ///   option "TrackLastEnqueuedEventInformation" enabled.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
-        ///
-        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
         ///
         protected internal long? LastPartitionSequenceNumber { get; }
 
@@ -119,11 +117,9 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received using an EventHubConsumer which was created with the
-        ///   option "TrackLastEnqueuedEventInformation" enabled.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
-        ///
-        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
         ///
         protected internal long? LastPartitionOffset { get; }
 
@@ -133,11 +129,9 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received using an EventHubConsumer which was created with the
-        ///   option "TrackLastEnqueuedEventInformation" enabled.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
-        ///
-        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
         ///
         protected internal DateTimeOffset? LastPartitionEnqueuedTime { get; }
 
