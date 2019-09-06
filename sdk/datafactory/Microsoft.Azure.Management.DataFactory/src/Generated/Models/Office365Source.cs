@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity source for an Office365 service.
+    /// A copy activity source for an Office 365 service.
     /// </summary>
     public partial class Office365Source : CopySource
     {
@@ -55,7 +55,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="endTime">End time of the requested range for this
         /// dataset. Type: string (or Expression with resultType
         /// string).</param>
-        public Office365Source(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object allowedGroups = default(object), object userScopeFilterUri = default(object), object dateFilterColumn = default(object), object startTime = default(object), object endTime = default(object))
+        /// <param name="outputColumns">The columns to be read out from the
+        /// Office 365 table. Type: array of objects (or Expression with
+        /// resultType array of objects). Example: [ { "name": "Id" }, {
+        /// "name": "CreatedDateTime" } ]</param>
+        public Office365Source(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object allowedGroups = default(object), object userScopeFilterUri = default(object), object dateFilterColumn = default(object), object startTime = default(object), object endTime = default(object), object outputColumns = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             AllowedGroups = allowedGroups;
@@ -63,6 +67,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             DateFilterColumn = dateFilterColumn;
             StartTime = startTime;
             EndTime = endTime;
+            OutputColumns = outputColumns;
             CustomInit();
         }
 
@@ -107,6 +112,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public object EndTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the columns to be read out from the Office 365 table.
+        /// Type: array of objects (or Expression with resultType array of
+        /// objects). Example: [ { "name": "Id" }, { "name": "CreatedDateTime"
+        /// } ]
+        /// </summary>
+        [JsonProperty(PropertyName = "outputColumns")]
+        public object OutputColumns { get; set; }
 
     }
 }
