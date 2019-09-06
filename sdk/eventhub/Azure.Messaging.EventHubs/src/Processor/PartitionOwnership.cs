@@ -45,14 +45,14 @@ namespace Azure.Messaging.EventHubs.Processor
         internal long OwnerLevel { get; }
 
         /// <summary>
-        ///   The offset of the last <see cref="EventData" /> received by the associated <see cref="BasePartitionProcessor" />
+        ///   The offset of the last <see cref="EventData" /> received by the associated partition processor
         ///   upon ownership update.
         /// </summary>
         ///
         public long? Offset { get; set; }
 
         /// <summary>
-        ///   The sequence number of the last <see cref="EventData" /> received by the associated <see cref="BasePartitionProcessor" />
+        ///   The sequence number of the last <see cref="EventData" /> received by the associated partition processor
         ///   upon ownership update.
         /// </summary>
         ///
@@ -78,8 +78,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-        /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated <see cref="BasePartitionProcessor" />.</param>
-        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated <see cref="BasePartitionProcessor" />.</param>
+        /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
+        /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>
         /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
         /// <param name="eTag">The entity tag needed to update this ownership.</param>
         ///

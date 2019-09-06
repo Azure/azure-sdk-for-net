@@ -46,24 +46,19 @@ namespace Azure.Messaging.EventHubs.Samples
             await using (var client = new EventHubClient(connectionString, eventHubName))
             {
                 // An event processor is associated with a specific Event Hub and a consumer group.  It receives events from
-                // all partitions in the Event Hub, passing them to the user for processing.
+                // all partitions in the Event Hub, passing them to the user for processing.  It's worth mentioning that an
+                // event processor is a generic class, and it takes a partition processor as its underlying type.
                 //
                 // A partition processor is associated with a specific partition and is responsible for processing events when
-                // requested by the event processor.  A BasePartitionProcessor instance is provided to the event processor when
-                // requested from a factory function.
+                // requested by the event processor.  In order to use it as the event processor's underlying type, two conditions
+                // must be met:
                 //
-                // The factory function is provided to the event processor when it is created.  The factory is responsible for
-                // creating a partition processor based on a single argument:
+                //   It must be a BasePartitionProcessor or a class derived from it.
                 //
-                //   A partition context: contains information about the partition the partition processor will be processing
-                //   events from.  It's also responsible for the creation of checkpoints.  In this sample, we are only interested
-                //   in its partition id.
+                //   It must have a parameterless constructor.
                 //
-                // We'll be using a SamplePartitionProcessor, whose implementation can be found at the end of this sample.  Its
-                // constructor takes the associated partition id so it can provide useful log messages.
-
-                Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory =
-                    partitionContext => new SamplePartitionProcessor(partitionContext.PartitionId);
+                // A BasePartitionProcessor can't do much because it doesn't provide any kind of event processing by itself, so
+                // we'll be using a SamplePartitionProcessor, whose implementation can be found at the end of this sample.
 
                 // A partition manager may create checkpoints and list/claim partition ownership.  The user can implement their
                 // own partition manager by creating a subclass from the PartitionManager abstract class.  Here we are creating
@@ -84,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-                EventProcessor<SamplePartitionProcessor> eventProcessor = new EventProcessor<SamplePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, client, partitionManager, eventProcessorOptions);
+                var eventProcessor = new EventProcessor<SamplePartitionProcessor>(EventHubConsumer.DefaultConsumerGroupName, client, partitionManager, eventProcessorOptions);
 
                 // Once started, the event processor will start to receive events from all partitions.
 
@@ -148,7 +143,7 @@ namespace Azure.Messaging.EventHubs.Samples
         }
 
         /// <summary>
-        ///   A sample implementation of <see cref="IPartitionProcessor" />.  It makes use of a static integer to count
+        ///   A sample class derived from <see cref="BasePartitionProcessor" />.  It makes use of a static integer to count
         ///   the amount of received events across all existing instances of this class.
         /// </summary>
         ///
@@ -172,32 +167,12 @@ namespace Azure.Messaging.EventHubs.Samples
             public static int TotalEventsCount { get => s_totalEventsCount; }
 
             /// <summary>
-            ///   The identifier of the Event Hub partition this partition processor is associated with.  Used in
-            ///   log messages.
-            /// </summary>
-            ///
-            private readonly string PartitionId;
-
-            /// <summary>
             ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.
             /// </summary>
             ///
             public SamplePartitionProcessor()
             {
                 Console.WriteLine($"\tPartition processor successfully created.");
-            }
-
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="SamplePartitionProcessor"/> class.
-            /// </summary>
-            ///
-            /// <param name="partitionId">The identifier of the Event Hub partition this partition processor is associated with.</param>
-            ///
-            public SamplePartitionProcessor(string partitionId)
-            {
-                PartitionId = partitionId;
-
-                Console.WriteLine($"\tPartition '{ PartitionId }': partition processor successfully created.");
             }
 
             /// <summary>
@@ -213,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // This is the last piece of code guaranteed to run before event processing, so all initialization
                 // must be done by the moment this method returns.
 
-                Console.WriteLine($"\tPartition '{ PartitionId }': partition processor successfully initialized.");
+                Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processor successfully initialized.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 
@@ -235,7 +210,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // The code to be run when closing the partition processor.  This is the right place to dispose
                 // of objects that will no longer be used.
 
-                Console.WriteLine($"\tPartition '{ PartitionId }': partition processor successfully closed. Reason: { reason }.");
+                Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': partition processor successfully closed. Reason: { reason }.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 
@@ -267,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 if (eventsCount > 0)
                 {
                     Interlocked.Add(ref s_totalEventsCount, eventsCount);
-                    Console.WriteLine($"\tPartition '{ PartitionId }': { eventsCount } event(s) received.");
+                    Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': { eventsCount } event(s) received.");
                 }
 
                 // This method is asynchronous, which means it's expected to return a Task.
@@ -276,7 +251,7 @@ namespace Azure.Messaging.EventHubs.Samples
             }
 
             /// <summary>
-            ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
+            ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor{T}" /> is running.
             /// </summary>
             ///
             /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
@@ -295,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // This piece of code is not supposed to be reached by this sample.  If the following message has been printed
                 // to the Console, then something unexpected has happened.
 
-                Console.WriteLine($"\tPartition '{ PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
+                Console.WriteLine($"\tPartition '{ partitionContext.PartitionId }': an unhandled exception was encountered. This was not expected to happen.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 

@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Constantly receives <see cref="EventData" /> from a single partition in the context of a given consumer
-    ///   group.  The received data is sent to a <see cref="BasePartitionProcessor" /> to be processed.
+    ///   group.  The received data is sent to a partition processor to be processed.
     /// </summary>
     ///
     internal class PartitionPump
@@ -42,8 +42,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private string ConsumerGroup { get; }
 
         /// <summary>
-        ///   The context of the Event Hub partition this partition pump is associated with.  Events will be
-        ///   read only from this partition.
+        ///   The context of the Event Hub partition this partition pump is associated with.
         /// </summary>
         ///
         private PartitionContext AssociatedPartitionContext { get; }
@@ -79,8 +78,8 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   The reason why the partition processor is being closed.  This member is only used in case of failure, as a Shutdown
-        ///   or OwnershipLost close reason will be specified by the event processor.
+        ///   The reason why the associated partition processor is being closed.  This member is only used in case of failure,
+        ///   as a Shutdown or OwnershipLost close reason will be specified by the event processor.
         /// </summary>
         ///
         private PartitionProcessorCloseReason CloseReason { get; set; }
@@ -154,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Stops the partition pump.  In case it isn't running, nothing happens.
         /// </summary>
         ///
-        /// <param name="reason">The reason why the partition processor is being closed.  In case it's <c>null</c>, the internal close reason set by this pump is used.</param>
+        /// <param name="reason">The reason why the associated partition processor is being closed.  In case it's <c>null</c>, the internal close reason set by this pump is used.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///

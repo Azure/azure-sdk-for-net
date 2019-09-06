@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of live tests for the <see cref="EventProcessor" />
+    ///   The suite of live tests for the <see cref="EventProcessor{T}" />
     ///   class.
     /// </summary>
     ///
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Tests
     public class EventProcessorLiveTests
     {
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -45,9 +45,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var initializeCalls = new ConcurrentDictionary<string, int>();
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                 initializeCalls.AddOrUpdate(partitionContext.PartitionId, 1, (partitionId, value) => value + 1)
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // InitializeAsync should have not been called when constructing the event processors.
 
@@ -63,11 +63,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Validate results before calling stop.  This way, we can make sure the initialize calls were
                     // triggered by start.
@@ -84,13 +84,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -106,9 +106,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     var closeCalls = new ConcurrentDictionary<string, int>();
                     var closeReasons = new ConcurrentDictionary<string, PartitionProcessorCloseReason>();
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -119,15 +119,15 @@ namespace Azure.Messaging.EventHubs.Tests
                                 }
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // CloseAsync should have not been called when constructing the event processor or initializing the partition processors.
 
@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.
 
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -171,9 +171,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var allReceivedEvents = new ConcurrentDictionary<string, List<EventData>>();
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -199,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Send some events.
 
@@ -229,15 +229,15 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize and receive events.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.  Make sure we received every event in the correct partition processor,
                     // in the order they were sent.
@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -277,9 +277,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var receivedEventSets = new ConcurrentBag<IEnumerable<EventData>>();
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -287,19 +287,19 @@ namespace Azure.Messaging.EventHubs.Tests
                                 receivedEventSets.Add(events)
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.
 
@@ -310,7 +310,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -327,9 +327,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     int initializeCallsCount = 0;
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -337,27 +337,27 @@ namespace Azure.Messaging.EventHubs.Tests
                                 Interlocked.Increment(ref initializeCallsCount)
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // We should be able to call StartAsync again without getting an exception.
 
-                    Assert.That(async () => await hub.StartAllAsync(), Throws.Nothing);
+                    Assert.That(async () => await eventProcessorManager.StartAllAsync(), Throws.Nothing);
 
                     // Give the event processors more time in case they try to initialize again, which shouldn't happen.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.
 
@@ -367,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -384,9 +384,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     int closeCallsCount = 0;
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -394,29 +394,29 @@ namespace Azure.Messaging.EventHubs.Tests
                                 Interlocked.Increment(ref closeCallsCount)
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Calling StopAsync before starting the event processors shouldn't have any effect.
 
-                    Assert.That(async () => await hub.StopAllAsync(), Throws.Nothing);
+                    Assert.That(async () => await eventProcessorManager.StopAllAsync(), Throws.Nothing);
 
                     Assert.That(closeCallsCount, Is.EqualTo(0));
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // We should be able to call StopAsync again without getting an exception.
 
-                    Assert.That(async () => await hub.StopAllAsync(), Throws.Nothing);
+                    Assert.That(async () => await eventProcessorManager.StopAllAsync(), Throws.Nothing);
 
                     // Validate results.
 
@@ -426,7 +426,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -442,9 +442,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     int receivedEventsCount = 0;
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -461,7 +461,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Send some events.
 
@@ -486,15 +486,15 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Start the event processors.
 
-                        await hub.StartAllAsync();
+                        await eventProcessorManager.StartAllAsync();
 
                         // Make sure the event processors have enough time to stabilize and receive events.
 
-                        await hub.WaitStabilization();
+                        await eventProcessorManager.WaitStabilization();
 
                         // Stop the event processors.
 
-                        await hub.StopAllAsync();
+                        await eventProcessorManager.StopAllAsync();
 
                         // Validate results.
 
@@ -505,7 +505,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -549,9 +549,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                     }
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -569,19 +569,19 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize and receive events.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.
 
@@ -591,7 +591,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -609,9 +609,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var timestamps = new ConcurrentDictionary<string, List<DateTimeOffset>>();
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -633,19 +633,19 @@ namespace Azure.Messaging.EventHubs.Tests
                                     )
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.
 
@@ -671,7 +671,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -711,9 +711,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                     }
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -734,19 +734,19 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize and receive events.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.
 
@@ -756,7 +756,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -777,9 +777,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     ConcurrentDictionary<string, int> ownedPartitionsCount = new ConcurrentDictionary<string, int>();
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -789,15 +789,15 @@ namespace Azure.Messaging.EventHubs.Tests
                                 ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
-                    hub.AddEventProcessors(eventProcessors);
+                    eventProcessorManager.AddEventProcessors(eventProcessors);
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Take a snapshot of the current partition balancing status.
 
@@ -805,7 +805,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.
 
@@ -823,7 +823,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessor" /> is able to
+        ///   Verifies that the <see cref="EventProcessor{T}" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -840,9 +840,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     ConcurrentDictionary<string, int> ownedPartitionsCount = new ConcurrentDictionary<string, int>();
 
-                    // Create the event processor hub to manage our event processors.
+                    // Create the event processor manager to manage our event processors.
 
-                    var hub = new EventProcessorManager
+                    var eventProcessorManager = new EventProcessorManager
                         (
                             EventHubConsumer.DefaultConsumerGroupName,
                             client,
@@ -852,29 +852,29 @@ namespace Azure.Messaging.EventHubs.Tests
                                 ownedPartitionsCount.AddOrUpdate(partitionContext.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
                     // Start the event processors.
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Assert all partitions have been claimed.
 
                     Assert.That(ownedPartitionsCount.ToArray().Single().Value, Is.EqualTo(partitions));
 
-                    // Insert a new event processor into the hub so it can start stealing partitions.
+                    // Insert a new event processor into the manager so it can start stealing partitions.
 
-                    hub.AddEventProcessors(1);
+                    eventProcessorManager.AddEventProcessors(1);
 
-                    await hub.StartAllAsync();
+                    await eventProcessorManager.StartAllAsync();
 
                     // Make sure the event processors have enough time to stabilize.
 
-                    await hub.WaitStabilization();
+                    await eventProcessorManager.WaitStabilization();
 
                     // Take a snapshot of the current partition balancing status.
 
@@ -882,7 +882,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Stop the event processors.
 
-                    await hub.StopAllAsync();
+                    await eventProcessorManager.StopAllAsync();
 
                     // Validate results.
 

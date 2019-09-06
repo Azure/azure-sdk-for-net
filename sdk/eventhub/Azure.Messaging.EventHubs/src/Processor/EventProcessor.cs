@@ -13,9 +13,11 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Constantly receives <see cref="EventData" /> from every partition in the context of a given consumer group.
-    ///   The received data is sent to a <see cref="BasePartitionProcessor" /> to be processed.
+    ///   Constantly receives <see cref="EventData" /> from partitions in the context of a given consumer group.  The received
+    ///   data is sent to a partition processor to be processed.
     /// </summary>
+    ///
+    /// <typeparam name="T">The type of partition processor used by this instance by default; the type must be a <see cref="BasePartitionProcessor" /> and must have a parameterless constructor.</typeparam>
     ///
     public class EventProcessor<T> where T : BasePartitionProcessor, new()
     {
@@ -96,7 +98,8 @@ namespace Azure.Messaging.EventHubs.Processor
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; }
 
         /// <summary>
-        ///   The running task responsible for checking the status of the owned partition pumps.
+        ///   The running task responsible for performing partition load balancing between multiple <see cref="EventProcessor{T}" />
+        ///   instances, as well as managing partition pumps and ownership.
         /// </summary>
         ///
         private Task RunningTask { get; set; }
@@ -129,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionProcessorFactory">Creates a <see cref="BasePartitionProcessor" /> instance.</param>
+        /// <param name="partitionProcessorFactory">Creates a partition processor instance from its associated <see cref="PartitionContext" />.</param>
         /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
@@ -518,7 +521,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Tries to claim the ownership of the specified partition.
+        ///   Tries to claim ownership of the specified partition.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the ownership is associated with.</param>

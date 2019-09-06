@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   A factory used to create partition processors.
         /// </summary>
         ///
-        private Func<PartitionContext, BasePartitionProcessor> PartitionProcessorFactory { get; }
+        private Func<PartitionContext, PartitionProcessor> PartitionProcessorFactory { get; }
 
         /// <summary>
         ///   The name of the consumer group the event processors are associated with.  Events will be
@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The event processors managed by this hub.
         /// </summary>
         ///
-        private List<EventProcessor<BasePartitionProcessor>> EventProcessors { get; }
+        private List<EventProcessor<PartitionProcessor>> EventProcessors { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorManager"/> class.
@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Options.MaximumReceiveWaitTime = TimeSpan.FromSeconds(2);
             }
 
-            EventProcessors = new List<EventProcessor<BasePartitionProcessor>>();
+            EventProcessors = new List<EventProcessor<PartitionProcessor>>();
         }
 
         /// <summary>
@@ -146,8 +146,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Waits until the partition load distribution is stabilized.  Throws a <see cref="TimeoutException"/> if
-        ///   the load takes too long to stabilize.
+        ///   Waits until the partition load distribution is stabilized.  Throws an <see cref="OperationCanceledException"/>
+        ///   if the load takes too long to stabilize.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -266,18 +266,11 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   A test helper implementation of <see cref="IPartitionProcessor" />.
+        ///   A test helper class derived from <see cref="BasePartitionProcessor" />.
         /// </summary>
         ///
         private class PartitionProcessor : BasePartitionProcessor
         {
-            /// <summary>
-            ///   Contains information about the partition this partition processor will be processing
-            ///   events from.  It's also responsible for the creation of checkpoints.
-            /// </summary>
-            ///
-            private PartitionContext AssociatedPartitionContext { get; }
-
             /// <summary>
             ///   A callback action to be called on <see cref="InitializeAsync" />.
             /// </summary>
@@ -301,6 +294,14 @@ namespace Azure.Messaging.EventHubs.Tests
             /// </summary>
             ///
             private Action<PartitionContext, Exception, CancellationToken> OnProcessError { get; }
+
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
+            /// </summary>
+            ///
+            public PartitionProcessor()
+            {
+            }
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
@@ -371,7 +372,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             /// <summary>
-            ///   Processes an unexpected exception thrown when <see cref="EventProcessor" /> is running.
+            ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor{T}" /> is running.
             /// </summary>
             ///
             /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
@@ -394,7 +395,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   for testing purposes.
         /// </summary>
         ///
-        private class ShortWaitTimeMock : EventProcessor<BasePartitionProcessor>
+        private class ShortWaitTimeMock : EventProcessor<PartitionProcessor>
         {
             /// <summary>A value used to override event processors' load balance update time span.</summary>
             public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
@@ -420,13 +421,13 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
             /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-            /// <param name="partitionProcessorFactory">Creates an instance of a class implementing the <see cref="IPartitionProcessor" /> interface.</param>
+            /// <param name="partitionProcessorFactory">Creates a partition processor instance from its associated <see cref="PartitionContext" />.</param>
             /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
             /// <param name="options">The set of options to use for this event processor.</param>
             ///
             public ShortWaitTimeMock(string consumerGroup,
                                      EventHubClient eventHubClient,
-                                     Func<PartitionContext, BasePartitionProcessor> partitionProcessorFactory,
+                                     Func<PartitionContext, PartitionProcessor> partitionProcessorFactory,
                                      PartitionManager partitionManager,
                                      EventProcessorOptions options) : base(consumerGroup, eventHubClient, partitionProcessorFactory, partitionManager, options)
             {
