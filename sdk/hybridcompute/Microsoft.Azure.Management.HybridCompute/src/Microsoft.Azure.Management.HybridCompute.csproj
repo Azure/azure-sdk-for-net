@@ -11,7 +11,7 @@
     <PackageTags>management;hybridcompute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is private preview release of the Azure Hybrid Compute SDK.
+        This is public preview release of the Azure Hybrid Compute SDK.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
