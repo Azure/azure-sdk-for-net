@@ -2273,7 +2273,6 @@ namespace Azure.Storage.Blobs.Test
         {
             using (this.GetNewContainer(out var container))
             {
-
                 // arrange
                 var blob = await this.GetNewBlobClient(container);
                 await blob.SetTierAsync(AccessTier.Archive);
@@ -2286,7 +2285,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.AreEqual("rehydrate-pending-to-cool", propertiesResponse.Value.ArchiveStatus);
-
             }
         }
 
