@@ -38,40 +38,122 @@ namespace Azure.Security.KeyVault.Keys
         Other = 0x0010,
     }
 
-    internal static class KeyCurveNameExtensions
+    internal readonly struct KeyCurveNameInfo
     {
-        internal static KeyCurveName ParseFromString(string value)
+        internal static readonly KeyCurveNameInfo P256 = new KeyCurveNameInfo(KeyCurveName.P256, "P-256", new Oid("1.2.840.10045.3.1.7"), 256, 32);
+        internal static readonly KeyCurveNameInfo P256K = new KeyCurveNameInfo(KeyCurveName.P256K, "P-256K", new Oid("1.3.132.0.10"), 256, 32);
+        internal static readonly KeyCurveNameInfo P384 = new KeyCurveNameInfo(KeyCurveName.P384, "P-384", new Oid("1.3.132.0.34"), 384, 48);
+        internal static readonly KeyCurveNameInfo P521 = new KeyCurveNameInfo(KeyCurveName.P521, "P-521", new Oid("1.3.132.0.35"), 521, 66);
+        internal static readonly KeyCurveNameInfo Other = new KeyCurveNameInfo(KeyCurveName.Other, null, null, -1, -1);
+
+        private static readonly KeyCurveNameInfo[] Supported =
+        {
+            P521,
+            P384,
+            P256K,
+            P256,
+        };
+
+        private KeyCurveNameInfo(KeyCurveName value, string name, Oid oid, int keySize, int keyParameterSize)
+        {
+            Value = value;
+            Name = name;
+            Oid = oid;
+            KeySize = keySize;
+            KeyParameterSize = keyParameterSize;
+        }
+
+        internal readonly KeyCurveName Value;
+
+        internal readonly string Name;
+
+        internal readonly Oid Oid;
+
+        internal readonly int KeySize;
+
+        internal readonly int KeyParameterSize;
+
+        internal static ref readonly KeyCurveNameInfo FromValue(KeyCurveName value)
         {
             switch (value)
             {
-                case "P-256":
-                    return KeyCurveName.P256;
-                case "P-256K":
-                    return KeyCurveName.P256K;
-                case "P-384":
-                    return KeyCurveName.P384;
-                case "P-521":
-                    return KeyCurveName.P521;
+                case KeyCurveName.P256:
+                    return ref P256;
+
+                case KeyCurveName.P256K:
+                    return ref P256K;
+
+                case KeyCurveName.P384:
+                    return ref P384;
+
+                case KeyCurveName.P521:
+                    return ref P521;
+
                 default:
-                    return KeyCurveName.Other;
+                    return ref Other;
             }
         }
 
-        internal static string AsString(KeyCurveName curve)
+        internal static ref readonly KeyCurveNameInfo FromName(string name)
         {
-            switch (curve)
+            if (!string.IsNullOrEmpty(name))
             {
-                case KeyCurveName.P256:
-                    return "P-256";
-                case KeyCurveName.P256K:
-                    return "P-256K";
-                case KeyCurveName.P384:
-                    return "P-384";
-                case KeyCurveName.P521:
-                    return "P-521";
-                default:
-                    return string.Empty;
+                for (int i = 0; i < Supported.Length; ++i)
+                {
+                    ref KeyCurveNameInfo info = ref Supported[i];
+                    if (string.Equals(name, info.Name, StringComparison.Ordinal))
+                    {
+                        return ref info;
+                    }
+                }
             }
+
+            return ref Other;
         }
+
+        internal static ref readonly KeyCurveNameInfo FromOid(Oid oid, int keySize)
+        {
+            if (!string.IsNullOrEmpty(oid?.Value))
+            {
+                string oidValue = oid.Value;
+                for (int i = 0; i < Supported.Length; ++i)
+                {
+                    ref KeyCurveNameInfo info = ref Supported[i];
+                    if (string.Equals(oidValue, info.Oid.Value, StringComparison.Ordinal))
+                    {
+                        return ref info;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(oid?.FriendlyName))
+            {
+                switch (keySize)
+                {
+                    case 256 when string.Equals(oid.FriendlyName, "nistP256", StringComparison.OrdinalIgnoreCase) || string.Equals(oid.FriendlyName, "ECDSA_P256", StringComparison.OrdinalIgnoreCase):
+                        return ref P256;
+
+                    case 256 when string.Equals(oid.FriendlyName, "secP256k1", StringComparison.OrdinalIgnoreCase):
+                        return ref P256K;
+
+                    case 384 when string.Equals(oid.FriendlyName, "nistP384", StringComparison.OrdinalIgnoreCase) || string.Equals(oid.FriendlyName, "ECDSA_P384", StringComparison.OrdinalIgnoreCase):
+                        return ref P384;
+
+                    case 521 when string.Equals(oid.FriendlyName, "nistP521", StringComparison.OrdinalIgnoreCase) || string.Equals(oid.FriendlyName, "ECDSA_P521", StringComparison.OrdinalIgnoreCase):
+                        return ref P521;
+                }
+            }
+
+            return ref Other;
+        }
+
+        public override string ToString() => Value switch
+        {
+            KeyCurveName.P256 => P256.Name,
+            KeyCurveName.P256K => P256K.Name,
+            KeyCurveName.P384 => P384.Name,
+            KeyCurveName.P521 => P521.Name,
+            _ => string.Empty,
+        };
     }
 }

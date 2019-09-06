@@ -117,7 +117,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (Curve.HasValue)
             {
-                json.WriteString(CurveNamePropertyNameBytes, KeyCurveNameExtensions.AsString(Curve.Value));
+                json.WriteString(CurveNamePropertyNameBytes, KeyCurveNameInfo.FromValue(Curve.Value).ToString());
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {

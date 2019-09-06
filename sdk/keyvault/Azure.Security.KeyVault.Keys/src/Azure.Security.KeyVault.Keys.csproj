@@ -11,8 +11,7 @@
       ]]>
     </PackageReleaseNotes>
 
-    <!-- Need to multitarget since ECParameters is not defined in net461 but introduced in net47. -->
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net47</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
