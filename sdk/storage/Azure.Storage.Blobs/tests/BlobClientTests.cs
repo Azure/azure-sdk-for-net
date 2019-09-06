@@ -289,6 +289,99 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [TestCase(1)]
+        public async Task UploadAsync_File_AccessTier(int? maximumThreadCount)
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                var blob = this.InstrumentClient(container.GetBlobClient(this.GetNewBlobName()));
+                var data = this.GetRandomBuffer(Constants.KB);
+
+                using (var stream = new MemoryStream(data))
+                {
+                    var path = Path.GetTempFileName();
+
+                    try
+                    {
+                        File.WriteAllBytes(path, data);
+
+                        var file = new FileInfo(path);
+
+                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
+
+                        await Verify(blob.UploadAsync(
+                            file,
+                            parallelTransferOptions: options,
+                            accessTier: AccessTierOptional.Cool));
+
+                        async Task Verify(Task<Response<BlobContentInfo>> upload)
+                        {
+                            using (var stream = new MemoryStream(data))
+                            {
+                                await upload;
+                            }
+
+                            var download = await blob.DownloadAsync();
+                            using var actual = new MemoryStream();
+                            await download.Value.Content.CopyToAsync(actual);
+                            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                        }
+                    }
+                    finally
+                    {
+                        if (File.Exists(path))
+                        {
+                            File.Delete(path);
+                        }
+                    }
+                }
+
+                var properties = await blob.GetPropertiesAsync();
+                Assert.AreEqual(AccessTierOptional.Cool.ToString(), properties.Value.AccessTier);
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        public async Task UploadAsync_File_AccessTierFail(int? maximumThreadCount)
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                var blob = this.InstrumentClient(container.GetBlobClient(this.GetNewBlobName()));
+                var data = this.GetRandomBuffer(Constants.KB);
+
+                using (var stream = new MemoryStream(data))
+                {
+                    var path = Path.GetTempFileName();
+
+                    try
+                    {
+                        File.WriteAllBytes(path, data);
+
+                        var file = new FileInfo(path);
+
+                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
+
+                        // Assert
+                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                            blob.UploadAsync(
+                            file,
+                            parallelTransferOptions: options,
+                            accessTier: AccessTierOptional.P10),
+                            e => Assert.IsTrue(true));
+                    }
+                    finally
+                    {
+                        if (File.Exists(path))
+                        {
+                            File.Delete(path);
+                        }
+                    }
+                }
+            }
+        }
+
+        [Test]
         public async Task UploadAsync_File_Overloads()
         {
             using (this.GetNewContainer(out var container))
@@ -353,7 +446,7 @@ namespace Azure.Storage.Blobs.Test
                         customerProvidedKey: default,
                         progressHandler: default,
                         singleBlockThreshold: singleBlockThreshold,
-                        parallelTransferOptions,
+                        parallelTransferOptions: parallelTransferOptions,
                         async: true);
                 }
 
@@ -404,7 +497,7 @@ namespace Azure.Storage.Blobs.Test
                             customerProvidedKey: default,
                             progressHandler: default,
                             singleBlockThreshold: singleBlockThreshold,
-                            parallelTransferOptions,
+                            parallelTransferOptions: parallelTransferOptions,
                             async: true);
                     }
 
