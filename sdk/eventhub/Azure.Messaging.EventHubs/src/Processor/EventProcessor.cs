@@ -13,7 +13,7 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Receives <see cref="EventData" /> as they are available for partition, in the context of a consumer group, and routes
+    ///   Receives <see cref="EventData" /> as they are available for a partition, in the context of a consumer group, and routes
     ///   them to a partition processor instance to be processed.
     /// </summary>
     ///
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
-        public string Identifier { get; }
+        public virtual string Identifier { get; }
 
         /// <summary>
         ///   The client used to interact with the Azure Event Hubs service.
@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task StartAsync()
+        public virtual async Task StartAsync()
         {
             if (RunningTask == null)
             {
@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task StopAsync()
+        public virtual async Task StopAsync()
         {
             if (RunningTask != null)
             {

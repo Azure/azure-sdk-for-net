@@ -164,10 +164,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             while (!stabilizedStatusAchieved)
             {
-                // Give up if it takes more than 1 minute.
-
-                timeoutToken.ThrowIfCancellationRequested();
-
                 // Remember to filter expired ownership.
 
                 var activeOwnership = (await InnerPartitionManager
@@ -192,9 +188,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (consecutiveStabilizedStatus < 10)
                 {
-                    // Wait a load balance update cycle before the next verification.
+                    // Wait a load balance update cycle before the next verification.  Give up if the whole process takes more than 1 minute.
 
-                    await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdate);
+                    await Task.Delay(ShortWaitTimeMock.ShortLoadBalanceUpdate, timeoutToken);
                 }
                 else
                 {
