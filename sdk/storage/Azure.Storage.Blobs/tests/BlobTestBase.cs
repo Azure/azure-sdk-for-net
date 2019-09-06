@@ -153,16 +153,16 @@ namespace Azure.Storage.Test.Shared
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType? publicAccessType = default,
+            PublicAccessType publicAccessType = PublicAccessType.None,
             bool premium = default)
         {
             containerName ??= this.GetNewContainerName();
             service ??= this.GetServiceClient_SharedKey();
             container = this.InstrumentClient(service.GetBlobContainerClient(containerName));
 
-            if(publicAccessType == null)
+            if(publicAccessType == PublicAccessType.None)
             {
-                publicAccessType = premium ? (PublicAccessType?)null : PublicAccessType.Container;
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.Container;
             }
 
             return new DisposingContainer(
@@ -368,7 +368,7 @@ namespace Azure.Storage.Test.Shared
         {
             public BlobContainerClient ContainerClient { get; }
 
-            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType? publicAccessType = default)
+            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType = default)
             {
                 container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
 

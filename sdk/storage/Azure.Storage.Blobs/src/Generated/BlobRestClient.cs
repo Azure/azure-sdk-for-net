@@ -998,9 +998,9 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
-            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -1009,9 +1009,9 @@ namespace Azure.Storage.Blobs
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Blobs.Models.PublicAccessType access,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Create",
@@ -1025,9 +1025,9 @@ namespace Azure.Storage.Blobs
                     using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                         pipeline,
                         resourceUri,
+                        access,
                         timeout,
                         metadata,
-                        access,
                         requestId))
                     {
                         Azure.Response _response = async ?
@@ -1056,17 +1056,17 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
-            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.CreateAsync Request.</returns>
             internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Blobs.Models.PublicAccessType access,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 string requestId = default)
             {
                 // Validation
@@ -1085,6 +1085,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
+                if (access != Azure.Storage.Blobs.Models.PublicAccessType.None) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access)); }
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
@@ -1092,7 +1093,6 @@ namespace Azure.Storage.Blobs
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
-                if (access != null) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access.Value)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 return _request;
@@ -1772,10 +1772,10 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="permissions">the acls for the container</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -1786,10 +1786,10 @@ namespace Azure.Storage.Blobs
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Blobs.Models.PublicAccessType access,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> permissions = default,
                 int? timeout = default,
                 string leaseId = default,
-                Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
@@ -1805,10 +1805,10 @@ namespace Azure.Storage.Blobs
                     using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
                         pipeline,
                         resourceUri,
+                        access,
                         permissions,
                         timeout,
                         leaseId,
-                        access,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         requestId))
@@ -1839,10 +1839,10 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="permissions">the acls for the container</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -1850,10 +1850,10 @@ namespace Azure.Storage.Blobs
             internal static Azure.Core.Http.Request SetAccessPolicyAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Blobs.Models.PublicAccessType access,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> permissions = default,
                 int? timeout = default,
                 string leaseId = default,
-                Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default)
@@ -1875,9 +1875,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
+                if (access != Azure.Storage.Blobs.Models.PublicAccessType.None) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access)); }
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
-                if (access != null) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
@@ -17766,6 +17766,11 @@ namespace Azure.Storage.Blobs.Models
     public enum PublicAccessType
     {
         /// <summary>
+        /// none
+        /// </summary>
+        None,
+
+        /// <summary>
         /// container
         /// </summary>
         Container,
@@ -17787,6 +17792,8 @@ namespace Azure.Storage.Blobs
             {
                 switch (value)
                 {
+                    case Azure.Storage.Blobs.Models.PublicAccessType.None:
+                        return null;
                     case Azure.Storage.Blobs.Models.PublicAccessType.Container:
                         return "container";
                     case Azure.Storage.Blobs.Models.PublicAccessType.Blob:
@@ -17800,6 +17807,8 @@ namespace Azure.Storage.Blobs
             {
                 switch (value)
                 {
+                    case null:
+                        return Azure.Storage.Blobs.Models.PublicAccessType.None;
                     case "container":
                         return Azure.Storage.Blobs.Models.PublicAccessType.Container;
                     case "blob":
