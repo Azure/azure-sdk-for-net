@@ -515,6 +515,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [LiveOnly]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
         [TestCase(2 * Constants.KB)]
@@ -529,6 +530,7 @@ namespace Azure.Storage.Blobs.Test
             await this.UploadStreamAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
+        [LiveOnly]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
         [TestCase(2 * Constants.KB)]
