@@ -112,6 +112,31 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void RecordMatcherIgnoresIgnoredHeaders()
+        {
+            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+
+            MockRequest mockRequest = new MockRequest();
+            mockRequest.Method = RequestMethod.Put;
+            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+
+            RecordEntry[] entries = new []
+            {
+                new RecordEntry()
+                {
+                    RequestUri = "http://localhost",
+                    RequestMethod = RequestMethod.Put,
+                    RequestHeaders =
+                    {
+                        { "Request-Id", new[] { "Non-Random value"}},
+                    }
+                }
+            };
+
+            Assert.NotNull(matcher.FindMatch(mockRequest, entries));
+        }
+
+        [Test]
         public void RecordMatcherThrowsExceptionsWhenNoRecordsLeft()
         {
             var matcher = new RecordMatcher(new RecordedTestSanitizer());
