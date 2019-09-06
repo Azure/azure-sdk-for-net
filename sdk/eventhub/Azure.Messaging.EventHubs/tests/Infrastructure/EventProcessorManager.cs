@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
         /// <param name="client">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
+        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="PartitionProcessor.InitializeAsync" />.</param>
         /// <param name="onClose">A callback action to be called on <see cref="PartitionProcessor.CloseAsync" />.</param>
@@ -329,7 +329,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Initializes the partition processor.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
@@ -343,7 +343,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Closes the partition processor.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
             /// <param name="reason">The reason why the partition processor is being closed.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -359,7 +359,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Processes a set of received <see cref="EventData" />.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
             /// <param name="events">The received events to be processed.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
             ///
@@ -377,7 +377,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor{T}" /> is running.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
             /// <param name="exception">The exception to be processed.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
             ///
@@ -423,8 +423,8 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
             /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-            /// <param name="partitionProcessorFactory">Creates a partition processor instance from its associated <see cref="PartitionContext" />.</param>
-            /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
+            /// <param name="partitionProcessorFactory">Creates a partition processor instance for the associated <see cref="PartitionContext" />.</param>
+            /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
             /// <param name="options">The set of options to use for this event processor.</param>
             ///
             public ShortWaitTimeMock(string consumerGroup,

@@ -53,9 +53,9 @@ namespace Azure.Messaging.EventHubs.Samples
                 // requested by the event processor.  In order to use it as the event processor's underlying type, two conditions
                 // must be met:
                 //
-                //   It must be a BasePartitionProcessor or a class derived from it.
+                //     - It must be a BasePartitionProcessor or a class derived from it.
                 //
-                //   It must have a parameterless constructor.
+                //     - It must have a parameterless constructor.
                 //
                 // A BasePartitionProcessor can't do much because it doesn't provide any kind of event processing by itself, so
                 // we'll be using a SamplePartitionProcessor, whose implementation can be found at the end of this sample.
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Initializes the partition processor.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
@@ -199,7 +199,7 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Closes the partition processor.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
             /// <param name="reason">The reason why the partition processor is being closed.</param>
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Processes a set of received <see cref="EventData" />.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
             /// <param name="events">The received events to be processed.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
             ///
@@ -254,7 +254,7 @@ namespace Azure.Messaging.EventHubs.Samples
             ///   Processes an unexpected exception thrown while the associated <see cref="EventProcessor{T}" /> is running.
             /// </summary>
             ///
-            /// <param name="partitionContext">Contains information about the partition this partition processor will be processing events from.  It's also responsible for the creation of checkpoints.</param>
+            /// <param name="partitionContext">Contains information about the partition from which events are sourced and provides a means of creating checkpoints for that partition.</param>
             /// <param name="exception">The exception to be processed.  It's not used in this sample.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  It's not used in this sample.</param>
             ///

@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The context of the Event Hub partition this partition pump is associated with.
         /// </summary>
         ///
-        private PartitionContext AssociatedPartitionContext { get; }
+        private PartitionContext Context { get; }
 
         /// <summary>
         ///   Processes events and errors.
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
-            AssociatedPartitionContext = partitionContext;
+            Context = partitionContext;
             PartitionProcessor = partitionProcessor;
             Options = options;
         }
@@ -128,13 +128,13 @@ namespace Azure.Messaging.EventHubs.Processor
                         RunningTaskTokenSource?.Cancel();
                         RunningTaskTokenSource = new CancellationTokenSource();
 
-                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, AssociatedPartitionContext.PartitionId, Options.InitialEventPosition);
+                        InnerConsumer = InnerClient.CreateConsumer(ConsumerGroup, Context.PartitionId, Options.InitialEventPosition);
 
                         // In case an exception is encountered while partition processor is initializing, don't catch it
                         // and let the event processor handle it.  The inner consumer hasn't connected to the service yet,
                         // so there's no need to close it.
 
-                        await PartitionProcessor.InitializeAsync(AssociatedPartitionContext).ConfigureAwait(false);
+                        await PartitionProcessor.InitializeAsync(Context).ConfigureAwait(false);
 
                         // Before closing, the running task will set the close reason in case of failure.  When something
                         // unexpected happens and it's not set, the default value (Unknown) is kept.
@@ -198,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         // only known by the pump.  In this case, we expect the processor-provided reason to be null, and
                         // the private CloseReason is used instead.
 
-                        await PartitionProcessor.CloseAsync(AssociatedPartitionContext, reason ?? CloseReason).ConfigureAwait(false);
+                        await PartitionProcessor.CloseAsync(Context, reason ?? CloseReason).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -233,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     try
                     {
-                        await PartitionProcessor.ProcessEventsAsync(AssociatedPartitionContext, receivedEvents, cancellationToken).ConfigureAwait(false);
+                        await PartitionProcessor.ProcessEventsAsync(Context, receivedEvents, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception partitionProcessorException)
                     {
@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // In case an exception is encountered while partition processor is processing the error, don't
                 // catch it and let the calling method (StopAsync) handle it.
 
-                await PartitionProcessor.ProcessErrorAsync(AssociatedPartitionContext, unrecoverableException, cancellationToken).ConfigureAwait(false);
+                await PartitionProcessor.ProcessErrorAsync(Context, unrecoverableException, cancellationToken).ConfigureAwait(false);
             }
         }
     }

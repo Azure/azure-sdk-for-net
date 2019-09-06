@@ -99,12 +99,12 @@ namespace Azure.Messaging.EventHubs.Processor
 
             if (offset.HasValue)
             {
-                Guard.ArgumentInRange(nameof(offset), offset.Value, 0, Int64.MaxValue);
+                Guard.ArgumentAtLeast(nameof(offset), offset.Value, 0);
             }
 
             if (sequenceNumber.HasValue)
             {
-                Guard.ArgumentInRange(nameof(sequenceNumber), sequenceNumber.Value, 0, Int64.MaxValue);
+                Guard.ArgumentAtLeast(nameof(sequenceNumber), sequenceNumber.Value, 0);
             }
 
             EventHubName = eventHubName;

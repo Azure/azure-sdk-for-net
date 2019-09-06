@@ -7,7 +7,7 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Contains all the information needed to store the state of a partition's event processing.
+    ///   Contains the information to reflect the state of event processing for a given Event Hub partition.
     /// </summary>
     ///
     public class Checkpoint
@@ -71,8 +71,8 @@ namespace Azure.Messaging.EventHubs.Processor
             Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
             Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentInRange(nameof(offset), offset, 0, Int64.MaxValue);
-            Guard.ArgumentInRange(nameof(sequenceNumber), sequenceNumber, 0, Int64.MaxValue);
+            Guard.ArgumentAtLeast(nameof(offset), offset, 0);
+            Guard.ArgumentAtLeast(nameof(sequenceNumber), sequenceNumber, 0);
 
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;

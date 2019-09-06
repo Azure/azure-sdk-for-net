@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   A non-volatile in-memory storage service that keeps track of checkpoints and ownership.
+    ///   A volatile in-memory storage service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    public class InMemoryPartitionManager : PartitionManager
+    public sealed class InMemoryPartitionManager : PartitionManager
     {
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object OwnershipLock = new object();
@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     if (Ownership.TryGetValue(key, out var currentOwnership))
                     {
-                        isClaimable = ownership.ETag == currentOwnership.ETag;
+                        isClaimable = String.Equals(ownership.ETag, currentOwnership.ETag, StringComparison.InvariantCultureIgnoreCase);
                     }
 
                     if (isClaimable)

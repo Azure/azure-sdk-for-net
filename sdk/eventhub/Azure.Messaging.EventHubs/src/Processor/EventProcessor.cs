@@ -13,8 +13,8 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Constantly receives <see cref="EventData" /> from partitions in the context of a given consumer group.  The received
-    ///   data is sent to a partition processor to be processed.
+    ///   Receives <see cref="EventData" /> as they are available for partition, in the context of a consumer group, and routes
+    ///   them to a partition processor instance to be processed.
     /// </summary>
     ///
     /// <typeparam name="T">The type of partition processor used by this instance by default; the type must be a <see cref="BasePartitionProcessor" /> and must have a parameterless constructor.</typeparam>
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private Func<PartitionContext, BasePartitionProcessor> PartitionProcessorFactory { get; }
 
         /// <summary>
-        ///   Interacts with the storage system, dealing with ownership and checkpoints.
+        ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
         private PartitionManager Manager { get; }
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
+        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
         /// <remarks>
@@ -132,8 +132,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventHubClient">The client used to interact with the Azure Event Hubs service.</param>
-        /// <param name="partitionProcessorFactory">Creates a partition processor instance from its associated <see cref="PartitionContext" />.</param>
-        /// <param name="partitionManager">Interacts with the storage system, dealing with ownership and checkpoints.</param>
+        /// <param name="partitionProcessorFactory">Creates a partition processor instance for the associated <see cref="PartitionContext" />.</param>
+        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="options">The set of options to use for this event processor.</param>
         ///
         /// <remarks>

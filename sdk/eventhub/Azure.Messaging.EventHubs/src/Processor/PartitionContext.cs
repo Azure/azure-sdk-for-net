@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string OwnerIdentifier { get; }
 
         /// <summary>
-        ///   Interacts with the storage system, dealing with the creation of checkpoints.
+        ///   Interacts with the storage system with responsibility for creation of checkpoints.
         /// </summary>
         ///
         private PartitionManager Manager { get; }
@@ -51,14 +51,14 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the specific Event Hub this context is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
-        /// <param name="partitionManager">Interacts with the storage system, dealing with the creation of checkpoints.</param>
+        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
         ///
-        internal PartitionContext(string eventHubName,
-                                  string consumerGroup,
-                                  string partitionId,
-                                  string ownerIdentifier,
-                                  PartitionManager partitionManager)
+        protected internal PartitionContext(string eventHubName,
+                                            string consumerGroup,
+                                            string partitionId,
+                                            string ownerIdentifier,
+                                            PartitionManager partitionManager)
         {
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public Task UpdateCheckpointAsync(EventData eventData) => UpdateCheckpointAsync(eventData.Offset.Value, eventData.SequenceNumber.Value);
+        public virtual Task UpdateCheckpointAsync(EventData eventData) => UpdateCheckpointAsync(eventData.Offset.Value, eventData.SequenceNumber.Value);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
@@ -86,8 +86,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task UpdateCheckpointAsync(long offset,
-                                                long sequenceNumber)
+        public virtual Task UpdateCheckpointAsync(long offset,
+                                                  long sequenceNumber)
         {
             // Parameter validation is done by Checkpoint constructor.
 
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 sequenceNumber
             );
 
-            await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+            return Manager.UpdateCheckpointAsync(checkpoint);
         }
     }
 }
