@@ -446,6 +446,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var originalLastModifiedTime = originalOwnership.LastModifiedTime;
             var originalETag = originalOwnership.ETag;
 
+            // Add a short delay so we don't end up with the same LastModifiedTime.
+
+            await Task.Delay(TimeSpan.FromMilliseconds(100));
+
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
                 ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
 
