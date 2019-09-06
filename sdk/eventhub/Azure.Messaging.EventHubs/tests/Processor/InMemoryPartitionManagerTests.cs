@@ -261,7 +261,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Failing test: current implementation only uses partition id as key")]
         public async Task OwnershipClaimDoesNotInterfereWithOtherConsumerGroups()
         {
             var partitionManager = new InMemoryPartitionManager();
@@ -317,7 +316,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Failing test: current implementation only uses partition id as key")]
         public async Task OwnershipClaimDoesNotInterfereWithOtherEventHubs()
         {
             var partitionManager = new InMemoryPartitionManager();
@@ -471,7 +469,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Failing test: current implementation only uses partition id as key")]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherConsumerGroups()
         {
             var partitionManager = new InMemoryPartitionManager();
@@ -500,7 +497,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Failing test: current implementation only uses partition id as key")]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherEventHubs()
         {
             var partitionManager = new InMemoryPartitionManager();

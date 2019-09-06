@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,8 +17,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object OwnershipLock = new object();
 
-        /// <summary>The set of stored ownership.  Partition ids are used as keys.</summary>
-        private Dictionary<string, PartitionOwnership> Ownership;
+        /// <summary>The set of stored ownership.</summary>
+        private Dictionary<(string EventHubName, string ConsumerGroup, string PartitionId), PartitionOwnership> Ownership;
 
         /// <summary>Logs activities performed by this partition manager.</summary>
         private Action<string> Logger;
@@ -34,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             Logger = logger;
 
-            Ownership = new Dictionary<string, PartitionOwnership>();
+            Ownership = new Dictionary<(string, string, string), PartitionOwnership>();
         }
 
         /// <summary>
@@ -82,10 +81,11 @@ namespace Azure.Messaging.EventHubs.Processor
                 foreach (var ownership in partitionOwnership)
                 {
                     var isClaimable = true;
+                    var key = (ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
 
                     // In case the partition already has an owner, the ETags must match in order to claim it.
 
-                    if (Ownership.TryGetValue(ownership.PartitionId, out var currentOwnership))
+                    if (Ownership.TryGetValue(key, out var currentOwnership))
                     {
                         isClaimable = ownership.ETag == currentOwnership.ETag;
                     }
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         ownership.ETag = Guid.NewGuid().ToString();
 
-                        Ownership[ownership.PartitionId] = ownership;
+                        Ownership[key] = ownership;
                         claimedOwnership.Add(ownership);
 
                         Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
@@ -121,7 +121,9 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             lock (OwnershipLock)
             {
-                if (Ownership.TryGetValue(checkpoint.PartitionId, out var ownership))
+                var key = (checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
+
+                if (Ownership.TryGetValue(key, out var ownership))
                 {
                     if (ownership.OwnerIdentifier == checkpoint.OwnerIdentifier)
                     {
