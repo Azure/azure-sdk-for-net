@@ -490,6 +490,18 @@ namespace Azure.Messaging.EventHubs.Processor
             try
             {
                 var partitionProcessor = PartitionProcessorFactory(partitionContext);
+                var options = Options.Clone();
+
+                // Ovewrite the initial event position in case a checkpoint exists.  The InstanceOwnership dictionary is expected to
+                // have an entry for the partition we're dealing with, so it throws an exception if that's not the case.
+
+                var initialSequenceNumber = InstanceOwnership[partitionId].SequenceNumber;
+
+                if (initialSequenceNumber.HasValue)
+                {
+                    options.InitialEventPosition = EventPosition.FromSequenceNumber(initialSequenceNumber.Value);
+                }
+
                 var partitionPump = new PartitionPump(InnerClient, ConsumerGroup, partitionContext, partitionProcessor, Options);
 
                 await partitionPump.StartAsync().ConfigureAwait(false);
