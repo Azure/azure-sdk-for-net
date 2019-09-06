@@ -37,6 +37,7 @@ namespace Azure.Core.Tests
                 var startSuffix = ".Start";
                 var stopSuffix = ".Stop";
                 var exceptionSuffix = ".Exception";
+                var addLinkSuffix = ".AddLink";
                 if (value.Key.EndsWith(startSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - startSuffix.Length);
@@ -46,6 +47,19 @@ namespace Azure.Core.Tests
                         Activity = Activity.Current
                     };
                     Scopes.Add(scope);
+                }
+                else if (value.Key.EndsWith(addLinkSuffix))
+                {
+                    var name = value.Key.Substring(0, value.Key.Length - addLinkSuffix.Length);
+                    foreach (var producedDiagnosticScope in Scopes)
+                    {
+                        if (producedDiagnosticScope.Name == name)
+                        {
+                            producedDiagnosticScope.Links.Add(((Activity)value.Value).ParentId);
+                            return;
+                        }
+                    }
+                    throw new InvalidOperationException($"Event '{name}' was not started");
                 }
                 else if (value.Key.EndsWith(stopSuffix))
                 {
@@ -90,7 +104,7 @@ namespace Azure.Core.Tests
                 }
             }
         }
-        
+
         public void Dispose()
         {
             List<IDisposable> subscriptions;
@@ -113,7 +127,7 @@ namespace Azure.Core.Tests
                 }
             }
         }
-        
+
         public ProducedDiagnosticScope AssertScopeStarted(string name, params KeyValuePair<string, string>[] expectedAttributes)
         {
             lock (Scopes)
@@ -168,6 +182,7 @@ namespace Azure.Core.Tests
             public Activity Activity { get; set; }
             public bool IsCompleted { get; set; }
             public Exception Exception { get; set; }
+            public List<string> Links { get; set; } = new List<string>();
         }
     }
 

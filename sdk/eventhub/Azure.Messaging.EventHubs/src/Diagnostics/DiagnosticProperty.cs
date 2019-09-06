@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Messaging.EventHubs.Processor;
+
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
@@ -17,6 +19,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>The activity name associated with Event Hub producers.</summary>
         public static readonly string ProducerActivityName = $"{ BaseActivityName }.{ nameof(EventHubProducer) }.Send";
+
+        /// <summary>The activity name associated with EventProcessor processing a list of events.</summary>
+        public static readonly string EventProcessorProcessingActivityName = $"{ BaseActivityName }.{ nameof(EventProcessor) }.Process";
+
+        /// <summary>The activity name associated with EventProcessor creating a checkpoint.</summary>
+        public static readonly string EventProcessorCheckpointActivityName = $"{ BaseActivityName }.{ nameof(EventProcessor) }.Checkpoint";
 
         /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
         public static string DiagnosticIdAttribute = "Diagnostic-Id";

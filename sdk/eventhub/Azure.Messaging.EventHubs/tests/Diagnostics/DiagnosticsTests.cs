@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using NUnit.Framework;
 
@@ -219,5 +220,74 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(eventData3.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute), Is.False, "Events that were not accepted into the batch should not have been instrumented.");
         }
+
+        [Test]
+        public async Task CheckpointManagerCreatesScope()
+        {
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener();
+            var manager = new CheckpointManager(new PartitionContext("name", "group", "partition"), new InMemoryPartitionManager(), "owner");
+
+            await manager.UpdateCheckpointAsync(0, 0);
+
+            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
+            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));
+        }
+
+        [Test]
+        public async Task PartitionPumpCreatesScopeForEventProcessing()
+        {
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener();
+            var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var consumerMock = new Mock<EventHubConsumer>();
+            bool returnedItems = false;
+            consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Returns(()=> {
+                    if (returnedItems)
+                    {
+                        throw new InvalidOperationException("Something bad happened");
+                    }
+
+                    returnedItems = true;
+                    return Task.FromResult(
+                        (IEnumerable<EventData>)new[]
+                        {
+                            new EventData(Array.Empty<byte>())
+                            {
+                                Properties =
+                                {
+                                    { "Diagnostic-Id", "id" }
+                                }
+                            },
+                            new EventData(Array.Empty<byte>())
+                            {
+                                Properties =
+                                {
+                                    { "Diagnostic-Id", "id2" }
+                                }
+                            }
+                        });
+                });
+
+            var clientMock = new Mock<EventHubClient>();
+            clientMock.Setup(c => c.CreateConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerOptions>())).Returns(consumerMock.Object);
+
+            var processorMock = new Mock<IPartitionProcessor>();
+            processorMock.Setup(p => p.InitializeAsync()).Returns(Task.CompletedTask);
+            processorMock.Setup(p => p.ProcessEventsAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask)
+                .Callback(() => processorCalledSource.SetResult(null));
+
+            var manager = new PartitionPump(clientMock.Object, "cg", "pid", processorMock.Object, new EventProcessorOptions());
+
+            await manager.StartAsync();
+            await processorCalledSource.Task;
+            await manager.StopAsync(null);
+
+            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
+            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+            Assert.That(scope.Links, Has.One.EqualTo("id"));
+            Assert.That(scope.Links, Has.One.EqualTo("id2"));
+        }
+
     }
 }

@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -81,7 +84,17 @@ namespace Azure.Messaging.EventHubs.Processor
                 sequenceNumber
             );
 
-            await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+            using DiagnosticScope scope =
+                EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
+            scope.Start();
+            try
+            {
+                await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+            }
         }
     }
 }

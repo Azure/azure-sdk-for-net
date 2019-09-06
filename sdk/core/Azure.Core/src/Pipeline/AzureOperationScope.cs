@@ -18,7 +18,8 @@ namespace Azure.Core.Pipeline
         {
             _name = name;
             _source = source;
-            _activity = _source.IsEnabled() ? new Activity(_name) : null;
+            _activity = _source.IsEnabled() ? new Activity(_name)  : null;
+            _activity?.SetIdFormat(ActivityIdFormat.W3C);
         }
 
         public bool IsEnabled => _activity != null;
@@ -41,6 +42,18 @@ namespace Azure.Core.Pipeline
             if (_activity != null)
             {
                 AddAttribute(name, format(value));
+            }
+        }
+
+        public void AddLink(string id)
+        {
+            if (_activity != null)
+            {
+                var linkedActivity = new Activity("LinkedActivity");
+                linkedActivity.SetIdFormat(ActivityIdFormat.W3C);
+                linkedActivity.SetParentId(id);
+
+                _source.Write(_activity.OperationName + ".AddLink", linkedActivity);
             }
         }
 
