@@ -11,7 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// An <see cref="Operation{Int64}"/> for tracking the status of a 
-    /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+    /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
     /// request.  Its <see cref="Operation{Int64}.Value"/> upon succesful
     /// completion will be the number of bytes copied.
     /// </summary>
