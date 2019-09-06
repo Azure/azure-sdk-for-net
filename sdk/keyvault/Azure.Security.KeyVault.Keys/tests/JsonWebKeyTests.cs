@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using Azure.Core;
 using NUnit.Framework;
@@ -90,7 +89,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void ToECDsa(string oid, string friendlyName, bool includePrivateParameters)
         {
 #if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net41.");
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
 #else
             using ECDsa ecdsa = ECDsa.Create();
             int bitLength = ecdsa.KeySize;
@@ -111,6 +110,24 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa());
+        }
+
+        [TestCaseSource(nameof(GetECDSaInvalidTestData))]
+        public void ToECDsa_Invalid_Key(string curveName, byte[] x, byte[] y, string name)
+        {
+#if NET461
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#else
+            JsonWebKey jwk = new JsonWebKey
+            {
+                KeyType = KeyType.EllipticCurve,
+                CurveName = curveName,
+                X = x,
+                Y = y,
+            };
+
+            Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa(), "Expected exception not thrown for data named '{0}'", name);
+#endif
         }
 
         [TestCase(false)]
@@ -161,12 +178,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 KeyType = KeyType.Rsa,
                 E = rsaParameters.Exponent,
                 N = rsaParameters.Modulus,
-                D = rsaParameters.D,
-                DP = rsaParameters.DP,
-                DQ = rsaParameters.DQ,
-                P = rsaParameters.P,
-                Q = rsaParameters.Q,
-                QI = rsaParameters.InverseQ,
             };
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToRSA(), "Expected exception not thrown for data named '{0}'", name);
@@ -187,6 +198,35 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 yield return new object[] { oid.Oid, oid.FriendlyName, false };
                 yield return new object[] { oid.Oid, oid.FriendlyName, true };
             }
+        }
+
+        private static IEnumerable<object> GetECDSaInvalidTestData()
+        {
+            const string curveName = "P-256";
+            byte[] x = { 0x34, 0x64, 0xc8, 0x7e, 0x68, 0xc5, 0x62, 0xa6, 0x09, 0xe4, 0x72, 0xd4, 0xd5, 0xa2, 0x75, 0xec, 0x7a, 0x9f, 0x12, 0x73, 0x4a, 0xe1, 0x00, 0x5c, 0x27, 0x40, 0x0d, 0x90, 0x61, 0x4b, 0xe8, 0x58 };
+            byte[] y = { 0xbe, 0x85, 0xa3, 0x9a, 0xc9, 0x8f, 0xa8, 0xf3, 0x18, 0xc8, 0xfc, 0x33, 0x74, 0xff, 0x75, 0x6b, 0x0d, 0xe3, 0xf9, 0x66, 0x52, 0xff, 0x8b, 0x40, 0x61, 0x24, 0xd5, 0x1e, 0x7c, 0xd2, 0x79, 0x14 };
+
+            static byte[] Resize(byte[] buffer)
+            {
+                byte[] result = new byte[buffer.Length + 1];
+                result[0] = 0xff;
+                Array.Copy(buffer, 0, result, 1, buffer.Length);
+
+                return result;
+            }
+
+            yield return new object[] { null, x, y, "nullCurveName" };
+            yield return new object[] { "invalid", x, y, "invalidCurveName" };
+
+            yield return new object[] { curveName, null, y, "nullX" };
+            yield return new object[] { curveName, Array.Empty<byte>(), y, "emptyX" };
+            yield return new object[] { curveName, new byte[x.Length], y, "zeroX" };
+            yield return new object[] { curveName, Resize(x), y, "longerX" };
+
+            yield return new object[] { curveName, x, null, "nullY" };
+            yield return new object[] { curveName, x, Array.Empty<byte>(), "emptyY" };
+            yield return new object[] { curveName, x, new byte[x.Length], "zeroY" };
+            yield return new object[] { curveName, x, Resize(y), "longerY" };
         }
 
         private static IEnumerable<object> GetRSAInvalidKeyData()
