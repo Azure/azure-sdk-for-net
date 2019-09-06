@@ -153,7 +153,7 @@ namespace Azure.Storage.Test.Shared
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType? publicAccessType = default,
+            PublicAccessType? publicAccessType = PublicAccessType.None,
             bool premium = default)
         {
             containerName ??= this.GetNewContainerName();

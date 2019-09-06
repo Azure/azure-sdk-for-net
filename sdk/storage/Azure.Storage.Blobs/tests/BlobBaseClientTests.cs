@@ -619,6 +619,71 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task StartCopyFromUriAsync_RehydratePriority()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var data = this.GetRandomBuffer(Constants.KB);
+                var data2 = this.GetRandomBuffer(Constants.KB);
+                var srcBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await srcBlob.UploadAsync(stream);
+                }
+
+                // destBlob needs to exist so we can get its lease and etag
+                using (var stream = new MemoryStream(data2))
+                {
+                    await destBlob.UploadAsync(stream);
+                }
+
+                // Act
+                var operation = await destBlob.StartCopyFromUriAsync(
+                    srcBlob.Uri,
+                    accessTier: AccessTier.Archive,
+                    rehydratePriority: RehydratePriority.High);
+
+                // Assert
+                // data copied within an account, so copy should be instantaneous
+                if (this.Mode == RecordedTestMode.Playback)
+                {
+                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                }
+                await operation.WaitCompletionAsync();
+                Assert.IsTrue(operation.HasCompleted);
+                Assert.IsTrue(operation.HasValue);
+
+                // Act
+                await destBlob.SetTierAsync(AccessTier.Cool);
+                var propertiesResponse = await destBlob.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual("rehydrate-pending-to-cool", propertiesResponse.Value.ArchiveStatus);
+            }
+        }
+
+        [Test]
+        public async Task StartCopyFromUriAsync_RehydratePriorityFail()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var srcBlob = await this.GetNewBlobClient(container);
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    destBlob.StartCopyFromUriAsync(
+                        srcBlob.Uri,
+                        accessTier: AccessTier.Archive,
+                        rehydratePriority: "None"),
+                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
+            }
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync_AccessTierFail()
         {
             using (this.GetNewContainer(out var container))
@@ -2200,6 +2265,44 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.SetTierAsync(AccessTier.Cool),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task SetTierAsync_Rehydrate()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+
+                // arrange
+                var blob = await this.GetNewBlobClient(container);
+                await blob.SetTierAsync(AccessTier.Archive);
+
+                // Act
+                var setTierResponse = await blob.SetTierAsync(
+                    accessTier: AccessTier.Cool,
+                    rehydratePriority: RehydratePriority.High);
+                var propertiesResponse = await blob.GetPropertiesAsync();
+
+                // Assert
+                Assert.AreEqual("rehydrate-pending-to-cool", propertiesResponse.Value.ArchiveStatus);
+
+            }
+        }
+
+        [Test]
+        public async Task SetTierAsync_RehydrateFail()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+
+                // arrange
+                var blob = await this.GetNewBlobClient(container);
+                await blob.SetTierAsync(AccessTier.Archive);
+
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.SetTierAsync(accessTier: AccessTier.Cool, rehydratePriority: "None"),
+                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
             }
         }
 

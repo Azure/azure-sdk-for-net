@@ -1238,7 +1238,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StartCopyFromUri
         /// <summary>
-        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
         /// returned from the <see cref="GetProperties"/> to determine if the
@@ -1276,6 +1276,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1294,6 +1298,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             BlobAccessConditions? sourceAccessConditions = default,
             BlobAccessConditions? destinationAccessConditions = default,
+            RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default)
         {
             var response = this.StartCopyFromUriInternal(
@@ -1302,6 +1307,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier,
                 sourceAccessConditions,
                 destinationAccessConditions,
+                rehydratePriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1313,7 +1319,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
         /// returned from the <see cref="GetPropertiesAsync"/> to determine if
@@ -1351,6 +1357,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1369,6 +1379,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             BlobAccessConditions? sourceAccessConditions = default,
             BlobAccessConditions? destinationAccessConditions = default,
+            RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default)
         {
             var response = await this.StartCopyFromUriInternal(
@@ -1377,6 +1388,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier,
                 sourceAccessConditions,
                 destinationAccessConditions,
+                rehydratePriority,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1500,6 +1512,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1521,6 +1537,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier,
             BlobAccessConditions? sourceAccessConditions,
             BlobAccessConditions? destinationAccessConditions,
+            RehydratePriority? rehydratePriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1539,6 +1556,7 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         copySource: source,
+                        rehydratePriority: rehydratePriority,
                         tier: accessTier,
                         sourceIfModifiedSince: sourceAccessConditions?.HttpAccessConditions?.IfModifiedSince,
                         sourceIfUnmodifiedSince: sourceAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
@@ -2660,6 +2678,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2674,10 +2696,12 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response SetTier(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
+            RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
             this.SetTierInternal(
                 accessTier,
                 leaseAccessConditions,
+                rehydratePriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2704,6 +2728,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2718,10 +2746,12 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response> SetTierAsync(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
+            RehydratePriority? rehydratePriority = default,
             CancellationToken cancellationToken = default) =>
             await this.SetTierInternal(
                 accessTier,
                 leaseAccessConditions,
+                rehydratePriority,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2748,6 +2778,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
+        /// <param name="rehydratePriority">
+        /// Optional <see cref="RehydratePriority"/>
+        /// Indicates the priority with which to rehydrate an archived blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2765,6 +2799,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response> SetTierInternal(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions,
+            RehydratePriority? rehydratePriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2782,6 +2817,7 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         tier: accessTier,
+                        rehydratePriority: rehydratePriority,
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier",
