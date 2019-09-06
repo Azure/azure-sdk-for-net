@@ -13,11 +13,11 @@ namespace Azure.Storage.Blobs
     static partial class BlobExtensions
     {
         /// <summary>
-        /// Convert an AccessTier into an AccessTierRequired value.
+        /// Convert an AccessTier into an AccessTier value.
         /// </summary>
         /// <param name="tier">The AccessTier.</param>
-        /// <returns>An AccessTierRequired value.</returns>
-        internal static AccessTierRequired ToAccessTierRequired(this AccessTier tier) =>
-            (AccessTierRequired)tier.ToString();
+        /// <returns>An AccessTier value.</returns>
+        internal static AccessTier ToAccessTier(this AccessTier tier) =>
+            (AccessTier)tier.ToString();
     }
 }

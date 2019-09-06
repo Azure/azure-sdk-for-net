@@ -307,25 +307,9 @@ namespace Azure.Storage.Blobs.Test
 
                         var file = new FileInfo(path);
 
-                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
-
-                        await Verify(blob.UploadAsync(
+                        await blob.UploadAsync(
                             file,
-                            parallelTransferOptions: options,
-                            accessTier: AccessTierOptional.Cool));
-
-                        async Task Verify(Task<Response<BlobContentInfo>> upload)
-                        {
-                            using (var stream = new MemoryStream(data))
-                            {
-                                await upload;
-                            }
-
-                            var download = await blob.DownloadAsync();
-                            using var actual = new MemoryStream();
-                            await download.Value.Content.CopyToAsync(actual);
-                            TestHelper.AssertSequenceEqual(data, actual.ToArray());
-                        }
+                            accessTier: AccessTier.Cool);
                     }
                     finally
                     {
@@ -337,7 +321,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 var properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(AccessTierOptional.Cool.ToString(), properties.Value.AccessTier);
+                Assert.AreEqual(AccessTier.Cool.ToString(), properties.Value.AccessTier);
             }
         }
 
@@ -367,8 +351,9 @@ namespace Azure.Storage.Blobs.Test
                             blob.UploadAsync(
                             file,
                             parallelTransferOptions: options,
-                            accessTier: AccessTierOptional.P10),
-                            e => Assert.IsTrue(true));
+                            accessTier: AccessTier.P10),
+                            e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
+
                     }
                     finally
                     {

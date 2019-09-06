@@ -1410,7 +1410,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 var operation = await destinationBlob.StartCopyFromUriAsync(
                     sourceBlob.Uri,
-                    accessTier: AccessTierOptional.P20);
+                    accessTier: AccessTier.P20);
 
                 if (this.Mode == RecordedTestMode.Playback)
                 {
@@ -1421,7 +1421,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsTrue(operation.HasValue);
 
                 var response = await destinationBlob.GetPropertiesAsync();
-                Assert.AreEqual(AccessTierOptional.P20.ToString(), response.Value.AccessTier);
+                Assert.AreEqual(AccessTier.P20.ToString(), response.Value.AccessTier);
             }
         }
 
@@ -1432,7 +1432,6 @@ namespace Azure.Storage.Blobs.Test
             using (this.GetNewContainer(out var container, service: premiumService, premium: true))
             {
                 // Arrange
-                //await container.SetAccessPolicyAsync(PublicAccessType.Container);
                 var data = this.GetRandomBuffer(Constants.KB);
                 var expectedData = new byte[4 * Constants.KB];
                 data.CopyTo(expectedData, 0);
@@ -1457,8 +1456,8 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     destinationBlob.StartCopyFromUriAsync(
                     sourceBlob.Uri,
-                    accessTier: AccessTierOptional.Cool),
-                    e => Assert.IsTrue(true));
+                    accessTier: AccessTier.Cool),
+                    e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
             }
         }
 
@@ -1476,7 +1475,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 var responseProperties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(AccessTierOptional.P20.ToString(), responseProperties.Value.AccessTier);
+                Assert.AreEqual(AccessTier.P20.ToString(), responseProperties.Value.AccessTier);
             }
         }
 
@@ -1492,7 +1491,7 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.SetTierAsync(AccessTier.Cool),
-                    e => Assert.IsTrue(true));
+                    e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
             }
         }
 

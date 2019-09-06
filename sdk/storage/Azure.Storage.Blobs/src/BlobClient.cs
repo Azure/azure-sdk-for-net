@@ -439,7 +439,7 @@ namespace Azure.Storage.Blobs
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTierOptional?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -474,7 +474,7 @@ namespace Azure.Storage.Blobs
         /// progress updates about data transfers.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="parallelTransferOptions">
@@ -501,7 +501,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
-            AccessTierOptional? accessTier = default,
+            AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
             this.StagedUploadAsync(
@@ -518,7 +518,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Upload(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTierOptional?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -553,7 +553,7 @@ namespace Azure.Storage.Blobs
         /// progress updates about data transfers.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="parallelTransferOptions">
@@ -580,7 +580,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
-            AccessTierOptional? accessTier = default,
+            AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
             this.StagedUploadAsync(
@@ -597,7 +597,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTierOptional?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -636,7 +636,7 @@ namespace Azure.Storage.Blobs
         /// progress updates about data transfers.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="cancellationToken">
@@ -659,7 +659,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
-            AccessTierOptional? accessTier = default,
+            AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
             this.StagedUploadAsync(
@@ -675,7 +675,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTierOptional?, ParallelTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(FileInfo, BlobHttpHeaders?, Metadata, BlobAccessConditions?, CustomerProvidedKey?, IProgress{StorageProgress}, AccessTier?, ParallelTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -710,7 +710,7 @@ namespace Azure.Storage.Blobs
         /// progress updates about data transfers.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="parallelTransferOptions">
@@ -737,7 +737,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
-            AccessTierOptional? accessTier = default,
+            AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
             this.StagedUploadAsync(
@@ -781,7 +781,7 @@ namespace Azure.Storage.Blobs
         /// progress updates about data transfers.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="singleBlockThreshold">
@@ -813,7 +813,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions,
             CustomerProvidedKey? customerProvidedKey,
             IProgress<StorageProgress> progressHandler,
-            AccessTierOptional? accessTier = default,
+            AccessTier? accessTier = default,
             long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
             ParallelTransferOptions parallelTransferOptions = default,
             bool async = true,
@@ -958,7 +958,7 @@ namespace Azure.Storage.Blobs
         /// progress updates about data transfers.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="singleBlockThreshold">
@@ -990,7 +990,7 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions,
             CustomerProvidedKey? customerProvidedKey,
             IProgress<StorageProgress> progressHandler,
-            AccessTierOptional? accessTier = default,
+            AccessTier? accessTier = default,
             long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
             ParallelTransferOptions parallelTransferOptions = default,
             bool async = true,

@@ -1238,7 +1238,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StartCopyFromUri
         /// <summary>
-        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTierOptional?, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
         /// returned from the <see cref="GetProperties"/> to determine if the
@@ -1265,7 +1265,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional custom metadata to set for this blob.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="sourceAccessConditions">
@@ -1291,7 +1291,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Operation<long> StartCopyFromUri(
             Uri source,
             Metadata metadata = default,
-            AccessTierOptional? accessTier = default,
+            AccessTier? accessTier = default,
             BlobAccessConditions? sourceAccessConditions = default,
             BlobAccessConditions? destinationAccessConditions = default,
             CancellationToken cancellationToken = default)
@@ -1313,7 +1313,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTierOptional?, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
+        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
         /// returned from the <see cref="GetPropertiesAsync"/> to determine if
@@ -1340,7 +1340,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional custom metadata to set for this blob.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="sourceAccessConditions">
@@ -1366,7 +1366,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Operation<long>> StartCopyFromUriAsync(
             Uri source,
             Metadata metadata = default,
-            AccessTierOptional? accessTier = default,
+            AccessTier? accessTier = default,
             BlobAccessConditions? sourceAccessConditions = default,
             BlobAccessConditions? destinationAccessConditions = default,
             CancellationToken cancellationToken = default)
@@ -1489,7 +1489,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional custom metadata to set for this blob.
         /// </param>
         /// <param name="accessTier">
-        /// Optional <see cref="AccessTierOptional"/>
+        /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
         /// <param name="sourceAccessConditions">
@@ -1518,7 +1518,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobCopyInfo>> StartCopyFromUriInternal(
             Uri source,
             Metadata metadata,
-            AccessTierOptional? accessTier,
+            AccessTier? accessTier,
             BlobAccessConditions? sourceAccessConditions,
             BlobAccessConditions? destinationAccessConditions,
             bool async,
@@ -2781,7 +2781,7 @@ namespace Azure.Storage.Blobs.Specialized
                     return await BlobRestClient.Blob.SetTierAsync(
                         this.Pipeline,
                         this.Uri,
-                        tier: accessTier.ToAccessTierRequired(),
+                        tier: accessTier.ToAccessTier(),
                         leaseId: leaseAccessConditions?.LeaseId,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier",

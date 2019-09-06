@@ -928,7 +928,7 @@ namespace Azure.Storage.Blobs.Test
                     this.ToBase64(secondBlockName)
                 };
 
-                await blob.CommitBlockListAsync(commitList, accessTier: AccessTierOptional.Cool);
+                await blob.CommitBlockListAsync(commitList, accessTier: AccessTier.Cool);
 
                 // Stage 3rd Block
                 using (var stream = new MemoryStream(data))
@@ -945,7 +945,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(this.ToBase64(thirdBlockName), blobList.Value.UncommittedBlocks.First().Name);
 
                 var response = await blob.GetPropertiesAsync();
-                Assert.AreEqual(AccessTierOptional.Cool.ToString(), response.Value.AccessTier);
+                Assert.AreEqual(AccessTier.Cool.ToString(), response.Value.AccessTier);
             }
         }
 
@@ -959,7 +959,6 @@ namespace Azure.Storage.Blobs.Test
                 var data = this.GetRandomBuffer(Size);
                 var firstBlockName = this.GetNewBlockName();
                 var secondBlockName = this.GetNewBlockName();
-                var thirdBlockName = this.GetNewBlockName();
 
                 // Act
                 // Stage blocks
@@ -980,8 +979,8 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.CommitBlockListAsync(commitList, accessTier:AccessTierOptional.P10),
-                    e => Assert.IsTrue(true));
+                    blob.CommitBlockListAsync(commitList, accessTier:AccessTier.P10),
+                    e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
             }
         }
 

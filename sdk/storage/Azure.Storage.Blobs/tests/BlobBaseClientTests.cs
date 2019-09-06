@@ -588,7 +588,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 var operation = await destBlob.StartCopyFromUriAsync(
                     srcBlob.Uri,
-                    accessTier:AccessTierOptional.Cool);
+                    accessTier:AccessTier.Cool);
 
                 // Assert
                 // data copied within an account, so copy should be instantaneous
@@ -631,8 +631,8 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     destBlob.StartCopyFromUriAsync(
                     srcBlob.Uri,
-                    accessTier: AccessTierOptional.P20),
-                    e => Assert.IsTrue(true));
+                    accessTier: AccessTier.P20),
+                    e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
             }
         }
 
