@@ -100,30 +100,26 @@ namespace Azure.Messaging.EventHubs
         public string PartitionKey { get; }
 
         /// <summary>
-        ///   The sequence number that was last enqueued into the Event Hub partition from which this
+        ///   The sequence number of the event that was last enqueued into the Event Hub partition from which this
         ///   event was received.
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service and when
-        ///   partition metrics have been requested.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
-        ///
-        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
         ///
         protected internal long? LastPartitionSequenceNumber { get; }
 
         /// <summary>
-        ///   The offset that was last enqueued into the Event Hub partition from which this event was
+        ///   The offset of the event that was last enqueued into the Event Hub partition from which this event was
         ///   received.
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service and when
-        ///   partition metrics have been requested.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
-        ///
-        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
         ///
         protected internal long? LastPartitionOffset { get; }
 
@@ -133,11 +129,9 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service and when
-        ///   partition metrics have been requested.
+        ///   This property is only populated for events received using an <see cref="EventHubConsumer" /> which was created when
+        ///   <see cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" /> is enabled.
         /// </remarks>
-        ///
-        /// <seealso cref="EventHubConsumerOptions.TrackLastEnqueuedEventInformation" />
         ///
         protected internal DateTimeOffset? LastPartitionEnqueuedTime { get; }
 
