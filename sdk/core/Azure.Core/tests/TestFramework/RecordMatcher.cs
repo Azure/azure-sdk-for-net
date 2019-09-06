@@ -26,7 +26,8 @@ namespace Azure.Core.Testing
             "x-ms-date",
             "x-ms-client-request-id",
             "User-Agent",
-            "Request-Id"
+            "Request-Id",
+            "traceparent"
         };
 
         // Headers that don't indicate meaningful changes between updated recordings
