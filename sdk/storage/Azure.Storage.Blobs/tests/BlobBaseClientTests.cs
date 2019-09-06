@@ -577,6 +577,32 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task StartCopyFromUriAsync_AccessTier()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var srcBlob = await this.GetNewBlobClient(container);
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+
+                // Act
+                var operation = await destBlob.StartCopyFromUriAsync(
+                    srcBlob.Uri,
+                    accessTier:AccessTier.Cool);
+
+                // Assert
+                // data copied within an account, so copy should be instantaneous
+                if (this.Mode == RecordedTestMode.Playback)
+                {
+                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                }
+                await operation.WaitCompletionAsync();
+                Assert.IsTrue(operation.HasCompleted);
+                Assert.IsTrue(operation.HasValue);
+            }
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync_Error()
         {
             using (this.GetNewContainer(out var container))
@@ -589,6 +615,24 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     destBlob.StartCopyFromUriAsync(srcBlob.Uri),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task StartCopyFromUriAsync_AccessTierFail()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var srcBlob = await this.GetNewBlobClient(container);
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    destBlob.StartCopyFromUriAsync(
+                    srcBlob.Uri,
+                    accessTier: AccessTier.P20),
+                    e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
             }
         }
 

@@ -6336,7 +6336,7 @@ namespace Azure.Storage.Blobs
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -6424,7 +6424,7 @@ namespace Azure.Storage.Blobs
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -6565,7 +6565,7 @@ namespace Azure.Storage.Blobs
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
                 Azure.Core.Http.ETag? sourceIfMatch = default,
@@ -6650,7 +6650,7 @@ namespace Azure.Storage.Blobs
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
                 Azure.Core.Http.ETag? sourceIfMatch = default,
@@ -6911,7 +6911,7 @@ namespace Azure.Storage.Blobs
             public static async System.Threading.Tasks.Task<Azure.Response> SetTierAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Blobs.Models.AccessTierRequired tier,
+                Azure.Storage.Blobs.Models.AccessTier tier,
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 string requestId = default,
@@ -6969,7 +6969,7 @@ namespace Azure.Storage.Blobs
             internal static Azure.Core.Http.Request SetTierAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Blobs.Models.AccessTierRequired tier,
+                Azure.Storage.Blobs.Models.AccessTier tier,
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 string requestId = default,
@@ -9919,7 +9919,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -10022,7 +10022,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -10648,7 +10648,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -10754,7 +10754,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -12185,7 +12185,7 @@ namespace Azure.Storage.Blobs.Models
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// AccessTier values
+    /// Indicates the tier to be set on the blob.
     /// </summary>
     public partial struct AccessTier : System.IEquatable<AccessTier>
     {
@@ -12332,310 +12332,6 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion enum strings AccessTier
-
-#region enum strings AccessTierOptional
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Optional. Indicates the tier to be set on the blob.
-    /// </summary>
-    public partial struct AccessTierOptional : System.IEquatable<AccessTierOptional>
-    {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// P4
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P4 = @"P4";
-
-        /// <summary>
-        /// P6
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P6 = @"P6";
-
-        /// <summary>
-        /// P10
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P10 = @"P10";
-
-        /// <summary>
-        /// P15
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P15 = @"P15";
-
-        /// <summary>
-        /// P20
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P20 = @"P20";
-
-        /// <summary>
-        /// P30
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P30 = @"P30";
-
-        /// <summary>
-        /// P40
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P40 = @"P40";
-
-        /// <summary>
-        /// P50
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P50 = @"P50";
-
-        /// <summary>
-        /// P60
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P60 = @"P60";
-
-        /// <summary>
-        /// P70
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P70 = @"P70";
-
-        /// <summary>
-        /// P80
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P80 = @"P80";
-
-        /// <summary>
-        /// Hot
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional Hot = @"Hot";
-
-        /// <summary>
-        /// Cool
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional Cool = @"Cool";
-
-        /// <summary>
-        /// Archive
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional Archive = @"Archive";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The AccessTierOptional value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new AccessTierOptional instance.
-        /// </summary>
-        /// <param name="value">The AccessTierOptional value.</param>
-        private AccessTierOptional(string value) { this._value = value; }
-
-        /// <summary>
-        /// Check if two AccessTierOptional instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.AccessTierOptional other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two AccessTierOptional instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.AccessTierOptional other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the AccessTierOptional.
-        /// </summary>
-        /// <returns>Hash code for the AccessTierOptional.</returns>
-        public override int GetHashCode() => this._value.GetHashCode();
-
-        /// <summary>
-        /// Convert the AccessTierOptional to a string.
-        /// </summary>
-        /// <returns>String representation of the AccessTierOptional.</returns>
-        public override string ToString() => this._value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a AccessTierOptional.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The AccessTierOptional value.</returns>
-        public static implicit operator AccessTierOptional(string value) => new Azure.Storage.Blobs.Models.AccessTierOptional(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an AccessTierOptional to a string.
-        /// </summary>
-        /// <param name="o">The AccessTierOptional value.</param>
-        /// <returns>String representation of the AccessTierOptional value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTierOptional o) => o._value;
-
-        /// <summary>
-        /// Check if two AccessTierOptional instances are equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTierOptional a, Azure.Storage.Blobs.Models.AccessTierOptional b) => a.Equals(b);
-
-        /// <summary>
-        /// Check if two AccessTierOptional instances are not equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.AccessTierOptional a, Azure.Storage.Blobs.Models.AccessTierOptional b) => !a.Equals(b);
-    }
-}
-#endregion enum strings AccessTierOptional
-
-#region enum strings AccessTierRequired
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Indicates the tier to be set on the blob.
-    /// </summary>
-    public partial struct AccessTierRequired : System.IEquatable<AccessTierRequired>
-    {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// P4
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P4 = @"P4";
-
-        /// <summary>
-        /// P6
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P6 = @"P6";
-
-        /// <summary>
-        /// P10
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P10 = @"P10";
-
-        /// <summary>
-        /// P15
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P15 = @"P15";
-
-        /// <summary>
-        /// P20
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P20 = @"P20";
-
-        /// <summary>
-        /// P30
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P30 = @"P30";
-
-        /// <summary>
-        /// P40
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P40 = @"P40";
-
-        /// <summary>
-        /// P50
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P50 = @"P50";
-
-        /// <summary>
-        /// P60
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P60 = @"P60";
-
-        /// <summary>
-        /// P70
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P70 = @"P70";
-
-        /// <summary>
-        /// P80
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P80 = @"P80";
-
-        /// <summary>
-        /// Hot
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired Hot = @"Hot";
-
-        /// <summary>
-        /// Cool
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired Cool = @"Cool";
-
-        /// <summary>
-        /// Archive
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired Archive = @"Archive";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The AccessTierRequired value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new AccessTierRequired instance.
-        /// </summary>
-        /// <param name="value">The AccessTierRequired value.</param>
-        private AccessTierRequired(string value) { this._value = value; }
-
-        /// <summary>
-        /// Check if two AccessTierRequired instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.AccessTierRequired other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two AccessTierRequired instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.AccessTierRequired other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the AccessTierRequired.
-        /// </summary>
-        /// <returns>Hash code for the AccessTierRequired.</returns>
-        public override int GetHashCode() => this._value.GetHashCode();
-
-        /// <summary>
-        /// Convert the AccessTierRequired to a string.
-        /// </summary>
-        /// <returns>String representation of the AccessTierRequired.</returns>
-        public override string ToString() => this._value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a AccessTierRequired.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The AccessTierRequired value.</returns>
-        public static implicit operator AccessTierRequired(string value) => new Azure.Storage.Blobs.Models.AccessTierRequired(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an AccessTierRequired to a string.
-        /// </summary>
-        /// <param name="o">The AccessTierRequired value.</param>
-        /// <returns>String representation of the AccessTierRequired value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTierRequired o) => o._value;
-
-        /// <summary>
-        /// Check if two AccessTierRequired instances are equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTierRequired a, Azure.Storage.Blobs.Models.AccessTierRequired b) => a.Equals(b);
-
-        /// <summary>
-        /// Check if two AccessTierRequired instances are not equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.AccessTierRequired a, Azure.Storage.Blobs.Models.AccessTierRequired b) => !a.Equals(b);
-    }
-}
-#endregion enum strings AccessTierRequired
 
 #region class AccountInfo
 namespace Azure.Storage.Blobs.Models
