@@ -60,12 +60,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="offset">The offset of the <see cref="EventData" /> this checkpoint is associated with.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the <see cref="EventData" /> this checkpoint is associated with.</param>
         ///
-        internal Checkpoint(string eventHubName,
-                            string consumerGroup,
-                            string ownerIdentifier,
-                            string partitionId,
-                            long offset,
-                            long sequenceNumber)
+        protected internal Checkpoint(string eventHubName,
+                                      string consumerGroup,
+                                      string ownerIdentifier,
+                                      string partitionId,
+                                      long offset,
+                                      long sequenceNumber)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
             Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
