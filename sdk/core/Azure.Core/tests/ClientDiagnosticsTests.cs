@@ -38,9 +38,52 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
+            Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));
+        }
+
+        [Test]
+        public void AddLinkCallsAddLinkWithActivity()
+        {
+
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            scope.AddAttribute("Attribute1", "Value1");
+            scope.AddAttribute("Attribute2", 2, i => i.ToString());
+
+            scope.Start();
+
+            KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
+
+            Activity activity = Activity.Current;
+
+            var exception = new Exception();
+            scope.AddLink("id");
+            scope.Dispose();
+
+            KeyValuePair<string, object> addLinkEvent = testListener.Events.Dequeue();
+            KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
+
+
+            Assert.Null(Activity.Current);
+            Assert.AreEqual("ActivityName.Start", startEvent.Key);
+            Assert.AreEqual("ActivityName.AddLink", addLinkEvent.Key);
+            Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
+            Assert.IsInstanceOf<Activity>(addLinkEvent.Value);
+
+            var linkedActivity = (Activity)addLinkEvent.Value;
+
+            Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity.IdFormat);
+            Assert.AreEqual("id", linkedActivity.ParentId);
+            Assert.AreEqual(0, testListener.Events.Count);
+
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
         }
 
         [Test]
@@ -63,7 +106,7 @@ namespace Azure.Core.Tests
             var exception = new Exception();
             scope.Failed(exception);
             scope.Dispose();
-            
+
             KeyValuePair<string, object> exceptionEvent = testListener.Events.Dequeue();
             KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
 
