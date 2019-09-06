@@ -282,10 +282,29 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 Stopwatch cycleDuration = Stopwatch.StartNew();
 
-                // Renew this instance's ownership so they don't expire.  This method call will fill the InstanceOwnership dictionary
-                // with the renewed ownership information.
+                // Renew this instance's ownership so they don't expire.
 
                 await RenewOwnershipAsync().ConfigureAwait(false);
+
+                // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
+                // their eTags to claim orphan partitions.
+
+                var completeOwnershipList = (await Manager
+                    .ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup)
+                    .ConfigureAwait(false))
+                    .ToList();
+
+                // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
+                // but it may be overriden by a derived class.
+
+                var activeOwnership = completeOwnershipList
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
+
+                // Dispose of all previous partition ownership instances and get a whole new dictionary.
+
+                InstanceOwnership = activeOwnership
+                    .Where(ownership => ownership.OwnerIdentifier == Identifier)
+                    .ToDictionary(ownership => ownership.PartitionId);
 
                 // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
                 // the pumps we don't need anymore.
@@ -315,7 +334,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
                 // increase its ownership list, if no claimable ownership could be found or if a claim attempt failed.
 
-                var claimedOwnership = await FindAndClaimOwnershipAsync().ConfigureAwait(false);
+                var claimedOwnership = await FindAndClaimOwnershipAsync(completeOwnershipList, activeOwnership).ConfigureAwait(false);
 
                 if (claimedOwnership != null)
                 {
@@ -344,28 +363,18 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   list.
         /// </summary>
         ///
+        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
+        /// <param name="activeOwnership">The set of ownership that are still active.</param>
+        ///
         /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
         ///
-        private async Task<PartitionOwnership> FindAndClaimOwnershipAsync()
+        private async Task<PartitionOwnership> FindAndClaimOwnershipAsync(IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
+                                                                          IEnumerable<PartitionOwnership> activeOwnership)
         {
             // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
             // it may change in the future.
 
             var partitionIds = await InnerClient.GetPartitionIdsAsync().ConfigureAwait(false);
-
-            // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
-            // their eTags to claim orphan partitions.
-
-            var completeOwnershipList = (await Manager
-                .ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup)
-                .ConfigureAwait(false))
-                .ToList();
-
-            // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
-            // but it may be overriden by a derived class.
-
-            var activeOwnership = completeOwnershipList
-                .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
 
             // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
             // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
@@ -419,7 +428,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count());
 
-                    return await ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipList).ConfigureAwait(false);
+                    return await ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
                 }
 
                 // Only try to steal partitions if there are no unclaimed partitions left.  At first, only processors that have exceeded the
@@ -448,7 +457,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count());
 
-                    return await ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipList).ConfigureAwait(false);
+                    return await ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
                 }
             }
 
@@ -564,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task RenewOwnershipAsync()
+        private Task RenewOwnershipAsync()
         {
             var ownershipToRenew = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership
@@ -579,12 +588,11 @@ namespace Azure.Messaging.EventHubs.Processor
                     ownership.ETag
                 ));
 
-            // Dispose of all previous partition ownership instances and get a whole new dictionary.
+            // We cannot rely on the ownership returned by ClaimOwnershipAsync to update our InstanceOwnership dictionary.
+            // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
+            // will fail in claiming it here, but this instance still owns it.
 
-            InstanceOwnership = (await Manager
-                .ClaimOwnershipAsync(ownershipToRenew)
-                .ConfigureAwait(false))
-                .ToDictionary(ownership => ownership.PartitionId);
+            return Manager.ClaimOwnershipAsync(ownershipToRenew);
         }
     }
 }
