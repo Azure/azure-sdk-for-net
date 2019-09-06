@@ -293,6 +293,10 @@ namespace Azure.Storage
                     "Azure.Storage.Files.ShareClient.SetAccessPolicy";
                 public const string GetStatisticsOperationName =
                     "Azure.Storage.Files.ShareClient.GetStatistics";
+                public const string GetPermissionOperationName =
+                    "Azure.Storage.Files.ShareClient.GetPermission";
+                public const string CreatePermissionOperationName =
+                    "Azure.Storage.Files.ShareClient.CreatePermission";
             }
         }
 
