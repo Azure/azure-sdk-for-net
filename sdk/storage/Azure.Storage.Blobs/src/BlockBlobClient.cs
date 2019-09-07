@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
         {
             var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new BlockBlobClient(builder.ToUri(), this.Pipeline);
+            return new BlockBlobClient(builder.Uri, this.Pipeline);
         }
 
         ///// <summary>
