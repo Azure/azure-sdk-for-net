@@ -4,7 +4,7 @@
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   The reason for closing an <see cref="IPartitionProcessor" />.
+    ///   The reason for closing a partition processor.
     /// </summary>
     ///
     public enum PartitionProcessorCloseReason
@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>A non-retriable exception was thrown by the Event Hub Client.</summary>
         EventHubException,
 
-        /// <summary>A non-retriable exception was thrown by the provided Partition Processor.</summary>
+        /// <summary>A non-retriable exception was thrown by the provided partition processor.</summary>
         PartitionProcessorException
     }
 }

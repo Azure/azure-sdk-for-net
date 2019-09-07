@@ -965,14 +965,14 @@ namespace Azure.Messaging.EventHubs.Tests
             public bool WasCloseAsyncCalled = false;
 
             public ObservableOperationsMock(string connectionString,
-                                       EventHubClientOptions clientOptions = default) : base(connectionString, clientOptions)
+                                            EventHubClientOptions clientOptions = default) : base(connectionString, clientOptions)
             {
             }
 
             public ObservableOperationsMock(string host,
-                                       string eventHubName,
-                                       TokenCredential credential,
-                                       EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
+                                            string eventHubName,
+                                            TokenCredential credential,
+                                            EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
             }
 

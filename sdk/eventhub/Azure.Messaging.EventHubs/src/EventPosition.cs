@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs
         internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
-        ///   The sequence number of the event identified by this position;
+        ///   The sequence number of the event identified by this position.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>

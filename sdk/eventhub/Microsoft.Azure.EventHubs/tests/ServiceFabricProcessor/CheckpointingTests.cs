@@ -11,7 +11,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
     public class CheckpointingTests
     {
-        [Fact]
+        [Fact(Skip = "Test is unstable during nightly runs.  Tracking with #7435")]
         [DisplayTestMethodName]
         public void CheckpointBatchTest()
         {
