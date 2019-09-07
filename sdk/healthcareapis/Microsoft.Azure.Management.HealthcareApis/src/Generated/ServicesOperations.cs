@@ -82,6 +82,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse<ServicesDescription>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -361,6 +365,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse<IPage<ServicesDescription>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -533,6 +541,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse<IPage<ServicesDescription>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -727,6 +739,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse<ServicesNameAvailabilityInfo>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityParameters checkNameAvailabilityInputs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -920,6 +936,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse<ServicesDescription>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, ServicesDescription serviceDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1169,6 +1189,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse<ServicesDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, ServicesPatchDescription servicePatchDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1390,6 +1414,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
