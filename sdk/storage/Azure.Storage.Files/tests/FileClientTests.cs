@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Http;
 using Azure.Core.Testing;
@@ -845,6 +845,54 @@ namespace Azure.Storage.Files.Test
                         content: stream),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
                 }
+            }
+        }
+
+        [Test]
+        [TestCase(512)]
+        [TestCase(1 * Constants.KB)]
+        [TestCase(2 * Constants.KB)]
+        [TestCase(4 * Constants.KB)]
+        [TestCase(10 * Constants.KB)]
+        [TestCase(20 * Constants.KB)]
+        [TestCase(30 * Constants.KB)]
+        [TestCase(50 * Constants.KB)]
+        [TestCase(501 * Constants.KB)]
+        public async Task UploadAsync_SmallBlobs(int size) =>
+            // Use a 1KB threshold so we get a lot of individual blocks
+            await this.UploadAndVerify(size, Constants.KB);
+
+        [Test]
+        [LiveOnly]
+        [TestCase(33 * Constants.MB)]
+        [TestCase(257 * Constants.MB)]
+        [TestCase(1 * Constants.GB)]
+        public async Task UploadAsync_LargeBlobs(int size) =>
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            await this.UploadAndVerify(size, Constants.MB);
+
+        private async Task UploadAndVerify(long size, int singleRangeThreshold)
+        {
+            var data = this.GetRandomBuffer(size);
+            using (this.GetNewShare(out var share))
+            {
+                var name = this.GetNewFileName();
+                var file = this.InstrumentClient(share.GetRootDirectoryClient().GetFileClient(name));
+                await file.CreateAsync(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.UploadInternal(
+                        content: stream,
+                        progressHandler: default,
+                        singleRangeThreshold: singleRangeThreshold,
+                        async: true,
+                        cancellationToken: CancellationToken.None);
+                }
+
+                using var bufferedContent = new MemoryStream();
+                var download = await file.DownloadAsync();
+                await download.Value.Content.CopyToAsync(bufferedContent);
+                TestHelper.AssertSequenceEqual(data, bufferedContent.ToArray());
             }
         }
 
