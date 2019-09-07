@@ -21,9 +21,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void CreateKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(null, KeyType.EllipticCurve));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(null, JsonWebKeyType.EllipticCurve));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateKeyAsync("name", default));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync("", KeyType.EllipticCurve));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync("", JsonWebKeyType.EllipticCurve));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateEcKeyAsync(null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateRsaKeyAsync(null));
         }
@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void UpdateKeyArgumentValidation()
         {
-            var keyOperations = new List<KeyOperations>() { KeyOperations.Sign };
+            var keyOperations = new List<JsonWebKeyOperations>() { JsonWebKeyOperations.Sign };
             var key = new KeyBase("name");
 
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, null));

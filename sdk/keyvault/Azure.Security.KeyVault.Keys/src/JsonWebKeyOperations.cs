@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys
     /// Supported JsonWebKey cryptographic operations that may be performed on a key.
     /// </summary>
     [Flags]
-    public enum KeyOperations : uint
+    public enum JsonWebKeyOperations : uint
     {
         /// <summary>
         /// A key stored in Key Vault may be used to protect another key, 
@@ -48,12 +48,12 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         Verify = 0x0008,
         /// <summary>
-        /// The Wrap operation is supported as a convenience for
+        /// The WrapWrapKey operation is supported as a convenience for
         /// applications that may not have access to [public] key material. 
         /// For best application performance, wrap key operations should be performed locally.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#key-operations"/>.
         /// </summary>
-        Wrap = 0x0010,
+        WrapKey = 0x0010,
         /// <summary>
         /// Unwraps a symmetric key using the specified key that was initially used
         /// for wrapping that key. The unwrap operation supports decryption of a 
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation is the reverse of the WRAP operation.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#key-operations"/>.
         /// </summary>
-        Unwrap = 0x0020,
+        UnwrapKey = 0x0020,
         /// <summary>
         /// Other type of Key Operation
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#key-operations"/>.
@@ -76,35 +76,35 @@ namespace Azure.Security.KeyVault.Keys
 
     internal static class KeyOperationsExtensions
     {
-        internal static KeyOperations ParseFromString(string value)
+        internal static JsonWebKeyOperations Parse(string value)
         {
             switch (value)
             {
-                case "encrypt": return KeyOperations.Encrypt;
-                case "decrypt": return KeyOperations.Decrypt;
-                case "sign": return KeyOperations.Sign;
-                case "verify": return KeyOperations.Verify;
-                case "wrapKey": return KeyOperations.Wrap;
-                case "unwrapKey": return KeyOperations.Unwrap;
-                default: return KeyOperations.Other;
+                case "encrypt": return JsonWebKeyOperations.Encrypt;
+                case "decrypt": return JsonWebKeyOperations.Decrypt;
+                case "sign": return JsonWebKeyOperations.Sign;
+                case "verify": return JsonWebKeyOperations.Verify;
+                case "wrapKey": return JsonWebKeyOperations.WrapKey;
+                case "unwrapKey": return JsonWebKeyOperations.UnwrapKey;
+                default: return JsonWebKeyOperations.Other;
             }
         }
 
-        internal static string AsString(KeyOperations keyType)
+        internal static string AsString(JsonWebKeyOperations keyType)
         {
             switch (keyType)
             {
-                case KeyOperations.Encrypt:
+                case JsonWebKeyOperations.Encrypt:
                     return "encrypt";
-                case KeyOperations.Decrypt:
+                case JsonWebKeyOperations.Decrypt:
                     return "decrypt";
-                case KeyOperations.Sign:
+                case JsonWebKeyOperations.Sign:
                     return "sign";
-                case KeyOperations.Verify:
+                case JsonWebKeyOperations.Verify:
                     return "verify";
-                case KeyOperations.Wrap:
+                case JsonWebKeyOperations.WrapKey:
                     return "wrapKey";
-                case KeyOperations.Unwrap:
+                case JsonWebKeyOperations.UnwrapKey:
                     return "unwrapKey";
                 default:
                     return string.Empty;

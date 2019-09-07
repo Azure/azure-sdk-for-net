@@ -17,6 +17,12 @@ namespace Azure.Security.KeyVault.Keys
     /// </summary>
     public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
+        private static readonly JsonWebKeyOperations[] AesKeyOperations = { JsonWebKeyOperations.Encrypt, JsonWebKeyOperations.Decrypt, JsonWebKeyOperations.WrapKey, JsonWebKeyOperations.UnwrapKey };
+        private static readonly JsonWebKeyOperations[] RSAPublicKeyOperations = { JsonWebKeyOperations.Encrypt, JsonWebKeyOperations.Verify, JsonWebKeyOperations.WrapKey };
+        private static readonly JsonWebKeyOperations[] RSAPrivateKeyOperations = { JsonWebKeyOperations.Encrypt, JsonWebKeyOperations.Decrypt, JsonWebKeyOperations.Sign, JsonWebKeyOperations.Verify, JsonWebKeyOperations.WrapKey, JsonWebKeyOperations.UnwrapKey };
+        private static readonly JsonWebKeyOperations[] ECPublicKeyOperations = { JsonWebKeyOperations.Sign };
+        private static readonly JsonWebKeyOperations[] ECPrivateKeyOperations = { JsonWebKeyOperations.Sign, JsonWebKeyOperations.Verify };
+
         /// <summary>
         /// The identifier of the key.
         /// </summary>
@@ -26,42 +32,44 @@ namespace Azure.Security.KeyVault.Keys
         /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
         /// For valid values, see <see cref="KeyType"/>.
         /// </summary>
-        public KeyType KeyType { get; set; }
+        public JsonWebKeyType KeyType { get; set; }
 
         /// <summary>
-        /// Supported Key Operations
+        /// Supported Key Operations.
         /// </summary>
-        public IList<KeyOperations> KeyOps { get; set; }
+        public IList<JsonWebKeyOperations> KeyOps { get; set; }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/>
+        /// Creates an instance of <see cref="JsonWebKey"/>.
         /// </summary>
         public JsonWebKey()
         {
-            KeyOps = new List<KeyOperations>();
+            KeyOps = new List<JsonWebKeyOperations>();
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Octet"/>.
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="JsonWebKeyType.Octet"/>.
         /// </summary>
         /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
-        public JsonWebKey(Aes aesProvider) : this()
+        public JsonWebKey(Aes aesProvider)
         {
             if (aesProvider is null) throw new ArgumentNullException(nameof(aesProvider));
 
-            KeyType = KeyType.Octet;
+            KeyType = JsonWebKeyType.Octet;
+            KeyOps = new List<JsonWebKeyOperations>(AesKeyOperations);
+
             K = aesProvider.Key;
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.EllipticCurve"/>.
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="JsonWebKeyType.EllipticCurve"/>.
         /// </summary>
         /// <param name="ecdsa">An <see cref="ECDsa"/> provider.</param>
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
         /// <exception cref="ArgumentNullException"><paramref name="ecdsa"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
-        public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default) : this()
+        public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default)
         {
             if (ecdsa is null) throw new ArgumentNullException(nameof(ecdsa));
 
@@ -69,19 +77,22 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Rsa"/>.
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="JsonWebKeyType.Rsa"/>.
         /// </summary>
         /// <param name="rsaProvider">An <see cref="RSA"/> provider.</param>
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
         /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
         public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default)
-            : this(rsaProvider?.ExportParameters(includePrivateParameters) ?? throw new ArgumentNullException(nameof(rsaProvider)))
         {
-        }
+            if (rsaProvider is null)
+            {
+                throw new ArgumentNullException(nameof(rsaProvider));
+            }
 
-        private JsonWebKey(RSAParameters rsaParameters) : this()
-        {
-            KeyType = KeyType.Rsa;
+            KeyType = JsonWebKeyType.Rsa;
+            KeyOps = new List<JsonWebKeyOperations>(includePrivateParameters ? RSAPrivateKeyOperations : RSAPublicKeyOperations);
+
+            RSAParameters rsaParameters = rsaProvider.ExportParameters(includePrivateParameters);
 
             E = rsaParameters.Exponent;
             N = rsaParameters.Modulus;
@@ -140,7 +151,7 @@ namespace Azure.Security.KeyVault.Keys
         #region EC Public Key Parameters
 
         /// <summary>
-        /// The curve for Elliptic Curve Cryptography (ECC) algorithms
+        /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
         /// </summary>
         public string CurveName { get; set; }
 
@@ -175,18 +186,18 @@ namespace Azure.Security.KeyVault.Keys
         #endregion
 
         /// <summary>
-        /// HSM Token, used with "Bring Your Own Key"
+        /// HSM Token, used with "Bring Your Own Key".
         /// </summary>
         public byte[] T { get; set; }
 
         /// <summary>
-        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Octet"/> to an <see cref="Aes"/> object.
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="JsonWebKeyType.Octet"/> to an <see cref="Aes"/> object.
         /// </summary>
         /// <returns>An <see cref="Aes"/> object.</returns>
-        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Octet"/> or <see cref="K"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="JsonWebKeyType.Octet"/> or <see cref="K"/> is null.</exception>
         public Aes ToAes()
         {
-            if (KeyType != KeyType.Octet)
+            if (KeyType != JsonWebKeyType.Octet)
             {
                 throw new InvalidOperationException("key is not an octet key");
             }
@@ -206,15 +217,15 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.EllipticCurve"/> or <see cref="KeyType.EllipticCurveHsm"/> to an <see cref="ECDsa"/> object.
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="JsonWebKeyType.EllipticCurve"/> or <see cref="JsonWebKeyType.EllipticCurveHsm"/> to an <see cref="ECDsa"/> object.
         /// </summary>
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
         /// <returns>An <see cref="ECDsa"/> object.</returns>
-        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.EllipticCurve"/> or <see cref="KeyType.EllipticCurveHsm"/>, or one or more key parameters are invalid.</exception>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="JsonWebKeyType.EllipticCurve"/> or <see cref="JsonWebKeyType.EllipticCurveHsm"/>, or one or more key parameters are invalid.</exception>
         /// <exception cref="NotSupportedException">The <see cref="CurveName"/> is not supported.</exception>
         public ECDsa ToECDsa(bool includePrivateParameters = false)
         {
-            if (KeyType != KeyType.EllipticCurve && KeyType != KeyType.EllipticCurveHsm)
+            if (KeyType != JsonWebKeyType.EllipticCurve && KeyType != JsonWebKeyType.EllipticCurveHsm)
             {
                 throw new InvalidOperationException("key is not an EC or EC-HSM type");
             }
@@ -226,14 +237,14 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Rsa"/> or <see cref="KeyType.RsaHsm"/> to an <see cref="RSA"/> object.
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="JsonWebKeyType.Rsa"/> or <see cref="JsonWebKeyType.RsaHsm"/> to an <see cref="RSA"/> object.
         /// </summary>
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
         /// <returns>An <see cref="RSA"/> object.</returns>
-        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Rsa"/> or <see cref="KeyType.RsaHsm"/>, or one or more key parameters are invalid.</exception>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="JsonWebKeyType.Rsa"/> or <see cref="JsonWebKeyType.RsaHsm"/>, or one or more key parameters are invalid.</exception>
         public RSA ToRSA(bool includePrivateParameters = false)
         {
-            if (KeyType != KeyType.Rsa && KeyType != KeyType.RsaHsm)
+            if (KeyType != JsonWebKeyType.Rsa && KeyType != JsonWebKeyType.RsaHsm)
             {
                 throw new InvalidOperationException("key is not an RSA or RSA-HSM type");
             }
@@ -308,12 +319,12 @@ namespace Azure.Security.KeyVault.Keys
                         KeyId = prop.Value.GetString();
                         break;
                     case KeyTypePropertyName:
-                        KeyType = KeyTypeExtensions.ParseFromString(prop.Value.GetString());
+                        KeyType = JsonWebKeyTypeExtensions.Parse(prop.Value.GetString());
                         break;
                     case KeyOpsPropertyName:
                         foreach (var element in prop.Value.EnumerateArray())
                         {
-                            KeyOps.Add(KeyOperationsExtensions.ParseFromString(element.ToString()));
+                            KeyOps.Add(KeyOperationsExtensions.Parse(element.ToString()));
                         }
                         break;
                     case CurveNamePropertyName:
@@ -363,7 +374,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.AsString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, JsonWebKeyTypeExtensions.AsString(KeyType));
             }
             if (KeyOps != null)
             {
@@ -510,10 +521,11 @@ namespace Azure.Security.KeyVault.Keys
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void Initialize(ECDsa ecdsa, bool includePrivateParameters)
         {
-            KeyType = KeyType.EllipticCurve;
+            KeyType = JsonWebKeyType.EllipticCurve;
+            KeyOps = new List<JsonWebKeyOperations>(includePrivateParameters ? ECPrivateKeyOperations : ECPublicKeyOperations);
 
             ECParameters ecParameters = ecdsa.ExportParameters(includePrivateParameters);
-            CurveName = KeyCurveNameInfo.FromOid(ecParameters.Curve.Oid, ecdsa.KeySize).Name ?? throw new InvalidOperationException("elliptic curve name is invalid");
+            CurveName = JsonWebKeyCurveNameInfo.FromOid(ecParameters.Curve.Oid, ecdsa.KeySize).Name ?? throw new InvalidOperationException("elliptic curve name is invalid");
             D = ecParameters.D;
             X = ecParameters.Q.X;
             Y = ecParameters.Q.Y;
@@ -522,7 +534,7 @@ namespace Azure.Security.KeyVault.Keys
         [MethodImpl(MethodImplOptions.NoInlining)]
         private ECDsa Convert(bool includePrivateParameters)
         {
-            ref readonly KeyCurveNameInfo info = ref KeyCurveNameInfo.FromName(CurveName);
+            ref readonly JsonWebKeyCurveNameInfo info = ref JsonWebKeyCurveNameInfo.FromName(CurveName);
 
             int requiredParameterSize = info.KeyParameterSize;
             if (requiredParameterSize < 0)
@@ -530,6 +542,7 @@ namespace Azure.Security.KeyVault.Keys
                 throw new InvalidOperationException($"invalid curve name: {CurveName ?? "null"}");
             }
 
+            // TODO: If we change to enum-like structures for curve names that could then be invalid, consider catching PlatformNotSupportedException and rethrow as NotSupportedException.
             ECParameters ecParameters = new ECParameters
             {
                 Curve = ECCurve.CreateFromOid(info.Oid),

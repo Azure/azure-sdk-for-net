@@ -73,10 +73,10 @@ namespace Azure.Security.KeyVault.Keys
         /// version of the key. It requires the keys/create permission.
         /// </remarks>
         /// <param name="name">The name of the key.</param>
-        /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
+        /// <param name="keyType">The type of key to create. See <see cref="JsonWebKeyType"/> for valid values.</param>
         /// <param name="keyOptions">Specific attributes with information about the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<Key> CreateKey(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<Key> CreateKey(string name, JsonWebKeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
             if (keyType == default) throw new ArgumentNullException(nameof(keyType));
@@ -107,10 +107,10 @@ namespace Azure.Security.KeyVault.Keys
         /// version of the key. It requires the keys/create permission.
         /// </remarks>
         /// <param name="name">The name of the key.</param>
-        /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
+        /// <param name="keyType">The type of key to create. See <see cref="JsonWebKeyType"/> for valid values.</param>
         /// <param name="keyOptions">Specific attributes with information about the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<Key>> CreateKeyAsync(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Key>> CreateKeyAsync(string name, JsonWebKeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
             if (keyType == default) throw new ArgumentNullException(nameof(keyType));
@@ -262,9 +262,9 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation requires the keys/update permission.
         /// </remarks>
         /// <param name="key">The <see cref="KeyBase"/> object with updated properties.</param>
-        /// <param name="keyOperations">List of supported <see cref="KeyOperations"/>.</param>
+        /// <param name="keyOperations">List of supported <see cref="JsonWebKeyOperations"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<KeyOperations> keyOperations, CancellationToken cancellationToken = default)
+        public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<JsonWebKeyOperations> keyOperations, CancellationToken cancellationToken = default)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
             if (key.Version == null) throw new ArgumentNullException($"{nameof(key)}.{nameof(key.Version)}");
@@ -297,9 +297,9 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation requires the keys/update permission.
         /// </remarks>
         /// <param name="key">The <see cref="KeyBase"/> object with updated properties.</param>
-        /// <param name="keyOperations">List of supported <see cref="KeyOperations"/>.</param>
+        /// <param name="keyOperations">List of supported <see cref="JsonWebKeyOperations"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<KeyOperations> keyOperations, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<JsonWebKeyOperations> keyOperations, CancellationToken cancellationToken = default)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
             if (key.Version == null) throw new ArgumentNullException($"{nameof(key)}.{nameof(key.Version)}");

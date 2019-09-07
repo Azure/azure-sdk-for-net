@@ -18,13 +18,13 @@ namespace Azure.Security.KeyVault.Keys
         /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
         /// Possible values 'EC', 'EC-HSM.'
         /// </summary>
-        public KeyType KeyType { get; private set; }
+        public JsonWebKeyType KeyType { get; private set; }
 
         /// <summary>
-        /// Elliptic curve name. For valid values, see <see cref="KeyCurveName"/>. Possible values include: 'P-256', 'P-384',
+        /// Elliptic curve name. For valid values, see <see cref="JsonWebKeyCurveName"/>. Possible values include: 'P-256', 'P-384',
         /// 'P-521', 'P-256K'.
         /// </summary>
-        public KeyCurveName? Curve { get; set; }
+        public JsonWebKeyCurveName? Curve { get; set; }
 
         /// <summary> 
         /// Determines whether or not a hardware key (HSM) is used for creation.
@@ -39,17 +39,17 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         /// <param name="hsm">Whether to import as a hardware key (HSM) or software key.</param>
         /// <param name="curveName">Elliptic curve name.</param>
-        public EcKeyCreateOptions(string name, bool hsm, KeyCurveName? curveName = null)
+        public EcKeyCreateOptions(string name, bool hsm, JsonWebKeyCurveName? curveName = null)
         {
             Name = name;
             Hsm = hsm;
             if(hsm)
             {
-                KeyType = KeyType.EllipticCurveHsm;
+                KeyType = JsonWebKeyType.EllipticCurveHsm;
             }
             else
             {
-                KeyType = KeyType.EllipticCurve;
+                KeyType = JsonWebKeyType.EllipticCurve;
             }
 
             if (curveName.HasValue)

@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048);
 
             string ecKeyName = $"CloudEcKey-{Guid.NewGuid()}";
-            var ecKey = new EcKeyCreateOptions(ecKeyName, hsm: false, curveName: KeyCurveName.P256K);
+            var ecKey = new EcKeyCreateOptions(ecKeyName, hsm: false, curveName: JsonWebKeyCurveName.P256K);
 
             Key cloudRsaKey = await keyClient.CreateRsaKeyAsync(rsaKey);
             Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");

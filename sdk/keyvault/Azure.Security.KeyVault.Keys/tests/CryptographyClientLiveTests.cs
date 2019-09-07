@@ -1,12 +1,14 @@
-﻿using Azure.Core.Testing;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -187,7 +189,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case EncryptionAlgorithm.RSA15:
                 case EncryptionAlgorithm.RSAOAEP:
                 case EncryptionAlgorithm.RSAOAEP256:
-                    return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
+                    return await Client.CreateKeyAsync(keyName, JsonWebKeyType.Rsa);
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
@@ -202,7 +204,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case KeyWrapAlgorithm.RSA15:
                 case KeyWrapAlgorithm.RSAOAEP:
                 case KeyWrapAlgorithm.RSAOAEP256:
-                    return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
+                    return await Client.CreateKeyAsync(keyName, JsonWebKeyType.Rsa);
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
@@ -231,15 +233,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case SignatureAlgorithm.PS256:
                 case SignatureAlgorithm.PS384:
                 case SignatureAlgorithm.PS512:
-                    return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
+                    return await Client.CreateKeyAsync(keyName, JsonWebKeyType.Rsa);
                 case SignatureAlgorithm.ES256:
-                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P256));
+                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, JsonWebKeyCurveName.P256));
                 case SignatureAlgorithm.ES256K:
-                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P256K));
+                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, JsonWebKeyCurveName.P256K));
                 case SignatureAlgorithm.ES384:
-                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P384));
+                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, JsonWebKeyCurveName.P384));
                 case SignatureAlgorithm.ES512:
-                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P521));
+                    return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, JsonWebKeyCurveName.P521));
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }

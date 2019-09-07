@@ -4,10 +4,6 @@
 
 using Azure.Core.Pipeline;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -54,24 +50,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </param>
         public CryptographyClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
-            this.Version = version;
+            Version = version;
         }
 
         internal string GetVersionString()
         {
-            var version = string.Empty;
-
-            switch (this.Version)
+            switch (Version)
             {
                 case ServiceVersion.V7_0:
-                    version = "7.0";
-                    break;
+                    return "7.0";
 
                 default:
-                    throw new ArgumentException(this.Version.ToString());
+                    throw new NotSupportedException($"The service version {Version} is not supported.");
             }
-
-            return version;
         }
     }
 }

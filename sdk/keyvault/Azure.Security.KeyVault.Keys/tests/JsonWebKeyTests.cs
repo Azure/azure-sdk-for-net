@@ -15,9 +15,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
     public class JsonWebKeyTests
     {
         [Test]
+        public void Aes_Defaults_KeyOps()
+        {
+            using Aes aes = Aes.Create();
+            JsonWebKey jwk = new JsonWebKey(aes);
+
+            CollectionAssert.AreEqual(new[] { JsonWebKeyOperations.Encrypt, JsonWebKeyOperations.Decrypt, JsonWebKeyOperations.WrapKey, JsonWebKeyOperations.UnwrapKey }, jwk.KeyOps);
+        }
+
+        [Test]
         public void SerializeOctet()
         {
-            JsonWebKey jwk = new JsonWebKey(Aes.Create());
+            using Aes aes = Aes.Create();
+            JsonWebKey jwk = new JsonWebKey(aes);
             ReadOnlyMemory<byte> serialized = jwk.Serialize();
             Assert.True(HasPrivateKey(jwk));
 
@@ -44,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.Other,
+                KeyType = JsonWebKeyType.Other,
             };
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
@@ -55,11 +65,32 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.Octet,
+                KeyType = JsonWebKeyType.Octet,
                 K = null,
             };
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ECDsa_Defaults_KeyOps(bool includePrivateParameters)
+        {
+#if NET461
+            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+#else
+            using ECDsa ecdsa = ECDsa.Create();
+            JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
+
+            if (includePrivateParameters)
+            {
+                CollectionAssert.AreEqual(new[] { JsonWebKeyOperations.Sign, JsonWebKeyOperations.Verify }, jwk.KeyOps);
+            }
+            else
+            {
+                CollectionAssert.AreEqual(new[] { JsonWebKeyOperations.Sign }, jwk.KeyOps);
+            }
+#endif
         }
 
         [TestCaseSource(nameof(GetECDSaTestData))]
@@ -106,7 +137,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.Other,
+                KeyType = JsonWebKeyType.Other,
             };
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa());
@@ -120,7 +151,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #else
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.EllipticCurve,
+                KeyType = JsonWebKeyType.EllipticCurve,
                 CurveName = curveName,
                 X = x,
                 Y = y,
@@ -128,6 +159,23 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa(), "Expected exception not thrown for data named '{0}'", name);
 #endif
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void RSA_Defaults_KeyOps(bool includePrivateParameters)
+        {
+            using RSA rsa = RSA.Create();
+            JsonWebKey jwk = new JsonWebKey(rsa, includePrivateParameters);
+
+            if (includePrivateParameters)
+            {
+                CollectionAssert.AreEqual(new[] { JsonWebKeyOperations.Encrypt, JsonWebKeyOperations.Decrypt, JsonWebKeyOperations.Sign, JsonWebKeyOperations.Verify, JsonWebKeyOperations.WrapKey, JsonWebKeyOperations.UnwrapKey }, jwk.KeyOps);
+            }
+            else
+            {
+                CollectionAssert.AreEqual(new[] { JsonWebKeyOperations.Encrypt, JsonWebKeyOperations.Verify, JsonWebKeyOperations.WrapKey }, jwk.KeyOps);
+            }
         }
 
         [TestCase(false)]
@@ -164,7 +212,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.Other,
+                KeyType = JsonWebKeyType.Other,
             };
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToRSA());
@@ -175,7 +223,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.Rsa,
+                KeyType = JsonWebKeyType.Rsa,
                 E = rsaParameters.Exponent,
                 N = rsaParameters.Modulus,
             };
@@ -267,15 +315,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             switch (jwk.KeyType)
             {
-                case KeyType.Octet:
+                case JsonWebKeyType.Octet:
                     return jwk.K != null;
 
-                case KeyType.EllipticCurve:
-                case KeyType.EllipticCurveHsm:
+                case JsonWebKeyType.EllipticCurve:
+                case JsonWebKeyType.EllipticCurveHsm:
                     return jwk.D != null;
 
-                case KeyType.Rsa:
-                case KeyType.RsaHsm:
+                case JsonWebKeyType.Rsa:
+                case JsonWebKeyType.RsaHsm:
                     return jwk.D != null && jwk.DP != null && jwk.DQ != null && jwk.P != null && jwk.Q != null && jwk.QI != null;
 
                 default:
@@ -296,12 +344,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 if (x.KeyType != y.KeyType) return false;
                 if (!CollectionEquals(x.KeyOps, y.KeyOps)) return false;
 
-                if (x.KeyType == KeyType.Octet)
+                if (x.KeyType == JsonWebKeyType.Octet)
                 {
                     return CollectionEquals(x.K, y.K);
                 }
 
-                if (x.KeyType == KeyType.Rsa)
+                if (x.KeyType == JsonWebKeyType.Rsa)
                 {
                     return CollectionEquals(x.E, y.E)
                         && CollectionEquals(x.N, y.N)
@@ -313,7 +361,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                         && CollectionEquals(x.QI, y.QI);
                 }
 
-                if (x.KeyType == KeyType.EllipticCurve)
+                if (x.KeyType == JsonWebKeyType.EllipticCurve)
                 {
                     return CollectionEquals(x.D, y.D)
                         && CollectionEquals(x.X, y.X)
@@ -326,9 +374,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             public int GetHashCode(JsonWebKey obj) => obj?.KeyType switch
             {
                 null => 0,
-                KeyType.Octet => HashCodeBuilder.Combine(obj.KeyType, obj.K),
-                KeyType.Rsa => HashCodeBuilder.Combine(obj.KeyType, obj.N),
-                KeyType.EllipticCurve => HashCodeBuilder.Combine(obj.KeyType, obj.X),
+                JsonWebKeyType.Octet => HashCodeBuilder.Combine(obj.KeyType, obj.K),
+                JsonWebKeyType.Rsa => HashCodeBuilder.Combine(obj.KeyType, obj.N),
+                JsonWebKeyType.EllipticCurve => HashCodeBuilder.Combine(obj.KeyType, obj.X),
                 _ => throw new NotImplementedException(),
             };
 

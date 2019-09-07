@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// Supported JsonWebKey key types (kty)
     /// </summary>
-    public enum KeyType : uint
+    public enum JsonWebKeyType : uint
     {
         /// <summary>
         /// Cryptographic algorithm Elliptic Curve
@@ -37,40 +37,40 @@ namespace Azure.Security.KeyVault.Keys
         Other = 0x0020,
     }
 
-    internal static class KeyTypeExtensions
+    internal static class JsonWebKeyTypeExtensions
     {
-        internal static KeyType ParseFromString(string value)
+        internal static JsonWebKeyType Parse(string value)
         {
             switch (value)
             {
                 case "EC":
-                    return KeyType.EllipticCurve;
+                    return JsonWebKeyType.EllipticCurve;
                 case "EC-HSM":
-                    return KeyType.EllipticCurveHsm;
+                    return JsonWebKeyType.EllipticCurveHsm;
                 case "RSA":
-                    return KeyType.Rsa;
+                    return JsonWebKeyType.Rsa;
                 case "RSA-HSM":
-                    return KeyType.RsaHsm;
+                    return JsonWebKeyType.RsaHsm;
                 case "oct":
-                    return KeyType.Octet;
+                    return JsonWebKeyType.Octet;
                 default:
-                    return KeyType.Other;
+                    return JsonWebKeyType.Other;
             }
         }
 
-        internal static string AsString(KeyType keyType)
+        internal static string AsString(JsonWebKeyType keyType)
         {
             switch (keyType)
             {
-                case KeyType.EllipticCurve:
+                case JsonWebKeyType.EllipticCurve:
                     return "EC";
-                case KeyType.EllipticCurveHsm:
+                case JsonWebKeyType.EllipticCurveHsm:
                     return "EC-HSM";
-                case KeyType.Rsa:
+                case JsonWebKeyType.Rsa:
                     return "RSA";
-                case KeyType.RsaHsm:
+                case JsonWebKeyType.RsaHsm:
                     return "RSA-HSM";
-                case KeyType.Octet:
+                case JsonWebKeyType.Octet:
                     return "oct";
                 default:
                     return string.Empty;

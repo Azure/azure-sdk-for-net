@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// Elliptic Curve Cryptography (ECC) curve names.
     /// </summary>
-    public enum KeyCurveName : uint
+    public enum JsonWebKeyCurveName : uint
     {
         /// <summary>
         /// The NIST P-256 elliptic curve, AKA SECG curve SECP256R1
@@ -38,15 +38,15 @@ namespace Azure.Security.KeyVault.Keys
         Other = 0x0010,
     }
 
-    internal readonly struct KeyCurveNameInfo
+    internal readonly struct JsonWebKeyCurveNameInfo
     {
-        internal static readonly KeyCurveNameInfo P256 = new KeyCurveNameInfo(KeyCurveName.P256, "P-256", new Oid("1.2.840.10045.3.1.7"), 256, 32);
-        internal static readonly KeyCurveNameInfo P256K = new KeyCurveNameInfo(KeyCurveName.P256K, "P-256K", new Oid("1.3.132.0.10"), 256, 32);
-        internal static readonly KeyCurveNameInfo P384 = new KeyCurveNameInfo(KeyCurveName.P384, "P-384", new Oid("1.3.132.0.34"), 384, 48);
-        internal static readonly KeyCurveNameInfo P521 = new KeyCurveNameInfo(KeyCurveName.P521, "P-521", new Oid("1.3.132.0.35"), 521, 66);
-        internal static readonly KeyCurveNameInfo Other = new KeyCurveNameInfo(KeyCurveName.Other, null, null, -1, -1);
+        internal static readonly JsonWebKeyCurveNameInfo P256 = new JsonWebKeyCurveNameInfo(JsonWebKeyCurveName.P256, "P-256", new Oid("1.2.840.10045.3.1.7"), 256, 32);
+        internal static readonly JsonWebKeyCurveNameInfo P256K = new JsonWebKeyCurveNameInfo(JsonWebKeyCurveName.P256K, "P-256K", new Oid("1.3.132.0.10"), 256, 32);
+        internal static readonly JsonWebKeyCurveNameInfo P384 = new JsonWebKeyCurveNameInfo(JsonWebKeyCurveName.P384, "P-384", new Oid("1.3.132.0.34"), 384, 48);
+        internal static readonly JsonWebKeyCurveNameInfo P521 = new JsonWebKeyCurveNameInfo(JsonWebKeyCurveName.P521, "P-521", new Oid("1.3.132.0.35"), 521, 66);
+        internal static readonly JsonWebKeyCurveNameInfo Other = new JsonWebKeyCurveNameInfo(JsonWebKeyCurveName.Other, null, null, -1, -1);
 
-        private static readonly KeyCurveNameInfo[] Supported =
+        private static readonly JsonWebKeyCurveNameInfo[] Supported =
         {
             P521,
             P384,
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys
             P256,
         };
 
-        private KeyCurveNameInfo(KeyCurveName value, string name, Oid oid, int keySize, int keyParameterSize)
+        private JsonWebKeyCurveNameInfo(JsonWebKeyCurveName value, string name, Oid oid, int keySize, int keyParameterSize)
         {
             Value = value;
             Name = name;
@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Keys
             KeyParameterSize = keyParameterSize;
         }
 
-        internal readonly KeyCurveName Value;
+        internal readonly JsonWebKeyCurveName Value;
 
         internal readonly string Name;
 
@@ -73,20 +73,20 @@ namespace Azure.Security.KeyVault.Keys
 
         internal readonly int KeyParameterSize;
 
-        internal static ref readonly KeyCurveNameInfo FromValue(KeyCurveName value)
+        internal static ref readonly JsonWebKeyCurveNameInfo FromValue(JsonWebKeyCurveName value)
         {
             switch (value)
             {
-                case KeyCurveName.P256:
+                case JsonWebKeyCurveName.P256:
                     return ref P256;
 
-                case KeyCurveName.P256K:
+                case JsonWebKeyCurveName.P256K:
                     return ref P256K;
 
-                case KeyCurveName.P384:
+                case JsonWebKeyCurveName.P384:
                     return ref P384;
 
-                case KeyCurveName.P521:
+                case JsonWebKeyCurveName.P521:
                     return ref P521;
 
                 default:
@@ -94,13 +94,13 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal static ref readonly KeyCurveNameInfo FromName(string name)
+        internal static ref readonly JsonWebKeyCurveNameInfo FromName(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {
                 for (int i = 0; i < Supported.Length; ++i)
                 {
-                    ref KeyCurveNameInfo info = ref Supported[i];
+                    ref JsonWebKeyCurveNameInfo info = ref Supported[i];
                     if (string.Equals(name, info.Name, StringComparison.Ordinal))
                     {
                         return ref info;
@@ -111,14 +111,14 @@ namespace Azure.Security.KeyVault.Keys
             return ref Other;
         }
 
-        internal static ref readonly KeyCurveNameInfo FromOid(Oid oid, int keySize)
+        internal static ref readonly JsonWebKeyCurveNameInfo FromOid(Oid oid, int keySize)
         {
             if (!string.IsNullOrEmpty(oid?.Value))
             {
                 string oidValue = oid.Value;
                 for (int i = 0; i < Supported.Length; ++i)
                 {
-                    ref KeyCurveNameInfo info = ref Supported[i];
+                    ref JsonWebKeyCurveNameInfo info = ref Supported[i];
                     if (string.Equals(oidValue, info.Oid.Value, StringComparison.Ordinal))
                     {
                         return ref info;
@@ -130,16 +130,22 @@ namespace Azure.Security.KeyVault.Keys
             {
                 switch (keySize)
                 {
-                    case 256 when string.Equals(oid.FriendlyName, "nistP256", StringComparison.OrdinalIgnoreCase) || string.Equals(oid.FriendlyName, "ECDSA_P256", StringComparison.OrdinalIgnoreCase):
+                    case 256 when string.Equals(oid.FriendlyName, "nistP256", StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(oid.FriendlyName, "secp256r1", StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(oid.FriendlyName, "ECDSA_P256", StringComparison.OrdinalIgnoreCase):
                         return ref P256;
 
                     case 256 when string.Equals(oid.FriendlyName, "secP256k1", StringComparison.OrdinalIgnoreCase):
                         return ref P256K;
 
-                    case 384 when string.Equals(oid.FriendlyName, "nistP384", StringComparison.OrdinalIgnoreCase) || string.Equals(oid.FriendlyName, "ECDSA_P384", StringComparison.OrdinalIgnoreCase):
+                    case 384 when string.Equals(oid.FriendlyName, "nistP384", StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(oid.FriendlyName, "secp384r1", StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(oid.FriendlyName, "ECDSA_P384", StringComparison.OrdinalIgnoreCase):
                         return ref P384;
 
-                    case 521 when string.Equals(oid.FriendlyName, "nistP521", StringComparison.OrdinalIgnoreCase) || string.Equals(oid.FriendlyName, "ECDSA_P521", StringComparison.OrdinalIgnoreCase):
+                    case 521 when string.Equals(oid.FriendlyName, "nistP521", StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(oid.FriendlyName, "secp521r1", StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(oid.FriendlyName, "ECDSA_P521", StringComparison.OrdinalIgnoreCase):
                         return ref P521;
                 }
             }
@@ -149,10 +155,10 @@ namespace Azure.Security.KeyVault.Keys
 
         public override string ToString() => Value switch
         {
-            KeyCurveName.P256 => P256.Name,
-            KeyCurveName.P256K => P256K.Name,
-            KeyCurveName.P384 => P384.Name,
-            KeyCurveName.P521 => P521.Name,
+            JsonWebKeyCurveName.P256 => P256.Name,
+            JsonWebKeyCurveName.P256K => P256K.Name,
+            JsonWebKeyCurveName.P384 => P384.Name,
+            JsonWebKeyCurveName.P521 => P521.Name,
             _ => string.Empty,
         };
     }
