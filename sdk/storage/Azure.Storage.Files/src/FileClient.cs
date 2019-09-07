@@ -913,6 +913,7 @@ namespace Azure.Storage.Files
                     range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
+                    bufferResponse: false,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");

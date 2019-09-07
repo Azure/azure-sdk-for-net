@@ -659,6 +659,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                     async: async,
+                    bufferResponse: false,
                     operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

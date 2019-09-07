@@ -370,6 +370,7 @@ namespace Azure.Storage.Blobs.Test
             // Use a 1KB threshold so we get a lot of individual blocks
             await this.ParallelDownloadFileAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
 
+        [Ignore("These tests currently take 40 mins for little additional coverage")]
         [Test]
         [Category("Live")]
         [TestCase(33 * Constants.MB, 1)]
