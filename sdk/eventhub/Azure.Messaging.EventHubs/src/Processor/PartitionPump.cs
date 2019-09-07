@@ -78,8 +78,8 @@ namespace Azure.Messaging.EventHubs.Processor
         private Task RunningTask { get; set; }
 
         /// <summary>
-        ///   The reason why the associated partition processor is being closed.  This member is only used in case of failure,
-        ///   as a Shutdown or OwnershipLost close reason will be specified by the event processor.
+        ///   The reason why the associated partition processor is being closed.  This member is only used in case of failure.
+        ///   Shutdown and OwnershipLost close reasons will be specified by the event processor.
         /// </summary>
         ///
         private PartitionProcessorCloseReason CloseReason { get; set; }

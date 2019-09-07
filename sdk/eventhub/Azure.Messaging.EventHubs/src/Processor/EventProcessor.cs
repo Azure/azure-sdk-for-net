@@ -318,17 +318,17 @@ namespace Azure.Messaging.EventHubs.Processor
                 // unexpected failure has happened, so try closing it and starting a new one.  In case we don't have a pump that
                 // should exist, create it.  This might happen when pump creation has failed in a previous cycle.
 
-                await Task.WhenAll(InstanceOwnership.Keys
-                    .Where(partitionId =>
+                await Task.WhenAll(InstanceOwnership
+                    .Where(kvp =>
                         {
-                            if (PartitionPumps.TryGetValue(partitionId, out var pump))
+                            if (PartitionPumps.TryGetValue(kvp.Key, out var pump))
                             {
                                 return !pump.IsRunning;
                             }
 
                             return true;
                         })
-                    .Select(partitionId => AddOrOverwritePartitionPumpAsync(partitionId)))
+                    .Select(kvp => AddOrOverwritePartitionPumpAsync(kvp.Key, kvp.Value.SequenceNumber)))
                     .ConfigureAwait(false);
 
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
@@ -340,7 +340,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
 
-                    await AddOrOverwritePartitionPumpAsync(claimedOwnership.PartitionId).ConfigureAwait(false);
+                    await AddOrOverwritePartitionPumpAsync(claimedOwnership.PartitionId, claimedOwnership.SequenceNumber).ConfigureAwait(false);
                 }
 
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
@@ -472,10 +472,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the partition pump will be associated with.  Events will be read only from this partition.</param>
+        /// <param name="initialSequenceNumber">The sequence number of the event within a partition where the partition pump should begin reading events.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        private async Task AddOrOverwritePartitionPumpAsync(string partitionId)
+        private async Task AddOrOverwritePartitionPumpAsync(string partitionId,
+                                                            long? initialSequenceNumber)
         {
             // Remove and stop the existing partition pump if it exists.  We are not specifying any close reason because partition
             // pumps only are overwritten in case of failure.  In these cases, the close reason is delegated to the pump as it may
@@ -492,10 +494,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 var partitionProcessor = PartitionProcessorFactory(partitionContext);
                 var options = Options.Clone();
 
-                // Ovewrite the initial event position in case a checkpoint exists.  The InstanceOwnership dictionary is expected to
-                // have an entry for the partition we're dealing with, so it throws an exception if that's not the case.
-
-                var initialSequenceNumber = InstanceOwnership[partitionId].SequenceNumber;
+                // Ovewrite the initial event position in case a checkpoint exists.
 
                 if (initialSequenceNumber.HasValue)
                 {

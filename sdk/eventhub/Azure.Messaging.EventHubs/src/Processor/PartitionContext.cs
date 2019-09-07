@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Messaging.EventHubs.Core;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -60,6 +61,12 @@ namespace Azure.Messaging.EventHubs.Processor
                                             string ownerIdentifier,
                                             PartitionManager partitionManager)
         {
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
+            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
+            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
+            Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
+            Guard.ArgumentNotNull(nameof(partitionManager), partitionManager);
+
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
@@ -75,7 +82,14 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task UpdateCheckpointAsync(EventData eventData) => UpdateCheckpointAsync(eventData.Offset.Value, eventData.SequenceNumber.Value);
+        public virtual Task UpdateCheckpointAsync(EventData eventData)
+        {
+            Guard.ArgumentNotNull(nameof(eventData), eventData);
+            Guard.ArgumentNotNull(nameof(eventData.Offset), eventData.Offset);
+            Guard.ArgumentNotNull(nameof(eventData.SequenceNumber), eventData.SequenceNumber);
+
+            return UpdateCheckpointAsync(eventData.Offset.Value, eventData.SequenceNumber.Value);
+        }
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
