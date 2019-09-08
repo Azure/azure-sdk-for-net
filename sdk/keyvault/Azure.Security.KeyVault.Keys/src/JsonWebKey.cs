@@ -2,7 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
@@ -12,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys
     /// structure that represents a cryptographic key.
     /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18"/>.
     /// </summary>
-    public class JsonWebKey : Model
+    public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
         /// <summary>
         /// The identifier of the key.
@@ -37,6 +39,23 @@ namespace Azure.Security.KeyVault.Keys
         {
             KeyOps = new List<KeyOperations>();
         }
+
+        /// <summary>
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Octet"/>.
+        /// </summary>
+        /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
+        public JsonWebKey(Aes aesProvider)
+        {
+            if (aesProvider is null) throw new ArgumentNullException(nameof(aesProvider));
+
+            KeyType = KeyType.Octet;
+            K = aesProvider.Key;
+        }
+
+        //public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default)
+        //{
+        //}
 
         #region RSA Public Key Parameters
 
@@ -155,7 +174,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string TPropertyName = "t";
         private static readonly JsonEncodedText TPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
 
-        internal override void ReadProperties(JsonElement json)
+        internal void ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
             {
@@ -216,7 +235,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal override void WriteProperties(Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (KeyType != default)
             {
@@ -284,6 +303,10 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteString(TPropertyNameBytes, Base64Url.Encode(T));
             }
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }
 

@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// KeyBase is the resource containing all the properties of the key except <see cref="JsonWebKey"/> properties.
     /// </summary>
-    public class KeyBase : Model
+    public class KeyBase : IJsonDeserializable, IJsonSerializable
     {
         internal KeyBase() { }
 
@@ -121,9 +121,9 @@ namespace Azure.Security.KeyVault.Keys
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }
 
-        internal override void WriteProperties(Utf8JsonWriter json) { }
+        internal virtual void WriteProperties(Utf8JsonWriter json) { }
 
-        internal override void ReadProperties(JsonElement json)
+        internal virtual void ReadProperties(JsonElement json)
         {
             foreach(JsonProperty prop in json.EnumerateObject())
             {
@@ -148,5 +148,9 @@ namespace Azure.Security.KeyVault.Keys
                 }
             }
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }

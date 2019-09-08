@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    internal class KeyRequestParameters : Model
+    internal class KeyRequestParameters : IJsonSerializable
     {
         private KeyAttributes _attributes;
 
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string TagsPropertyName = "tags";
         private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
 
-        internal override void WriteProperties(Utf8JsonWriter json)
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if(KeyType != default)
             {
@@ -148,7 +148,5 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteEndObject();
             }
         }
-
-        internal override void ReadProperties(JsonElement json) { }
     }
 }
