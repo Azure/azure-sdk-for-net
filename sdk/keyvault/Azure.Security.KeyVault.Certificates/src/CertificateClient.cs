@@ -145,6 +145,12 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary>
+        /// Returns the latest version of the <see cref="Certificate"/> along with it's <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Certificate"/> to retrieve</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the certificate and policy as a <see cref="CertificateWithPolicy"/> instance</returns>
         public virtual Response<CertificateWithPolicy> GetCertificateWithPolicy(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
@@ -164,6 +170,12 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary>
+        /// Returns the latest version of the <see cref="Certificate"/> along with it's <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Certificate"/> to retrieve</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the certificate and policy as a <see cref="CertificateWithPolicy"/> instance</returns>
         public virtual async Task<Response<CertificateWithPolicy>> GetCertificateWithPolicyAsync(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
@@ -183,6 +195,13 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary>
+        /// Gets a specific version of the <see cref="Certificate"/>. This operation requires the certificates/get permission.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Certificate"/> to retrieve</param>
+        /// <param name="version">Ther version of the <see cref="Certificate"/> to retrieve</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The requested <see cref="Certificate"/></returns>
         public virtual Response<Certificate> GetCertificate(string name, string version, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
@@ -202,6 +221,13 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary>
+        /// Gets a specific version of the <see cref="Certificate"/>. This operation requires the certificates/get permission.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Certificate"/> to retrieve</param>
+        /// <param name="version">Ther version of the <see cref="Certificate"/> to retrieve</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The requested <see cref="Certificate"/></returns>
         public virtual async Task<Response<Certificate>> GetCertificateAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
@@ -222,6 +248,15 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary>
+        /// Updates the specified <see cref="Certificate"/> with the specified values for its mutable properties. This operation requires the certificates/update permission.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Certificate"/> to update</param>
+        /// <param name="version">The version of the <see cref="Certificate"/> to update, if unspecified the latest version will be updated</param>
+        /// <param name="enabled">Specifies whether the <see cref="Certificate"/> is enabled, if unspecified <see cref="CertificateBase.Enabled"/> remains unchanged</param>
+        /// <param name="tags">Specifies the tags associated with the <see cref="Certificate"/>, if unspecified <see cref="CertificateBase.Tags"/> remains unchanged</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The updated <see cref="Certificate"/></returns>
         public virtual Response<Certificate> UpdateCertificate(string name, string version = default, bool enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
@@ -245,6 +280,15 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary>
+        /// Updates the specified <see cref="Certificate"/> with the specified values for its mutable properties. This operation requires the certificates/update permission.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Certificate"/> to update</param>
+        /// <param name="version">The version of the <see cref="Certificate"/> to update, if unspecified the latest version will be updated</param>
+        /// <param name="enabled">Specifies whether the <see cref="Certificate"/> is enabled, if unspecified <see cref="CertificateBase.Enabled"/> remains unchanged</param>
+        /// <param name="tags">Specifies the tags associated with the <see cref="Certificate"/>, if unspecified <see cref="CertificateBase.Tags"/> remains unchanged</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The updated <see cref="Certificate"/></returns>
         public virtual async Task<Response<Certificate>> UpdateCertificateAsync(string name, string version = default, bool enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
@@ -268,6 +312,13 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary>
+        /// Deletes all versions of the specified <see cref="Certificate"/>. If the vault is soft delete enabled, the <see cref="Certificate"/> will be marked for perminent deletion 
+        /// and can be recovered with <see cref="RecoverDeletedCertificate"/>, or purged with <see cref="PurgeDeletedCertificate"/>. This operation requires the certificates/delete permission.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Certificate"/> to delete</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The details of the <see cref="DeletedCertificate"/></returns>
         public virtual Response<DeletedCertificate> DeleteCertificate(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
@@ -287,6 +338,13 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+        /// <summary>
+        /// Deletes all versions of the specified <see cref="Certificate"/>. If the vault is soft delete enabled, the <see cref="Certificate"/> will be marked for perminent deletion 
+        /// and can be recovered with <see cref="RecoverDeletedCertificate"/>, or purged with <see cref="PurgeDeletedCertificate"/>. This operation requires the certificates/delete permission.
+        /// </summary>
+        /// <param name="name">The name of the <see cref="Certificate"/> to delete</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The details of the <see cref="DeletedCertificate"/></returns>
         public virtual async Task<Response<DeletedCertificate>> DeleteCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
