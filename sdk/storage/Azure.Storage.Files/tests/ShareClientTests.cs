@@ -469,7 +469,7 @@ namespace Azure.Storage.Files.Test
         {
             using (this.GetNewShare(out var share))
             {
-                var dir = (await share.CreateDirectoryAsync(this.GetNewDirectoryName())).Value;
+                var dir = this.InstrumentClient((await share.CreateDirectoryAsync(this.GetNewDirectoryName())).Value);
 
                 var properties = await dir.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
@@ -482,7 +482,7 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewShare(out var share))
             {
                 var name = this.GetNewDirectoryName();
-                var dir = (await share.CreateDirectoryAsync(name)).Value;
+                var dir = this.InstrumentClient((await share.CreateDirectoryAsync(name)).Value);
 
                 await share.DeleteDirectoryAsync(name);
                 Assert.ThrowsAsync<StorageRequestFailedException>(
