@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
-            Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>("kind", "internal")), "The activities tag should be internal.");
+            Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.InternalKind)), "The activities tag should be internal.");
             Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
         }
 
@@ -288,7 +288,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
             Assert.That(scope.Links, Has.One.EqualTo("id"));
             Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>("kind", "server")), "The activities tag should be server.");
+            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
 
         }
 

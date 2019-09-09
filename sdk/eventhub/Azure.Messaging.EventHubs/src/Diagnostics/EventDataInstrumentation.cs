@@ -13,6 +13,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///
     internal class EventDataInstrumentation
     {
+        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
         public static ClientDiagnostics ClientDiagnostics { get; } =  new ClientDiagnostics(true);
 
         /// <summary>
@@ -42,6 +43,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             return false;
         }
 
+        /// <summary>
+        ///    Extracts a diagnostic id from the given event.
+        /// </summary>
+        ///
+        /// <param name="eventData">The event to instrument.</param>
+        /// <param name="id">The value of </param>
+        /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
+        ///
         public static bool TryExtractDiagnosticId(EventData eventData, out string id)
         {
             id = null;

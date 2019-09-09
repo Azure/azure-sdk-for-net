@@ -46,5 +46,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>The value which identifies an Event Hub producer as the type associated with the diagnostics information.</summary>
         public const string EventHubProducerType = "producer";
+
+        /// <summary>The attribute which represents the kind of diagnostic scope.</summary>
+        public const string KindAttribute = "kind";
+
+        /// <summary>The value which identifies the Event Processor scope kind.</summary>
+        public const string ServerKind = "server";
+
+        /// <summary>The value which identifies the message instrumentation scope kind.</summary>
+        public const string InternalKind = "internal";
     }
 }
