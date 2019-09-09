@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace Azure.Core.Tests
 {
@@ -37,29 +38,20 @@ namespace Azure.Core.Tests
                 var startSuffix = ".Start";
                 var stopSuffix = ".Stop";
                 var exceptionSuffix = ".Exception";
-                var addLinkSuffix = ".AddLink";
+
                 if (value.Key.EndsWith(startSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - startSuffix.Length);
+                    PropertyInfo propertyInfo = value.Value.GetType().GetProperty("Links");
+                    var links = propertyInfo?.GetValue(value.Value) as IEnumerable<Activity> ?? Array.Empty<Activity>();
+
                     var scope = new ProducedDiagnosticScope()
                     {
                         Name = name,
-                        Activity = Activity.Current
+                        Activity = Activity.Current,
+                        Links = links.Select(a => a.ParentId).ToList()
                     };
                     Scopes.Add(scope);
-                }
-                else if (value.Key.EndsWith(addLinkSuffix))
-                {
-                    var name = value.Key.Substring(0, value.Key.Length - addLinkSuffix.Length);
-                    foreach (var producedDiagnosticScope in Scopes)
-                    {
-                        if (producedDiagnosticScope.Name == name)
-                        {
-                            producedDiagnosticScope.Links.Add(((Activity)value.Value).ParentId);
-                            return;
-                        }
-                    }
-                    throw new InvalidOperationException($"Event '{name}' was not started");
                 }
                 else if (value.Key.EndsWith(stopSuffix))
                 {

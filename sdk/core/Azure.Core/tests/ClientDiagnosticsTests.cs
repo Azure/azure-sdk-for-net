@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -45,45 +46,44 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AddLinkCallsAddLinkWithActivity()
+        public void AddLinkCallsPassesLinksAsPartOfStartPayload()
         {
-
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
-            scope.AddAttribute("Attribute1", "Value1");
-            scope.AddAttribute("Attribute2", 2, i => i.ToString());
-
+            scope.AddLink("id");
+            scope.AddLink("id2");
             scope.Start();
 
             KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
 
             Activity activity = Activity.Current;
 
-            var exception = new Exception();
-            scope.AddLink("id");
             scope.Dispose();
 
-            KeyValuePair<string, object> addLinkEvent = testListener.Events.Dequeue();
             KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
-
 
             Assert.Null(Activity.Current);
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
-            Assert.AreEqual("ActivityName.AddLink", addLinkEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
-            Assert.IsInstanceOf<Activity>(addLinkEvent.Value);
 
-            var linkedActivity = (Activity)addLinkEvent.Value;
+            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetProperty("Links").GetValue(startEvent.Value);
+            Activity[] activitiesArray = activities.ToArray();
 
-            Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity.IdFormat);
-            Assert.AreEqual("id", linkedActivity.ParentId);
+            Assert.AreEqual(activitiesArray.Length, 2);
+
+            Activity linkedActivity1 = activitiesArray[0];
+            Activity linkedActivity2 = activitiesArray[1];
+
+            Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity1.IdFormat);
+            Assert.AreEqual("id", linkedActivity1.ParentId);
+
+            Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity2.IdFormat);
+            Assert.AreEqual("id2", linkedActivity2.ParentId);
+
             Assert.AreEqual(0, testListener.Events.Count);
-
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
         }
 
         [Test]

@@ -234,8 +234,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
 
                     using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
-
-                    diagnosticScope.Start();
+                    diagnosticScope.AddAttribute("kind", "server");
 
                     if (diagnosticScope.IsEnabled)
                     {
@@ -247,6 +246,8 @@ namespace Azure.Messaging.EventHubs.Processor
                             }
                         }
                     }
+
+                    diagnosticScope.Start();
 
                     try
                     {

@@ -64,6 +64,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
+            Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>("kind", "internal")), "The activities tag should be internal.");
             Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
         }
 
@@ -225,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CheckpointManagerCreatesScope()
         {
             using ClientDiagnosticListener listener = new ClientDiagnosticListener();
-            var manager = new CheckpointManager(new PartitionContext("name", "group", "partition"), new InMemoryPartitionManager(), "owner");
+            var manager = new PartitionContext("name", "group", "partition", "owner", new InMemoryPartitionManager());
 
             await manager.UpdateCheckpointAsync(0, 0);
 
@@ -271,13 +272,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var clientMock = new Mock<EventHubClient>();
             clientMock.Setup(c => c.CreateConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerOptions>())).Returns(consumerMock.Object);
 
-            var processorMock = new Mock<IPartitionProcessor>();
-            processorMock.Setup(p => p.InitializeAsync()).Returns(Task.CompletedTask);
-            processorMock.Setup(p => p.ProcessEventsAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<CancellationToken>()))
+            var processorMock = new Mock<BasePartitionProcessor>();
+            processorMock.Setup(p => p.InitializeAsync(It.IsAny<PartitionContext>())).Returns(Task.CompletedTask);
+            processorMock.Setup(p => p.ProcessEventsAsync(It.IsAny<PartitionContext>(), It.IsAny<IEnumerable<EventData>>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask)
                 .Callback(() => processorCalledSource.SetResult(null));
 
-            var manager = new PartitionPump(clientMock.Object, "cg", "pid", processorMock.Object, new EventProcessorOptions());
+            var manager = new PartitionPump(clientMock.Object, "cg", new PartitionContext("eh", "cg", "pid", "oid", new InMemoryPartitionManager()),  processorMock.Object, new EventProcessorOptions());
 
             await manager.StartAsync();
             await processorCalledSource.Task;
@@ -287,6 +288,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
             Assert.That(scope.Links, Has.One.EqualTo("id"));
             Assert.That(scope.Links, Has.One.EqualTo("id2"));
+            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>("kind", "server")), "The activities tag should be server.");
+
         }
 
     }

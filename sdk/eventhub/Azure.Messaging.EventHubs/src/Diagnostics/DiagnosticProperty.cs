@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         public static readonly string ProducerActivityName = $"{ BaseActivityName }.{ nameof(EventHubProducer) }.Send";
 
         /// <summary>The activity name associated with EventProcessor processing a list of events.</summary>
-        public static readonly string EventProcessorProcessingActivityName = $"{ BaseActivityName }.{ nameof(EventProcessor) }.Process";
+        public static readonly string EventProcessorProcessingActivityName = $"{ BaseActivityName }.{ typeof(EventProcessor<>).Name }.Process";
 
         /// <summary>The activity name associated with EventProcessor creating a checkpoint.</summary>
-        public static readonly string EventProcessorCheckpointActivityName = $"{ BaseActivityName }.{ nameof(EventProcessor) }.Checkpoint";
+        public static readonly string EventProcessorCheckpointActivityName = $"{ BaseActivityName }.{ typeof(EventProcessor<>).Name }.Checkpoint";
 
         /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
         public static string DiagnosticIdAttribute = "Diagnostic-Id";

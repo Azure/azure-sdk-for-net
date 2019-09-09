@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
     public readonly struct DiagnosticScope: IDisposable
     {
-        private readonly Activity? _activity;
+        private readonly DiagnosticActivity? _activity;
 
         private readonly string _name;
 
@@ -18,8 +19,8 @@ namespace Azure.Core.Pipeline
         {
             _name = name;
             _source = source;
-            _activity = _source.IsEnabled() ? new Activity(_name)  : null;
-            _activity?.SetIdFormat(ActivityIdFormat.W3C);
+            _activity = _source.IsEnabled() ? new DiagnosticActivity(_name) : null;
+            _activity?.SetW3CFormat();
         }
 
         public bool IsEnabled => _activity != null;
@@ -50,10 +51,10 @@ namespace Azure.Core.Pipeline
             if (_activity != null)
             {
                 var linkedActivity = new Activity("LinkedActivity");
-                linkedActivity.SetIdFormat(ActivityIdFormat.W3C);
+                linkedActivity.SetW3CFormat();
                 linkedActivity.SetParentId(id);
 
-                _source.Write(_activity.OperationName + ".AddLink", linkedActivity);
+                _activity.AddLink(linkedActivity);
             }
         }
 
@@ -61,7 +62,7 @@ namespace Azure.Core.Pipeline
         {
             if (_activity != null && _source.IsEnabled(_name))
             {
-                _source.StartActivity(_activity, null);
+                _source.StartActivity(_activity, _activity);
             }
         }
 
@@ -91,6 +92,23 @@ namespace Azure.Core.Pipeline
 
             _source?.Write(_activity.OperationName + ".Exception", e);
 
+        }
+
+        private class DiagnosticActivity : Activity
+        {
+            private List<Activity>? _links;
+
+            public IEnumerable<Activity> Links => (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>();
+
+            public DiagnosticActivity(string operationName) : base(operationName)
+            {
+            }
+
+            public void AddLink(Activity activity)
+            {
+                _links ??= new List<Activity>();
+                _links.Add(activity);
+            }
         }
     }
 }
