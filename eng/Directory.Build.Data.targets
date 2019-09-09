@@ -1,4 +1,6 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.36" />
+
   <Target Name="ValidateTargetFrameworks" BeforeTargets="Build">
     <ItemGroup>
       <RequiredTargetFrameworks Include="$(RequiredTargetFrameworks)" />
@@ -10,46 +12,54 @@
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
 
-  <PropertyGroup>
-    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
-    <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
-    <EnableClientSdkAnalyzers Condition="'$(EnableClientSdkAnalyzers)' == '' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(SignAssembly)' == 'true' and '$(IsTestProject)' == 'true'">
-    <!-- Always fully sign test assemblies since we have a full public/private key -->
-    <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
-    <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.0;net461</RequiredTargetFrameworks>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
-
-    <!-- Disable running of tests for test helper libraries -->
-    <IsTestProject Condition="'$(IsTestHelperLibrary)' == 'true'">false</IsTestProject>
-  </PropertyGroup>
+  <!-- Set PackageProjectUrl to the package README for Client Libraries -->
+  <Target Name="SetPackageProjectUrl" BeforeTargets="ValidateTargetFrameworks" Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and
+   '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(CommitSHA)' != ''">
+    <PropertyGroup>
+      <CurrentCsprojPath>$(MSBuildProjectDirectory)</CurrentCsprojPath>
+      <DirectoryPartofPath>$(CurrentCsprojPath.Substring($(CurrentCsprojPath.LastIndexOf("\sdk\"))))</DirectoryPartofPath>
+      <DirectoryPartofPath>$(DirectoryPartofPath.Remove($(DirectoryPartofPath.LastIndexOf("\src"))))</DirectoryPartofPath>
+      <PackageProjectUrl>$(RepositoryUrl)/blob/$(CommitSHA)$(DirectoryPartofPath)/README.md</PackageProjectUrl>
+    </PropertyGroup>
+  </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" PrivateAssets="all" IsImplicitlyDefined="true" />
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true' and '$(OS)' != 'Windows_NT'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
   <!-- Add Client SDK Analyzers -->
   <ItemGroup>
-    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-preview1" PrivateAssets="All" />
+    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
+
+    <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+
+    <PackageReference Condition="'$(EnableStyleCopAnalyzers)' == 'true'" Include="StyleCop.Analyzers" >
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
-  <!-- Import default references if this is not set -->
-  <PropertyGroup Condition="'$(ImportDefaultReferences)'==''">
-    <ImportDefaultReferences>true</ImportDefaultReferences>
+  <!-- Enable SourceLink  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
+    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
+    <DefaultReferenceTargets Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">AzSdk.test.reference.targets</DefaultReferenceTargets>
+
+    <!-- Disable running of tests for test helper libraries -->
+    <IsTestProject Condition="'$(IsTestSupportProject)' == 'true'">false</IsTestProject>
   </PropertyGroup>
 
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
+
+  <Import Project="Versioning.targets" />
 </Project>

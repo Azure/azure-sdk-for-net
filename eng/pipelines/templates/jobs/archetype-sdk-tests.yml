@@ -1,0 +1,72 @@
+parameters:
+  PreSteps: []
+  EnvVars: {}
+  MaxParallel: 0
+
+jobs:
+  - job: "Test"
+    variables:
+      - template: ../variables/globals.yml
+
+    # Increase timeout so Event Hubs tests do not timeout (Windows runs for ~2h 35m, on average due to having two target platforms)
+    # https://github.com/Azure/azure-sdk-for-net/issues/5982
+    timeoutInMinutes: 175
+
+    strategy:
+      maxParallel: ${{ parameters.MaxParallel }}
+      matrix:
+        Linux:
+          OSName: "Linux"
+          OSVmImage: "ubuntu-16.04"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetCoreApp:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetFramework:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+        MacOs:
+          OSName: "MacOS"
+          OSVmImage: "macOS-10.13"
+          TestTargetFramework: netcoreapp2.1
+    pool:
+      vmImage: "$(OSVmImage)"
+
+    steps:
+      - ${{ parameters.PreSteps }}
+
+      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
+        parameters:
+          OSName: $(OSName)
+
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
+
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          packageType: sdk
+          version: "$(DotNetCoreSDKVersion)"
+
+      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false
+        displayName: "Build & Test (all tests for $(TestTargetFramework))"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+          AZURE_TEST_MODE: "None"
+          ${{ insert }}: ${{ parameters.EnvVars }}
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        displayName: "Publish Results ($(TestTargetFramework))"
+        inputs:
+          testResultsFiles: "**/$(TestTargetFramework)*.trx"
+          testRunTitle: "$(OSName) $(TestTargetFramework)"
+          testResultsFormat: "VSTest"
+          mergeTestResults: true

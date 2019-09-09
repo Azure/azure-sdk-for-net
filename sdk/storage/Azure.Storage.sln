@@ -1,0 +1,162 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{9056EE3A-9ED4-441A-9A88-A567ED07DDDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{6890AA6B-C71C-48A0-BE49-E0D5AD4E914F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Tests", "Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj", "{6D68AF55-B0AF-435E-A943-9F53F1A062E0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs", "Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{3B14B995-1D5B-42C4-AD7F-5C9B91481039}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Tests", "Azure.Storage.Blobs\tests\Azure.Storage.Blobs.Tests.csproj", "{BCA1EC4A-8B3E-4F22-A3E5-8AA405978BDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files", "Azure.Storage.Files\src\Azure.Storage.Files.csproj", "{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Tests", "Azure.Storage.Files\tests\Azure.Storage.Files.Tests.csproj", "{05EBD54A-0437-46C3-A6FF-E49EC89EA22C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{2864E202-6DF1-47A7-AD91-496FB1B37F6F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Tests", "Azure.Storage.Queues\tests\Azure.Storage.Queues.Tests.csproj", "{CA7C46F4-DE70-467F-802E-024063083F66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{A4D0A040-DB1C-4B1D-B4D8-8004C58DB49D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		ci.yml = ci.yml
+		CONTRIBUTING.md = CONTRIBUTING.md
+		Directory.Build.props = Directory.Build.props
+		generate.ps1 = generate.ps1
+		README.md = README.md
+		tests.yml = tests.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blobs", "Blobs", "{B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Blobs\BreakingChanges.txt = Azure.Storage.Blobs\BreakingChanges.txt
+		Azure.Storage.Blobs\Changelog.txt = Azure.Storage.Blobs\Changelog.txt
+		Azure.Storage.Blobs\README.md = Azure.Storage.Blobs\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Queues", "Queues", "{F4218B06-A246-4762-984D-5BC852B62889}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Queues\BreakingChanges.txt = Azure.Storage.Queues\BreakingChanges.txt
+		Azure.Storage.Queues\Changelog.txt = Azure.Storage.Queues\Changelog.txt
+		Azure.Storage.Queues\README.md = Azure.Storage.Queues\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Files\BreakingChanges.txt = Azure.Storage.Files\BreakingChanges.txt
+		Azure.Storage.Files\Changelog.txt = Azure.Storage.Files\Changelog.txt
+		Azure.Storage.Files\README.md = Azure.Storage.Files\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{794500AE-0D91-414D-8C8C-08577C65AA7A}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Common\BreakingChanges.txt = Azure.Storage.Common\BreakingChanges.txt
+		Azure.Storage.Common\Changelog.txt = Azure.Storage.Common\Changelog.txt
+		Azure.Storage.Common\README.md = Azure.Storage.Common\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{69A8687B-B040-451E-A72E-295C6CFC1B8B}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Blobs\swagger\readme.md = Azure.Storage.Blobs\swagger\readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{AD85524A-FB82-475C-9907-27DBC2BE2945}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Files\swagger\readme.md = Azure.Storage.Files\swagger\readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{6EEF892F-E4EE-4610-9C94-4B206D9E7152}"
+	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Queues\swagger\readme.md = Azure.Storage.Queues\swagger\readme.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\identity\Azure.Identity\src\Azure.Identity.csproj", "{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Samples.Tests", "Azure.Storage.Blobs\samples\Azure.Storage.Blobs.Samples.Tests.csproj", "{3CB9895E-D5CC-4F30-B122-68A5522A51AB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Samples.Tests", "Azure.Storage.Queues\samples\Azure.Storage.Queues.Samples.Tests.csproj", "{1CDEBFBF-280D-4618-B52A-238EE6751A33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Samples.Tests", "Azure.Storage.Files\samples\Azure.Storage.Files.Samples.Tests.csproj", "{6C62BFA4-DB03-4701-934D-915AB28B9761}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Samples.Tests", "Azure.Storage.Common\samples\Azure.Storage.Common.Samples.Tests.csproj", "{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9056EE3A-9ED4-441A-9A88-A567ED07DDDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9056EE3A-9ED4-441A-9A88-A567ED07DDDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9056EE3A-9ED4-441A-9A88-A567ED07DDDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9056EE3A-9ED4-441A-9A88-A567ED07DDDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6890AA6B-C71C-48A0-BE49-E0D5AD4E914F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6890AA6B-C71C-48A0-BE49-E0D5AD4E914F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6890AA6B-C71C-48A0-BE49-E0D5AD4E914F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6890AA6B-C71C-48A0-BE49-E0D5AD4E914F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D68AF55-B0AF-435E-A943-9F53F1A062E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D68AF55-B0AF-435E-A943-9F53F1A062E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D68AF55-B0AF-435E-A943-9F53F1A062E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D68AF55-B0AF-435E-A943-9F53F1A062E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B14B995-1D5B-42C4-AD7F-5C9B91481039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B14B995-1D5B-42C4-AD7F-5C9B91481039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B14B995-1D5B-42C4-AD7F-5C9B91481039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B14B995-1D5B-42C4-AD7F-5C9B91481039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCA1EC4A-8B3E-4F22-A3E5-8AA405978BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCA1EC4A-8B3E-4F22-A3E5-8AA405978BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCA1EC4A-8B3E-4F22-A3E5-8AA405978BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCA1EC4A-8B3E-4F22-A3E5-8AA405978BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05EBD54A-0437-46C3-A6FF-E49EC89EA22C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05EBD54A-0437-46C3-A6FF-E49EC89EA22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05EBD54A-0437-46C3-A6FF-E49EC89EA22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05EBD54A-0437-46C3-A6FF-E49EC89EA22C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2864E202-6DF1-47A7-AD91-496FB1B37F6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2864E202-6DF1-47A7-AD91-496FB1B37F6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2864E202-6DF1-47A7-AD91-496FB1B37F6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2864E202-6DF1-47A7-AD91-496FB1B37F6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7C46F4-DE70-467F-802E-024063083F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7C46F4-DE70-467F-802E-024063083F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7C46F4-DE70-467F-802E-024063083F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7C46F4-DE70-467F-802E-024063083F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CDEBFBF-280D-4618-B52A-238EE6751A33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CDEBFBF-280D-4618-B52A-238EE6751A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CDEBFBF-280D-4618-B52A-238EE6751A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CDEBFBF-280D-4618-B52A-238EE6751A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C62BFA4-DB03-4701-934D-915AB28B9761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C62BFA4-DB03-4701-934D-915AB28B9761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C62BFA4-DB03-4701-934D-915AB28B9761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C62BFA4-DB03-4701-934D-915AB28B9761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{69A8687B-B040-451E-A72E-295C6CFC1B8B} = {B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}
+		{AD85524A-FB82-475C-9907-27DBC2BE2945} = {9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}
+		{6EEF892F-E4EE-4610-9C94-4B206D9E7152} = {F4218B06-A246-4762-984D-5BC852B62889}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F236F49-3FED-4E35-AF93-48BA7EB0D42A}
+	EndGlobalSection
+EndGlobal

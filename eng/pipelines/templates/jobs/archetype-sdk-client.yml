@@ -1,0 +1,134 @@
+jobs:
+  - job: Build
+    variables:
+      - template: ../variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+      - checkout: self
+        path: AzureSDKEngSystem/Net/SourceDirectory
+      - pwsh: |
+          echo "##vso[build.addbuildtag]Scheduled"
+        displayName: "Tag scheduled builds"
+        condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          version: "$(DotNetCoreSDKVersion)"
+      - script: >-
+          dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}}
+          /p:PublicSign=false ${{ parameters.VersioningProperties }} /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
+        displayName: "Build and Package"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+      - task: PublishPipelineArtifact@1
+        condition: succeededOrFailed()
+        inputs:
+          artifactName: packages
+          path: $(Build.ArtifactStagingDirectory)
+  - job: "Analyze"
+    variables:
+      - template: ../variables/globals.yml
+    dependsOn:
+      - Build
+    pool:
+      vmImage: "windows-2019"
+    steps:
+      - checkout: self
+        path: AzureSDKEngSystem/Net/SourceDirectory
+      - task: UsePythonVersion@0
+        displayName: "Use Python 3.6"
+        inputs:
+          versionSpec: "3.6"
+      - script: |
+          pip install setuptools wheel
+          pip install doc-warden
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
+        displayName: "Verify Readmes"
+      - task: DownloadPipelineArtifact@2
+        displayName: "Download Build Artifacts"
+        condition: succeededOrFailed()
+        inputs:
+          artifact: packages
+          path: $(Pipeline.Workspace)/packages
+          patterns: "*.nupkg"
+      - task: PowerShell@2
+        displayName: "Analyze dependencies"
+        inputs:
+          filePath: "tools/AnalyzeDeps/AnalyzeDeps.ps1"
+          arguments: '-PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" -OutPath "$(Build.ArtifactStagingDirectory)/dependencies.html"'
+          pwsh: true
+      - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
+        parameters:
+          SourceDirectory: $(Build.SourcesDirectory)
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: "Component Detection"
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        inputs:
+          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+      - task: PublishPipelineArtifact@1
+        condition: succeededOrFailed()
+        displayName: "Publish Report Artifacts"
+        inputs:
+          artifactName: reports
+          path: $(Build.ArtifactStagingDirectory)/dependencies.html
+  - job: "Test"
+    variables:
+      - template: ../variables/globals.yml
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Linux:
+          OSName: "Linux"
+          OSVmImage: "ubuntu-16.04"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetCoreApp:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetFramework:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+        MacOs:
+          OSName: "MacOS"
+          OSVmImage: "macOS-10.13"
+          TestTargetFramework: netcoreapp2.1
+    pool:
+      vmImage: "$(OSVmImage)"
+    steps:
+      - checkout: self
+        path: AzureSDKEngSystem/Net/SourceDirectory
+      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
+        parameters:
+          OSName: $(OSName)
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          packageType: sdk
+          version: "$(DotNetCoreSDKVersion)"
+      - script: >-
+          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" 
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration)
+        displayName: "Build & Test ($(TestTargetFramework))"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        displayName: "Publish Results ($(TestTargetFramework))"
+        inputs:
+          testResultsFiles: "**/$(TestTargetFramework)*.trx"
+          testRunTitle: "$(OSName) $(TestTargetFramework)"
+          testResultsFormat: "VSTest"
+          mergeTestResults: true

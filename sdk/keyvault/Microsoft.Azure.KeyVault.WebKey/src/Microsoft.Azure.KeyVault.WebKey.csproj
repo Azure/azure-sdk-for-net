@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Microsoft Azure Key Vault WebKey Class Library</Description>
+    <AssemblyTitle>Microsoft Azure Key Vault WebKey</AssemblyTitle>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="System.Collections" />
+    <PackageReference Include="System.Runtime" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" />
+    <PackageReference Include="System.Security.Cryptography.Cng" />
+    <PackageReference Include="System.Collections.Concurrent" />
+    <PackageReference Include="System.Linq" />
+  </ItemGroup>
+</Project>

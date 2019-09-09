@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
+    <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
+    <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
+    <PackageReleaseNotes>
+      For release notes and more information please visit https://aka.ms/azure-sdk-preview1-net
+    </PackageReleaseNotes>
+    <Description>
+      This client library enables working with the Microsoft Azure Storage services which include the blob and file services for storing binary and text data, and the queue service for storing messages that may be accessed by a client.
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/changelog.txt
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/BreakingChanges.txt
+      Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
+      Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
+    </Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <!--
+    Compile in ArrayBufferWriter which is needed for our recorded tests
+    (and shared via InternalsVisibleTo with the other libraries)
+    -->
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

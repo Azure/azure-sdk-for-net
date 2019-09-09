@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Microsoft Azure Key Vault Cryptography Class Library</Description>
+    <AssemblyTitle>Microsoft Azure Key Vault Cryptography</AssemblyTitle>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.KeyVault.Core\src\Microsoft.Azure.KeyVault.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetstandard)' == 'true'">
+    <PackageReference Include="System.Diagnostics.Tools" />
+    <PackageReference Include="System.Linq" />
+    <PackageReference Include="System.Globalization" />
+    <PackageReference Include="System.Runtime.Extensions" />
+    <PackageReference Include="System.Security.Cryptography.Primitives" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" />
+    <PackageReference Include="System.Security.Cryptography.Cng" />
+  </ItemGroup>
+</Project>

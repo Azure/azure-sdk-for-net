@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Network</PackageId>
+		<Description>Provides management capabilities for Network services.</Description>
+		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
+		<Version>19.14.0-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<PackageReleaseNotes>
+		<![CDATA[
+            - Fixed incorrect properties of ApplicationGatewayOnDemandProbe
+            - Added operation UnprepareNetworkPolicies for Subnets
+            - Added operations for FirewallPolicies and FirewallPolicyRuleGroups
+            - Added read-only property LoadBalancerFrontendIpConfiguration to PublicIPPrefix
+            - Updated models for PrivateEndpoints and PrivateLinks
+		]]></PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>
