@@ -33,12 +33,17 @@ namespace Azure.Security.KeyVault.Certificates
 
         public override bool Equals(object obj)
         {
-            return obj is CertificateKeyType && string.CompareOrdinal(_value, ((CertificateKeyType)obj)._value) == 0;
+            return obj is CertificateKeyType && this.Equals((CertificateKeyType)obj);
+        }
+
+        public bool Equals(CertificateKeyType other)
+        {
+            return string.CompareOrdinal(_value, other._value) == 0;
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return _value?.GetHashCode() ?? 0;
         }
 
         public override string ToString()
