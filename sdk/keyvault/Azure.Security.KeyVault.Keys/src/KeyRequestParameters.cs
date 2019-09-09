@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    internal class KeyRequestParameters : Model
+    internal class KeyRequestParameters : IJsonSerializable
     {
         private KeyAttributes _attributes;
 
@@ -98,14 +98,14 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText KeySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
         private const string KeyOpsPropertyName = "key_ops";
         private static readonly JsonEncodedText KeyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
-        private const string CurveNamePropertyName = "curveName";
+        private const string CurveNamePropertyName = "crv";
         private static readonly JsonEncodedText CurveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
         private const string AttributesPropertyName = "attributes";
         private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private const string TagsPropertyName = "tags";
         private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
 
-        internal override void WriteProperties(Utf8JsonWriter json)
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if(KeyType != default)
             {
@@ -123,7 +123,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 json.WriteStartObject(AttributesPropertyNameBytes);
 
-                _attributes.WriteProperties(ref json);
+                _attributes.WriteProperties(json);
 
                 json.WriteEndObject();
             }
@@ -148,8 +148,5 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteEndObject();
             }
         }
-
-        internal override void ReadProperties(JsonElement json) { }
-        
     }
 }

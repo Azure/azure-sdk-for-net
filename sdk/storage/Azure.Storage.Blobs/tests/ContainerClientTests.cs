@@ -228,7 +228,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task DeleteAsync_AccessConditions()
         {
-            var garbageLeaseId = this.GetGarbageLeaseId(); 
+            var garbageLeaseId = this.GetGarbageLeaseId();
             foreach (var parameters in this.AccessConditions_Data)
             {
                 // Arrange
@@ -592,7 +592,7 @@ namespace Azure.Storage.Blobs.Test
             var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
             await container.CreateAsync();
             var id = this.Recording.Random.NewGuid().ToString();
-            var duration = 15;
+            var duration = TimeSpan.FromSeconds(15);
 
             // Act
             var response = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
@@ -611,13 +611,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task AcquireLeaseAsync_ErrorDurationTooLarge()
+        {
+            // Arrange
+            var service = this.GetServiceClient_SharedKey();
+            var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
+            var id = this.Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.MaxValue;
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                container.GetLeaseClient(id).AcquireAsync(duration: duration),
+                e => StringAssert.Contains("InvalidHeaderValue", e.ErrorCode));
+        }
+
+        [Test]
         public async Task AcquireLeaseAsync_Error()
         {
             // Arrange
             var service = this.GetServiceClient_SharedKey();
             var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
             var id = this.Recording.Random.NewGuid().ToString();
-            var duration = 15;
+            var duration = TimeSpan.FromSeconds(15);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -640,7 +655,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 // Act
                 var response = await container.GetLeaseClient(id).AcquireAsync(
@@ -675,7 +690,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: false);
 
                     var id = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -696,10 +711,10 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateAsync();
 
             var id = this.Recording.Random.NewGuid().ToString();
-            var duration = 15;
+            var duration = TimeSpan.FromSeconds(15);
 
             var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(
-                duration: duration); 
+                duration: duration);
 
             // Act
             var renewResponse = await container.GetLeaseClient(leaseResponse.Value.LeaseId).RenewAsync();
@@ -746,7 +761,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 var lease = container.GetLeaseClient(id);
                 _ = await lease.AcquireAsync(duration: duration);
 
@@ -782,7 +797,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var lease = container.GetLeaseClient(id);
                 var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
@@ -810,7 +825,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration);
 
                 // Act
@@ -852,7 +867,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: false);
 
                     var id = this.Recording.Random.NewGuid().ToString();
-                    var duration = 15;
+                    var duration = TimeSpan.FromSeconds(15);
 
                     var lease = container.GetLeaseClient(id);
                     var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
@@ -881,7 +896,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var lease = container.GetLeaseClient(id); ;
                 var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
@@ -909,7 +924,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 await container.GetLeaseClient(id).AcquireAsync(duration);
                 var breakPeriod = 0;
 
@@ -953,7 +968,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
@@ -990,7 +1005,7 @@ namespace Azure.Storage.Blobs.Test
                     lease: false);
 
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
@@ -1018,7 +1033,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
                 var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration);
                 var newId = this.Recording.Random.NewGuid().ToString();
 
@@ -1064,7 +1079,7 @@ namespace Azure.Storage.Blobs.Test
 
                 var id = this.Recording.Random.NewGuid().ToString();
                 var newId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
@@ -1103,7 +1118,7 @@ namespace Azure.Storage.Blobs.Test
 
                 var id = this.Recording.Random.NewGuid().ToString();
                 var newId = this.Recording.Random.NewGuid().ToString();
-                var duration = 15;
+                var duration = TimeSpan.FromSeconds(15);
 
                 var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
@@ -1150,6 +1165,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListBlobsFlatSegmentAsync_MaxResults()
         {
             using (this.GetNewContainer(out var container))
@@ -1159,12 +1175,12 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var page = await container.GetBlobsAsync().ByPage(pageSizeHint: 2).FirstAsync();
-                
+
                 // Assert
-                Assert.AreEqual(2, page.Values.Length);
+                Assert.AreEqual(2, page.Values.Count);
             }
         }
-        
+
         [Test]
         public async Task ListBlobsFlatSegmentAsync_Metadata()
         {
@@ -1351,6 +1367,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListBlobsHierarchySegmentAsync_MaxResults()
         {
             using (this.GetNewContainer(out var container))
@@ -1365,10 +1382,10 @@ namespace Azure.Storage.Blobs.Test
                     .FirstAsync();
 
                 // Assert
-                Assert.AreEqual(2, page.Values.Length);
+                Assert.AreEqual(2, page.Values.Count);
             }
         }
-        
+
         [Test]
         public async Task ListBlobsHierarchySegmentAsync_Metadata()
         {

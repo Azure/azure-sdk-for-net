@@ -8,8 +8,8 @@
       "Key": {
         "Type": "Common.AutoUserScope?",
         "Name": "Scope",
-        "SummaryComment": "The scope for the auto user. If omitted, the default is <see cref=\"Common.AutoUserScope.Task\"/>.",
-        "RemarksComment": null,
+        "SummaryComment": "The scope for the auto user. If omitted, the default is <see cref=\"Common.AutoUserScope.Pool\"/>.",
+        "RemarksComment": "If the pool is running Windows a value of <see cref=\"Common.AutoUserScope.Task\"/> should be specified if stricter isolation between tasks is required. For example, if the Task mutates the registry in a way which could impact other Tasks, or if Certificates have been specified on the pool which should not be accessible by normal tasks but should be accessible by StartTasks.",
         "BoundAccess": "read",
         "UnboundAccess": "read,write",
         "ConstructorArgumentType": "Optional",

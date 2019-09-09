@@ -32,7 +32,7 @@ namespace Azure.Storage
         /// <see cref="AsyncCollection{T}"/>.
         /// </summary>
         /// <remarks>
-        /// This is all you need to implement when providng a new 
+        /// This is all you need to implement when providng a new
         /// <see cref="AsyncCollection{T}"/>.
         /// </remarks>
         /// <param name="continuationToken">
@@ -121,7 +121,7 @@ namespace Azure.Storage
             {
                 var page = await this.GetNextPageAsync(
                     continuationToken,
-                    null, 
+                    null,
                     isAsync: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -138,7 +138,7 @@ namespace Azure.Storage
         /// make mutliple service requests.
         /// </summary>
         /// <returns>A sequence of values.</returns>
-        protected override IEnumerator<Response<T>> GetEnumerator()
+        protected IEnumerator<Response<T>> GetEnumerator()
         {
             string continuationToken = null;
             do

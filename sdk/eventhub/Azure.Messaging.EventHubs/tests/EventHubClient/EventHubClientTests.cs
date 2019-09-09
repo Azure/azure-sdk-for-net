@@ -22,7 +22,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
     public class EventHubClientTests
     {
         /// <summary>
@@ -64,8 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubClientOptions
             {
                 TransportType = TransportType.AmqpWebSockets,
-                DefaultTimeout = TimeSpan.FromHours(2),
-                Retry = new ExponentialRetry(TimeSpan.FromMinutes(10), TimeSpan.FromHours(1), 24),
+                RetryOptions = new RetryOptions { MaximumRetries = 88, TryTimeout = TimeSpan.FromMinutes(58) },
                 Proxy = Mock.Of<IWebProxy>()
             };
 
@@ -121,8 +119,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorDoesNotRequireEventHubInConnectionStringWhenPassedSeparate()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.Nothing, "The constructor without options should not require the conection string event hub");
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.Nothing, "The constructor with options should not require the conection string event hub");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.Nothing, "The constructor without options should not require the connection string event hub");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.Nothing, "The constructor with options should not require the connection string event hub");
         }
 
         /// <summary>
@@ -146,11 +144,25 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructoNotAllowTheEventHubToBePassedTwice()
+        public void ConstructorDoesNotAllowTheEventHubToBePassedTwiceIfDifferent()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.InstanceOf<ArgumentException>(), "The constructor without options should detect multiple Event Hubs");
-            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should detect multiple Event Hubs");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.InstanceOf<ArgumentException>(), "The constructor without options should detect multiple different Event Hubs");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should detect multiple different Event Hubs");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorAllowsTheEventHubToBePassedTwiceIfEqual()
+        {
+            var eventHubName = "myHub";
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ eventHubName }";
+            Assert.That(() => new EventHubClient(fakeConnection, eventHubName), Throws.Nothing, "The constructor without options should allow the same Event Hub in multiple places");
+            Assert.That(() => new EventHubClient(fakeConnection, eventHubName, new EventHubClientOptions()), Throws.Nothing, "The constructor with options should allow the same Event Hub in multiple places");
         }
 
         /// <summary>
@@ -161,10 +173,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCaseSource(nameof(ConstructorExpandedArgumentInvalidCases))]
         public void ConstructorValidatesExpandedArguments(string host,
-                                                          string eventHubPath,
+                                                          string eventHubName,
                                                           TokenCredential credential)
         {
-            Assert.That(() => new EventHubClient(host, eventHubPath, credential), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubClient(host, eventHubName, credential), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -183,9 +195,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
             Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.DefaultTimeout, Is.EqualTo(defaultOptions.DefaultTimeout), $"The { constructorDescription } constructor should have the correct default timeout.");
             Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)options.Retry, (ExponentialRetry)defaultOptions.Retry), $"The { constructorDescription } constructor should have the correct retry.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The { constructorDescription } constructor should have the correct retry options.");
         }
 
         /// <summary>
@@ -204,9 +215,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
             Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.DefaultTimeout, Is.EqualTo(constructorOptions.DefaultTimeout), $"The { constructorDescription } constructor should have the correct default timeout.");
             Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)options.Retry, (ExponentialRetry)constructorOptions.Retry), $"The { constructorDescription } constructor should have the correct retry.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(constructorOptions.RetryOptions), Is.True, $"The { constructorDescription } constructor should have the correct retry options.");
         }
 
         /// <summary>
@@ -221,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityPath }";
             var client = new EventHubClient(fakeConnection);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -236,7 +246,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
             var client = new EventHubClient(fakeConnection, entityPath);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -252,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = Mock.Of<TokenCredential>();
             var client = new EventHubClient(host, entityPath, credential);
 
-            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
+            Assert.That(client.EventHubName, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -278,7 +288,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorWithExpandedArgumentsValidatesOptions()
         {
             var invalidOptions = new EventHubClientOptions { TransportType = TransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
-            Assert.That(() => new EventHubClient("host", "path", Mock.Of<TokenCredential>(), invalidOptions), Throws.ArgumentException, "The cexpanded argument onstructor should validate client options");
+            Assert.That(() => new EventHubClient("host", "path", Mock.Of<TokenCredential>(), invalidOptions), Throws.ArgumentException, "The expanded argument constructor should validate client options");
         }
 
         /// <summary>
@@ -289,7 +299,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ContructorWithConnectionStringCreatesTheTransportClient()
         {
-
             var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubClientOptions());
             Assert.That(GetTransportClient(client), Is.Not.Null);
         }
@@ -330,9 +339,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
             Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.DefaultTimeout, Is.EqualTo(defaultOptions.DefaultTimeout), $"The { constructorDescription } constructor should have the correct default timeout.");
             Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)options.Retry, (ExponentialRetry)defaultOptions.Retry), $"The { constructorDescription } constructor should have the correct retry.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The { constructorDescription } constructor should have the correct retry.");
         }
 
         /// <summary>
@@ -351,9 +359,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
             Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.DefaultTimeout, Is.EqualTo(constructorOptions.DefaultTimeout), $"The { constructorDescription } constructor should have the correct default timeout.");
             Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)options.Retry, (ExponentialRetry)constructorOptions.Retry), $"The { constructorDescription } constructor should have the correct retry.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(constructorOptions.RetryOptions), Is.True, $"The { constructorDescription } constructor should have the correct retry.");
         }
 
         /// <summary>
@@ -375,7 +382,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new SharedAccessSignatureCredential(signature);
             var client = new EventHubClient(host, path, credential);
 
-            Assert.That(() => client.BuildTransportClient(host, path, credential, options), Throws.Nothing);
+            Assert.That(() => client.BuildTransportClient(host, path, credential, options, client.RetryPolicy), Throws.Nothing);
         }
 
         /// <summary>
@@ -397,7 +404,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new SharedAccessSignatureCredential(signature);
             var client = new EventHubClient(host, path, credential);
 
-            Assert.That(() => client.BuildTransportClient(host, path, credential, options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.BuildTransportClient(host, path, credential, options, client.RetryPolicy), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -408,16 +415,21 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateProducerCreatesDefaultWhenNoOptionsArePassed()
         {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
             var clientOptions = new EventHubClientOptions
             {
-                Retry = new ExponentialRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), 5),
-                DefaultTimeout = TimeSpan.FromHours(24)
+                RetryOptions = retryOptions
             };
 
             var expected = new EventHubProducerOptions
             {
-                Retry = clientOptions.Retry,
-                Timeout = clientOptions.DefaultTimeout
+                RetryOptions = retryOptions
             };
 
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
@@ -427,8 +439,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(mockClient.ProducerOptions, Is.Not.Null, "The producer options should have been set.");
             Assert.That(mockClient.ProducerOptions.PartitionId, Is.EqualTo(expected.PartitionId), "The partition identifiers should match.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)mockClient.ProducerOptions.Retry, (ExponentialRetry)expected.Retry), "The retries should match.");
-            Assert.That(mockClient.ProducerOptions.TimeoutOrDefault, Is.EqualTo(expected.TimeoutOrDefault), "The timeouts should match.");
+            Assert.That(mockClient.ProducerOptions.RetryOptions.IsEquivalentTo(expected.RetryOptions), Is.True, "The retries should match.");
         }
 
         /// <summary>
@@ -437,38 +448,28 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateProducerCreatesDefaultWhenOptionsAreNotSet()
+        public void CreateProducerReceivesTheDefaultRetryPolicy()
         {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
             var clientOptions = new EventHubClientOptions
             {
-                Retry = new ExponentialRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), 5),
-                DefaultTimeout = TimeSpan.FromHours(24)
-            };
-
-            var producerOptions = new EventHubProducerOptions
-            {
-                PartitionId = "123",
-                Retry = null,
-                Timeout = TimeSpan.Zero
-            };
-
-            var expected = new EventHubProducerOptions
-            {
-                PartitionId = producerOptions.PartitionId,
-                Retry = clientOptions.Retry,
-                Timeout = clientOptions.DefaultTimeout
+                RetryOptions = retryOptions
             };
 
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
 
-            mockClient.CreateProducer(producerOptions);
+            mockClient.CreateProducer();
 
-            Assert.That(mockClient.ProducerOptions, Is.Not.Null, "The producer options should have been set.");
-            Assert.That(mockClient.ProducerOptions, Is.Not.SameAs(producerOptions), "The options should have been cloned.");
-            Assert.That(mockClient.ProducerOptions.PartitionId, Is.EqualTo(expected.PartitionId), "The partition identifiers should match.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)mockClient.ProducerOptions.Retry, (ExponentialRetry)expected.Retry), "The retries should match.");
-            Assert.That(mockClient.ProducerOptions.TimeoutOrDefault, Is.EqualTo(expected.TimeoutOrDefault), "The timeouts should match.");
+            Assert.That(mockClient.RetryPolicy, Is.Not.Null, "The client should have a retry policy set.");
+            Assert.That(mockClient.ProducerDefaultRetry, Is.Not.Null, "The producer should have received a default retry policy.");
+            Assert.That(mockClient.ProducerDefaultRetry, Is.SameAs(mockClient.RetryPolicy), "The client retry policy should have been used as the default.");
         }
 
         /// <summary>
@@ -479,17 +480,21 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateConsumerCreatesDefaultWhenNoOptionsArePassed()
         {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
             var clientOptions = new EventHubClientOptions
             {
-                Retry = new ExponentialRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), 5),
-                DefaultTimeout = TimeSpan.FromHours(24)
+                RetryOptions = retryOptions
             };
 
             var expectedOptions = new EventHubConsumerOptions
             {
-                Retry = clientOptions.Retry,
-                DefaultMaximumReceiveWaitTime = clientOptions.DefaultTimeout
-
+                RetryOptions = retryOptions
             };
 
             var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroupName;
@@ -505,7 +510,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
+            Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
         }
 
@@ -517,10 +522,16 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateConsumerCreatesDefaultWhenOptionsAreNotSet()
         {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
             var clientOptions = new EventHubClientOptions
             {
-                Retry = new ExponentialRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), 5),
-                DefaultTimeout = TimeSpan.FromHours(24)
+                RetryOptions = retryOptions
             };
 
             var expectedOptions = new EventHubConsumerOptions
@@ -528,9 +539,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 OwnerLevel = 251,
                 Identifier = "Bob",
                 PrefetchCount = 600,
-                Retry = clientOptions.Retry,
-                DefaultMaximumReceiveWaitTime = clientOptions.DefaultTimeout
-
+                RetryOptions = retryOptions,
+                DefaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(123)
             };
 
             var expectedConsumerGroup = "SomeGroup";
@@ -547,8 +557,38 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
+            Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubClient.CreateConsumer" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateConsumerReceivesTheDefaultRetryPolicy()
+        {
+            var retryOptions = new RetryOptions
+            {
+                MaximumRetries = 99,
+                MaximumDelay = TimeSpan.FromHours(72),
+                Delay = TimeSpan.FromSeconds(27)
+            };
+
+            var clientOptions = new EventHubClientOptions
+            {
+                RetryOptions = retryOptions
+            };
+
+            var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
+            var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
+
+            mockClient.CreateConsumer("bleh", "1", EventPosition.Earliest);
+
+            Assert.That(mockClient.RetryPolicy, Is.Not.Null, "The client should have a retry policy set.");
+            Assert.That(mockClient.ConsumerDefaultRetry, Is.Not.Null, "The consumer should have received a default retry policy.");
+            Assert.That(mockClient.ConsumerDefaultRetry, Is.SameAs(mockClient.RetryPolicy), "The client retry policy should have been used as the default.");
         }
 
         /// <summary>
@@ -650,6 +690,41 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubClient.RetryPolicy" />
+        ///   setter.
+        /// </summary>
+        ///
+        [Test]
+        public void SettingTheRetryPolicyUpdatesState()
+        {
+            var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
+            var clientOptions = new EventHubClientOptions();
+            var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
+
+            var newRetry = Mock.Of<EventHubRetryPolicy>();
+            mockClient.RetryPolicy = newRetry;
+
+            Assert.That(mockClient.RetryPolicy, Is.SameAs(newRetry), "The client should have the correct retry policy set.");
+            Assert.That(mockClient.ClientOptions.RetryOptions, Is.Null, "The retry options should have been cleared when a new retry policy is set.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubClient.RetryPolicy" />
+        ///   setter.
+        /// </summary>
+        ///
+        [Test]
+        public void SettingTheRetryPolicyUpdatesTheTransportClient()
+        {
+            var newRetry = Mock.Of<EventHubRetryPolicy>();
+            var transportClient = new ObservableTransportClientMock();
+            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
+
+            client.RetryPolicy = newRetry;
+            Assert.That(transportClient.UpdateRetryPolicyCalledWith, Is.SameAs(newRetry), "The retry policy should have been passed as the update.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubClient.GetPropertiesAsync" />
         ///   method.
         /// </summary>
@@ -692,15 +767,15 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedOptions = new EventHubProducerOptions { Retry = Retry.Default };
+            var expectedOptions = new EventHubProducerOptions { RetryOptions = new RetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
 
             client.CreateProducer(expectedOptions);
-            var actualOptions = transportClient.CreateProducerCalledWithOptions;
+            (var actualOptions, var actualDefaultRetry) = transportClient.CreateProducerCalledWith;
 
             Assert.That(actualOptions, Is.Not.Null, "The producer options should have been set.");
             Assert.That(actualOptions.PartitionId, Is.EqualTo(expectedOptions.PartitionId), "The partition identifiers should match.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
-            Assert.That(actualOptions.TimeoutOrDefault, Is.EqualTo(expectedOptions.TimeoutOrDefault), "The timeouts should match.");
+            Assert.That(actualOptions.RetryOptions.IsEquivalentTo(expectedOptions.RetryOptions), Is.True, "The retry options should match.");
+            Assert.That(actualDefaultRetry, Is.SameAs(client.RetryPolicy), "The client retry policy should have been used as the default.");
         }
 
         /// <summary>
@@ -713,13 +788,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedOptions = new EventHubConsumerOptions { Retry = Retry.Default };
+            var expectedOptions = new EventHubConsumerOptions { RetryOptions = new RetryOptions { MaximumRetries = 67 } };
             var expectedPosition = EventPosition.FromOffset(65);
             var expectedPartition = "2123";
             var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroupName;
 
             client.CreateConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
-            (var actualConsumerGroup, var actualPartition, var actualPosition, var actualOptions) = transportClient.CreateConsumerCalledWith;
+            (var actualConsumerGroup, var actualPartition, var actualPosition, var actualOptions, var actualDefaultRetry) = transportClient.CreateConsumerCalledWith;
 
             Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
             Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer groups should match.");
@@ -729,8 +804,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
+            Assert.That(actualDefaultRetry, Is.SameAs(client.RetryPolicy), "The client retry policy should have been used as the default.");
         }
 
         /// <summary>
@@ -823,10 +898,10 @@ namespace Azure.Messaging.EventHubs.Tests
         private string BuildResource(EventHubClient client,
                                      TransportType transportType,
                                      string host,
-                                     string eventHubPath) =>
+                                     string eventHubName) =>
              typeof(EventHubClient)
-                 .GetMethod("BuildResource", BindingFlags.Static | BindingFlags.NonPublic)
-                 .Invoke(client, new object[] { transportType, host, eventHubPath }) as string;
+                 .GetMethod("BuildAudienceResource", BindingFlags.Static | BindingFlags.NonPublic)
+                 .Invoke(client, new object[] { transportType, host, eventHubName }) as string;
 
         /// <summary>
         ///   Provides a test shim for retrieving the transport client contained by an
@@ -854,8 +929,10 @@ namespace Azure.Messaging.EventHubs.Tests
                    .GetValue(this) as EventHubClientOptions;
 
             public EventHubClientOptions TransportClientOptions;
-            public EventHubProducerOptions ProducerOptions => _transportClient.CreateProducerCalledWithOptions;
+            public EventHubProducerOptions ProducerOptions => _transportClient.CreateProducerCalledWith.Options;
+            public EventHubRetryPolicy ProducerDefaultRetry => _transportClient.CreateProducerCalledWith.DefaultRetry;
             public EventHubConsumerOptions ConsumerOptions => _transportClient.CreateConsumerCalledWith.Options;
+            public EventHubRetryPolicy ConsumerDefaultRetry => _transportClient.CreateConsumerCalledWith.DefaultRetry;
 
             private ObservableTransportClientMock _transportClient;
 
@@ -865,13 +942,13 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public ReadableOptionsMock(string host,
-                                       string eventHubPath,
+                                       string eventHubName,
                                        TokenCredential credential,
-                                       EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                       EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
             }
 
-            internal override TransportEventHubClient BuildTransportClient(string host, string eventHubPath, TokenCredential credential, EventHubClientOptions options)
+            internal override TransportEventHubClient BuildTransportClient(string host, string eventHubName, TokenCredential credential, EventHubClientOptions options, EventHubRetryPolicy defaultRetry)
             {
                 TransportClientOptions = options;
                 _transportClient = new ObservableTransportClientMock();
@@ -888,14 +965,14 @@ namespace Azure.Messaging.EventHubs.Tests
             public bool WasCloseAsyncCalled = false;
 
             public ObservableOperationsMock(string connectionString,
-                                       EventHubClientOptions clientOptions = default) : base(connectionString, clientOptions)
+                                            EventHubClientOptions clientOptions = default) : base(connectionString, clientOptions)
             {
             }
 
             public ObservableOperationsMock(string host,
-                                       string eventHubPath,
-                                       TokenCredential credential,
-                                       EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                            string eventHubName,
+                                            TokenCredential credential,
+                                            EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
             }
 
@@ -926,15 +1003,19 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public InjectableTransportClientMock(TransportEventHubClient transportClient,
                                                  string host,
-                                                 string eventHubPath,
+                                                 string eventHubName,
                                                  TokenCredential credential,
-                                                 EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
+                                                 EventHubClientOptions clientOptions = default) : base(host, eventHubName, credential, clientOptions)
             {
                 TransportClient = transportClient;
                 SetTransportClient(transportClient);
             }
 
-            internal override TransportEventHubClient BuildTransportClient(string host, string eventHubPath, TokenCredential credential, EventHubClientOptions options) => TransportClient;
+            internal override TransportEventHubClient BuildTransportClient(string host,
+                                                                           string eventHubName,
+                                                                           TokenCredential credential,
+                                                                           EventHubClientOptions options,
+                                                                           EventHubRetryPolicy defaultRetry) => TransportClient;
 
             private void SetTransportClient(TransportEventHubClient transportClient) =>
                 typeof(EventHubClient)
@@ -949,8 +1030,9 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ObservableTransportClientMock : TransportEventHubClient
         {
-            public (string ConsumerGroup, string Partition, EventPosition position, EventHubConsumerOptions Options) CreateConsumerCalledWith;
-            public EventHubProducerOptions CreateProducerCalledWithOptions;
+            public (string ConsumerGroup, string Partition, EventPosition Position, EventHubConsumerOptions Options, EventHubRetryPolicy DefaultRetry) CreateConsumerCalledWith;
+            public (EventHubProducerOptions Options, EventHubRetryPolicy DefaultRetry) CreateProducerCalledWith;
+            public EventHubRetryPolicy UpdateRetryPolicyCalledWith;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
             public bool WasCloseCalled;
@@ -968,16 +1050,26 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(default(PartitionProperties));
             }
 
-            public override EventHubProducer CreateProducer(EventHubProducerOptions producerOptions = default)
+            public override EventHubProducer CreateProducer(EventHubProducerOptions producerOptions,
+                                                            EventHubRetryPolicy defaultRetry)
             {
-                CreateProducerCalledWithOptions = producerOptions;
+                CreateProducerCalledWith = (producerOptions, defaultRetry);
                 return default(EventHubProducer);
             }
 
-            public override EventHubConsumer CreateConsumer(string consumerGroup, string partitionId, EventPosition eventPosition, EventHubConsumerOptions consumerOptions)
+            public override EventHubConsumer CreateConsumer(string consumerGroup,
+                                                            string partitionId,
+                                                            EventPosition eventPosition,
+                                                            EventHubConsumerOptions consumerOptions,
+                                                            EventHubRetryPolicy defaultRetry)
             {
-                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, consumerOptions);
+                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, consumerOptions, defaultRetry);
                 return default(EventHubConsumer);
+            }
+
+            public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy)
+            {
+                UpdateRetryPolicyCalledWith = newRetryPolicy;
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken)

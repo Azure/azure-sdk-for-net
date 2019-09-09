@@ -203,11 +203,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IFailoverGroupsOperations FailoverGroups { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedInstancesOperations.
-        /// </summary>
-        public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -388,6 +383,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISensitivityLabelsOperations SensitivityLabels { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedInstanceAdministratorsOperations.
+        /// </summary>
+        public virtual IManagedInstanceAdministratorsOperations ManagedInstanceAdministrators { get; private set; }
+
+        /// <summary>
         /// Gets the IDatabaseOperations.
         /// </summary>
         public virtual IDatabaseOperations DatabaseOperations { get; private set; }
@@ -471,6 +471,31 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedDatabaseSensitivityLabelsOperations.
         /// </summary>
         public virtual IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; private set; }
+
+        /// <summary>
+        /// Gets the IInstancePoolsOperations.
+        /// </summary>
+        public virtual IInstancePoolsOperations InstancePools { get; private set; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -739,7 +764,6 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             EncryptionProtectors = new EncryptionProtectorsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
-            ManagedInstances = new ManagedInstancesOperations(this);
             Operations = new Operations(this);
             ServerKeys = new ServerKeysOperations(this);
             SyncAgents = new SyncAgentsOperations(this);
@@ -776,6 +800,7 @@ namespace Microsoft.Azure.Management.Sql
             ManagedDatabaseSecurityAlertPolicies = new ManagedDatabaseSecurityAlertPoliciesOperations(this);
             ManagedServerSecurityAlertPolicies = new ManagedServerSecurityAlertPoliciesOperations(this);
             SensitivityLabels = new SensitivityLabelsOperations(this);
+            ManagedInstanceAdministrators = new ManagedInstanceAdministratorsOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
@@ -793,6 +818,11 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstanceVulnerabilityAssessments = new ManagedInstanceVulnerabilityAssessmentsOperations(this);
             ServerVulnerabilityAssessments = new ServerVulnerabilityAssessmentsOperations(this);
             ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
+            InstancePools = new InstancePoolsOperations(this);
+            Usages = new UsagesOperations(this);
+            ManagedInstances = new ManagedInstancesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

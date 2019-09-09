@@ -7,17 +7,12 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
-using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Azure.Storage.Sas;
-using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -82,23 +77,26 @@ namespace Azure.Storage.Test.Shared
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultTargetTenant);
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigDefault);
 
         public BlobServiceClient GetServiceClient_SecondaryAccount_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultSecondaryTargetTenant);
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigSecondary);
 
         public BlobServiceClient GetServiceClient_PreviewAccount_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultTargetPreviewBlobTenant);
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPreviewBlob);
+
+        public BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey()
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPremiumBlob);
 
         public BlobServiceClient GetServiceClient_OauthAccount() =>
-            this.GetServiceClientFromOauthConfig(TestConfigurations.DefaultTargetOAuthTenant);
+            this.GetServiceClientFromOauthConfig(this.TestConfigOAuth);
 
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
@@ -107,7 +105,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsContainer(containerName: containerName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsContainer(containerName: containerName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceIdentitySas_Container(
@@ -116,7 +114,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsContainer(containerName: containerName, userDelegationKey, TestConfigurations.DefaultTargetOAuthTenant.AccountName)}"),
+                    new Uri($"{this.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsContainer(containerName: containerName, userDelegationKey, this.TestConfigOAuth.AccountName)}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Blob(
@@ -126,7 +124,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsBlob(containerName: containerName, blobName: blobName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsBlob(containerName: containerName, blobName: blobName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceIdentitySas_Blob(
@@ -136,7 +134,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: TestConfigurations.DefaultTargetOAuthTenant.AccountName)}"),
+                    new Uri($"{this.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: this.TestConfigOAuth.AccountName)}"),
                     this.GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Snapshot(
@@ -147,7 +145,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public IDisposable GetNewContainer(
@@ -155,21 +153,28 @@ namespace Azure.Storage.Test.Shared
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType? publicAccessType = default)
+            PublicAccessType publicAccessType = PublicAccessType.None,
+            bool premium = default)
         {
             containerName ??= this.GetNewContainerName();
             service ??= this.GetServiceClient_SharedKey();
             container = this.InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            if(publicAccessType == PublicAccessType.None)
+            {
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.Container;
+            }
+
             return new DisposingContainer(
                 container,
                 metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
-                publicAccessType ?? PublicAccessType.Container);
+                publicAccessType);
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
-                    TestConfigurations.DefaultTargetTenant.AccountName,
-                    TestConfigurations.DefaultTargetTenant.AccountKey);
+                    this.TestConfigDefault.AccountName,
+                    this.TestConfigDefault.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
             => new AccountSasBuilder
@@ -255,6 +260,23 @@ namespace Azure.Storage.Test.Shared
             return Convert.ToBase64String(bytes);
         }
 
+        public CustomerProvidedKey GetCustomerProvidedKey()
+        {
+            var bytes = new byte[32];
+            this.Recording.Random.NextBytes(bytes);
+            return new CustomerProvidedKey(bytes);
+        }
+
+        public Uri GetHttpsUri(Uri uri)
+        {
+            var uriBuilder = new UriBuilder(uri)
+            {
+                Scheme = Constants.Https,
+                Port = Constants.HttpPort
+            };
+            return uriBuilder.Uri;
+        }
+
         //TODO consider removing this.
         public async Task<string> SetupBlobMatchCondition(BlobBaseClient blob, string match)
         {
@@ -275,7 +297,7 @@ namespace Azure.Storage.Test.Shared
             Lease lease = null;
             if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await this.InstrumentClient(blob.GetLeaseClient(this.Recording.Random.NewGuid().ToString())).AcquireAsync(-1);
+                lease = await this.InstrumentClient(blob.GetLeaseClient(this.Recording.Random.NewGuid().ToString())).AcquireAsync(LeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
@@ -286,7 +308,7 @@ namespace Azure.Storage.Test.Shared
             Lease lease = null;
             if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await container.GetLeaseClient(this.Recording.Random.NewGuid().ToString()).AcquireAsync(-1);
+                lease = await container.GetLeaseClient(this.Recording.Random.NewGuid().ToString()).AcquireAsync(LeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
@@ -346,7 +368,7 @@ namespace Azure.Storage.Test.Shared
         {
             public BlobContainerClient ContainerClient { get; }
 
-            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType)
+            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType = default)
             {
                 container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
 

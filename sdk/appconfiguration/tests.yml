@@ -1,9 +1,16 @@
 trigger: none
 
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: azure
+
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     MaxParallel: 1
     ServiceDirectory: appconfiguration
     EnvVars:
-      APP_CONFIG_CONNECTION: $(net-azconfig-test-connection-string)
+      APPCONFIGURATION_CONNECTION_STRING: $(net-azconfig-test-connection-string)

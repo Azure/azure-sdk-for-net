@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
-        /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
+        /// <param name="sharedAccessKey">The value of the shared access key for the signature.</param>
         /// <param name="signatureValidityDuration">The duration that the signature should be considered valid; if not specified, a default will be assumed.</param>
         ///
         public SharedAccessSignature(string eventHubResource,
@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
-        /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
+        /// <param name="sharedAccessKey">The value of the shared access key for the signature.</param>
         /// <param name="value">The shared access signature to be used for authorization.</param>
         /// <param name="signatureExpiration">The date and time that the shared access signature expires, in UTC.</param>
         ///
@@ -209,7 +209,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -328,7 +328,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))
                 {
-                    // This wasn't a legal pair and it is not simply a trailing delmieter; consider
+                    // This wasn't a legal pair and it is not simply a trailing delimiter; consider
                     // the signature to be malformed.
 
                     throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
@@ -352,13 +352,13 @@ namespace Azure.Messaging.EventHubs.Authorization
         }
 
         /// <summary>
-        ///   Builds the shared accesss signature value, which can be used as a token for
+        ///   Builds the shared access signature value, which can be used as a token for
         ///   access to the Event Hubs service.
         /// </summary>
         ///
         /// <param name="audience">The audience scope to which this signature applies.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
-        /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
+        /// <param name="sharedAccessKey">The value of the shared access key for the signature.</param>
         /// <param name="expirationTime">The date/time, in UTC, that the signature expires.</param>
         ///
         /// <returns>The value of the shared access signature.</returns>

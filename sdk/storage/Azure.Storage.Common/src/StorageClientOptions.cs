@@ -5,7 +5,6 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Storage.Common;
 
 namespace Azure.Storage
@@ -44,7 +43,7 @@ namespace Azure.Storage
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this StorageSharedKeyCredential credential) =>
             new StorageSharedKeyPipelinePolicy(
-                credential ?? throw new ArgumentNullException(nameof(credential)));
+                credential ?? throw Errors.ArgumentNull(nameof(credential)));
 
         /// <summary>
         /// Get an authentication policy to sign Storage requests.
@@ -53,7 +52,7 @@ namespace Azure.Storage
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
             new BearerTokenAuthenticationPolicy(
-                credential ?? throw new ArgumentNullException(nameof(credential)),
+                credential ?? throw Errors.ArgumentNull(nameof(credential)),
                 StorageScope);
 
         /// <summary>
@@ -74,9 +73,7 @@ namespace Azure.Storage
                 case TokenCredential token:
                     return token.AsPolicy();
                 default:
-                    throw new ArgumentException(
-                        $"Cannot authenticate with ${credentials.GetType().FullName}",
-                        nameof(credentials));
+                    throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
         }
 
@@ -89,10 +86,6 @@ namespace Azure.Storage
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null) =>
             HttpPipelineBuilder.Build(
                 options,
-                // TODO: PageBlob's UploadPagesAsync test currently fails
-                // without buffered responses, so I'm leaving this on for now.
-                // It'd be a great perf win to remove it soon.
-                bufferResponse: true,
                 authentication);
 
         /// <summary>

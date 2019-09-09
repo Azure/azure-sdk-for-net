@@ -11,7 +11,7 @@ namespace TrackOne
     /// 
     /// When defining Start/Stop tasks, the StopEvent.Id must be exactly StartEvent.Id + 1.
     /// 
-    /// Do not explicity include the Guid here, since EventSource has a mechanism to automatically
+    /// Do not explicitly include the Guid here, since EventSource has a mechanism to automatically
     /// map to an EventSource Guid based on the Name (Microsoft-Azure-EventHubs).
     /// </summary>
     [EventSource(Name = "Microsoft-Azure-EventHubs")]
@@ -128,7 +128,7 @@ namespace TrackOne
                 WriteEvent(12, clientId, details ?? string.Empty);
             }
         }
-        
+
         [Event(13, Level = EventLevel.Informational, Message = "{0}: closing.")]
         public void ClientCloseStart(string clientId)
         {
@@ -137,7 +137,7 @@ namespace TrackOne
                 WriteEvent(13, clientId);
             }
         }
-        
+
         [Event(14, Level = EventLevel.Informational, Message = "{0}: closed.")]
         public void ClientCloseStop(string clientId)
         {

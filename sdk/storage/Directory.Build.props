@@ -13,13 +13,13 @@
     <VersionPrefix>12.0.0</VersionPrefix>
 
     <!--
-    The Client SDK Analyzers are based on Design Guidelines that haven't been
-    fully formalized so we won't enable them just yet.
+    These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127
      -->
-    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-
-    <!-- Disable some xml doc comment warnings until we can fix them -->
-    <NoWarn>$(NoWarn);1591;1573;1574;1584;1658;0419</NoWarn>
+    <NoWarn>
+      $(NoWarn);
+      AZC0006;
+      AZC0007;
+    </NoWarn>
 
     <!--
     Storage used to point to its main documentation page, but the rest of the
@@ -35,6 +35,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <!-- Turn on the DEBUG constant -->
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Disables StyleCopAnalyzer, Remove this property to enable it -->
+  <PropertyGroup>
+    <EnableStyleCopAnalyzers>false</EnableStyleCopAnalyzers>
   </PropertyGroup>
 
   <Import Condition="'$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />

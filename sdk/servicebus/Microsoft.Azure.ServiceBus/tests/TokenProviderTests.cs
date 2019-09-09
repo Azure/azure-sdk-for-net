@@ -38,22 +38,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
         public async Task AzureActiveDirectoryTokenProviderAuthCallbackTest()
         {
+            var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
             string TestToken = @"eyJhbGciOiJIUzI1NiJ9.e30.ZRrHA1JJJW8opsbCGfG_HACGpVUMN_a9IV7pAx_Zmeo";
-            string ServiceBusAudience = "https://servicebus.azure.net";
 
             var aadTokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(
                 (audience, authority, state) =>
                 {
-                    Assert.Equal(ServiceBusAudience, audience);
+                    Assert.Equal(Constants.AadServiceBusAudience, audience);
                     return Task.FromResult(TestToken);
                 },
-                null);
+                "https://servicebus.azure.net/MyTenantId");
 
-            var token = await aadTokenProvider.GetTokenAsync(ServiceBusAudience, TimeSpan.FromSeconds(60));
-            Assert.Equal(TestToken, token.TokenValue);
+            var token = await aadTokenProvider.GetTokenAsync(csb.Endpoint, TimeSpan.FromSeconds(60));
             Assert.Equal(typeof(JsonSecurityToken), token.GetType());
+            Assert.Equal(TestToken, token.TokenValue);
+            Assert.Equal(csb.Endpoint, token.Audience);
         }
     }
 }

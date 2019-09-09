@@ -19,6 +19,7 @@ namespace Azure.Core.Tests
         [TestCase("multi\rline", "application/xml")]
         [TestCase("multi\r\nline", "application/xml")]
         [TestCase("multi\n\rline\n", "application/xml")]
+        [TestCase("", "")]
         public void CanRoundtripSessionRecord(string body, string contentType)
         {
             byte[] bodyBytes = Encoding.UTF8.GetBytes(body);
@@ -108,6 +109,31 @@ namespace Azure.Core.Tests
                 "    <Some-Other-Header> is absent in record, value <V>" + Environment.NewLine +
                 "    <Extra-Header> is absent in request, value <Extra-Value>" + Environment.NewLine,
                 exception.Message);
+        }
+
+        [Test]
+        public void RecordMatcherIgnoresIgnoredHeaders()
+        {
+            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+
+            MockRequest mockRequest = new MockRequest();
+            mockRequest.Method = RequestMethod.Put;
+            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+
+            RecordEntry[] entries = new []
+            {
+                new RecordEntry()
+                {
+                    RequestUri = "http://localhost",
+                    RequestMethod = RequestMethod.Put,
+                    RequestHeaders =
+                    {
+                        { "Request-Id", new[] { "Non-Random value"}},
+                    }
+                }
+            };
+
+            Assert.NotNull(matcher.FindMatch(mockRequest, entries));
         }
 
         [Test]

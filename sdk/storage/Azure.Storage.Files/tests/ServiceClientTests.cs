@@ -64,8 +64,8 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     InvalidUri,
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act
@@ -112,8 +112,8 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act
@@ -129,14 +129,14 @@ namespace Azure.Storage.Files.Test
             var service = this.GetServiceClient_SharedKey();
 
             // Ensure at least one share
-            using (this.GetNewShare(out var share, service: service)) 
+            using (this.GetNewShare(out var share, service: service))
             {
                 var shares = new List<ShareItem>();
                 await foreach (var page in service.GetSharesAsync().ByPage())
                 {
                     shares.AddRange(page.Values);
                 }
-                
+
                 // Assert
                 Assert.AreNotEqual(0, shares.Count);
                 Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
@@ -152,8 +152,8 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act

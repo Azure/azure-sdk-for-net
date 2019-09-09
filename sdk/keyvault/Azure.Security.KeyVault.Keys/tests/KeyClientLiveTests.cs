@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
         }
 
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if (this.Mode == RecordedTestMode.Record || this.Mode == RecordedTestMode.Playback)
+            {
+                this.Client = this.GetClient();
+
+                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+            }
+        }
+
         [Test]
         public async Task CreateKey()
         {
@@ -34,10 +48,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task CreateKeyWithOptions()
         {
+            var exp = new DateTimeOffset(new DateTime(637027248120000000, DateTimeKind.Utc));
+            var nbf = exp.AddDays(-30);
+
             var keyOptions = new KeyCreateOptions()
             {
                 KeyOperations = new List<KeyOperations>() { KeyOperations.Verify },
-                Enabled = false
+                Enabled = false,
+                Expires = exp,
+                NotBefore = nbf,
             };
 
             Key key = await Client.CreateKeyAsync(Recording.GenerateId(), KeyType.EllipticCurve, keyOptions);
@@ -72,10 +91,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task CreateEcWithCurveKey()
+        public async Task CreateEcWithCurveKey([Values]KeyCurveName curve)
         {
-            var ecCurveKey = new EcKeyCreateOptions(Recording.GenerateId(), hsm: false, KeyCurveName.P256);
+            var ecCurveKey = new EcKeyCreateOptions(Recording.GenerateId(), hsm: false, curve);
             Key keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);
+
             RegisterForCleanup(keyNoHsmCurve);
 
             Key keyReturned = await Client.GetKeyAsync(ecCurveKey.Name);
@@ -298,7 +318,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             await WaitForPurgedKey(keyName);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
-            
+
             Key restoredResult = await Client.RestoreKeyAsync(backup);
             RegisterForCleanup(restoredResult);
 

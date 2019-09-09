@@ -38,11 +38,23 @@ namespace Microsoft.Azure.Search.Models
         /// malformed input document, 404 for document not found, 409 for a
         /// version conflict, 422 when the index is temporarily unavailable, or
         /// 503 for when the service is too busy.</param>
-        public ItemError(string key = default(string), string errorMessage = default(string), int statusCode = default(int))
+        /// <param name="name">The name of the source at which the error
+        /// originated. For example, this could refer to a particular skill in
+        /// the attached skillset. This may not be always available.</param>
+        /// <param name="details">Additional, verbose details about the error
+        /// to assist in debugging the indexer. This may not be always
+        /// available.</param>
+        /// <param name="documentationLink">A link to a troubleshooting guide
+        /// for these classes of errors. This may not be always
+        /// available.</param>
+        public ItemError(string key = default(string), string errorMessage = default(string), int statusCode = default(int), string name = default(string), string details = default(string), string documentationLink = default(string))
         {
             Key = key;
             ErrorMessage = errorMessage;
             StatusCode = statusCode;
+            Name = name;
+            Details = details;
+            DocumentationLink = documentationLink;
             CustomInit();
         }
 
@@ -73,6 +85,28 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "statusCode")]
         public int StatusCode { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the source at which the error originated. For
+        /// example, this could refer to a particular skill in the attached
+        /// skillset. This may not be always available.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets additional, verbose details about the error to assist in
+        /// debugging the indexer. This may not be always available.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public string Details { get; private set; }
+
+        /// <summary>
+        /// Gets a link to a troubleshooting guide for these classes of errors.
+        /// This may not be always available.
+        /// </summary>
+        [JsonProperty(PropertyName = "documentationLink")]
+        public string DocumentationLink { get; private set; }
 
     }
 }

@@ -7,9 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.Peering</PackageId>
 		<Description>Microsoft Azure Management Peering library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Peering</AssemblyName>
-		<Version>0.9.0-preview</Version>
+		<Version>1.0.0-preview</Version>
 		<PackageTags>Azure Peering;</PackageTags>
     <PackageReleaseNotes>
+	<![CDATA[New features:   Adding Peering Service operations. ]]>
+</PackageReleaseNotes>
+		<PackageTags>Azure Peering;Peering_2019-08-01-preview</PackageTags>
+    <PackageReleaseNotes>
+	<![CDATA[New features:   Adding Peering Service]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

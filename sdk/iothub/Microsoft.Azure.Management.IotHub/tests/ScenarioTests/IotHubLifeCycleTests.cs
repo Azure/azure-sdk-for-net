@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -21,7 +21,7 @@ namespace IotHub.Tests.ScenarioTests
         [Fact]
         public void TestIotHubCreateLifeCycle()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.Initialize(context);
 
@@ -96,7 +96,7 @@ namespace IotHub.Tests.ScenarioTests
 
                 Assert.Contains(quotaMetrics, q => q.Name.Equals("TotalDeviceCount", StringComparison.OrdinalIgnoreCase) &&
                                                   q.CurrentValue == 0 &&
-                                                  q.MaxValue == 500000);
+                                                  q.MaxValue == 1000000);
 
                 // Get all Iot Hubs in a resource group
                 var iotHubs = this.iotHubClient.IotHubResource.ListByResourceGroup(IotHubTestUtilities.DefaultResourceGroupName);
@@ -177,13 +177,31 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.True(hubReadOperation.Count().Equals(1));
                 Assert.Equal("Microsoft Devices", hubReadOperation.First().Display.Provider, ignoreCase: true);
                 Assert.Equal("Get IotHub(s)", hubReadOperation.First().Display.Operation, ignoreCase: true);
+
+                // Initiate manual failover
+                var iotHubBeforeFailover = this.iotHubClient.IotHubResource.Get(
+                    IotHubTestUtilities.DefaultResourceGroupName,
+                    IotHubTestUtilities.DefaultIotHubName);
+                var failoverInput = new FailoverInput(IotHubTestUtilities.DefaultFailoverLocation);
+                this.iotHubClient.IotHub.ManualFailover(IotHubTestUtilities.DefaultIotHubName, failoverInput, IotHubTestUtilities.DefaultResourceGroupName);
+                var iotHubAfterFailover = this.iotHubClient.IotHubResource.Get(
+                    IotHubTestUtilities.DefaultResourceGroupName,
+                    IotHubTestUtilities.DefaultIotHubName);
+                Assert.Equal("primary", iotHubBeforeFailover.Properties.Locations[0].Role.ToLower());
+                Assert.Equal(IotHubTestUtilities.DefaultLocation.ToLower(), iotHubBeforeFailover.Properties.Locations[0].Location.Replace(" ", "").ToLower());
+                Assert.Equal("secondary", iotHubBeforeFailover.Properties.Locations[1].Role.ToLower());
+                Assert.Equal(IotHubTestUtilities.DefaultFailoverLocation.ToLower(), iotHubBeforeFailover.Properties.Locations[1].Location.Replace(" ", "").ToLower());
+                Assert.Equal("primary", iotHubAfterFailover.Properties.Locations[0].Role.ToLower());
+                Assert.Equal(IotHubTestUtilities.DefaultFailoverLocation.ToLower(), iotHubAfterFailover.Properties.Locations[0].Location.Replace(" ", "").ToLower());
+                Assert.Equal("secondary", iotHubAfterFailover.Properties.Locations[1].Role.ToLower());
+                Assert.Equal(IotHubTestUtilities.DefaultLocation.ToLower(), iotHubAfterFailover.Properties.Locations[1].Location.Replace(" ", "").ToLower());
             }
         }
 
         [Fact]
         public void TestIotHubUpdateLifeCycle()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.Initialize(context);
 
@@ -265,7 +283,7 @@ namespace IotHub.Tests.ScenarioTests
         [Fact]
         public void TestIotHubCertificateLifeCycle()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.Initialize(context);
 
@@ -410,3 +428,4 @@ namespace IotHub.Tests.ScenarioTests
         }
     }
 }
+

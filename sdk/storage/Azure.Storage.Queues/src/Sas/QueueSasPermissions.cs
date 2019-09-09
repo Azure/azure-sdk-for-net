@@ -58,7 +58,7 @@ namespace Azure.Storage.Sas
         /// <returns>The parsed <see cref="QueueSasPermissions"/>.</returns>
         public static QueueSasPermissions Parse(string s)
         {
-            var p = new QueueSasPermissions(); 
+            var p = new QueueSasPermissions();
             foreach (var c in s)
             {
                 switch (c)
@@ -68,7 +68,7 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.Permissions.Update: p.Update = true; break;
                     case Constants.Sas.Permissions.Process: p.Process = true; break;
                     default:
-                        throw new ArgumentException("invalid permission: " + c);
+                        throw Errors.InvalidPermission(c);
                 }
             }
             return p;

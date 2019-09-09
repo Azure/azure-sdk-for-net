@@ -111,6 +111,42 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public async Task CreateAsync_CPK()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                blob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+
+                // Act
+                var response = await blob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
+
+                // Assert
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_CpkHttpError()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blobName = this.GetNewBlobName();
+                var blob = this.InstrumentClient(container.GetPageBlobClient(blobName));
+                Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    blob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey),
+                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            }
+        }
+
         /// <summary>
         /// Data for CreateAsync, GetPageRangesAsync, GetPageRangesDiffAsync, ResizeAsync, and 
         /// UpdateSequenceNumber AccessConditions tests
@@ -285,6 +321,58 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadPagesAsync_CPK()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blobName = this.GetNewBlobName();
+                var blob = this.InstrumentClient(container.GetPageBlobClient(blobName));
+                blob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                var data = this.GetRandomBuffer(Constants.KB);
+                await blob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
+
+                using var stream = new MemoryStream(data);
+
+                // Act
+                var response = await blob.UploadPagesAsync(
+                    content: stream,
+                    offset: 0,
+                    customerProvidedKey: customerProvidedKey);
+
+                // Assert
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            }
+        }
+
+        [Test]
+        public async Task UploadPagesAsync_CpkHttpError()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blobName = this.GetNewBlobName();
+                var httpBlob = this.InstrumentClient(container.GetPageBlobClient(blobName));
+                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+                var httpsBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                var data = this.GetRandomBuffer(Constants.KB);
+                await httpsBlob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
+
+                using var stream = new MemoryStream(data);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    httpBlob.UploadPagesAsync(
+                        content: stream,
+                        offset: 0,
+                        customerProvidedKey: customerProvidedKey),
+                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            }
+        }
+
+        [Test]
         public async Task UploadPagesAsync_Error()
         {
             using (this.GetNewContainer(out var container))
@@ -407,8 +495,8 @@ namespace Azure.Storage.Blobs.Test
             using (this.GetNewContainer(out var container))
             {
                 var credentials = new StorageSharedKeyCredential(
-                    TestConfigurations.DefaultTargetTenant.AccountName,
-                    TestConfigurations.DefaultTargetTenant.AccountKey);
+                    this.TestConfigDefault.AccountName,
+                    this.TestConfigDefault.AccountKey);
                 var containerClientFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
@@ -433,12 +521,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
 
-                    var attempts = 0;
-                    while (attempts++ < 7 && progressList.Last().BytesTransferred < data.LongLength)
-                    {
-                        // wait to allow lingering progress events to execute
-                        await this.Delay(500, 100).ConfigureAwait(false);
-                    }
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     // Changing from Assert.AreEqual because these don't always update fast enough
                     Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
@@ -478,6 +561,59 @@ namespace Azure.Storage.Blobs.Test
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
+            }
+        }
+
+        [Ignore("Backend bug")]
+        [Test]
+        public async Task ClearPagesAsync_CPK()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                blob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                await blob.CreateAsync(4 * Constants.KB, customerProvidedKey: customerProvidedKey);
+                var data = this.GetRandomBuffer(4 * Constants.KB);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 0, customerProvidedKey: customerProvidedKey);
+                }
+
+                // Act
+                var response = await blob.ClearPagesAsync(
+                    range: new HttpRange(Constants.KB, Constants.KB), 
+                    customerProvidedKey: customerProvidedKey);
+
+                // Assert
+                Assert.IsNotNull(response.Value.ETag);
+            }
+        }
+
+        [Test]
+        public async Task ClearPagesAsync_CpkHttpError()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var httpBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+                var httpsBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                await httpsBlob.CreateAsync(4 * Constants.KB, customerProvidedKey: customerProvidedKey);
+                var data = this.GetRandomBuffer(4 * Constants.KB);
+                using (var stream = new MemoryStream(data))
+                {
+                    await httpsBlob.UploadPagesAsync(stream, 0, customerProvidedKey: customerProvidedKey);
+                }
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    httpBlob.ClearPagesAsync(
+                        range: new HttpRange(Constants.KB, Constants.KB),
+                        customerProvidedKey: customerProvidedKey),
+                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
             }
         }
 
@@ -835,6 +971,46 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 var response = await blob.GetPropertiesAsync();
                 Assert.AreEqual(newSize, response.Value.ContentLength);
+            }
+        }
+
+        [Test]
+        public async Task ResizeAsync_CPK()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                blob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                await blob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
+                var newSize = 8 * Constants.KB;
+
+                // Act
+                var response = await blob.ResizeAsync(size: newSize, customerProvidedKey: customerProvidedKey);
+
+                // Assert
+                Assert.IsNotNull(response.Value.ETag);
+            }
+        }
+
+        [Test]
+        public async Task ResizeAsync_CpkHttpError()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var httpBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+                var httpsBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                await httpsBlob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
+                var newSize = 8 * Constants.KB;
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    httpBlob.ResizeAsync(size: newSize, customerProvidedKey: customerProvidedKey),
+                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
             }
         }
 
@@ -1205,6 +1381,121 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task StartCopyIncrementalAsync_AccessTier()
+        {
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service:premiumService, premium: true))
+            {
+                // Arrange
+                var data = this.GetRandomBuffer(Constants.KB);
+                var expectedData = new byte[4 * Constants.KB];
+                data.CopyTo(expectedData, 0);
+
+                // Create Page Blob
+                var sourceBlob = await this.CreatePageBlobClientAsync(container, 4 * Constants.KB);
+
+                // Update data to firstPageBlob
+                using (var stream = new MemoryStream(data))
+                {
+                    await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+                }
+
+                // Create Snapshot
+                var snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+                var snapshot = snapshotResponse.Value.Snapshot;
+
+                var destinationBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+
+                // Act
+                var operation = await destinationBlob.StartCopyFromUriAsync(
+                    sourceBlob.Uri,
+                    accessTier: AccessTier.P20);
+
+                if (this.Mode == RecordedTestMode.Playback)
+                {
+                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                }
+                await operation.WaitCompletionAsync();
+                Assert.IsTrue(operation.HasCompleted);
+                Assert.IsTrue(operation.HasValue);
+
+                var response = await destinationBlob.GetPropertiesAsync();
+                Assert.AreEqual(AccessTier.P20.ToString(), response.Value.AccessTier);
+            }
+        }
+
+        [Test]
+        public async Task StartCopyIncrementalAsync_AccessTierFail()
+        {
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService, premium: true))
+            {
+                // Arrange
+                var data = this.GetRandomBuffer(Constants.KB);
+                var expectedData = new byte[4 * Constants.KB];
+                data.CopyTo(expectedData, 0);
+
+                // Create Page Blob
+                var sourceBlob = await this.CreatePageBlobClientAsync(container, 4 * Constants.KB);
+
+                // Update data to firstPageBlob
+                using (var stream = new MemoryStream(data))
+                {
+                    await sourceBlob.UploadPagesAsync(stream, Constants.KB);
+                }
+
+                // Create Snapshot
+                var snapshotResponse = await sourceBlob.CreateSnapshotAsync();
+
+                var snapshot = snapshotResponse.Value.Snapshot;
+
+                var destinationBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    destinationBlob.StartCopyFromUriAsync(
+                    sourceBlob.Uri,
+                    accessTier: AccessTier.Cool),
+                    e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task SetTierAsync_AccessTier()
+        {
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService, premium: true))
+            {
+                // Arrange
+                var blob = await this.CreatePageBlobClientAsync(container, Constants.KB);
+
+                // Act
+                var response = await blob.SetTierAsync(AccessTier.P20);
+
+                // Assert
+                var responseProperties = await blob.GetPropertiesAsync();
+                Assert.AreEqual(AccessTier.P20.ToString(), responseProperties.Value.AccessTier);
+            }
+        }
+
+        [Test]
+        public async Task SetTierAsync_AccessTierFail()
+        {
+            var premiumService = this.GetServiceClient_PremiumBlobAccount_SharedKey();
+            using (this.GetNewContainer(out var container, service: premiumService, premium: true))
+            {
+                // Arrange
+                var blob = await this.CreatePageBlobClientAsync(container, Constants.KB);
+
+                // Assert
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.SetTierAsync(AccessTier.Cool),
+                    e => Assert.AreEqual(BlobErrorCode.InvalidBlobTier.ToString(), e.ErrorCode));
+            }
+        }
+
+        [Test]
         public async Task UploadPagesFromUriAsync_Min()
         {
             using (this.GetNewContainer(out var container))
@@ -1230,6 +1521,69 @@ namespace Azure.Storage.Blobs.Test
                         sourceRange: range,
                         range: range);
                 }
+            }
+        }
+
+        [Test]
+        public async Task UploadPagesFromUriAsync_CPK()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+
+                var data = this.GetRandomBuffer(Constants.KB);
+
+                using var stream = new MemoryStream(data);
+                var sourceBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                await sourceBlob.CreateAsync(Constants.KB);
+                await sourceBlob.UploadPagesAsync(stream, 0);
+
+                var destBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                destBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(destBlob.Uri), destBlob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                await destBlob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
+                var range = new HttpRange(0, Constants.KB);
+
+                // Act
+                await destBlob.UploadPagesFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    sourceRange: range,
+                    range: range,
+                    customerProvidedKey: customerProvidedKey);
+            }
+        }
+
+        [Test]
+        public async Task UploadPagesFromUriAsync_CpkHttpError()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                await container.SetAccessPolicyAsync(PublicAccessType.Container);
+
+                var data = this.GetRandomBuffer(Constants.KB);
+
+                using var stream = new MemoryStream(data);
+                var sourceBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                await sourceBlob.CreateAsync(Constants.KB);
+                await sourceBlob.UploadPagesAsync(stream, 0);
+
+                var httpDestBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+                Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
+                var httpsDestBlob = this.InstrumentClient(new PageBlobClient(this.GetHttpsUri(httpDestBlob.Uri), httpDestBlob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                await httpsDestBlob.CreateAsync(Constants.KB, customerProvidedKey: customerProvidedKey);
+                var range = new HttpRange(0, Constants.KB);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    httpDestBlob.UploadPagesFromUriAsync(
+                        sourceUri: sourceBlob.Uri,
+                        sourceRange: range,
+                        range: range,
+                        customerProvidedKey: customerProvidedKey),
+                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
             }
         }
 

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
@@ -48,7 +48,7 @@ namespace Compute.Tests
         public void TestOperations()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 try
                 {
@@ -404,17 +404,35 @@ namespace Compute.Tests
                 IPage<AvailabilitySet> response = computeClient.AvailabilitySets.ListBySubscription();
                 Assert.Null(response.NextPageLink);
 
-                int validationCount = 0;
-
                 foreach (AvailabilitySet availabilitySet in response)
                 {
                     if (availabilitySet.Name == availabilitySet1Name)
                     {
+                        Assert.Equal(inputAvailabilitySet1.Location, availabilitySet.Location);
+                        Assert.Null(availabilitySet.VirtualMachines);
+                    }
+                    else if (availabilitySet.Name == availabilitySet2Name)
+                    {
+                        Assert.Equal(inputAvailabilitySet2.Location, availabilitySet.Location);
+                        Assert.Null(availabilitySet.VirtualMachines);
+                    }
+                }
+
+                response = computeClient.AvailabilitySets.ListBySubscription("virtualMachines/$ref");
+                int validationCount = 0;
+
+                foreach (AvailabilitySet availabilitySet in response)
+                {
+                    Assert.NotNull(availabilitySet.VirtualMachines);
+                    if (availabilitySet.Name == availabilitySet1Name)
+                    {
+                        Assert.Equal(0, availabilitySet.VirtualMachines.Count);
                         ValidateResults(outputAvailabilitySet1, inputAvailabilitySet1, resourceGroup1Name, availabilitySet1Name, defaultFD, defaultUD);
                         validationCount++;
                     }
                     else if (availabilitySet.Name == availabilitySet2Name)
                     {
+                        Assert.Equal(0, availabilitySet.VirtualMachines.Count);
                         ValidateResults(outputAvailabilitySet2, inputAvailabilitySet2, resourceGroup2Name, availabilitySet2Name, defaultFD, defaultUD);
                         validationCount++;
                     }
@@ -429,4 +447,5 @@ namespace Compute.Tests
         }
     }
 }
+
 

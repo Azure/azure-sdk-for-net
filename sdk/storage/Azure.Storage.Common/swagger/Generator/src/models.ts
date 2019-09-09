@@ -168,6 +168,7 @@ export interface IEnumType extends IModelType {
     customSerialization: boolean,
     constant: boolean,
     public: boolean,
+    skipValue?: string,
     values: IEnumValue[]
 }
 
@@ -217,7 +218,8 @@ export interface IParameter {
     location: string,
     skipUrlEncoding: boolean,
     parameterGroup?: string,
-    model: IModelType
+    model: IModelType,
+    trace: boolean
 }
 
 export interface IResponses {

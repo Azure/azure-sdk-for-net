@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Metadata;
 
@@ -11,8 +12,26 @@ namespace Azure.Messaging.EventHubs.Core
     ///   for different transports.
     /// </summary>
     ///
-    internal abstract class TransportEventHubClient
+    internal abstract class TransportEventHubClient : IAsyncDisposable
     {
+        /// <summary>
+        ///   Indicates whether or not this client has been closed.
+        ///   </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public virtual bool Closed { get; }
+
+        /// <summary>
+        ///   Updates the active retry policy for the client.
+        /// </summary>
+        ///
+        /// <param name="newRetryPolicy">The retry policy to set as active.</param>
+        ///
+        public abstract void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy);
+
         /// <summary>
         ///   Retrieves information about an Event Hub, including the number of partitions present
         ///   and their identifiers.
@@ -25,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Retrieves information about a specific partiton for an Event Hub, including elements that describe the available
+        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
         ///   events in the partition event stream.
         /// </summary>
         ///
@@ -45,10 +64,12 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
+        /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="producerOptions" />.</param>
         ///
         /// <returns>An Event Hub producer configured in the requested manner.</returns>
         ///
-        public abstract EventHubProducer CreateProducer(EventHubProducerOptions producerOptions);
+        public abstract EventHubProducer CreateProducer(EventHubProducerOptions producerOptions,
+                                                        EventHubRetryPolicy defaultRetryPolicy);
 
         /// <summary>
         ///   Creates an Event Hub consumer responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
@@ -70,13 +91,15 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
+        /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="consumerOptions" />.</param>
         ///
         /// <returns>An Event Hub consumer configured in the requested manner.</returns>
         ///
         public abstract EventHubConsumer CreateConsumer(string consumerGroup,
                                                         string partitionId,
                                                         EventPosition eventPosition,
-                                                        EventHubConsumerOptions consumerOptions);
+                                                        EventHubConsumerOptions consumerOptions,
+                                                        EventHubRetryPolicy defaultRetryPolicy);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.
@@ -85,5 +108,14 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public abstract Task CloseAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the client,
+        ///   including ensuring that the client itself has been closed.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public virtual async ValueTask DisposeAsync() => await CloseAsync(CancellationToken.None).ConfigureAwait(false);
     }
 }

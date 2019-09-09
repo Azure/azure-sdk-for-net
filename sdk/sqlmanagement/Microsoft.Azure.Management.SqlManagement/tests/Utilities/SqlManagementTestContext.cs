@@ -23,7 +23,8 @@ namespace Sql.Tests
         {
             var providersToIgnore = new Dictionary<string, string>
             {
-                {"Microsoft.Sql", null}
+                {"Microsoft.Sql", null},
+                {"Microsoft.Network", null}
             };
 
             var userAgentsToIgnore = new Dictionary<string, string>
@@ -32,7 +33,7 @@ namespace Sql.Tests
 
             HttpMockServer.Matcher = new PermissiveRecordMatcherWithApiExclusion(true, providersToIgnore, userAgentsToIgnore);
 
-            _mockContext = MockContext.Start(suiteObject.GetType().FullName, testName);
+            _mockContext = MockContext.Start(suiteObject.GetType().Name, testName);
         }
 
         private readonly MockContext _mockContext;

@@ -11,7 +11,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// <summary>
     /// SecretBase is the resource containing all the properties of the secret except its value.
     /// </summary>
-    public class SecretBase : Model
+    public class SecretBase : IJsonDeserializable, IJsonSerializable
     {
         private ObjectId _identifier;
         private VaultAttributes _attributes;
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// Secret identifier.
         /// </summary>
         public Uri Id => _identifier.Id;
-        
+
         /// <summary>
         /// Vault base URL.
         /// </summary>
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Secrets
         public bool? Managed { get; private set; }
 
         /// <summary>
-        /// If this is a secret backing a KV certificate, then this field specifies 
+        /// If this is a secret backing a KV certificate, then this field specifies
         /// the corresponding key backing the KV certificate.
         /// </summary>
         public string KeyId { get; private set; }
@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
 
-        internal override void ReadProperties(JsonElement json)
+        internal virtual void ReadProperties(JsonElement json)
         {
             _identifier.ParseId("secrets", json.GetProperty("id").GetString());
 
@@ -145,7 +145,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal virtual void WriteProperties(Utf8JsonWriter json)
         {
             if (ContentType != null)
             {
@@ -156,7 +156,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 json.WriteStartObject("attributes");
 
-                _attributes.WriteProperties(ref json);
+                _attributes.WriteProperties(json);
 
                 json.WriteEndObject();
             }
@@ -177,5 +177,9 @@ namespace Azure.Security.KeyVault.Secrets
 
             // Managed is read-only don't serialize
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }

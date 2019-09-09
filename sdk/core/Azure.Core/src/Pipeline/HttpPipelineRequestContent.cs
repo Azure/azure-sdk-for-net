@@ -87,8 +87,7 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                _stream?.Dispose();
-                _stream = null;
+                _stream.Dispose();
             }
         }
 

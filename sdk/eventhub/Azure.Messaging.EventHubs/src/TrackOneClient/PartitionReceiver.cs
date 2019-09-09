@@ -5,8 +5,6 @@ namespace TrackOne
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -167,8 +165,6 @@ namespace TrackOne
             waitTime = waitTime ?? this.EventHubClient.ConnectionStringBuilder.OperationTimeout;
 
             EventHubsEventSource.Log.EventReceiveStart(this.ClientId);
-            Activity activity = EventHubsDiagnosticSource.StartReceiveActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, this.ConsumerGroupName, this.EventPosition);
-
             Task<IList<EventData>> receiveTask = null;
             IList<EventData> events = null;
             int count = 0;
@@ -198,13 +194,11 @@ namespace TrackOne
             catch (Exception e)
             {
                 EventHubsEventSource.Log.EventReceiveException(this.ClientId, e.ToString());
-                EventHubsDiagnosticSource.FailReceiveActivity(activity, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, this.ConsumerGroupName, e);
                 throw;
             }
             finally
             {
                 EventHubsEventSource.Log.EventReceiveStop(this.ClientId, count);
-                EventHubsDiagnosticSource.StopReceiveActivity(activity, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, this.ConsumerGroupName, events, receiveTask);
             }
         }
 

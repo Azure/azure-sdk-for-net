@@ -82,20 +82,10 @@ namespace Azure.Core.Testing
                 // Map IEnumerable to IAsyncEnumerable
                 if (returnsIEnumerable)
                 {
-                    if (invocation.Method.ReturnType.IsGenericType &&
-                        invocation.Method.ReturnType.GetGenericTypeDefinition().Name == "AsyncCollection`1")
-                    {
-                        // AsyncCollection can be used as either a sync or async
-                        // collection so there's no need to wrap it in an
-                        // IAsyncEnumerable
-                        invocation.ReturnValue = result;
-                    }
-                    else
-                    {
-                        invocation.ReturnValue = Activator.CreateInstance(
-                            typeof(AsyncEnumerableWrapper<>).MakeGenericType(returnType.GenericTypeArguments),
-                            new[] { result });
-                    }
+                    Type[] modelType = returnType.GenericTypeArguments.Single().GenericTypeArguments;
+                    Type wrapperType = typeof(AsyncEnumerableWrapper<>).MakeGenericType(modelType);
+
+                    invocation.ReturnValue = Activator.CreateInstance(wrapperType, new [] { result });
                 }
                 else
                 {
@@ -120,34 +110,33 @@ namespace Azure.Core.Testing
             return invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
         }
 
-        private class AsyncEnumerableWrapper<T> : IAsyncEnumerable<T>
+        private class AsyncEnumerableWrapper<T> : AsyncCollection<T>
         {
-            private readonly IEnumerable<T> _enumerable;
+            private readonly IEnumerable<Response<T>> _enumerable;
 
-            public AsyncEnumerableWrapper(IEnumerable<T> enumerable)
+            public AsyncEnumerableWrapper(IEnumerable<Response<T>> enumerable)
             {
                 _enumerable = enumerable;
             }
 
-            public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
+#pragma warning disable 1998
+            public override async IAsyncEnumerable<Page<T>> ByPage(string continuationToken = default, int? pageSizeHint = default)
+#pragma warning restore 1998
             {
-                return new Enumerator(_enumerable.GetEnumerator());
-            }
-
-            private class Enumerator: IAsyncEnumerator<T>
-            {
-                private readonly IEnumerator<T> _enumerator;
-
-                public Enumerator(IEnumerator<T> enumerator)
+                if (continuationToken != null)
                 {
-                    _enumerator = enumerator;
+                    throw new InvalidOperationException("Calling ByPage with a continuationToken is not supported in the sync mode");
                 }
 
-                public ValueTask DisposeAsync() => default;
+                if (pageSizeHint != null)
+                {
+                    throw new InvalidOperationException("Calling ByPage with a pageSizeHint is not supported in the sync mode");
+                }
 
-                public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(_enumerator.MoveNext());
-
-                public T Current => _enumerator.Current;
+                foreach (Response<T> response in _enumerable)
+                {
+                    yield return new Page<T>(new [] { response.Value}, null, response.GetRawResponse());
+                }
             }
         }
     }

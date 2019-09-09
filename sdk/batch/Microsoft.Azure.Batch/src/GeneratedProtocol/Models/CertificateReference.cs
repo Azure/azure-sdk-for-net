@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A reference to a certificate to be installed on compute nodes in a
-    /// pool.
+    /// A reference to a Certificate to be installed on Compute Nodes in a
+    /// Pool.
     /// </summary>
     public partial class CertificateReference
     {
@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CertificateReference class.
         /// </summary>
-        /// <param name="thumbprint">The thumbprint of the certificate.</param>
+        /// <param name="thumbprint">The thumbprint of the Certificate.</param>
         /// <param name="thumbprintAlgorithm">The algorithm with which the
         /// thumbprint is associated. This must be sha1.</param>
-        /// <param name="storeLocation">The location of the certificate store
-        /// on the compute node into which to install the certificate.</param>
-        /// <param name="storeName">The name of the certificate store on the
-        /// compute node into which to install the certificate.</param>
-        /// <param name="visibility">Which user accounts on the compute node
-        /// should have access to the private data of the certificate.</param>
+        /// <param name="storeLocation">The location of the Certificate store
+        /// on the Compute Node into which to install the Certificate.</param>
+        /// <param name="storeName">The name of the Certificate store on the
+        /// Compute Node into which to install the Certificate.</param>
+        /// <param name="visibility">Which user Accounts on the Compute Node
+        /// should have access to the private data of the Certificate.</param>
         public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), IList<CertificateVisibility> visibility = default(IList<CertificateVisibility>))
         {
             Thumbprint = thumbprint;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the thumbprint of the certificate.
+        /// Gets or sets the thumbprint of the Certificate.
         /// </summary>
         [JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
@@ -70,33 +70,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the certificate store on the compute
-        /// node into which to install the certificate.
+        /// Gets or sets the location of the Certificate store on the Compute
+        /// Node into which to install the Certificate.
         /// </summary>
         /// <remarks>
         /// The default value is currentuser. This property is applicable only
-        /// for pools configured with Windows nodes (that is, created with
-        /// cloudServiceConfiguration, or with virtualMachineConfiguration
-        /// using a Windows image reference). For Linux compute nodes, the
-        /// certificates are stored in a directory inside the task working
+        /// for Pools configured with Windows Compute Nodes (that is, created
+        /// with cloudServiceConfiguration, or with virtualMachineConfiguration
+        /// using a Windows Image reference). For Linux Compute Nodes, the
+        /// Certificates are stored in a directory inside the Task working
         /// directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is
-        /// supplied to the task to query for this location. For certificates
+        /// supplied to the Task to query for this location. For Certificates
         /// with visibility of 'remoteUser', a 'certs' directory is created in
         /// the user's home directory (e.g., /home/{user-name}/certs) and
-        /// certificates are placed in that directory. Possible values include:
+        /// Certificates are placed in that directory. Possible values include:
         /// 'currentUser', 'localMachine'
         /// </remarks>
         [JsonProperty(PropertyName = "storeLocation")]
         public CertificateStoreLocation? StoreLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the certificate store on the compute node
-        /// into which to install the certificate.
+        /// Gets or sets the name of the Certificate store on the Compute Node
+        /// into which to install the Certificate.
         /// </summary>
         /// <remarks>
-        /// This property is applicable only for pools configured with Windows
-        /// nodes (that is, created with cloudServiceConfiguration, or with
-        /// virtualMachineConfiguration using a Windows image reference).
+        /// This property is applicable only for Pools configured with Windows
+        /// Compute Nodes (that is, created with cloudServiceConfiguration, or
+        /// with virtualMachineConfiguration using a Windows Image reference).
         /// Common store names include: My, Root, CA, Trust, Disallowed,
         /// TrustedPeople, TrustedPublisher, AuthRoot, AddressBook, but any
         /// custom store name can also be used. The default value is My.
@@ -105,12 +105,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string StoreName { get; set; }
 
         /// <summary>
-        /// Gets or sets which user accounts on the compute node should have
-        /// access to the private data of the certificate.
+        /// Gets or sets which user Accounts on the Compute Node should have
+        /// access to the private data of the Certificate.
         /// </summary>
         /// <remarks>
         /// You can specify more than one visibility in this collection. The
-        /// default is all accounts.
+        /// default is all Accounts.
         /// </remarks>
         [JsonProperty(PropertyName = "visibility")]
         public IList<CertificateVisibility> Visibility { get; set; }

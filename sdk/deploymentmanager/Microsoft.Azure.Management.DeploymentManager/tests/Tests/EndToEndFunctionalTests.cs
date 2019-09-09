@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace DeploymentManager.Tests
@@ -41,7 +41,7 @@ namespace DeploymentManager.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(typeof(EndToEndFunctionalTests).FullName))
+            using (var context = MockContext.Start(typeof(EndToEndFunctionalTests)))
             {
                 var deploymentManagerClient = DeploymentManagerTestUtilities.GetDeploymentManagerClient(context, handler);
                 var clientHelper = new DeploymentManagerClientHelper(this, context);
@@ -681,3 +681,4 @@ namespace DeploymentManager.Tests
         }
     }
 }
+

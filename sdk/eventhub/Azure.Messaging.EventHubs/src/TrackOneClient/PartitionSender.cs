@@ -3,9 +3,7 @@
 
 namespace TrackOne
 {
-    using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Threading.Tasks;
     using TrackOne.Primitives;
 
@@ -130,7 +128,7 @@ namespace TrackOne
                 throw Fx.Exception.InvalidOperation(Resources.PartitionSenderInvalidWithPartitionKeyOnBatch);
             }
 
-            await  this.InnerSender.SendAsync(eventDatas, null).ConfigureAwait(false);
+            await this.InnerSender.SendAsync(eventDatas, null).ConfigureAwait(false);
         }
 
         /// <summary>

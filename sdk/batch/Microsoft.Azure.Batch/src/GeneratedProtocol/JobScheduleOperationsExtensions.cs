@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Batch.Protocol
     public static partial class JobScheduleOperationsExtensions
     {
             /// <summary>
-            /// Checks the specified job schedule exists.
+            /// Checks the specified Job Schedule exists.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule which you want to check.
+            /// The ID of the Job Schedule which you want to check.
             /// </param>
             /// <param name='jobScheduleExistsOptions'>
             /// Additional parameters for the operation
@@ -39,13 +39,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Checks the specified job schedule exists.
+            /// Checks the specified Job Schedule exists.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule which you want to check.
+            /// The ID of the Job Schedule which you want to check.
             /// </param>
             /// <param name='jobScheduleExistsOptions'>
             /// Additional parameters for the operation
@@ -62,21 +62,21 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes a job schedule from the specified account.
+            /// Deletes a Job Schedule from the specified Account.
             /// </summary>
             /// <remarks>
-            /// When you delete a job schedule, this also deletes all jobs and tasks under
-            /// that schedule. When tasks are deleted, all the files in their working
-            /// directories on the compute nodes are also deleted (the retention period is
-            /// ignored). The job schedule statistics are no longer accessible once the job
-            /// schedule is deleted, though they are still counted towards account lifetime
+            /// When you delete a Job Schedule, this also deletes all Jobs and Tasks under
+            /// that schedule. When Tasks are deleted, all the files in their working
+            /// directories on the Compute Nodes are also deleted (the retention period is
+            /// ignored). The Job Schedule statistics are no longer accessible once the Job
+            /// Schedule is deleted, though they are still counted towards Account lifetime
             /// statistics.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to delete.
+            /// The ID of the Job Schedule to delete.
             /// </param>
             /// <param name='jobScheduleDeleteOptions'>
             /// Additional parameters for the operation
@@ -87,21 +87,21 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes a job schedule from the specified account.
+            /// Deletes a Job Schedule from the specified Account.
             /// </summary>
             /// <remarks>
-            /// When you delete a job schedule, this also deletes all jobs and tasks under
-            /// that schedule. When tasks are deleted, all the files in their working
-            /// directories on the compute nodes are also deleted (the retention period is
-            /// ignored). The job schedule statistics are no longer accessible once the job
-            /// schedule is deleted, though they are still counted towards account lifetime
+            /// When you delete a Job Schedule, this also deletes all Jobs and Tasks under
+            /// that schedule. When Tasks are deleted, all the files in their working
+            /// directories on the Compute Nodes are also deleted (the retention period is
+            /// ignored). The Job Schedule statistics are no longer accessible once the Job
+            /// Schedule is deleted, though they are still counted towards Account lifetime
             /// statistics.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to delete.
+            /// The ID of the Job Schedule to delete.
             /// </param>
             /// <param name='jobScheduleDeleteOptions'>
             /// Additional parameters for the operation
@@ -118,13 +118,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified job schedule.
+            /// Gets information about the specified Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to get.
+            /// The ID of the Job Schedule to get.
             /// </param>
             /// <param name='jobScheduleGetOptions'>
             /// Additional parameters for the operation
@@ -135,13 +135,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified job schedule.
+            /// Gets information about the specified Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to get.
+            /// The ID of the Job Schedule to get.
             /// </param>
             /// <param name='jobScheduleGetOptions'>
             /// Additional parameters for the operation
@@ -158,20 +158,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of the specified job schedule.
+            /// Updates the properties of the specified Job Schedule.
             /// </summary>
             /// <remarks>
-            /// This replaces only the job schedule properties specified in the request.
+            /// This replaces only the Job Schedule properties specified in the request.
             /// For example, if the schedule property is not specified with this request,
-            /// then the Batch service will keep the existing schedule. Changes to a job
-            /// schedule only impact jobs created by the schedule after the update has
-            /// taken place; currently running jobs are unaffected.
+            /// then the Batch service will keep the existing schedule. Changes to a Job
+            /// Schedule only impact Jobs created by the schedule after the update has
+            /// taken place; currently running Jobs are unaffected.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to update.
+            /// The ID of the Job Schedule to update.
             /// </param>
             /// <param name='jobSchedulePatchParameter'>
             /// The parameters for the request.
@@ -185,20 +185,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of the specified job schedule.
+            /// Updates the properties of the specified Job Schedule.
             /// </summary>
             /// <remarks>
-            /// This replaces only the job schedule properties specified in the request.
+            /// This replaces only the Job Schedule properties specified in the request.
             /// For example, if the schedule property is not specified with this request,
-            /// then the Batch service will keep the existing schedule. Changes to a job
-            /// schedule only impact jobs created by the schedule after the update has
-            /// taken place; currently running jobs are unaffected.
+            /// then the Batch service will keep the existing schedule. Changes to a Job
+            /// Schedule only impact Jobs created by the schedule after the update has
+            /// taken place; currently running Jobs are unaffected.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to update.
+            /// The ID of the Job Schedule to update.
             /// </param>
             /// <param name='jobSchedulePatchParameter'>
             /// The parameters for the request.
@@ -218,20 +218,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of the specified job schedule.
+            /// Updates the properties of the specified Job Schedule.
             /// </summary>
             /// <remarks>
-            /// This fully replaces all the updatable properties of the job schedule. For
+            /// This fully replaces all the updatable properties of the Job Schedule. For
             /// example, if the schedule property is not specified with this request, then
-            /// the Batch service will remove the existing schedule. Changes to a job
-            /// schedule only impact jobs created by the schedule after the update has
-            /// taken place; currently running jobs are unaffected.
+            /// the Batch service will remove the existing schedule. Changes to a Job
+            /// Schedule only impact Jobs created by the schedule after the update has
+            /// taken place; currently running Jobs are unaffected.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to update.
+            /// The ID of the Job Schedule to update.
             /// </param>
             /// <param name='jobScheduleUpdateParameter'>
             /// The parameters for the request.
@@ -245,20 +245,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of the specified job schedule.
+            /// Updates the properties of the specified Job Schedule.
             /// </summary>
             /// <remarks>
-            /// This fully replaces all the updatable properties of the job schedule. For
+            /// This fully replaces all the updatable properties of the Job Schedule. For
             /// example, if the schedule property is not specified with this request, then
-            /// the Batch service will remove the existing schedule. Changes to a job
-            /// schedule only impact jobs created by the schedule after the update has
-            /// taken place; currently running jobs are unaffected.
+            /// the Batch service will remove the existing schedule. Changes to a Job
+            /// Schedule only impact Jobs created by the schedule after the update has
+            /// taken place; currently running Jobs are unaffected.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to update.
+            /// The ID of the Job Schedule to update.
             /// </param>
             /// <param name='jobScheduleUpdateParameter'>
             /// The parameters for the request.
@@ -278,16 +278,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Disables a job schedule.
+            /// Disables a Job Schedule.
             /// </summary>
             /// <remarks>
-            /// No new jobs will be created until the job schedule is enabled again.
+            /// No new Jobs will be created until the Job Schedule is enabled again.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to disable.
+            /// The ID of the Job Schedule to disable.
             /// </param>
             /// <param name='jobScheduleDisableOptions'>
             /// Additional parameters for the operation
@@ -298,16 +298,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Disables a job schedule.
+            /// Disables a Job Schedule.
             /// </summary>
             /// <remarks>
-            /// No new jobs will be created until the job schedule is enabled again.
+            /// No new Jobs will be created until the Job Schedule is enabled again.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to disable.
+            /// The ID of the Job Schedule to disable.
             /// </param>
             /// <param name='jobScheduleDisableOptions'>
             /// Additional parameters for the operation
@@ -324,13 +324,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Enables a job schedule.
+            /// Enables a Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to enable.
+            /// The ID of the Job Schedule to enable.
             /// </param>
             /// <param name='jobScheduleEnableOptions'>
             /// Additional parameters for the operation
@@ -341,13 +341,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Enables a job schedule.
+            /// Enables a Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to enable.
+            /// The ID of the Job Schedule to enable.
             /// </param>
             /// <param name='jobScheduleEnableOptions'>
             /// Additional parameters for the operation
@@ -364,13 +364,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Terminates a job schedule.
+            /// Terminates a Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to terminates.
+            /// The ID of the Job Schedule to terminates.
             /// </param>
             /// <param name='jobScheduleTerminateOptions'>
             /// Additional parameters for the operation
@@ -381,13 +381,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Terminates a job schedule.
+            /// Terminates a Job Schedule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobScheduleId'>
-            /// The ID of the job schedule to terminates.
+            /// The ID of the Job Schedule to terminates.
             /// </param>
             /// <param name='jobScheduleTerminateOptions'>
             /// Additional parameters for the operation
@@ -404,13 +404,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Adds a job schedule to the specified account.
+            /// Adds a Job Schedule to the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='cloudJobSchedule'>
-            /// The job schedule to be added.
+            /// The Job Schedule to be added.
             /// </param>
             /// <param name='jobScheduleAddOptions'>
             /// Additional parameters for the operation
@@ -421,13 +421,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Adds a job schedule to the specified account.
+            /// Adds a Job Schedule to the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='cloudJobSchedule'>
-            /// The job schedule to be added.
+            /// The Job Schedule to be added.
             /// </param>
             /// <param name='jobScheduleAddOptions'>
             /// Additional parameters for the operation
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the job schedules in the specified account.
+            /// Lists all of the Job Schedules in the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the job schedules in the specified account.
+            /// Lists all of the Job Schedules in the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -478,7 +478,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the job schedules in the specified account.
+            /// Lists all of the Job Schedules in the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the job schedules in the specified account.
+            /// Lists all of the Job Schedules in the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

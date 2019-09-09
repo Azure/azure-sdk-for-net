@@ -20,9 +20,9 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.Common` client library will be included:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.1
-dotnet add package Azure.Storage.Queues --version 12.0.0-preview.1
-dotnet add package Azure.Storage.Files --version 12.0.0-preview.1
+dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.2
+dotnet add package Azure.Storage.Queues --version 12.0.0-preview.2
+dotnet add package Azure.Storage.Files --version 12.0.0-preview.2
 ```
 
 ### Prerequisites
@@ -57,6 +57,9 @@ with helpful [`ErrorCode`s][error_codes].
 Get started with our [Common samples][samples] and then continue on with our [Blobs][blobs_samples], [Queues][queues_samples], and [Files][files_samples] samples.
 
 ## Contributing
+
+See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
+testing, and contributing to these libraries.
 
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
@@ -93,6 +96,7 @@ additional questions or comments.
 [blobs_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#next-steps
 [files_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files/README.md#next-steps
 [queues_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#next-steps
+[storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

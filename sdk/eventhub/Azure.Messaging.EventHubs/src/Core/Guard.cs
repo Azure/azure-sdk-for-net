@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="argumentValue">The value of the argument to verify.</param>
         ///
         public static void ArgumentNotEmptyOrWhitespace(string argumentName,
-                                                       string argumentValue)
+                                                        string argumentValue)
         {
             if (argumentValue == null)
             {
@@ -124,13 +124,32 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
+        ///   Ensures that an argument's value is at least as large as a given lower bound, throwing
+        ///   <see cref="ArgumentException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
+        ///
+        public static void ArgumentAtLeast(string argumentName,
+                                           long argumentValue,
+                                           long minimumValue)
+        {
+            if (argumentValue < minimumValue)
+            {
+                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueMustBeAtLeast, minimumValue));
+            }
+        }
+
+        /// <summary>
         ///   Ensures that an argument's value is within a specified range, inclusive.
         ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
         /// </summary>
         ///
         /// <param name="argumentName">The name of the argument being considered.</param>
         /// <param name="argumentValue">The value of the argument to verify.</param>
-        /// <param name="minimumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
+        /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
         /// <param name="maximumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be less than or equal to this value.</param>
         ///
         public static void ArgumentInRange(string argumentName,
@@ -140,7 +159,66 @@ namespace Azure.Messaging.EventHubs.Core
         {
             if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
             {
-                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, argumentName, minimumValue, maximumValue));
+                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
+            }
+        }
+
+        /// <summary>
+        ///   Ensures that an argument's value is within a specified range, inclusive.
+        ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
+        /// <param name="maximumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be less than or equal to this value.</param>
+        ///
+        public static void ArgumentInRange(string argumentName,
+                                           long argumentValue,
+                                           long minimumValue,
+                                           long maximumValue)
+        {
+            if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
+            {
+                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
+            }
+        }
+
+        /// <summary>
+        ///   Ensures that an argument's value is within a specified range, inclusive,
+        ///   throwing an <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
+        /// <param name="maximumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be less than or equal to this value.</param>
+        ///
+        public static void ArgumentInRange(string argumentName,
+                                           TimeSpan argumentValue,
+                                           TimeSpan minimumValue,
+                                           TimeSpan maximumValue)
+        {
+            if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
+            {
+                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
+            }
+        }
+
+        /// <summary>
+        ///   Ensures that an instance has not been disposed, throwing an
+        ///   <see cref="ObjectDisposedException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="targetName">The name of the target instance that is being verified.</param>
+        /// <param name="wasDisposed"><c>true</c> if the target instance has been disposed; otherwise, <c>false</c>.</param>
+        ///
+        public static void NotDisposed(string targetName,
+                                       bool wasDisposed)
+        {
+            if (wasDisposed)
+            {
+                throw new ObjectDisposedException(targetName, String.Format(CultureInfo.CurrentCulture, Resources.DisposedInstanceCannotPerformOperation, targetName));
             }
         }
     }

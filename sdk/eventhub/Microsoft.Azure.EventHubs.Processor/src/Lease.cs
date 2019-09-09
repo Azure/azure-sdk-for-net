@@ -75,7 +75,11 @@ namespace Microsoft.Azure.EventHubs.Processor
             return Task.FromResult(false);
         }
 
-        internal long IncrementEpoch()
+		/// <summary>
+		/// Increments the stored epoch in the checkpoint.
+		/// </summary>
+		/// <returns></returns>
+        public long IncrementEpoch()
         {
             this.Epoch++;
             return this.Epoch;

@@ -4,7 +4,6 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -33,8 +32,7 @@ namespace Azure.Security.KeyVault.Certificates
             options = options ?? new CertificateClientOptions();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    bufferResponse: true,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"));
+                    new ChallengeBasedAuthenticationPolicy(credential));
         }
 
         // Certificates API

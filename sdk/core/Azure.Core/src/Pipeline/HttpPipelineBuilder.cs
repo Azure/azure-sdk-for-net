@@ -4,13 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {
     public static class HttpPipelineBuilder
     {
-        public static HttpPipeline Build(ClientOptions options, bool bufferResponse = true, params HttpPipelinePolicy[] clientPolicies)
+        public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] clientPolicies)
         {
             var policies = new List<HttpPipelinePolicy>();
 
@@ -35,14 +34,13 @@ namespace Azure.Core.Pipeline
                 policies.Add(LoggingPolicy.Shared);
             }
 
-            if (bufferResponse)
-            {
-                policies.Add(BufferResponsePolicy.Shared);
-            }
+            policies.Add(BufferResponsePolicy.Shared);
+
+            policies.Add(new RequestActivityPolicy());
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier);
+            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, new ClientDiagnostics(options.Diagnostics.IsLoggingEnabled));
         }
 
         // internal for testing

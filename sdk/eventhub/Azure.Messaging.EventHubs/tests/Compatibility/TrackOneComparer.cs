@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <returns><c>true</c>, if the two events are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
         public static bool IsEventDataEquivalent(TrackOne.EventData trackOneEvent,
-                                                EventData trackTwoEvent)
+                                                 EventData trackTwoEvent)
         {
             // If the events are the same instance, they're equal.  This should only happen
             // if both are null, since the types differ.
@@ -68,9 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     return false;
                 }
 
-                // Verify that the system properties contain the same elements, assuming they are non-null.
-
-                if (trackOneEvent.SystemProperties?.Count != trackTwoEvent.SystemProperties?.Count)
+                if (trackOneEvent.SystemProperties.WithoutTypedMembers().Count != trackTwoEvent.SystemProperties.Count)
                 {
                     return false;
                 }
@@ -79,30 +77,48 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (property.Key == TrackOne.ClientConstants.EnqueuedTimeUtcName)
                     {
-                        // It's necessary to be extra careful with EnqueuedTime property because its type
-                        // differs between Track One and Track Two.
-
                         var trackOneDate = (DateTime)trackOneEvent.SystemProperties[property.Key];
-                        var trackTwoDate = (DateTimeOffset)trackTwoEvent.SystemProperties[property.Key];
+                        var trackTwoDate = trackTwoEvent.EnqueuedTime;
 
-                        if (trackOneDate != trackTwoDate.UtcDateTime)
+                        if (trackOneDate != trackTwoDate.Value.UtcDateTime)
                         {
                             return false;
                         }
                     }
-                    else
+                    else if (property.Key == TrackOne.ClientConstants.SequenceNumberName)
                     {
-                        // Other properties have the same type in Track One and Track Two.
+                        var trackOneSequence = (long)trackOneEvent.SystemProperties[property.Key];
+                        var trackTwoSequence = trackTwoEvent.SequenceNumber;
 
-                        if (!trackTwoEvent.SystemProperties.ContainsKey(property.Key))
+                        if (trackOneSequence != trackTwoSequence)
                         {
                             return false;
                         }
+                    }
+                    else if (property.Key == TrackOne.ClientConstants.OffsetName)
+                    {
+                        var trackOneOffset = (string)trackOneEvent.SystemProperties[property.Key];
+                        var trackTwoOffset = trackTwoEvent.Offset?.ToString();
 
-                        if (!Equals(trackTwoEvent.SystemProperties[property.Key], property.Value))
+                        if (trackOneOffset != trackTwoOffset)
                         {
                             return false;
                         }
+                    }
+                    else if (property.Key == TrackOne.ClientConstants.PartitionKeyName)
+                    {
+                        var trackOnePartitionKey = (string)trackOneEvent.SystemProperties[property.Key];
+                        var trackTwoPartitionKey = trackTwoEvent.PartitionKey;
+
+                        if (trackOnePartitionKey != trackTwoPartitionKey)
+                        {
+                            return false;
+                        }
+                    }
+                    else if ((!trackTwoEvent.SystemProperties.ContainsKey(property.Key))
+                        || (trackOneEvent.SystemProperties[property.Key] != trackTwoEvent.SystemProperties[property.Key]))
+                    {
+                        return false;
                     }
                 }
             }
@@ -131,7 +147,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
-            return trackOneEvent.Properties.OrderBy(kvp => kvp.Key).SequenceEqual(trackTwoEvent.Properties.OrderBy(kvp => kvp.Key));
+            if (!trackOneEvent.Properties.OrderBy(kvp => kvp.Key).SequenceEqual(trackTwoEvent.Properties.OrderBy(kvp => kvp.Key)))
+            {
+                return false;
+            }
+
+            // Validate the runtime metrics properties.
+
+            return ((trackOneEvent.LastSequenceNumber != default ? trackOneEvent.LastSequenceNumber : default(long?)) == trackTwoEvent.LastPartitionSequenceNumber)
+                && ((trackOneEvent.LastEnqueuedTime != default ? new DateTimeOffset(trackOneEvent.LastEnqueuedTime) : default(DateTimeOffset?)) == trackTwoEvent.LastPartitionEnqueuedTime)
+                && ((trackOneEvent.LastEnqueuedOffset == trackTwoEvent.LastPartitionOffset?.ToString()));
         }
 
         /// <summary>
@@ -145,7 +170,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <returns><c>true</c>, if the two events are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
         public static bool IsEventPositionEquivalent(TrackOne.EventPosition trackOnePosition,
-                                                    EventPosition trackTwoPosition)
+                                                     EventPosition trackTwoPosition)
         {
             // If the positions are the same instance, they're equal.  This should only happen
             // if both are null, since the types differ.

@@ -45,13 +45,12 @@ namespace Azure.Messaging.EventHubs
         public long? OwnerLevel { get; set; }
 
         /// <summary>
-        ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue
-        ///   is encountered while receiving.
+        ///   The set of options to use for determining whether a failed operation should be retried and,
+        ///   if so, the amount of time to wait between retry attempts.  If not specified, the retry policy from
+        ///   the associated <see cref="EventHubClient" /> will be used.
         /// </summary>
         ///
-        /// <value>If not specified, the retry policy configured on the associated <see cref="EventHubClient" /> will be used.</value>
-        ///
-        public Retry Retry { get; set; }
+        public RetryOptions RetryOptions { get; set; }
 
         /// <summary>
         ///   The default amount of time to wait for the requested amount of messages when receiving; if this
@@ -83,7 +82,7 @@ namespace Azure.Messaging.EventHubs
         ///     An optional text-based identifier label to assign to a consumer.
         /// </summary>
         ///
-        /// <value>The identifier is used for informational purposes only.  If not specified, the reaciever will have no assigned identifier label.</value>
+        /// <value>The identifier is used for informational purposes only.  If not specified, the receiver will have no assigned identifier label.</value>
         ///
         public string Identifier
         {
@@ -97,7 +96,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The prefetch count used by the consumer to control the number of events this consumer will actively receive
+        ///   The count used by the consumer to control the number of events this consumer will actively receive
         ///   and queue locally without regard to whether a receive operation is currently active.
         /// </summary>
         ///
@@ -113,7 +112,24 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///     Indicates whether or not the consumer should request information on the last enqueued event on its
+        ///     associated partition, and track that information as events are received.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if information about the partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
+        ///
+        /// <remarks>
+        ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
+        ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
+        ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
+        ///   against periodically making requests for partition properties using the Event Hub client.
+        /// </remarks>
+        ///
+        ///
+        public bool TrackLastEnqueuedEventInformation { get; set; } = true;
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -151,8 +167,7 @@ namespace Azure.Messaging.EventHubs
             new EventHubConsumerOptions
             {
                 OwnerLevel = this.OwnerLevel,
-                Retry = this.Retry?.Clone(),
-
+                RetryOptions = this.RetryOptions?.Clone(),
                 _identifier = this._identifier,
                 _prefetchCount = this._prefetchCount,
                 _maximumReceiveWaitTime = this._maximumReceiveWaitTime
@@ -163,7 +178,7 @@ namespace Azure.Messaging.EventHubs
         ///   it is not valid.
         /// </summary>
         ///
-        /// <param name="identifier">The identifier to validae.</param>
+        /// <param name="identifier">The identifier to validate.</param>
         ///
         private void ValidateIdentifier(string identifier)
         {
@@ -178,7 +193,7 @@ namespace Azure.Messaging.EventHubs
         ///   it is not valid.
         /// </summary>
         ///
-        /// <param name="maximumWaitTime">The time period to validae.</param>
+        /// <param name="maximumWaitTime">The time period to validate.</param>
         ///
         private void ValidateMaximumReceiveWaitTime(TimeSpan? maximumWaitTime)
         {

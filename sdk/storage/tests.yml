@@ -1,14 +1,21 @@
 trigger: none
 
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
-  parameters:
-    ServiceDirectory: storage
-    PreSteps:
-      - powershell: |
-          $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"
-          '$(net-storage-test-configuration)' | Out-File -Encoding Utf8 $TestConfigurationPath
-          Write-Host "##vso[task.setvariable variable=TestConfigurationPath]$TestConfigurationPath"
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: azure
 
-    EnvVars:
-      AZ_STORAGE_CONFIG_PATH: $(TestConfigurationPath)
+jobs:
+  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+    parameters:
+      ServiceDirectory: storage
+      PreSteps:
+        - pwsh: |
+            $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"
+            '$(net-storage-test-configuration)' | Out-File -Encoding Utf8 $TestConfigurationPath
+            Write-Host "##vso[task.setvariable variable=TestConfigurationPath]$TestConfigurationPath"
+
+      EnvVars:
+        AZ_STORAGE_CONFIG_PATH: $(TestConfigurationPath)

@@ -72,14 +72,14 @@ namespace Microsoft.Azure.Management.Reservations
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IReservationOrderOperations.
-        /// </summary>
-        public virtual IReservationOrderOperations ReservationOrder { get; private set; }
-
-        /// <summary>
         /// Gets the IReservationOperations.
         /// </summary>
         public virtual IReservationOperations Reservation { get; private set; }
+
+        /// <summary>
+        /// Gets the IReservationOrderOperations.
+        /// </summary>
+        public virtual IReservationOrderOperations ReservationOrder { get; private set; }
 
         /// <summary>
         /// Gets the IOperationOperations.
@@ -327,8 +327,8 @@ namespace Microsoft.Azure.Management.Reservations
         /// </summary>
         private void Initialize()
         {
-            ReservationOrder = new ReservationOrderOperations(this);
             Reservation = new ReservationOperations(this);
+            ReservationOrder = new ReservationOrderOperations(this);
             Operation = new OperationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-04-01";

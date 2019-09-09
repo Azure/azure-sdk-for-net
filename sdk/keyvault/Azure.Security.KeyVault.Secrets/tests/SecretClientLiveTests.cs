@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Core.Testing;
 using System.Text;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Test
 {
@@ -20,6 +20,19 @@ namespace Azure.Security.KeyVault.Test
 
         public SecretClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if(this.Mode == RecordedTestMode.Record || this.Mode == RecordedTestMode.Playback)
+            {
+                this.Client = this.GetClient();
+
+                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+            }
         }
 
         [Test]
@@ -41,12 +54,13 @@ namespace Azure.Security.KeyVault.Test
         public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1565114301));
 
             Secret setResult = null;
 
             try
             {
-                var exp = new DateTimeOffset(new DateTime(637027248124480000, DateTimeKind.Utc));
+                var exp = new DateTimeOffset(new DateTime(637027248120000000, DateTimeKind.Utc));
                 var nbf = exp.AddDays(-30);
 
                 var secret = new Secret(secretName, "CrudWithExtendedPropsValue1")
@@ -62,6 +76,11 @@ namespace Azure.Security.KeyVault.Test
                 };
 
                 setResult = await Client.SetAsync(secret);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    DateTimeOffset now = DateTimeOffset.UtcNow;
+                    createdUpdatedConstraint = Is.InRange(now.AddMinutes(-5), now.AddMinutes(5));
+                }
 
                 RegisterForCleanup(secret, delete: false);
 
@@ -76,8 +95,8 @@ namespace Azure.Security.KeyVault.Test
                 Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
                 Assert.AreEqual(VaultUri, setResult.Vault);
                 Assert.AreEqual("Recoverable+Purgeable", setResult.RecoveryLevel);
-                Assert.NotNull(setResult.Created);
-                Assert.NotNull(setResult.Updated);
+                Assert.That(setResult.Created, createdUpdatedConstraint);
+                Assert.That(setResult.Updated, createdUpdatedConstraint);
 
                 Secret getResult = await Client.GetAsync(secretName);
 
@@ -136,7 +155,7 @@ namespace Azure.Security.KeyVault.Test
 
             SecretBase setSecret = await Client.SetAsync(secretName, "value");
             RegisterForCleanup(setSecret);
-            
+
             Secret secret = await Client.GetAsync(secretName);
 
             AssertSecretsEqual(setSecret, secret);
@@ -161,7 +180,7 @@ namespace Azure.Security.KeyVault.Test
         public async Task GetSecretVersionsNonExisting()
         {
             List<Response<SecretBase>> allSecrets = await Client.GetSecretVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-            
+
             Assert.AreEqual(0, allSecrets.Count);
         }
 
@@ -230,6 +249,8 @@ namespace Azure.Security.KeyVault.Test
             DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
 
             AssertSecretsEqual(secret, deletedSecret);
+            Assert.NotNull(deletedSecret.DeletedDate);
+            Assert.NotNull(deletedSecret.ScheduledPurgeDate);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetAsync(secretName));
         }

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             var currentRetryCount = 0;
             List<Exception> exceptions = null;
-            var timeoutHelper = new TimeoutHelper(operationTimeout);
+            var timeoutHelper = new TimeoutHelper(operationTimeout, true);
 
             if (this.IsServerBusy && timeoutHelper.RemainingTime() < RetryPolicy.ServerBusyBaseSleepTime)
             {

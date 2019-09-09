@@ -259,6 +259,43 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Deletes the specified network profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkProfileName'>
+            /// The name of the NetworkProfile.
+            /// </param>
+            public static void BeginDelete(this INetworkProfilesOperations operations, string resourceGroupName, string networkProfileName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, networkProfileName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified network profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkProfileName'>
+            /// The name of the NetworkProfile.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this INetworkProfilesOperations operations, string resourceGroupName, string networkProfileName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, networkProfileName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets all the network profiles in a subscription.
             /// </summary>
             /// <param name='operations'>

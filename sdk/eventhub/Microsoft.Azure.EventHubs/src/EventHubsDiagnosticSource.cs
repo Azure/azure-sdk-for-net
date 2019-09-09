@@ -20,13 +20,13 @@ namespace Microsoft.Azure.EventHubs
         public const string CorrelationContextPropertyName = "Correlation-Context";
         public const string RelatedToTagName = "RelatedTo";
 
-        public const string ProcessActivityName = DiagnosticSourceName + ".Process";
+        public const string ProcessActivityName = "Process";
 
-        public const string SendActivityName = DiagnosticSourceName + ".Send";
+        public const string SendActivityName = "Send";
         public const string SendActivityStartName = SendActivityName + ".Start";
         public const string SendActivityExceptionName = SendActivityName + ".Exception";
 
-        public const string ReceiveActivityName = DiagnosticSourceName + ".Receive";
+        public const string ReceiveActivityName = "Receive";
         public const string ReceiveActivityStartName = ReceiveActivityName + ".Start";
         public const string ReceiveActivityExceptionName = ReceiveActivityName + ".Exception";
 

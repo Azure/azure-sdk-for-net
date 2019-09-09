@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,7 +33,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsFalseIfNotExist()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
 
             Assert.False(message.TryGetProperty("someName", out _));
         }
@@ -43,7 +41,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsValueIfSet()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
             message.SetProperty("someName", "value");
 
             Assert.True(message.TryGetProperty("someName", out object value));
@@ -53,7 +51,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyIsCaseSensitive()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
             message.SetProperty("someName", "value");
 
             Assert.False(message.TryGetProperty("SomeName", out object value));

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the most recent job to run under the job schedule.
+    /// Information about the most recent Job to run under the Job Schedule.
     /// </summary>
     public partial class RecentJob
     {
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the RecentJob class.
         /// </summary>
-        /// <param name="id">The ID of the job.</param>
-        /// <param name="url">The URL of the job.</param>
+        /// <param name="id">The ID of the Job.</param>
+        /// <param name="url">The URL of the Job.</param>
         public RecentJob(string id = default(string), string url = default(string))
         {
             Id = id;
@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the job.
+        /// Gets or sets the ID of the Job.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL of the job.
+        /// Gets or sets the URL of the Job.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }

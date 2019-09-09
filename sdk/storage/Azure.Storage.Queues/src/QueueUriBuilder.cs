@@ -10,12 +10,10 @@ namespace Azure.Storage.Queues
 {
     /// <summary>
     /// Constructs a Queue URI.
-    /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/addressing-queue-service-resources"/>
+    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/addressing-queue-service-resources"/>
     /// </summary>
     internal struct QueueUriBuilder : IEquatable<QueueUriBuilder>
     {
-        const string SasVersionKey = "sv";
-
         /// <summary>
         /// Scheme.
         /// Example: "http"
@@ -64,8 +62,8 @@ namespace Azure.Storage.Queues
         public string UnparsedParams;
 
         /// <summary>
-        /// Parses a URL initializing QueueUriBuilder's fields including any SAS-related query parameters. 
-        /// Any other query parameters remain in the UnparsedParams field. 
+        /// Parses a URL initializing QueueUriBuilder's fields including any SAS-related query parameters.
+        /// Any other query parameters remain in the UnparsedParams field.
         /// </summary>
         /// <param name="uri"><see cref="Uri"/></param>
         public QueueUriBuilder(Uri uri)
@@ -97,7 +95,7 @@ namespace Azure.Storage.Queues
                     // Slash not found; path has account name & no queue name
                     if (accountEndIndex == -1)
                     {
-                        this.AccountName = path; 
+                        this.AccountName = path;
                         startIndex = path.Length;
                     }
                     else
@@ -109,11 +107,11 @@ namespace Azure.Storage.Queues
 
                 // Find the next slash (if it exists)
                 var queueEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
-                
+
                 // Slash not found; path has queue name & no message id
                 if (queueEndIndex == -1)
                 {
-                    this.QueueName = path.Substring(startIndex); 
+                    this.QueueName = path.Substring(startIndex);
                 }
                 else
                 {
@@ -135,7 +133,7 @@ namespace Azure.Storage.Queues
 
             // Convert the query parameters to a case-sensitive map & trim whitespace
             var paramsMap = new UriQueryParamsCollection(uri.Query);
-            if(paramsMap.ContainsKey(SasVersionKey))
+            if(paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
                 this.Sas = new SasQueryParameters(paramsMap);
             }
@@ -144,7 +142,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// URL returns a URL object whose fields are initialized from the QueueUriBuilder fields. The URL's RawQuery
-        /// field contains the SAS and unparsed query parameters.        
+        /// field contains the SAS and unparsed query parameters.
         /// </summary>
         /// <returns><see cref="Uri"/></returns>
         public Uri ToUri()
@@ -207,7 +205,6 @@ namespace Azure.Storage.Queues
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
             => obj is QueueUriBuilder other && this.Equals(other);
-
 
         /// <summary>
         /// Check if two QueueUriBuilder instances are equal.

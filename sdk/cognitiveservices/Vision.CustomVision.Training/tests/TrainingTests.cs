@@ -28,9 +28,9 @@
             var updatedProjName = "Another Name";
             var updatedProjDescription = "Updated Project Description";
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteProject", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "CreateUpdateDeleteProject", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -59,9 +59,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void CreateDeleteProjectWithDomain()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateDeleteProjectWithDomain", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "CreateDeleteProjectWithDomain", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -82,9 +82,9 @@
         {
             string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Hemlock/hemlock_1.jpg";
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateImageFromUrl", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "CreateImageFromUrl", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -115,9 +115,9 @@
         {
             var dataFileName = "hemlock_1.jpg";
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromFiles", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "CreateImagesFromFiles", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -149,9 +149,9 @@
         {
             var dataFileName = "hemlock_1.jpg";
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromData", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "CreateImagesFromData", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -180,9 +180,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void ProjectRetrieval()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ProjectRetrieval", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ProjectRetrieval", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -209,9 +209,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void TagRetrieval()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "TagRetrieval", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "TagRetrieval", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -243,9 +243,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public void DomainsApiTests()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DomainsApiTests", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "DomainsApiTests", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -271,9 +271,9 @@
             var updatedName = "New Tag Name";
             var updatedDescription = "Updated Description";
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteTag", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "CreateUpdateDeleteTag", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
@@ -309,9 +309,9 @@
         {
             var updatedName = "New Iteration Name";
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetIterations", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "GetIterations", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -349,9 +349,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void GetIterationPerformance()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetIterationPerformance", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "GetIterationPerformance", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -384,9 +384,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void ExportTests()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ExportTests", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ExportTests", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject(ProjectBuilderHelper.ExportableDomain))
                 {
@@ -419,9 +419,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void TrainAndPublishProject()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "TrainAndPublishProject", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "TrainAndPublishProject", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -463,9 +463,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void GetTaggedImages()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetTaggedImages", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "GetTaggedImages", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
@@ -498,9 +498,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void GetUntaggedImages()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetUntaggedImages", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "GetUntaggedImages", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -515,9 +515,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void ImageTagManipulation()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ImageTagManipulation", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ImageTagManipulation", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -550,9 +550,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void DeleteImages()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DeleteImages", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "DeleteImages", RecorderMode);
 
                 using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
                 {
@@ -575,9 +575,9 @@
         {
             var dataFileName = "test_image.jpg";
 
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "QuickTests", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "QuickTests", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
@@ -608,9 +608,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void CreateImagesFromPredictions()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromPredictions", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "CreateImagesFromPredictions", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -631,9 +631,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void QueryPredictionResults()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "QueryPredictionResults", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "QueryPredictionResults", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -663,9 +663,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void DeletePrediction()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DeletePrediction", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "DeletePrediction", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -686,9 +686,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void GetImagesByIds()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetImagesByIds", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "GetImagesByIds", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -720,9 +720,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void ImageCounts()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ImageCounts", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ImageCounts", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 {
@@ -744,9 +744,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void DownloadRegions()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DownloadRegions", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "DownloadRegions", RecorderMode);
 
                 using (var project = CreateTrainedObjDetectionProject())
                 {
@@ -769,9 +769,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void RegionManipulation()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "RegionManipulation", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "RegionManipulation", RecorderMode);
 
                 using (var project = CreateTrainedObjDetectionProject())
                 using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
@@ -821,9 +821,9 @@
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
         public async void ObjDetectionPrediction()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ObjDetectionPrediction", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "ObjDetectionPrediction", RecorderMode);
 
                 using (var project = CreateTrainedObjDetectionProject())
                 using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())

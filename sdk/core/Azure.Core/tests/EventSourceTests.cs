@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -87,7 +86,7 @@ namespace Azure.Core.Tests
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.ClientRequestId;
 
-                await SendRequestAsync(pipeline, request, CancellationToken.None);
+                await SendRequestAsync(pipeline, request);
             }
 
             var e = _listener.SingleEventById(RequestEvent);
@@ -148,7 +147,7 @@ namespace Azure.Core.Tests
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.ClientRequestId;
 
-                await SendRequestAsync(pipeline, request, CancellationToken.None);
+                await SendRequestAsync(pipeline, request);
             }
 
             var e = _listener.SingleEventById(RequestContentTextEvent);
@@ -315,7 +314,7 @@ namespace Azure.Core.Tests
             {
                 request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
 
-                Response response = await SendRequestAsync(pipeline, request, CancellationToken.None);
+                Response response = await SendRequestAsync(pipeline, request);
 
                 var buffer = new byte[11];
 

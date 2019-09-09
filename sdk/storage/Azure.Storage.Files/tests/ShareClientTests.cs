@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Common;
@@ -172,6 +173,53 @@ namespace Azure.Storage.Files.Test
                 {
                     await share.DeleteAsync();
                 }
+            }
+        }
+
+        [Test]
+        public async Task CreateAndGetPermissionAsync()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+
+                // Act
+                var createResponse = await share.CreatePermissionAsync(permission);
+                var getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+
+                // Assert
+                Assert.AreEqual(permission, getResponse.Value);
+            }
+        }
+
+        [Test]
+        public async Task CreatePermissionAsync_Error()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var permission = "invalidPermission";
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    share.CreatePermissionAsync(permission),
+                    e => Assert.AreEqual("FileInvalidPermission", e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task GetPermissionAsync_Error()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                // Arrange
+                var permissionKey = "invalidPermission";
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    share.GetPermissionAsync(permissionKey),
+                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
             }
         }
 

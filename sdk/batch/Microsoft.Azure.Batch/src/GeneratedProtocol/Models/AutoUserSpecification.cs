@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the parameters for the auto user that runs a task on the
+    /// Specifies the parameters for the auto user that runs a Task on the
     /// Batch service.
     /// </summary>
     public partial class AutoUserSpecification
@@ -49,7 +49,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the scope for the auto user
         /// </summary>
         /// <remarks>
-        /// The default value is task. Possible values include: 'task', 'pool'
+        /// The default value is pool. If the pool is running Windows a value
+        /// of Task should be specified if stricter isolation between tasks is
+        /// required. For example, if the task mutates the registry in a way
+        /// which could impact other tasks, or if certificates have been
+        /// specified on the pool which should not be accessible by normal
+        /// tasks but should be accessible by StartTasks. Possible values
+        /// include: 'task', 'pool'
         /// </remarks>
         [JsonProperty(PropertyName = "scope")]
         public AutoUserScope? Scope { get; set; }

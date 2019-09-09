@@ -4,7 +4,7 @@ Azure Event Hubs is a highly scalable publish-subscribe service that can ingest 
 
 ## Design Overview
 
-This design is focused on the second preview of the track two Event Hubs client library, and limits the scope of discussion to those areas with active development for the second preview. For wider context and more general discussion of the design goals for the track two Event Hubs client, please see the [.NET Event Hubs Client: Track Two Proposal (First  Preview)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hubs-first-preview.md). 
+This design is focused on the second preview of the track two Event Hubs client library, and limits the scope of discussion to those areas with active development for the second preview. For wider context and more general discussion of the design goals for the track two Event Hubs client, please see the [.NET Event Hubs Client: Track Two Proposal (First Preview)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hubs-first-preview.md). 
 
 ## Goals for the Second Preview
 
@@ -12,7 +12,7 @@ This design is focused on the second preview of the track two Event Hubs client 
 
 - Continue to align the public API surface area to the guidance outlined in the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html).
 
-- Design an exception hierarchy that follows the overall pattern used by the track one client, limiting changes and allowing the published  [exception guidance](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-messaging-exceptions) to remain as relevant as possible.
+- Design an exception hierarchy that follows the overall pattern used by the track one client, limiting changes and allowing the published [exception guidance](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-messaging-exceptions) to remain as relevant as possible.
 
 - Streamline the design around timeouts and retries, making the common scenarios easier while allowing developers with advanced scenarios to customize.
 
@@ -343,7 +343,7 @@ The main client library package, containing the core components for interacting 
 
 The top-level container for the types in the client library intended to be used by Event Hubs client library users. It is intended that types most frequently used by users for basic operations belong to this namespace to ensure ease of discovery.
 
-##### _Example Types:_
+##### _Example types:_
  
 - `RetryOptions`
 - `EventHubsRetryPolicy`
@@ -354,7 +354,7 @@ The top-level container for the types in the client library intended to be used 
 
 The location for exceptions and error-related information and operations. Many of these types are surfaced as information for consumers in response to conditions encountered during a basic operation. It is not intended that consumers need to create these types directly.
 
-##### _Example Types:_
+##### _Example types:_
  
 - `OperationCancelledException`
 - `TimeoutException`
@@ -365,7 +365,7 @@ The location for exceptions and error-related information and operations. Many o
 
 The location for internal types used by the Event Hubs library to facilitate operations; these constructs are not intended to be consumed externally. 
 
-##### _Example Types:_
+##### _Example types:_
  
 - `DefaultEventHubsRetryPolicy`
 - `SystemMessagePropertyName`
@@ -374,7 +374,7 @@ The location for internal types used by the Event Hubs library to facilitate ope
 
 The location for internal types used by the Event Hubs library to facilitate AMQP protocol-related activities; these constructs are not intended to be consumed externally. 
 
-##### _Example Types:_
+##### _Example types:_
  
 - `AmqpMessageConverter`
 - `AmqpEventDataBatch`
@@ -383,7 +383,7 @@ The location for internal types used by the Event Hubs library to facilitate AMQ
 
 The location for internal types used by the Event Hubs library for diagnostics and logging activities; these constructs are not intended to be consumed externally. 
 
-##### _Example Types:_
+##### _Example types:_
  
 - `EventHubsEventSource`
 - `EventHubsDiagnosticSource`

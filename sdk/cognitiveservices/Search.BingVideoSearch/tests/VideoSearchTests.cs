@@ -14,9 +14,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void VideoSearch()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "VideoSearch");
+                HttpMockServer.Initialize(this.GetType(), "VideoSearch");
 
                 IVideoSearchClient client = new VideoSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -36,9 +36,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void VideoDetail()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "VideoDetail");
+                HttpMockServer.Initialize(this.GetType(), "VideoDetail");
 
                 IVideoSearchClient client = new VideoSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
@@ -64,9 +64,9 @@ namespace SearchSDK.Tests
         [Fact]
         public void VideoTrending()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "VideoTrending");
+                HttpMockServer.Initialize(this.GetType(), "VideoTrending");
 
                 IVideoSearchClient client = new VideoSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 

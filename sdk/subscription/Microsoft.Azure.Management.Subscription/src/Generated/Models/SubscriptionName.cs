@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// New name of the subscription.
+    /// The new name of the subscription.
     /// </summary>
     public partial class SubscriptionName
     {

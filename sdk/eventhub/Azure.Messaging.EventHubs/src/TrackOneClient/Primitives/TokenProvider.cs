@@ -5,8 +5,8 @@ namespace TrackOne
 {
     using System;
     using System.Threading.Tasks;
-    using TrackOne.Primitives;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using TrackOne.Primitives;
 
     /// <summary>
     /// This abstract base class can be extended to implement additional token providers.

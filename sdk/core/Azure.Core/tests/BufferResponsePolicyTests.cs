@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline.Policies;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -71,6 +71,21 @@ namespace Azure.Core.Tests
             await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
 
             Assert.True(readTrackingStream.IsClosed);
+        }
+
+        [Test]
+        public async Task DoesntBufferWhenDisabled()
+        {
+            ReadTrackingStream readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = readTrackingStream
+            };
+
+            var mockTransport = CreateMockTransport(mockResponse);
+            Response response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared, bufferResponse: false);
+
+            Assert.IsNotInstanceOf<MemoryStream>(response.ContentStream);
         }
 
         private class ReadTrackingStream : Stream

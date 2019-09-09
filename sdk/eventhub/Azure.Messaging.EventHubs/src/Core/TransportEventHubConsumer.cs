@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -17,7 +19,35 @@ namespace Azure.Messaging.EventHubs.Core
     internal abstract class TransportEventHubConsumer
     {
         /// <summary>
-        ///   Receives a bach of <see cref="EventData" /> from the the Event Hub partition.
+        ///   A set of information about the enqueued state of a partition, as observed by the consumer as
+        ///   events are received from the Event Hubs service.
+        /// </summary>
+        ///
+        /// <value><c>null</c>, if the information was not requested; otherwise, the last observed set of partition metrics.</value>
+        ///
+        public LastEnqueuedEventProperties LastEnqueuedEventInformation { get; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TransportEventHubConsumer"/> class.
+        /// </summary>
+        ///
+        /// <param name="lastEnqueuedEventProperties">The set of properties for the last event enqueued in a partition.</param>
+        ///
+        protected TransportEventHubConsumer(LastEnqueuedEventProperties lastEnqueuedEventProperties = null)
+        {
+            LastEnqueuedEventInformation = lastEnqueuedEventProperties;
+        }
+
+        /// <summary>
+        ///   Updates the active retry policy for the client.
+        /// </summary>
+        ///
+        /// <param name="newRetryPolicy">The retry policy to set as active.</param>
+        ///
+        public abstract void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy);
+
+        /// <summary>
+        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>

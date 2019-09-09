@@ -3,79 +3,98 @@ trigger:
 jobs:
   - job: CreateDocs
     variables:
-      skipComponentGovernanceDetection: true
+      - template: templates/variables/globals.yml
     pool:
-      vmImage: vs2017-win2016
+      vmImage: windows-2019
     steps:
-      - powershell: |
-          Invoke-WebRequest -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
+      - pwsh: |
+          Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip" `
+          -OutFile "mdoc.zip" | Wait-Process; Expand-Archive -Path "mdoc.zip" -DestinationPath "./mdoc/"
+        workingDirectory: $(Build.BinariesDirectory)
+        displayName: Download and Extract mdoc Zip
+      - pwsh: |
+          Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
           -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
         workingDirectory: $(Build.BinariesDirectory)
         displayName: Download and Extract DocFX
+      - pwsh: |
+          dotnet restore "$(Build.SourcesDirectory)/eng/docgeneration/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
+        displayName: Restore Nuget Packages Needed
+      - pwsh: |
+          mkdir dll-docs/my-api
+          mkdir dll-xml-output
+          mkdir dll-yaml-output
+          mkdir docfx-output
+        displayName: Create Directories for Doc Generation
+        workingDirectory: $(Build.BinariesDirectory)
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          version: $(DotNetCoreSDKVersion)
+      - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.BinariesDirectory)/dll-docs/my-api /p:TargetFramework=netstandard2.0
+        displayName: Build Packages
+      - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.BinariesDirectory)/dll-docs/dependencies/my-api /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
+        displayName: Build Packages, Include Dependencies
+      - pwsh: dotnet restore "$(Build.SourcesDirectory)/eng/docgeneration/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
+        displayName: Restore other Nuget Packages Needed
+      - task: DeleteFiles@1
+        displayName: "Delete files from $(Build.BinariesDirectory)/dll-docs/my-api"
+        inputs:
+          SourceFolder: "$(Build.BinariesDirectory)/dll-docs/my-api"
+          Contents: |
+            *.json
+            *.pdb
+            *.config
+      - task: CmdLine@2
+        displayName: Initialize Frameworks File
+        inputs:
+          script: mdoc.exe fx-bootstrap ../dll-docs
+          workingDirectory: $(Build.BinariesDirectory)/mdoc
+          failOnStderr: true
+      - pwsh: ./popimport.exe -f ../dll-docs/
+        workingDirectory: $(Build.BinariesDirectory)/PopImport
+        displayName: Include XML Files
+      - task: CmdLine@2
+        displayName: Produce ECMAXML
+        inputs:
+          script: |
+            mdoc.exe update -fx ../dll-docs -o ../dll-xml-output --debug -lang docid -lang vb.net -lang fsharp --delete
+          workingDirectory: $(Build.BinariesDirectory)/mdoc
+          failOnStderr: true
+      - task: CmdLine@2
+        displayName: Generate YAML
+        inputs:
+          script: |
+            "$(Build.BinariesDirectory)/ECMA2Yml/ECMA2Yaml.exe" -s "./dll-xml-output" -o "./dll-yaml-output"
+          workingDirectory: $(Build.BinariesDirectory)
+          failOnStderr: true
       - task: CmdLine@2
         displayName: Provision DocFX Directory
         inputs:
           script: $(Build.BinariesDirectory)/docfx/docfx.exe init -q
-          workingDirectory: $(Build.SourcesDirectory)
+          workingDirectory: $(Build.BinariesDirectory)/docfx-output
           failOnStderr: true
-      - powershell: ls
-        workingDirectory: $(Build.SourcesDirectory)/docfx_project/
-      - powershell: |
-          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
-        displayName: Copy over docfx.json
-      - task: CmdLine@2
-        displayName: Generate MetaData
-        inputs:
-          script: $(Build.BinariesDirectory)/docfx/docfx.exe metadata
-          workingDirectory: $(Build.SourcesDirectory)/docfx_project/
-          failOnStderr: true
-      - task: PythonScript@0
-        displayName: "Arrange Yaml files into Folders"
-        inputs:
-          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/MoveYmlFiles.py"
-          arguments: $(Build.SourcesDirectory)
-          failOnStderr: true
-      - task: PythonScript@0
-        displayName: "Create Toc.yml for each service directory"
-        inputs:
-          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CreateTocYml.py"
-          arguments: $(Build.SourcesDirectory)
-      - powershell: |
-          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/api/*" -Destination "$(Build.SourcesDirectory)/docfx_project/api/" -Force
-          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/api/index.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/intro.md" -Force
-          Copy-Item "$(Build.SourcesDirectory)/Documentation/*" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
-          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/index/*" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
-          Copy-Item "$(Build.SourcesDirectory)/CONTRIBUTING.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
-          Copy-Item "$(Build.SourcesDirectory)/packages.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
-          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
+      - pwsh: |
+          Copy-Item "$(Build.BinariesDirectory)/dll-yaml-output/*" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/api/" -Recurse
+          Copy-Item "$(Build.SourcesDirectory)/README.md" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/index.md" -Recurse -Force
+          Copy-Item "$(Build.SourcesDirectory)/README.md" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/api/index.md" -Recurse -Force
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/docfx.json" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project" -Recurse -Force
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/toc.yml" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/toc.yml" -Recurse -Force
         displayName: Copy over Yaml and Md files
-      - task: PythonScript@0
-        displayName: "Copy Over all ReadMes in the Repo"
-        inputs:
-          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CopyReadMes.py"
-          arguments: $(Build.SourcesDirectory)
-          failOnStderr: true
-      - task: PythonScript@0
-        displayName: "Create Toc.yml for articles"
-        inputs:
-          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CreateTocYmlForArticles.py"
-          arguments: $(Build.SourcesDirectory)
-          failOnStderr: true
-      - powershell: ls
-        workingDirectory: $(Build.SourcesDirectory)/docfx_project/articles
       - task: CmdLine@2
         displayName: Build Doc Content
         inputs:
           script: $(Build.BinariesDirectory)/docfx/docfx.exe build
-          workingDirectory: $(Build.SourcesDirectory)/docfx_project/
+          workingDirectory: $(Build.BinariesDirectory)/docfx-output/docfx_project/
           failOnStderr: true
-      - powershell: |
-          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/*" -Destination "$(Build.SourcesDirectory)/docfx_project/_site/" -Force
-        displayName: Replace site assets
+      - pwsh: |
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/logo.svg" -Destination `
+          "$(Build.BinariesDirectory)/docfx-output/docfx_project/_site" -Recurse -Force
+        displayName: "Copy over site logo"
       - task: CopyFiles@2
-        displayName: Copy HTML to Artifacts Directory
+        displayName: Copy HTML to Artificats Directory
         inputs:
-          sourceFolder: $(Build.SourcesDirectory)/docfx_project/
+          sourceFolder: $(Build.BinariesDirectory)/docfx-output/docfx_project/
           content: '**\*'
           targetFolder: $(Build.ArtifactStagingDirectory)/docfx_project
           overWrite: true
