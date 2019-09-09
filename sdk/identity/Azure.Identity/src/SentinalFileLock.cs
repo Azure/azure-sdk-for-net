@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Identity
@@ -16,7 +17,7 @@ namespace Azure.Identity
         {
             _lockFileStream = lockFileStream;
         }
-        public static async Task<SentinalFileLock> AquireAsync(string lockfilePath, int lockFileRetryDelay, int lockFileRetryCount)
+        public static async Task<SentinalFileLock> AquireAsync(string lockfilePath, int lockFileRetryCount, TimeSpan lockFileRetryDelay)
         {
             Exception exception = null;
             FileStream fileStream = null;
@@ -26,7 +27,6 @@ namespace Azure.Identity
 
             for (int tryCount = 0; tryCount < lockFileRetryCount; tryCount++)
             {
-
                 try
                 {
                     // We are using the file locking to synchronize the store, do not allow multiple writers for the file.
@@ -47,7 +47,7 @@ namespace Azure.Identity
                 catch (UnauthorizedAccessException ex)
                 {
                     exception = ex;
-                    await Task.Delay(lockFileRetryCount).ConfigureAwait(false);
+                    await Task.Delay(lockFileRetryDelay).ConfigureAwait(false);
                 }
             }
 

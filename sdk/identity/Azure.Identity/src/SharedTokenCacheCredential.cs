@@ -1,42 +1,16 @@
-﻿using Azure.Core;
-using Azure.Core.Pipeline;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
 using Microsoft.Identity.Client;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// 
-    /// </summary>
-    public class SharedTokenCacheCredentialOptions
-    {
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string CacheFilePath { get; set; } = Path.Combine(DefaultCacheDirectory, "msal.cache");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int CacheAccessRetryCount { get; set; } = 100;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int CacheAccessRetryDelay { get; set; } = 60000 / 100;
-
-        private static string DefaultCacheDirectory { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ".IdentityService");
-
-    }
-
-    /// <summary>
-    /// 
+    /// Authenticates using tokens in the local cache shared between Microsoft applications.
     /// </summary>
     public class SharedTokenCacheCredential : TokenCredential
     {
@@ -49,7 +23,7 @@ namespace Azure.Identity
         /// Creates a new InteractiveBrowserCredential which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        /// <param name="username">The username of the user to authenticate</param>
+        /// <param name="username">The username (typically an email address) of the user to authenticate, this is required because the local cache may contain tokens for multiple identities</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         public SharedTokenCacheCredential(string clientId, string username)
             : this(clientId, username, null)
@@ -63,7 +37,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="username">The username of the user to authenticate</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
-        /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
+        /// <param name="options">The client options for the newly created SharedTokenCacheCredential</param>
         public SharedTokenCacheCredential(string clientId, string username, SharedTokenCacheCredentialOptions options)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
@@ -78,7 +52,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through the MSAL cache
         /// </summary>
         /// <param name="scopes">The list of scopes for which the token will have access.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -89,7 +63,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the default browser is launched to authenticate the user.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through the MSAL cache
         /// </summary>
         /// <param name="scopes">The list of scopes for which the token will have access.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

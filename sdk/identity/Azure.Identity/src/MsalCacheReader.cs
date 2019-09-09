@@ -1,8 +1,9 @@
-﻿using Microsoft.Identity.Client;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.Identity.Client;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
@@ -13,10 +14,10 @@ namespace Azure.Identity
         private string _cachePath;
         private string _cacheLockPath;
         private int _cacheRetryCount;
-        private int _cacheRetryDelay;
+        private TimeSpan _cacheRetryDelay;
         private DateTimeOffset _lastReadTime;
 
-        public MsalCacheReader(ITokenCache cache, string cachePath, int cacheRetryCount, int cacheRetryDelay)
+        public MsalCacheReader(ITokenCache cache, string cachePath, int cacheRetryCount, TimeSpan cacheRetryDelay)
         {
             _cachePath = cachePath;
 
