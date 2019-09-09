@@ -19,6 +19,7 @@ namespace Azure.Core.Pipeline
             _name = name;
             _source = source;
             _activity = _source.IsEnabled() ? new Activity(_name) : null;
+            _activity?.SetW3CFormat();
         }
 
         public bool IsEnabled => _activity != null;

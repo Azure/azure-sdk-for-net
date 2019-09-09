@@ -86,14 +86,14 @@ namespace Azure.Core.Pipeline
 
             if (currentActivity != null)
             {
-                if (currentActivity.IdFormat == ActivityIdFormat.W3C)
+                if (currentActivity.IsW3CFormat())
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
                         message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
-                        if (currentActivity.TraceStateString != null)
+                        if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
                         {
-                            message.Request.Headers.Add(TraceStateHeaderName, currentActivity.TraceStateString);
+                            message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
                     }
                 }
