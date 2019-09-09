@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs.Specialized
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
             var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new AppendBlobClient(builder.ToUri(), this.Pipeline);
+            return new AppendBlobClient(builder.Uri, this.Pipeline);
         }
 
         #region Create
@@ -222,6 +222,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the creation of this new append blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -238,11 +242,13 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
             AppendBlobAccessConditions? accessConditions = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             this.CreateInternal(
                 httpHeaders,
                 metadata,
                 accessConditions,
+                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -266,6 +272,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the creation of this new append blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -282,11 +292,13 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
             AppendBlobAccessConditions? accessConditions = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await this.CreateInternal(
                 httpHeaders,
                 metadata,
                 accessConditions,
+                customerProvidedKey,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -310,6 +322,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the creation of this new append blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -329,6 +345,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders,
             Metadata metadata,
             AppendBlobAccessConditions? accessConditions,
+            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -342,6 +359,8 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+
                     return await BlobRestClient.AppendBlob.CreateAsync(
                         this.Pipeline,
                         this.Uri,
@@ -354,6 +373,9 @@ namespace Azure.Storage.Blobs.Specialized
                         metadata: metadata,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         blobContentDisposition: httpHeaders?.ContentDisposition,
+                        encryptionKey: customerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
@@ -402,6 +424,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on appending content to this append blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -422,12 +448,14 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             this.AppendBlockInternal(
                 content,
                 transactionalContentHash,
                 accessConditions,
+                customerProvidedKey,
                 progressHandler,
                 false, // async
                 cancellationToken)
@@ -458,6 +486,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on appending content to this append blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -478,12 +510,14 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await this.AppendBlockInternal(
                 content,
                 transactionalContentHash,
                 accessConditions,
+                customerProvidedKey,
                 progressHandler,
                 true, // async
                 cancellationToken)
@@ -514,6 +548,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on appending content to this append blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -537,6 +575,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             byte[] transactionalContentHash,
             AppendBlobAccessConditions? accessConditions,
+            CustomerProvidedKey? customerProvidedKey,
             IProgress<StorageProgress> progressHandler,
             bool async,
             CancellationToken cancellationToken)
@@ -550,6 +589,8 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var appendAttempt = 0;
                     return await ReliableOperation.DoSyncOrAsync(
@@ -569,6 +610,9 @@ namespace Azure.Storage.Blobs.Specialized
                                     transactionalContentHash: transactionalContentHash,
                                     leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                                     maxSize: accessConditions?.IfMaxSizeLessThanOrEqual,
+                                    encryptionKey: customerProvidedKey?.EncryptionKey,
+                                    encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
+                                    encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
                                     appendPosition: accessConditions?.IfAppendPositionEqual,
                                     ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                                     ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
@@ -635,6 +679,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -653,6 +701,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
             AppendBlobAccessConditions? sourceAccessConditions = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             this.AppendBlockFromUriInternal(
                 sourceUri,
@@ -660,6 +709,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 accessConditions,
                 sourceAccessConditions,
+                customerProvidedKey,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -704,6 +754,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -722,6 +776,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
             AppendBlobAccessConditions? sourceAccessConditions = default,
+            CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
             await this.AppendBlockFromUriInternal(
                 sourceUri,
@@ -729,6 +784,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 accessConditions,
                 sourceAccessConditions,
+                customerProvidedKey,
                 true,  // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -773,6 +829,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
+        /// <param name="customerProvidedKey">
+        /// Optional CustomerProvidedKeyInfo for use in customer-provided key
+        /// server-side encryption.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -794,6 +854,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             AppendBlobAccessConditions? accessConditions,
             AppendBlobAccessConditions? sourceAccessConditions,
+            CustomerProvidedKey? customerProvidedKey,
             bool async,
             CancellationToken cancellationToken = default)
         {
@@ -807,6 +868,8 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+
                     return await BlobRestClient.AppendBlob.AppendBlockFromUriAsync(
                         this.Pipeline,
                         this.Uri,
@@ -814,6 +877,9 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         contentLength: default,
+                        encryptionKey: customerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         maxSize: accessConditions?.IfMaxSizeLessThanOrEqual,
                         appendPosition: accessConditions?.IfAppendPositionEqual,

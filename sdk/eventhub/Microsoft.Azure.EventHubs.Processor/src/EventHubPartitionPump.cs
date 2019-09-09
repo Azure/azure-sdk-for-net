@@ -88,7 +88,10 @@ namespace Microsoft.Azure.EventHubs.Processor
             var receiverOptions = new ReceiverOptions()
             {
                 // Enable receiver metrics?
-                EnableReceiverRuntimeMetric = this.Host.EventProcessorOptions.EnableReceiverRuntimeMetric
+                EnableReceiverRuntimeMetric = this.Host.EventProcessorOptions.EnableReceiverRuntimeMetric,
+
+                // Use host name as the identifier for debugging purpose
+                Identifier = this.Host.HostName
             };
 
             // Create new receiver and set options

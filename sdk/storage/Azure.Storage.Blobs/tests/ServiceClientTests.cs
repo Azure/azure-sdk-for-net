@@ -323,7 +323,7 @@ namespace Azure.Storage.Blobs.Test
             var service = this.GetServiceClient_SharedKey();
             try
             {
-                var container = (await service.CreateBlobContainerAsync(name)).Value;
+                var container = this.InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
                 var properties = await container.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
@@ -338,7 +338,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var name = this.GetNewContainerName();
             var service = this.GetServiceClient_SharedKey();
-            var container = (await service.CreateBlobContainerAsync(name)).Value;
+            var container = this.InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
 
             await service.DeleteBlobContainerAsync(name);
             Assert.ThrowsAsync<StorageRequestFailedException>(

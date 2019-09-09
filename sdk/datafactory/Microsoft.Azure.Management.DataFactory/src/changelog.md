@@ -2,6 +2,8 @@
 
 ## Current version
 ###  Feature Additions
+- Added outputColumns property to Office365Source
+- Added support for ORC dataset in ADF
 
 ## Version 4.1.2
 ###  Feature Additions

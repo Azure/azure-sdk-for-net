@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,20 +9,16 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   A non-volatile in-memory storage service that keeps track of checkpoints and ownership.  It must
-    ///   be used with a single <see cref="EventProcessor"/> instance.
+    ///   A volatile in-memory storage service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    public class InMemoryPartitionManager : PartitionManager
+    public sealed class InMemoryPartitionManager : PartitionManager
     {
-        /// <summary>The primitive for synchronizing access during ownership claim.</summary>
-        private readonly object OwnershipClaimLock = new object();
+        /// <summary>The primitive for synchronizing access during ownership update.</summary>
+        private readonly object OwnershipLock = new object();
 
-        /// <summary>The set of stored checkpoints.  Partition ids are used as keys.</summary>
-        private ConcurrentDictionary<string, Checkpoint> Checkpoints;
-
-        /// <summary>The set of stored ownership.  Partition ids are used as keys.</summary>
-        private Dictionary<string, PartitionOwnership> Ownership;
+        /// <summary>The set of stored ownership.</summary>
+        private Dictionary<(string EventHubName, string ConsumerGroup, string PartitionId), PartitionOwnership> Ownership;
 
         /// <summary>Logs activities performed by this partition manager.</summary>
         private Action<string> Logger;
@@ -38,8 +33,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             Logger = logger;
 
-            Checkpoints = new ConcurrentDictionary<string, Checkpoint>();
-            Ownership = new Dictionary<string, PartitionOwnership>();
+            Ownership = new Dictionary<(string, string, string), PartitionOwnership>();
         }
 
         /// <summary>
@@ -56,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             List<PartitionOwnership> ownershipList;
 
-            lock (OwnershipClaimLock)
+            lock (OwnershipLock)
             {
                 ownershipList = Ownership.Values
                     .Where(ownership => ownership.EventHubName == eventHubName &&
@@ -82,24 +76,25 @@ namespace Azure.Messaging.EventHubs.Processor
             // The following lock makes sure two different event processors won't try to claim ownership of a partition
             // simultaneously.  This approach prevents an ownership from being stolen just after being claimed.
 
-            lock (OwnershipClaimLock)
+            lock (OwnershipLock)
             {
                 foreach (var ownership in partitionOwnership)
                 {
                     var isClaimable = true;
+                    var key = (ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
 
                     // In case the partition already has an owner, the ETags must match in order to claim it.
 
-                    if (Ownership.TryGetValue(ownership.PartitionId, out var currentOwnership))
+                    if (Ownership.TryGetValue(key, out var currentOwnership))
                     {
-                        isClaimable = ownership.ETag == currentOwnership.ETag;
+                        isClaimable = String.Equals(ownership.ETag, currentOwnership.ETag, StringComparison.InvariantCultureIgnoreCase);
                     }
 
                     if (isClaimable)
                     {
                         ownership.ETag = Guid.NewGuid().ToString();
 
-                        Ownership[ownership.PartitionId] = ownership;
+                        Ownership[key] = ownership;
                         claimedOwnership.Add(ownership);
 
                         Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
@@ -124,9 +119,31 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public override Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            Checkpoints[checkpoint.PartitionId] = checkpoint;
+            lock (OwnershipLock)
+            {
+                var key = (checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
 
-            Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated.");
+                if (Ownership.TryGetValue(key, out var ownership))
+                {
+                    if (ownership.OwnerIdentifier == checkpoint.OwnerIdentifier)
+                    {
+                        ownership.Offset = checkpoint.Offset;
+                        ownership.SequenceNumber = checkpoint.SequenceNumber;
+                        ownership.LastModifiedTime = DateTimeOffset.UtcNow;
+                        ownership.ETag = Guid.NewGuid().ToString();
+
+                        Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated.");
+                    }
+                    else
+                    {
+                        Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' could not be updated because owner has changed.");
+                    }
+                }
+                else
+                {
+                    Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' could not be updated because no associated ownership was found.");
+                }
+            }
 
             return Task.CompletedTask;
         }

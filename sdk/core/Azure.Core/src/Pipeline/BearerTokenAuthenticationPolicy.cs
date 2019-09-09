@@ -9,7 +9,7 @@ using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
-    public class BearerTokenAuthenticationPolicy: HttpPipelinePolicy
+    public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly TokenCredential _credential;
 
@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
 
         private DateTimeOffset _refreshOn;
 
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new []{ scope })
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope })
         {
         }
 

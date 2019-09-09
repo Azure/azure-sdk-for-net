@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Compatibility;
 using Azure.Messaging.EventHubs.Core;
@@ -545,9 +546,9 @@ namespace Azure.Messaging.EventHubs
 
             // A proxy is only valid when web sockets is used as the transport.
 
-            if ((clientOptions.TransportType == TransportType.AmqpTcp) && (clientOptions.Proxy != null))
+            if ((!clientOptions.TransportType.IsWebSocketTransport()) && (clientOptions.Proxy != null))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ProxyMustUseWebsockets), nameof(clientOptions));
+                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ProxyMustUseWebSockets), nameof(clientOptions));
             }
         }
     }

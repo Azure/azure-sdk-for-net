@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
         public async Task WorksWithCancellationToken()
         {
             var client = InstrumentClient(new TestClient());
-            var result = await client.MethodAsync(123, new CancellationTokenSource().Token );
+            var result = await client.MethodAsync(123, new CancellationTokenSource().Token);
 
             Assert.AreEqual(IsAsync ? "Async 123 True" : "Sync 123 True", result);
         }

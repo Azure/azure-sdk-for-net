@@ -37,6 +37,11 @@
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
+  <!-- Disables StyleCopAnalyzer, Remove this property to enable it -->
+  <PropertyGroup>
+    <EnableStyleCopAnalyzers>false</EnableStyleCopAnalyzers>
+  </PropertyGroup>
+
   <Import Condition="'$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Add references for CLIENT LIBRARY projects -->

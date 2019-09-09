@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core.Testing;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 using System;
@@ -9,7 +10,7 @@ using System.Net.Http;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [Category("Live")]
+    [LiveOnly]
     public partial class ConfigurationSamples
     {
         HttpClient s_client = new HttpClient();

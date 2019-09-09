@@ -18,7 +18,8 @@ namespace Azure.Core.Pipeline
 
         public RequestMethod(string method)
         {
-            if (method == null) throw new ArgumentNullException(nameof(method));
+            if (method == null)
+                throw new ArgumentNullException(nameof(method));
 
             Method = method.ToUpperInvariant();
         }

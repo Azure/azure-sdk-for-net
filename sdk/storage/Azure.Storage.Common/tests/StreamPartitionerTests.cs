@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
@@ -149,6 +150,7 @@ namespace Azure.Storage.Common.Test
         }
 
         [Test]
+        [LiveOnly]
         [NonParallelizable]
         public async Task GetNextPartitionAsync_1GB_WithReadOnlyMemory()
         {
@@ -205,6 +207,7 @@ namespace Azure.Storage.Common.Test
         }
 
         [Test]
+        [LiveOnly]
         [NonParallelizable]
         public async Task GetNextPartitionAsync_1GB_Sequencing()
         {

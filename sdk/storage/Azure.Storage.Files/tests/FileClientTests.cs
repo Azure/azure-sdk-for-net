@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Http;
 using Azure.Core.Testing;
@@ -129,17 +129,22 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        //TODO add FilePermissionId once Share.CreateFilePermission is implemented.
         [Test]
         public async Task CreateAsync_SmbProperties()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
+                var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                var createPermissionResponse = await share.CreatePermissionAsync(permission);
+
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                await directory.CreateAsync();
+
                 var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
                 var smbProperties = new FileSmbProperties
                 {
-                    //TODO FilePermissionKey
+                    FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
                     FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
                     FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                     FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
@@ -401,17 +406,22 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        //TODO add FilePermissionId once Share.CreateFilePermission is implemented.
         [Test]
         public async Task SetPropertiesAsync_SmbProperties()
         {
-            using (this.GetNewDirectory(out var directory))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
+                var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+                var createPermissionResponse = await share.CreatePermissionAsync(permission);
+
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                await directory.CreateAsync();
+
                 var file = this.InstrumentClient(directory.GetFileClient(this.GetNewFileName()));
                 var smbProperties = new FileSmbProperties
                 {
-                    //TODO FilePermissionKey
+                    FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
                     FileAttributes = NtfsFileAttributes.Parse("Archive|ReadOnly"),
                     FileCreationTime = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                     FileLastWriteTime = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
@@ -835,6 +845,54 @@ namespace Azure.Storage.Files.Test
                         content: stream),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
                 }
+            }
+        }
+
+        [Test]
+        [TestCase(512)]
+        [TestCase(1 * Constants.KB)]
+        [TestCase(2 * Constants.KB)]
+        [TestCase(4 * Constants.KB)]
+        [TestCase(10 * Constants.KB)]
+        [TestCase(20 * Constants.KB)]
+        [TestCase(30 * Constants.KB)]
+        [TestCase(50 * Constants.KB)]
+        [TestCase(501 * Constants.KB)]
+        public async Task UploadAsync_SmallBlobs(int size) =>
+            // Use a 1KB threshold so we get a lot of individual blocks
+            await this.UploadAndVerify(size, Constants.KB);
+
+        [Test]
+        [LiveOnly]
+        [TestCase(33 * Constants.MB)]
+        [TestCase(257 * Constants.MB)]
+        [TestCase(1 * Constants.GB)]
+        public async Task UploadAsync_LargeBlobs(int size) =>
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            await this.UploadAndVerify(size, Constants.MB);
+
+        private async Task UploadAndVerify(long size, int singleRangeThreshold)
+        {
+            var data = this.GetRandomBuffer(size);
+            using (this.GetNewShare(out var share))
+            {
+                var name = this.GetNewFileName();
+                var file = this.InstrumentClient(share.GetRootDirectoryClient().GetFileClient(name));
+                await file.CreateAsync(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.UploadInternal(
+                        content: stream,
+                        progressHandler: default,
+                        singleRangeThreshold: singleRangeThreshold,
+                        async: true,
+                        cancellationToken: CancellationToken.None);
+                }
+
+                using var bufferedContent = new MemoryStream();
+                var download = await file.DownloadAsync();
+                await download.Value.Content.CopyToAsync(bufferedContent);
+                TestHelper.AssertSequenceEqual(data, bufferedContent.ToArray());
             }
         }
 

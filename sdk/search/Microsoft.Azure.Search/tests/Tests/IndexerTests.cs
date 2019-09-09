@@ -334,22 +334,22 @@ namespace Microsoft.Azure.Search.Tests
 
                 Assert.Equal("1", oldestResult.Errors[0].Key);
                 Assert.Equal("Key field contains unsafe characters", oldestResult.Errors[0].ErrorMessage);
-                Assert.Equal("errorSourceName", oldestResult.Errors[0].Name);
-                Assert.Equal("errorDetails", oldestResult.Errors[0].Details);
-                Assert.Equal("documentationLink", oldestResult.Errors[0].DocumentationLink);
+                Assert.Equal("DocumentExtraction.AzureBlob.MyDataSource", oldestResult.Errors[0].Name);
+                Assert.Equal("The file could not be parsed.", oldestResult.Errors[0].Details);
+                Assert.Equal("https://go.microsoft.com/fwlink/?linkid=2049388", oldestResult.Errors[0].DocumentationLink);
 
                 Assert.Equal("121713", oldestResult.Errors[1].Key);
                 Assert.Equal("Item is too large", oldestResult.Errors[1].ErrorMessage);
-                Assert.Equal("errorSourceName", oldestResult.Errors[1].Name);
-                Assert.Equal("errorDetails", oldestResult.Errors[1].Details);
-                Assert.Equal("documentationLink", oldestResult.Errors[1].DocumentationLink);
+                Assert.Equal("DocumentExtraction.AzureBlob.DataReader", oldestResult.Errors[1].Name);
+                Assert.Equal("Blob size cannot exceed 256 MB.", oldestResult.Errors[1].Details);
+                Assert.Equal("https://go.microsoft.com/fwlink/?linkid=2049388", oldestResult.Errors[1].DocumentationLink);
 
                 Assert.Equal(1, oldestResult.Warnings.Count);
                 Assert.Equal("2", oldestResult.Warnings[0].Key);
-                Assert.Equal("This is the first and last warning", oldestResult.Warnings[0].Message);
-                Assert.Equal("warningSourceName", oldestResult.Warnings[0].Name);
-                Assert.Equal("details", oldestResult.Warnings[0].Details);
-                Assert.Equal("documentationLink", oldestResult.Warnings[0].DocumentationLink);
+                Assert.Equal("Document was truncated to 50000 characters.", oldestResult.Warnings[0].Message);
+                Assert.Equal("Enrichment.LanguageDetectionSkill.#4", oldestResult.Warnings[0].Name);
+                Assert.Equal("Try to split the input into smaller chunks using Split skill.", oldestResult.Warnings[0].Details);
+                Assert.Equal("https://go.microsoft.com/fwlink/?linkid=2099692", oldestResult.Warnings[0].DocumentationLink);
             });
         }
 

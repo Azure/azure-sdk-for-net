@@ -35,7 +35,7 @@ namespace Azure.Core
             return new FuncAsyncCollection<T>(pageFunc);
         }
 
-        internal class FuncAsyncCollection<T>: AsyncCollection<T> where T : notnull
+        internal class FuncAsyncCollection<T> : AsyncCollection<T> where T : notnull
         {
             private readonly Func<string?, int?, Task<Page<T>>> _pageFunc;
 

@@ -50,21 +50,21 @@ namespace Azure.Security.KeyVault.Secrets
         /// </param>
         public SecretClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
-            this.Version = version;
+            Version = version;
         }
 
         internal string GetVersionString()
         {
-            var version = string.Empty;
+            string version = string.Empty;
 
-            switch (this.Version)
+            switch (Version)
             {
                 case ServiceVersion.V7_0:
                     version = "7.0";
                     break;
 
                 default:
-                    throw new ArgumentException(this.Version.ToString());
+                    throw new ArgumentException(Version.ToString());
             }
 
             return version;

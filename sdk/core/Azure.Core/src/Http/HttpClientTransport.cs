@@ -110,12 +110,12 @@ namespace Azure.Core.Pipeline
         internal static bool RemoveHeader(HttpHeaders headers, HttpContent? content, string name)
         {
             // .Remove throws on invalid header name so use TryGet here to check
-            if (headers.TryGetValues(name, out _ ) && headers.Remove(name))
+            if (headers.TryGetValues(name, out _) && headers.Remove(name))
             {
                 return true;
             }
 
-            return content?.Headers.TryGetValues(name, out _ ) == true && content.Headers.Remove(name);
+            return content?.Headers.TryGetValues(name, out _) == true && content.Headers.Remove(name);
         }
 
         internal static bool ContainsHeader(HttpHeaders headers, HttpContent? content, string name)
@@ -145,7 +145,7 @@ namespace Azure.Core.Pipeline
             return string.Join(",", values);
         }
 
-        sealed class PipelineRequest : Request
+        private sealed class PipelineRequest : Request
         {
             private bool _wasSent = false;
             private readonly HttpRequestMessage _requestMessage;
@@ -294,7 +294,7 @@ namespace Azure.Core.Pipeline
                 return _requestContent;
             }
 
-            sealed class PipelineContentAdapter : HttpContent
+            private sealed class PipelineContentAdapter : HttpContent
             {
                 public HttpPipelineRequestContent? PipelineContent { get; set; }
 
@@ -315,7 +315,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        sealed class PipelineResponse : Response
+        private sealed class PipelineResponse : Response
         {
             private readonly HttpResponseMessage _responseMessage;
 

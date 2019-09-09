@@ -169,7 +169,7 @@ namespace Azure.Storage.Files.Test
             var service = this.GetServiceClient_SharedKey();
             try
             {
-                var share = (await service.CreateShareAsync(name)).Value;
+                var share = this.InstrumentClient((await service.CreateShareAsync(name)).Value);
                 var properties = await share.GetPropertiesAsync();
                 Assert.AreNotEqual(0, properties.Value.Quota);
             }
@@ -184,7 +184,7 @@ namespace Azure.Storage.Files.Test
         {
             var name = this.GetNewShareName();
             var service = this.GetServiceClient_SharedKey();
-            var share = (await service.CreateShareAsync(name)).Value;
+            var share = this.InstrumentClient((await service.CreateShareAsync(name)).Value);
 
             await service.DeleteShareAsync(name);
             Assert.ThrowsAsync<StorageRequestFailedException>(

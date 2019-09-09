@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: ./file-2019-02-02.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-02-02/file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -609,4 +609,26 @@ directive:
   where: $.parameters.FileLastWriteTime
   transform: >
     delete $.format;
+```
+
+### Temporarily work around proper JSON support for file permissions
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=filepermission"]
+  transform: >
+    delete $.put.consumes;
+    $.put.responses["201"]["x-az-response-name"] = "PermissionInfo";
+    delete $.get.produces;
+- from: swagger-document
+  where: $.parameters.SharePermission
+  transform: >
+    $.schema = { "type": "string" };
+    $["x-ms-client-name"] = "sharePermissionJson";
+- from: swagger-document
+  where: $.definitions.SharePermission
+  transform: >
+    $.type = "string";
+    delete $.required;
+    delete $.properties;
 ```

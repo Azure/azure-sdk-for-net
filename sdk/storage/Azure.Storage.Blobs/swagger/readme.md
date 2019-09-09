@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate blob storage
-input-file: ./blob-2019-02-02.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.BlobStorage/preview/2019-02-02/blob.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -937,15 +937,6 @@ directive:
     delete $.properties.Etag;
 ```
 
-### PublicAccessType
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.PublicAccessType
-  transform: >
-    $["x-ms-enum"].modelAsString = false;
-```
-
 ### Make sure everything has a type
 ``` yaml
 directive:
@@ -1010,20 +1001,6 @@ directive:
     $["x-az-public"] = false;
 ```
 
-### Make AccessTier Unique
-autorest.python complains that the same enum has different values
-``` yaml
-directive:
-- from: swagger-document
-  where: $.parameters.AccessTierRequired
-  transform: >
-    $["x-ms-enum"].name = "AccessTierRequired";
-- from: swagger-document
-  where: $.parameters.AccessTierOptional
-  transform: >
-    $["x-ms-enum"].name = "AccessTierOptional";
-```
-
 ### Fix doc comments
 ``` yaml
 directive:
@@ -1043,4 +1020,37 @@ directive:
   where: $.parameters.MultipartContentType
   transform: >
     $.description = $.description.replace("<GUID>", "{GUID}");
+```
+
+### Add PublicAccessType.None
+``` yaml
+directive:
+- from: swagger-document
+  where:
+    - $.definitions.PublicAccessType
+    - $.parameters.BlobPublicAccess
+    - $["x-ms-paths"]["/{containerName}?restype=container"].get.responses["200"].headers["x-ms-blob-public-access"]
+    - $["x-ms-paths"]["/{containerName}?restype=container&comp=acl"].get.responses["200"].headers["x-ms-blob-public-access"]
+  transform: >
+    $.enum = [ "none", "container", "blob" ];
+    $["x-ms-enum"].values = [ { name: "none", value: null }, { name: "container", value: "container" }, { name: "blob", value: "blob" }];
+    $["x-az-enum-skip-value"] = "none";
+- from: swagger-document
+  where: $.definitions.PublicAccessType
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
+- from: swagger-document
+  where: $.parameters.BlobPublicAccess
+  transform: $.required = true;
+```
+
+### Make lease duration a long
+Lease Duration is represented as a TimeSpan in the .NET client libraries, but TimeSpan.MaxValue would overflow an int. Because of this, we are changing the 
+type used in the BlobRestClient from an int to a long. This will allow values larger than int.MaxValue (e.g. TimeSpan.MaxValue) to be successfully passed on to the service layer. 
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.LeaseDuration
+  transform: >
+    $.format = "int64";
 ```
