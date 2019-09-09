@@ -108,7 +108,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ContainerName = containerName,
                     BlobName = blobName
                 };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
         }
 
@@ -242,7 +242,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotImpl(string snapshot)
         {
             var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), this.Pipeline);
+            return new BlobBaseClient(builder.Uri, this.Pipeline);
         }
 
         ///// <summary>

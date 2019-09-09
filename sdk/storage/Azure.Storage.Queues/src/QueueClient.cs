@@ -117,7 +117,7 @@ namespace Azure.Storage.Queues
                 {
                     QueueName = queueName
                 };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._messagesUri = this._uri.AppendToPath(Constants.Queue.messagesUri);
             this._pipeline = (options ?? new QueueClientOptions()).Build(conn.Credentials);
         }
