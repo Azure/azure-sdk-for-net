@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
 using System.Threading;
@@ -20,7 +21,7 @@ namespace Azure.Identity
         private string _clientId;
 
         /// <summary>
-        /// Creates a new InteractiveBrowserCredential which will authenticate users with the specified application.
+        /// Creates a new SharedTokenCacheCredential which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="username">The username (typically an email address) of the user to authenticate, this is required because the local cache may contain tokens for multiple identities</param>
@@ -32,7 +33,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new InteractiveBrowserCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new SharedTokenCacheCredential with the specifeid options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="username">The username of the user to authenticate</param>
@@ -46,7 +47,9 @@ namespace Azure.Identity
 
             _username = username;
 
-            _pubApp = PublicClientApplicationBuilder.Create(_clientId).Build();
+            var pipeline = HttpPipelineBuilder.Build(options);
+
+            _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).Build();
 
             _cacheReader = new MsalCacheReader(_pubApp.UserTokenCache, options.CacheFilePath, options.CacheAccessRetryCount, options.CacheAccessRetryDelay);
         }
@@ -54,9 +57,9 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through the MSAL cache
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <param name="scopes">The list of scopes for which the token will have access</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
             return GetTokenAsync(scopes, cancellationToken).GetAwaiter().GetResult();
@@ -66,8 +69,8 @@ namespace Azure.Identity
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through the MSAL cache
         /// </summary>
         /// <param name="scopes">The list of scopes for which the token will have access.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
         public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
             try

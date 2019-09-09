@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
 using System;
 using System.IO;
 
@@ -9,9 +10,8 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure requests made to MSAL shared token cache
     /// </summary>
-    public class SharedTokenCacheCredentialOptions
+    public class SharedTokenCacheCredentialOptions : ClientOptions
     {
-
         /// <summary>
         /// Path to the persisted token cache
         /// </summary>
