@@ -222,6 +222,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData3.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute), Is.False, "Events that were not accepted into the batch should not have been instrumented.");
         }
 
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="PartitionContext" />
+        ///   class.
+        /// </summary>
+        ///
         [Test]
         public async Task CheckpointManagerCreatesScope()
         {
@@ -234,6 +239,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));
         }
 
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="PartitionPump" />
+        ///   class.
+        /// </summary>
+        ///
         [Test]
         public async Task PartitionPumpCreatesScopeForEventProcessing()
         {
