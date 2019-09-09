@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
         {
             var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new BlockBlobClient(builder.ToUri(), this.Pipeline);
+            return new BlockBlobClient(builder.Uri, this.Pipeline);
         }
 
         ///// <summary>
@@ -313,6 +313,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional CustomerProvidedKeyInfo for use in customer-provided key
         /// server-side encryption.
         /// </param>
+        /// <param name="accessTier">
+        /// Optional <see cref="AccessTier"/>
+        /// Indicates the tier to be set on the blob.
+        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -335,6 +339,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
+            AccessTier? accessTier = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             this.UploadInternal(
@@ -343,6 +348,7 @@ namespace Azure.Storage.Blobs.Specialized
                 metadata,
                 blobAccessConditions,
                 customerProvidedKey,
+                accessTier: accessTier,
                 progressHandler,
                 false, // async
                 cancellationToken)
@@ -379,6 +385,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional CustomerProvidedKeyInfo for use in customer-provided key
         /// server-side encryption.
         /// </param>
+        /// <param name="accessTier">
+        /// Optional <see cref="AccessTier"/>
+        /// Indicates the tier to be set on the blob.
+        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -401,6 +411,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
+            AccessTier? accessTier = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await this.UploadInternal(
@@ -409,6 +420,7 @@ namespace Azure.Storage.Blobs.Specialized
                 metadata,
                 blobAccessConditions,
                 customerProvidedKey,
+                accessTier: accessTier,
                 progressHandler,
                 true, // async
                 cancellationToken)
@@ -445,6 +457,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional CustomerProvidedKeyInfo for use in customer-provided key
         /// server-side encryption.
         /// </param>
+        /// <param name="accessTier">
+        /// Optional <see cref="AccessTier"/>
+        /// Indicates the tier to be set on the blob.
+        /// </param>
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
@@ -470,6 +486,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             CustomerProvidedKey? customerProvidedKey,
+            AccessTier? accessTier,
             IProgress<StorageProgress> progressHandler,
             bool async,
             CancellationToken cancellationToken)
@@ -508,6 +525,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 encryptionKey: customerProvidedKey?.EncryptionKey,
                                 encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
                                 encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                                tier: accessTier,
                                 ifModifiedSince: blobAccessConditions?.HttpAccessConditions?.IfModifiedSince,
                                 ifUnmodifiedSince: blobAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                                 ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
@@ -1125,6 +1143,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional CustomerProvidedKeyInfo for use in customer-provided key
         /// server-side encryption.
         /// </param>
+        /// <param name="accessTier">
+        /// Optional <see cref="AccessTier"/>
+        /// Indicates the tier to be set on the blob.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1143,6 +1165,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
+            AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
             this.CommitBlockListInternal(
                 base64BlockIds,
@@ -1150,6 +1173,7 @@ namespace Azure.Storage.Blobs.Specialized
                 metadata,
                 blobAccessConditions,
                 customerProvidedKey,
+                accessTier,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1192,6 +1216,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional CustomerProvidedKeyInfo for use in customer-provided key
         /// server-side encryption.
         /// </param>
+        /// <param name="accessTier">
+        /// Optional <see cref="AccessTier"/>
+        /// Indicates the tier to be set on the blob.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1210,6 +1238,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
+            AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
             await this.CommitBlockListInternal(
                 base64BlockIds,
@@ -1217,6 +1246,7 @@ namespace Azure.Storage.Blobs.Specialized
                 metadata,
                 blobAccessConditions,
                 customerProvidedKey,
+                accessTier,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1259,6 +1289,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional CustomerProvidedKeyInfo for use in customer-provided key
         /// server-side encryption.
         /// </param>
+        /// <param name="accessTier">
+        /// Optional <see cref="AccessTier"/>
+        /// Indicates the tier to be set on the blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1280,6 +1314,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata,
             BlobAccessConditions? blobAccessConditions,
             CustomerProvidedKey? customerProvidedKey,
+            AccessTier? accessTier,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1312,6 +1347,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: customerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: customerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: customerProvidedKey?.EncryptionAlgorithm,
+                        tier: accessTier,
                         ifModifiedSince: blobAccessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: blobAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,

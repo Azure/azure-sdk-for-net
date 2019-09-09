@@ -117,6 +117,12 @@ namespace Azure.Storage
                 public const int MaxBlocks = 50000;
             }
 
+            internal static class Base
+            {
+                public const string SetTierOperationName =
+                    "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier";
+            }
+
             internal static class Block
             {
                 public const int DefaultConcurrentTransfersCount = 4; // TODO What should the value really be?  Can we get rid of it with a different dispatch algorithm? (probably yes)
@@ -241,6 +247,7 @@ namespace Azure.Storage
             public const string Preserve = "Preserve";
             public const string FilePermissionInherit = "Inherit";
             public const int MaxFilePermissionHeaderSize = 8 * KB;
+            public const int MaxFileUpdateRange = 4 * MB;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
 
             public const string SetHttpHeadersOperationName =

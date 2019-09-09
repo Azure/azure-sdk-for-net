@@ -21,7 +21,7 @@ namespace Azure.Core.Testing
                 var expectedEvents = new List<string>();
                 expectedEvents.Add(expectedEventPrefix + ".Start");
 
-                TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
+                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
                 invocation.Proceed();
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
@@ -49,7 +49,6 @@ namespace Azure.Core.Testing
                 }
                 finally
                 {
-                    diagnosticListener.Dispose();
                     if (strict)
                     {
                         foreach (var expectedEvent in expectedEvents)

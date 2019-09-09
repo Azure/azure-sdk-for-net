@@ -1,6 +1,6 @@
 # Azure Event Hubs client library for .NET
 
-Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters.  If you would like to know more about Azure Event Hubs, you may wish to review: [What is Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about)? 
+Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters.  If you would like to know more about Azure Event Hubs, you may wish to review: [What is Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about)?
 
 The Azure Event Hubs client library allows for publishing and consuming of Azure Event Hubs events and may be used to:
 
@@ -31,7 +31,7 @@ To quickly create the needed Event Hubs resources in Azure and to receive a conn
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs -Version 5.0.0-preview.2
+Install-Package Azure.Messaging.EventHubs -Version 5.0.0-preview.3
 ```
 
 ### Obtain a connection string
@@ -133,26 +133,19 @@ await using (var client = new EventHubClient(connectionString, eventHubName))
 
 To consume events for all partitions of an Event Hub, you'll create an `EventProcessor` for a specific consumer group.  When an Event Hub is created, it provides a default consumer group that can be used to get started.
 
-The `EventProcessor` will delegate processing of events to a `IPartitionProcessor` implementation that you provide, allowing your logic to focus on the logic needed to provide value while the processor holds responsibility for managing the underlying consumer operations.  In our example, we will focus on building the `EventProcessor` and use a very minimal partition processor that does no actual processing.
+The `EventProcessor` will delegate processing of events to a `BasePartitionProcessor` implementation that you provide, allowing your logic to focus on the events received while the processor holds responsibility for managing the underlying consumer operations.  In our example, we will focus on building the `EventProcessor` and use a very minimal partition processor that does no actual processing.
+
+**Important Note:** This sample makes use of the `InMemoryPartitionManager`, which is recommended only for exploring the event processor.  It uses volatile memory to store checkpoints which track the state of processing for each partition.  This means that each time the event processor is run with a new `InMemoryPartitionManager` instance, it will re-process all events, rather than starting where a checkpoint was last created.
 
 ```csharp
-public class SimplePartitionProcessor : IPartitionProcessor
-{
-    public Task InitializeAsync() => Task.CompletedTask;
-    public Task CloseAsync((PartitionProcessorCloseReason reason) => Task.CompletedTask;
-    public Task ProcessEventsAsync(IEnumerable<EventData> events, CancellationToken cancellationToken) => Task.CompletedTask;
-    public Task ProcessErrorAsync(Exception exception, CancellationToken cancellationToken) => Task.CompletedTask;
-}
+// This example class implements only the essential methods for processing events
+// and handling errors.  There are also methods that you can override to help with
+// initialization at startup and to be notified when the processor stops.
 
-// This function is used by the EventProcessor to create a new partition processor for each partition of the 
-// Event Hub.  
-//
-// Its implementation may take various forms, such as a local function (as illustrated), a class or 
-// static method, an inline lambda, or a variable of type Func<PartitionContext, CheckpointManager, IPartitionProcessor>.
-
-IPartitionProcessor SimpleProcessorFactory(PartitionContext context, CheckpointManager manager)
+public class SimplePartitionProcessor : BasePartitionProcessor
 {
-    return new SimplePartitionProcessor();
+    public override Task ProcessEventsAsync(IEnumerable<EventData> events, CancellationToken cancellationToken) => Task.CompletedTask;
+    public override Task ProcessErrorAsync(Exception exception, CancellationToken cancellationToken) => Task.CompletedTask;
 }
 
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -163,7 +156,15 @@ await using (var client = new EventHubClient(connectionString, eventHubName))
     string consumerGroup = EventHubConsumer.DefaultConsumerGroup;
     PartitionManager partitionManager = new InMemoryPartitionManager(Console.WriteLine);
     
-    EventProcessor processor = new EventProcessor(consumerGroup, client, SimpleProcessorFactory);
+    // Because our SimplePartitionProcessor has a parameterless constructor, we can just provide
+    // the type as the generic argument for the EventProcessor, and the EventProcessor will take 
+    // responsibility for instantiating a SimplePartitionProcessor for each partition of the Event Hub.
+    //
+    // If your processor is more complex and you do not wish to have a parameterless constructor, you 
+    // may provide a factory method to the EventProcessor which the EventProcessor will call to instantiate 
+    // a new instance of your class for each partition of the Event Hub.
+    
+    EventProcessor processor = new EventProcessor<SimplePartitionProcessor>(consumerGroup, client, partitionManager);
     await processor.StartAsync();
     
     // At this point, the processor is consuming events from each partition of the Event Hub and
@@ -240,12 +241,10 @@ The available samples are:
 - [Consume events from a known position in the Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_ConsumeEventsFromAKnownPosition.cs)  
   An example of consuming events, starting at a well-known position in the Event Hub partition.
   
-- [Consume events from an Event Hub partition in batches](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_ConsumeEventsByBatch.cs)
-
+- [Consume events from an Event Hub partition in batches](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_ConsumeEventsByBatch.cs)  
   An example of consuming events, using a batch approach to control throughput.
   
-- [Consume events from all partitions of an Event Hub with the Event Processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample12_ConsumeEventsWithEventProcessor.cs)
-
+- [Consume events from all partitions of an Event Hub with the Event Processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample12_ConsumeEventsWithEventProcessor.cs)  
   An example of consuming events from all Event Hub partitions at once, using the Event Processor.
 
 ## Contributing  

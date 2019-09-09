@@ -3,8 +3,11 @@
 // license information.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -112,7 +115,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -214,7 +217,7 @@ namespace Azure.Storage.Files
         public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(this.Uri) { Snapshot = shareSnapshot };
-            return new FileClient(builder.ToUri(), this.Pipeline);
+            return new FileClient(builder.Uri, this.Pipeline);
         }
 
         #region Create
@@ -913,6 +916,7 @@ namespace Azure.Storage.Files
                     range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
+                    bufferResponse: false,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
@@ -1677,6 +1681,196 @@ namespace Azure.Storage.Files
             }
         }
         #endregion UploadRange
+
+        #region Upload
+        /// <summary>
+        /// The <see cref="Upload"/> operation writes <paramref name="content"/>
+        /// to a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the file to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileUploadInfo> Upload(
+            Stream content,
+            IProgress<StorageProgress> progressHandler = default,
+            CancellationToken cancellationToken = default) =>
+            this.UploadInternal(
+                content,
+                progressHandler,
+                Constants.File.MaxFileUpdateRange,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadAsync"/> operation writes
+        /// <paramref name="content"/> to a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the file to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<StorageFileUploadInfo>> UploadAsync(
+            Stream content,
+            IProgress<StorageProgress> progressHandler = default,
+            CancellationToken cancellationToken = default) =>
+            await this.UploadInternal(
+                content,
+                progressHandler,
+                Constants.File.MaxFileUpdateRange,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadInternal"/> operation writes
+        /// <paramref name="content"/> to a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="singleRangeThreshold">
+        /// The maximum size stream that we'll upload as a single range.  The
+        /// default value is 4MB.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<StorageFileUploadInfo>> UploadInternal(
+            Stream content,
+            IProgress<StorageProgress> progressHandler,
+            int singleRangeThreshold,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            // Try to upload the file as a single range
+            Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
+            try
+            {
+                var length = content.Length;
+                if (length <= singleRangeThreshold)
+                {
+                    return await this.UploadRangeInternal(
+                        FileRangeWriteType.Update,
+                        new HttpRange(0, length),
+                        content,
+                        null,
+                        progressHandler,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+            }
+            catch
+            {
+            }
+
+            // Otherwise naively split the file into ranges and upload them individually
+            var response = default(Response<StorageFileUploadInfo>);
+            var pool = default(MemoryPool<byte>);
+            try
+            {
+                pool = (singleRangeThreshold < MemoryPool<byte>.Shared.MaxBufferSize) ?
+                    MemoryPool<byte>.Shared :
+                    new StorageMemoryPool(singleRangeThreshold, 1);
+                for (;;)
+                {
+                    // Get the next chunk of content
+                    var parentPosition = content.Position;
+                    var buffer = pool.Rent(singleRangeThreshold);
+                    if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out var segment))
+                    {
+                        throw Errors.UnableAccessArray();
+                    }
+                    var count = async ?
+                        await content.ReadAsync(segment.Array, 0, singleRangeThreshold, cancellationToken).ConfigureAwait(false) :
+                        content.Read(segment.Array, 0, singleRangeThreshold);
+
+                    // Stop when we've exhausted the content
+                    if (count <= 0) { break; }
+
+                    // Upload the chunk
+                    var partition = new StreamPartition(
+                        buffer.Memory,
+                        parentPosition,
+                        count,
+                        () => buffer.Dispose(),
+                        cancellationToken);
+                    response = await this.UploadRangeInternal(
+                        FileRangeWriteType.Update,
+                        new HttpRange(partition.ParentPosition, partition.Length),
+                        partition,
+                        null,
+                        progressHandler,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+
+                }
+            }
+            finally
+            {
+                if (pool is StorageMemoryPool)
+                {
+                    pool.Dispose();
+                }
+            }
+            return response;
+        }
+        #endregion Upload
 
         #region GetRangeList
         /// <summary>

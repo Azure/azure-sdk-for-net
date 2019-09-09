@@ -10,6 +10,7 @@
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes><![CDATA[
 - Added outputColumns property to Office365Source
+- Added support for ORC dataset in ADF
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

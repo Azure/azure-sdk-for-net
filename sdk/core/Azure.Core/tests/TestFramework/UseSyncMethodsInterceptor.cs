@@ -138,25 +138,6 @@ namespace Azure.Core.Testing
                     yield return new Page<T>(new [] { response.Value}, null, response.GetRawResponse());
                 }
             }
-
-            private class SingleEnumerable: IAsyncEnumerable<Page<T>>, IAsyncEnumerator<Page<T>>
-            {
-                public SingleEnumerable(Page<T> value)
-                {
-                    Current = value;
-                }
-
-                public ValueTask DisposeAsync() => default;
-
-                public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(false);
-
-                public Page<T> Current { get; }
-
-                public IAsyncEnumerator<Page<T>> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
-                {
-                    return this;
-                }
-            }
         }
     }
 }

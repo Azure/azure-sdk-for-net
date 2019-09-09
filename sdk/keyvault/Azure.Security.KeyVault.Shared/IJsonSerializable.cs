@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Azure.Security.KeyVault.Keys.Cryptography
+namespace Azure.Security.KeyVault
 {
     internal interface IJsonSerializable
     {
@@ -23,10 +23,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         public static void Deserialize(this IJsonDeserializable obj, Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content, default))
-            {
-                obj.ReadProperties(json.RootElement);
-            }
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            obj.ReadProperties(json.RootElement);
         }
 
         public static ReadOnlyMemory<byte> Serialize(this IJsonSerializable obj)

@@ -112,18 +112,19 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Indicates whether or not the consumer requests metrics for the state of its
-        ///   partition each time that events are received.
+        ///     Indicates whether or not the consumer should request information on the last enqueued event on its
+        ///     associated partition, and track that information as events are received.
         /// </summary>
         ///
-        /// <value><c>true</c> if metrics are requested when events are received; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if information about the partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
         ///
         /// <remarks>
-        ///   When metrics are requested, each event received from the Event Hubs service will carry metadata
-        ///   about the state of a partition that it otherwise would not.  This results in a small amount of
+        ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
+        ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
         ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
         ///   against periodically making requests for partition properties using the Event Hub client.
         /// </remarks>
+        ///
         ///
         public bool TrackLastEnqueuedEventInformation { get; set; } = true;
 

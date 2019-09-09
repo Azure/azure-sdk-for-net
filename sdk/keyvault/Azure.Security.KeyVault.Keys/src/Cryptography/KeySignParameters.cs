@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Security.KeyVault.Keys.Cryptography;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys

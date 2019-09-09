@@ -11,8 +11,8 @@ namespace Azure.Security.KeyVault
     /// Defines a page in Azure responses.
     /// </summary>
     /// <typeparam name="T">Type of the page content items</typeparam>
-    internal class KeyVaultPage<T> : Model
-        where T : Model
+    internal class KeyVaultPage<T> : IJsonDeserializable
+        where T : IJsonDeserializable
     {
         private T[] _items;
         private Func<T> _itemFactory;
@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault
         /// </summary>
         public Uri NextLink { get; private set; }
 
-        internal override void ReadProperties(JsonElement json)
+        void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             if (json.TryGetProperty("value", out JsonElement value))
             {
@@ -62,12 +62,6 @@ namespace Azure.Security.KeyVault
                     NextLink = new Uri(nextLinkUrl);
                 }
             }
-        }
-
-        internal override void WriteProperties(Utf8JsonWriter json)
-        {
-            // serialization is not needed this type is only in responses
-            throw new NotImplementedException();
         }
     }
 }

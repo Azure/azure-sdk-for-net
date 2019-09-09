@@ -4,81 +4,138 @@
 
 using System;
 using System.Net;
+using System.Text;
+using Azure.Core.Http;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files
 {
     /// <summary>
     /// The <see cref="FileUriBuilder"/> class provides a convenient way to 
-    /// modify the contents of a <see cref="Uri"/> instance to point to
+    /// modify the contents of a <see cref="System.Uri"/> instance to point to
     /// different Azure Storage resources like an account, share, or file.
     /// 
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata" />.
     /// </summary>
-    internal struct FileUriBuilder : IEquatable<FileUriBuilder>
+    public class FileUriBuilder
     {
+        /// <summary>
+        /// The Uri instance constructed by this builder.  It will be reset to
+        /// null when changes are made and reconstructed when <see cref="System.Uri"/>
+        /// is accessed.
+        /// </summary>
+        private Uri _uri;
+
         /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
         /// </summary>
-        public string Scheme { get; set; }
+        public string Scheme
+        {
+            get => this._scheme;
+            set { this.ResetUri(); this._scheme = value; }
+        }
+        private string _scheme;
 
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address
         /// of a server.
+        /// 
         /// Example: "account.file.core.windows.net"
         /// </summary>
-        public string Host { get; set; }
+        public string Host
+        {
+            get => this._host;
+            set { this.ResetUri(); this._host = value; }
+        }
+        private string _host;
 
         /// <summary>
         /// Gets or sets the port number of the URI.
         /// </summary>
-        public int Port { get; set; }
+        public int Port
+        {
+            get => this._port;
+            set { this.ResetUri(); this._port = value; }
+        }
+        private int _port;
 
         /// <summary>
         /// Gets or sets the Azure Storage account name.  This is only
-        /// populated for IP-style <see cref="Uri"/>s.
+        /// populated for IP-style <see cref="System.Uri"/>s.
         /// </summary>
-        public string AccountName { get; set; }
+        public string AccountName
+        {
+            get => this._accountName;
+            set { this.ResetUri(); this._accountName = value; }
+        }
+        private string _accountName;
 
         /// <summary>
-        /// Gets or sets the name of a file storage share.  The value
-        /// defaults to <see cref="String.Empty"/> if not present in the
-        /// <see cref="Uri"/>.
+        /// Gets or sets the name of a file storage share.  The value defaults
+        /// to <see cref="String.Empty"/> if not present in the
+        /// <see cref="System.Uri"/>.
         /// </summary>
-        public string ShareName { get; set; }
+        public string ShareName
+        {
+            get => this._shareName;
+            set { this.ResetUri(); this._shareName = value; }
+        }
+        private string _shareName;
 
         /// <summary>
-        /// Gets or sets the path of the directory or file.  The value defaults to
-        /// <see cref="String.Empty"/> if not present in the <see cref="Uri"/>.
+        /// Gets or sets the path of the directory or file.  The value defaults
+        /// to <see cref="String.Empty"/> if not present in the
+        /// <see cref="System.Uri"/>.
+        /// 
         /// Example: "mydirectory/myfile"
         /// </summary>
-        public string DirectoryOrFilePath { get; set; }
+        public string DirectoryOrFilePath
+        {
+            get => this._directoryOrFilePath;
+            set { this.ResetUri(); this._directoryOrFilePath = value; }
+        }
+        private string _directoryOrFilePath;
 
         /// <summary>
         /// Gets or sets the name of a file snapshot.  The value defaults to
-        /// <see cref="String.Empty"/> if not present in the <see cref="Uri"/>.
+        /// <see cref="String.Empty"/> if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public string Snapshot { get; set; }
+        public string Snapshot
+        {
+            get => this._snapshot;
+            set { this.ResetUri(); this._snapshot = value; }
+        }
+        private string _snapshot;
 
         /// <summary>
         /// Gets or sets the Shared Access Signature query parameters, or null
-        /// if not present in the <see cref="Uri"/>.
+        /// if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public SasQueryParameters Sas { get; set; }
+        public SasQueryParameters Sas
+        {
+            get => this._sas;
+            set { this.ResetUri(); this._sas = value; }
+        }
+        private SasQueryParameters _sas;
 
         /// <summary>
-        /// Gets or sets the query parameters not relevant to addressing
-        /// Azure storage resources.
+        /// Gets or sets any query information included in the URI that's not
+        /// relevant to addressing Azure storage resources.
         /// </summary>
-        public string UnparsedParams { get; set; }
+        public string Query
+        {
+            get => this._query;
+            set { this.ResetUri(); this._query = value; }
+        }
+        private string _query;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileUriBuilder"/>
-        /// class with the specified <see cref="Uri"/>. 
+        /// class with the specified <see cref="System.Uri"/>. 
         /// </summary>
         /// <param name="uri">
-        /// The <see cref="Uri"/> to a storage resource.
+        /// The <see cref="System.Uri"/> to a storage resource.
         /// </param>
         public FileUriBuilder(Uri uri)
         {
@@ -94,7 +151,6 @@ namespace Azure.Storage.Files
             this.Sas = null;
 
             // Find the share & directory/file path (if any)
-
             if (!String.IsNullOrEmpty(uri.AbsolutePath))
             {
                 // If path starts with a slash, remove it
@@ -154,129 +210,94 @@ namespace Azure.Storage.Files
                 this.Sas = new SasQueryParameters(paramsMap);
             }
 
-            this.UnparsedParams = paramsMap.ToString();
+            this.Query = paramsMap.ToString();
         }
 
         /// <summary>
-        /// Construct a <see cref="Uri"/> representing the
+        /// Gets a <see cref="System.Uri"/> representing the
         /// <see cref="FileUriBuilder"/>'s fields.   The <see cref="Uri.Query"/>
-        /// property contains the SAS, snapshot, and unparsed query parameters.     
+        /// property contains the SAS, snapshot, and additional query parameters.
         /// </summary>
-        /// <returns>The constructed <see cref="Uri"/>.</returns>
-        public Uri ToUri()
+        public Uri Uri
         {
-            var path = "";
+            get
+            {
+                if (this._uri == null)
+                {
+                    this._uri = this.BuildUri().Uri;
+                }
+                return this._uri;
+            }
+        }
 
+        /// <summary>
+        /// Returns the display string for the specified
+        /// <see cref="FileUriBuilder"/> instance.
+        /// </summary>
+        /// <returns>
+        /// The display string for the specified <see cref="FileUriBuilder"/>
+        /// instance.
+        /// </returns>
+        public override string ToString() =>
+            this.BuildUri().ToString();
+
+        /// <summary>
+        /// Reset our cached URI.
+        /// </summary>
+        private void ResetUri() =>
+            this._uri = null;
+
+        /// <summary>
+        /// Construct a <see cref="RequestUriBuilder"/> representing the
+        /// <see cref="FileUriBuilder"/>'s fields. The <see cref="Uri.Query"/>
+        /// property contains the SAS, snapshot, and additional query parameters.
+        /// </summary>
+        /// <returns>The constructed <see cref="RequestUriBuilder"/>.</returns>
+        private RequestUriBuilder BuildUri()
+        {
             // Concatenate account, share & directory/file path (if they exist)
+            var path = new StringBuilder("");
             if (!String.IsNullOrWhiteSpace(this.AccountName))
             {
-                path += "/" + this.AccountName;
+                path.Append("/").Append(this.AccountName);
             }
-
             if (!String.IsNullOrWhiteSpace(this.ShareName))
             {
-                path += "/" + this.ShareName;
+                path.Append("/").Append(this.ShareName);
                 if (!String.IsNullOrWhiteSpace(this.DirectoryOrFilePath))
                 {
-                    path += "/" + this.DirectoryOrFilePath;
+                    path.Append("/").Append(this.DirectoryOrFilePath);
                 }
             }
 
-            var rawQuery = this.UnparsedParams;
-
-            // Concatenate snapshot query parameter (if it exists)
-
+            // Concatenate query parameters
+            var query = new StringBuilder(this.Query);
             if (!String.IsNullOrWhiteSpace(this.Snapshot))
             {
-                if (rawQuery.Length > 0)
-                {
-                    rawQuery += "&";
-                }
-
-                rawQuery += Constants.SnapshotParameterName + "=" + this.Snapshot;
+                if (query.Length > 0) { query.Append("&"); }
+                query.Append(Constants.SnapshotParameterName).Append("=").Append(this.Snapshot);
             }
-
-            if (this.Sas != null)
+            var sas = this.Sas?.ToString();
+            if (!String.IsNullOrWhiteSpace(sas))
             {
-                var sas = this.Sas.ToString();
-
-                if (!String.IsNullOrWhiteSpace(sas))
-                {
-                    if (rawQuery.Length > 0)
-                    {
-                        rawQuery += "&";
-                    }
-
-                    rawQuery += sas;
-                }
+                if (query.Length > 0) { query.Append("&"); }
+                query.Append(sas);
             }
 
-            rawQuery = "?" + rawQuery;
-
-            var uriBuilder = new UriBuilder(this.Scheme, this.Host, this.Port, path, rawQuery);
-
-            return uriBuilder.Uri;
+            // Use RequestUriBuilder, which has slightly nicer formatting
+            return new RequestUriBuilder
+            {
+                Scheme = this.Scheme,
+                Host = this.Host,
+                Port = this.Port,
+                Path = path.ToString(),
+                Query = query.Length > 0 ? "?" + query.ToString() : null
+            };
         }
 
         // TODO See remarks at https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.7.2
         // TODO refactor to shared method
         private static bool IsHostIPEndPointStyle(string host)
             => String.IsNullOrEmpty(host) ? false : IPAddress.TryParse(host, out _);
-
-        /// <summary>
-        /// Check if two FileUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is FileUriBuilder other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the FileUriBuilder.
-        /// </summary>
-        /// <returns>Hash code for the FileUriBuilder.</returns>
-        public override int GetHashCode()
-            => (this.Scheme?.GetHashCode() ?? 0)
-            ^ (this.Host?.GetHashCode() ?? 0)
-            ^ this.Port.GetHashCode()
-            ^ (this.AccountName?.GetHashCode() ?? 0)
-            ^ (this.ShareName?.GetHashCode() ?? 0)
-            ^ (this.DirectoryOrFilePath?.GetHashCode() ?? 0)
-            ^ (this.Snapshot?.GetHashCode()?? 0)
-            ^ (this.Sas?.GetHashCode() ?? 0)
-            ^ (this.UnparsedParams?.GetHashCode() ?? 0)
-            ;
-
-        /// <summary>
-        /// Check if two FileUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FileUriBuilder left, FileUriBuilder right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two FileUriBuilder instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FileUriBuilder left, FileUriBuilder right) => !(left == right);
-
-        /// <summary>
-        /// Check if two FileUriBuilder instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(FileUriBuilder other)
-            => this.Scheme == other.Scheme
-            && this.Host == other.Host
-            && this.Port == other.Port
-            && this.ShareName == other.ShareName
-            && this.DirectoryOrFilePath == other.DirectoryOrFilePath
-            && this.Snapshot == other.Snapshot
-            && this.Sas == other.Sas
-            && this.UnparsedParams == other.UnparsedParams
-            ;
     }
 }
