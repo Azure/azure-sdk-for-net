@@ -3,10 +3,11 @@
 // license information.
 
 using System;
+using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
-    public class DeletedCertificate : Certificate
+    public class DeletedCertificate : CertificateWithPolicy
     {
         public string RecoveryId { get; private set; }
 
@@ -14,12 +15,27 @@ namespace Azure.Security.KeyVault.Certificates
 
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
-        public DeletedCertificate(string name, string recoveryId, DateTimeOffset? deletedDate, DateTimeOffset? scheduledPurge)
-            : base(name)
+        private const string RecoveryIdPropertyName = "recoveryId";
+        private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
+        private const string DeletedDatePropertyName = "deletedDate";
+
+        internal override void ReadProperty(JsonProperty prop)
         {
-            RecoveryId = recoveryId;
-            DeletedDate = deletedDate;
-            ScheduledPurgeDate = scheduledPurge;
+            switch(prop.Name)
+            {
+                case RecoveryIdPropertyName:
+                    RecoveryId = prop.Value.GetString();
+                    break;
+                case DeletedDatePropertyName:
+                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
+                case ScheduledPurgeDatePropertyName:
+                    ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
+                default:
+                    base.ReadProperty(prop);
+                    break;
+            }
         }
     }
 }

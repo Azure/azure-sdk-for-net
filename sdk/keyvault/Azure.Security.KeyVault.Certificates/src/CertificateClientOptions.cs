@@ -3,6 +3,7 @@
 // license information.
 
 using Azure.Core.Pipeline;
+using System;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -47,6 +48,25 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
             this.Version = version;
+        }
+
+        public CertificatePolicy DefaultPolicy { get; set; }
+
+        internal string GetVersionString()
+        {
+            var version = string.Empty;
+
+            switch (this.Version)
+            {
+                case ServiceVersion.V7_0:
+                    version = "7.0";
+                    break;
+
+                default:
+                    throw new ArgumentException(this.Version.ToString());
+            }
+
+            return version;
         }
     }
 }

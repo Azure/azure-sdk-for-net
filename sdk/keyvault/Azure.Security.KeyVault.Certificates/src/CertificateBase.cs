@@ -5,26 +5,31 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
-    public class CertificateBase
+    public class CertificateBase : IJsonDeserializable
     {
-
         private CertificateAttributes _attributes;
 
+        public Uri Id { get; private set; }
+
         public string Name { get; private set; }
-        public Uri VaultId { get; private set; }
+
         public Uri VaultUri { get; private set; }
+
         public string Version { get; private set; }
-        public string X509Thumbprint { get; set; }
-        public IDictionary<string, string> Tags { get; set; }
+
+        public byte[] X509Thumbprint { get; private set; }
+
+        public IDictionary<string, string> Tags { get; private set; }
 
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
-        public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
+        public DateTimeOffset? NotBefore => _attributes.NotBefore;
 
-        public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
+        public DateTimeOffset? Expires => _attributes.Expires;
 
         public DateTimeOffset? Created => _attributes.Created;
 
@@ -32,9 +37,43 @@ namespace Azure.Security.KeyVault.Certificates
 
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
-        public CertificateBase(string name)
+        private const string IdPropertyName = "id";
+        private const string X509ThumprintPropertyName = "x5t";
+        private const string TagsPropertyName = "tags";
+        private const string AttributesPropertyName = "attributes";
+
+        void IJsonDeserializable.ReadProperties(JsonElement json)
         {
-            Name = name;
+            foreach (JsonProperty prop in json.EnumerateObject())
+            {
+                ReadProperty(prop);
+            }
+        }
+
+        internal virtual void ReadProperty(JsonProperty prop)
+        {
+            switch(prop.Name)
+            {
+                case IdPropertyName:
+                    var id = prop.Value.GetString();
+                    Id = new Uri(id);
+                    ParseId(id);
+                    break;
+                case X509ThumprintPropertyName:
+                    X509Thumbprint = Base64Url.Decode(prop.Value.GetString());
+                    break;
+                case TagsPropertyName:
+                    Tags = new Dictionary<string, string>();
+                    foreach (var tagProp in prop.Value.EnumerateObject())
+                    {
+                        Tags[tagProp.Name] = tagProp.Value.GetString();
+                    }
+                    break;
+                case AttributesPropertyName:
+                    _attributes = new CertificateAttributes();
+                    _attributes.ReadProperties(prop.Value);
+                    break;
+            }
         }
 
         private void ParseId(string id)
@@ -45,12 +84,13 @@ namespace Azure.Security.KeyVault.Certificates
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, idToParse.Segments.Length));
 
-            if (!string.Equals(idToParse.Segments[1], "keys" + "/", StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(idToParse.Segments[1], "certificates" + "/", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'certificates/', found '{1}'", id, idToParse.Segments[1]));
 
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }
+
     }
 }

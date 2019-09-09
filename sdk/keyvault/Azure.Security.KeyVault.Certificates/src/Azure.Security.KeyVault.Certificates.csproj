@@ -21,6 +21,8 @@
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
+  <Import Project="..\..\Azure.Security.KeyVault.Shared\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
+
   <ItemGroup>
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
@@ -28,6 +30,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
+    <Compile Include="..\..\Shared\*" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Serialization\" />
     <Compile Include="..\..\Azure.Security.KeyVault.Shared\ChallengeBasedAuthenticationPolicy.cs" />
   </ItemGroup>
 </Project>

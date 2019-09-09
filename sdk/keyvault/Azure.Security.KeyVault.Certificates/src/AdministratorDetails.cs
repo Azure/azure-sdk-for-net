@@ -6,23 +6,32 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
-    public class Contact : IJsonDeserializable, IJsonSerializable
+    public class AdministratorDetails
     {
         public string Email { get; set; }
-        public string Name { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string Phone { get; set; }
-        private const string NamePropertyName = "name";
+
+        private const string FirstNamePropertyName = "first_name";
+        private const string LastNamePropertyName = "last_name";
         private const string EmailPropertyName = "email";
         private const string PhonePropertyName = "phone";
 
-        void IJsonDeserializable.ReadProperties(JsonElement json)
+        internal void ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
             {
                 switch (prop.Name)
                 {
-                    case NamePropertyName:
-                        Name = prop.Value.GetString();
+                    case FirstNamePropertyName:
+                        FirstName = prop.Value.GetString();
+                        break;
+                    case LastNamePropertyName:
+                        LastName = prop.Value.GetString();
                         break;
                     case EmailPropertyName:
                         Email = prop.Value.GetString();
@@ -34,15 +43,21 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText NamePropertyNameBytes = JsonEncodedText.Encode(NamePropertyName);
+        private static readonly JsonEncodedText FirstNamePropertyNameBytes = JsonEncodedText.Encode(FirstNamePropertyName);
+        private static readonly JsonEncodedText LastNamePropertyNameBytes = JsonEncodedText.Encode(LastNamePropertyName);
         private static readonly JsonEncodedText EmailPropertyNameBytes = JsonEncodedText.Encode(EmailPropertyName);
         private static readonly JsonEncodedText PhonePropertyNameBytes = JsonEncodedText.Encode(PhonePropertyName);
 
-        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
-            if (!string.IsNullOrEmpty(Name))
+            if (!string.IsNullOrEmpty(FirstName))
             {
-                json.WriteString(NamePropertyNameBytes, Name);
+                json.WriteString(FirstNamePropertyNameBytes, FirstName);
+            }
+
+            if (!string.IsNullOrEmpty(LastName))
+            {
+                json.WriteString(LastNamePropertyNameBytes, LastName);
             }
 
             if (!string.IsNullOrEmpty(Email))
