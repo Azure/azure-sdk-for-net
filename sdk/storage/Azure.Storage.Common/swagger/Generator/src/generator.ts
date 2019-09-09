@@ -120,6 +120,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const methodName = naming.method(operation.name, true);
     const regionName = (operation.group ? naming.type(operation.group) + '.' : '') + methodName;
     const pipelineName = "pipeline";
+    const bufferResponseName = "bufferResponse";
     const cancellationName = "cancellationToken";
     const bodyName = "_body";
     const requestName = "_request";
@@ -156,6 +157,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
+    w.line(`/// <param name="${bufferResponseName}">Whether to buffer the response content.  The default value is true.</param>`);
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
@@ -172,8 +174,9 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`bool async = true`);
         }
         if (separateParams()) {  w.line(`,`); }
+        w.line(`bool ${bufferResponseName} = true,`);
         w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
-        if (separateParams()) {  w.line(`,`); }
+        w.line(`,`);
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
         w.write(')')
     });
@@ -199,7 +202,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             });
             w.scope('{', '}', () => {
                 w.write(`Azure.Response ${responseName} = `);
-                const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false)`;
+                const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${bufferResponseName}, ${cancellationName}).ConfigureAwait(false)`;
                 if (sync) {
                     w.write('async ?');
                     w.scope(() => {
@@ -207,7 +210,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         w.line(`${asyncCall} :`);
                         w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
                         w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
-                        w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
+                        w.line(`${pipelineName}.SendRequest(${requestName}, ${bufferResponseName}, ${cancellationName});`);
                     });
                 } else {
                     w.line(`${asyncCall};`);

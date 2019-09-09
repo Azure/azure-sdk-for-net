@@ -314,8 +314,8 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.DownloadAsync(range: new HttpRange(0, 4 * Constants.KB));
 
                 var actualData = new byte[4 * Constants.KB];
-                var bytesRead = await response.Value.Content.ReadAsync(actualData, 0, 4 * Constants.KB);
-                Assert.AreEqual(expectedData.Length, bytesRead);
+                using var actualStream = new MemoryStream(actualData);
+                await response.Value.Content.CopyToAsync(actualStream);
                 TestHelper.AssertSequenceEqual(expectedData, actualData);
             }
         }
