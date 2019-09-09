@@ -165,6 +165,58 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Update tags of the specified connection monitor.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='connectionMonitorName'>
+            /// The name of the connection monitor.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update connection monitor tags.
+            /// </param>
+            public static ConnectionMonitorResult UpdateTags(this IConnectionMonitorsOperations operations, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject parameters)
+            {
+                return operations.UpdateTagsAsync(resourceGroupName, networkWatcherName, connectionMonitorName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update tags of the specified connection monitor.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='connectionMonitorName'>
+            /// The name of the connection monitor.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update connection monitor tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConnectionMonitorResult> UpdateTagsAsync(this IConnectionMonitorsOperations operations, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, networkWatcherName, connectionMonitorName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Stops the specified connection monitor.
             /// </summary>
             /// <param name='operations'>

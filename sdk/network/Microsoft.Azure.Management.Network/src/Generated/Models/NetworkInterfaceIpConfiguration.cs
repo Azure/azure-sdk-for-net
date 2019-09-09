@@ -50,20 +50,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="privateIPAllocationMethod">The private IP address
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
-        /// <param name="privateIPAddressVersion">Available from Api-Version
-        /// 2016-03-30 onwards, it represents whether the specific
-        /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
-        /// values include: 'IPv4', 'IPv6'</param>
+        /// <param name="privateIPAddressVersion">Whether the specific IP
+        /// configuration is IPv4 or IPv6. Default is IPv4. Possible values
+        /// include: 'IPv4', 'IPv6'</param>
         /// <param name="subnet">Subnet bound to the IP configuration.</param>
-        /// <param name="primary">Gets whether this is a primary customer
-        /// address on the network interface.</param>
+        /// <param name="primary">Whether this is a primary customer address on
+        /// the network interface.</param>
         /// <param name="publicIPAddress">Public IP address bound to the IP
         /// configuration.</param>
         /// <param name="applicationSecurityGroups">Application security groups
         /// in which the IP configuration is included.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// network interface IP configuration. Possible values are:
-        /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// network interface IP configuration. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
@@ -134,9 +133,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets available from Api-Version 2016-03-30 onwards, it
-        /// represents whether the specific ipconfiguration is IPv4 or IPv6.
-        /// Default is taken as IPv4. Possible values include: 'IPv4', 'IPv6'
+        /// Gets or sets whether the specific IP configuration is IPv4 or IPv6.
+        /// Default is IPv4. Possible values include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
         public string PrivateIPAddressVersion { get; set; }
@@ -148,8 +146,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public Subnet Subnet { get; set; }
 
         /// <summary>
-        /// Gets whether this is a primary customer address on the network
-        /// interface.
+        /// Gets or sets whether this is a primary customer address on the
+        /// network interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
@@ -169,8 +167,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the provisioning state of the network interface IP
-        /// configuration. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// configuration. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

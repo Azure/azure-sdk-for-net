@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Network
         /// Gets a list of service tag information resources.
         /// </summary>
         /// <param name='location'>
-        /// The location.
+        /// The location that will be used as a reference for version (not as a
+        /// filter based on location, you will get the list of service tags
+        /// with prefix details across all regions but limited to the cloud
+        /// that your subscription belongs to).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
