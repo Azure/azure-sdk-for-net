@@ -84,7 +84,7 @@ namespace Azure.Core.Pipeline
                 ProcessNext(message, pipeline);
             }
 
-            
+
 
             var after = Stopwatch.GetTimestamp();
 

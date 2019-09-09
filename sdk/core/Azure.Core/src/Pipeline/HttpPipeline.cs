@@ -70,4 +70,3 @@ namespace Azure.Core.Pipeline
         }
     }
 }
-

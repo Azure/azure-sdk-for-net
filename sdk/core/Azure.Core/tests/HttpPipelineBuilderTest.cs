@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class HttpPipelineBuilderTest: PolicyTestBase
+    public class HttpPipelineBuilderTest : PolicyTestBase
     {
         [Theory]
         [TestCase(HttpPipelinePosition.PerCall, 1)]
