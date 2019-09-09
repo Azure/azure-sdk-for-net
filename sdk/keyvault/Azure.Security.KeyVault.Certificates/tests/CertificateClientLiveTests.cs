@@ -208,5 +208,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         // GetCertificateVersions
         // GetDeletedCertificates
         // GetUpdatePolicy
+        // IssuerCrud
+        // ContactsCrud
     }
 }

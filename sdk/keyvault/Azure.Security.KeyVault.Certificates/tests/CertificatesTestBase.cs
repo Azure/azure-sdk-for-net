@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         public Uri VaultUri { get; set; }
 
-        public CertificatesTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public CertificatesTestBase(bool isAsync) : base(isAsync)
         {
         }
 
@@ -63,6 +63,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task<CertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
         {
+            operation.PollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+
             if (IsAsync)
             {
                 await operation.WaitCompletionAsync();
@@ -72,6 +74,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 while (!operation.HasValue)
                 {
                     operation.UpdateStatus();
+
+                    await Task.Delay(operation.PollingInterval);
                 }
             }
 

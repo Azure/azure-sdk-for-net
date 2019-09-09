@@ -36,7 +36,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Serialization\" />
     <Compile Include="..\..\Azure.Security.KeyVault.Shared\ChallengeBasedAuthenticationPolicy.cs" />
   </ItemGroup>
 </Project>
