@@ -186,7 +186,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Storage/Azure.Storage.Blobs.html
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview
 [nuget]: https://www.nuget.org/
