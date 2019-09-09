@@ -38,7 +38,6 @@ namespace Azure.Core.Pipeline
             }
 
             var activity = new Activity("Azure.Core.Http.Request");
-            activity.SetW3CFormat();
             activity.AddTag("http.method", message.Request.Method.Method);
             activity.AddTag("http.url", message.Request.UriBuilder.ToString());
             activity.AddTag("requestId", message.Request.ClientRequestId);
