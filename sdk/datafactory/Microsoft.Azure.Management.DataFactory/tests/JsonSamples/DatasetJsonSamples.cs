@@ -1177,6 +1177,27 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string OrcDataset = @"
+{
+  ""name"": ""OrcDataset"",
+  ""properties"": {
+    ""type"": ""Orc"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""data.parquet""
+      }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string TeradataDataset = @"
 {
   ""name"": ""TeradataDataset"",
