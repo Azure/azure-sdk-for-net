@@ -8,6 +8,8 @@ Release History
 - Added FileClient.Upload convenience helper to support arbitrarily large files
 - Added FileUriBuilder for addressing Azure Storage resources
 
+For more information, please visit: https://aka.ms/azure-sdk-preview3-net.
+
 12.0.0-preview.2 (2019-08)
 --------------------------
 - Distributed Tracing
