@@ -28,12 +28,17 @@ namespace Azure.Security.KeyVault.Certificates
 
         public override bool Equals(object obj)
         {
-            return obj is CertificateContentType && string.CompareOrdinal(_value, ((CertificateContentType)obj)._value) == 0;
+            return obj is CertificateContentType && this.Equals((CertificateContentType)obj);
+        }
+
+        public bool Equals(CertificateContentType other)
+        {
+            return string.CompareOrdinal(_value, other._value) == 0;
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return _value?.GetHashCode() ?? 0;
         }
 
         public override string ToString()
