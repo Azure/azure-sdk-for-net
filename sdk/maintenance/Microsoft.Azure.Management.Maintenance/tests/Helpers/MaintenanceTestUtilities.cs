@@ -52,7 +52,7 @@ namespace Maintenance.Tests
             Assert.NotNull(actual);
             Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Location, actual.Location);
-            Assert.Equal(expected.maintenanceScope, actual.maintenanceScope);
+            Assert.Equal(expected.MaintenanceScope, actual.MaintenanceScope);
         }
     }
 }
