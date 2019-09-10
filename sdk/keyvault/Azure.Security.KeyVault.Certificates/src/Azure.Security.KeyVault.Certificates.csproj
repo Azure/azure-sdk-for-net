@@ -7,6 +7,10 @@
     <PackageTags>Microsoft Azure Key Vault Certificates</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
+      Initial release of the Azure.Security.KeyVault.Certificates enabling:
+       - Management of Key Vault certififiates
+       - Management of Certificate Issuers
+       - Management of Certificate Contacts
       ]]>
     </PackageReleaseNotes>
 
