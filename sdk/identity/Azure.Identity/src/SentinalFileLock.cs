@@ -39,12 +39,7 @@ namespace Azure.Identity
                     }
                     break;
                 }
-                catch (IOException ex)
-                {
-                    exception = ex;
-                    await Task.Delay(lockFileRetryDelay).ConfigureAwait(false);
-                }
-                catch (UnauthorizedAccessException ex)
+                catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
                 {
                     exception = ex;
                     await Task.Delay(lockFileRetryDelay).ConfigureAwait(false);

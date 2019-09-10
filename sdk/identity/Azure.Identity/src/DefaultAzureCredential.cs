@@ -27,15 +27,6 @@ namespace Azure.Identity
         /// Creates an instance of the DefaultAzureCredential class.
         /// </summary>
         public DefaultAzureCredential()
-            :this(null)
-        {
-
-        }
-
-        /// <summary>
-        /// Creates an instance of the DefaultAzureCredential class.
-        /// </summary>
-        public DefaultAzureCredential(IdentityClientOptions options)
             : base(s_defaultCredentialChain)
         {
 

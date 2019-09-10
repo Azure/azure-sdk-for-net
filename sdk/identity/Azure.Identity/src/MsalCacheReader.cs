@@ -11,10 +11,10 @@ namespace Azure.Identity
 {
     internal class MsalCacheReader
     {
-        private string _cachePath;
-        private string _cacheLockPath;
-        private int _cacheRetryCount;
-        private TimeSpan _cacheRetryDelay;
+        private readonly string _cachePath;
+        private readonly string _cacheLockPath;
+        private readonly int _cacheRetryCount;
+        private readonly TimeSpan _cacheRetryDelay;
         private DateTimeOffset _lastReadTime;
 
         public MsalCacheReader(ITokenCache cache, string cachePath, int cacheRetryCount, TimeSpan cacheRetryDelay)
@@ -34,14 +34,16 @@ namespace Azure.Identity
         {
             try
             {
-                if (File.Exists(_cachePath) && _lastReadTime < File.GetLastWriteTimeUtc(_cachePath))
+                DateTime cacheTimestamp = File.GetLastWriteTimeUtc(_cachePath);
+
+                if (File.Exists(_cachePath) && _lastReadTime < cacheTimestamp)
                 {
                     using (var cacheLock = await SentinalFileLock.AquireAsync(_cacheLockPath, _cacheRetryCount, _cacheRetryDelay).ConfigureAwait(false))
                     {
                         byte[] cacheBytesFromDisk = await ReadCacheFromProtectedStorageAsync().ConfigureAwait(false);
 
                         // update the last read time before deserialization so if deserialization fails we won't continually read the invalid file
-                        _lastReadTime = DateTimeOffset.UtcNow;
+                        _lastReadTime = cacheTimestamp;
 
                         if (cacheBytesFromDisk != null)
                         {
@@ -54,7 +56,6 @@ namespace Azure.Identity
             {
                 // log
             }
-
         }
 
         private async Task<byte[]> ReadCacheFromProtectedStorageAsync()
