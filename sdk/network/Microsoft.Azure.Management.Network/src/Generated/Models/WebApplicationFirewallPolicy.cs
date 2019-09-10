@@ -47,11 +47,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// policy.</param>
         /// <param name="applicationGateways">A collection of references to
         /// application gateways.</param>
-        /// <param name="provisioningState">Provisioning state of the
-        /// WebApplicationFirewallPolicy.</param>
+        /// <param name="provisioningState">The provisioning state of the web
+        /// application firewall policy resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="resourceState">Resource status of the policy.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public WebApplicationFirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), IList<WebApplicationFirewallCustomRule> customRules = default(IList<WebApplicationFirewallCustomRule>), IList<ApplicationGateway> applicationGateways = default(IList<ApplicationGateway>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -88,7 +89,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationGateway> ApplicationGateways { get; private set; }
 
         /// <summary>
-        /// Gets provisioning state of the WebApplicationFirewallPolicy.
+        /// Gets the provisioning state of the web application firewall policy
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -104,8 +107,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets a unique read-only string that changes whenever the resource
-        /// is updated.
+        /// Gets or sets a unique read-only string that changes whenever the
+        /// resource is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }

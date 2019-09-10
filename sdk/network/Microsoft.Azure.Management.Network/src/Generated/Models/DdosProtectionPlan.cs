@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// if the user changes its name or migrate the resource across
         /// subscriptions or resource groups.</param>
         /// <param name="provisioningState">The provisioning state of the DDoS
-        /// protection plan resource. Possible values are: 'Succeeded',
-        /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// protection plan resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="virtualNetworks">The list of virtual networks
         /// associated with the DDoS protection plan resource. This list is
         /// read-only.</param>
@@ -112,8 +112,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets the provisioning state of the DDoS protection plan resource.
-        /// Possible values are: 'Succeeded', 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
