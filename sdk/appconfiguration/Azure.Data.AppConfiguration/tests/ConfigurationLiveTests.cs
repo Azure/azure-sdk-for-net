@@ -12,7 +12,7 @@ using Azure.Core.Testing;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
-    public class ConfigurationLiveTests: RecordedTestBase
+    public class ConfigurationLiveTests : RecordedTestBase
     {
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
@@ -476,7 +476,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Different tags
                 var testSettingDiff = responseGet.Clone();
                 var settingTags = testSettingDiff.Tags;
-                if (settingTags.ContainsKey("tag1")) settingTags["tag1"] = "value-updated";
+                if (settingTags.ContainsKey("tag1"))
+                    settingTags["tag1"] = "value-updated";
                 settingTags.Add("tag3", "test_value3");
                 testSettingDiff.Tags = settingTags;
 
@@ -643,7 +644,7 @@ namespace Azure.Data.AppConfiguration.Tests
             await foreach (ConfigurationSetting item in service.GetSettingsAsync(selector, CancellationToken.None))
             {
                 Assert.AreEqual("test_value", item.Value);
-                resultsReturned ++;
+                resultsReturned++;
             }
 
             Assert.AreEqual(expectedEvents, resultsReturned);

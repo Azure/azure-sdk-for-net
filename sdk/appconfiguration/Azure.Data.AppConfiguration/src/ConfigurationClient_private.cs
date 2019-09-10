@@ -105,7 +105,7 @@ namespace Azure.Data.AppConfiguration
         private static string EscapeReservedCharacters(string input)
         {
             string resp = string.Empty;
-            for (int i=0; i<input.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
                 if (ReservedCharacters.Contains(input[i]))
                 {

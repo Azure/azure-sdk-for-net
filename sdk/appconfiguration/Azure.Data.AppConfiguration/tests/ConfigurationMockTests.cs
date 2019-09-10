@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration.Tests
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class ConfigurationMockTests: ClientTestBase
+    public class ConfigurationMockTests : ClientTestBase
     {
         static readonly string connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
@@ -207,7 +207,7 @@ namespace Azure.Data.AppConfiguration.Tests
         public async Task GetBatch()
         {
             var response1 = new MockResponse(200);
-            response1.SetContent(SerializationHelpers.Serialize(new []
+            response1.SetContent(SerializationHelpers.Serialize(new[]
             {
                 CreateSetting(0),
                 CreateSetting(1),
@@ -215,7 +215,7 @@ namespace Azure.Data.AppConfiguration.Tests
             response1.AddHeader(new HttpHeader("Link", $"</kv?after=5>;rel=\"next\""));
 
             var response2 = new MockResponse(200);
-            response2.SetContent(SerializationHelpers.Serialize(new []
+            response2.SetContent(SerializationHelpers.Serialize(new[]
             {
                 CreateSetting(2),
                 CreateSetting(3),
@@ -307,9 +307,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 }
                 json.WriteEndObject();
             }
-            if (setting.ETag != default) json.WriteString("etag", setting.ETag.ToString());
-            if (setting.LastModified.HasValue) json.WriteString("last_modified", setting.LastModified.Value.ToString());
-            if (setting.Locked.HasValue) json.WriteBoolean("locked", setting.Locked.Value);
+            if (setting.ETag != default)
+                json.WriteString("etag", setting.ETag.ToString());
+            if (setting.LastModified.HasValue)
+                json.WriteString("last_modified", setting.LastModified.Value.ToString());
+            if (setting.Locked.HasValue)
+                json.WriteBoolean("locked", setting.Locked.Value);
             json.WriteEndObject();
         }
 

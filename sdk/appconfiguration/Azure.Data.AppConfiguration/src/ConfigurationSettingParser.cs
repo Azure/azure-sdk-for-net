@@ -21,7 +21,7 @@ namespace Azure.Data.AppConfiguration
             json.WriteStartObject();
             json.WriteString("value", setting.Value);
             json.WriteString("content_type", setting.ContentType);
-            if(setting.Tags != null)
+            if (setting.Tags != null)
             {
                 json.WriteStartObject("tags");
                 foreach (var tag in setting.Tags)
@@ -38,14 +38,19 @@ namespace Azure.Data.AppConfiguration
         {
             // TODO (pri 2): make the deserializer version resilient
             var setting = new ConfigurationSetting();
-            if (root.TryGetProperty("key", out var keyValue)) setting.Key = keyValue.GetString();
-            if (root.TryGetProperty("value", out var value)) setting.Value = value.GetString();
-            if (root.TryGetProperty("label", out var labelValue)) setting.Label = labelValue.GetString();
-            if (root.TryGetProperty("content_type", out var contentValue)) setting.ContentType = contentValue.GetString();
-            if (root.TryGetProperty("etag", out var eTagValue)) setting.ETag = new ETag(eTagValue.GetString());
+            if (root.TryGetProperty("key", out var keyValue))
+                setting.Key = keyValue.GetString();
+            if (root.TryGetProperty("value", out var value))
+                setting.Value = value.GetString();
+            if (root.TryGetProperty("label", out var labelValue))
+                setting.Label = labelValue.GetString();
+            if (root.TryGetProperty("content_type", out var contentValue))
+                setting.ContentType = contentValue.GetString();
+            if (root.TryGetProperty("etag", out var eTagValue))
+                setting.ETag = new ETag(eTagValue.GetString());
             if (root.TryGetProperty("last_modified", out var lastModified))
             {
-                if(lastModified.ValueKind == JsonValueKind.Null)
+                if (lastModified.ValueKind == JsonValueKind.Null)
                 {
                     setting.LastModified = null;
                 }
@@ -56,7 +61,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (root.TryGetProperty("locked", out var lockedValue))
             {
-                if(lockedValue.ValueKind == JsonValueKind.Null)
+                if (lockedValue.ValueKind == JsonValueKind.Null)
                 {
                     setting.Locked = null;
                 }
@@ -134,11 +139,13 @@ namespace Azure.Data.AppConfiguration
         static bool TryGetNextAfterValue(ref Response response, out string afterValue)
         {
             afterValue = default;
-            if (!response.Headers.TryGetValue(Link, out var headerValue)) return false;
+            if (!response.Headers.TryGetValue(Link, out var headerValue))
+                return false;
 
             // the headers value is something like this: "</kv?after={token}>; rel=\"next\""
             var afterIndex = headerValue.IndexOf(After, StringComparison.Ordinal);
-            if (afterIndex < 0) return false;
+            if (afterIndex < 0)
+                return false;
 
             int beginingToken = afterIndex + After.Length;
             int endToken = headerValue.IndexOf(">", StringComparison.Ordinal);
