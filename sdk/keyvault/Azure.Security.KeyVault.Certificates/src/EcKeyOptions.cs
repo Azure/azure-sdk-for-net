@@ -6,13 +6,23 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// Propeties of an EC (EllipticCurve) key backing a certificate
+    /// </summary>
     public class EcKeyOptions : KeyOptions
     {
         private const string CurvePropertyName = "crv";
         private static readonly JsonEncodedText CurvePropertyNameBytes = JsonEncodedText.Encode(CurvePropertyName);
 
+        /// <summary>
+        /// The curve which back the EC key
+        /// </summary>
         public KeyCurveName? Curve { get; set; }
 
+        /// <summary>
+        /// Creates EcKeyOptions for use with a <see cref="CertificatePolicy"/>
+        /// </summary>
+        /// <param name="hsmProtected">Specifies whether the key should be protected in the HSM</param>
         public EcKeyOptions(bool hsmProtected)
             : base(hsmProtected ? CertificateKeyType.EllipticCurveHsm : CertificateKeyType.EllipticCurve)
         {

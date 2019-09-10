@@ -10,85 +10,74 @@ using System.Linq;
 
 namespace Azure.Security.KeyVault.Certificates
 {
-    public enum SubjectAlternativeNameType
-    {
-        Dns,
-        Email,
-        Upn
-    }
-
-    //public enum CertificateContentType
-    //{
-    //    Pkcs12,
-    //    Pem
-    //}
     /// <summary>
-    /// Content type of the certificate when downloaded from getSecret.
+    /// A policy which governs the lifecycle a properties of a certificate managed by Azure Key Vault
     /// </summary>
-    public struct CertificateContentType
-    {
-        private string _value;
-
-        public CertificateContentType(string curveName)
-        {
-            _value = curveName;
-        }
-
-        public static readonly CertificateContentType Pkcs12 = new CertificateContentType("application/x-pkcs12");
-
-        public static readonly CertificateContentType Pem = new CertificateContentType("application/x-pem");
-
-        public override bool Equals(object obj)
-        {
-            return obj is CertificateContentType && string.CompareOrdinal(_value, ((CertificateContentType)obj)._value) == 0;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return _value;
-        }
-
-        public static bool operator ==(CertificateContentType a, CertificateContentType b) => a.Equals(b);
-
-        public static bool operator !=(CertificateContentType a, CertificateContentType b) => !a.Equals(b);
-
-        public static implicit operator CertificateContentType(string value) => new CertificateContentType(value);
-
-        public static implicit operator string(CertificateContentType o) => o._value;
-
-    }
-
     public class CertificatePolicy : IJsonSerializable, IJsonDeserializable
     {
+        /// <summary>
+        /// The properties of the key backing a certificate
+        /// </summary>
         public KeyOptions KeyOptions { get; set; }
 
+        /// <summary>
+        /// The subject name of a certificate
+        /// </summary>
         public string Subject { get; set; }
 
+        /// <summary>
+        /// The subject alternative names (SAN) of a certificate
+        /// </summary>
         public SubjectAlternativeNames SubjectAlternativeNames { get; set; }
 
+        /// <summary>
+        /// The name of an issuer for a certificate
+        /// </summary>
         public string IssuerName { get; set; }
 
+        /// <summary>
+        /// Content type of the certificate when downloaded from getSecret.
+        /// </summary>
         public CertificateContentType? ContentType { get; set; }
 
+        /// <summary>
+        /// The certificate type of a certificate
+        /// </summary>
         public string CertificateType { get; set; }
 
+        /// <summary>
+        /// Specifies whether a certificate should be published to the certificate transparency list when created
+        /// </summary>
         public bool? CertificateTransparency { get; set; }
 
+        /// <summary>
+        /// The validity period for a certificate in months
+        /// </summary>
         public int? ValidityInMonths { get; set; }
 
+        /// <summary>
+        /// The last updated time in UTC.
+        /// </summary>
         public DateTimeOffset Updated { get; set; }
 
+        /// <summary>
+        /// The creation time in UTC.
+        /// </summary>
         public DateTimeOffset Created { get; set; }
 
+        /// <summary>
+        /// The allowed usages for the key of the certificate
+        /// </summary>
         public IList<KeyUsage> KeyUsage { get; set; }
 
+        /// <summary>
+        /// The allowed enhanced key usages (EKUs) of the certificate
+        /// </summary>
         public IList<string> EnhancedKeyUsage { get; set; }
 
+        /// <summary>
+        /// Actions to be executed at specified points in the certificates lifetime
+        /// </summary>
         public IList<LifetimeAction> LifetimeActions { get; set; }
 
         private const string KeyPropsPropertyName = "key_props";

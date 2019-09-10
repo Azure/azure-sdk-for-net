@@ -5,20 +5,8 @@
 namespace Azure.Security.KeyVault.Certificates
 {
 
-    //public enum KeyUsage
-    //{
-    //    DigitalSignature,
-    //    NonRepudiation,
-    //    KeyEncipherment,
-    //    DataEncipherment,
-    //    KeyAgreement,
-    //    KeyCertSign,
-    //    CrlSign,
-    //    EncipherOnly,
-    //    DecipherOnly,
-    //}
     /// <summary>
-    /// Supported JsonWebKey key types (kty)
+    /// Supported usages of a certificate key
     /// </summary>
     public struct KeyUsage
     {
@@ -33,27 +21,58 @@ namespace Azure.Security.KeyVault.Certificates
         internal const string EncipherOnlyValue = "encipherOnly";
         internal const string DecipherOnlyValue = "decipherOnly";
 
+        /// <summary>
+        /// Creates a new KeyUsage with the specified value
+        /// </summary>
+        /// <param name="KeyUsage">The string value of the KeyUsage</param>
         public KeyUsage(string KeyUsage)
         {
             _value = KeyUsage;
         }
 
+        /// <summary>
+        /// The certificate key can be used as a digital signatures
+        /// </summary>
         public static readonly KeyUsage DigitalSignature = new KeyUsage(DigitalSignatureValue);
 
+        /// <summary>
+        /// The certificate key can be used for authentication
+        /// </summary>
         public static readonly KeyUsage NonRepudiation = new KeyUsage(NonRepudiationValue);
 
+        /// <summary>
+        /// The certificate key can be used for key encryption
+        /// </summary>
         public static readonly KeyUsage KeyEncipherment = new KeyUsage(KeyEnciphermentValue);
 
+        /// <summary>
+        /// The certificate key can be used for data encryption
+        /// </summary>
         public static readonly KeyUsage DataEncipherment = new KeyUsage(DataEnciphermentValue);
 
+        /// <summary>
+        /// The certificate key can be used to determine key agreement, such as a key created using the Diffie-Hellman key agreement algorithm.
+        /// </summary>
         public static readonly KeyUsage KeyAgreement = new KeyUsage(KeyAgreementValue);
 
+        /// <summary>
+        /// The certificate key can be used to sign certificates
+        /// </summary>
         public static readonly KeyUsage KeyCertSign = new KeyUsage(KeyCertSignValue);
 
+        /// <summary>
+        /// The certificate key can be used to sign a certificate revocation list
+        /// </summary>
         public static readonly KeyUsage CrlSign = new KeyUsage(CrlSignValue);
 
+        /// <summary>
+        /// The certificate key can be used for encryption only
+        /// </summary>
         public static readonly KeyUsage EncipherOnly = new KeyUsage(EncipherOnlyValue);
 
+        /// <summary>
+        /// The certificate key can be used for decryption only
+        /// </summary>
         public static readonly KeyUsage DecipherOnly = new KeyUsage(DecipherOnlyValue);
 
         public override bool Equals(object obj)

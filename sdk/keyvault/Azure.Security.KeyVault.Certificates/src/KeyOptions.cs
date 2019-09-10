@@ -2,12 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
-
+    /// <summary>
+    /// Properties of a key backing a certificate managed by Azure Key vault
+    /// </summary>
     public abstract class KeyOptions : IJsonSerializable, IJsonDeserializable
     {
         private const string KeyTypePropertyName = "kty";
@@ -17,15 +18,28 @@ namespace Azure.Security.KeyVault.Certificates
         private const string ExportablePropertyName = "exportable";
         private static readonly JsonEncodedText ExportablePropertyNameBytes = JsonEncodedText.Encode(ExportablePropertyName);
 
+        /// <summary>
+        /// Creates key options for the specified type of key
+        /// </summary>
+        /// <param name="keyType">The type of backing key to be generated when issuing new certificates</param>
         protected KeyOptions(CertificateKeyType keyType)
         {
             this.KeyType = keyType;
         }
 
+        /// <summary>
+        /// The type of backing key to be generated when issuing new certificates
+        /// </summary>
         public CertificateKeyType KeyType { get; private set; }
 
+        /// <summary>
+        /// Specifies whether the certificate key should be reused when rotating the certificate
+        /// </summary>
         public bool? ReuseKey { get; set; }
 
+        /// <summary>
+        /// Specifies whether the certificate key is exportable from the vault or secure certificate store
+        /// </summary>
         public bool? Exportable { get; set; }
 
         void IJsonDeserializable.ReadProperties(JsonElement json)

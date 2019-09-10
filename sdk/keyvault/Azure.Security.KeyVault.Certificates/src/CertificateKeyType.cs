@@ -16,19 +16,38 @@ namespace Azure.Security.KeyVault.Certificates
         internal const string RSA_HSM_KTY = "RSA-HSM";
         internal const string OCT_KTY = "oct";
 
+        /// <summary>
+        /// Creats a CertificateKeyType with the specified value
+        /// </summary>
+        /// <param name="keyType"></param>
         public CertificateKeyType(string keyType)
         {
             _value = keyType;
         }
 
+        /// <summary>
+        /// An EC (EllipticCurve) key
+        /// </summary>
         public static readonly CertificateKeyType EllipticCurve = new CertificateKeyType(EC_KTY);
 
+        /// <summary>
+        /// An HSM protected EC (EllipticCurve) key
+        /// </summary>
         public static readonly CertificateKeyType EllipticCurveHsm = new CertificateKeyType(EC_HSM_KTY);
 
+        /// <summary>
+        /// A RSA key
+        /// </summary>
         public static readonly CertificateKeyType Rsa = new CertificateKeyType(RSA_KTY);
 
+        /// <summary>
+        /// An HSM protected RSA key
+        /// </summary>
         public static readonly CertificateKeyType RsaHsm = new CertificateKeyType(RSA_HSM_KTY);
 
+        /// <summary>
+        /// A octal (Symmetric) key
+        /// </summary>
         public static readonly CertificateKeyType Oct = new CertificateKeyType(OCT_KTY);
 
         public override bool Equals(object obj)

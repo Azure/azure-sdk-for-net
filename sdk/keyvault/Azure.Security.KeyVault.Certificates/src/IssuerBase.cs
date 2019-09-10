@@ -7,17 +7,35 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// Contains public properties of a certificate issuer
+    /// </summary>
     public class IssuerBase : IJsonDeserializable, IJsonSerializable
     {
         internal IssuerBase() { }
 
+        /// <summary>
+        /// Creates a new Issuer with the specified name
+        /// </summary>
+        /// <param name="name">The name of the issuer</param>
         protected IssuerBase(string name)
         {
             Name = name;
         }
 
+        /// <summary>
+        /// The unique identifier of the certificate issuer
+        /// </summary>
         public Uri Id { get; private set; }
+
+        /// <summary>
+        /// The name of the certificate issuer
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// The provider name of the certificate issuer
+        /// </summary>
         public string Provider { get; set; }
 
         private const string IdPropertyName = "id";

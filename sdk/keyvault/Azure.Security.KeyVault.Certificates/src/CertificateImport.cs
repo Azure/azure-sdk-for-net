@@ -8,9 +8,18 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// A certificate to be imported into Azure Key Vault
+    /// </summary>
     public class CertificateImport : IJsonSerializable
     {
-        public CertificateImport(string name, byte[] value, CertificatePolicy policy, string password = default, bool? enabled = default, IDictionary<string, string> tags = default)
+        /// <summary>
+        /// Creates a certificate import used to import a certificate into Azure Key Vault
+        /// </summary>
+        /// <param name="name">A name for the imported certificate</param>
+        /// <param name="value">The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key</param>
+        /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated</param>
+        public CertificateImport(string name, byte[] value, CertificatePolicy policy)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty");
             if (value == null) throw new ArgumentNullException(nameof(value));
@@ -19,21 +28,36 @@ namespace Azure.Security.KeyVault.Certificates
             Name = name;
             Value = value;
             Policy = policy;
-            Password = password;
-            Enabled = enabled;
-            Tags = tags;
         }
 
+        /// <summary>
+        /// The name of the certificate to import
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key
+        /// </summary>
         public byte[] Value { get; set; }
 
+        /// <summary>
+        /// The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated
+        /// </summary>
         public CertificatePolicy Policy { get; set; }
 
+        /// <summary>
+        /// The password protecting the certificate specified in the Value
+        /// </summary>
         public string Password { get; set; }
 
+        /// <summary>
+        /// Sepcifies whether the imported certificate should be initially enabled
+        /// </summary>
         public bool? Enabled { get; set; }
 
+        /// <summary>
+        /// Tags to be applied to the imported certifiate
+        /// </summary>
         public IDictionary<string, string> Tags { get; set; }
 
         private static readonly JsonEncodedText ValuePropertyNameBytes = JsonEncodedText.Encode("value");

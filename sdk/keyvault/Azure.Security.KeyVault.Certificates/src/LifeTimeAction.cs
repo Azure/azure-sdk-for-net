@@ -6,6 +6,9 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// An action to be executed at a perscribed time in a certificates lifecycle
+    /// </summary>
     public class LifetimeAction : IJsonSerializable, IJsonDeserializable
     {
         private const string TriggerPropertyName = "trigger";
@@ -19,10 +22,19 @@ namespace Azure.Security.KeyVault.Certificates
         private const string ActionTypePropertyName = "action_type";
         private static readonly JsonEncodedText ActionTypePropertyNameBytes = JsonEncodedText.Encode(ActionTypePropertyName);
 
+        /// <summary>
+        /// Specifies the action should be performed the specified number of days before the certificate will expire
+        /// </summary>
         public int? DaysBeforeExpiry { get; set; }
 
+        /// <summary>
+        /// Specifies the action should be performed when the certificate reaches the specified percentage of its lifetime. Valid values include 1-99
+        /// </summary>
         public int? LifetimePercentage { get; set; }
 
+        /// <summary>
+        /// The action to be performed
+        /// </summary>
         public Action Action { get; set; }
 
         internal static LifetimeAction FromJsonObject(JsonElement json)

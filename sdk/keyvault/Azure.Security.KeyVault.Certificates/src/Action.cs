@@ -7,7 +7,7 @@ using System;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Supported JsonWebKey key types (kty)
+    /// An action that will be executed.
     /// </summary>
     public struct Action
     {
@@ -15,13 +15,22 @@ namespace Azure.Security.KeyVault.Certificates
         internal const string AutoRenewValue = "AutoRenew";
         internal const string EmailContactsValue = "EmailContacts";
 
+        /// <summary>
+        /// Initializes a new instance of the Action struct with the specfied value.
+        /// </summary>
         public Action(string Action)
         {
             _value = Action;
         }
 
+        /// <summary>
+        /// An action that will auto-renew a certificate
+        /// </summary>
         public static readonly Action AutoRenew = new Action(AutoRenewValue);
 
+        /// <summary>
+        /// An action that will email certificate contacts
+        /// </summary>
         public static readonly Action EmailContacts = new Action(EmailContactsValue);
 
         public override bool Equals(object obj)

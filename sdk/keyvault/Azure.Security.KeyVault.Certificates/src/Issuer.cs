@@ -8,30 +8,64 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// A certificate issuer used to sign certificates managed by Azure Key Vault
+    /// </summary>
     public class Issuer : IssuerBase
     {
         internal Issuer() { }
 
+        /// <summary>
+        /// Creates an issuer with the specified name
+        /// </summary>
+        /// <param name="name">The name of the issuer</param>
         public Issuer(string name) : base(name)
         {
         }
 
+        /// <summary>
+        /// Well known issuer name for self signed certificates
+        /// </summary>
         public static string Self => "self";
 
+        /// <summary>
+        /// Well known issuer name for certificates signed by the user with a private certificate authority
+        /// </summary>
         public static string Unknown => "unknown";
 
+        /// <summary>
+        /// The account identifier or username used to authenticate to the certificate issuer
+        /// </summary>
         public string AccountId { get; set; }
 
+        /// <summary>
+        /// The password or key used to authenticate to the certificate issuer
+        /// </summary>
         public string Password { get; set; }
 
+        /// <summary>
+        /// The organizational identifier for the issuer
+        /// </summary>
         public string OrganizationId { get; set; }
 
+        /// <summary>
+        /// A list of contacts who administrate the certificate issuer account
+        /// </summary>
         public IList<AdministratorDetails> Administrators { get; set; }
 
+        /// <summary>
+        /// The time the issuer was created in UTC
+        /// </summary>
         public DateTimeOffset? Created { get; private set; }
 
+        /// <summary>
+        /// The last modified time of the issuer in UTC
+        /// </summary>
         public DateTimeOffset? Updated { get; private set; }
 
+        /// <summary>
+        /// Specifies whether the issuer can currently be used to issue certificates
+        /// </summary>
         public bool? Enabled { get; set; }
 
         private const string CredentialsPropertyName = "credentials";

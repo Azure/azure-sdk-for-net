@@ -10,6 +10,9 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// A collection of subject alternative names (SANs) for a x509 certificate. SANs can be DNS entries, emails, or unique prinicpal names.
+    /// </summary>
     public class SubjectAlternativeNames : IEnumerable<string>, IJsonSerializable, IJsonDeserializable
     {
         private IEnumerable<string> _names;
@@ -32,6 +35,11 @@ namespace Azure.Security.KeyVault.Certificates
             _names = names;
         }
 
+        /// <summary>
+        /// Creates a collection of DNS subject alternative names (SANs)
+        /// </summary>
+        /// <param name="names">The SAN entries</param>
+        /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromDns(params string[] names)
         {
             if (names == null) throw new ArgumentNullException(nameof(names));
@@ -41,6 +49,11 @@ namespace Azure.Security.KeyVault.Certificates
             return new SubjectAlternativeNames(DnsPropertyNameBytes, names);
         }
 
+        /// <summary>
+        /// Creates a collection of DNS subject alternative names (SANs)
+        /// </summary>
+        /// <param name="names">The SAN entries</param>
+        /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromDns(IEnumerable<string> names)
         {
             if (names == null) throw new ArgumentNullException(nameof(names));
@@ -50,6 +63,11 @@ namespace Azure.Security.KeyVault.Certificates
             return new SubjectAlternativeNames(DnsPropertyNameBytes, names);
         }
 
+        /// <summary>
+        /// Creates a collection of email subject alternative names (SANs)
+        /// </summary>
+        /// <param name="names">The SAN entries</param>
+        /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromEmail(params string[] names)
         {
             if (names == null) throw new ArgumentNullException(nameof(names));
@@ -59,6 +77,11 @@ namespace Azure.Security.KeyVault.Certificates
             return new SubjectAlternativeNames(EmailsPropertyNameBytes, names);
         }
 
+        /// <summary>
+        /// Creates a collection of email subject alternative names (SANs)
+        /// </summary>
+        /// <param name="names">The SAN entries</param>
+        /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromEmail(IEnumerable<string> names)
         {
             if (names == null) throw new ArgumentNullException(nameof(names));
@@ -68,6 +91,11 @@ namespace Azure.Security.KeyVault.Certificates
             return new SubjectAlternativeNames(EmailsPropertyNameBytes, names);
         }
 
+        /// <summary>
+        /// Creates a collection of unique principal name (UPN) subject alternative names (SANs)
+        /// </summary>
+        /// <param name="names">The SAN entries</param>
+        /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromUpn(params string[] names)
         {
             if (names == null) throw new ArgumentNullException(nameof(names));
@@ -77,6 +105,11 @@ namespace Azure.Security.KeyVault.Certificates
             return new SubjectAlternativeNames(UpnsPropertyNameBytes, names);
         }
 
+        /// <summary>
+        /// Creates a collection of unique principal name (UPN) subject alternative names (SANs)
+        /// </summary>
+        /// <param name="names">The SAN entries</param>
+        /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromUpn(IEnumerable<string> names)
         {
             if (names == null) throw new ArgumentNullException(nameof(names));
@@ -86,11 +119,19 @@ namespace Azure.Security.KeyVault.Certificates
             return new SubjectAlternativeNames(UpnsPropertyNameBytes, names);
         }
 
+        /// <summary>
+        /// Gets an enumerator for the SAN collection
+        /// </summary>
+        /// <returns>The created enumerator</returns>
         public IEnumerator<string> GetEnumerator()
         {
             return _names.GetEnumerator();
         }
 
+        /// <summary>
+        /// Gets an enumerator for the SAN collection
+        /// </summary>
+        /// <returns>The created enumerator</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _names.GetEnumerator();

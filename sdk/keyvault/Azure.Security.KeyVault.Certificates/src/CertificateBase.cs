@@ -13,18 +13,39 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private CertificateAttributes _attributes;
 
+        /// <summary>
+        /// The Id of the certificate
+        /// </summary>
         public Uri Id { get; private set; }
 
+        /// <summary>
+        /// The name of the certificate
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// The Uri of the vault in which the certificate is stored
+        /// </summary>
         public Uri VaultUri { get; private set; }
 
+        /// <summary>
+        /// The version of the certificate
+        /// </summary>
         public string Version { get; private set; }
 
+        /// <summary>
+        /// The digital thumbprint of the certificate which can be used to uniquely identify it
+        /// </summary>
         public byte[] X509Thumbprint { get; private set; }
 
+        /// <summary>
+        /// The tags applied to the certificate
+        /// </summary>
         public IDictionary<string, string> Tags { get; private set; }
 
+        /// <summary>
+        /// Specifies if the certificate is currently enabled
+        /// </summary>
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         public DateTimeOffset? NotBefore => _attributes.NotBefore;

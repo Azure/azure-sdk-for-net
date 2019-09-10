@@ -7,6 +7,9 @@ using System;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// Options that allow to configure the management of the request sent to Key Vault
+    /// </summary>
     public class CertificateClientOptions : ClientOptions
     {
         /// <summary>
@@ -50,6 +53,9 @@ namespace Azure.Security.KeyVault.Certificates
             this.Version = version;
         }
 
+        /// <summary>
+        /// The default <see cref="CertificatePolicy"/> to be used when creating certificates with the client
+        /// </summary>
         public CertificatePolicy DefaultPolicy { get; set; }
 
         internal string GetVersionString()

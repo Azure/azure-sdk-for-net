@@ -6,14 +6,29 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// Details of an administrator of a certificate <see cref="Issuer"/>
+    /// </summary>
     public class AdministratorDetails
     {
+        /// <summary>
+        /// The email address of the administrator
+        /// </summary>
         public string Email { get; set; }
 
+        /// <summary>
+        /// The first name of the administrator
+        /// </summary>
         public string FirstName { get; set; }
 
+        /// <summary>
+        /// The last name of the administrator
+        /// </summary>
         public string LastName { get; set; }
 
+        /// <summary>
+        /// The phone number of the administrator
+        /// </summary>
         public string Phone { get; set; }
 
         private const string FirstNamePropertyName = "first_name";

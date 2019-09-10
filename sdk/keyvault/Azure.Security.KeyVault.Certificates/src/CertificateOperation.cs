@@ -3,13 +3,14 @@
 // license information.
 
 using System;
-using System.Globalization;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Certificates
 {
+    /// <summary>
+    /// A long running poller operation which can be used to track the status of a pending key vault certificate operation.
+    /// </summary>
     public class CertificateOperation : Operation<CertificateWithPolicy>
     {
         private bool _hasValue = false;
@@ -24,12 +25,26 @@ namespace Azure.Security.KeyVault.Certificates
             _client = client;
         }
 
+        /// <summary>
+        /// The properties of the pending certificate operation
+        /// </summary>
         public CertificateOperationProperties Properties { get; private set; }
 
+        /// <summary>
+        /// Specifies whether the operation has reached a terminal state
+        /// </summary>
         public override bool HasCompleted => _completed;
 
+        /// <summary>
+        /// Specifies whether the Value property can be safely accessed
+        /// </summary>
         public override bool HasValue => _hasValue;
 
+        /// <summary>
+        /// Updates the status of the certificate operation
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The raw response of the poll operation</returns>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
             if (!_completed)
@@ -69,6 +84,11 @@ namespace Azure.Security.KeyVault.Certificates
             return GetRawResponse();
         }
 
+        /// <summary>
+        /// Updates the status of the certificate operation
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The raw response of the poll operation</returns>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
             if (!_completed)
@@ -106,96 +126,6 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             return GetRawResponse();
-        }
-    }
-
-    public class CertificateOperationProperties : IJsonDeserializable
-    {
-        private const string IdPropertyName = "id";
-        private const string IssuerProperyName = "issuer";
-        private const string IssuerNamePropertyName = "name";
-        private const string CsrPropertyName = "csr";
-        private const string CancellationRequestedPropertyName = "cancellation_requested";
-        private const string RequestIdPropertyName = "request_id";
-        private const string StatusPropertyName = "status";
-        private const string StatusDetailsPropertyName = "status_details";
-        private const string TargetPropertyName = "target";
-        private const string ErrorPropertyName = "error";
-
-        public Uri Id { get; private set; }
-
-        public string Name { get; private set; }
-
-        public Uri VaultUri { get; private set; }
-
-        public string IssuerName { get; private set; }
-
-        public string CertificateSigningRequest { get; private set; }
-
-        public bool CancellationRequested { get; private set; }
-
-        public string RequestId { get; private set; }
-
-        public string Status { get; private set; }
-
-        public string StatusDetails { get; private set; }
-
-        public string Target { get; private set; }
-
-        public Error Error { get; private set; }
-
-        void IJsonDeserializable.ReadProperties(JsonElement json)
-        {
-            foreach (JsonProperty prop in json.EnumerateObject())
-            {
-                switch (prop.Name)
-                {
-                    case IdPropertyName:
-                        var id = prop.Value.GetString();
-                        Id = new Uri(id);
-                        ParseId(id);
-                        break;
-                    case IssuerProperyName:
-                        IssuerName = prop.Value.GetProperty(IssuerNamePropertyName).GetString();
-                        break;
-                    case CsrPropertyName:
-                        CertificateSigningRequest = prop.Value.GetString();
-                        break;
-                    case CancellationRequestedPropertyName:
-                        CancellationRequested = prop.Value.GetBoolean();
-                        break;
-                    case RequestIdPropertyName:
-                        RequestId = prop.Value.GetString();
-                        break;
-                    case StatusPropertyName:
-                        Status = prop.Value.GetString();
-                        break;
-                    case StatusDetailsPropertyName:
-                        StatusDetails = prop.Value.GetString();
-                        break;
-                    case TargetPropertyName:
-                        Target = prop.Value.GetString();
-                        break;
-                    case ErrorPropertyName:
-                        Error = new Error();
-                        ((IJsonDeserializable)Error).ReadProperties(prop.Value);
-                        break;
-                }
-            }
-        }
-        private void ParseId(string id)
-        {
-            var idToParse = new Uri(id, UriKind.Absolute); ;
-
-            // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
-            if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, idToParse.Segments.Length));
-
-            if (!string.Equals(idToParse.Segments[1], "certificates" + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'certificates/', found '{1}'", id, idToParse.Segments[1]));
-
-            VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
-            Name = idToParse.Segments[2].Trim('/');
         }
     }
 }
