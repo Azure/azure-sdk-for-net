@@ -7,10 +7,7 @@
     <PackageTags>Microsoft Azure Identity</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Adding user authentication credential types:
-        - UsernamePasswordCredential
-        - DeviceCodeCredential
-        - InteractiveBrowserCredential
+      Adding SharedTokenCacheCredential to enable Single Sign On scenarios with other development tooling.
       ]]>
     </PackageReleaseNotes>
 
