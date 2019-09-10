@@ -10,7 +10,7 @@ namespace Azure.Data.AppConfiguration
     /// Fields to retrieve from a configuration setting.
     /// </summary>
     [Flags]
-    public enum SettingFields: uint
+    public enum SettingFields : uint
     {
         /// <summary>
         /// The primary identifier of a configuration setting.

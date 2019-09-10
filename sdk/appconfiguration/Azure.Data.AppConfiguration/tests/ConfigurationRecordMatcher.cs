@@ -28,7 +28,8 @@ namespace Azure.Data.AppConfiguration.Tests
             byte[] body = record.ResponseBody ?? Array.Empty<byte>();
             byte[] otherBody = record.ResponseBody ?? Array.Empty<byte>();
 
-            if (body.SequenceEqual(otherBody)) return true;
+            if (body.SequenceEqual(otherBody))
+                return true;
 
             var bodyJson = JObject.Parse(Encoding.UTF8.GetString(body));
             var otherBodyJson = JObject.Parse(Encoding.UTF8.GetString(otherBody));
