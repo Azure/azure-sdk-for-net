@@ -1,6 +1,6 @@
 # Release History
 
-## 5.0.0-preview.3 (2019-08-06)
+## 5.0.0-preview.3 (2019-09-06)
 
 ### Consuming Events
 
