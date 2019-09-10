@@ -13,7 +13,7 @@ using Azure.Core.Http;
 
 namespace Azure.Data.AppConfiguration
 {
-    static class ConfigurationServiceSerializer
+    internal static class ConfigurationServiceSerializer
     {
         public static void Serialize(ConfigurationSetting setting, IBufferWriter<byte> writer)
         {
@@ -136,7 +136,7 @@ namespace Azure.Data.AppConfiguration
 
         private const string Link = "Link";
         private const string After = "after=";
-        static bool TryGetNextAfterValue(ref Response response, out string afterValue)
+        private static bool TryGetNextAfterValue(ref Response response, out string afterValue)
         {
             afterValue = default;
             if (!response.Headers.TryGetValue(Link, out var headerValue))
@@ -155,4 +155,3 @@ namespace Azure.Data.AppConfiguration
         }
     }
 }
-
