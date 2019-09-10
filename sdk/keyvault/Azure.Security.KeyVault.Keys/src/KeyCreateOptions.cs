@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// List of supported <see cref="KeyOperations"/>.
         /// </summary>
-        public IList<JsonWebKeyOperations> KeyOperations { get; set; }
+        public IList<KeyOperation> KeyOperations { get; set; }
 
         /// <summary>
         /// Not before date in UTC.

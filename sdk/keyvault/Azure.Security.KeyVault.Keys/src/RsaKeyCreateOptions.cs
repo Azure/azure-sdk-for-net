@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
         /// Possible values 'RSA', 'RSA-HSM.'
         /// </summary>
-        public JsonWebKeyType KeyType { get; private set; }
+        public KeyType KeyType { get; private set; }
 
         /// <summary>
         /// Key size in bits. For example: 2048, 3072, or 4096.
@@ -44,11 +44,11 @@ namespace Azure.Security.KeyVault.Keys
             Hsm = hsm;
             if(hsm)
             {
-                KeyType = JsonWebKeyType.RsaHsm;
+                KeyType = KeyType.RsaHsm;
             }
             else
             {
-                KeyType = JsonWebKeyType.Rsa;
+                KeyType = KeyType.Rsa;
             }
 
             if(keySize.HasValue)

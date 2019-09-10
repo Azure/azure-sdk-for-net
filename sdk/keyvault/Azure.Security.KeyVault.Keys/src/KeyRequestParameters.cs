@@ -12,17 +12,17 @@ namespace Azure.Security.KeyVault.Keys
     {
         private KeyAttributes _attributes;
 
-        public JsonWebKeyType KeyType { get; set; }
+        public KeyType KeyType { get; set; }
         public int? KeySize { get; set; }
         public KeyAttributes Attributes { get; set; }
-        public IList<JsonWebKeyOperations> KeyOperations { get; set; }
+        public IList<KeyOperation> KeyOperations { get; set; }
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
         public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
         public IDictionary<string, string> Tags { get; set; }
-        public JsonWebKeyCurveName? Curve { get; set; }
+        public KeyCurveName? Curve { get; set; }
 
-        internal KeyRequestParameters(KeyBase key, IEnumerable<JsonWebKeyOperations> operations)
+        internal KeyRequestParameters(KeyBase key, IEnumerable<KeyOperation> operations)
         {
             if (key.Enabled.HasValue)
             {
@@ -42,11 +42,11 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (operations != null)
             {
-                KeyOperations = new List<JsonWebKeyOperations>(operations);
+                KeyOperations = new List<KeyOperation>(operations);
             }
         }
 
-        internal KeyRequestParameters(JsonWebKeyType type, KeyCreateOptions options = default)
+        internal KeyRequestParameters(KeyType type, KeyCreateOptions options = default)
         {
             KeyType = type;
             if (options != default)
@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys
                 }
                 if (options.KeyOperations != null)
                 {
-                    KeyOperations = new List<JsonWebKeyOperations>(options.KeyOperations);
+                    KeyOperations = new List<KeyOperation>(options.KeyOperations);
                 }
                 if (options.Tags != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if(KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, JsonWebKeyTypeExtensions.AsString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyType);
             }
             if(KeySize.HasValue)
             {
@@ -117,7 +117,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (Curve.HasValue)
             {
-                json.WriteString(CurveNamePropertyNameBytes, JsonWebKeyCurveNameInfo.FromValue(Curve.Value).ToString());
+                json.WriteString(CurveNamePropertyNameBytes, Curve.Value);
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteStartArray(KeyOpsPropertyNameBytes);
                 foreach(var operation in KeyOperations)
                 {
-                    json.WriteStringValue(KeyOperationsExtensions.AsString(operation));
+                    json.WriteStringValue(operation);
                 }
                 json.WriteEndArray();
             }

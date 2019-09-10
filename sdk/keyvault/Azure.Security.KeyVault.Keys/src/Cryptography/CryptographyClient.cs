@@ -58,9 +58,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="NotSupportedException">The <see cref="CryptographyClientOptions.Version"/> is not supported.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
-            _keyId = keyId ?? throw new ArgumentNullException(nameof(keyId));
-            if (credential is null) throw new ArgumentNullException(nameof(credential));
+            Argument.NotNull(keyId, nameof(keyId));
+            Argument.NotNull(credential, nameof(credential));
 
+            _keyId = keyId;
             options ??= new CryptographyClientOptions();
 
             var remoteProvider = new RemoteCryptographyClient(keyId, credential, options);
@@ -443,7 +444,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            Argument.NotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -474,7 +475,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            Argument.NotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -503,9 +504,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            Argument.NotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -534,9 +536,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            Argument.NotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -565,9 +568,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            Argument.NotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -596,9 +600,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            Argument.NotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -627,9 +632,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            Argument.NotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -658,9 +664,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            Argument.NotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
