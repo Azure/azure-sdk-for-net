@@ -38,8 +38,4 @@
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
     <Compile Include="..\..\Shared\*" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Include="..\..\Azure.Security.KeyVault.Shared\ChallengeBasedAuthenticationPolicy.cs" />
-  </ItemGroup>
 </Project>
