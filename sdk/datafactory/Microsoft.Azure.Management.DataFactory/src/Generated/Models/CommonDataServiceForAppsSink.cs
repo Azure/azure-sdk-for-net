@@ -52,10 +52,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ignore null values from input dataset (except key fields) during
         /// write operation. Default is false. Type: boolean (or Expression
         /// with resultType boolean).</param>
-        public CommonDataServiceForAppsSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object ignoreNullValues = default(object))
+        /// <param name="alternateKeyName">The logical name of the alternative
+        /// key which will be used when upserting records</param>
+        public CommonDataServiceForAppsSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object ignoreNullValues = default(object), object alternateKeyName = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             IgnoreNullValues = ignoreNullValues;
+            AlternateKeyName = alternateKeyName;
             CustomInit();
         }
         /// <summary>
@@ -78,6 +81,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "ignoreNullValues")]
         public object IgnoreNullValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets the logical name of the alternative key which will be
+        /// used when upserting records
+        /// </summary>
+        [JsonProperty(PropertyName = "alternateKeyName")]
+        public object AlternateKeyName { get; set; }
 
         /// <summary>
         /// The write behavior for the operation.
