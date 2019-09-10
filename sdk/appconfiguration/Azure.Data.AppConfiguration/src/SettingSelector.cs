@@ -93,7 +93,9 @@ namespace Azure.Data.AppConfiguration
                 return Equals(other);
             }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>

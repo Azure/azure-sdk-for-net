@@ -70,4 +70,3 @@ namespace Azure.Data.AppConfiguration.Samples
         }
     }
 }
-

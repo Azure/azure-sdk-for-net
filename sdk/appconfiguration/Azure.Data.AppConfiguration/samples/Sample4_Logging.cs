@@ -40,10 +40,10 @@ namespace Azure.Data.AppConfiguration.Samples
 
     public class ConsoleEventListener : EventListener
     {
-        const string SOURCE_NAME = "AzureSDK";
+        private const string SOURCE_NAME = "AzureSDK";
 
-        EventLevel _enabled;
-        EventSource _source;
+        private EventLevel _enabled;
+        private EventSource _source;
 
         protected override void OnEventSourceCreated(EventSource eventSource)
         {

@@ -19,8 +19,8 @@ namespace Azure.Data.AppConfiguration.Tests
     [TestFixture(false)]
     public class ConfigurationMockTests : ClientTestBase
     {
-        static readonly string connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
-        static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
+        private static readonly string connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
+        private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {
             Label = "test_label",
             ContentType = "test_content_type",

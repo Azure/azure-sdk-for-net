@@ -15,7 +15,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void HelloWorld()
         {
-            // Retrieve the connection string from the configuration store. 
+            // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal.
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
