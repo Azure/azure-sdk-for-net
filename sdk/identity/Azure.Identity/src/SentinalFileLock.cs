@@ -12,6 +12,7 @@ namespace Azure.Identity
     internal class SentinalFileLock : IDisposable
     {
         private FileStream _lockFileStream;
+        private const int DefaultFileBufferSize = 4096;
 
         private SentinalFileLock(FileStream lockFileStream)
         {
@@ -31,9 +32,9 @@ namespace Azure.Identity
                 {
                     // We are using the file locking to synchronize the store, do not allow multiple writers for the file.
                     // Note: this only works on windows if we extend to work on unix systems we need to set FileShare.None
-                    fileStream = new FileStream(lockfilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.DeleteOnClose);
+                    fileStream = new FileStream(lockfilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, DefaultFileBufferSize, FileOptions.DeleteOnClose);
 
-                    using (var writer = new StreamWriter(fileStream, Encoding.UTF8, 4096, leaveOpen: true))
+                    using (var writer = new StreamWriter(fileStream, Encoding.UTF8, DefaultFileBufferSize, leaveOpen: true))
                     {
                         await writer.WriteLineAsync($"{Process.GetCurrentProcess().Id} {Process.GetCurrentProcess().ProcessName}").ConfigureAwait(false);
                     }

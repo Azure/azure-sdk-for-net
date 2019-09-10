@@ -21,6 +21,7 @@ namespace Azure.Identity
         // TODO: Currently this is piggybacking off the Azure CLI client ID, but needs to be switched once the Developer Sign On application is available
         private const string DeveloperSignOnClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
         private static readonly string AzureUsername = Environment.GetEnvironmentVariable("AZURE_USERNAME");
+        private static readonly string AzurePassword = Environment.GetEnvironmentVariable("AZURE_PASSWORD");
         private static TokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain();
 
         /// <summary>
@@ -34,7 +35,9 @@ namespace Azure.Identity
 
         private static TokenCredential[] GetDefaultAzureCredentialChain()
         {
-            if (!string.IsNullOrEmpty(AzureUsername))
+            // if only the username is specified via the enviornment (not password as well) and we're running on windows add the SharedTokenCacheCredential to the 
+            // default credential to enable SSO
+            if (!string.IsNullOrEmpty(AzureUsername) && string.IsNullOrEmpty(AzurePassword) && (Environment.OSVersion.Platform == PlatformID.Win32NT))
             {
                 return new TokenCredential[] {
                     new EnvironmentCredential(),

@@ -25,7 +25,7 @@ namespace Azure.Identity
         /// <summary>
         /// Millisecond delay between attempts to read the persisted token cache
         /// </summary>
-        public TimeSpan CacheAccessRetryDelay { get; set; } = TimeSpan.FromMilliseconds(60000 / 100);
+        public TimeSpan CacheAccessRetryDelay { get; set; } = TimeSpan.FromMilliseconds(600);
 
         private static string DefaultCacheDirectory { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ".IdentityService");
 
