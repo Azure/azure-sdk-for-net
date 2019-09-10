@@ -39,7 +39,8 @@ namespace Azure.Core.Pipeline
 
             public StreamContent(Stream stream)
             {
-                if (!stream.CanSeek) throw new ArgumentException("stream must be seekable", nameof(stream));
+                if (!stream.CanSeek)
+                    throw new ArgumentException("stream must be seekable", nameof(stream));
                 _origin = stream.Position;
                 _stream = stream;
             }

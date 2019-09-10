@@ -4,6 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -93,7 +96,7 @@ namespace Azure.Storage.Files
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new FileUriBuilder(conn.FileEndpoint) { ShareName = shareName };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -195,7 +198,7 @@ namespace Azure.Storage.Files
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new FileUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), this.Pipeline);
+            return new ShareClient(p.Uri, this.Pipeline);
         }
 
         /// <summary>
@@ -1284,6 +1287,203 @@ namespace Azure.Storage.Files
             }
         }
         #endregion GetStatistics
+
+        #region GetPermission
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        public virtual Response<string> GetPermission(
+            string filePermissionKey = default,
+            CancellationToken cancellationToken = default) =>
+            this.GetPermissionInternal(
+                filePermissionKey,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        public virtual async Task<Response<string>> GetPermissionAsync(
+            string filePermissionKey = default,
+            CancellationToken cancellationToken = default) =>
+            await this.GetPermissionInternal(
+                filePermissionKey,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<string>> GetPermissionInternal(
+            string filePermissionKey,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                try
+                {
+                    // Get the permission as a JSON object
+                    var jsonResponse =
+                        await FileRestClient.Share.GetPermissionAsync(
+                            this.Pipeline,
+                            this.Uri,
+                            filePermissionKey: filePermissionKey,
+                            async: async,
+                            operationName: Constants.File.Share.GetPermissionOperationName,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                    // Parse the JSON object
+                    using var doc = JsonDocument.Parse(jsonResponse.Value);
+                    if (doc.RootElement.ValueKind != JsonValueKind.Object ||
+                        !doc.RootElement.TryGetProperty("permission", out var permissionProperty) ||
+                        permissionProperty.ValueKind != JsonValueKind.String)
+                    {
+                        throw FileErrors.InvalidPermissionJson(jsonResponse.Value);
+                    }
+                    var permission = permissionProperty.GetString();
+
+                    // Return the Permission string
+                    return new Response<string>(
+                        jsonResponse.GetRawResponse(),
+                        permission);
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+            }
+        }
+        #endregion GetPermission
+
+        #region CreatePermission
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
+        /// can be used for the files/directories in the share. 
+        /// </summary>
+        /// <param name="permission">
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        public virtual Response<PermissionInfo> CreatePermission(
+            string permission,
+            CancellationToken cancellationToken = default) =>
+            this.CreatePermissionInternal(
+                permission,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
+        /// can be used for the files/directories in the share. 
+        /// </summary>
+        /// <param name="permission">
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
+            string permission,
+            CancellationToken cancellationToken = default) =>
+            await this.CreatePermissionInternal(
+                permission,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<PermissionInfo>> CreatePermissionInternal(
+            string permission,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                try
+                {
+                    // Serialize the permission as a JSON object
+                    using var stream = new MemoryStream();
+                    using var writer = new Utf8JsonWriter(stream);
+                    writer.WriteStartObject();
+                    writer.WriteString("permission", permission);
+                    writer.WriteEndObject();
+                    if (async)
+                    {
+                        await writer.FlushAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        writer.Flush();
+                    }
+                    var json = Encoding.UTF8.GetString(stream.ToArray());
+
+                    return await FileRestClient.Share.CreatePermissionAsync(
+                        this.Pipeline,
+                        this.Uri,
+                        sharePermissionJson: json,
+                        async: async,
+                        operationName: Constants.File.Share.CreatePermissionOperationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+            }
+        }
+        #endregion CreatePermission
 
         #region CreateDirectory
         /// <summary>

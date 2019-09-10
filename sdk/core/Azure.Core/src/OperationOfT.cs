@@ -16,8 +16,8 @@ namespace Azure
     /// <typeparam name="T">The final result of the LRO.</typeparam>
     public abstract class Operation<T> where T : notnull
     {
-        T _value;
-        Response _response;
+        private T _value;
+        private Response _response;
 
         /// <summary>
         /// Creates a new instance of the Operation representing the specified
@@ -43,9 +43,11 @@ namespace Azure
         /// </remarks>
         public T Value
         {
-            get {
+            get
+            {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                if (!HasValue) throw new InvalidOperationException("operation has not completed");
+                if (!HasValue)
+                    throw new InvalidOperationException("operation has not completed");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 return _value;
             }

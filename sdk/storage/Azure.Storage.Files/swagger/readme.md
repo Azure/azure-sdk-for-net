@@ -610,3 +610,25 @@ directive:
   transform: >
     delete $.format;
 ```
+
+### Temporarily work around proper JSON support for file permissions
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}?restype=share&comp=filepermission"]
+  transform: >
+    delete $.put.consumes;
+    $.put.responses["201"]["x-az-response-name"] = "PermissionInfo";
+    delete $.get.produces;
+- from: swagger-document
+  where: $.parameters.SharePermission
+  transform: >
+    $.schema = { "type": "string" };
+    $["x-ms-client-name"] = "sharePermissionJson";
+- from: swagger-document
+  where: $.definitions.SharePermission
+  transform: >
+    $.type = "string";
+    delete $.required;
+    delete $.properties;
+```

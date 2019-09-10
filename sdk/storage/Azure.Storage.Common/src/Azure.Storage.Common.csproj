@@ -7,7 +7,7 @@
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <PackageReleaseNotes>
-      For release notes and more information please visit https://aka.ms/azure-sdk-preview1-net
+      For release notes and more information please visit https://aka.ms/azure-sdk-preview3-net
     </PackageReleaseNotes>
     <Description>
       This client library enables working with the Microsoft Azure Storage services which include the blob and file services for storing binary and text data, and the queue service for storing messages that may be accessed by a client.

@@ -3,21 +3,22 @@
 // license information.
 
 using System;
+using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [Category("Live")]
+    [LiveOnly]
     public partial class ConfigurationSamples
     {
         [Test]
         /*
-         * Sample demonstrates how to use Azure App Configuration to lock and 
+         * Sample demonstrates how to use Azure App Configuration to lock and
          * unlock a configuration setting.
         */
         public void LockUnlockSetting()
         {
-            // Retrieve the connection string from the configuration store. 
+            // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal.
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 

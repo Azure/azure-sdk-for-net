@@ -8,7 +8,7 @@ namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationSettingTests
     {
-        static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting(
+        private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting(
             string.Concat("key-", Guid.NewGuid().ToString("N")),
             "test_value"
         )

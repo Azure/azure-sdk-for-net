@@ -149,11 +149,19 @@ namespace Microsoft.Azure.EventHubs.Processor
             return this.PersistCheckpointAsync(new Checkpoint(this.PartitionId, eventData.SystemProperties.Offset, eventData.SystemProperties.SequenceNumber));
         }
 
-        /// <summary>
-        /// Provides the parition context in the following format:"PartitionContext({EventHubPath}/{ConsumerGroupName}/{PartitionId}/{SequenceNumber})"
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
+		/// <summary>
+		/// Writes the current offset and sequenceNumber to the checkpoint store via the checkpoint manager.
+		/// </summary>
+		public Task CheckpointAsync(Checkpoint checkPoint)
+		{
+			return this.PersistCheckpointAsync(checkPoint);
+		}
+
+		/// <summary>
+		/// Provides the parition context in the following format:"PartitionContext({EventHubPath}/{ConsumerGroupName}/{PartitionId}/{SequenceNumber})"
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
         {
             return $"PartitionContext({this.EventHubPath}/{this.ConsumerGroupName}/{this.PartitionId}/{this.SequenceNumber})";
         }

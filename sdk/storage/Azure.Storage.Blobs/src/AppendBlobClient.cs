@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs.Specialized
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
             var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new AppendBlobClient(builder.ToUri(), this.Pipeline);
+            return new AppendBlobClient(builder.Uri, this.Pipeline);
         }
 
         #region Create

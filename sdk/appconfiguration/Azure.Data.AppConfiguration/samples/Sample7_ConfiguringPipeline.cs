@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core.Testing;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 using System;
@@ -9,10 +10,10 @@ using System.Net.Http;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [Category("Live")]
+    [LiveOnly]
     public partial class ConfigurationSamples
     {
-        HttpClient s_client = new HttpClient();
+        private HttpClient s_client = new HttpClient();
 
         [Test]
         public void ConfiguringPipeline()
@@ -45,7 +46,7 @@ namespace Azure.Data.AppConfiguration.Samples
             client.Delete("some_key");
         }
 
-        class AddHeaderPolicy : SynchronousHttpPipelinePolicy
+        private class AddHeaderPolicy : SynchronousHttpPipelinePolicy
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {
@@ -53,7 +54,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        class CustomLogPolicy : SynchronousHttpPipelinePolicy
+        private class CustomLogPolicy : SynchronousHttpPipelinePolicy
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {

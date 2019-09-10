@@ -85,11 +85,11 @@ namespace Azure.Core.Testing
                     Type[] modelType = returnType.GenericTypeArguments.Single().GenericTypeArguments;
                     Type wrapperType = typeof(AsyncEnumerableWrapper<>).MakeGenericType(modelType);
 
-                    invocation.ReturnValue = Activator.CreateInstance(wrapperType, new [] { result });
+                    invocation.ReturnValue = Activator.CreateInstance(wrapperType, new[] { result });
                 }
                 else
                 {
-                    invocation.ReturnValue = TaskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new [] { result });
+                    invocation.ReturnValue = TaskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
                 }
             }
             catch (TargetInvocationException exception)
@@ -100,7 +100,7 @@ namespace Azure.Core.Testing
                 }
                 else
                 {
-                    invocation.ReturnValue = TaskFromExceptionMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new [] { exception.InnerException });
+                    invocation.ReturnValue = TaskFromExceptionMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new[] { exception.InnerException });
                 }
             }
         }
@@ -135,26 +135,7 @@ namespace Azure.Core.Testing
 
                 foreach (Response<T> response in _enumerable)
                 {
-                    yield return new Page<T>(new [] { response.Value}, null, response.GetRawResponse());
-                }
-            }
-
-            private class SingleEnumerable: IAsyncEnumerable<Page<T>>, IAsyncEnumerator<Page<T>>
-            {
-                public SingleEnumerable(Page<T> value)
-                {
-                    Current = value;
-                }
-
-                public ValueTask DisposeAsync() => default;
-
-                public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(false);
-
-                public Page<T> Current { get; }
-
-                public IAsyncEnumerator<Page<T>> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
-                {
-                    return this;
+                    yield return new Page<T>(new[] { response.Value }, null, response.GetRawResponse());
                 }
             }
         }

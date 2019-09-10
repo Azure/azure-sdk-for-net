@@ -41,6 +41,7 @@ namespace Azure.Core.Pipeline
             activity.AddTag("http.method", message.Request.Method.Method);
             activity.AddTag("http.url", message.Request.UriBuilder.ToString());
             activity.AddTag("requestId", message.Request.ClientRequestId);
+
             if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
                 activity.AddTag("http.user_agent", userAgent);
@@ -86,14 +87,14 @@ namespace Azure.Core.Pipeline
 
             if (currentActivity != null)
             {
-                if (currentActivity.IdFormat == ActivityIdFormat.W3C)
+                if (currentActivity.IsW3CFormat())
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
                         message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
-                        if (currentActivity.TraceStateString != null)
+                        if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
                         {
-                            message.Request.Headers.Add(TraceStateHeaderName, currentActivity.TraceStateString);
+                            message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
                     }
                 }

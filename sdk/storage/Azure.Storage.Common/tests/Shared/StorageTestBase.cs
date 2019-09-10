@@ -18,7 +18,7 @@ namespace Azure.Storage.Test.Shared
     public abstract class StorageTestBase : RecordedTestBase
     {
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode ?? GetModeFromEnvironment())
+            : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             this.Sanitizer = new StorageRecordedTestSanitizer();
             this.Matcher = new StorageRecordMatcher(this.Sanitizer);

@@ -22,13 +22,13 @@ These libraries follow the [Azure SDK Design Guidelines for .NET](https://azure.
 These preview libraries can be easily identified by their folder, package, and namespaces names starting with 'Azure', e.g. Azure.Storage.Blobs. 
 
 The libraries released in the July 2019 preview:
-* [Azure.ApplicationModel.Configuration](https://azure.github.io/azure-sdk-for-net/api/Azure.ApplicationModel.Configuration.html)
-* [Azure.Messaging.EventHubs](https://azure.github.io/azure-sdk-for-net/api/Azure.Messaging.EventHubs.html)
-* [Azure.Security.KeyVault.Keys](https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Keys.html)
-* [Azure.Security.KeyVault.Secrets](https://azure.github.io/azure-sdk-for-net/api/Azure.Security.KeyVault.Secrets.html)
-* [Azure.Storage.Blobs](https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.html)
-* [Azure.Storage.Files](https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Files.html)
-* [Azure.Storage.Queues](https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Queues.html)
+* [Azure.ApplicationModel.Configuration](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md)
+* [Azure.Messaging.EventHubs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md)
+* [Azure.Security.KeyVault.Keys](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
+* [Azure.Security.KeyVault.Secrets](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md)
+* [Azure.Storage.Blobs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md)
+* [Azure.Storage.Files](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files/README.md)
+* [Azure.Storage.Queues](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/README.md)
 
 >NOTE: If you need to ensure your code is ready for production, use one of the stable libraries.
 

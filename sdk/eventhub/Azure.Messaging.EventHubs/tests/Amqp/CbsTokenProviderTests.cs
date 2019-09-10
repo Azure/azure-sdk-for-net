@@ -8,7 +8,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests.Amqp
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="CbsTokenProvider" />

@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Core
         private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> s_random = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>
         ///   The set of options responsible for configuring the retry
@@ -87,11 +87,11 @@ namespace Azure.Messaging.EventHubs.Core
             switch (Options.Mode)
             {
                 case RetryMode.Fixed:
-                    retryDelay = CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, s_random.Value);
+                    retryDelay = CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value);
                     break;
 
                 case RetryMode.Exponential:
-                    retryDelay = CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, s_random.Value);
+                    retryDelay = CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value);
                     break;
 
                 default:

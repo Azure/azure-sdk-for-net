@@ -13,9 +13,9 @@ namespace Azure.Storage.Common
     public struct ParallelTransferOptions : IEquatable<ParallelTransferOptions>
     {
         /// <summary>
-        /// The maximum length of an upload block in bytes.
+        /// The maximum length of an transfer in bytes.
         /// </summary>
-        public int? MaximumBlockLength { get; set; }
+        public int? MaximumTransferLength { get; set; }
 
         /// <summary>
         /// The maximum number of threads that may be used in a parallel transfer.
@@ -39,7 +39,7 @@ namespace Azure.Storage.Common
         /// <returns>Hash code for the ParallelTransferOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
-            => this.MaximumBlockLength.GetHashCode()
+            => this.MaximumTransferLength.GetHashCode()
             ^ this.MaximumThreadCount.GetHashCode()
             ;
 
@@ -68,7 +68,7 @@ namespace Azure.Storage.Common
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(ParallelTransferOptions obj)
-            => this.MaximumBlockLength == obj.MaximumBlockLength
+            => this.MaximumTransferLength == obj.MaximumTransferLength
             && this.MaximumThreadCount == obj.MaximumThreadCount
             ;
     }

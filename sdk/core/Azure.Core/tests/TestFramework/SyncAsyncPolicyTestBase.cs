@@ -27,7 +27,7 @@ namespace Azure.Core.Testing
         {
             await Task.Yield();
 
-            var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
+            var pipeline = new HttpPipeline(transport, new[] { policy }, responseClassifier);
             return await SendRequestAsync(pipeline, request, bufferResponse, CancellationToken.None);
         }
 

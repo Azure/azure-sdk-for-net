@@ -1,12 +1,11 @@
-﻿using Azure.Identity;
-using Azure.Security.KeyVault.Keys;
+﻿using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Samples
@@ -14,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// Sample demonstrates how to wrap and unwrap a symmetric key with an RSA key using the synchronous methods of the CryptographyClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class Sample6_WrapUnwrap
     {
         [Test]

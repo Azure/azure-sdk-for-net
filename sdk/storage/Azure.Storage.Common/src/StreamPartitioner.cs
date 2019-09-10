@@ -52,7 +52,7 @@ namespace Azure.Storage.Common
 
             var sourceComplete = false;
 
-            while(!ct.IsCancellationRequested)
+            while (!ct.IsCancellationRequested)
             {
                 // try to keep as many partitions loaded as possible
 
@@ -102,12 +102,14 @@ namespace Azure.Storage.Common
                 {
                     //Console.WriteLine("Waiting for partition to complete...");
 
-                    var t = Task.WhenAny(activePartitionDisposalTasks);
-
-                    var completedTask =
-                        async
-                        ? await t.ConfigureAwait(false)
-                        : t.EnsureCompleted();
+                    if (async)
+                    {
+                        await Task.WhenAny(activePartitionDisposalTasks).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Task.WaitAny(activePartitionDisposalTasks.ToArray(), ct);
+                    }
                 }
 
                 // now we are assured to have room for partitions to be worked on
@@ -131,15 +133,13 @@ namespace Azure.Storage.Common
 
                     //Console.WriteLine("Waiting for remaining partitions to complete...");
 
-                    var t = Task.WhenAll(activePartitionDisposalTasks);
-
                     if (async)
                     {
-                        await t.ConfigureAwait(false);
+                        await Task.WhenAll(activePartitionDisposalTasks).ConfigureAwait(false);
                     }
                     else
                     {
-                        t.EnsureCompleted();
+                        Task.WaitAll(activePartitionDisposalTasks.ToArray(), ct);
                     }
 
                     //Console.WriteLine("All partitions complete...");
@@ -297,124 +297,5 @@ namespace Azure.Storage.Common
 #pragma warning disable CA1063 // Implement IDisposable Correctly // false alert
         public void Dispose() => this.Dispose(true);
 #pragma warning restore CA1063 // Implement IDisposable Correctly
-    }
-
-    sealed class StreamPartition : Stream
-    {
-        Action disposeAction;
-        ReadOnlyMemory<byte> memory;
-
-        public override bool CanRead => true;
-
-        public override bool CanSeek => true;
-
-        public override bool CanWrite => false;
-
-        public override long Length { get; }
-
-        long position;
-
-        public override long Position { get => this.position; set => this.position = value; }
-
-        public long ParentPosition { get; }
-
-        public Task DisposalTask { get; }
-
-#pragma warning disable IDE0069 // Disposable fields should be disposed // disposed in DisposalTask
-        ManualResetEventSlim disposalTaskCompletionSource;
-#pragma warning restore IDE0069 // Disposable fields should be disposed
-
-        public StreamPartition(ReadOnlyMemory<byte> buffer, long parentPosition, int count, Action disposeAction, CancellationToken ct)
-        {
-            this.memory = buffer;
-            this.ParentPosition = parentPosition;
-            this.Length = count;
-            this.disposeAction = disposeAction;
-            this.disposalTaskCompletionSource = new ManualResetEventSlim(false);
-
-            this.DisposalTask = Task.Factory.StartNew(
-                () =>
-                {
-                    //Console.WriteLine($"Waiting for partition {this.ParentPosition}");
-
-                    this.disposalTaskCompletionSource.Wait(ct);
-
-                    //Console.WriteLine($"Completed partition {this.ParentPosition}");
-
-                    this.disposalTaskCompletionSource.Dispose();
-                    this.disposalTaskCompletionSource = default;
-                },
-                CancellationToken.None,
-                TaskCreationOptions.None,
-                TaskScheduler.Default
-                );
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (!this.disposedValue)
-            {
-                if (disposing)
-                {
-                    base.Dispose(disposing);
-                    this.disposeAction();
-                }
-
-                this.memory = default;
-                this.disposeAction = default;
-
-                this.disposedValue = true;
-
-                this.disposalTaskCompletionSource.Set();
-            }
-        }
-
-        private bool disposedValue = false; // To detect redundant calls
-
-        public override void Flush() => throw Errors.NotImplemented();
-
-        public int Read(out ReadOnlyMemory<byte> buffer, int count)
-        {
-            var n = Math.Min(count, (int)(this.Length - this.position));
-
-            buffer = this.memory.Slice((int)this.position, n);
-
-            Interlocked.Add(ref this.position, n);
-
-            return n;
-        }
-
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            var n = Math.Min(count, (int)(this.Length - this.position));
-
-            this.memory.Slice((int)this.position, n).CopyTo(new Memory<byte>(buffer, offset, count));
-
-            Interlocked.Add(ref this.position, n);
-
-            return n;
-        }
-
-        public override long Seek(long offset, SeekOrigin origin)
-        {
-            switch (origin)
-            {
-                case SeekOrigin.Begin:
-                    Interlocked.Exchange(ref this.position, offset);
-                    break;
-                case SeekOrigin.Current:
-                    Interlocked.Add(ref this.position, offset);
-                    break;
-                case SeekOrigin.End:
-                    Interlocked.Exchange(ref this.position, this.Length - offset);
-                    break;
-            }
-
-            return this.Position;
-        }
-
-        public override void SetLength(long value) => throw Errors.NotImplemented();
-
-        public override void Write(byte[] buffer, int offset, int count) => throw Errors.NotImplemented();
     }
 }

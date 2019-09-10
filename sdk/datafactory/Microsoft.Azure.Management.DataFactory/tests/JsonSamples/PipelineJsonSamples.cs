@@ -1502,7 +1502,7 @@ namespace DataFactory.Tests.JsonSamples
                         type: ""BlobSink"",
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
-                        copyBehavior: ""FlattenHierarchy""                                                
+                        copyBehavior: ""FlattenHierarchy""
                     }
                 },
                 inputs: 
@@ -3552,7 +3552,15 @@ namespace DataFactory.Tests.JsonSamples
             ""userScopeFilterUri"": ""https://graph.microsoft.com/v1.0/users?$filter=Department eq 'Finance'"",
             ""dateFilterColumn"": ""CreatedDateTime"",
             ""startTime"": ""2019-04-28T16:00:00.000Z"",
-            ""endTime"": ""2019-05-05T16:00:00.000Z""
+            ""endTime"": ""2019-05-05T16:00:00.000Z"",
+            ""outputColumns"": [
+              {
+                ""name"": ""Id""
+              },
+              {
+                ""name"": ""CreatedDateTime""
+              }
+            ]
           },
           ""sink"": {
             ""type"": ""AzureDataLakeStoreSink"",
@@ -3734,6 +3742,47 @@ namespace DataFactory.Tests.JsonSamples
   }
 }";
 
+        [JsonSample]
+        public const string CopyActivity_Orc_Adls = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""OrcSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            }
+          },
+          ""sink"": {
+            ""type"": ""OrcSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
 
         [JsonSample]
         public const string CopyActivity_DelimitedText_Adls = @"{
@@ -3746,12 +3795,12 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreReadSetting"",
+              ""type"": ""AzureDataLakeStoreReadSettings"",
               ""recursive"": true,
               ""enablePartitionDiscovery"": true
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
 }
@@ -3759,12 +3808,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -3797,14 +3846,14 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""AzureBlobStorageReadSetting"",
+              ""type"": ""AzureBlobStorageReadSettings"",
               ""recursive"": true,
               ""enablePartitionDiscovery"": true,
               ""wildcardFolderPath"":  ""abc/efg"",
               ""wildcardFileName"":  ""a.csv""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
 }
@@ -3812,12 +3861,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -3851,14 +3900,14 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""AzureBlobFSReadSetting"",
+              ""type"": ""AzureBlobFSReadSettings"",
               ""recursive"": true,
               ""enablePartitionDiscovery"": true,
               ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
               ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
             }
@@ -3866,12 +3915,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -3906,7 +3955,7 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""FileServerReadSetting"",
+              ""type"": ""FileServerReadSettings"",
               ""recursive"": true,
               ""enablePartitionDiscovery"": true,
               ""wildcardFolderPath"": ""A*"",
@@ -3914,7 +3963,7 @@ namespace DataFactory.Tests.JsonSamples
               ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
             }
@@ -3922,12 +3971,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -3961,14 +4010,14 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""FtpReadSetting"",
+              ""type"": ""FtpReadSettings"",
               ""recursive"": true,
               ""wildcardFolderPath"": ""A*"",
               ""wildcardFileName"":  ""*.csv"",
               ""useBinaryTransfer"":  true
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
             }
@@ -3976,12 +4025,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -4015,7 +4064,7 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""HdfsReadSetting"",
+              ""type"": ""HdfsReadSettings"",
               ""recursive"": true,
               ""enablePartitionDiscovery"": true,
               ""wildcardFolderPath"": ""A*"",
@@ -4023,7 +4072,7 @@ namespace DataFactory.Tests.JsonSamples
               ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
             }
@@ -4031,12 +4080,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -4071,14 +4120,14 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""HttpReadSetting"",
+              ""type"": ""HttpReadSettings"",
               ""requestMethod"": ""POST"",
               ""requestBody"": ""request body"",
               ""additionalHeaders"": ""testHeaders"",
               ""requestTimeout"":  ""2400""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
             }
@@ -4086,12 +4135,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -4125,7 +4174,7 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""AmazonS3ReadSetting"",
+              ""type"": ""AmazonS3ReadSettings"",
               ""recursive"": true,
               ""enablePartitionDiscovery"": true,
               ""prefix"": ""A*"",
@@ -4133,7 +4182,7 @@ namespace DataFactory.Tests.JsonSamples
               ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
             }
@@ -4141,12 +4190,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -4181,7 +4230,7 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""DelimitedTextSource"",
             ""storeSettings"": {
-              ""type"": ""SftpReadSetting"",
+              ""type"": ""SftpReadSettings"",
               ""recursive"": true,
               ""wildcardFileName"": ""*.csv"",
               ""wildcardFolderPath"": ""A*"",
@@ -4189,7 +4238,7 @@ namespace DataFactory.Tests.JsonSamples
               ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextReadSetting"",
+              ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
             }
@@ -4197,12 +4246,12 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             },
             ""formatSettings"": {
-              ""type"": ""DelimitedTextWriteSetting"",
+              ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
@@ -4285,7 +4334,7 @@ namespace DataFactory.Tests.JsonSamples
           ""source"": {
             ""type"": ""BinarySource"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreReadSetting"",
+              ""type"": ""AzureDataLakeStoreReadSettings"",
               ""recursive"": true,
               ""enablePartitionDiscovery"": true
             }
@@ -4293,7 +4342,7 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""BinarySink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             }
@@ -4310,11 +4359,80 @@ namespace DataFactory.Tests.JsonSamples
             ""referenceName"": ""exampleDataset"",
             ""type"": ""DatasetReference""
           }
+        ]
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""BinarySource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            }
+          },
+          ""sink"": {
+            ""type"": ""BinarySink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""blockSizeInMB"": 8
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
         ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""BinarySource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            }
+          },
+          ""sink"": {
+            ""type"": ""BinarySink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobFSWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""blockSizeInMB"": 8
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
       }
     ]
   }
 }";
+
         [JsonSample]
         public const string CopyActivity_Teradata_Binary = @"{
   ""name"": ""MyPipeline"",
@@ -4335,7 +4453,7 @@ namespace DataFactory.Tests.JsonSamples
           ""sink"": {
             ""type"": ""BinarySink"",
             ""storeSettings"": {
-              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy""
             }

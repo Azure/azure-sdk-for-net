@@ -54,7 +54,8 @@ namespace Azure.Data.AppConfiguration
             Keys.Add(key ?? Any);
 
             Labels = new List<string>();
-            if (label != null) Labels.Add(label);
+            if (label != null)
+                Labels.Add(label);
         }
 
         /// <summary>
@@ -63,11 +64,16 @@ namespace Azure.Data.AppConfiguration
         /// <param name="other">The instance to compare to.</param>
         public bool Equals(SettingSelector other)
         {
-            if (other == null) return false;
-            if (!Keys.SequenceEqual(other.Keys)) return false;
-            if (!Labels.SequenceEqual(other.Labels)) return false;
-            if (!Fields.Equals(other.Fields)) return false;
-            if (AsOf != other.AsOf) return false;
+            if (other == null)
+                return false;
+            if (!Keys.SequenceEqual(other.Keys))
+                return false;
+            if (!Labels.SequenceEqual(other.Labels))
+                return false;
+            if (!Fields.Equals(other.Fields))
+                return false;
+            if (AsOf != other.AsOf)
+                return false;
 
             return true;
         }
@@ -80,12 +86,16 @@ namespace Azure.Data.AppConfiguration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
+            if (obj == null)
+                return false;
             if (obj is SettingSelector other)
             {
                 return Equals(other);
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

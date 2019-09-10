@@ -481,6 +481,7 @@ function createEnumType(project: IProject, name: string, swagger: any, location:
         constant: false,
         customSerialization,
         public: isPublic,
+        skipValue: swagger[`x-az-enum-skip-value`],
         values,
         extendedHeaders: []
     };

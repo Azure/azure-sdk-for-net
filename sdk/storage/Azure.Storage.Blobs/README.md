@@ -1,6 +1,6 @@
 # Azure Storage Blobs client library for .NET
 
-> Server Version: 2018-11-09
+> Server Version: 2019-02-02
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.
@@ -16,7 +16,7 @@ definition, such as text or binary data.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.2
+dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.3
 ```
 
 ### Prerequisites
@@ -186,7 +186,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Storage/Azure.Storage.Blobs.html
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview
 [nuget]: https://www.nuget.org/
