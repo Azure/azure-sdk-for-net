@@ -39,6 +39,24 @@ namespace Azure.Security.KeyVault
             return firstPage.Uri;
         }
 
+        public Uri CreateFirstPageUri(string path, params ValueTuple<string, string>[] queryParams)
+        {
+            var firstPage = new RequestUriBuilder
+            {
+                Uri = _vaultUri,
+            };
+
+            firstPage.AppendPath(path);
+            firstPage.AppendQuery("api-version", ApiVersion);
+
+            foreach(var tuple in queryParams)
+            {
+                firstPage.AppendQuery(tuple.Item1, tuple.Item2);
+            }
+
+            return firstPage.Uri;
+        }
+
         public Request CreateRequest(RequestMethod method, Uri uri)
         {
             Request request = _pipeline.CreateRequest();
@@ -205,6 +223,7 @@ namespace Azure.Security.KeyVault
             {
                 case 200:
                 case 201:
+                case 202:
                 case 204:
                     return response;
                 default:
@@ -219,6 +238,7 @@ namespace Azure.Security.KeyVault
             {
                 case 200:
                 case 201:
+                case 202:
                 case 204:
                     return response;
                 default:
