@@ -5,7 +5,6 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
-using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
 
@@ -14,7 +13,7 @@ namespace Azure.Data.AppConfiguration.Samples
     [LiveOnly]
     public partial class ConfigurationSamples
     {
-        // CreateConsoleLogger logs lots of useful information automatically to .NET's EventSource.
+        // AzureEventSourceListener logs lots of useful information automatically to .NET's EventSource.
         // This sample illustrate how to control and access the log information.
         [Test]
         public void Logging()
