@@ -100,7 +100,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
 #else
             using ECDsa ecdsa = ECDsa.Create();
-            ecdsa.GenerateKey(ECCurve.CreateFromValue(oid));
+            try
+            {
+                ecdsa.GenerateKey(ECCurve.CreateFromValue(oid));
+            }
+            catch (PlatformNotSupportedException)
+            {
+                Assert.Inconclusive("This platform does not support OID {0} with friendly name '{1}'", oid, friendlyName);
+            }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
             Assert.AreEqual(friendlyName, jwk.CurveName);
