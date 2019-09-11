@@ -5,6 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Core
 {
@@ -30,7 +31,7 @@ namespace Azure.Core
         /// <param name="value">The value to validate.</param>
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public static void NotNull<T>(T value, string name) where T : class
+        public static void NotNull<T>([AllowNull, NotNull] T value, string name) where T : class?
         {
             if (value is null)
             {
@@ -59,7 +60,7 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public static void NotNullOrEmpty<T>(IEnumerable<T> value, string name)
+        public static void NotNullOrEmpty<T>([AllowNull, NotNull] IEnumerable<T> value, string name)
         {
             if (value is null)
             {
@@ -91,7 +92,7 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public static void NotNullOrEmpty(string value, string name)
+        public static void NotNullOrEmpty([AllowNull, NotNull] string value, string name)
         {
             if (value is null)
             {
@@ -111,7 +112,7 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty string or consists only of white-space characters.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public static void NotNullOrWhiteSpace(string value, string name)
+        public static void NotNullOrWhiteSpace([AllowNull, NotNull] string value, string name)
         {
             if (value is null)
             {
@@ -147,7 +148,7 @@ namespace Azure.Core
         /// <param name="minimum">The minimum value to compare.</param>
         /// <param name="maximum">The maximum value to compare.</param>
         /// <param name="name">The name of the parameter.</param>
-        public static void InRange<T>(T value, T minimum, T maximum, string name) where T : struct, IComparable<T>
+        public static void InRange<T>(T value, T minimum, T maximum, string name) where T : notnull, IComparable<T>
         {
             if (minimum.CompareTo(value) > 0)
             {

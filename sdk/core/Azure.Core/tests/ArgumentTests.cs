@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -10,16 +12,19 @@ namespace Azure.Core.Tests
 {
     public class ArgumentTests
     {
-        [Test]
-        public void NotNull()
+        [TestCase("test")]
+        public void NotNull(object? value)
         {
-            Argument.NotNull(new object(), "value");
+            Argument.NotNull(value, "value");
+
+            // With nullability enabled and without [NotNull] attributed on the first parameter above, this would fail compilation.
+            Assert.AreEqual("test", value.ToString());
         }
 
         [Test]
         public void NotNullThrowsOnNull()
         {
-            object value = null;
+            object? value = null;
             Assert.Throws<ArgumentNullException>(() => Argument.NotNull(value, "value"));
         }
 
@@ -47,12 +52,12 @@ namespace Azure.Core.Tests
         [Test]
         public void NotNullOrEmptyCollectionThrowsOnNull()
         {
-            string[] value = null;
+            string[]? value = null;
             Assert.Throws<ArgumentNullException>(() => Argument.NotNullOrEmpty(value, "value"));
         }
 
         [TestCaseSource(nameof(GetNotNullOrEmptyCollectionThrowsOnEmptyCollectionData))]
-        public void NotNullOrEmptyCollectionThrowsOnEmptyCollection(IEnumerable<string> value)
+        public void NotNullOrEmptyCollectionThrowsOnEmptyCollection(IEnumerable<string>? value)
         {
             Assert.Throws<ArgumentException>(() => Argument.NotNullOrEmpty(value, "value"));
         }
@@ -67,7 +72,7 @@ namespace Azure.Core.Tests
         [Test]
         public void NotNullOrEmptyStringThrowsOnNull()
         {
-            string value = null;
+            string? value = null;
             Assert.Throws<ArgumentNullException>(() => Argument.NotNullOrEmpty(value, "value"));
         }
 
