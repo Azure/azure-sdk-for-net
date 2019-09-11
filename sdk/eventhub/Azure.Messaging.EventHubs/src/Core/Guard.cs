@@ -25,7 +25,7 @@ namespace Azure.Core
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(argumentValue))
+            if (String.IsNullOrWhiteSpace(argumentValue))
             {
                 throw new ArgumentException($"The argument '{argumentName}' may not be empty or white-space, though it may be null.", argumentName);
             }
@@ -93,7 +93,7 @@ namespace Azure.Core
         {
             if (wasDisposed)
             {
-                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.DisposedInstanceCannotPerformOperation, targetName));
+                throw new ObjectDisposedException(targetName, String.Format(CultureInfo.CurrentCulture, Resources.DisposedInstanceCannotPerformOperation, targetName));
             }
         }
     }
