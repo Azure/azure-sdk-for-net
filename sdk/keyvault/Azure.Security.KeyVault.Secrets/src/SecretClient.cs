@@ -37,6 +37,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="vaultUri">Endpoint URL for the Azure Key Vault service.</param>
         /// <param name="credential">Represents a credential capable of providing an OAuth token.</param>
+        /// <example></example>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public SecretClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)

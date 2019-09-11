@@ -41,7 +41,7 @@ namespace Azure.Core.Diagnostics
         private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
 
-        private HttpPipelineEventSource() : base(EventSourceName) { }
+        private HttpPipelineEventSource() : base(EventSourceName, EventSourceSettings.Default, "AzureEventSource", "true") { }
 
         internal static readonly HttpPipelineEventSource Singleton = new HttpPipelineEventSource();
 

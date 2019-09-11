@@ -33,7 +33,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
-  
+
   <Import Project="..\..\Azure.Core\src\Azure.Core.props" />
 
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)\EventSourceEventFormatting.cs" />
+  </ItemGroup>
 </Project>
