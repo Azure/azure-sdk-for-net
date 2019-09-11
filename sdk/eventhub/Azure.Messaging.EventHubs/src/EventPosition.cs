@@ -3,7 +3,7 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs
         private static EventPosition FromOffset(string offset,
                                                 bool isInclusive = false)
         {
-            Guard.ArgumentNotNullOrWhitespace(nameof(offset), offset);
+            Argument.NotNullOrWhiteSpace(nameof(offset), offset);
 
             return new EventPosition
             {

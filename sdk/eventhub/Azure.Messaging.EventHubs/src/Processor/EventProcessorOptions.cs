@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             set
             {
-                Guard.ArgumentInRange(nameof(MaximumMessageCount), value, 1, Int32.MaxValue);
+                Argument.InRange(value, 1, Int32.MaxValue, nameof(MaximumMessageCount));
                 _maximumMessageCount = value;
             }
         }
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 if (value.HasValue)
                 {
-                    Guard.ArgumentNotNegative(nameof(MaximumReceiveWaitTime), value.Value);
+                    Argument.NotNegative(value.Value, nameof(MaximumReceiveWaitTime));
                 }
 
                 _maximumReceiveWaitTime = value;

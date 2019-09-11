@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                Argument.NotNull(value, nameof(RetryPolicy));
                 _retryPolicy = value;
 
                 // Applying a custom retry policy invalidates the retry options specified.
@@ -146,7 +146,7 @@ namespace Azure.Messaging.EventHubs
         {
             clientOptions = clientOptions?.Clone() ?? new EventHubClientOptions();
 
-            Guard.ArgumentNotNullOrEmpty(nameof(connectionString), connectionString);
+            Argument.NotNullOrEmpty(connectionString, nameof(connectionString));
             ValidateClientOptions(clientOptions);
 
             var connectionStringProperties = ParseConnectionString(connectionString);
@@ -188,9 +188,9 @@ namespace Azure.Messaging.EventHubs
         {
             clientOptions = clientOptions?.Clone() ?? new EventHubClientOptions();
 
-            Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
+            Argument.NotNullOrEmpty(host, nameof(host));
+            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.NotNull(credential, nameof(credential));
             ValidateClientOptions(clientOptions);
 
             switch (credential)
@@ -337,8 +337,8 @@ namespace Azure.Messaging.EventHubs
                                                        EventPosition eventPosition,
                                                        EventHubConsumerOptions consumerOptions = default)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
+            Argument.NotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.NotNull(eventPosition, nameof(eventPosition));
 
             var options = consumerOptions?.Clone() ?? new EventHubConsumerOptions { RetryOptions = null };
             options.RetryOptions = options.RetryOptions ?? ClientOptions.RetryOptions?.Clone();

@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -33,11 +34,11 @@ namespace Azure.Messaging.EventHubs.Core
                                                                     TimeSpan? maximumWaitTime,
                                                                     [EnumeratorCancellation]CancellationToken cancellationToken)
         {
-            Guard.ArgumentNotNull(nameof(reader), reader);
+            Argument.NotNull(reader, nameof(reader));
 
             if (maximumWaitTime.HasValue)
             {
-                Guard.ArgumentNotNegative(nameof(maximumWaitTime), maximumWaitTime.Value);
+                Argument.NotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
             }
 
             T result;

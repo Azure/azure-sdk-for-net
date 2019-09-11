@@ -3,87 +3,31 @@
 
 using System;
 using System.Globalization;
+using Azure.Messaging.EventHubs;
 
-namespace Azure.Messaging.EventHubs.Core
+namespace Azure.Core
 {
-    /// <summary>
-    ///   Provides a consistent means for verifying arguments and other invariants for a given
-    ///   member.
-    /// </summary>
-    ///
-    internal static class Guard
+    internal static partial class Argument
     {
-        /// <summary>
-        ///   Ensures that an argument's value is not <c>null</c>, throwing an
-        ///   <see cref="ArgumentNullException" /> if that invariant is not met.
-        /// </summary>
-        ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
-        /// <param name="argumentValue">The value of the argument to verify.</param>
-        ///
-        public static void ArgumentNotNull(string argumentName,
-                                           object argumentValue)
-        {
-            if (argumentValue == null)
-            {
-                throw new ArgumentNullException(argumentName);
-            }
-        }
-
-        /// <summary>
-        ///   Ensures that an argument's value is not <c>null</c> or an empty string, throwing an
-        ///   <see cref="ArgumentException" /> if that invariant is not met.
-        /// </summary>
-        ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
-        /// <param name="argumentValue">The value of the argument to verify.</param>
-        ///
-        public static void ArgumentNotNullOrEmpty(string argumentName,
-                                                  string argumentValue)
-        {
-            if (String.IsNullOrEmpty(argumentValue))
-            {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentNullOrEmpty, argumentName), argumentName);
-            }
-        }
-
-        /// <summary>
-        ///   Ensures that an argument's value is not <c>null</c> or a string comprised of only whitespace,
-        ///   throwing an <see cref="ArgumentException" /> if that invariant is not met.
-        /// </summary>
-        ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
-        /// <param name="argumentValue">The value of the argument to verify.</param>
-        ///
-        public static void ArgumentNotNullOrWhitespace(string argumentName,
-                                                       string argumentValue)
-        {
-            if (String.IsNullOrWhiteSpace(argumentValue))
-            {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentNullOrWhiteSpace, argumentName), argumentName);
-            }
-        }
-
         /// <summary>
         ///   Ensures that an argument's value is a string comprised of only whitespace, though
         ///   <c>null</c> is considered a valid value.  An <see cref="ArgumentException" /> is thrown
         ///   if that invariant is not met.
         /// </summary>
         ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
         /// <param name="argumentValue">The value of the argument to verify.</param>
-        ///
-        public static void ArgumentNotEmptyOrWhitespace(string argumentName,
-                                                        string argumentValue)
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <exception cref="ArgumentException">The argument is empty or contains only white-space.</exception>
+        public static void NotEmptyOrWhiteSpace(string argumentValue, string argumentName)
         {
-            if (argumentValue == null)
+            if (argumentValue is null)
             {
                 return;
             }
 
-            if (String.IsNullOrWhiteSpace(argumentValue))
+            if (string.IsNullOrWhiteSpace(argumentValue))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentEmptyOrWhiteSpace, argumentName), argumentName);
+                throw new ArgumentException($"The argument '{argumentName}' may not be empty or white-space, though it may be null.", argumentName);
             }
         }
 
@@ -92,17 +36,15 @@ namespace Azure.Messaging.EventHubs.Core
         ///   throwing an <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
         /// </summary>
         ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
         /// <param name="argumentValue">The value of the argument to verify.</param>
-        /// <param name="maxmimumLength">The maximum allowable length for the <paramref name="argumentValue"/>; its length must be less than or equal to this value.</param>
-        ///
-        public static void ArgumentNotTooLong(string argumentName,
-                                              string argumentValue,
-                                              int maxmimumLength)
+        /// <param name="maximumLength">The maximum allowable length for the <paramref name="argumentValue"/>; its length must be less than or equal to this value.</param>
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> exceeds <paramref name="maximumLength"/> characters.</exception>
+        public static void NotTooLong(string argumentValue, int maximumLength, string argumentName)
         {
-            if (argumentValue?.Length > maxmimumLength)
+            if (argumentValue != null && argumentValue.Length > maximumLength)
             {
-                throw new ArgumentOutOfRangeException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentStringTooLong, argumentName, maxmimumLength), argumentName);
+                throw new ArgumentOutOfRangeException(argumentName, $"The argument '{argumentName}' cannot exceed {maximumLength} characters.");
             }
         }
 
@@ -111,15 +53,14 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
         /// </summary>
         ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
         /// <param name="argumentValue">The value of the argument to verify.</param>
-        ///
-        public static void ArgumentNotNegative(string argumentName,
-                                               TimeSpan argumentValue)
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is a negative <see cref="TimeSpan"/> value.</exception>
+        public static void NotNegative(TimeSpan argumentValue, string argumentName)
         {
             if (argumentValue < TimeSpan.Zero)
             {
-                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.TimeSpanMustBeNonNegative, argumentName, argumentValue));
+                throw new ArgumentOutOfRangeException(argumentName, $"Argument {argumentName} must be a non-negative timespan value. The provided value was {argumentValue}.");
             }
         }
 
@@ -128,80 +69,15 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <see cref="ArgumentException" /> if that invariant is not met.
         /// </summary>
         ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
         /// <param name="argumentValue">The value of the argument to verify.</param>
         /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
-        ///
-        public static void ArgumentAtLeast(string argumentName,
-                                           long argumentValue,
-                                           long minimumValue)
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is less than <paramref name="minimumValue"/>.</exception>
+        public static void AtLeast(long argumentValue, long minimumValue, string argumentName)
         {
             if (argumentValue < minimumValue)
             {
-                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueMustBeAtLeast, minimumValue));
-            }
-        }
-
-        /// <summary>
-        ///   Ensures that an argument's value is within a specified range, inclusive.
-        ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
-        /// </summary>
-        ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
-        /// <param name="argumentValue">The value of the argument to verify.</param>
-        /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
-        /// <param name="maximumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be less than or equal to this value.</param>
-        ///
-        public static void ArgumentInRange(string argumentName,
-                                           int argumentValue,
-                                           int minimumValue,
-                                           int maximumValue)
-        {
-            if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
-            {
-                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
-            }
-        }
-
-        /// <summary>
-        ///   Ensures that an argument's value is within a specified range, inclusive.
-        ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
-        /// </summary>
-        ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
-        /// <param name="argumentValue">The value of the argument to verify.</param>
-        /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
-        /// <param name="maximumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be less than or equal to this value.</param>
-        ///
-        public static void ArgumentInRange(string argumentName,
-                                           long argumentValue,
-                                           long minimumValue,
-                                           long maximumValue)
-        {
-            if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
-            {
-                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
-            }
-        }
-
-        /// <summary>
-        ///   Ensures that an argument's value is within a specified range, inclusive,
-        ///   throwing an <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
-        /// </summary>
-        ///
-        /// <param name="argumentName">The name of the argument being considered.</param>
-        /// <param name="argumentValue">The value of the argument to verify.</param>
-        /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
-        /// <param name="maximumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be less than or equal to this value.</param>
-        ///
-        public static void ArgumentInRange(string argumentName,
-                                           TimeSpan argumentValue,
-                                           TimeSpan minimumValue,
-                                           TimeSpan maximumValue)
-        {
-            if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
-            {
-                throw new ArgumentOutOfRangeException(argumentName, String.Format(CultureInfo.CurrentCulture, Resources.ValueOutOfRange, minimumValue, maximumValue));
+                throw new ArgumentOutOfRangeException(argumentName, $"The value supplied must be greater than or equal to {minimumValue}.");
             }
         }
 
@@ -210,15 +86,14 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <see cref="ObjectDisposedException" /> if that invariant is not met.
         /// </summary>
         ///
-        /// <param name="targetName">The name of the target instance that is being verified.</param>
         /// <param name="wasDisposed"><c>true</c> if the target instance has been disposed; otherwise, <c>false</c>.</param>
+        /// <param name="targetName">The name of the target instance that is being verified.</param>
         ///
-        public static void NotDisposed(string targetName,
-                                       bool wasDisposed)
+        public static void NotDisposed(bool wasDisposed, string targetName)
         {
             if (wasDisposed)
             {
-                throw new ObjectDisposedException(targetName, String.Format(CultureInfo.CurrentCulture, Resources.DisposedInstanceCannotPerformOperation, targetName));
+                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.DisposedInstanceCannotPerformOperation, targetName));
             }
         }
     }

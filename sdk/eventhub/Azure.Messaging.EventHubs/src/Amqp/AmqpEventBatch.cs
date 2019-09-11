@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Microsoft.Azure.Amqp;
 
@@ -80,9 +81,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         public AmqpEventBatch(AmqpMessageConverter messageConverter,
                               BatchOptions options)
         {
-            Guard.ArgumentNotNull(nameof(messageConverter), messageConverter);
-            Guard.ArgumentNotNull(nameof(options), options);
-            Guard.ArgumentNotNull(nameof(options.MaximumizeInBytes), options.MaximumizeInBytes);
+            Argument.NotNull(messageConverter, nameof(messageConverter));
+            Argument.NotNull(options, nameof(options));
+            Argument.NotNull(options.MaximumizeInBytes, nameof(options.MaximumizeInBytes));
 
             MessageConverter = messageConverter;
             Options = options;
@@ -105,8 +106,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override bool TryAdd(EventData eventData)
         {
-            Guard.ArgumentNotNull(nameof(eventData), eventData);
-            Guard.NotDisposed(nameof(EventDataBatch), _disposed);
+            Argument.NotNull(eventData, nameof(eventData));
+            Argument.NotDisposed(_disposed, nameof(EventDataBatch));
 
             var eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
 

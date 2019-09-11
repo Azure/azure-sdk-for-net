@@ -4,7 +4,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Authorization
 {
@@ -32,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         public SharedAccessSignatureCredential(SharedAccessSignature signature)
         {
-            Guard.ArgumentNotNull(nameof(signature), signature);
+            Argument.NotNull(signature, nameof(signature));
             SharedAccessSignature = signature;
         }
 

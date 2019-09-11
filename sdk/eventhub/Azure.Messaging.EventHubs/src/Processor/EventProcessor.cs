@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -148,10 +148,10 @@ namespace Azure.Messaging.EventHubs.Processor
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNull(nameof(eventHubClient), eventHubClient);
-            Guard.ArgumentNotNull(nameof(partitionProcessorFactory), partitionProcessorFactory);
-            Guard.ArgumentNotNull(nameof(partitionManager), partitionManager);
+            Argument.NotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.NotNull(eventHubClient, nameof(eventHubClient));
+            Argument.NotNull(partitionProcessorFactory, nameof(partitionProcessorFactory));
+            Argument.NotNull(partitionManager, nameof(partitionManager));
 
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;

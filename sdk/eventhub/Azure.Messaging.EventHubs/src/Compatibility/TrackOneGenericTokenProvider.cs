@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Core;
 using TrackOne;
 
 namespace Azure.Messaging.EventHubs.Compatibility
@@ -39,8 +38,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public TrackOneGenericTokenProvider(EventHubTokenCredential credential)
         {
-            Guard.ArgumentNotNull(nameof(credential), credential);
-            Guard.ArgumentNotNullOrEmpty(nameof(credential.Resource), credential.Resource);
+            Argument.NotNull(credential, nameof(credential));
+            Argument.NotNullOrEmpty(credential.Resource, nameof(credential.Resource));
 
             Credential = credential;
         }
@@ -58,8 +57,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public async override Task<SecurityToken> GetTokenAsync(string resource,
                                                                 TimeSpan tokenValidityDuration)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(resource), resource);
-            Guard.ArgumentNotNegative(nameof(tokenValidityDuration), tokenValidityDuration);
+            Argument.NotNullOrEmpty(resource, nameof(resource));
+            Argument.NotNegative(tokenValidityDuration, nameof(tokenValidityDuration));
 
             // The resource of a token is assigned at the Event Hub level.  The resource being requested may be a child
             // of the Event Hub, such as a partition.  Ensure that the resource being requested is the same Event Hub associated

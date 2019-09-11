@@ -136,11 +136,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                                      AmqpConnectionScope connectionScope,
                                      AmqpMessageConverter messageConverter)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
-            Guard.ArgumentNotNull(nameof(clientOptions), clientOptions);
-            Guard.ArgumentNotNull(nameof(defaultRetryPolicy), defaultRetryPolicy);
+            Argument.NotNullOrEmpty(host, nameof(host));
+            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.NotNull(credential, nameof(credential));
+            Argument.NotNull(clientOptions, nameof(clientOptions));
+            Argument.NotNull(defaultRetryPolicy, nameof(defaultRetryPolicy));
 
             try
             {
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy)
         {
-            Guard.ArgumentNotNull(nameof(newRetryPolicy), newRetryPolicy);
+            Argument.NotNull(newRetryPolicy, nameof(newRetryPolicy));
 
             _retryPolicy = newRetryPolicy;
             _tryTimeout = _retryPolicy.CalculateTryTimeout(0);
@@ -255,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                                     CancellationToken cancellationToken)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
+            Argument.NotNullOrEmpty(partitionId, nameof(partitionId));
 
             // Since the AMQP objects do not honor the cancellation token, manually check for cancellation between operation steps.
 

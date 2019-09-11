@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs.Core
@@ -45,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public static ConnectionStringProperties Parse(string connectionString)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(connectionString), connectionString);
+            Argument.NotNullOrEmpty(connectionString, nameof(connectionString));
 
             int tokenPositionModifier = (connectionString[0] == TokenValuePairDelimiter) ? 0 : 1;
             int lastPosition = 0;

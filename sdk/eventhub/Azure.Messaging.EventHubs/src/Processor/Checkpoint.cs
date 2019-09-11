@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -67,12 +67,12 @@ namespace Azure.Messaging.EventHubs.Processor
                                       long offset,
                                       long sequenceNumber)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentAtLeast(nameof(offset), offset, 0);
-            Guard.ArgumentAtLeast(nameof(sequenceNumber), sequenceNumber, 0);
+            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.NotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.NotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
+            Argument.NotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AtLeast(offset, 0, nameof(offset));
+            Argument.AtLeast(sequenceNumber, 0, nameof(sequenceNumber));
 
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;

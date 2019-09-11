@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
@@ -134,7 +135,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                Argument.NotNull(value, nameof(RetryPolicy));
                 _retryPolicy = value;
 
                 // Applying a custom retry policy invalidates the retry options specified.
@@ -187,13 +188,13 @@ namespace Azure.Messaging.EventHubs
                                   EventHubConsumerOptions consumerOptions,
                                   EventHubRetryPolicy retryPolicy)
         {
-            Guard.ArgumentNotNull(nameof(transportConsumer), transportConsumer);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
-            Guard.ArgumentNotNull(nameof(consumerOptions), consumerOptions);
-            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
+            Argument.NotNull(transportConsumer, nameof(transportConsumer));
+            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.NotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.NotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.NotNull(eventPosition, nameof(eventPosition));
+            Argument.NotNull(consumerOptions, nameof(consumerOptions));
+            Argument.NotNull(retryPolicy, nameof(retryPolicy));
 
             EventHubName = eventHubName;
             PartitionId = partitionId;
@@ -230,8 +231,8 @@ namespace Azure.Messaging.EventHubs
         {
             maximumWaitTime = maximumWaitTime ?? Options.DefaultMaximumReceiveWaitTime;
 
-            Guard.ArgumentInRange(nameof(maximumMessageCount), maximumMessageCount, 1, Int32.MaxValue);
-            Guard.ArgumentNotNegative(nameof(maximumWaitTime), maximumWaitTime.Value);
+            Argument.InRange(maximumMessageCount, 1, Int32.MaxValue, nameof(maximumMessageCount));
+            Argument.NotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
 
             return InnerConsumer.ReceiveAsync(maximumMessageCount, maximumWaitTime.Value, cancellationToken);
         }

@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
 using TrackOne;
 
 namespace Azure.Messaging.EventHubs.Compatibility
@@ -39,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                     DateTime tokenExpirationUtc) :
             base(jwtTokenString, tokenExpirationUtc, eventHubResource, ClientConstants.JsonWebTokenType)
         {
-            Guard.ArgumentNotNull(nameof(tokenCredential), tokenCredential);
+            Argument.NotNull(tokenCredential, nameof(tokenCredential));
             Credential = tokenCredential;
         }
     }

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Core;
 using TrackOne;
 
 namespace Azure.Messaging.EventHubs.Compatibility
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public TrackOneSharedAccessSignatureToken(SharedAccessSignature sharedAccessSignature) :
             base(sharedAccessSignature?.Value, (sharedAccessSignature?.SignatureExpiration.UtcDateTime ?? default), sharedAccessSignature?.Resource, ClientConstants.SasTokenType)
         {
-            Guard.ArgumentNotNull(nameof(sharedAccessSignature), sharedAccessSignature);
+            Argument.NotNull(sharedAccessSignature, nameof(sharedAccessSignature));
             SharedAccessSignature = sharedAccessSignature;
         }
     }

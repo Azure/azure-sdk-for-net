@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Compatibility
 {
@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public static Errors.EventHubsException MapToTrackTwoException(this TrackOne.EventHubsException instance)
         {
-            Guard.ArgumentNotNull(nameof(instance), instance);
+            Argument.NotNull(instance, nameof(instance));
 
             switch (instance)
             {

@@ -49,6 +49,9 @@
 
   <!-- Import the Azure.Core reference -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+  </ItemGroup>
 
   <!--
       TRACK ONE DEPENDENCIES::TO BE REMOVED

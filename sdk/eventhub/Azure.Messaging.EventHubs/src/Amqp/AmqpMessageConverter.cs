@@ -7,7 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual AmqpMessage CreateMessageFromEvent(EventData source,
                                                           string partitionKey = null)
         {
-            Guard.ArgumentNotNull(nameof(source), source);
+            Argument.NotNull(source, nameof(source));
             return BuildAmqpMessageFromEvent(source, partitionKey);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual AmqpMessage CreateBatchFromEvents(IEnumerable<EventData> source,
                                                          string partitionKey = null)
         {
-            Guard.ArgumentNotNull(nameof(source), source);
+            Argument.NotNull(source, nameof(source));
             return BuildAmqpBatchFromEvents(source, partitionKey);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual AmqpMessage CreateBatchFromMessages(IEnumerable<AmqpMessage> source,
                                                            string partitionKey = null)
         {
-            Guard.ArgumentNotNull(nameof(source), source);
+            Argument.NotNull(source, nameof(source));
             return BuildAmqpBatchFromMessages(source, partitionKey);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public virtual EventData CreateEventFromMessage(AmqpMessage source)
         {
-            Guard.ArgumentNotNull(nameof(source), source);
+            Argument.NotNull(source, nameof(source));
             return BuildEventFromAmqpMessage(source);
         }
 
@@ -127,8 +127,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual AmqpMessage CreateEventHubPropertiesRequest(string eventHubName,
                                                                    string managementAuthorizationToken)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNullOrEmpty(nameof(managementAuthorizationToken), managementAuthorizationToken);
+            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.NotNullOrEmpty(managementAuthorizationToken, nameof(managementAuthorizationToken));
 
             var request = AmqpMessage.Create();
             request.ApplicationProperties = new ApplicationProperties();
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public virtual EventHubProperties CreateEventHubPropertiesFromResponse(AmqpMessage response)
         {
-            Guard.ArgumentNotNull(nameof(response), response);
+            Argument.NotNull(response, nameof(response));
 
             var responseData = response.ValueBody?.Value as AmqpMap;
 
@@ -190,9 +190,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                     string partitionIdentifier,
                                                                     string managementAuthorizationToken)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionIdentifier), partitionIdentifier);
-            Guard.ArgumentNotNullOrEmpty(nameof(managementAuthorizationToken), managementAuthorizationToken);
+            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.NotNullOrEmpty(partitionIdentifier, nameof(partitionIdentifier));
+            Argument.NotNullOrEmpty(managementAuthorizationToken, nameof(managementAuthorizationToken));
 
             var request = AmqpMessage.Create();
             request.ApplicationProperties = new ApplicationProperties();
@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public virtual PartitionProperties CreatePartitionPropertiesFromResponse(AmqpMessage response)
         {
-            Guard.ArgumentNotNull(nameof(response), response);
+            Argument.NotNull(response, nameof(response));
 
             var responseData = response.ValueBody?.Value as AmqpMap;
 

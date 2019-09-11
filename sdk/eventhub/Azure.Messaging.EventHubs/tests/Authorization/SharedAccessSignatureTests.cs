@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -56,7 +57,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void CompositeConstructorValidatesTheResource(string resource)
         {
-            Assert.That(() => new SharedAccessSignature(resource, "Yay", "OMG!", TimeSpan.FromMilliseconds(500)), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = resource is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(resource, "Yay", "OMG!", TimeSpan.FromMilliseconds(500)), typeConstraint);
         }
 
         /// <summary>
@@ -173,7 +176,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void SignatureKeyConstructorValidatesTheSignature(string signature)
         {
-            Assert.That(() => new SharedAccessSignature(signature, "key"), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = signature is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(signature, "key"), typeConstraint);
         }
 
         /// <summary>
@@ -208,7 +213,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void SignatureOnlyConstructorValidatesTheSignature(string signature)
         {
-            Assert.That(() => new SharedAccessSignature(signature), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = signature is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(signature), typeConstraint);
         }
 
         /// <summary>

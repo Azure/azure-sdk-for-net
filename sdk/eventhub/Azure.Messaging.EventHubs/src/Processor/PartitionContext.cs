@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -64,11 +65,11 @@ namespace Azure.Messaging.EventHubs.Processor
                                             string ownerIdentifier,
                                             PartitionManager partitionManager)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
-            Guard.ArgumentNotNull(nameof(partitionManager), partitionManager);
+            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.NotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.NotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.NotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
+            Argument.NotNull(partitionManager, nameof(partitionManager));
 
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
@@ -87,9 +88,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public virtual Task UpdateCheckpointAsync(EventData eventData)
         {
-            Guard.ArgumentNotNull(nameof(eventData), eventData);
-            Guard.ArgumentNotNull(nameof(eventData.Offset), eventData.Offset);
-            Guard.ArgumentNotNull(nameof(eventData.SequenceNumber), eventData.SequenceNumber);
+            Argument.NotNull(eventData, nameof(eventData));
+            Argument.NotNull(eventData.Offset, nameof(eventData.Offset));
+            Argument.NotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
 
             return UpdateCheckpointAsync(eventData.Offset.Value, eventData.SequenceNumber.Value);
         }
