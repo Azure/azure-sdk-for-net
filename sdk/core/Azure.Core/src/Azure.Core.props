@@ -12,4 +12,12 @@
   <ItemGroup Condition="'$(UseProjectReferenceToAzureCore)'!='true'">
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
+
+  <!-- Nullability -->
+  <PropertyGroup Condition="'$(UseAzureCoreNullableAttributes)'=='true'">
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(UseAzureCoreNullableAttributes)'=='true'">
+    <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
+  </ItemGroup>
 </Project>

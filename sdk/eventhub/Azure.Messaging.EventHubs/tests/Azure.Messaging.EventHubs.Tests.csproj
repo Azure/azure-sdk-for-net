@@ -5,6 +5,7 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
+    <UseAzureCoreNullableAttributes>true</UseAzureCoreNullableAttributes>
   </PropertyGroup>
 
    <ItemGroup>

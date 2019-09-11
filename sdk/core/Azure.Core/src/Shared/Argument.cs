@@ -2,6 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#if AZURE_NULLABLE
+#nullable enable
+#endif
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +35,11 @@ namespace Azure.Core
         /// <param name="value">The value to validate.</param>
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+#if AZURE_NULLABLE
         public static void NotNull<T>([AllowNull, NotNull] T value, string name) where T : class?
+#else
+        public static void NotNull<T>(T value, string name) where T : class
+#endif
         {
             if (value is null)
             {
@@ -60,7 +68,11 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+#if AZURE_NULLABLE
         public static void NotNullOrEmpty<T>([AllowNull, NotNull] IEnumerable<T> value, string name)
+#else
+        public static void NotNullOrEmpty<T>(IEnumerable<T> value, string name)
+#endif
         {
             if (value is null)
             {
@@ -92,7 +104,11 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+#if AZURE_NULLABLE
         public static void NotNullOrEmpty([AllowNull, NotNull] string value, string name)
+#else
+        public static void NotNullOrEmpty(string value, string name)
+#endif
         {
             if (value is null)
             {
@@ -112,7 +128,11 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentException"><paramref name="value"/> is an empty string or consists only of white-space characters.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+#if AZURE_NULLABLE
         public static void NotNullOrWhiteSpace([AllowNull, NotNull] string value, string name)
+#else
+        public static void NotNullOrWhiteSpace(string value, string name)
+#endif
         {
             if (value is null)
             {

@@ -7,6 +7,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
     <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
+    <UseAzureCoreNullableAttributes>true</UseAzureCoreNullableAttributes>
   </PropertyGroup>
 
   <ItemGroup>
