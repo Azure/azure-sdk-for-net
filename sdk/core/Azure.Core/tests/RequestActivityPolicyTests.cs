@@ -66,7 +66,7 @@ namespace Azure.Core.Tests
         {
             using var testListener = new TestDiagnosticListener("Azure.Pipeline");
 
-            var previousFormat = Activity.DefaultIdFormat;
+            ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             try
             {
@@ -117,7 +117,7 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public async Task CurrentActivityIsInjectedIntoRequestW3C()
         {
-            var previousFormat = Activity.DefaultIdFormat;
+            ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             try
             {
@@ -156,7 +156,7 @@ namespace Azure.Core.Tests
 
             KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
             KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
-            var isEnabledCall = testListener.IsEnabledCalls.Dequeue();
+            (string, object, object) isEnabledCall = testListener.IsEnabledCalls.Dequeue();
 
             Assert.AreEqual("Azure.Core.Http.Request.Start", startEvent.Key);
             Assert.IsInstanceOf<HttpPipelineMessage>(startEvent.Value);

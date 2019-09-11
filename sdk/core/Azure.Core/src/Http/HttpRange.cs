@@ -39,8 +39,8 @@ namespace Azure.Core.Http
             if (count.HasValue && count <= 0)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            this.Offset = offset ?? 0;
-            this.Count = count;
+            Offset = offset ?? 0;
+            Count = count;
         }
 
         /// <summary>
@@ -52,12 +52,12 @@ namespace Azure.Core.Http
         {
             // No additional validation by design. API can validate parameter by case, and use this method.
             var endRange = "";
-            if (this.Count.HasValue && this.Count != 0)
+            if (Count.HasValue && Count != 0)
             {
-                endRange = (this.Offset + this.Count.Value - 1).ToString(CultureInfo.InvariantCulture);
+                endRange = (Offset + Count.Value - 1).ToString(CultureInfo.InvariantCulture);
             }
 
-            return FormattableString.Invariant($"{Unit}={this.Offset}-{endRange}");
+            return FormattableString.Invariant($"{Unit}={Offset}-{endRange}");
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.Core.Http
         /// </summary>
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(HttpRange other) => this.Offset == other.Offset && this.Count == other.Count;
+        public bool Equals(HttpRange other) => Offset == other.Offset && Count == other.Count;
 
         /// <summary>
         /// Check if two <see cref="HttpRange"/> instances are equal.
@@ -95,7 +95,7 @@ namespace Azure.Core.Http
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HttpRange other && this.Equals(other);
+        public override bool Equals(object obj) => obj is HttpRange other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="HttpRange"/>.

@@ -43,7 +43,12 @@ namespace Azure.Core.Diagnostics
 
         private HttpPipelineEventSource() : base(EventSourceName) { }
 
-        internal static readonly HttpPipelineEventSource Singleton = new HttpPipelineEventSource();
+        private static readonly HttpPipelineEventSource s_singleton = new HttpPipelineEventSource();
+
+        public static HttpPipelineEventSource Singleton
+        {
+            get { return s_singleton; }
+        }
 
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
@@ -428,7 +433,7 @@ namespace Azure.Core.Diagnostics
         private static string FormatHeaders(IEnumerable<HttpHeader> headers)
         {
             var stringBuilder = new StringBuilder();
-            foreach (var header in headers)
+            foreach (HttpHeader header in headers)
             {
                 stringBuilder.AppendLine(header.ToString());
             }

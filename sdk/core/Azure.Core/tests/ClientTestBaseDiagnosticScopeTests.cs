@@ -20,7 +20,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsWhenNoDiagnosticScope()
         {
-            var client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.NoScopeAsync());
             StringAssert.Contains("Expected some diagnostic event to fire", ex.Message);
         }
@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsWhenWrongDiagnosticScope()
         {
-            var client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.WrongScopeAsync());
             StringAssert.Contains($"{typeof(InvalidDiagnosticScopeTestClient).FullName}.{nameof(client.WrongScope)}", ex.Message);
 
@@ -41,14 +41,14 @@ namespace Azure.Core.Tests
         [Test]
         public async Task DoesNotThrowForForwardedDiagnosticScope()
         {
-            var client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             await client.ForwardsAsync();
         }
 
         [Test]
         public async Task DoesNotThrowForCorrectDiagnosticScope()
         {
-            var client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             await client.CorrectScopeAsync();
         }
     }
