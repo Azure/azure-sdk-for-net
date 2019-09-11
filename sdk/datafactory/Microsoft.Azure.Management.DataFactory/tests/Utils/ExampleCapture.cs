@@ -158,7 +158,7 @@ namespace DataFactory.Tests.Utils
                 CaptureIntegrationRuntimes_Delete(); // 202
                 CaptureIntegrationRuntimes_Delete(); // 204
 
-                //CaptureChainingTrigger();
+                CaptureChainingTrigger();
 
                 // Finish Factories operations, deleting factory
                 CaptureFactories_Delete(); // 200
