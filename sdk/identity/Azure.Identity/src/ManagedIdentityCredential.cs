@@ -25,7 +25,7 @@ namespace Azure.Identity
         /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
         /// </summary>
         /// <param name="clientId">
-        /// The client id to authenticate for a user assigned managed identity.  More information on user assigned managed identities cam be found here: 
+        /// The client id to authenticate for a user assigned managed identity.  More information on user assigned managed identities cam be found here:
         /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm
         /// </param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>

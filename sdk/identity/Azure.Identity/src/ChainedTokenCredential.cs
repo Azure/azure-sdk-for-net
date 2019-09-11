@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations to be tried in order 
+    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations to be tried in order
     /// until one of the getToken methods returns a non-default <see cref="AccessToken"/>.
     /// </summary>
     public class ChainedTokenCredential : TokenCredential

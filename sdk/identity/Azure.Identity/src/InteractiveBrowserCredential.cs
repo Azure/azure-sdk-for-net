@@ -97,4 +97,3 @@ namespace Azure.Identity
         }
     }
 }
-

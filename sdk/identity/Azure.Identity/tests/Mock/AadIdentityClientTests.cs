@@ -165,7 +165,7 @@ namespace Azure.Identity.Tests.Mock
 
                 var splitParam = parameter.Split('=');
 
-                if(splitParam.Length != 2)
+                if (splitParam.Length != 2)
                 {
                     return false;
                 }

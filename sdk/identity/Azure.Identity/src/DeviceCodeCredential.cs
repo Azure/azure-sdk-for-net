@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// A <see cref="TokenCredential"/> implementation which authenticates a user using the device code flow, and provides access tokens for that user account.  
+    /// A <see cref="TokenCredential"/> implementation which authenticates a user using the device code flow, and provides access tokens for that user account.
     /// For more information on the device code authentication flow see https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow.
     /// </summary>
     public class DeviceCodeCredential : TokenCredential

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Identity.Tests.Mock
 {
-    class MockScopes
+    internal class MockScopes
     {
         private string[] _scopes;
 

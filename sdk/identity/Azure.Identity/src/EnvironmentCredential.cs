@@ -23,7 +23,7 @@ namespace Azure.Identity
         private TokenCredential _credential = null;
 
         /// <summary>
-        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.  
+        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         public EnvironmentCredential()
@@ -32,7 +32,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.  
+        /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
@@ -49,7 +49,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables 
+        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET to authenticate.
         /// </summary>
         /// <remarks>
@@ -64,7 +64,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables 
+        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET to authenticate.
         /// </summary>
         /// <remarks>

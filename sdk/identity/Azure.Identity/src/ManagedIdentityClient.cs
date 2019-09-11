@@ -110,7 +110,7 @@ namespace Azure.Identity
                 {
                     return SendAuthRequest(msiType, scopes, clientId, cancellationToken);
                 }
-                catch(RequestFailedException ex)
+                catch (RequestFailedException ex)
                 {
                     throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
                 }
@@ -257,7 +257,7 @@ namespace Azure.Identity
                             {
                                 s_endpoint = new Uri(endpointEnvVar);
                             }
-                            catch(FormatException ex)
+                            catch (FormatException ex)
                             {
                                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
                             }
@@ -476,7 +476,7 @@ namespace Azure.Identity
             // if s_msiType is AppService expires_on will be a string formatted datetimeoffset
             if (s_msiType == MsiType.AppService)
             {
-                if(!DateTimeOffset.TryParse(expiresOnProp.GetString(), out expiresOn))
+                if (!DateTimeOffset.TryParse(expiresOnProp.GetString(), out expiresOn))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }

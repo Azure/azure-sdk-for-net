@@ -35,7 +35,7 @@ namespace Azure.Identity
 
         private static TokenCredential[] GetDefaultAzureCredentialChain()
         {
-            // if only the username is specified via the enviornment (not password as well) and we're running on windows add the SharedTokenCacheCredential to the 
+            // if only the username is specified via the enviornment (not password as well) and we're running on windows add the SharedTokenCacheCredential to the
             // default credential to enable SSO
             if (!string.IsNullOrEmpty(AzureUsername) && string.IsNullOrEmpty(AzurePassword) && (Environment.OSVersion.Platform == PlatformID.Win32NT))
             {

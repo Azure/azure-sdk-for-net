@@ -11,7 +11,7 @@ namespace Azure.Identity
     /// </summary>
     public class IdentityClientOptions : ClientOptions
     {
-        private readonly static Uri DefaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
+        private static readonly Uri DefaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
 
         /// <summary>
         /// The host of the Azure Active Directory authority.   The default is https://login.microsoft.com
