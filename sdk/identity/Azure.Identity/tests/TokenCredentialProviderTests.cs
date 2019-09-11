@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Identity.Tests
 {
     public class TokenCredentialProviderTests
-    { 
+    {
         public class MockException : Exception
         {
 

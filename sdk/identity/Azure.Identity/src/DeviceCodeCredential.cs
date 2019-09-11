@@ -43,7 +43,7 @@ namespace Azure.Identity
         public DeviceCodeCredential(string clientId, Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback)
             : this(clientId, deviceCodeCallback, null)
         {
-            
+
         }
 
         /// <summary>

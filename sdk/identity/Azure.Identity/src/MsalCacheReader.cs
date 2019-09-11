@@ -28,7 +28,7 @@ namespace Azure.Identity
             _cacheRetryDelay = cacheRetryDelay;
 
             cache.SetBeforeAccessAsync(OnBeforeAccessAsync);
-        } 
+        }
 
         private async Task OnBeforeAccessAsync(TokenCacheNotificationArgs args)
         {

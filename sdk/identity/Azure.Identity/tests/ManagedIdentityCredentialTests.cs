@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Azure.Identity.Tests
 {
-    public class ManagedIdentityCredentialTests: ClientTestBase
+    public class ManagedIdentityCredentialTests : ClientTestBase
     {
         public ManagedIdentityCredentialTests(bool isAsync) : base(isAsync)
         {

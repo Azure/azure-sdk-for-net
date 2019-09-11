@@ -118,7 +118,7 @@ namespace Azure.Identity.Tests.Mock
         public static MockAadClient ExpiredTokenClient { get; } = new MockAadClient(ExpiredTokenFactory);
 
         public static MockAadClient LiveTokenClient { get; } = new MockAadClient(LiveTokenFactory);
-        
+
         private Func<string[], string, string, string, CancellationToken, AccessToken> _tokenFactory;
 
         public MockAadClient()

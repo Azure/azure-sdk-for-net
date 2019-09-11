@@ -64,7 +64,7 @@ namespace Azure.Identity.Tests
             var expectedCode = Guid.NewGuid().ToString();
 
             var expectedToken = Guid.NewGuid().ToString();
-            
+
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
@@ -135,7 +135,7 @@ namespace Azure.Identity.Tests
 
                 Assert.Fail();
             }
-            catch(TaskCanceledException)
+            catch (TaskCanceledException)
             {
 
             }
@@ -183,15 +183,15 @@ namespace Azure.Identity.Tests
                 return CreateTokenResponse(code, token);
 
             }
-            
+
             throw new InvalidOperationException();
         }
 
         private MockResponse CreateTokenResponse(string code, string token)
         {
-            lock(_requestedCodesLock)
+            lock (_requestedCodesLock)
             {
-                if(_requestedCodes.Add(code))
+                if (_requestedCodes.Add(code))
                 {
                     return AuthorizationPendingResponse;
                 }

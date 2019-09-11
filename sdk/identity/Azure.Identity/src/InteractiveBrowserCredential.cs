@@ -27,7 +27,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate.</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         public InteractiveBrowserCredential(string clientId)
-            : this (clientId, null)
+            : this(clientId, null)
         {
 
         }
