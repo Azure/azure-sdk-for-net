@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration.Tests
             MockTransport transport = CreateMockTransport(syncTokenReponse, new MockResponse(200));
             var policy = new SyncTokenPolicy();
 
-            var response = await SendGetRequest(transport, policy);
+            Response response = await SendGetRequest(transport, policy);
 
             Assert.False(transport.Requests[0].Headers.TryGetValue(headerName, out _));
             Assert.True(response.Headers.TryGetValue(headerName, out string responseValue));

@@ -13,16 +13,18 @@ namespace Azure.Data.AppConfiguration.Samples
     [LiveOnly]
     public partial class ConfigurationSamples
     {
-        private HttpClient s_client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
 
         [Test]
         public void ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options
-            var options = new ConfigurationClientOptions();
+            var options = new ConfigurationClientOptions
+            {
 
-            // specify custon HttpClient
-            options.Transport = new HttpClientTransport(s_client);
+                // specify custon HttpClient
+                Transport = new HttpClientTransport(_client)
+            };
 
             // remove logging policy
             options.Diagnostics.IsLoggingEnabled = false;

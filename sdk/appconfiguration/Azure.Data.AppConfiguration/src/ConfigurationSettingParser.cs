@@ -24,7 +24,7 @@ namespace Azure.Data.AppConfiguration
             if (setting.Tags != null)
             {
                 json.WriteStartObject("tags");
-                foreach (var tag in setting.Tags)
+                foreach (System.Collections.Generic.KeyValuePair<string, string> tag in setting.Tags)
                 {
                     json.WriteString(tag.Key, tag.Value);
                 }
@@ -38,17 +38,17 @@ namespace Azure.Data.AppConfiguration
         {
             // TODO (pri 2): make the deserializer version resilient
             var setting = new ConfigurationSetting();
-            if (root.TryGetProperty("key", out var keyValue))
+            if (root.TryGetProperty("key", out JsonElement keyValue))
                 setting.Key = keyValue.GetString();
-            if (root.TryGetProperty("value", out var value))
+            if (root.TryGetProperty("value", out JsonElement value))
                 setting.Value = value.GetString();
-            if (root.TryGetProperty("label", out var labelValue))
+            if (root.TryGetProperty("label", out JsonElement labelValue))
                 setting.Label = labelValue.GetString();
-            if (root.TryGetProperty("content_type", out var contentValue))
+            if (root.TryGetProperty("content_type", out JsonElement contentValue))
                 setting.ContentType = contentValue.GetString();
-            if (root.TryGetProperty("etag", out var eTagValue))
+            if (root.TryGetProperty("etag", out JsonElement eTagValue))
                 setting.ETag = new ETag(eTagValue.GetString());
-            if (root.TryGetProperty("last_modified", out var lastModified))
+            if (root.TryGetProperty("last_modified", out JsonElement lastModified))
             {
                 if (lastModified.ValueKind == JsonValueKind.Null)
                 {
@@ -59,7 +59,7 @@ namespace Azure.Data.AppConfiguration
                     setting.LastModified = DateTimeOffset.Parse(lastModified.GetString(), CultureInfo.InvariantCulture);
                 }
             }
-            if (root.TryGetProperty("locked", out var lockedValue))
+            if (root.TryGetProperty("locked", out JsonElement lockedValue))
             {
                 if (lockedValue.ValueKind == JsonValueKind.Null)
                 {
@@ -70,9 +70,9 @@ namespace Azure.Data.AppConfiguration
                     setting.Locked = lockedValue.GetBoolean();
                 }
             }
-            if (root.TryGetProperty("tags", out var tagsValue))
+            if (root.TryGetProperty("tags", out JsonElement tagsValue))
             {
-                foreach (var element in tagsValue.EnumerateObject())
+                foreach (JsonProperty element in tagsValue.EnumerateObject())
                 {
                     setting.Tags.Add(element.Name, element.Value.GetString());
                 }

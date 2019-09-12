@@ -42,7 +42,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         public ConfigurationClientOptions(ServiceVersion version = ServiceVersion.Default)
         {
-            this.Version = version;
+            Version = version;
         }
     }
 }
