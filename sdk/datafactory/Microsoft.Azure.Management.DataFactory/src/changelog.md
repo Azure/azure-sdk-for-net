@@ -4,6 +4,7 @@
 ###  Feature Additions
 - Added outputColumns property to Office365Source
 - Added support for ORC dataset in ADF
+- Added alternateKeyName property to DynamicsSink, DynamicsCrmSink and CommonDataServiceForAppsSinkCommonDataServiceForAppsSink
 
 
 ## Version 4.1.3

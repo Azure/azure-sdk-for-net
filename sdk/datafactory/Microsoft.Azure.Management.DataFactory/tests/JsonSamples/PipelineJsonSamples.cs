@@ -2160,7 +2160,8 @@ namespace DataFactory.Tests.JsonSamples
                     sink: {
                         type: ""DynamicsSink"",
                         writeBehavior: ""Upsert"",
-                        ignoreNullValues: false
+                        ignoreNullValues: false,
+                        alternateKeyName: ""keyName""
                     }
                 }
             }
@@ -4564,7 +4565,8 @@ namespace DataFactory.Tests.JsonSamples
             ""type"": ""DynamicsCrmSink"",
             ""writeBehavior"": ""Upsert"",
             ""writeBatchSize"": 5000,
-            ""ignoreNullValues"": true
+            ""ignoreNullValues"": true,
+            ""alternateKeyName"": ""keyName""
           }
         },
         ""inputs"": [
@@ -4599,7 +4601,8 @@ namespace DataFactory.Tests.JsonSamples
             ""type"": ""CommonDataServiceForAppsSink"",
             ""writeBehavior"": ""Upsert"",
             ""writeBatchSize"": 5000,
-            ""ignoreNullValues"": true
+            ""ignoreNullValues"": true,
+            ""alternateKeyName"": ""keyName""
           }
         },
         ""inputs"": [
