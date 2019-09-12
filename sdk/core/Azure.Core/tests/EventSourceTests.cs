@@ -61,8 +61,8 @@ namespace Azure.Core.Tests
 
             // Assert
             Assert.NotNull(eventSourceType);
-            Assert.AreEqual("AzureSDK", EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("1015ab6c-4cd8-53d6-aec3-9b937011fa95"), EventSource.GetGuid(eventSourceType));
+            Assert.AreEqual("Azure-Core", EventSource.GetName(eventSourceType));
+            Assert.AreEqual(Guid.Parse("44cbc7c6-6776-5f3c-36c1-75cd3ef19ea9"), EventSource.GetGuid(eventSourceType));
             Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
         }
 
