@@ -1,8 +1,8 @@
-# Azure Event Hubs Checkpoint Store client library for .NET using Storage Blobs
+# Azure Event Hubs Checkpoint Store for Azure Storage blobs client library for .NET
 
-WORDS NEEDED...
+Intended as a companion to the `Azure.Messaging.EventHubs` client library, the Azure Event Hubs Checkpoint Store for Azure Storage Blobs enables using an Azure Storage account as the durable persistence mechanism for an `EventProcessor`.  The constructs in this library plug into the `EventProcessor` allowing it to preserve its state, in the form of checkpoints, as Azure storage blobs.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.CheckpointStore.Blob/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/api/EventHubs/Azure.Messaging.EventHubs.CheckpointStore.Blob.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.CheckpointStore.Blob/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/api/Azure.Messaging.EventHubs.CheckpointStore.Blob.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
 
 ## Getting started
 
@@ -10,29 +10,33 @@ WORDS NEEDED...
 
 - **Microsoft Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://account.windowsazure.com/Home/Index). 
 
-- **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub  available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
+- **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
-- **Azure Storage account with Blob Storage:** WORDS WORDS
+- **Azure Storage account with blob storage:** To persist checkpoints as blobs in Azure Storage, you'll need to have an Azure Storage account with blobs available.  If you are not familiar with Azure Storage accounts, you may wish to follow the step-by-step guide for [creating a storage account using the Azure portal](https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-portal).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create storage accounts.
 
-To quickly create the needed Event Hubs resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:  
+To quickly create the needed resources in Azure and to receive connection strings for them, you can deploy our sample template by clicking:  
 
-[![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
+[![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.CheckpointStore.Blob%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Install the package
 
-Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Event Hubs Checkpoint Store for Azure Storage blobs client library for .NET using [NuGet](https://www.nuget.org/):
 
 ```PowerShell
 Install-Package Azure.Messaging.EventHubs.CheckpointStore.Blob -Version 1.0.0-preview.1
 ```
 
-### Obtain a connection string
+### Obtain an Event Hubs connection string
 
-For the Event Hubs client library to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string).
+For the event processor to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string).
 
-### Create an Event Processor
+### Obtain an Azure Storage connection string
 
-Once the Event Hub and connection string are available, they can be used to create an event processor for interacting with Azure Event Hubs.  The simplest way to create an `EventProcessor` is:
+For checkpoint storage to make use of Azure Storage blobs, it will need to understand how to connect to a storage account and authorize with it.  The most straightforward method of doing so is to use a connection string, which is generated at the time that the storage account is created.  If you aren't familiar with storage accounts in Azure, you may wish to follow the step-by-step guide to [configure Azure Storage connection strings](https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string).
+
+### Create an Event Processor that persists checkpoints in Azure Storage blobs
+
+Once the Azure resources and connection strings are available, they can be used to create an event processor for interacting with Azure Event Hubs which persists its state via checkpoints in Azure Storage blobs.  The simplest way to create an `EventProcessor` that uses the `**TODO: CHECKPOINT BLOB NAME THING HERE**` is:
 
 ```csharp
 // CODE GOES HERE
@@ -40,11 +44,11 @@ Once the Event Hub and connection string are available, they can be used to crea
 
 ## Key concepts
 
-- An **Event processor** WORDS, WORDS, WORDS
+- An **event processor** is a construct intended to manage the responsibilities associated with connecting to a given Event Hub and processing events from each of its partitions, in the context of a specific consumer group.  The act of processing events read from the partition and handling any errors that occur is delegated by the event processor to code that you provide, allowing your logic to concentrate on delivering business value while the processor handles the tasks associated with reading events, managing the partitions, and allowing state to be persisted in the form of checkpoints. 
 
-- A **Partition manager** WORDS, WORDS, WORDS
+- **Checkpointing** is a process by which readers mark and persist their position for events that have been processed for a partition. Checkpointing is the responsibility of the consumer and occurs on a per-partition, typically in the context of a specific consumer group.  For the `EventProcessor`, this means that for consumer group and partition combination, the processor must keep track of its current position in the event stream.  
 
-- A **Checkpoint** WORDS, WORDS, WORDS
+  When an event processor connects, it will begin reading events at the checkpoint that was previously submitted by the last processor of that partition in that consumer group, if one exists.  As an event processor reads and acts on events in the partition, it should periodically create checkpoints to both mark the events as "complete" by downstream applications and to provide resiliency should an event processor or the environment hosting it fail.  Should it be necessary, it is possible to reprocess events that were previously marked as "complete" by specifying an earlier offset through this checkpointing process.
 
 - A **partition** is an ordered sequence of events that is held in an Event Hub. Partitions are a means of data organization associated with the parallelism required by event consumers.  Azure Event Hubs provides message streaming through a partitioned consumer pattern in which each consumer only reads a specific subset, or partition, of the message stream. As newer events arrive, they are added to the end of this sequence. The number of partitions is specified at the time an Event Hub is created and cannot be changed.
 
@@ -61,22 +65,13 @@ WORDS NEEDED.
 ```csharp
 // CODE HERE
 ```
-
 ## Troubleshooting
 
 ### Common exceptions
 
-#### Operation Canceled
-
-This occurs when an operation has been requested on a client, producer, or consumer that has already been closed or disposed of.  It is recommended to check the application code and ensure that objects from the Event Hubs client library are created and closed/disposed in the intended scope.  
-
 #### Timeout
 
-This indicates that the Event Hubs service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Event Hubs service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.  
-
-#### Message Size Exceeded
-
-Event data, both individual and in batches, have a maximum size allowed.  This includes the data of the event, as well as any associated metadata and system overhead.  The best approach for resolving this error is to reduce the number of events being sent in a batch or the size of data included in the message.  Because size limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quotas) for specifics.  
+This indicates that the Event Hubs service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Event Hubs service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.
 
 ### Other exceptions
 
@@ -84,7 +79,7 @@ For detailed information about these and other exceptions that may occur, please
 
 ## Next steps
 
-Beyond the scenarios discussed, the Azure Event Hubs blob storage checkpoint library offers support for additional scenarios to help take advantage of the full feature set of the Event Processor.  In order to help explore some of these scenarios, the Azure Event Hubs blob storage checkpoint library offers a [project of samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.CheckpointStore.Blob/samples) to serve as an illustration for common scenarios.
+Beyond the scenarios discussed, the Azure Event Hubs checkpoint store for Azure Storage blobs offers support for additional scenarios to help take advantage of the full feature set of the `EventProcessor`.  In order to help explore some of these scenarios, the library offers a [project of samples](./samples) to serve as an illustration for common scenarios.
 
 The samples are accompanied by a console application which you can use to execute and debug them interactively.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred IDE and provide the Event Hubs connection information in response to the prompts.  
 
@@ -92,7 +87,7 @@ Each of the samples is self-contained and focused on illustrating one specific s
 
 The available samples are:
 
-- [Hello world](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.CheckpointStore.Blob/samples/Sample01_HelloWorld.cs)  
+- [Hello world](./samples/Sample01_HelloWorld.cs)  
   An introduction to processing events using the Event Processor, illustrating how to configure the processor and connect to the Event Hubs service.
 
 ## Contributing  
@@ -103,6 +98,6 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
+Please see our [contributing guide](./../Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
   
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.checkpoint.Blob%2FFREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.CheckpointStore.Blob%2FFREADME.png)
