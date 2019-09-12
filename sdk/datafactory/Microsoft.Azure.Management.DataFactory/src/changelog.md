@@ -4,6 +4,14 @@
 ###  Feature Additions
 - Added outputColumns property to Office365Source
 - Added support for ORC dataset in ADF
+- Added alternateKeyName property to DynamicsSink, DynamicsCrmSink and CommonDataServiceForAppsSinkCommonDataServiceForAppsSink
+
+
+## Version 4.1.3
+###  Feature Additions
+- Added RunDimnesion to Pipeline
+- Added Chaining Trigger
+- Added Dependency Status property in Pipeline and Trigger Run
 
 ## Version 4.1.2
 ###  Feature Additions

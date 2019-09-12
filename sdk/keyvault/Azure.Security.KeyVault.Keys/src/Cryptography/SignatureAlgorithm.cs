@@ -13,32 +13,32 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     public enum SignatureAlgorithm
     {
         /// <summary>
-        /// RSA SHA-256 Signature algorithim
+        /// RSA SHA-256 Signature algorithim.
         /// </summary>
         RS256,
 
         /// <summary>
-        /// RSA SHA-384 Signature algorithim
+        /// RSA SHA-384 Signature algorithim.
         /// </summary>
         RS384,
 
         /// <summary>
-        /// RSA SHA-512 Signature algorithim
+        /// RSA SHA-512 Signature algorithim.
         /// </summary>
         RS512,
 
         /// <summary>
-        /// RSASSA-PSS using SHA-256 and MGF1 with SHA-256
+        /// RSASSA-PSS using SHA-256 and MGF1 with SHA-256.
         /// </summary>
         PS256,
 
         /// <summary>
-        /// RSASSA-PSS using SHA-384 and MGF1 with SHA-384
+        /// RSASSA-PSS using SHA-384 and MGF1 with SHA-384.
         /// </summary>
         PS384,
 
         /// <summary>
-        /// RSASSA-PSS using SHA-512 and MGF1 with SHA-512
+        /// RSASSA-PSS using SHA-512 and MGF1 with SHA-512.
         /// </summary>
         PS512,
 

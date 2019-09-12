@@ -243,7 +243,7 @@ namespace Azure.Messaging.EventHubs.Tests
             trackOneEvent.SystemProperties = new TrackOne.EventData.SystemPropertiesCollection();
             trackOneEvent.SystemProperties[TrackOne.ClientConstants.OffsetName] = offset.ToString();
             trackOneEvent.LastEnqueuedOffset = "1";
-            trackOneEvent.LastSequenceNumber = trackTwoEvent.LastPartitionSequenceNumber.Value;;
+            trackOneEvent.LastSequenceNumber = trackTwoEvent.LastPartitionSequenceNumber.Value;
             trackOneEvent.LastEnqueuedTime = trackTwoEvent.LastPartitionEnqueuedTime.Value.UtcDateTime;
 
             Assert.That(TrackOneComparer.IsEventDataEquivalent(trackOneEvent, trackTwoEvent), Is.False);
@@ -276,7 +276,7 @@ namespace Azure.Messaging.EventHubs.Tests
             trackOneEvent.SystemProperties = new TrackOne.EventData.SystemPropertiesCollection();
             trackOneEvent.SystemProperties[TrackOne.ClientConstants.OffsetName] = offset.ToString();
             trackOneEvent.LastEnqueuedOffset = trackTwoEvent.LastPartitionOffset.ToString();
-            trackOneEvent.LastSequenceNumber = trackTwoEvent.LastPartitionSequenceNumber.Value;;
+            trackOneEvent.LastSequenceNumber = trackTwoEvent.LastPartitionSequenceNumber.Value;
             trackOneEvent.LastEnqueuedTime = DateTime.Parse("2012-03-04T08:46:00Z").ToUniversalTime();
 
             Assert.That(TrackOneComparer.IsEventDataEquivalent(trackOneEvent, trackTwoEvent), Is.False);

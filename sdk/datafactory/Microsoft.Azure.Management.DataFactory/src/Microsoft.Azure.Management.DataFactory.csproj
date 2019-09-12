@@ -8,9 +8,11 @@
     <Version>4.1.4</Version>
     <AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
-    <PackageReleaseNotes><![CDATA[
+    <PackageReleaseNotes>
+  <![CDATA[
 - Added outputColumns property to Office365Source
 - Added support for ORC dataset in ADF
+- Added alternateKeyName property to DynamicsSink, DynamicsCrmSink and CommonDataServiceForAppsSinkCommonDataServiceForAppsSink
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
