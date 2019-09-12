@@ -785,5 +785,25 @@ namespace Azure.Data.AppConfiguration
 
             return request;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<bool> HasChanged(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            return new Response<bool>();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<bool>> HasChangedAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            return await Task.Run(() => { return new Response<bool>(); }).ConfigureAwait(false);
+        }
     }
 }
