@@ -132,7 +132,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 try
                 {
-                    var response = await blobClient.UploadAsync(Stream.Null, metadata: metadata, blobAccessConditions: blobAccessConditions);
+                    var emptyStream = new MemoryStream(new byte[0]);
+                    var response = await blobClient.UploadAsync(emptyStream, metadata: metadata, blobAccessConditions: blobAccessConditions);
 
                     ownership.LastModifiedTime = response.Value.LastModified;
                     ownership.ETag = response.Value.ETag.ToString();
