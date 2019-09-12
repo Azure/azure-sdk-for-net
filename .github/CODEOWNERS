@@ -32,7 +32,7 @@
 
 /sdk/search/ @brjohnstmsft
 /sdk/servicebus/ @nemakam @jsquire
-/sdk/storage/ @kfarmer-msft @seanmcc-msft @tg-msft
+/sdk/storage/ @seanmcc-msft @amnguye @tg-msft
 # Management Plane
 /**/*Management*/ @erich-wang
 
