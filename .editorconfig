@@ -26,8 +26,12 @@ csharp_new_line_between_query_expression_clauses = true # vs-default: true
 csharp_indent_block_contents = true # vs-default: true
 csharp_indent_braces = false # vs-default: false
 csharp_indent_case_contents = true # vs-default: true
+csharp_indent_case_contents_when_block = true
 csharp_indent_switch_labels = true # vs-default: true
 csharp_indent_labels = one_less_than_current # vs-default: one_less_than_current
+
+# Modifier preferences
+csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:suggestion
 
 # avoid this. unless absolutely necessary
 dotnet_style_qualification_for_field = false:suggestion # vs-default: false:none
@@ -77,9 +81,18 @@ dotnet_naming_style.camel_case_underscore_style.required_prefix = _
 dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
 
 # Code style defaults
+csharp_using_directive_placement = outside_namespace:suggestion
 dotnet_sort_system_directives_first = true # vs-default: true
+csharp_prefer_braces = true:refactoring
 csharp_preserve_single_line_blocks = true # vs-default: true
 csharp_preserve_single_line_statements = false # vs-default: true
+csharp_prefer_static_local_function = true:suggestion
+csharp_prefer_simple_using_statement = false:none
+csharp_style_prefer_switch_expression = true:suggestion
+
+# Code quality
+dotnet_style_readonly_field = true:suggestion
+dotnet_code_quality_unused_parameters = non_public:suggestion
 
 # Expression-level preferences
 dotnet_style_object_initializer = true:suggestion # vs-default: true:suggestion
@@ -87,6 +100,13 @@ dotnet_style_collection_initializer = true:suggestion # vs-default: true:suggest
 dotnet_style_explicit_tuple_names = true:suggestion # vs-default: true:suggestion
 dotnet_style_coalesce_expression = true:suggestion # vs-default: true:suggestion
 dotnet_style_null_propagation = true:suggestion # vs-default: true:suggestion
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+dotnet_style_prefer_auto_properties = true:suggestion
+dotnet_style_prefer_conditional_expression_over_assignment = true:refactoring
+dotnet_style_prefer_conditional_expression_over_return = true:refactoring
+csharp_prefer_simple_default_expression = true:suggestion
 
 # Expression-bodied members
 csharp_style_expression_bodied_methods = false:none # vs-default: false:none
@@ -95,6 +115,8 @@ csharp_style_expression_bodied_operators = false:none # vs-default: false:none
 csharp_style_expression_bodied_properties = true:none # vs-default: true:none
 csharp_style_expression_bodied_indexers = true:none # vs-default: true:none
 csharp_style_expression_bodied_accessors = true:none # vs-default: true:none
+csharp_style_expression_bodied_lambdas = true:refactoring
+csharp_style_expression_bodied_local_functions = true:refactoring
 
 # Pattern matching
 csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion # vs-default: true:suggestion
@@ -104,6 +126,11 @@ csharp_style_inlined_variable_declaration = true:suggestion # vs-default: true:s
 # Null checking preferences
 csharp_style_throw_expression = true:suggestion # vs-default: true:suggestion
 csharp_style_conditional_delegate_call = true:suggestion # vs-default: true:suggestion
+
+# Other features
+csharp_style_prefer_index_operator = false:none
+csharp_style_prefer_range_operator = false:none
+csharp_style_pattern_local_over_anonymous_function = false:none
 
 # Space preferences
 csharp_space_after_cast = false # vs-default: false
@@ -131,3 +158,28 @@ csharp_space_between_square_brackets = false # vs-default: false
 
 # Require accessibility modifiers
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion # vs-default: for_non_interface_members:none
+
+# Analyzers
+dotnet_code_quality.ca1802.api_surface = private, internal
+
+# Xml project files
+[*.{csproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
+indent_size = 2
+
+# Xml build files
+[*.builds]
+indent_size = 2
+
+# Xml files
+[*.{xml,stylecop,resx,ruleset}]
+indent_size = 2
+
+# Xml config files
+[*.{props,targets,config,nuspec}]
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+end_of_line = lf
+[*.{cmd, bat}]
+end_of_line = crlf

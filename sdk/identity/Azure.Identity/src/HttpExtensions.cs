@@ -21,7 +21,7 @@ namespace Azure.Identity
 
             pipelineRequest.Content = await request.Content.ToPipelineRequestContentAsync().ConfigureAwait(false);
 
-            foreach (var header in request.Headers)
+            foreach (System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>> header in request.Headers)
             {
                 foreach (var value in header.Value)
                 {
@@ -47,13 +47,14 @@ namespace Azure.Identity
 
         public static HttpResponseMessage ToHttpResponseMessage(this Response response)
         {
-            HttpResponseMessage responseMessage = new HttpResponseMessage();
+            HttpResponseMessage responseMessage = new HttpResponseMessage
+            {
+                StatusCode = (HttpStatusCode)response.Status,
 
-            responseMessage.StatusCode = (HttpStatusCode)response.Status;
+                Content = new StreamContent(response.ContentStream)
+            };
 
-            responseMessage.Content = new StreamContent(response.ContentStream);
-
-            foreach (var header in response.Headers)
+            foreach (HttpHeader header in response.Headers)
             {
                 if (!responseMessage.Headers.TryAddWithoutValidation(header.Name, header.Value))
                 {

@@ -16,10 +16,10 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential
     {
-        private IPublicClientApplication _pubApp = null;
+        private readonly IPublicClientApplication _pubApp = null;
         private IAccount _account = null;
-        private IdentityClientOptions _options;
-        private string _clientId;
+        private readonly IdentityClientOptions _options;
+        private readonly string _clientId;
 
         /// <summary>
         /// Creates a new InteractiveBrowserCredential which will authenticate users with the specified application.
@@ -27,7 +27,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate.</param>
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         public InteractiveBrowserCredential(string clientId)
-            : this (clientId, null)
+            : this(clientId, null)
         {
 
         }
@@ -44,7 +44,7 @@ namespace Azure.Identity
 
             _options = options ??= new IdentityClientOptions();
 
-            var pipeline = HttpPipelineBuilder.Build(_options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(_options);
 
             _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).WithRedirectUri("http://localhost").Build();
         }
@@ -97,4 +97,3 @@ namespace Azure.Identity
         }
     }
 }
-
