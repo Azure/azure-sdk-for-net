@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <UseAzureCoreNullableAttributes>true</UseAzureCoreNullableAttributes>
   </PropertyGroup>
 
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />

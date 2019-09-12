@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs
             get => _partitionId;
             set
             {
-                Argument.NotEmptyOrWhiteSpace(value, nameof(PartitionId));
+                Argument.AssertNotEmptyOrWhiteSpace(value, nameof(PartitionId));
                 _partitionId = value;
             }
         }

@@ -46,8 +46,8 @@ namespace Azure.Messaging.EventHubs.Authorization
         public EventHubTokenCredential(TokenCredential tokenCredential,
                                        string eventHubResource)
         {
-            Argument.NotNull(tokenCredential, nameof(tokenCredential));
-            Argument.NotNullOrEmpty(eventHubResource, nameof(eventHubResource));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
 
             Credential = tokenCredential;
             Resource = eventHubResource;

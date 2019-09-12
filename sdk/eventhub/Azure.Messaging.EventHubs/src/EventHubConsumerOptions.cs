@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Argument.InRange(value, MinimumPrefetchCount, int.MaxValue, nameof(PrefetchCount));
+                Argument.AssertInRange(value, MinimumPrefetchCount, int.MaxValue, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }

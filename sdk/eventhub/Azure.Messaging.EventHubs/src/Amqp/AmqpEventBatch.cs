@@ -81,9 +81,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         public AmqpEventBatch(AmqpMessageConverter messageConverter,
                               BatchOptions options)
         {
-            Argument.NotNull(messageConverter, nameof(messageConverter));
-            Argument.NotNull(options, nameof(options));
-            Argument.NotNull(options.MaximumizeInBytes, nameof(options.MaximumizeInBytes));
+            Argument.AssertNotNull(messageConverter, nameof(messageConverter));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(options.MaximumizeInBytes, nameof(options.MaximumizeInBytes));
 
             MessageConverter = messageConverter;
             Options = options;
@@ -106,8 +106,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override bool TryAdd(EventData eventData)
         {
-            Argument.NotNull(eventData, nameof(eventData));
-            Argument.NotDisposed(_disposed, nameof(EventDataBatch));
+            Argument.AssertNotNull(eventData, nameof(eventData));
+            Argument.AssertNotDisposed(_disposed, nameof(EventDataBatch));
 
             var eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
 

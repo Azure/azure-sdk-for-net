@@ -92,19 +92,19 @@ namespace Azure.Messaging.EventHubs.Processor
                                               DateTimeOffset? lastModifiedTime = null,
                                               string eTag = null)
         {
-            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.NotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.NotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
-            Argument.NotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
             if (offset.HasValue)
             {
-                Argument.AtLeast(offset.Value, 0, nameof(offset));
+                Argument.AssertAtLeast(offset.Value, 0, nameof(offset));
             }
 
             if (sequenceNumber.HasValue)
             {
-                Argument.AtLeast(sequenceNumber.Value, 0, nameof(sequenceNumber));
+                Argument.AssertAtLeast(sequenceNumber.Value, 0, nameof(sequenceNumber));
             }
 
             EventHubName = eventHubName;

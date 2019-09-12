@@ -55,8 +55,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                         EventHubRetryPolicy retryPolicy,
                                         LastEnqueuedEventProperties lastEnqueuedEventProperties) : base(lastEnqueuedEventProperties)
         {
-            Argument.NotNull(trackOneReceiverFactory, nameof(trackOneReceiverFactory));
-            Argument.NotNull(retryPolicy, nameof(retryPolicy));
+            Argument.AssertNotNull(trackOneReceiverFactory, nameof(trackOneReceiverFactory));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _retryPolicy = retryPolicy;
             _trackOneReceiver = new Lazy<TrackOne.PartitionReceiver>(() => trackOneReceiverFactory(_retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);

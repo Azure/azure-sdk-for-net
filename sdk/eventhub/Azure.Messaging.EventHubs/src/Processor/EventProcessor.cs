@@ -148,10 +148,10 @@ namespace Azure.Messaging.EventHubs.Processor
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
-            Argument.NotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.NotNull(eventHubClient, nameof(eventHubClient));
-            Argument.NotNull(partitionProcessorFactory, nameof(partitionProcessorFactory));
-            Argument.NotNull(partitionManager, nameof(partitionManager));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNull(eventHubClient, nameof(eventHubClient));
+            Argument.AssertNotNull(partitionProcessorFactory, nameof(partitionProcessorFactory));
+            Argument.AssertNotNull(partitionManager, nameof(partitionManager));
 
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;

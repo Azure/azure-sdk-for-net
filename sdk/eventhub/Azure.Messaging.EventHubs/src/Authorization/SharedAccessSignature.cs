@@ -104,13 +104,13 @@ namespace Azure.Messaging.EventHubs.Authorization
         {
             signatureValidityDuration = signatureValidityDuration ?? DefaultSignatureValidityDuration;
 
-            Argument.NotNullOrEmpty(eventHubResource, nameof(eventHubResource));
-            Argument.NotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
-            Argument.NotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
+            Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
+            Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
+            Argument.AssertNotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
 
-            Argument.NotTooLong(sharedAccessKeyName, MaximumKeyNameLength, nameof(sharedAccessKeyName));
-            Argument.NotTooLong(sharedAccessKey, MaximumKeyLength, nameof(sharedAccessKey));
-            Argument.NotNegative(signatureValidityDuration.Value, nameof(signatureValidityDuration));
+            Argument.AssertNotTooLong(sharedAccessKeyName, MaximumKeyNameLength, nameof(sharedAccessKeyName));
+            Argument.AssertNotTooLong(sharedAccessKey, MaximumKeyLength, nameof(sharedAccessKey));
+            Argument.AssertNotNegative(signatureValidityDuration.Value, nameof(signatureValidityDuration));
 
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
@@ -129,8 +129,8 @@ namespace Azure.Messaging.EventHubs.Authorization
         public SharedAccessSignature(string sharedAccessSignature,
                                      string sharedAccessKey)
         {
-            Argument.NotNullOrEmpty(sharedAccessSignature, nameof(sharedAccessSignature));
-            Argument.NotTooLong(sharedAccessKey, MaximumKeyLength, nameof(sharedAccessKey));
+            Argument.AssertNotNullOrEmpty(sharedAccessSignature, nameof(sharedAccessSignature));
+            Argument.AssertNotTooLong(sharedAccessKey, MaximumKeyLength, nameof(sharedAccessKey));
 
             (SharedAccessKeyName, Resource, SignatureExpiration) = ParseSignature(sharedAccessSignature);
 
@@ -186,7 +186,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         public void ExtendExpiration(TimeSpan signatureValidityDuration)
         {
-            Argument.NotNegative(signatureValidityDuration, nameof(signatureValidityDuration));
+            Argument.AssertNotNegative(signatureValidityDuration, nameof(signatureValidityDuration));
 
             // The key must have been provided at construction in order to manipulate the signature.
 

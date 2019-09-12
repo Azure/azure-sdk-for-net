@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -22,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         public KeyBase(string name)
         {
-            Argument.NotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Name = name;
         }

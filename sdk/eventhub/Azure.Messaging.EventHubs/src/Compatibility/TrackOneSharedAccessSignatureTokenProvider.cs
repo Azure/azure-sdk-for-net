@@ -34,8 +34,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public TrackOneSharedAccessTokenProvider(SharedAccessSignature sharedAccessSignature)
         {
-            Argument.NotNull(sharedAccessSignature, nameof(sharedAccessSignature));
-            Argument.NotNullOrEmpty(sharedAccessSignature.SharedAccessKey, nameof(sharedAccessSignature.SharedAccessKey));
+            Argument.AssertNotNull(sharedAccessSignature, nameof(sharedAccessSignature));
+            Argument.AssertNotNullOrEmpty(sharedAccessSignature.SharedAccessKey, nameof(sharedAccessSignature.SharedAccessKey));
 
             SharedAccessSignature = sharedAccessSignature.Clone();
         }
@@ -53,8 +53,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public override Task<SecurityToken> GetTokenAsync(string resource,
                                                           TimeSpan tokenValidityDuration)
         {
-            Argument.NotNullOrEmpty(resource, nameof(resource));
-            Argument.NotNegative(tokenValidityDuration, nameof(tokenValidityDuration));
+            Argument.AssertNotNullOrEmpty(resource, nameof(resource));
+            Argument.AssertNotNegative(tokenValidityDuration, nameof(tokenValidityDuration));
 
             // The resource of a token is assigned at the Event Hub level.  The resource being requested may be a child
             // of the Event Hub, such as a partition.  Ensure that the resource being requested is the same Event Hub associated

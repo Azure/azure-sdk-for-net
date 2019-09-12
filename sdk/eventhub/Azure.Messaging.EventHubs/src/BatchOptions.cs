@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs
             {
                 if (value.HasValue)
                 {
-                    Argument.AtLeast(value.Value, EventHubProducer.MinimumBatchSizeLimit, nameof(MaximumizeInBytes));
+                    Argument.AssertAtLeast(value.Value, EventHubProducer.MinimumBatchSizeLimit, nameof(MaximumizeInBytes));
                 }
 
                 _maximumSizeInBytes = value;

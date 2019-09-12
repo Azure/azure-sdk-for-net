@@ -65,11 +65,11 @@ namespace Azure.Messaging.EventHubs.Processor
                                             string ownerIdentifier,
                                             PartitionManager partitionManager)
         {
-            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.NotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.NotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.NotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
-            Argument.NotNull(partitionManager, nameof(partitionManager));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
+            Argument.AssertNotNull(partitionManager, nameof(partitionManager));
 
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
@@ -88,9 +88,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public virtual Task UpdateCheckpointAsync(EventData eventData)
         {
-            Argument.NotNull(eventData, nameof(eventData));
-            Argument.NotNull(eventData.Offset, nameof(eventData.Offset));
-            Argument.NotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
+            Argument.AssertNotNull(eventData, nameof(eventData));
+            Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
+            Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
 
             return UpdateCheckpointAsync(eventData.Offset.Value, eventData.SequenceNumber.Value);
         }

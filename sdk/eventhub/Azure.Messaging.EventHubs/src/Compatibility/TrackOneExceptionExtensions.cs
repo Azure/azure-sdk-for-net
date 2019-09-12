@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public static Errors.EventHubsException MapToTrackTwoException(this TrackOne.EventHubsException instance)
         {
-            Argument.NotNull(instance, nameof(instance));
+            Argument.AssertNotNull(instance, nameof(instance));
 
             switch (instance)
             {

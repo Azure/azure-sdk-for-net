@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public static ConnectionStringProperties Parse(string connectionString)
         {
-            Argument.NotNullOrEmpty(connectionString, nameof(connectionString));
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
             int tokenPositionModifier = (connectionString[0] == TokenValuePairDelimiter) ? 0 : 1;
             int lastPosition = 0;

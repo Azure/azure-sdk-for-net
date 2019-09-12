@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Argument.NotNull(value, nameof(RetryPolicy));
+                Argument.AssertNotNull(value, nameof(RetryPolicy));
                 _retryPolicy = value;
 
                 // Applying a custom retry policy invalidates the retry options specified.
@@ -120,11 +120,11 @@ namespace Azure.Messaging.EventHubs
                                   EventHubProducerOptions producerOptions,
                                   EventHubRetryPolicy retryPolicy)
         {
-            Argument.NotNull(transportProducer, nameof(transportProducer));
-            Argument.NotNull(endpoint, nameof(endpoint));
-            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.NotNull(producerOptions, nameof(producerOptions));
-            Argument.NotNull(retryPolicy, nameof(retryPolicy));
+            Argument.AssertNotNull(transportProducer, nameof(transportProducer));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(producerOptions, nameof(producerOptions));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             PartitionId = producerOptions.PartitionId;
             EventHubName = eventHubName;
@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventHubs
         public virtual Task SendAsync(EventData eventData,
                                       CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(eventData, nameof(eventData));
+            Argument.AssertNotNull(eventData, nameof(eventData));
             return SendAsync(new[] { eventData }, null, cancellationToken);
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Messaging.EventHubs
                                       SendOptions options,
                                       CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(eventData, nameof(eventData));
+            Argument.AssertNotNull(eventData, nameof(eventData));
             return SendAsync(new[] { eventData }, options, cancellationToken);
         }
 
@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs
         {
             options = options ?? DefaultSendOptions;
 
-            Argument.NotNull(events, nameof(events));
+            Argument.AssertNotNull(events, nameof(events));
             GuardSinglePartitionReference(PartitionId, options.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();
@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs
         public virtual async Task SendAsync(EventDataBatch eventBatch,
                                             CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(eventBatch, nameof(eventBatch));
+            Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             GuardSinglePartitionReference(PartitionId, eventBatch.SendOptions.PartitionKey);
 
             using DiagnosticScope scope = CreateDiagnosticScope();

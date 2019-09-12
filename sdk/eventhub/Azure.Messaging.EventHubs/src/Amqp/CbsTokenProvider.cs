@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public CbsTokenProvider(EventHubTokenCredential credential,
                                 CancellationToken cancellationToken)
         {
-            Argument.NotNull(credential, nameof(credential));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             Credential = credential;
             CancellationToken = cancellationToken;

@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         public SharedAccessSignatureCredential(SharedAccessSignature signature)
         {
-            Argument.NotNull(signature, nameof(signature));
+            Argument.AssertNotNull(signature, nameof(signature));
             SharedAccessSignature = signature;
         }
 

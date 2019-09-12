@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public BasicRetryPolicy(RetryOptions retryOptions)
         {
-            Argument.NotNull(retryOptions, nameof(retryOptions));
+            Argument.AssertNotNull(retryOptions, nameof(retryOptions));
             Options = retryOptions;
         }
 

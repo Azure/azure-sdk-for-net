@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -54,7 +55,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
         public JsonWebKey(Aes aesProvider)
         {
-            Argument.NotNull(aesProvider, nameof(aesProvider));
+            Argument.AssertNotNull(aesProvider, nameof(aesProvider));
 
             KeyType = KeyType.Oct;
             KeyOps = new List<KeyOperation>(AesKeyOperation);
@@ -71,7 +72,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
         public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default)
         {
-            Argument.NotNull(ecdsa, nameof(ecdsa));
+            Argument.AssertNotNull(ecdsa, nameof(ecdsa));
 
             Initialize(ecdsa, includePrivateParameters);
         }
@@ -84,7 +85,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
         public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default)
         {
-            Argument.NotNull(rsaProvider, nameof(rsaProvider));
+            Argument.AssertNotNull(rsaProvider, nameof(rsaProvider));
 
             KeyType = KeyType.Rsa;
             KeyOps = new List<KeyOperation>(includePrivateParameters ? RSAPrivateKeyOperation : RSAPublicKeyOperation);

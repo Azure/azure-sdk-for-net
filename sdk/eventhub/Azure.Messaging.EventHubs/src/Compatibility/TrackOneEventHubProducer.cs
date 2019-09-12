@@ -54,8 +54,8 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public TrackOneEventHubProducer(Func<EventHubRetryPolicy, TrackOne.EventDataSender> trackOneSenderFactory,
                                         EventHubRetryPolicy retryPolicy)
         {
-            Argument.NotNull(trackOneSenderFactory, nameof(trackOneSenderFactory));
-            Argument.NotNull(retryPolicy, nameof(retryPolicy));
+            Argument.AssertNotNull(trackOneSenderFactory, nameof(trackOneSenderFactory));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _retryPolicy = retryPolicy;
             _trackOneSender = new Lazy<TrackOne.EventDataSender>(() => trackOneSenderFactory(_retryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public override async Task<TransportEventBatch> CreateBatchAsync(BatchOptions options,
                                                                          CancellationToken cancellationToken)
         {
-            Argument.NotNull(options, nameof(options));
+            Argument.AssertNotNull(options, nameof(options));
 
             // Ensure that the underlying AMQP link was created so that the maximum
             // message size was set on the track one sender.
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             options.MaximumizeInBytes = options.MaximumizeInBytes ?? TrackOneSender.MaxMessageSize;
 
-            Argument.InRange(options.MaximumizeInBytes.Value, EventHubProducer.MinimumBatchSizeLimit, TrackOneSender.MaxMessageSize, nameof(options.MaximumizeInBytes));
+            Argument.AssertInRange(options.MaximumizeInBytes.Value, EventHubProducer.MinimumBatchSizeLimit, TrackOneSender.MaxMessageSize, nameof(options.MaximumizeInBytes));
 
             return new AmqpEventBatch(new AmqpMessageConverter(), options);
         }

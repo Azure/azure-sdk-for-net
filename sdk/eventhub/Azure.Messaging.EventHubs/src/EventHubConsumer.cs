@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Argument.NotNull(value, nameof(RetryPolicy));
+                Argument.AssertNotNull(value, nameof(RetryPolicy));
                 _retryPolicy = value;
 
                 // Applying a custom retry policy invalidates the retry options specified.
@@ -188,13 +188,13 @@ namespace Azure.Messaging.EventHubs
                                   EventHubConsumerOptions consumerOptions,
                                   EventHubRetryPolicy retryPolicy)
         {
-            Argument.NotNull(transportConsumer, nameof(transportConsumer));
-            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.NotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.NotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.NotNull(eventPosition, nameof(eventPosition));
-            Argument.NotNull(consumerOptions, nameof(consumerOptions));
-            Argument.NotNull(retryPolicy, nameof(retryPolicy));
+            Argument.AssertNotNull(transportConsumer, nameof(transportConsumer));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNull(eventPosition, nameof(eventPosition));
+            Argument.AssertNotNull(consumerOptions, nameof(consumerOptions));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             EventHubName = eventHubName;
             PartitionId = partitionId;
@@ -231,8 +231,8 @@ namespace Azure.Messaging.EventHubs
         {
             maximumWaitTime = maximumWaitTime ?? Options.DefaultMaximumReceiveWaitTime;
 
-            Argument.InRange(maximumMessageCount, 1, Int32.MaxValue, nameof(maximumMessageCount));
-            Argument.NotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
+            Argument.AssertInRange(maximumMessageCount, 1, Int32.MaxValue, nameof(maximumMessageCount));
+            Argument.AssertNotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
 
             return InnerConsumer.ReceiveAsync(maximumMessageCount, maximumWaitTime.Value, cancellationToken);
         }

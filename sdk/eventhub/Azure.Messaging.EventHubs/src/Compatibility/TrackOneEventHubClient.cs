@@ -106,11 +106,11 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                       EventHubRetryPolicy defaultRetryPolicy,
                                       Func<string, string, TokenCredential, EventHubClientOptions, Func<EventHubRetryPolicy>, TrackOne.EventHubClient> eventHubClientFactory)
         {
-            Argument.NotNullOrEmpty(host, nameof(host));
-            Argument.NotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.NotNull(credential, nameof(credential));
-            Argument.NotNull(clientOptions, nameof(clientOptions));
-            Argument.NotNull(defaultRetryPolicy, nameof(defaultRetryPolicy));
+            Argument.AssertNotNullOrEmpty(host, nameof(host));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(clientOptions, nameof(clientOptions));
+            Argument.AssertNotNull(defaultRetryPolicy, nameof(defaultRetryPolicy));
 
             EventHubName = eventHubName;
 

@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public TrackOneSharedAccessSignatureToken(SharedAccessSignature sharedAccessSignature) :
             base(sharedAccessSignature?.Value, (sharedAccessSignature?.SignatureExpiration.UtcDateTime ?? default), sharedAccessSignature?.Resource, ClientConstants.SasTokenType)
         {
-            Argument.NotNull(sharedAccessSignature, nameof(sharedAccessSignature));
+            Argument.AssertNotNull(sharedAccessSignature, nameof(sharedAccessSignature));
             SharedAccessSignature = sharedAccessSignature;
         }
     }

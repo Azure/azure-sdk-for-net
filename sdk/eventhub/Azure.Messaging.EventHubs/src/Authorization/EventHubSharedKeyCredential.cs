@@ -41,8 +41,8 @@ namespace Azure.Messaging.EventHubs.Authorization
         public EventHubSharedKeyCredential(string sharedAccessKeyName,
                                            string sharedAccessKey)
         {
-            Argument.NotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
-            Argument.NotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
+            Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
+            Argument.AssertNotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
 
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;

@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -42,9 +43,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromDns(params string[] names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
-
-            if (names.Length == 0) throw new ArgumentException("The specified names must be non-null and non-empty");
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
             return new SubjectAlternativeNames(DnsPropertyNameBytes, names);
         }
@@ -56,9 +55,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromDns(IEnumerable<string> names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
-
-            if (!names.Any()) throw new ArgumentException("The specified names must be non-null and non-empty");
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
             return new SubjectAlternativeNames(DnsPropertyNameBytes, names);
         }
@@ -70,9 +67,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromEmail(params string[] names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
-
-            if (names.Length == 0) throw new ArgumentException("The specified names must be non-null and non-empty");
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
             return new SubjectAlternativeNames(EmailsPropertyNameBytes, names);
         }
@@ -84,9 +79,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromEmail(IEnumerable<string> names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
-
-            if (!names.Any()) throw new ArgumentException("The specified names must be non-null and non-empty");
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
             return new SubjectAlternativeNames(EmailsPropertyNameBytes, names);
         }
@@ -98,9 +91,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromUpn(params string[] names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
-
-            if (names.Length == 0) throw new ArgumentException("The specified names must be non-null and non-empty");
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
             return new SubjectAlternativeNames(UpnsPropertyNameBytes, names);
         }
@@ -112,9 +103,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The created subject alternative name collection</returns>
         public static SubjectAlternativeNames FromUpn(IEnumerable<string> names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
-
-            if (!names.Any()) throw new ArgumentException("The specified names must be non-null and non-empty");
+            Argument.AssertNotNullOrEmpty(names, nameof(names));
 
             return new SubjectAlternativeNames(UpnsPropertyNameBytes, names);
         }

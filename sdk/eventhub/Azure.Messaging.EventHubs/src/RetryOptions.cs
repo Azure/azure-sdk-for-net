@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Argument.InRange(value, 0, 100, nameof(MaximumRetries));
+                Argument.AssertInRange(value, 0, 100, nameof(MaximumRetries));
                 _maximumRetries = value;
             }
         }
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Argument.InRange(value, TimeSpan.FromMilliseconds(1), TimeSpan.FromMinutes(5), nameof(Delay));
+                Argument.AssertInRange(value, TimeSpan.FromMilliseconds(1), TimeSpan.FromMinutes(5), nameof(Delay));
                 _delay = value;
             }
         }
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Argument.NotNegative(value, nameof(MaximumDelay));
+                Argument.AssertNotNegative(value, nameof(MaximumDelay));
                 _maximumDelay = value;
             }
         }
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs
                     throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(TryTimeout));
                 }
 
-                Argument.InRange(value, TimeSpan.Zero, TimeSpan.FromHours(1), nameof(TryTimeout));
+                Argument.AssertInRange(value, TimeSpan.Zero, TimeSpan.FromHours(1), nameof(TryTimeout));
                 _tryTimeOut = value;
             }
         }

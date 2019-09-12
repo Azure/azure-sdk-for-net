@@ -69,8 +69,8 @@ namespace Azure.Messaging.EventHubs
         internal EventDataBatch(TransportEventBatch transportBatch,
                                 SendOptions sendOptions)
         {
-            Argument.NotNull(transportBatch, nameof(transportBatch));
-            Argument.NotNull(sendOptions, nameof(sendOptions));
+            Argument.AssertNotNull(transportBatch, nameof(transportBatch));
+            Argument.AssertNotNull(sendOptions, nameof(sendOptions));
 
             InnerBatch = transportBatch;
             SendOptions = sendOptions;

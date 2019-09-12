@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                     DateTime tokenExpirationUtc) :
             base(jwtTokenString, tokenExpirationUtc, eventHubResource, ClientConstants.JsonWebTokenType)
         {
-            Argument.NotNull(tokenCredential, nameof(tokenCredential));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
             Credential = tokenCredential;
         }
     }

@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs
         private static EventPosition FromOffset(string offset,
                                                 bool isInclusive = false)
         {
-            Argument.NotNullOrWhiteSpace(nameof(offset), offset);
+            Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
 
             return new EventPosition
             {

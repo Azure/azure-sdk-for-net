@@ -34,11 +34,11 @@ namespace Azure.Messaging.EventHubs.Core
                                                                     TimeSpan? maximumWaitTime,
                                                                     [EnumeratorCancellation]CancellationToken cancellationToken)
         {
-            Argument.NotNull(reader, nameof(reader));
+            Argument.AssertNotNull(reader, nameof(reader));
 
             if (maximumWaitTime.HasValue)
             {
-                Argument.NotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
+                Argument.AssertNotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
             }
 
             T result;

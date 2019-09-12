@@ -18,7 +18,7 @@ namespace Azure.Core
         /// <param name="argumentValue">The value of the argument to verify.</param>
         /// <param name="argumentName">The name of the argument being considered.</param>
         /// <exception cref="ArgumentException">The argument is empty or contains only white-space.</exception>
-        public static void NotEmptyOrWhiteSpace(string argumentValue, string argumentName)
+        public static void AssertNotEmptyOrWhiteSpace(string argumentValue, string argumentName)
         {
             if (argumentValue is null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Core
         /// <param name="maximumLength">The maximum allowable length for the <paramref name="argumentValue"/>; its length must be less than or equal to this value.</param>
         /// <param name="argumentName">The name of the argument being considered.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> exceeds <paramref name="maximumLength"/> characters.</exception>
-        public static void NotTooLong(string argumentValue, int maximumLength, string argumentName)
+        public static void AssertNotTooLong(string argumentValue, int maximumLength, string argumentName)
         {
             if (argumentValue != null && argumentValue.Length > maximumLength)
             {
@@ -56,7 +56,7 @@ namespace Azure.Core
         /// <param name="argumentValue">The value of the argument to verify.</param>
         /// <param name="argumentName">The name of the argument being considered.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is a negative <see cref="TimeSpan"/> value.</exception>
-        public static void NotNegative(TimeSpan argumentValue, string argumentName)
+        public static void AssertNotNegative(TimeSpan argumentValue, string argumentName)
         {
             if (argumentValue < TimeSpan.Zero)
             {
@@ -73,7 +73,7 @@ namespace Azure.Core
         /// <param name="minimumValue">The minimum to use for comparison; <paramref name="argumentValue"/> must be greater than or equal to this value.</param>
         /// <param name="argumentName">The name of the argument being considered.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is less than <paramref name="minimumValue"/>.</exception>
-        public static void AtLeast(long argumentValue, long minimumValue, string argumentName)
+        public static void AssertAtLeast(long argumentValue, long minimumValue, string argumentName)
         {
             if (argumentValue < minimumValue)
             {
@@ -89,7 +89,7 @@ namespace Azure.Core
         /// <param name="wasDisposed"><c>true</c> if the target instance has been disposed; otherwise, <c>false</c>.</param>
         /// <param name="targetName">The name of the target instance that is being verified.</param>
         ///
-        public static void NotDisposed(bool wasDisposed, string targetName)
+        public static void AssertNotDisposed(bool wasDisposed, string targetName)
         {
             if (wasDisposed)
             {

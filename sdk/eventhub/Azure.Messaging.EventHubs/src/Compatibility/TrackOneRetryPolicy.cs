@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public TrackOneRetryPolicy(EventHubRetryPolicy sourcePolicy) : base()
         {
-            Argument.NotNull(sourcePolicy, nameof(sourcePolicy));
+            Argument.AssertNotNull(sourcePolicy, nameof(sourcePolicy));
             _sourcePolicy = sourcePolicy;
         }
 
