@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// </summary>
     public class ChainedTokenCredential : TokenCredential
     {
-        private TokenCredential[] _sources;
+        private readonly TokenCredential[] _sources;
 
         /// <summary>
         /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
@@ -24,10 +24,14 @@ namespace Azure.Identity
         public ChainedTokenCredential(params TokenCredential[] sources)
         {
             if (sources == null)
+            {
                 throw new ArgumentNullException(nameof(sources));
+            }
 
             if (sources.Length == 0)
+            {
                 throw new ArgumentException("sources must not be empty", nameof(sources));
+            }
 
             for (int i = 0; i < sources.Length; i++)
             {

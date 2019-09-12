@@ -19,12 +19,12 @@ namespace Azure.Identity
     /// </summary>
     public class DeviceCodeCredential : TokenCredential
     {
-        private IPublicClientApplication _pubApp = null;
-        private HttpPipeline _pipeline = null;
+        private readonly IPublicClientApplication _pubApp = null;
+        private readonly HttpPipeline _pipeline = null;
         private IAccount _account = null;
-        private IdentityClientOptions _options;
-        private string _clientId;
-        private Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
+        private readonly IdentityClientOptions _options;
+        private readonly string _clientId;
+        private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
 
         /// <summary>
         /// Protected constructor for mocking

@@ -18,8 +18,8 @@ namespace Azure.Identity
     /// </summary>
     public class ManagedIdentityCredential : TokenCredential
     {
-        private string _clientId;
-        private ManagedIdentityClient _client;
+        private readonly string _clientId;
+        private readonly ManagedIdentityClient _client;
 
         /// <summary>
         /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
@@ -44,7 +44,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
         public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return await this._client.AuthenticateAsync(scopes, _clientId, cancellationToken).ConfigureAwait(false);
+            return await _client.AuthenticateAsync(scopes, _clientId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return this._client.Authenticate(scopes, _clientId, cancellationToken);
+            return _client.Authenticate(scopes, _clientId, cancellationToken);
         }
     }
 }

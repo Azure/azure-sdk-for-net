@@ -40,7 +40,7 @@ namespace Azure.Identity.Tests.Mock
 
             var expectedClientSecret = "secret";
 
-            var client = InstrumentClient(new AadIdentityClient(options: options));
+            AadIdentityClient client = InstrumentClient(new AadIdentityClient(options: options));
 
             AccessToken actualToken = await client.AuthenticateAsync(expectedTenantId, expectedClientId, expectedClientSecret, MockScopes.Default);
 
@@ -86,7 +86,7 @@ namespace Azure.Identity.Tests.Mock
 
             var mockCert = new X509Certificate2("./Data/cert.pfx", "password");
 
-            var client = InstrumentClient(new AadIdentityClient(options: options));
+            AadIdentityClient client = InstrumentClient(new AadIdentityClient(options: options));
 
             AccessToken actualToken = await client.AuthenticateAsync(expectedTenantId, expectedClientId, mockCert, MockScopes.Default);
 

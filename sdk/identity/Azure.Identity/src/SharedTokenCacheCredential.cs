@@ -15,10 +15,10 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredential : TokenCredential
     {
-        private IPublicClientApplication _pubApp = null;
-        private string _username;
-        private MsalCacheReader _cacheReader;
-        private string _clientId;
+        private readonly IPublicClientApplication _pubApp = null;
+        private readonly string _username;
+        private readonly MsalCacheReader _cacheReader;
+        private readonly string _clientId;
 
         /// <summary>
         /// Creates a new SharedTokenCacheCredential which will authenticate users with the specified application.
@@ -47,7 +47,7 @@ namespace Azure.Identity
 
             _username = username;
 
-            var pipeline = HttpPipelineBuilder.Build(options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             _pubApp = PublicClientApplicationBuilder.Create(_clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline)).Build();
 

@@ -18,8 +18,8 @@ namespace Azure.Identity.Tests
 
         public class SimpleMockTokenCredential : TokenCredential
         {
-            private string _scope;
-            private string _token;
+            private readonly string _scope;
+            private readonly string _token;
 
             public SimpleMockTokenCredential(string scope, string token)
             {
@@ -29,14 +29,14 @@ namespace Azure.Identity.Tests
 
             public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
             {
-                return _scope == scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default(AccessToken);
+                return _scope == scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default;
             }
 
             public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
             {
                 await Task.CompletedTask;
 
-                return _scope == scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default(AccessToken);
+                return _scope == scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default;
             }
         }
 

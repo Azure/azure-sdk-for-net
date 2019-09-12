@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
         {
             var credential = new ManagedIdentityCredential();
 
-            var token = await credential.GetTokenAsync(new string[] { "https://management.azure.com//.default" });
+            Core.AccessToken token = await credential.GetTokenAsync(new string[] { "https://management.azure.com//.default" });
 
             Assert.IsNotNull(token.Token);
         }

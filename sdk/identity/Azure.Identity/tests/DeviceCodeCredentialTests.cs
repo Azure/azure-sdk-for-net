@@ -20,9 +20,9 @@ namespace Azure.Identity.Tests
 
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 
-        private HashSet<string> _requestedCodes = new HashSet<string>();
+        private readonly HashSet<string> _requestedCodes = new HashSet<string>();
 
-        private object _requestedCodesLock = new object();
+        private readonly object _requestedCodesLock = new object();
 
         private Task VerifyDeviceCode(DeviceCodeInfo code, string message)
         {
@@ -69,7 +69,7 @@ namespace Azure.Identity.Tests
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
+            DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
 
             AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
 
@@ -87,7 +87,7 @@ namespace Azure.Identity.Tests
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
+            DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCode(code, expectedCode), options));
 
             AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
 
@@ -107,7 +107,7 @@ namespace Azure.Identity.Tests
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCodeAndCancel(code, expectedCode, cancelSource), options));
+            DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, (code, cancelToken) => VerifyDeviceCodeAndCancel(code, expectedCode, cancelSource), options));
 
             Assert.ThrowsAsync<OperationCanceledException>(async () => await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token));
         }
@@ -125,7 +125,7 @@ namespace Azure.Identity.Tests
 
             var cancelSource = new CancellationTokenSource(1000);
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, VerifyDeviceCodeCallbackCancellationToken, options));
+            DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, VerifyDeviceCodeCallbackCancellationToken, options));
 
             Task<AccessToken> getTokenTask = cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token);
 
@@ -154,7 +154,7 @@ namespace Azure.Identity.Tests
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ClientId, ThrowingDeviceCodeCallback, options));
+            DeviceCodeCredential cred = InstrumentClient(new DeviceCodeCredential(ClientId, ThrowingDeviceCodeCallback, options));
 
             Assert.ThrowsAsync<MockException>(async () => await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" }, cancelSource.Token));
         }
@@ -204,7 +204,7 @@ namespace Azure.Identity.Tests
 
         private MockResponse CreateDeviceCodeResponse(string code)
         {
-            var response = new MockResponse(200).WithContent($@"{{
+            MockResponse response = new MockResponse(200).WithContent($@"{{
     ""user_code"": ""{code}"",
     ""device_code"": ""{code}_{code}"",
     ""verification_uri"": ""https://microsoft.com/devicelogin"",
@@ -218,7 +218,7 @@ namespace Azure.Identity.Tests
 
         private MockResponse CreateAuthorizationResponse(string accessToken)
         {
-            var response = new MockResponse(200).WithContent(@$"{{
+            MockResponse response = new MockResponse(200).WithContent(@$"{{
     ""token_type"": ""Bearer"",
     ""scope"": ""https://vault.azure.net/user_impersonation https://vault.azure.net/.default"",
     ""expires_in"": 3600,

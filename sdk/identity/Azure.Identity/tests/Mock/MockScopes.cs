@@ -9,7 +9,7 @@ namespace Azure.Identity.Tests.Mock
 {
     internal class MockScopes
     {
-        private string[] _scopes;
+        private readonly string[] _scopes;
 
         private MockScopes(string[] scopes)
         {
