@@ -88,6 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the encrypt operation. The returned <see cref="EncryptResult"/> contains the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Encrypt");
@@ -123,6 +124,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the encrypt operation. The returned <see cref="EncryptResult"/> contains the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Encrypt");
@@ -161,6 +163,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the decrypt operation. The returned <see cref="DecryptResult"/> contains the encrypted data
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Decrypt");
@@ -199,6 +202,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the decrypt operation. The returned <see cref="DecryptResult"/> contains the encrypted data
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Decrypt");
@@ -226,6 +230,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the wrap operation. The returned <see cref="WrapResult"/> contains the wrapped key
         /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.WrapKey");
@@ -253,6 +258,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the wrap operation. The returned <see cref="WrapResult"/> contains the wrapped key
         /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.WrapKey");
@@ -280,6 +286,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the unwrap operation. The returned <see cref="UnwrapResult"/> contains the key
         /// along with information regarding the algorithm and key used to unwrap it.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.UnwrapKey");
@@ -307,6 +314,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the unwrap operation. The returned <see cref="UnwrapResult"/> contains the key
         /// along with information regarding the algorithm and key used to unwrap it.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.UnwrapKey");
@@ -334,6 +342,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Sign");
@@ -361,6 +370,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Sign");
@@ -388,6 +398,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Verify");
@@ -415,6 +426,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.Verify");
@@ -442,6 +454,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(data, nameof(data));
@@ -473,6 +486,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(data, nameof(data));
@@ -505,6 +519,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(data, nameof(data));
@@ -537,6 +552,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(data, nameof(data));
@@ -569,6 +585,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(data, nameof(data));
@@ -601,6 +618,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(data, nameof(data));
@@ -633,6 +651,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(data, nameof(data));
@@ -665,6 +684,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(data, nameof(data));

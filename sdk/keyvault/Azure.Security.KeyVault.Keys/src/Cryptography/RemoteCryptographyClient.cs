@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal KeyVaultPipeline Pipeline { get; }
 
-        private async Task<Response<EncryptResult>> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
+        public async Task<Response<EncryptResult>> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private Response<EncryptResult> Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
+        public Response<EncryptResult> Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
@@ -81,7 +81,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private async Task<Response<DecryptResult>> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
+        public async Task<Response<DecryptResult>> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
@@ -107,7 +107,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private Response<DecryptResult> Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
+        public Response<DecryptResult> Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = default, byte[] authenticationData = default, byte[] authenticationTag = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
             {
@@ -133,7 +133,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private async Task<Response<WrapResult>> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
+        public async Task<Response<WrapResult>> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
@@ -156,7 +156,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private Response<WrapResult> WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
+        public Response<WrapResult> WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
@@ -179,7 +179,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private async Task<Response<UnwrapResult>> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
+        public async Task<Response<UnwrapResult>> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
@@ -202,7 +202,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private Response<UnwrapResult> UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
+        public Response<UnwrapResult> UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyWrapParameters()
             {
@@ -225,7 +225,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private async Task<Response<SignResult>> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
+        public async Task<Response<SignResult>> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             var parameters = new KeySignParameters
             {
@@ -248,7 +248,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private Response<SignResult> Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
+        public Response<SignResult> Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             var parameters = new KeySignParameters
             {
@@ -271,7 +271,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private async Task<Response<VerifyResult>> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
+        public async Task<Response<VerifyResult>> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyVerifyParameters
             {
@@ -295,7 +295,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        private Response<VerifyResult> Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
+        public Response<VerifyResult> Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyVerifyParameters
             {

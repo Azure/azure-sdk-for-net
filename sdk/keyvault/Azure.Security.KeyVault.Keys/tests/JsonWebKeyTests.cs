@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.Octet,
+                KeyType = KeyType.Oct,
                 K = null,
             };
 
@@ -158,7 +158,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #else
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.EllipticCurve,
+                KeyType = KeyType.Ec,
                 CurveName = curveName,
                 X = x,
                 Y = y,
@@ -320,12 +320,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private static bool HasPrivateKey(JsonWebKey jwk)
         {
-            if (jwk.KeyType == KeyType.Octet)
+            if (jwk.KeyType == KeyType.Oct)
             {
                 return jwk.K != null;
             }
 
-            if (jwk.KeyType == KeyType.EllipticCurve || jwk.KeyType == KeyType.EllipticCurveHsm)
+            if (jwk.KeyType == KeyType.Ec || jwk.KeyType == KeyType.EcHsm)
             {
                 return jwk.D != null;
             }
@@ -351,7 +351,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 if (x.KeyType != y.KeyType) return false;
                 if (!CollectionEquals(x.KeyOps, y.KeyOps)) return false;
 
-                if (x.KeyType == KeyType.Octet)
+                if (x.KeyType == KeyType.Oct)
                 {
                     return CollectionEquals(x.K, y.K);
                 }
@@ -368,7 +368,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                         && CollectionEquals(x.QI, y.QI);
                 }
 
-                if (x.KeyType == KeyType.EllipticCurve)
+                if (x.KeyType == KeyType.Ec)
                 {
                     return CollectionEquals(x.D, y.D)
                         && CollectionEquals(x.X, y.X)
@@ -385,7 +385,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     return 0;
                 }
 
-                if (obj.KeyType == KeyType.Octet)
+                if (obj.KeyType == KeyType.Oct)
                 {
                     return HashCodeBuilder.Combine(obj.KeyType, obj.K);
                 }
@@ -395,7 +395,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     return HashCodeBuilder.Combine(obj.KeyType, obj.N);
                 }
 
-                if (obj.KeyType == KeyType.EllipticCurve)
+                if (obj.KeyType == KeyType.Ec)
                 {
                     return HashCodeBuilder.Combine(obj.KeyType, obj.X);
                 }

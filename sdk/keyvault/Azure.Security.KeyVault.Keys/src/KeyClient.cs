@@ -79,6 +79,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string, or <paramref name="keyType"/> contains no value.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<Key> CreateKey(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -115,6 +116,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string, or <paramref name="keyType"/> contains no value.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<Key>> CreateKeyAsync(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -147,6 +149,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="ecKey">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="ecKey"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<Key> CreateEcKey(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(ecKey, nameof(ecKey));
@@ -178,6 +181,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="ecKey">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="ecKey"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<Key>> CreateEcKeyAsync(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(ecKey, nameof(ecKey));
@@ -209,6 +213,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="rsaKey">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="rsaKey"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<Key> CreateRsaKey(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(rsaKey, nameof(rsaKey));
@@ -240,6 +245,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="rsaKey">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="rsaKey"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<Key>> CreateRsaKeyAsync(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(rsaKey, nameof(rsaKey));
@@ -271,14 +277,14 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation requires the keys/update permission.
         /// </remarks>
         /// <param name="key">The <see cref="KeyBase"/> object with updated properties.</param>
-        /// <param name="keyOperations">List of supported <see cref="KeyOperation"/>.</param>
+        /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> or <paramref name="keyOperations"/> is null, or <see cref="KeyBase.Version"/> of <paramref name="key"/> is null.</exception>
-        public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<KeyOperation> keyOperations, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> is null, or <see cref="KeyBase.Version"/> of <paramref name="key"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(key, nameof(key));
             Argument.NotNull(key.Version, $"{nameof(key)}.{nameof(key.Version)}");
-            Argument.NotNull(keyOperations, nameof(keyOperations));
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
@@ -307,14 +313,14 @@ namespace Azure.Security.KeyVault.Keys
         /// This operation requires the keys/update permission.
         /// </remarks>
         /// <param name="key">The <see cref="KeyBase"/> object with updated properties.</param>
-        /// <param name="keyOperations">List of supported <see cref="KeyOperation"/>.</param>
+        /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> or <paramref name="keyOperations"/> is null, or <see cref="KeyBase.Version"/> of <paramref name="key"/> is null.</exception>
-        public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<KeyOperation> keyOperations, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(key, nameof(key));
             Argument.NotNull(key.Version, $"{nameof(key)}.{nameof(key.Version)}");
-            Argument.NotNull(keyOperations, nameof(keyOperations));
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
@@ -346,6 +352,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<Key> GetKey(string name, string version = null, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -378,6 +385,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<Key>> GetKeyAsync(string name, string version = null, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -408,6 +416,7 @@ namespace Azure.Security.KeyVault.Keys
         /// permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual IEnumerable<Response<KeyBase>> GetKeys(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
@@ -444,6 +453,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual IEnumerable<Response<KeyBase>> GetKeyVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -464,6 +474,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual AsyncCollection<KeyBase> GetKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -486,6 +497,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<DeletedKey> GetDeletedKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -518,6 +530,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<DeletedKey>> GetDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -551,6 +564,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<DeletedKey> DeleteKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -584,6 +598,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<DeletedKey>> DeleteKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -615,6 +630,7 @@ namespace Azure.Security.KeyVault.Keys
         /// vault. This operation requires the keys/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual IEnumerable<Response<DeletedKey>> GetDeletedKeys(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
@@ -634,6 +650,7 @@ namespace Azure.Security.KeyVault.Keys
         /// vault. This operation requires the keys/list permission.
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual AsyncCollection<DeletedKey> GetDeletedKeysAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
@@ -654,6 +671,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response PurgeDeletedKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -686,6 +704,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response> PurgeDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -719,6 +738,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<Key> RecoverDeletedKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -752,6 +772,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<Key>> RecoverDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -793,6 +814,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<byte[]> BackupKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -803,7 +825,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                var backup = _pipeline.SendRequest(RequestMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup");
+                Response<KeyBackup> backup = _pipeline.SendRequest(RequestMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup");
 
                 return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
             }
@@ -836,6 +858,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<byte[]>> BackupKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -846,7 +869,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                var backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup").ConfigureAwait(false);
+                Response<KeyBackup> backup = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup").ConfigureAwait(false);
 
                 return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
             }
@@ -879,6 +902,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="backup"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="backup"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<Key> RestoreKey(byte[] backup, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(backup, nameof(backup));
@@ -919,6 +943,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="backup"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="backup"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<Key>> RestoreKeyAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(backup, nameof(backup));
@@ -951,6 +976,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="keyMaterial"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<Key> ImportKey(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -987,6 +1013,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="keyMaterial"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<Key>> ImportKeyAsync(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
         {
             Argument.NotNullOrEmpty(name, nameof(name));
@@ -1021,6 +1048,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="keyImportOptions">The key import configuration object containing information about the <see cref="JsonWebKey"/> being imported.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyImportOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<Key> ImportKey(KeyImportOptions keyImportOptions, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(keyImportOptions, nameof(keyImportOptions));
@@ -1053,6 +1081,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="keyImportOptions">The key import configuration object containing information about the <see cref="JsonWebKey"/> being imported.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyImportOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<Response<Key>> ImportKeyAsync(KeyImportOptions keyImportOptions, CancellationToken cancellationToken = default)
         {
             Argument.NotNull(keyImportOptions, nameof(keyImportOptions));

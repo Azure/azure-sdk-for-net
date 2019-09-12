@@ -25,12 +25,12 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Elliptic curve cryptographic algorithm.
         /// </summary>
-        public static readonly KeyType EllipticCurve = new KeyType("EC");
+        public static readonly KeyType Ec = new KeyType("EC");
 
         /// <summary>
         /// Elliptic curve cryptographic algorithm backed by HSM.
         /// </summary>
-        public static readonly KeyType EllipticCurveHsm = new KeyType("EC-HSM");
+        public static readonly KeyType EcHsm = new KeyType("EC-HSM");
 
         /// <summary>
         /// RSA cryptographic algorithm.
@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// AES cryptographic algorithm.
         /// </summary>
-        public static readonly KeyType Octet = new KeyType("oct");
+        public static readonly KeyType Oct = new KeyType("oct");
 
         /// <summary>
         /// Determines if two <see cref="KeyType"/> values are the same.

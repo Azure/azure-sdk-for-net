@@ -21,9 +21,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void CreateKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateKeyAsync(null, KeyType.EllipticCurve));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateKeyAsync(null, KeyType.Ec));
             Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync("name", default));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(string.Empty, KeyType.EllipticCurve));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(string.Empty, KeyType.Ec));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateEcKeyAsync(null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateRsaKeyAsync(null));
         }
@@ -37,7 +37,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(null, keyOperations));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateKeyAsync(key, keyOperations));
         }
 
         [Test]

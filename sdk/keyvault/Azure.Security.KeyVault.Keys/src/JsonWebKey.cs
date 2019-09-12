@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Octet"/>.
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Oct"/>.
         /// </summary>
         /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
@@ -56,14 +56,14 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.NotNull(aesProvider, nameof(aesProvider));
 
-            KeyType = KeyType.Octet;
+            KeyType = KeyType.Oct;
             KeyOps = new List<KeyOperation>(AesKeyOperation);
 
             K = aesProvider.Key;
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.EllipticCurve"/>.
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Ec"/>.
         /// </summary>
         /// <param name="ecdsa">An <see cref="ECDsa"/> provider.</param>
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
@@ -188,15 +188,15 @@ namespace Azure.Security.KeyVault.Keys
         public byte[] T { get; set; }
 
         /// <summary>
-        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Octet"/> to an <see cref="Aes"/> object.
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> to an <see cref="Aes"/> object.
         /// </summary>
         /// <returns>An <see cref="Aes"/> object.</returns>
-        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Octet"/> or <see cref="K"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Oct"/> or <see cref="K"/> is null.</exception>
         public Aes ToAes()
         {
-            if (KeyType != KeyType.Octet)
+            if (KeyType != KeyType.Oct)
             {
-                throw new InvalidOperationException("key is not an octet key");
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Oct)} key");
             }
 
             if (K is null)
@@ -205,25 +205,22 @@ namespace Azure.Security.KeyVault.Keys
             }
 
             Aes key = Aes.Create();
-            if (key != null)
-            {
-                key.Key = K;
-            }
+            key.Key = K;
 
             return key;
         }
 
         /// <summary>
-        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.EllipticCurve"/> or <see cref="KeyType.EllipticCurveHsm"/> to an <see cref="ECDsa"/> object.
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Ec"/> or <see cref="KeyType.EcHsm"/> to an <see cref="ECDsa"/> object.
         /// </summary>
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
         /// <returns>An <see cref="ECDsa"/> object.</returns>
-        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.EllipticCurve"/> or <see cref="KeyType.EllipticCurveHsm"/>, or one or more key parameters are invalid.</exception>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Ec"/> or <see cref="KeyType.EcHsm"/>, or one or more key parameters are invalid.</exception>
         public ECDsa ToECDsa(bool includePrivateParameters = false)
         {
-            if (KeyType != KeyType.EllipticCurve && KeyType != KeyType.EllipticCurveHsm)
+            if (KeyType != KeyType.Ec && KeyType != KeyType.EcHsm)
             {
-                throw new InvalidOperationException("key is not an EC or EC-HSM type");
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Ec)} or {nameof(KeyType.EcHsm)} type");
             }
 
             ValidateKeyParameter(nameof(X), X);
@@ -242,7 +239,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (KeyType != KeyType.Rsa && KeyType != KeyType.RsaHsm)
             {
-                throw new InvalidOperationException("key is not an RSA or RSA-HSM type");
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Rsa)} or {nameof(KeyType.RsaHsm)} type");
             }
 
             ValidateKeyParameter(nameof(E), E);
@@ -517,7 +514,7 @@ namespace Azure.Security.KeyVault.Keys
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void Initialize(ECDsa ecdsa, bool includePrivateParameters)
         {
-            KeyType = KeyType.EllipticCurve;
+            KeyType = KeyType.Ec;
             KeyOps = new List<KeyOperation>(includePrivateParameters ? ECPrivateKeyOperation : ECPublicKeyOperation);
 
             ECParameters ecParameters = ecdsa.ExportParameters(includePrivateParameters);

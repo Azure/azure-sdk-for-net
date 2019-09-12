@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task CreateKey()
         {
             string keyName = Recording.GenerateId();
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key);
 
             Key keyReturned = await Client.GetKeyAsync(keyName);
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 NotBefore = nbf,
             };
 
-            Key key = await Client.CreateKeyAsync(Recording.GenerateId(), KeyType.EllipticCurve, keyOptions);
+            Key key = await Client.CreateKeyAsync(Recording.GenerateId(), KeyType.Ec, keyOptions);
             RegisterForCleanup(key);
 
             Key keyReturned = await Client.GetKeyAsync(key.Name);
@@ -141,7 +141,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key);
 
             key.Expires = key.Created;
@@ -155,7 +155,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key);
 
             key.Enabled = false;
@@ -169,7 +169,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task GetKey()
         {
             string keyName = Recording.GenerateId();
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key);
 
             Key keyReturned = await Client.GetKeyAsync(keyName);
@@ -187,7 +187,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task GetKeyWithVersion()
         {
             string keyName = Recording.GenerateId();
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
             RegisterForCleanup(key);
 
             Key keyReturned = await Client.GetKeyAsync(keyName, key.Version);
@@ -200,7 +200,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             RegisterForCleanup(key, delete: false);
 
@@ -225,7 +225,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             RegisterForCleanup(key, delete: false);
 
@@ -254,7 +254,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             DeletedKey deletedKey = await Client.DeleteKeyAsync(keyName);
 
@@ -286,7 +286,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             RegisterForCleanup(key);
 
@@ -307,7 +307,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
 
             byte[] backup = await Client.BackupKeyAsync(keyName);
 
@@ -340,7 +340,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             List<Key> createdKeys = new List<Key>();
             for (int i = 0; i < PagedKeyCount; i++)
             {
-                Key Key = await Client.CreateKeyAsync(keyName + i, KeyType.EllipticCurve);
+                Key Key = await Client.CreateKeyAsync(keyName + i, KeyType.Ec);
                 createdKeys.Add(Key);
                 RegisterForCleanup(Key);
             }
@@ -362,7 +362,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             List<Key> createdKeys = new List<Key>();
             for (int i = 0; i < PagedKeyCount; i++)
             {
-                Key Key = await Client.CreateKeyAsync(keyName + i, KeyType.EllipticCurve);
+                Key Key = await Client.CreateKeyAsync(keyName + i, KeyType.Ec);
                 createdKeys.Add(Key);
                 await Client.DeleteKeyAsync(keyName + i);
 
@@ -391,7 +391,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             List<Key> createdKeys = new List<Key>();
             for (int i = 0; i < PagedKeyCount; i++)
             {
-                Key Key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+                Key Key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
                 createdKeys.Add(Key);
             }
             RegisterForCleanup(createdKeys.First());
