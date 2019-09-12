@@ -35,7 +35,6 @@ namespace Azure.Storage.Files.Tests
             => this.Recording.InstrumentClientOptions(
                     new FileClientOptions
                     {
-                        ResponseClassifier = new TestResponseClassifier(),
                         Diagnostics = { IsLoggingEnabled = true },
                         Retry =
                         {
