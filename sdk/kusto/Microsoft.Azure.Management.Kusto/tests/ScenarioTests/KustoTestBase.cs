@@ -102,8 +102,8 @@ namespace Kusto.Tests.ScenarioTests
 
             clusterName = TestUtilities.GenerateName("testcluster");
             databaseName = TestUtilities.GenerateName("testdatabase");
-            eventHubConnectionName = TestUtilities.GenerateName("eventhubConection");
-            eventGridConnectinoName = TestUtilities.GenerateName("eventGridConection");
+            eventHubConnectionName = TestUtilities.GenerateName("eventhubConnection");
+            eventGridConnectinoName = TestUtilities.GenerateName("eventGridConnection");
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
 
             sku1 = new AzureSku(name: "D13_v2", "Standard", capacity: 2);

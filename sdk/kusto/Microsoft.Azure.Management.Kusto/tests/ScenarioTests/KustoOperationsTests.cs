@@ -406,25 +406,6 @@ namespace Kusto.Tests.ScenarioTests
         }
 
         [Fact]
-        public void KustoAvailabilityZonesTests()
-        {
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var testBase = new KustoTestBase(context);
-
-                // Create cluster with zones {1}
-                var onlyOneZone = new List<string> { "1" };
-                testBase.cluster.Zones = onlyOneZone;
-                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                Assert.Equal(onlyOneZone, createdCluster.Zones);
-
-                // Delete cluster
-                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
-            }
-        }
-
-
-        [Fact]
         public void KustoDatabasePrincipalsTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
