@@ -3,13 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Tracing;
+using System.Globalization;
 using Azure.Core.Shared;
 
 namespace Azure.Core.Diagnostics
 {
     public class AzureEventSourceListener: EventListener
     {
+        public const string TraitName = "AzureEventSource";
+        public const string TraitValue = "true";
+
         private readonly List<EventSource> _eventSources = new List<EventSource>();
 
         private readonly Action<EventWrittenEventArgs, string> _log;
@@ -37,7 +42,7 @@ namespace Azure.Core.Diagnostics
                 _eventSources.Add(eventSource);
             }
 
-            if (eventSource.GetTrait("AzureEventSource") == "true")
+            if (eventSource.GetTrait(TraitName) == TraitValue)
             {
                 EnableEvents(eventSource, _level);
             }
@@ -51,6 +56,12 @@ namespace Azure.Core.Diagnostics
         public static AzureEventSourceListener CreateConsoleLogger(EventLevel level = EventLevel.Informational)
         {
             return new AzureEventSourceListener((eventData, text) => Console.WriteLine("[{1}] {0}: {2}", eventData.EventSource.Name, eventData.Level, text), level);
+        }
+
+        public static AzureEventSourceListener CreateTraceLogger(EventLevel level = EventLevel.Informational)
+        {
+            return new AzureEventSourceListener(
+                (eventData, text) => Trace.WriteLine(string.Format(CultureInfo.InvariantCulture, "[{0}] {1}", eventData.Level, text), eventData.EventSource.Name), level);
         }
     }
 }

@@ -11,16 +11,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Http;
 
-// TODO (pri 2): we should log correction/activity
-// TODO (pri 2): we should log exceptions
 namespace Azure.Core.Diagnostics
 {
-    // TODO (pri 2): make the type internal
     [EventSource(Name = EventSourceName)]
     internal sealed class HttpPipelineEventSource : EventSource
     {
-        // TODO (pri 3): do we want the same source name for all SDk components?
-        private const string EventSourceName = "AzureSDK";
+        private const string EventSourceName = "Azure-Core";
 
         private const int MaxEventPayloadSize = 10 * 1024;
         private const int CopyBufferSize = 8 * 1024;
@@ -41,11 +37,10 @@ namespace Azure.Core.Diagnostics
         private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
 
-        private HttpPipelineEventSource() : base(EventSourceName, EventSourceSettings.Default, "AzureEventSource", "true") { }
+        private HttpPipelineEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
         internal static readonly HttpPipelineEventSource Singleton = new HttpPipelineEventSource();
 
-        // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
         public void Request(Request request)
         {
