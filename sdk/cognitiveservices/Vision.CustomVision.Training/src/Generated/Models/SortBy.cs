@@ -12,16 +12,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
 
     /// <summary>
-    /// Defines values for ExportFlavor.
+    /// Defines values for SortBy.
     /// </summary>
-    public static class ExportFlavor
+    public static class SortBy
     {
-        public const string Linux = "Linux";
-        public const string Windows = "Windows";
-        public const string ONNX10 = "ONNX10";
-        public const string ONNX12 = "ONNX12";
-        public const string ARM = "ARM";
-        public const string TensorFlowNormal = "TensorFlowNormal";
-        public const string TensorFlowLite = "TensorFlowLite";
+        public const string UncertaintyAscending = "UncertaintyAscending";
+        public const string UncertaintyDescending = "UncertaintyDescending";
     }
 }

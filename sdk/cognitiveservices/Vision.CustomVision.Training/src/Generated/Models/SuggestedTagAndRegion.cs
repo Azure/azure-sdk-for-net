@@ -16,44 +16,36 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of an image prediction request.
+    /// Result of a suggested tags and regions request.
     /// </summary>
-    public partial class StoredImagePrediction
+    public partial class SuggestedTagAndRegion
     {
         /// <summary>
-        /// Initializes a new instance of the StoredImagePrediction class.
+        /// Initializes a new instance of the SuggestedTagAndRegion class.
         /// </summary>
-        public StoredImagePrediction()
+        public SuggestedTagAndRegion()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StoredImagePrediction class.
+        /// Initializes a new instance of the SuggestedTagAndRegion class.
         /// </summary>
-        /// <param name="resizedImageUri">The URI to the (resized) prediction
-        /// image.</param>
-        /// <param name="thumbnailUri">The URI to the thumbnail of the original
-        /// prediction image.</param>
-        /// <param name="originalImageUri">The URI to the original prediction
-        /// image.</param>
-        /// <param name="domain">Domain used for the prediction.</param>
         /// <param name="id">Prediction Id.</param>
         /// <param name="project">Project Id.</param>
         /// <param name="iteration">Iteration Id.</param>
         /// <param name="created">Date this prediction was created.</param>
         /// <param name="predictions">List of predictions.</param>
-        public StoredImagePrediction(string resizedImageUri = default(string), string thumbnailUri = default(string), string originalImageUri = default(string), System.Guid domain = default(System.Guid), System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<Prediction> predictions = default(IList<Prediction>))
+        /// <param name="predictionUncertainty">Uncertainty (entropy) of
+        /// suggested tags or regions per image.</param>
+        public SuggestedTagAndRegion(System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<Prediction> predictions = default(IList<Prediction>), double predictionUncertainty = default(double))
         {
-            ResizedImageUri = resizedImageUri;
-            ThumbnailUri = thumbnailUri;
-            OriginalImageUri = originalImageUri;
-            Domain = domain;
             Id = id;
             Project = project;
             Iteration = iteration;
             Created = created;
             Predictions = predictions;
+            PredictionUncertainty = predictionUncertainty;
             CustomInit();
         }
 
@@ -61,30 +53,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the URI to the (resized) prediction image.
-        /// </summary>
-        [JsonProperty(PropertyName = "resizedImageUri")]
-        public string ResizedImageUri { get; private set; }
-
-        /// <summary>
-        /// Gets the URI to the thumbnail of the original prediction image.
-        /// </summary>
-        [JsonProperty(PropertyName = "thumbnailUri")]
-        public string ThumbnailUri { get; private set; }
-
-        /// <summary>
-        /// Gets the URI to the original prediction image.
-        /// </summary>
-        [JsonProperty(PropertyName = "originalImageUri")]
-        public string OriginalImageUri { get; private set; }
-
-        /// <summary>
-        /// Gets domain used for the prediction.
-        /// </summary>
-        [JsonProperty(PropertyName = "domain")]
-        public System.Guid Domain { get; private set; }
 
         /// <summary>
         /// Gets prediction Id.
@@ -115,6 +83,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "predictions")]
         public IList<Prediction> Predictions { get; private set; }
+
+        /// <summary>
+        /// Gets uncertainty (entropy) of suggested tags or regions per image.
+        /// </summary>
+        [JsonProperty(PropertyName = "predictionUncertainty")]
+        public double PredictionUncertainty { get; private set; }
 
     }
 }

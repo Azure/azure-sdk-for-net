@@ -16,25 +16,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Query result of the prediction images that were sent to your prediction
-    /// endpoint.
+    /// The array of result images and token containing session and
+    /// continuation Ids for the next query.
     /// </summary>
-    public partial class PredictionQueryResult
+    public partial class SuggestedTagAndRegionQuery
     {
         /// <summary>
-        /// Initializes a new instance of the PredictionQueryResult class.
+        /// Initializes a new instance of the SuggestedTagAndRegionQuery class.
         /// </summary>
-        public PredictionQueryResult()
+        public SuggestedTagAndRegionQuery()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PredictionQueryResult class.
+        /// Initializes a new instance of the SuggestedTagAndRegionQuery class.
         /// </summary>
-        /// <param name="token">Prediction Query Token.</param>
-        /// <param name="results">Result of an prediction request.</param>
-        public PredictionQueryResult(PredictionQueryToken token = default(PredictionQueryToken), IList<StoredImagePrediction> results = default(IList<StoredImagePrediction>))
+        /// <param name="token">Contains properties we need to fetch suggested
+        /// tags for.</param>
+        /// <param name="results">Result of a suggested tags and regions
+        /// request of the untagged image.</param>
+        public SuggestedTagAndRegionQuery(SuggestedTagAndRegionQueryToken token = default(SuggestedTagAndRegionQueryToken), IList<StoredSuggestedTagAndRegion> results = default(IList<StoredSuggestedTagAndRegion>))
         {
             Token = token;
             Results = results;
@@ -47,16 +49,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets prediction Query Token.
+        /// Gets or sets contains properties we need to fetch suggested tags
+        /// for.
         /// </summary>
         [JsonProperty(PropertyName = "token")]
-        public PredictionQueryToken Token { get; set; }
+        public SuggestedTagAndRegionQueryToken Token { get; set; }
 
         /// <summary>
-        /// Gets result of an prediction request.
+        /// Gets result of a suggested tags and regions request of the untagged
+        /// image.
         /// </summary>
         [JsonProperty(PropertyName = "results")]
-        public IList<StoredImagePrediction> Results { get; private set; }
+        public IList<StoredSuggestedTagAndRegion> Results { get; private set; }
 
     }
 }

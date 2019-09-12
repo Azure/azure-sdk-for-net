@@ -16,21 +16,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of an image prediction request.
+    /// Result of a suggested tags and regions request of the untagged image.
     /// </summary>
-    public partial class StoredImagePrediction
+    public partial class StoredSuggestedTagAndRegion
     {
         /// <summary>
-        /// Initializes a new instance of the StoredImagePrediction class.
+        /// Initializes a new instance of the StoredSuggestedTagAndRegion
+        /// class.
         /// </summary>
-        public StoredImagePrediction()
+        public StoredSuggestedTagAndRegion()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StoredImagePrediction class.
+        /// Initializes a new instance of the StoredSuggestedTagAndRegion
+        /// class.
         /// </summary>
+        /// <param name="width">Width of the resized image.</param>
+        /// <param name="height">Height of the resized image.</param>
         /// <param name="resizedImageUri">The URI to the (resized) prediction
         /// image.</param>
         /// <param name="thumbnailUri">The URI to the thumbnail of the original
@@ -43,8 +47,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="iteration">Iteration Id.</param>
         /// <param name="created">Date this prediction was created.</param>
         /// <param name="predictions">List of predictions.</param>
-        public StoredImagePrediction(string resizedImageUri = default(string), string thumbnailUri = default(string), string originalImageUri = default(string), System.Guid domain = default(System.Guid), System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<Prediction> predictions = default(IList<Prediction>))
+        /// <param name="predictionUncertainty">Uncertainty (entropy) of
+        /// suggested tags or regions per image.</param>
+        public StoredSuggestedTagAndRegion(int width = default(int), int height = default(int), string resizedImageUri = default(string), string thumbnailUri = default(string), string originalImageUri = default(string), System.Guid domain = default(System.Guid), System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<Prediction> predictions = default(IList<Prediction>), double predictionUncertainty = default(double))
         {
+            Width = width;
+            Height = height;
             ResizedImageUri = resizedImageUri;
             ThumbnailUri = thumbnailUri;
             OriginalImageUri = originalImageUri;
@@ -54,6 +62,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             Iteration = iteration;
             Created = created;
             Predictions = predictions;
+            PredictionUncertainty = predictionUncertainty;
             CustomInit();
         }
 
@@ -61,6 +70,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets width of the resized image.
+        /// </summary>
+        [JsonProperty(PropertyName = "width")]
+        public int Width { get; private set; }
+
+        /// <summary>
+        /// Gets height of the resized image.
+        /// </summary>
+        [JsonProperty(PropertyName = "height")]
+        public int Height { get; private set; }
 
         /// <summary>
         /// Gets the URI to the (resized) prediction image.
@@ -115,6 +136,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "predictions")]
         public IList<Prediction> Predictions { get; private set; }
+
+        /// <summary>
+        /// Gets uncertainty (entropy) of suggested tags or regions per image.
+        /// </summary>
+        [JsonProperty(PropertyName = "predictionUncertainty")]
+        public double PredictionUncertainty { get; private set; }
 
     }
 }
