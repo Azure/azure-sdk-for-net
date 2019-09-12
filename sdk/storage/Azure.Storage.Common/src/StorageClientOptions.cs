@@ -19,6 +19,7 @@ namespace Azure.Storage
         /// The default scope used for token authentication with Storage.
         /// </summary>
         const string StorageScope = "https://storage.azure.com/.default";
+        static StorageRequestValidationPipelinePolicy _storageRequestValidationPipelinePolicy;
 
         /// <summary>
         /// Set common ClientOptions defaults for Azure Storage.
@@ -34,6 +35,9 @@ namespace Azure.Storage
 
             // Disable logging until we fully support redaction
             options.Diagnostics.IsLoggingEnabled = false;
+
+            // Initialize StorageRequestValidationPipelinePolicy to validate request client id
+            _storageRequestValidationPipelinePolicy = new StorageRequestValidationPipelinePolicy();
         }
 
         /// <summary>
@@ -86,7 +90,8 @@ namespace Azure.Storage
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null) =>
             HttpPipelineBuilder.Build(
                 options,
-                authentication);
+                authentication,
+                _storageRequestValidationPipelinePolicy);
 
         /// <summary>
         /// Create an HttpPipeline from Storage ClientOptions.

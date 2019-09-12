@@ -420,6 +420,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 var name = this.GetNewBlobName();
                 var blob = this.InstrumentClient(container.GetBlobClient(name));
+                var credential = new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey);
+                blob = this.InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
                 using (var stream = new MemoryStream(data))
                 {
@@ -471,6 +473,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     var name = this.GetNewBlobName();
                     var blob = this.InstrumentClient(container.GetBlobClient(name));
+                    var credential = new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey);
+                    blob = this.InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
                     using (var stream = new MemoryStream(data))
                     {

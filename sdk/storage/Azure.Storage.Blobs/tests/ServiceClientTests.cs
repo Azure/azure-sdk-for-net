@@ -189,7 +189,7 @@ namespace Azure.Storage.Blobs.Test
             var response = await service.GetPropertiesAsync();
 
             // Assert
-            Assert.IsFalse(String.IsNullOrWhiteSpace(response.Value.DefaultServiceVersion));
+            Assert.IsNotNull(response.Value.DeleteRetentionPolicy);
         }
 
         [Test]
