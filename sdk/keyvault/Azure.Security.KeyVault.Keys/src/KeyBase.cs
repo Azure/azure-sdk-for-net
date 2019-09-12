@@ -22,7 +22,8 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         public KeyBase(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.NotNullOrEmpty(name, nameof(name));
+
             Name = name;
         }
 

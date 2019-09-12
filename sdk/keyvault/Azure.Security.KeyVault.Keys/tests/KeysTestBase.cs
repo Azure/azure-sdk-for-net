@@ -117,7 +117,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsTrue(AreEqual(exp.Tags, act.Tags));
         }
 
-        private static bool AreEqual(IList<KeyOperations> exp, IList<KeyOperations> act)
+        private static bool AreEqual(IList<KeyOperation> exp, IList<KeyOperation> act)
         {
             if (exp == null && act == null)
                 return true;
