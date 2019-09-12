@@ -88,7 +88,7 @@ namespace Azure.Core.Pipeline
 
             var after = Stopwatch.GetTimestamp();
 
-            bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
+            bool isError = message.ResponseClassifier.IsErrorResponse(message);
 
             var textResponse = ContentTypeUtilities.TryGetTextEncoding(message.Response.Headers.ContentType, out Encoding? responseTextEncoding);
 
