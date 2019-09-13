@@ -13,17 +13,19 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.Default;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary>
         /// The versions of App Config Service supported by this client library.
         /// </summary>
         public enum ServiceVersion
         {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
             /// Uses the latest service version
             /// </summary>
-            Default = 0
+            V1_0 = 0
+#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace Azure.Data.AppConfiguration
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public ConfigurationClientOptions(ServiceVersion version = ServiceVersion.Default)
+        public ConfigurationClientOptions(ServiceVersion version = LatestVersion)
         {
             this.Version = version;
         }

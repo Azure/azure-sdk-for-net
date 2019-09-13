@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
+#pragma warning disable CA1801 // use your parameters
     /// <summary>
     /// The client to use for interacting with the Azure Configuration Store.
     /// </summary>
@@ -853,6 +854,8 @@ namespace Azure.Data.AppConfiguration
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Put;
             //BuildUriForLocksRoute(request.UriBuilder, key, label);
+            // TODOL Totally gross.
+            request.Headers.Add(key, label);
 
             if (etag != default)
             {
@@ -987,6 +990,9 @@ namespace Azure.Data.AppConfiguration
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
             //BuildUriForLocksRoute(request.UriBuilder, key, label);
+
+            // TODOL Totally gross.
+            request.Headers.Add(key, label);
 
             if (etag != default)
             {

@@ -5,6 +5,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
+#pragma warning disable CA1801 // use your parameters
 #pragma warning disable AZC0007 // needs constructor with ClientOptions
     /// <summary>
     /// Client for sending requests directly to the management plane.
