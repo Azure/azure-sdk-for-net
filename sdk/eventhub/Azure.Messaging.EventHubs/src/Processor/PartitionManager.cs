@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                                                                  string consumerGroup);
 
         /// <summary>
-        ///   Tries to claim a list of specified ownership.
+        ///   Attempts to claim ownership of partitions for processing.
         /// </summary>
         ///
         /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
