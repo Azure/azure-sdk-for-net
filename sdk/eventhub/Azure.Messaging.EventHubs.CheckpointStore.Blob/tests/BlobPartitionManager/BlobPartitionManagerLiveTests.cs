@@ -858,7 +858,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         }
 
         /// <summary>
-        ///   A workaround so we can create <see cref="Checkpoint"/> instances.
+        ///   A workaround so we can create <see cref="Checkpoint" /> instances.
         /// </summary>
         ///
         private class MockCheckpoint : Checkpoint
