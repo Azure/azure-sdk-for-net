@@ -7,15 +7,20 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
     ///   The set of keys to access or modify blobs' metadata.
     /// </summary>
     ///
+    /// <remarks>
+    ///   The current storage SDK throws an exception when the key contains
+    ///   an uppercase letter.
+    /// </remarks>
+    ///
     internal static class BlobMetadataKey
     {
         /// <summary>The key to the owner identifier metadata.</summary>
-        public const string OwnerIdentifier = "OwnerId";
+        public const string OwnerIdentifier = "owner_id";
 
         /// <summary>The key to the offset metadata.</summary>
-        public const string Offset = "Offset";
+        public const string Offset = "offset";
 
         /// <summary>The key to the sequence number metadata.</summary>
-        public const string SequenceNumber = "SequenceNumber";
+        public const string SequenceNumber = "sequence_number";
     }
 }

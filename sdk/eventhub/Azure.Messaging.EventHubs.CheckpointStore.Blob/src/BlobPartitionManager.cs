@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.Http;
 using Azure.Messaging.EventHubs.CheckpointStore.Blob;
@@ -118,33 +119,77 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 var blobAccessConditions = new BlobAccessConditions();
 
-                if (ownership.ETag == null)
-                {
-                    blobAccessConditions.HttpAccessConditions = new HttpAccessConditions { IfNoneMatch = new ETag("*") };
-                }
-                else
-                {
-                    blobAccessConditions.HttpAccessConditions = new HttpAccessConditions { IfMatch = new ETag(ownership.ETag) };
-                }
-
                 var blobName = $"{ ownership.EventHubName }/{ ownership.ConsumerGroup }/{ ownership.PartitionId }";
                 var blobClient = ContainerClient.GetBlobClient(blobName);
 
                 try
                 {
-                    var emptyStream = new MemoryStream(new byte[0]);
-                    var response = await blobClient.UploadAsync(emptyStream, metadata: metadata, blobAccessConditions: blobAccessConditions);
+                    // Even though documentation states otherwise, we cannot use UploadAsync when the blob already exists in
+                    // the current storage SDK.  For this reason, we are using the specified ETag as an indication of what
+                    // method to use.
 
-                    ownership.LastModifiedTime = response.Value.LastModified;
-                    ownership.ETag = response.Value.ETag.ToString();
+                    if (ownership.ETag == null)
+                    {
+                        blobAccessConditions.HttpAccessConditions = new HttpAccessConditions { IfNoneMatch = new ETag("*") };
+
+                        Response<BlobContentInfo> response;
+
+                        try
+                        {
+                            response = await blobClient.UploadAsync(new MemoryStream(new byte[0]), metadata: metadata, blobAccessConditions: blobAccessConditions);
+                        }
+                        catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+                        {
+                            // A blob could have just been created by another Event Processor that claimed ownership of this
+                            // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
+
+                            Log($"Ownership with partition id = '{ ownership.PartitionId }' is not claimable.");
+                            continue;
+                        }
+
+                        ownership.LastModifiedTime = response.Value.LastModified;
+                        ownership.ETag = response.Value.ETag.ToString();
+                    }
+                    else
+                    {
+                        blobAccessConditions.HttpAccessConditions = new HttpAccessConditions { IfMatch = new ETag(ownership.ETag) };
+
+                        Response<BlobInfo> response;
+
+                        try
+                        {
+                            response = await blobClient.SetMetadataAsync(metadata, blobAccessConditions);
+                        }
+                        catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                        {
+                            // No ownership was found, which means the ETag should have been set to null in order to
+                            // claim this ownership.  For this reason, we consider it a failure and don't try again.
+
+                            Log($"Ownership with partition id = '{ ownership.PartitionId }' is not claimable.");
+                            continue;
+                        }
+
+                        ownership.LastModifiedTime = response.Value.LastModified;
+                        ownership.ETag = response.Value.ETag.ToString();
+                    }
+
+                    // Small workaround to retrieve the eTag.  The current storage SDK returns it enclosed in
+                    // double quotes ('"ETAG_VALUE"' instead of 'ETAG_VALUE').
+
+                    var match = Regex.Match(ownership.ETag, "\"(.*)\"");
+
+                    if (match.Success)
+                    {
+                        ownership.ETag = match.Groups[1].ToString();
+                    }
 
                     claimedOwnership.Add(ownership);
 
-                    Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
+                    Log($"Ownership with partition id = '{ ownership.PartitionId }' claimed.");
                 }
                 catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                 {
-                    Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
+                    Log($"Ownership with partition id = '{ ownership.PartitionId }' is not claimable.");
                 }
             }
 
@@ -172,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
             {
-                Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' could not be updated because no associated ownership was found.");
+                Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because no associated ownership was found.");
                 return;
             }
 
@@ -197,16 +242,16 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     await blobClient.SetMetadataAsync(metadata, accessConditions);
 
-                    Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated.");
+                    Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' updated.");
                 }
                 catch(StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                 {
-                    Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' could not be updated because eTag has changed.");
+                    Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because eTag has changed.");
                 }
             }
             else
             {
-                Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' could not be updated because owner has changed.");
+                Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because owner has changed.");
             }
         }
 
