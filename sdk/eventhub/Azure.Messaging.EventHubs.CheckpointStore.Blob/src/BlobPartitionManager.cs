@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                 Prefix = prefix
             };
 
-            await foreach (var response in ContainerClient.GetBlobsAsync(options))
+            await foreach (var response in ContainerClient.GetBlobsAsync(options).ConfigureAwait(false))
             {
                 var blob = response.Value;
 
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
                         try
                         {
-                            response = await blobClient.UploadAsync(new MemoryStream(new byte[0]), metadata: metadata, blobAccessConditions: blobAccessConditions);
+                            response = await blobClient.UploadAsync(new MemoryStream(new byte[0]), metadata: metadata, blobAccessConditions: blobAccessConditions).ConfigureAwait(false);
                         }
                         catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                         {
@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
                         try
                         {
-                            response = await blobClient.SetMetadataAsync(metadata, blobAccessConditions);
+                            response = await blobClient.SetMetadataAsync(metadata, blobAccessConditions).ConfigureAwait(false);
                         }
                         catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
                         {
@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
             try
             {
-                currentBlob = (await blobClient.GetPropertiesAsync()).Value;
+                currentBlob = (await blobClient.GetPropertiesAsync().ConfigureAwait(false)).Value;
             }
             catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
             {
@@ -242,7 +242,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
                 try
                 {
-                    await blobClient.SetMetadataAsync(metadata, accessConditions);
+                    await blobClient.SetMetadataAsync(metadata, accessConditions).ConfigureAwait(false);
 
                     Log($"Checkpoint with partition id = '{ checkpoint.PartitionId }' updated.");
                 }
