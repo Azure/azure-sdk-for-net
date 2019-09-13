@@ -2,6 +2,10 @@
 
 ## Current version
 ###  Feature Additions
+- Added support for instance pools in Databricks linked service
+
+## Version 4.1.3
+###  Feature Additions
 - Added outputColumns property to Office365Source
 - Added support for ORC dataset in ADF
 
