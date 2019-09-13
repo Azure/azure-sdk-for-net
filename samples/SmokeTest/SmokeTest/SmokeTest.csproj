@@ -10,7 +10,6 @@
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.0-preview.3" />
     <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.0.0-preview.4" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.0.0-preview.3" />
-    <PackageReference Include="Microsoft.Azure.DocumentDB" Version="2.6.0" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.6.0" />
     <PackageReference Include="System.Reflection.Metadata" Version="1.6.0" />
   </ItemGroup>

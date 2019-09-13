@@ -4,20 +4,24 @@ variables:
 jobs:
   - job: SmokeTest
 
-    variables:
-      TestTargetFramework: netcoreapp2.1
-
     strategy:
       matrix:
         Linux:
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
-        Windows:
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetCoreApp:
           OSName: "Windows"
           OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetFramework:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
         MacOs:
           OSName: "MacOS"
           OSVmImage: "macOS-10.13"
+          TestTargetFramework: netcoreapp2.1
 
     pool:
       vmImage: $(OSVmImage)

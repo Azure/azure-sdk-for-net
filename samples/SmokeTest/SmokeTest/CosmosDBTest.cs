@@ -12,8 +12,6 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
-    using DocumentClient = Microsoft.Azure.Documents.Client.DocumentClient;
-
     public class Planet
     {
         [JsonProperty(PropertyName = "id")]
@@ -136,7 +134,7 @@ namespace SmokeTest
             Console.Write("Querying... ");
             IQueryable<Planet> planetarySqlQuery = client.CreateDocumentQuery<Planet>(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), "SELECT * FROM c");
 
-            var planetsSet = new HashSet<string>(planets.Count);
+            var planetsSet = new HashSet<string>();
             foreach(Planet planet in planets)
             {
                 planetsSet.Add(planet.ToString());
