@@ -3,6 +3,7 @@
 // license information.
 
 using Azure.Core;
+using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using System;
 using System.IO;
@@ -23,7 +24,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// A client used to perform cryptographic operations with Azure Key Vault keys 
     /// </summary>
-    public class CryptographyClient
+    public class CryptographyClient : IKeyEncryptionKey
     {
         private readonly Uri _keyId;
         private readonly ICryptographyProvider _remoteProvider;
@@ -704,6 +705,54 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Encrypts the specified key using the specified algorithm
+        /// </summary>
+        /// <param name="algorithm">The algorithm to use to encrypt the key</param>
+        /// <param name="key">The key to be encrypted</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>The encrypted key</returns>
+        byte[] IKeyEncryptionKey.WrapKey(string algorithm, byte[] key, CancellationToken cancellationToken)
+        {
+            return WrapKey(new KeyWrapAlgorithm(algorithm), key, cancellationToken).EncryptedKey;
+        }
+
+        /// <summary>
+        /// Encrypts the specified key using the specified algorithm
+        /// </summary>
+        /// <param name="algorithm">The algorithm to use to encrypt the key</param>
+        /// <param name="key">The key to be encrypted</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>The encrypted key</returns>
+        async Task<byte[]> IKeyEncryptionKey.WrapKeyAsync(string algorithm, byte[] key, CancellationToken cancellationToken)
+        {
+            return (await WrapKeyAsync(new KeyWrapAlgorithm(algorithm), key, cancellationToken).ConfigureAwait(false)).EncryptedKey;
+        }
+
+        /// <summary>
+        /// Decrypts the specified key using the specified algorithm
+        /// </summary>
+        /// <param name="algorithm">The algorithm to use to decrypt the key</param>
+        /// <param name="encryptedKey">The encrypted key to be decrypted</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>The decrypted key</returns>
+        byte[] IKeyEncryptionKey.UnwrapKey(string algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
+        {
+            return UnwrapKey(new KeyWrapAlgorithm(algorithm), encryptedKey, cancellationToken).Key;
+        }
+
+        /// <summary>
+        /// Decrypts the specified key using the specified algorithm
+        /// </summary>
+        /// <param name="algorithm">The algorithm to use to decrypt the key</param>
+        /// <param name="encryptedKey">The encrypted key to be decrypted</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>The decrypted key</returns>
+        async Task<byte[]> IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
+        {
+            return (await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), encryptedKey, cancellationToken).ConfigureAwait(false)).Key;
         }
 
         private static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)
