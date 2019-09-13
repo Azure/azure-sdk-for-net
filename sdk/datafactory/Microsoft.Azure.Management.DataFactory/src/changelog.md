@@ -2,12 +2,18 @@
 
 ## Current version
 ###  Feature Additions
-- Added support for instance pools in Databricks linked service
 
 ## Version 4.1.3
 ###  Feature Additions
+- Added RunDimension to Pipeline
+- Added Chaining Trigger
+- Added Dependency Status property in Pipeline and Trigger Run
 - Added outputColumns property to Office365Source
 - Added support for ORC dataset in ADF
+- Added alternateKeyName property to DynamicsSink, DynamicsCrmSink and CommonDataServiceForAppsSinkCommonDataServiceForAppsSink
+- Added property blockSizeInMB to Blobsink and BlobFSsink
+- Added support for custom setup without script properties for a SSIS integration runtime
+- Added support for instance pools in Databricks linked service
 
 ## Version 4.1.2
 ###  Feature Additions
