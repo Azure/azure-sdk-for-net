@@ -11,11 +11,21 @@ namespace Azure.Core.Pipeline
     {
         public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] clientPolicies)
         {
-            return Build(options, new ResponseClassifier(), Array.Empty<HttpPipelinePolicy>(), clientPolicies);
+            return Build(options, Array.Empty<HttpPipelinePolicy>(), clientPolicies, new ResponseClassifier());
         }
 
-        public static HttpPipeline Build(ClientOptions options, ResponseClassifier responseClassifier, HttpPipelinePolicy[] perCallClientPolicies, HttpPipelinePolicy[] perRetryClientPolicies)
+        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallClientPolicies, HttpPipelinePolicy[] perRetryClientPolicies, ResponseClassifier responseClassifier)
         {
+            if (perCallClientPolicies == null)
+            {
+                throw new ArgumentNullException(nameof(perCallClientPolicies));
+            }
+
+            if (perRetryClientPolicies == null)
+            {
+                throw new ArgumentNullException(nameof(perRetryClientPolicies));
+            }
+
             var policies = new List<HttpPipelinePolicy>();
 
             policies.AddRange(perCallClientPolicies);
