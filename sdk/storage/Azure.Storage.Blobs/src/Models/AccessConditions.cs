@@ -40,17 +40,17 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
-            => obj is HttpAccessConditions other && this.Equals(other);
+            => obj is HttpAccessConditions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the HttpAccessConditions.
         /// </summary>
         /// <returns>Hash code for the HttpAccessConditions.</returns>
         public override int GetHashCode()
-            => this.IfModifiedSince.GetHashCode()
-            ^ this.IfUnmodifiedSince.GetHashCode()
-            ^ this.IfMatch.GetHashCode()
-            ^ this.IfNoneMatch.GetHashCode()
+            => IfModifiedSince.GetHashCode()
+            ^ IfUnmodifiedSince.GetHashCode()
+            ^ IfMatch.GetHashCode()
+            ^ IfNoneMatch.GetHashCode()
             ;
 
         /// <summary>
@@ -75,10 +75,10 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(HttpAccessConditions other)
-            => this.IfMatch == other.IfMatch
-            && this.IfModifiedSince == other.IfModifiedSince
-            && this.IfNoneMatch == other.IfNoneMatch
-            && this.IfUnmodifiedSince == other.IfUnmodifiedSince
+            => IfMatch == other.IfMatch
+            && IfModifiedSince == other.IfModifiedSince
+            && IfNoneMatch == other.IfNoneMatch
+            && IfUnmodifiedSince == other.IfUnmodifiedSince
             ;
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Azure.Storage.Blobs.Models
         /// A string representation of the HttpAccessConditions.
         /// </returns>
         public override string ToString()
-            => $"[{nameof(HttpAccessConditions)}:{nameof(this.IfModifiedSince)}={this.IfModifiedSince};{nameof(this.IfUnmodifiedSince)}={this.IfUnmodifiedSince};{nameof(this.IfMatch)}={this.IfMatch};{nameof(this.IfNoneMatch)}={this.IfNoneMatch}]";
+            => $"[{nameof(HttpAccessConditions)}:{nameof(IfModifiedSince)}={IfModifiedSince};{nameof(IfUnmodifiedSince)}={IfUnmodifiedSince};{nameof(IfMatch)}={IfMatch};{nameof(IfNoneMatch)}={IfNoneMatch}]";
     }
 
     /// <summary>
@@ -113,15 +113,15 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
-            => obj is ContainerAccessConditions other && this.Equals(other);
+            => obj is ContainerAccessConditions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the ContainerAccessConditions.
         /// </summary>
         /// <returns>Hash code for the ContainerAccessConditions.</returns>
         public override int GetHashCode()
-            => this.HttpAccessConditions.GetHashCode()
-            ^ this.LeaseAccessConditions.GetHashCode()
+            => HttpAccessConditions.GetHashCode()
+            ^ LeaseAccessConditions.GetHashCode()
             ;
 
         /// <summary>
@@ -146,8 +146,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(ContainerAccessConditions other)
-            => this.HttpAccessConditions == other.HttpAccessConditions
-            && this.LeaseAccessConditions == other.LeaseAccessConditions
+            => HttpAccessConditions == other.HttpAccessConditions
+            && LeaseAccessConditions == other.LeaseAccessConditions
             ;
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.Storage.Blobs.Models
         /// A string representation of the ContainerAccessConditions.
         /// </returns>
         public override string ToString()
-            => $"[{nameof(ContainerAccessConditions)}:{nameof(this.HttpAccessConditions)}={this.HttpAccessConditions};{nameof(this.LeaseAccessConditions)}={this.LeaseAccessConditions}]";
+            => $"[{nameof(ContainerAccessConditions)}:{nameof(HttpAccessConditions)}={HttpAccessConditions};{nameof(LeaseAccessConditions)}={LeaseAccessConditions}]";
     }
 
     /// <summary>
@@ -182,14 +182,14 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
-            => obj is BlobAccessConditions other && this.Equals(other);
+            => obj is BlobAccessConditions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the BlobAccessConditions.
         /// </summary>
         public override int GetHashCode()
-            => this.HttpAccessConditions.GetHashCode()
-            ^ this.LeaseAccessConditions.GetHashCode()
+            => HttpAccessConditions.GetHashCode()
+            ^ LeaseAccessConditions.GetHashCode()
             ;
 
         /// <summary>
@@ -214,8 +214,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(BlobAccessConditions other)
-            => this.HttpAccessConditions == other.HttpAccessConditions
-            && this.LeaseAccessConditions == other.LeaseAccessConditions
+            => HttpAccessConditions == other.HttpAccessConditions
+            && LeaseAccessConditions == other.LeaseAccessConditions
             ;
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.Storage.Blobs.Models
         /// A string representation of the BlobAccessConditions.
         /// </returns>
         public override string ToString()
-            => $"[{nameof(BlobAccessConditions)}:{nameof(this.HttpAccessConditions)}={this.HttpAccessConditions};{nameof(this.LeaseAccessConditions)}={this.LeaseAccessConditions}]";
+            => $"[{nameof(BlobAccessConditions)}:{nameof(HttpAccessConditions)}={HttpAccessConditions};{nameof(LeaseAccessConditions)}={LeaseAccessConditions}]";
     }
 
     /// <summary>
@@ -246,14 +246,14 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
-            => obj is LeaseAccessConditions other && this.Equals(other);
+            => obj is LeaseAccessConditions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the LeaseAccessConditions.
         /// </summary>
         /// <returns>Hash code for the LeaseAccessConditions.</returns>
         public override int GetHashCode()
-            => this.LeaseId.GetHashCode();
+            => LeaseId.GetHashCode();
 
         /// <summary>
         /// Check if two LeaseAccessConditions instances are equal.
@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(LeaseAccessConditions other)
-            => this.LeaseId == other.LeaseId;
+            => LeaseId == other.LeaseId;
 
         /// <summary>
         /// Converts the value of the current HttpAccessConditions object to
@@ -287,7 +287,7 @@ namespace Azure.Storage.Blobs.Models
         /// A string representation of the HttpAccessConditions.
         /// </returns>
         public override string ToString()
-            => $"[{nameof(LeaseAccessConditions)}:{nameof(this.LeaseId)}={this.LeaseId}]";
+            => $"[{nameof(LeaseAccessConditions)}:{nameof(LeaseId)}={LeaseId}]";
     }
 
     /// <summary>
@@ -324,17 +324,17 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
-            => obj is AppendBlobAccessConditions other && this.Equals(other);
+            => obj is AppendBlobAccessConditions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the AppendBlobAccessConditions.
         /// </summary>
         /// <returns>Hash code for the AppendBlobAccessConditions.</returns>
         public override int GetHashCode()
-            => this.HttpAccessConditions.GetHashCode()
-            ^ this.IfAppendPositionEqual.GetHashCode()
-            ^ this.IfMaxSizeLessThanOrEqual.GetHashCode()
-            ^ this.LeaseAccessConditions.GetHashCode()
+            => HttpAccessConditions.GetHashCode()
+            ^ IfAppendPositionEqual.GetHashCode()
+            ^ IfMaxSizeLessThanOrEqual.GetHashCode()
+            ^ LeaseAccessConditions.GetHashCode()
             ;
 
         /// <summary>
@@ -359,10 +359,10 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AppendBlobAccessConditions other)
-            => this.HttpAccessConditions == other.HttpAccessConditions
-            && this.IfAppendPositionEqual == other.IfAppendPositionEqual
-            && this.IfMaxSizeLessThanOrEqual == other.IfMaxSizeLessThanOrEqual
-            && this.LeaseAccessConditions == other.LeaseAccessConditions
+            => HttpAccessConditions == other.HttpAccessConditions
+            && IfAppendPositionEqual == other.IfAppendPositionEqual
+            && IfMaxSizeLessThanOrEqual == other.IfMaxSizeLessThanOrEqual
+            && LeaseAccessConditions == other.LeaseAccessConditions
             ;
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Azure.Storage.Blobs.Models
         /// A string representation of the AppendBlobAccessConditions.
         /// </returns>
         public override string ToString()
-            => $"[{nameof(AppendBlobAccessConditions)}:{nameof(this.HttpAccessConditions)}={this.HttpAccessConditions};{nameof(this.LeaseAccessConditions)}={this.LeaseAccessConditions};{nameof(this.IfAppendPositionEqual)}={this.IfAppendPositionEqual};{nameof(this.IfMaxSizeLessThanOrEqual)}={this.IfMaxSizeLessThanOrEqual}]";
+            => $"[{nameof(AppendBlobAccessConditions)}:{nameof(HttpAccessConditions)}={HttpAccessConditions};{nameof(LeaseAccessConditions)}={LeaseAccessConditions};{nameof(IfAppendPositionEqual)}={IfAppendPositionEqual};{nameof(IfMaxSizeLessThanOrEqual)}={IfMaxSizeLessThanOrEqual}]";
     }
 
     /// <summary>
@@ -416,18 +416,18 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public override bool Equals(object obj)
-            => obj is PageBlobAccessConditions other && this.Equals(other);
+            => obj is PageBlobAccessConditions other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the PageBlobAccessConditions.
         /// </summary>
         /// <returns>Hash code for the PageBlobAccessConditions.</returns>
         public override int GetHashCode()
-            => this.HttpAccessConditions.GetHashCode()
-            ^ this.IfSequenceNumberEqual.GetHashCode()
-            ^ this.IfSequenceNumberLessThan.GetHashCode()
-            ^ this.IfSequenceNumberLessThanOrEqual.GetHashCode()
-            ^ this.LeaseAccessConditions.GetHashCode()
+            => HttpAccessConditions.GetHashCode()
+            ^ IfSequenceNumberEqual.GetHashCode()
+            ^ IfSequenceNumberLessThan.GetHashCode()
+            ^ IfSequenceNumberLessThanOrEqual.GetHashCode()
+            ^ LeaseAccessConditions.GetHashCode()
             ;
 
         /// <summary>
@@ -452,11 +452,11 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(PageBlobAccessConditions other)
-            => this.HttpAccessConditions == other.HttpAccessConditions
-            && this.IfSequenceNumberEqual == other.IfSequenceNumberEqual
-            && this.IfSequenceNumberLessThan == other.IfSequenceNumberLessThan
-            && this.IfSequenceNumberLessThanOrEqual == other.IfSequenceNumberLessThanOrEqual
-            && this.LeaseAccessConditions == other.LeaseAccessConditions
+            => HttpAccessConditions == other.HttpAccessConditions
+            && IfSequenceNumberEqual == other.IfSequenceNumberEqual
+            && IfSequenceNumberLessThan == other.IfSequenceNumberLessThan
+            && IfSequenceNumberLessThanOrEqual == other.IfSequenceNumberLessThanOrEqual
+            && LeaseAccessConditions == other.LeaseAccessConditions
             ;
 
         /// <summary>
@@ -467,6 +467,6 @@ namespace Azure.Storage.Blobs.Models
         /// A string representation of the PageBlobAccessConditions.
         /// </returns>
         public override string ToString()
-            => $"[{nameof(PageBlobAccessConditions)}:{nameof(this.HttpAccessConditions)}={this.HttpAccessConditions};{nameof(this.LeaseAccessConditions)}={this.LeaseAccessConditions};{nameof(this.IfSequenceNumberLessThan)}={this.IfSequenceNumberLessThan};{nameof(this.IfSequenceNumberLessThanOrEqual)}={this.IfSequenceNumberLessThanOrEqual};{nameof(this.IfSequenceNumberEqual)}={this.IfSequenceNumberEqual}]";
+            => $"[{nameof(PageBlobAccessConditions)}:{nameof(HttpAccessConditions)}={HttpAccessConditions};{nameof(LeaseAccessConditions)}={LeaseAccessConditions};{nameof(IfSequenceNumberLessThan)}={IfSequenceNumberLessThan};{nameof(IfSequenceNumberLessThanOrEqual)}={IfSequenceNumberLessThanOrEqual};{nameof(IfSequenceNumberEqual)}={IfSequenceNumberEqual}]";
     }
 }
