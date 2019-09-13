@@ -28,8 +28,15 @@ jobs:
 
     steps:
       - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
+
+      - task: DotNetCoreInstaller@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
+          packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
       - script: dotnet run -p ./samples/SmokeTest/SmokeTest/SmokeTest.csproj --framework $(TestTargetFramework)
