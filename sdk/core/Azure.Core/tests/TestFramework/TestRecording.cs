@@ -55,11 +55,9 @@ namespace Azure.Core.Testing
 
         private readonly RecordMatcher _matcher;
 
-        private RecordSession _session;
+        private readonly RecordSession _session;
 
         private RecordSession _previousSession;
-
-        private readonly Random _nonReproducibleRandom = new Random();
 
         private Random _random;
 
@@ -185,17 +183,13 @@ namespace Azure.Core.Testing
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
         {
-            switch (Mode)
+            return Mode switch
             {
-                case RecordedTestMode.Live:
-                    return currentTransport;
-                case RecordedTestMode.Record:
-                    return new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random);
-                case RecordedTestMode.Playback:
-                    return new PlaybackTransport(_session, _matcher, Random);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null);
-            }
+                RecordedTestMode.Live => currentTransport,
+                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random),
+                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, Random),
+                _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
+            };
         }
 
         public string GenerateId()

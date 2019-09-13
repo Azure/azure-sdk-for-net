@@ -42,8 +42,10 @@ namespace Azure.Core.Tests
         public async Task UsesAssemblyNameAndInformationalVersionForTelemetryPolicySettings()
         {
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
-            var options = new TestOptions();
-            options.Transport = transport;
+            var options = new TestOptions
+            {
+                Transport = transport
+            };
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 

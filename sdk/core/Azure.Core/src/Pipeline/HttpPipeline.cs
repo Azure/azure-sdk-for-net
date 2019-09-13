@@ -62,10 +62,12 @@ namespace Azure.Core.Pipeline
 
         private HttpPipelineMessage BuildMessage(Request request, bool bufferResponse, CancellationToken cancellationToken)
         {
-            var message = new HttpPipelineMessage(request, _responseClassifier, cancellationToken);
-            message.Request = request;
-            message.BufferResponse = bufferResponse;
-            message.ResponseClassifier = _responseClassifier;
+            var message = new HttpPipelineMessage(request, _responseClassifier, cancellationToken)
+            {
+                Request = request,
+                BufferResponse = bufferResponse,
+                ResponseClassifier = _responseClassifier
+            };
             return message;
         }
     }

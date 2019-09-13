@@ -67,7 +67,7 @@ namespace Azure.Core
             messageBuilder
                 .AppendLine()
                 .AppendLine("Headers:");
-            foreach (var responseHeader in response.Headers)
+            foreach (Http.HttpHeader responseHeader in response.Headers)
             {
                 messageBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
             }

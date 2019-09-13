@@ -22,8 +22,10 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(Uris))]
         public void RoundtripWithUri(Uri uri)
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Uri = uri;
+            var uriBuilder = new RequestUriBuilder
+            {
+                Uri = uri
+            };
 
             Assert.AreEqual(uri.Scheme, uriBuilder.Scheme);
             Assert.AreEqual(uri.Host, uriBuilder.Host);
@@ -40,11 +42,13 @@ namespace Azure.Core.Tests
         [TestCase("/a", "http://localhost/a")]
         public void AddsLeadingSlashToPath(string path, string expected)
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Scheme = "http";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 80;
-            uriBuilder.Path = path;
+            var uriBuilder = new RequestUriBuilder
+            {
+                Scheme = "http",
+                Host = "localhost",
+                Port = 80,
+                Path = path
+            };
 
             Assert.AreEqual(expected, uriBuilder.Uri.ToString());
         }
@@ -55,11 +59,13 @@ namespace Azure.Core.Tests
         [TestCase("?a", "http://localhost/?a")]
         public void AddsLeadingQuestionMarkToQuery(string query, string expected)
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Scheme = "http";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 80;
-            uriBuilder.Query = query;
+            var uriBuilder = new RequestUriBuilder
+            {
+                Scheme = "http",
+                Host = "localhost",
+                Port = 80,
+                Query = query
+            };
 
             Assert.AreEqual(expected, uriBuilder.Uri.ToString());
         }
@@ -68,11 +74,13 @@ namespace Azure.Core.Tests
         [TestCase("")]
         public void SettingQueryToEmptyRemovesQuestionMark(string query)
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Scheme = "http";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 80;
-            uriBuilder.Query = "a";
+            var uriBuilder = new RequestUriBuilder
+            {
+                Scheme = "http",
+                Host = "localhost",
+                Port = 80,
+                Query = "a"
+            };
 
             Assert.AreEqual("http://localhost/?a", uriBuilder.Uri.ToString());
 
@@ -88,11 +96,13 @@ namespace Azure.Core.Tests
         [TestCase("%#?&", "%25#?&")]
         public void PathIsEscaped(string path, string expectedPath)
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Scheme = "http";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 80;
-            uriBuilder.Path = path;
+            var uriBuilder = new RequestUriBuilder
+            {
+                Scheme = "http",
+                Host = "localhost",
+                Port = 80,
+                Path = path
+            };
 
             Assert.AreEqual("http://localhost/" + expectedPath, uriBuilder.Uri.OriginalString);
         }
@@ -100,11 +110,13 @@ namespace Azure.Core.Tests
         [Test]
         public void QueryIsNotEscaped()
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Scheme = "http";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 80;
-            uriBuilder.Query = "\u1234";
+            var uriBuilder = new RequestUriBuilder
+            {
+                Scheme = "http",
+                Host = "localhost",
+                Port = 80,
+                Query = "\u1234"
+            };
 
             Assert.AreEqual("http://localhost/?\u1234", uriBuilder.Uri.ToString());
         }
@@ -112,10 +124,12 @@ namespace Azure.Core.Tests
         [Test]
         public void AppendQueryWithEmptyValueWorks()
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Scheme = "http";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 80;
+            var uriBuilder = new RequestUriBuilder
+            {
+                Scheme = "http",
+                Host = "localhost",
+                Port = 80
+            };
             uriBuilder.AppendQuery("a", null);
 
             Assert.AreEqual("http://localhost/?a=", uriBuilder.Uri.ToString());
@@ -128,11 +142,13 @@ namespace Azure.Core.Tests
         [TestCase("?initial", "http://localhost/?initial&a=b&c=d")]
         public void AppendQueryWorks(string initialQuery, string expectedResult)
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Scheme = "http";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 80;
-            uriBuilder.Query = initialQuery;
+            var uriBuilder = new RequestUriBuilder
+            {
+                Scheme = "http",
+                Host = "localhost",
+                Port = 80,
+                Query = initialQuery
+            };
             uriBuilder.AppendQuery("a", "b");
             uriBuilder.AppendQuery("c", "d");
 
@@ -147,11 +163,13 @@ namespace Azure.Core.Tests
         [TestCase("", "\u1234", "http://localhost/%E1%88%B4")]
         public void AppendPathWorks(string initialPath, string append, string expectedResult)
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Scheme = "http";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 80;
-            uriBuilder.Path = initialPath;
+            var uriBuilder = new RequestUriBuilder
+            {
+                Scheme = "http",
+                Host = "localhost",
+                Port = 80,
+                Path = initialPath
+            };
             uriBuilder.AppendPath(append);
 
             Assert.AreEqual(expectedResult, uriBuilder.Uri.OriginalString);
@@ -160,8 +178,10 @@ namespace Azure.Core.Tests
         [Test]
         public void AppendingQueryResetsUri()
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Uri = new Uri("http://localhost/");
+            var uriBuilder = new RequestUriBuilder
+            {
+                Uri = new Uri("http://localhost/")
+            };
             uriBuilder.AppendQuery("a", "b");
 
             Assert.AreEqual("http://localhost/?a=b", uriBuilder.Uri.ToString());
@@ -170,8 +190,10 @@ namespace Azure.Core.Tests
         [Test]
         public void AppendingPathResetsUri()
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Uri = new Uri("http://localhost/");
+            var uriBuilder = new RequestUriBuilder
+            {
+                Uri = new Uri("http://localhost/")
+            };
             uriBuilder.AppendPath("a");
 
             Assert.AreEqual("http://localhost/a", uriBuilder.Uri.ToString());
@@ -180,8 +202,10 @@ namespace Azure.Core.Tests
         [Test]
         public void AppendingPathAfterQueryAndSettingTheUriWorks()
         {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Uri = new Uri("http://localhost/");
+            var uriBuilder = new RequestUriBuilder
+            {
+                Uri = new Uri("http://localhost/")
+            };
             uriBuilder.AppendQuery("query", "value");
             uriBuilder.AppendPath("a");
             uriBuilder.AppendPath("b");

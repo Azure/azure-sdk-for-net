@@ -77,8 +77,10 @@ namespace Azure.Core.Tests
         {
             var matcher = new RecordMatcher(new RecordedTestSanitizer());
 
-            MockRequest mockRequest = new MockRequest();
-            mockRequest.Method = RequestMethod.Head;
+            MockRequest mockRequest = new MockRequest
+            {
+                Method = RequestMethod.Head
+            };
             mockRequest.UriBuilder.Uri = new Uri("http://localhost");
             mockRequest.Headers.Add("Some-Header", "Random value");
             mockRequest.Headers.Add("Some-Other-Header", "V");
@@ -116,8 +118,10 @@ namespace Azure.Core.Tests
         {
             var matcher = new RecordMatcher(new RecordedTestSanitizer());
 
-            MockRequest mockRequest = new MockRequest();
-            mockRequest.Method = RequestMethod.Put;
+            MockRequest mockRequest = new MockRequest
+            {
+                Method = RequestMethod.Put
+            };
             mockRequest.UriBuilder.Uri = new Uri("http://localhost");
 
             RecordEntry[] entries = new[]
@@ -141,8 +145,10 @@ namespace Azure.Core.Tests
         {
             var matcher = new RecordMatcher(new RecordedTestSanitizer());
 
-            MockRequest mockRequest = new MockRequest();
-            mockRequest.Method = RequestMethod.Head;
+            MockRequest mockRequest = new MockRequest
+            {
+                Method = RequestMethod.Head
+            };
             mockRequest.UriBuilder.Uri = new Uri("http://localhost");
             mockRequest.Headers.Add("Some-Header", "Random value");
             mockRequest.Headers.Add("Some-Other-Header", "V");

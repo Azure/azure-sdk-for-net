@@ -103,10 +103,10 @@ namespace Azure.Core.Pipeline
         private const string EnvNoProxyUC = "NO_PROXY";
         private const string EnvCGI = "GATEWAY_INTERFACE"; // Running in a CGI environment.
 
-        private Uri _httpProxyUri;      // String URI for HTTP requests
-        private Uri _httpsProxyUri;     // String URI for HTTPS requests
-        private string[] _bypass;// list of domains not to proxy
-        private ICredentials _credentials;
+        private readonly Uri _httpProxyUri;      // String URI for HTTP requests
+        private readonly Uri _httpsProxyUri;     // String URI for HTTPS requests
+        private readonly string[] _bypass;// list of domains not to proxy
+        private readonly ICredentials _credentials;
 
         public static bool TryCreate(out IWebProxy proxy)
         {
@@ -200,7 +200,6 @@ namespace Azure.Core.Pipeline
             string user = null;
             string password = null;
             ushort port = 80;
-            string host = null;
 
             // Check if there is authentication part with user and possibly password.
             // Curl accepts raw text and that may break URI parser.
@@ -233,6 +232,7 @@ namespace Azure.Core.Pipeline
 
             int ipV6AddressEnd = value.IndexOf(']');
             separatorIndex = value.LastIndexOf(':');
+            string host;
             // No ':' or it is part of IPv6 address.
             if (separatorIndex == -1 || (ipV6AddressEnd != -1 && separatorIndex < ipV6AddressEnd))
             {
