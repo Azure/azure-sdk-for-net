@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
 
         public void DetectsTextContentTypes(string contentType, bool isText, string expectedEncoding)
         {
-            Assert.AreEqual(isText, ContentTypeUtilities.TryGetTextEncoding(contentType, out var encoding));
+            Assert.AreEqual(isText, ContentTypeUtilities.TryGetTextEncoding(contentType, out System.Text.Encoding encoding));
             Assert.AreEqual(encoding?.EncodingName, expectedEncoding);
         }
     }

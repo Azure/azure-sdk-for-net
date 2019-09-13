@@ -13,24 +13,24 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal static class ActivityExtensions
     {
-        private static readonly MethodInfo? SetIdFormatMethod = typeof(Activity).GetMethod("SetIdFormat");
-        private static readonly MethodInfo? GetIdFormatMethod = typeof(Activity).GetProperty("IdFormat")?.GetMethod;
-        private static readonly MethodInfo? GetTraceStateStringMethod = typeof(Activity).GetProperty("TraceStateString")?.GetMethod;
+        private static readonly MethodInfo? s_setIdFormatMethod = typeof(Activity).GetMethod("SetIdFormat");
+        private static readonly MethodInfo? s_getIdFormatMethod = typeof(Activity).GetProperty("IdFormat")?.GetMethod;
+        private static readonly MethodInfo? s_getTraceStateStringMethod = typeof(Activity).GetProperty("TraceStateString")?.GetMethod;
 
         public static bool SetW3CFormat(this Activity activity)
         {
-            if (SetIdFormatMethod == null) return false;
+            if (s_setIdFormatMethod == null) return false;
 
-            SetIdFormatMethod.Invoke(activity, new object[]{ 2 /* ActivityIdFormat.W3C */});
+            s_setIdFormatMethod.Invoke(activity, new object[]{ 2 /* ActivityIdFormat.W3C */});
 
             return true;
         }
 
         public static bool IsW3CFormat(this Activity activity)
         {
-            if (GetIdFormatMethod == null) return false;
+            if (s_getIdFormatMethod == null) return false;
 
-            object result = GetIdFormatMethod.Invoke(activity, Array.Empty<object>());
+            object result = s_getIdFormatMethod.Invoke(activity, Array.Empty<object>());
 
             return (int)result == 2 /* ActivityIdFormat.W3C */;
         }
@@ -39,9 +39,9 @@ namespace Azure.Core.Pipeline
         {
             traceState = null;
 
-            if (GetTraceStateStringMethod == null) return false;
+            if (s_getTraceStateStringMethod == null) return false;
 
-            traceState = GetTraceStateStringMethod.Invoke(activity, Array.Empty<object>()) as string;
+            traceState = s_getTraceStateStringMethod.Invoke(activity, Array.Empty<object>()) as string;
 
             return true;
         }

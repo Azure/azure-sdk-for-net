@@ -42,7 +42,7 @@ namespace Azure.Core.Testing
 #endif
         protected override void AddHeader(string name, string value)
         {
-            if (!_headers.TryGetValue(name, out var values))
+            if (!_headers.TryGetValue(name, out List<string> values))
             {
                 _headers[name] = values = new List<string>();
             }
@@ -55,7 +55,7 @@ namespace Azure.Core.Testing
 #endif
         protected override bool TryGetHeader(string name, out string value)
         {
-            if (_headers.TryGetValue(name, out var values))
+            if (_headers.TryGetValue(name, out List<string> values))
             {
                 value = JoinHeaderValue(values);
                 return true;
@@ -70,7 +70,7 @@ namespace Azure.Core.Testing
 #endif
         protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
-            var result = _headers.TryGetValue(name, out var valuesList);
+            var result = _headers.TryGetValue(name, out List<string> valuesList);
             values = valuesList;
             return result;
         }

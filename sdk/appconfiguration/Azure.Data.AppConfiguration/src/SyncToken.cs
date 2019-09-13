@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration
         public string Value { get; }
 
         /// <summary>
-        /// Token sequence number (version). Higher means newer version of the same token. 
+        /// Token sequence number (version). Higher means newer version of the same token.
         /// </summary>
         public long SequenceNumber { get; }
 

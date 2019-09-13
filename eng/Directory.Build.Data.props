@@ -114,7 +114,7 @@
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
     <ImportDefaultReferences>false</ImportDefaultReferences>
-    <UseProjectReferenceToAzureCore>false</UseProjectReferenceToAzureCore>
+    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
     <LangVersion>preview</LangVersion>
     <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>

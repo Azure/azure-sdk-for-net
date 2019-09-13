@@ -160,7 +160,7 @@ namespace Azure.Core.Pipeline
                 {
                     return TimeSpan.FromSeconds(delaySeconds);
                 }
-                if (DateTimeOffset.TryParse(retryAfterValue, out var delayTime))
+                if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
                 {
                     return delayTime - DateTimeOffset.Now;
                 }

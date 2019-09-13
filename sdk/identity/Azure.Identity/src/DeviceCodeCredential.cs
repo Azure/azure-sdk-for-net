@@ -14,17 +14,17 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// A <see cref="TokenCredential"/> implementation which authenticates a user using the device code flow, and provides access tokens for that user account.  
+    /// A <see cref="TokenCredential"/> implementation which authenticates a user using the device code flow, and provides access tokens for that user account.
     /// For more information on the device code authentication flow see https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow.
     /// </summary>
     public class DeviceCodeCredential : TokenCredential
     {
-        private IPublicClientApplication _pubApp = null;
-        private HttpPipeline _pipeline = null;
+        private readonly IPublicClientApplication _pubApp = null;
+        private readonly HttpPipeline _pipeline = null;
         private IAccount _account = null;
-        private IdentityClientOptions _options;
-        private string _clientId;
-        private Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
+        private readonly IdentityClientOptions _options;
+        private readonly string _clientId;
+        private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
 
         /// <summary>
         /// Protected constructor for mocking
@@ -43,7 +43,7 @@ namespace Azure.Identity
         public DeviceCodeCredential(string clientId, Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback)
             : this(clientId, deviceCodeCallback, null)
         {
-            
+
         }
 
         /// <summary>

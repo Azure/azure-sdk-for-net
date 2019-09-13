@@ -20,11 +20,11 @@ namespace Azure.Identity
     /// </summary>
     public class UsernamePasswordCredential : TokenCredential
     {
-        private IPublicClientApplication _pubApp = null;
-        private HttpPipeline _pipeline = null;
-        private IdentityClientOptions _options;
-        private string _username = null;
-        private SecureString _password;
+        private readonly IPublicClientApplication _pubApp = null;
+        private readonly HttpPipeline _pipeline = null;
+        private readonly IdentityClientOptions _options;
+        private readonly string _username = null;
+        private readonly SecureString _password;
 
 
         /// <summary>

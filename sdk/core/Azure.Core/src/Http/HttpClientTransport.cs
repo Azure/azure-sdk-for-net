@@ -25,11 +25,7 @@ namespace Azure.Core.Pipeline
 
         public HttpClientTransport(HttpClient client)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-            _client = client;
+            _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
@@ -66,8 +62,7 @@ namespace Azure.Core.Pipeline
 
         private static HttpRequestMessage BuildRequestMessage(HttpPipelineMessage message)
         {
-            var pipelineRequest = message.Request as PipelineRequest;
-            if (pipelineRequest == null)
+            if (!(message.Request is PipelineRequest pipelineRequest))
             {
                 throw new InvalidOperationException("the request is not compatible with the transport");
             }
@@ -93,14 +88,14 @@ namespace Azure.Core.Pipeline
 
         internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent? content)
         {
-            foreach (var header in headers)
+            foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
             {
                 yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
             }
 
             if (content != null)
             {
-                foreach (var header in content.Headers)
+                foreach (KeyValuePair<string, IEnumerable<string>> header in content.Headers)
                 {
                     yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
                 }
@@ -131,7 +126,7 @@ namespace Azure.Core.Pipeline
 
         internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
         {
-            foreach (var header in from)
+            foreach (KeyValuePair<string, IEnumerable<string>> header in from)
             {
                 if (!to.TryAddWithoutValidation(header.Key, header.Value))
                 {
@@ -175,7 +170,7 @@ namespace Azure.Core.Pipeline
                     return;
                 }
 
-                var requestContent = EnsureContentInitialized();
+                PipelineContentAdapter requestContent = EnsureContentInitialized();
                 if (!requestContent.Headers.TryAddWithoutValidation(name, value))
                 {
                     throw new InvalidOperationException("Unable to add header to request or content");

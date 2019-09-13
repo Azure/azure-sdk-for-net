@@ -19,6 +19,9 @@
 - Added property blockSizeInMB to Blobsink and BlobFSsink
 - Added support for custom setup without script properties for a SSIS integration runtime
 - Added support for instance pools in Databricks linked service
+- Added outputColumns property to Office365Source
+- Added support for ORC dataset in ADF
+- Added alternateKeyName property to DynamicsSink, DynamicsCrmSink and CommonDataServiceForAppsSinkCommonDataServiceForAppsSink
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

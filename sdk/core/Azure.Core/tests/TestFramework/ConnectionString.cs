@@ -50,7 +50,7 @@ namespace Azure.Core.Testing
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
-            foreach (var pair in Pairs)
+            foreach (KeyValuePair<string, string> pair in Pairs)
             {
                 stringBuilder.Append(pair.Key).Append('=').Append(pair.Value).Append(';');
             }

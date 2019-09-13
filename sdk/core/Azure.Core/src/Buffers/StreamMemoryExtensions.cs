@@ -22,7 +22,7 @@ namespace Azure.Core.Buffers
             byte[]? array = null;
             try
             {
-                if (MemoryMarshal.TryGetArray(buffer, out var arraySegment))
+                if (MemoryMarshal.TryGetArray(buffer, out ArraySegment<byte> arraySegment))
                 {
                     await stream.WriteAsync(arraySegment.Array, arraySegment.Offset, arraySegment.Count, cancellation).ConfigureAwait(false);
                 }
@@ -57,9 +57,9 @@ namespace Azure.Core.Buffers
             byte[]? array = null;
             try
             {
-                foreach (var segment in buffer)
+                foreach (ReadOnlyMemory<byte> segment in buffer)
                 {
-                    if (MemoryMarshal.TryGetArray(segment, out var arraySegment))
+                    if (MemoryMarshal.TryGetArray(segment, out ArraySegment<byte> arraySegment))
                     {
                         await stream.WriteAsync(arraySegment.Array, arraySegment.Offset, arraySegment.Count, cancellation).ConfigureAwait(false);
                     }
