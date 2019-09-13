@@ -7,12 +7,12 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.Http;
-using Azure.Messaging.EventHubs.CheckpointStore.Blob;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Messaging.EventHubs.Processor
+namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 {
     /// <summary>
     ///   A storage blob service that keeps track of checkpoints and ownership.
@@ -36,7 +36,9 @@ namespace Azure.Messaging.EventHubs.Processor
         public BlobPartitionManager(BlobContainerClient blobContainerClient,
                                     Action<string> logger = null)
         {
-            ContainerClient = blobContainerClient;
+            // TODO: instead of manually checking the instance, make use of the Guard class once it's available.
+
+            ContainerClient = blobContainerClient ?? throw new ArgumentNullException(nameof(blobContainerClient));
             Logger = logger;
         }
 
