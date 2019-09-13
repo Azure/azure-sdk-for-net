@@ -35,29 +35,29 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the FrontendIPConfiguration class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="inboundNatRules">Read only. Inbound rules URIs that
-        /// use this frontend IP.</param>
-        /// <param name="inboundNatPools">Read only. Inbound pools URIs that
-        /// use this frontend IP.</param>
-        /// <param name="outboundRules">Read only. Outbound rules URIs that use
-        /// this frontend IP.</param>
-        /// <param name="loadBalancingRules">Gets load balancing rules URIs
-        /// that use this frontend IP.</param>
+        /// <param name="inboundNatRules">An array of references to inbound
+        /// rules that use this frontend IP.</param>
+        /// <param name="inboundNatPools">An array of references to inbound
+        /// pools that use this frontend IP.</param>
+        /// <param name="outboundRules">An array of references to outbound
+        /// rules that use this frontend IP.</param>
+        /// <param name="loadBalancingRules">An array of references to load
+        /// balancing rules that use this frontend IP.</param>
         /// <param name="privateIPAddress">The private IP address of the IP
         /// configuration.</param>
         /// <param name="privateIPAllocationMethod">The Private IP allocation
         /// method. Possible values include: 'Static', 'Dynamic'</param>
-        /// <param name="privateIPAddressVersion">It represents whether the
-        /// specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.
-        /// Possible values include: 'IPv4', 'IPv6'</param>
+        /// <param name="privateIPAddressVersion">Whether the specific
+        /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
+        /// values include: 'IPv4', 'IPv6'</param>
         /// <param name="subnet">The reference of the subnet resource.</param>
         /// <param name="publicIPAddress">The reference of the Public IP
         /// resource.</param>
         /// <param name="publicIPPrefix">The reference of the Public IP Prefix
         /// resource.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// frontend IP configuration resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within
         /// the set of frontend IP configurations used by the load balancer.
         /// This name can be used to access the resource.</param>
@@ -93,25 +93,29 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets read only. Inbound rules URIs that use this frontend IP.
+        /// Gets an array of references to inbound rules that use this frontend
+        /// IP.
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatRules")]
         public IList<SubResource> InboundNatRules { get; private set; }
 
         /// <summary>
-        /// Gets read only. Inbound pools URIs that use this frontend IP.
+        /// Gets an array of references to inbound pools that use this frontend
+        /// IP.
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatPools")]
         public IList<SubResource> InboundNatPools { get; private set; }
 
         /// <summary>
-        /// Gets read only. Outbound rules URIs that use this frontend IP.
+        /// Gets an array of references to outbound rules that use this
+        /// frontend IP.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outboundRules")]
         public IList<SubResource> OutboundRules { get; private set; }
 
         /// <summary>
-        /// Gets load balancing rules URIs that use this frontend IP.
+        /// Gets an array of references to load balancing rules that use this
+        /// frontend IP.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<SubResource> LoadBalancingRules { get; private set; }
@@ -130,9 +134,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets it represents whether the specific ipconfiguration is
-        /// IPv4 or IPv6. Default is taken as IPv4. Possible values include:
-        /// 'IPv4', 'IPv6'
+        /// Gets or sets whether the specific ipconfiguration is IPv4 or IPv6.
+        /// Default is taken as IPv4. Possible values include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
         public string PrivateIPAddressVersion { get; set; }
@@ -156,8 +159,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource PublicIPPrefix { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the frontend IP
+        /// configuration resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

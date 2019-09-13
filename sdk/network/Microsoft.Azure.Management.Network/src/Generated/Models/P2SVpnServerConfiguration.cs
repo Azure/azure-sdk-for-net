@@ -57,9 +57,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="radiusServerSecret">The radius secret property of the
         /// P2SVpnServerConfiguration resource for point to site client
         /// connection.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// P2SVpnServerConfiguration resource. Possible values are:
-        /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the P2S
+        /// VPN server configuration resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="p2SVpnGateways">List of references to
         /// P2SVpnGateways.</param>
         /// <param name="p2SVpnServerConfigurationPropertiesEtag">A unique
@@ -68,8 +68,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public P2SVpnServerConfiguration(string id = default(string), string p2SVpnServerConfigurationPropertiesName = default(string), IList<string> vpnProtocols = default(IList<string>), IList<P2SVpnServerConfigVpnClientRootCertificate> p2SVpnServerConfigVpnClientRootCertificates = default(IList<P2SVpnServerConfigVpnClientRootCertificate>), IList<P2SVpnServerConfigVpnClientRevokedCertificate> p2SVpnServerConfigVpnClientRevokedCertificates = default(IList<P2SVpnServerConfigVpnClientRevokedCertificate>), IList<P2SVpnServerConfigRadiusServerRootCertificate> p2SVpnServerConfigRadiusServerRootCertificates = default(IList<P2SVpnServerConfigRadiusServerRootCertificate>), IList<P2SVpnServerConfigRadiusClientRootCertificate> p2SVpnServerConfigRadiusClientRootCertificates = default(IList<P2SVpnServerConfigRadiusClientRootCertificate>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), string provisioningState = default(string), IList<SubResource> p2SVpnGateways = default(IList<SubResource>), string p2SVpnServerConfigurationPropertiesEtag = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
@@ -161,9 +161,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string RadiusServerSecret { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the P2SVpnServerConfiguration
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets the provisioning state of the P2S VPN server configuration
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
