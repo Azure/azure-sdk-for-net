@@ -11,7 +11,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// A digital signature algorithm
     /// </summary>
-    public struct SignatureAlgorithm : IEquatable<SignatureAlgorithm>
+    public readonly struct SignatureAlgorithm : IEquatable<SignatureAlgorithm>
     {
         private readonly string _value;
 

@@ -8,7 +8,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// An algorithm used for encryption and decryption
     /// </summary>
-    public struct EncryptionAlgorithm : IEquatable<EncryptionAlgorithm>
+    public readonly struct EncryptionAlgorithm : IEquatable<EncryptionAlgorithm>
     {
         private readonly string _value;
 

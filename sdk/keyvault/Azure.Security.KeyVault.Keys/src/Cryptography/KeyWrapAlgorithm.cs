@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// Describes the key wrap algorithm
     /// </summary>
-    public struct KeyWrapAlgorithm : IEquatable<KeyWrapAlgorithm>
+    public readonly struct KeyWrapAlgorithm : IEquatable<KeyWrapAlgorithm>
     {
         private readonly string _value;
 
