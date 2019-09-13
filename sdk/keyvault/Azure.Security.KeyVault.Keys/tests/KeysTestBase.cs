@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             try
             {
-                foreach (var cleanupItem in _keysToCleanup)
+                foreach ((KeyBase Key, bool Delete) cleanupItem in _keysToCleanup)
                 {
                     if (cleanupItem.Delete)
                     {
@@ -56,17 +56,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     }
                 }
 
-                foreach (var cleanupItem in _keysToCleanup)
+                foreach ((KeyBase Key, bool Delete) cleanupItem in _keysToCleanup)
                 {
                     await WaitForDeletedKey(cleanupItem.Key.Name);
                 }
 
-                foreach (var cleanupItem in _keysToCleanup)
+                foreach ((KeyBase Key, bool Delete) cleanupItem in _keysToCleanup)
                 {
                     await Client.PurgeDeletedKeyAsync(cleanupItem.Key.Name);
                 }
 
-                foreach (var cleanupItem in _keysToCleanup)
+                foreach ((KeyBase Key, bool Delete) cleanupItem in _keysToCleanup)
                 {
                     await WaitForPurgedKey(cleanupItem.Key.Name);
                 }
@@ -140,7 +140,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             if (exp?.Count != act?.Count)
                 return false;
 
-            foreach (var pair in exp)
+            foreach (KeyValuePair<string, string> pair in exp)
             {
                 if (!act.TryGetValue(pair.Key, out string value)) return false;
                 if (!string.Equals(value, pair.Value)) return false;

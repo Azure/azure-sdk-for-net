@@ -139,7 +139,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 Tags = new Dictionary<string, string>();
 
-                foreach (var prop in tags.EnumerateObject())
+                foreach (JsonProperty prop in tags.EnumerateObject())
                 {
                     Tags[prop.Name] = prop.Value.GetString();
                 }
@@ -166,7 +166,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 json.WriteStartObject("tags");
 
-                foreach (var kvp in Tags)
+                foreach (KeyValuePair<string, string> kvp in Tags)
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }

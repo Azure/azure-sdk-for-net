@@ -12,11 +12,11 @@ namespace Azure.Security.KeyVault.Certificates
     public abstract class KeyOptions : IJsonSerializable, IJsonDeserializable
     {
         private const string KeyTypePropertyName = "kty";
-        private static readonly JsonEncodedText KeyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private const string ReuseKeyPropertyName = "reuse_key";
-        private static readonly JsonEncodedText ReuseKeyPropertyNameBytes = JsonEncodedText.Encode(ReuseKeyPropertyName);
+        private static readonly JsonEncodedText s_reuseKeyPropertyNameBytes = JsonEncodedText.Encode(ReuseKeyPropertyName);
         private const string ExportablePropertyName = "exportable";
-        private static readonly JsonEncodedText ExportablePropertyNameBytes = JsonEncodedText.Encode(ExportablePropertyName);
+        private static readonly JsonEncodedText s_exportablePropertyNameBytes = JsonEncodedText.Encode(ExportablePropertyName);
 
         /// <summary>
         /// Creates key options for the specified type of key
@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="keyType">The type of backing key to be generated when issuing new certificates</param>
         protected KeyOptions(CertificateKeyType keyType)
         {
-            this.KeyType = keyType;
+            KeyType = keyType;
         }
 
         /// <summary>
@@ -46,13 +46,13 @@ namespace Azure.Security.KeyVault.Certificates
         {
             foreach (JsonProperty prop in json.EnumerateObject())
             {
-                this.ReadProperty(prop);
+                ReadProperty(prop);
             }
         }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            this.WriteProperties(json);
+            WriteProperties(json);
         }
 
         internal virtual bool ReadProperty(JsonProperty prop)
@@ -77,16 +77,16 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal virtual void WriteProperties(Utf8JsonWriter json)
         {
-            json.WriteString(KeyTypePropertyNameBytes, KeyType);
+            json.WriteString(s_keyTypePropertyNameBytes, KeyType);
 
             if (ReuseKey.HasValue)
             {
-                json.WriteBoolean(ReuseKeyPropertyNameBytes, ReuseKey.Value);
+                json.WriteBoolean(s_reuseKeyPropertyNameBytes, ReuseKey.Value);
             }
 
             if (Exportable.HasValue)
             {
-                json.WriteBoolean(ExportablePropertyNameBytes, Exportable.Value);
+                json.WriteBoolean(s_exportablePropertyNameBytes, Exportable.Value);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             string kty = json.GetProperty(KeyTypePropertyName).GetString();
 
-            switch(kty)
+            switch (kty)
             {
                 case CertificateKeyType.EC_HSM_KTY:
                 case CertificateKeyType.EC_KTY:
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
             }
 
-            if(ret != null)
+            if (ret != null)
             {
                 ((IJsonDeserializable)ret).ReadProperties(json);
             }

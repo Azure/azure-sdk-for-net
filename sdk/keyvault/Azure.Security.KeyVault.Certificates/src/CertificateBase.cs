@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal virtual void ReadProperty(JsonProperty prop)
         {
-            switch(prop.Name)
+            switch (prop.Name)
             {
                 case IdPropertyName:
                     var id = prop.Value.GetString();
@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
                 case TagsPropertyName:
                     Tags = new Dictionary<string, string>();
-                    foreach (var tagProp in prop.Value.EnumerateObject())
+                    foreach (JsonProperty tagProp in prop.Value.EnumerateObject())
                     {
                         Tags[tagProp.Name] = tagProp.Value.GetString();
                     }
@@ -99,7 +99,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         private void ParseId(string id)
         {
-            var idToParse = new Uri(id, UriKind.Absolute); ;
+            var idToParse = new Uri(id, UriKind.Absolute);
 
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
