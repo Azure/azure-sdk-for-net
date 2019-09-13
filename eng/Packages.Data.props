@@ -4,8 +4,10 @@
     <PackageReference Update="Microsoft.AspNetCore.WebUtilities" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard1.4' ">
-    <PackageReference Update="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+  <PackageReference Update="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
   </ItemGroup>
+
+ 
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
@@ -99,7 +101,7 @@
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
+    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />     
   </ItemGroup>
   <!-- Track 2 specific versions -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
@@ -112,6 +114,15 @@
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
     <PackageReference Update="System.Threading.Channels" Version="4.6.0-preview7.19362.9" />
     <PackageReference Update="System.Text.Json" Version="4.6.0-preview7.19362.9" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview7.19362.9" />
+   <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview7.19362.9" />   
+
+   <PackageReference Update="Azure.Core" Version="1.0.0-preview.6" />
+   <!--<PackageReference Update="System.Text.Json" Version="4.6.0-preview6.19303.8" />-->
+   <!--<PackageReference Update="System.Text.Json" Version="4.6.0-preview7.19362.9" />-->
+  <!-- <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+	<Version>6.2.8</Version>
+   </PackageReference>
+-->
+	
   </ItemGroup>
 </Project>
