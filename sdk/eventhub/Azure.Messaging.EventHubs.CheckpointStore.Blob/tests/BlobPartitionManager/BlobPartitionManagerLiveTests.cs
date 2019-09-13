@@ -90,6 +90,41 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         /// </summary>
         ///
         [Test]
+        public async Task OwnershipClaimSetsLastModifiedTimeAndETag()
+        {
+            await using (var storageScope = await StorageScope.CreateAsync())
+            {
+                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+
+                var partitionManager = new BlobPartitionManager(containerClient);
+                var ownershipList = new List<PartitionOwnership>();
+                var ownership =
+                    new MockPartitionOwnership
+                    (
+                        "eventHubName",
+                        "consumerGroup",
+                        "ownerIdentifier",
+                        "partitionId"
+                    );
+
+                ownershipList.Add(ownership);
+
+                await partitionManager.ClaimOwnershipAsync(ownershipList);
+
+                Assert.That(ownership.LastModifiedTime, Is.Not.Null);
+                Assert.That(ownership.LastModifiedTime.Value, Is.GreaterThan(DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(5))));
+
+                Assert.That(ownership.ETag, Is.Not.Null);
+            }
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="BlobPartitionManager.ClaimOwnershipAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
         [TestCase(null)]
         [TestCase("invalidETag")]
         public async Task OwnershipClaimFailsWhenETagIsInvalid(string eTag)
@@ -137,6 +172,43 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
                 Assert.That(storedOwnershipList.Single().IsEquivalentTo(firstOwnership), Is.True);
+            }
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="BlobPartitionManager.ClaimOwnershipAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OwnershipClaimFailsWhenETagExistsAndOwnershipDoesNotExist()
+        {
+            await using (var storageScope = await StorageScope.CreateAsync())
+            {
+                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+
+                var partitionManager = new BlobPartitionManager(containerClient);
+                var ownershipList = new List<PartitionOwnership>();
+
+                var eTaggyOwnership =
+                    new MockPartitionOwnership
+                    (
+                        "eventHubName",
+                        "consumerGroup",
+                        "ownerIdentifier",
+                        "partitionId",
+                        offset: 2,
+                        eTag: "ETag"
+                    );
+
+                ownershipList.Add(eTaggyOwnership);
+
+                await partitionManager.ClaimOwnershipAsync(ownershipList);
+
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+
+                Assert.That(storedOwnershipList, Is.Not.Null.And.Empty);
             }
         }
 
