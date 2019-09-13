@@ -40,61 +40,61 @@ namespace Azure.Storage.Sas
         // All members are immutable or values so copies of this struct are thread safe.
 
         // sv
-        readonly string version;
+        private readonly string version;
 
         // ss
-        readonly string services;
+        private readonly string services;
 
         // srt
-        readonly string resourceTypes;
+        private readonly string resourceTypes;
 
         // spr
-        readonly SasProtocol protocol;
+        private readonly SasProtocol protocol;
 
         // st
-        readonly DateTimeOffset startTime;
+        private readonly DateTimeOffset startTime;
 
         // se
-        readonly DateTimeOffset expiryTime;
+        private readonly DateTimeOffset expiryTime;
 
         // sip
-        readonly IPRange ipRange;
+        private readonly IPRange ipRange;
 
         // si
-        readonly string identifier;
+        private readonly string identifier;
 
         // sr
-        readonly string resource;
+        private readonly string resource;
 
         // sp
-        readonly string permissions;
+        private readonly string permissions;
 
         // sig
-        readonly string signature;
+        private readonly string signature;
 
         /// <summary>
         /// Gets the storage service version to use to authenticate requests
         /// made with this shared access signature, and the service version to
         /// use when handling requests made with this shared access signature.
         /// </summary>
-        public string Version => this.version ?? DefaultSasVersion;
+        public string Version => version ?? DefaultSasVersion;
 
         /// <summary>
         /// Gets the signed services accessible with an account level shared
         /// access signature. 
         /// </summary>
-        public string Services => this.services ?? String.Empty;
+        public string Services => services ?? string.Empty;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public string ResourceTypes => this.resourceTypes ?? String.Empty;
+        public string ResourceTypes => resourceTypes ?? string.Empty;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
         /// the shared access signature.
         /// </summary>
-        public SasProtocol Protocol => this.protocol;
+        public SasProtocol Protocol => protocol;
 
         /// <summary>
         /// Gets the optional time at which the shared access signature becomes
@@ -102,32 +102,32 @@ namespace Azure.Storage.Sas
         /// time when the storage service receives the request.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
-        public DateTimeOffset StartTime => this.startTime;
+        public DateTimeOffset StartTime => startTime;
 
         /// <summary>
         /// Gets the time at which the shared access signature becomes invalid.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
-        public DateTimeOffset ExpiryTime => this.expiryTime;
+        public DateTimeOffset ExpiryTime => expiryTime;
 
         /// <summary>
         /// Gets the optional IP address or a range of IP addresses from which
         /// to accept requests.  When specifying a range, note that the range
         /// is inclusive.
         /// </summary>
-        public IPRange IPRange => this.ipRange;
+        public IPRange IPRange => ipRange;
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
         /// correlates to an access policy specified for the container, queue,
         /// or share.
         /// </summary>
-        public string Identifier => this.identifier ?? String.Empty;
+        public string Identifier => identifier ?? string.Empty;
 
         /// <summary>
         /// Gets the resources are accessible via the shared access signature.
         /// </summary>
-        public string Resource => this.resource ?? String.Empty;
+        public string Resource => resource ?? string.Empty;
 
         /// <summary>
         /// Gets the permissions associated with the shared access signature.
@@ -135,7 +135,7 @@ namespace Azure.Storage.Sas
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
-        public string Permissions => this.permissions ?? String.Empty;
+        public string Permissions => permissions ?? string.Empty;
 
         /// <summary>
         /// Gets the string-to-sign, a unique string constructed from the
@@ -143,7 +143,7 @@ namespace Azure.Storage.Sas
         /// The signature is an HMAC computed over the string-to-sign and key
         /// using the SHA256 algorithm, and then encoded using Base64 encoding.
         /// </summary>
-        public string Signature => this.signature ?? String.Empty;
+        public string Signature => signature ?? string.Empty;
 
         #region Blob Only Parameters
         // skoid
@@ -199,18 +199,18 @@ namespace Azure.Storage.Sas
         {
             // Assume URL-decoded
             this.version = version ?? DefaultSasVersion;
-            this.services = services ?? String.Empty;
-            this.resourceTypes = resourceTypes ?? String.Empty;
+            this.services = services ?? string.Empty;
+            this.resourceTypes = resourceTypes ?? string.Empty;
             this.protocol = protocol;
             this.startTime = startTime;
             this.expiryTime = expiryTime;
             this.ipRange = ipRange;
-            this.identifier = identifier ?? String.Empty;
-            this.resource = resource ?? String.Empty;
-            this.permissions = permissions ?? String.Empty;
-            this.signature = signature ?? String.Empty;  // Should never be null
-            this.keyObjectId = keyOid;
-            this.keyTenantId = keyTid;
+            this.identifier = identifier ?? string.Empty;
+            this.resource = resource ?? string.Empty;
+            this.permissions = permissions ?? string.Empty;
+            this.signature = signature ?? string.Empty;  // Should never be null
+            keyObjectId = keyOid;
+            keyTenantId = keyTid;
             this.keyStart = keyStart;
             this.keyExpiry = keyExpiry;
             this.keyService = keyService;
@@ -234,47 +234,47 @@ namespace Azure.Storage.Sas
         {
             // make copy, otherwise we'll get an exception when we remove
             IEnumerable<KeyValuePair<string, string>> kvps = values.ToArray(); ;
-            foreach (var kv in kvps)
+            foreach (KeyValuePair<string, string> kv in kvps)
             {
                 // these are already decoded
                 var isSasKey = true;
                 switch (kv.Key.ToUpperInvariant())
                 {
-                    case Constants.Sas.Parameters.VersionUpper: this.version = kv.Value; break;
-                    case Constants.Sas.Parameters.ServicesUpper: this.services = kv.Value; break;
-                    case Constants.Sas.Parameters.ResourceTypesUpper: this.resourceTypes = kv.Value; break;
-                    case Constants.Sas.Parameters.ProtocolUpper: this.protocol = SasProtocol.Parse(kv.Value); break;
-                    case Constants.Sas.Parameters.StartTimeUpper: this.startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); break;
-                    case Constants.Sas.Parameters.ExpiryTimeUpper: this.expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); break;
-                    case Constants.Sas.Parameters.IPRangeUpper: this.ipRange = IPRange.Parse(kv.Value); break;
-                    case Constants.Sas.Parameters.IdentifierUpper: this.identifier = kv.Value; break;
-                    case Constants.Sas.Parameters.ResourceUpper: this.resource = kv.Value; break;
-                    case Constants.Sas.Parameters.PermissionsUpper: this.permissions = kv.Value; break;
-                    case Constants.Sas.Parameters.SignatureUpper: this.signature = kv.Value; break;
+                    case Constants.Sas.Parameters.VersionUpper: version = kv.Value; break;
+                    case Constants.Sas.Parameters.ServicesUpper: services = kv.Value; break;
+                    case Constants.Sas.Parameters.ResourceTypesUpper: resourceTypes = kv.Value; break;
+                    case Constants.Sas.Parameters.ProtocolUpper: protocol = SasProtocol.Parse(kv.Value); break;
+                    case Constants.Sas.Parameters.StartTimeUpper: startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); break;
+                    case Constants.Sas.Parameters.ExpiryTimeUpper: expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); break;
+                    case Constants.Sas.Parameters.IPRangeUpper: ipRange = IPRange.Parse(kv.Value); break;
+                    case Constants.Sas.Parameters.IdentifierUpper: identifier = kv.Value; break;
+                    case Constants.Sas.Parameters.ResourceUpper: resource = kv.Value; break;
+                    case Constants.Sas.Parameters.PermissionsUpper: permissions = kv.Value; break;
+                    case Constants.Sas.Parameters.SignatureUpper: signature = kv.Value; break;
 
                     // Optionally include Blob parameters
                     case Constants.Sas.Parameters.KeyOidUpper:
-                        if (includeBlobParameters) { this.keyObjectId = kv.Value; }
+                        if (includeBlobParameters) { keyObjectId = kv.Value; }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyTidUpper:
-                        if (includeBlobParameters) { this.keyTenantId = kv.Value; }
+                        if (includeBlobParameters) { keyTenantId = kv.Value; }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyStartUpper:
-                        if (includeBlobParameters) { this.keyStart = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
+                        if (includeBlobParameters) { keyStart = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyExpiryUpper:
-                        if (includeBlobParameters) { this.keyExpiry = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
+                        if (includeBlobParameters) { keyExpiry = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture); }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyServiceUpper:
-                        if (includeBlobParameters) { this.keyService = kv.Value; }
+                        if (includeBlobParameters) { keyService = kv.Value; }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyVersionUpper:
-                        if (includeBlobParameters) { this.keyVersion = kv.Value; }
+                        if (includeBlobParameters) { keyVersion = kv.Value; }
                         else { isSasKey = false; }
                         break;
 
@@ -297,7 +297,7 @@ namespace Azure.Storage.Sas
         /// A URL encoded query string representing the SAS.
         /// </returns>
         public override string ToString() =>
-            this.Encode();
+            Encode();
 
         /// <summary>
         /// Convert the SAS query parameters into a URL encoded query string.
@@ -321,93 +321,93 @@ namespace Azure.Storage.Sas
                 .Append('=')
                 .Append(value);
 
-            if (!String.IsNullOrWhiteSpace(this.Version))
+            if (!string.IsNullOrWhiteSpace(Version))
             {
-                AddToBuilder(Constants.Sas.Parameters.Version, this.Version);
+                AddToBuilder(Constants.Sas.Parameters.Version, Version);
             }
 
-            if (!String.IsNullOrWhiteSpace(this.Services))
+            if (!string.IsNullOrWhiteSpace(Services))
             {
-                AddToBuilder(Constants.Sas.Parameters.Services, this.Services);
+                AddToBuilder(Constants.Sas.Parameters.Services, Services);
             }
 
-            if (!String.IsNullOrWhiteSpace(this.ResourceTypes))
+            if (!string.IsNullOrWhiteSpace(ResourceTypes))
             {
-                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, this.ResourceTypes);
+                AddToBuilder(Constants.Sas.Parameters.ResourceTypes, ResourceTypes);
             }
 
-            if (this.Protocol != SasProtocol.None)
+            if (Protocol != SasProtocol.None)
             {
-                AddToBuilder(Constants.Sas.Parameters.Protocol, this.Protocol.ToString());
+                AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToString());
             }
 
-            if (this.StartTime != DateTimeOffset.MinValue)
+            if (StartTime != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(this.StartTime.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartTime.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
-            if (this.ExpiryTime != DateTimeOffset.MinValue)
+            if (ExpiryTime != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(this.ExpiryTime.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiryTime.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
-            var ipr = this.IPRange.ToString();
+            var ipr = IPRange.ToString();
             if (ipr.Length > 0)
             {
                 AddToBuilder(Constants.Sas.Parameters.IPRange, ipr);
             }
 
-            if (!String.IsNullOrWhiteSpace(this.Identifier))
+            if (!string.IsNullOrWhiteSpace(Identifier))
             {
-                AddToBuilder(Constants.Sas.Parameters.Identifier, this.Identifier);
+                AddToBuilder(Constants.Sas.Parameters.Identifier, Identifier);
             }
 
-            if (!String.IsNullOrWhiteSpace(this.Resource))
+            if (!string.IsNullOrWhiteSpace(Resource))
             {
-                AddToBuilder(Constants.Sas.Parameters.Resource, this.Resource);
+                AddToBuilder(Constants.Sas.Parameters.Resource, Resource);
             }
 
-            if (!String.IsNullOrWhiteSpace(this.Permissions))
+            if (!string.IsNullOrWhiteSpace(Permissions))
             {
-                AddToBuilder(Constants.Sas.Parameters.Permissions, this.Permissions);
+                AddToBuilder(Constants.Sas.Parameters.Permissions, Permissions);
             }
 
             if (includeBlobParameters)
             {
-                if (!String.IsNullOrWhiteSpace(this.keyObjectId))
+                if (!string.IsNullOrWhiteSpace(keyObjectId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyOid, this.keyObjectId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyOid, keyObjectId);
                 }
 
-                if (!String.IsNullOrWhiteSpace(this.keyTenantId))
+                if (!string.IsNullOrWhiteSpace(keyTenantId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTid, this.keyTenantId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyTid, keyTenantId);
                 }
 
-                if (this.keyStart != DateTimeOffset.MinValue)
+                if (keyStart != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(this.keyStart.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(keyStart.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
                 }
 
-                if (this.keyExpiry != DateTimeOffset.MinValue)
+                if (keyExpiry != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(this.keyExpiry.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(keyExpiry.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
                 }
 
-                if (!String.IsNullOrWhiteSpace(this.keyService))
+                if (!string.IsNullOrWhiteSpace(keyService))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyService, this.keyService);
+                    AddToBuilder(Constants.Sas.Parameters.KeyService, keyService);
                 }
 
-                if (!String.IsNullOrWhiteSpace(this.keyVersion))
+                if (!string.IsNullOrWhiteSpace(keyVersion))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, this.keyVersion);
+                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, keyVersion);
                 }
             }
 
-            if (!String.IsNullOrWhiteSpace(this.Signature))
+            if (!string.IsNullOrWhiteSpace(Signature))
             {
-                AddToBuilder(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(this.Signature));
+                AddToBuilder(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(Signature));
             }
 
             return sb.ToString();

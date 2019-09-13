@@ -37,8 +37,8 @@ namespace Azure.Storage.Sas
         /// </param>
         public IPRange(IPAddress start, IPAddress end = null)
         {
-            this.Start = start ?? IPAddress.None;
-            this.End = end ?? IPAddress.None;
+            Start = start ?? IPAddress.None;
+            End = end ?? IPAddress.None;
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace Azure.Storage.Sas
         /// A string representation of an <see cref="IPRange"/>.
         /// </returns>
         public override string ToString() =>
-            IsEmpty(this.Start) ? String.Empty :
-            IsEmpty(this.End) ? this.Start.ToString() :
-            this.Start.ToString() + "-" + this.End.ToString();
+            IsEmpty(Start) ? string.Empty :
+            IsEmpty(End) ? Start.ToString() :
+            Start.ToString() + "-" + End.ToString();
 
         /// <summary>
         /// Parse an IP range string into a new <see cref="IPRange"/>.
@@ -82,7 +82,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
-            obj is IPRange other && this.Equals(other);
+            obj is IPRange other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="IPRange"/>.
@@ -90,7 +90,7 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the <see cref="IPRange"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.Start?.GetHashCode() ?? 0) ^ (this.End?.GetHashCode() ?? 0);
+            (Start?.GetHashCode() ?? 0) ^ (End?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Check if two <see cref="IPRange"/> instances are equal.
@@ -116,9 +116,9 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(IPRange other) =>
-            ((IsEmpty(this.Start) && IsEmpty(other.Start)) ||
-             (this.Start != null && this.Start.Equals(other.Start))) &&
-            ((IsEmpty(this.End) && IsEmpty(other.End)) ||
-             (this.End != null && this.End.Equals(other.End)));
+            ((IsEmpty(Start) && IsEmpty(other.Start)) ||
+             (Start != null && Start.Equals(other.Start))) &&
+            ((IsEmpty(End) && IsEmpty(other.End)) ||
+             (End != null && End.Equals(other.End)));
     }
 }

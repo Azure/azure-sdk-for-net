@@ -62,7 +62,7 @@ namespace Azure.Storage
             => new ArgumentException($"Invalid resource type: '{s}'");
 
         public static ArgumentException AccountMismatch(string accountNameCredential, string accountNameValue)
-            => new ArgumentException(String.Format(
+            => new ArgumentException(string.Format(
                 CultureInfo.CurrentCulture,
                 "Account Name Mismatch: {0} != {1}",
                 accountNameCredential,
