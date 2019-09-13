@@ -20,6 +20,9 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
     ///
     public sealed class BlobPartitionManager : PartitionManager
     {
+        /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
+        private static readonly Regex DoubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
+
         /// <summary>The client used to interact with the Azure Blob Storage service.</summary>
         private readonly BlobContainerClient ContainerClient;
 
@@ -63,9 +66,11 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                 Prefix = prefix
             };
 
+            BlobItem blob;
+
             await foreach (var response in ContainerClient.GetBlobsAsync(options).ConfigureAwait(false))
             {
-                var blob = response.Value;
+                blob = response.Value;
 
                 // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
                 // to throw an exception.
@@ -101,7 +106,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
         }
 
         /// <summary>
-        ///   Tries to claim a list of specified ownership.
+        ///   Attempts to claim ownership of partitions for processing.
         /// </summary>
         ///
         /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
@@ -112,6 +117,9 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
         {
             var claimedOwnership = new List<PartitionOwnership>();
             var metadata = new Dictionary<string, string>();
+
+            Response<BlobContentInfo> contentInfoResponse;
+            Response<BlobInfo> infoResponse;
 
             foreach (var ownership in partitionOwnership)
             {
@@ -134,11 +142,12 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                     {
                         blobAccessConditions.HttpAccessConditions = new HttpAccessConditions { IfNoneMatch = new ETag("*") };
 
-                        Response<BlobContentInfo> response;
+                        MemoryStream blobContent = null;
 
                         try
                         {
-                            response = await blobClient.UploadAsync(new MemoryStream(new byte[0]), metadata: metadata, blobAccessConditions: blobAccessConditions).ConfigureAwait(false);
+                            blobContent = new MemoryStream(new byte[0]);
+                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, blobAccessConditions: blobAccessConditions).ConfigureAwait(false);
                         }
                         catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                         {
@@ -148,19 +157,21 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                             Log($"Ownership with partition id = '{ ownership.PartitionId }' is not claimable.");
                             continue;
                         }
+                        finally
+                        {
+                            blobContent?.Dispose();
+                        }
 
-                        ownership.LastModifiedTime = response.Value.LastModified;
-                        ownership.ETag = response.Value.ETag.ToString();
+                        ownership.LastModifiedTime = contentInfoResponse.Value.LastModified;
+                        ownership.ETag = contentInfoResponse.Value.ETag.ToString();
                     }
                     else
                     {
                         blobAccessConditions.HttpAccessConditions = new HttpAccessConditions { IfMatch = new ETag(ownership.ETag) };
 
-                        Response<BlobInfo> response;
-
                         try
                         {
-                            response = await blobClient.SetMetadataAsync(metadata, blobAccessConditions).ConfigureAwait(false);
+                            infoResponse = await blobClient.SetMetadataAsync(metadata, blobAccessConditions).ConfigureAwait(false);
                         }
                         catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
                         {
@@ -171,14 +182,14 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                             continue;
                         }
 
-                        ownership.LastModifiedTime = response.Value.LastModified;
-                        ownership.ETag = response.Value.ETag.ToString();
+                        ownership.LastModifiedTime = infoResponse.Value.LastModified;
+                        ownership.ETag = infoResponse.Value.ETag.ToString();
                     }
 
                     // Small workaround to retrieve the eTag.  The current storage SDK returns it enclosed in
                     // double quotes ('"ETAG_VALUE"' instead of 'ETAG_VALUE').
 
-                    var match = Regex.Match(ownership.ETag, "\"(.*)\"");
+                    var match = DoubleQuotesExpression.Match(ownership.ETag);
 
                     if (match.Success)
                     {

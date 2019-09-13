@@ -4,7 +4,7 @@
 namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 {
     /// <summary>
-    ///   The set of keys to access or modify blobs' metadata.
+    ///   The set of keys to access or modify metadata for a blob.
     /// </summary>
     ///
     /// <remarks>
