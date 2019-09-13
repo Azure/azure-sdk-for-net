@@ -41,7 +41,6 @@ namespace Azure.Storage.Test.Shared
             => this.Recording.InstrumentClientOptions(
                     new BlobClientOptions
                     {
-                        ResponseClassifier = new TestResponseClassifier(),
                         Diagnostics = { IsLoggingEnabled = true },
                         Retry =
                         {
