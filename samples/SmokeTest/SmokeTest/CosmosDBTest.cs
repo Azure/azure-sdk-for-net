@@ -2,21 +2,18 @@
 // Copyright(c) Microsoft Corporation.
 // Licensed under the MIT License.
 // ------------------------------------
-using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Reflection.Metadata;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmokeTest
 {
+    using DocumentClient = Microsoft.Azure.Documents.Client.DocumentClient;
+
     public class Planet
     {
         [JsonProperty(PropertyName = "id")]
