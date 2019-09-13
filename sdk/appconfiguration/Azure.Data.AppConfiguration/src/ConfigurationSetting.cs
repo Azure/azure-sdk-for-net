@@ -135,7 +135,7 @@ namespace Azure.Data.AppConfiguration
                 return false;
             if (Tags.Count != other.Count)
                 return false;
-            foreach (var pair in Tags)
+            foreach (KeyValuePair<string, string> pair in Tags)
             {
                 if (!other.TryGetValue(pair.Key, out string value))
                     return false;

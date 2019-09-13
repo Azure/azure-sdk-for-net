@@ -42,7 +42,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private void Normalize(JObject o)
         {
-            foreach (var node in o.DescendantsAndSelf().ToList())
+            foreach (JToken node in o.DescendantsAndSelf().ToList())
             {
                 if (node is JProperty property)
                 {
