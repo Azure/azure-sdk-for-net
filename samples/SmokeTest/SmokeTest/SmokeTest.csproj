@@ -29,4 +29,16 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <!-- Signing properties -->
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <!--
+      In order to be able to run our tests on .NET Framework we should use public signing by default so
+      we don't have to disable strong name validation for things that are delay signed.
+    -->
+    <PublicSign>true</PublicSign>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>../../../eng/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
 </Project>
