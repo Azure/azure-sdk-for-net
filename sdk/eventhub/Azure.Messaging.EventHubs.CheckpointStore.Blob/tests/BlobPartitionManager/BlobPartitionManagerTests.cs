@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorValidatesTheBlobContainerClient()
+        public void ConstructorRequiresBlobContainerClient()
         {
             Assert.That(() => new BlobPartitionManager(null), Throws.InstanceOf<ArgumentException>());
         }

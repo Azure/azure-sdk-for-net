@@ -29,6 +29,95 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
     public class BlobPartitionManagerLiveTests
     {
         /// <summary>
+        ///   Verifies that the <see cref="BlobPartitionManager" /> is able to
+        ///   connect to the Storage service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task BlobPartitionManagerCanListOwnership()
+        {
+            await using (var storageScope = await StorageScope.CreateAsync())
+            {
+                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+
+                var partitionManager = new BlobPartitionManager(containerClient);
+
+                Assert.That(async () => await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup"), Throws.Nothing);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="BlobPartitionManager" /> is able to
+        ///   connect to the Storage service.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("ETag")]
+        public async Task BlobPartitionManagerCanClaimOwnership(string eTag)
+        {
+            await using (var storageScope = await StorageScope.CreateAsync())
+            {
+                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+
+                var partitionManager = new BlobPartitionManager(containerClient);
+                var ownershipList = new List<PartitionOwnership>();
+
+                // Null ETag and non-null ETag hit different paths of the code, calling different methods that connect
+                // to the Storage service.
+
+                ownershipList.Add(
+                    new MockPartitionOwnership
+                    (
+                        "eventHubName",
+                        "consumerGroup",
+                        "ownerIdentifier",
+                        "partitionId",
+                        eTag: eTag
+                    ));
+
+                Assert.That(async () => await partitionManager.ClaimOwnershipAsync(ownershipList), Throws.Nothing);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="BlobPartitionManager" /> is able to
+        ///   connect to the Storage service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task BlobPartitionManagerCanUpdateCheckpoint()
+        {
+            await using (var storageScope = await StorageScope.CreateAsync())
+            {
+                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+
+                var partitionManager = new BlobPartitionManager(containerClient);
+                var ownershipList = new List<PartitionOwnership>();
+
+                // Make sure the ownership exists beforehand so we hit all storage SDK calls in the partition manager.
+
+                ownershipList.Add(
+                    new MockPartitionOwnership
+                    (
+                        "eventHubName",
+                        "consumerGroup",
+                        "ownerIdentifier",
+                        "partitionId"
+                    ));
+
+                await partitionManager.ClaimOwnershipAsync(ownershipList);
+
+                var checkpoint = new MockCheckpoint("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20);
+
+                Assert.That(async () => await partitionManager.UpdateCheckpointAsync(checkpoint), Throws.Nothing);
+            }
+        }
+
+        /// <summary>
         ///    Verifies functionality of the <see cref="BlobPartitionManager.ListOwnershipAsync" />
         ///    method.
         /// </summary>
