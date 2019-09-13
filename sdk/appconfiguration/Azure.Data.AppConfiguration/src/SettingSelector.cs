@@ -50,8 +50,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">The value used to group configuration settings.</param>
         public SettingSelector(string key, string label = default)
         {
-            Keys = new List<string>();
-            Keys.Add(key ?? Any);
+            Keys = new List<string>
+            {
+                key ?? Any
+            };
 
             Labels = new List<string>();
             if (label != null)

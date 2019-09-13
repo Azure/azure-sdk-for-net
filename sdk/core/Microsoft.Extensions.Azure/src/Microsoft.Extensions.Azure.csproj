@@ -39,4 +39,7 @@
 
   <Import Project="..\..\Azure.Core\src\Azure.Core.props" />
 
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)\EventSourceEventFormatting.cs" />
+  </ItemGroup>
 </Project>

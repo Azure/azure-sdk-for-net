@@ -44,7 +44,7 @@ namespace Azure.Core.Pipeline
 
         public bool HasResponse => _response != null;
 
-        public ResponseClassifier ResponseClassifier { get; set; }
+        public ResponseClassifier ResponseClassifier { get; }
 
         public bool BufferResponse { get; set; }
 

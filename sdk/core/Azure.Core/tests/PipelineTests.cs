@@ -23,9 +23,9 @@ namespace Azure.Core.Tests
                 new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
             }, responseClassifier: new CustomResponseClassifier());
 
-            var request = pipeline.CreateRequest();
+            Http.Request request = pipeline.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
-            var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
         }
@@ -54,7 +54,8 @@ namespace Azure.Core.Tests
             HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
             message.SetProperty("someName", "value");
 
-            Assert.False(message.TryGetProperty("SomeName", out object value));
+
+            Assert.False(message.TryGetProperty("SomeName", out _));
         }
 
         private class CustomResponseClassifier : ResponseClassifier

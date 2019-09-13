@@ -57,12 +57,12 @@ namespace Azure.Core.Tests
         public void MatchesNameAndGuid()
         {
             // Arrange & Act
-            var eventSourceType = typeof(HttpPipelineEventSource);
+            Type eventSourceType = typeof(HttpPipelineEventSource);
 
             // Assert
             Assert.NotNull(eventSourceType);
-            Assert.AreEqual("AzureSDK", EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("1015ab6c-4cd8-53d6-aec3-9b937011fa95"), EventSource.GetGuid(eventSourceType));
+            Assert.AreEqual("Azure-Core", EventSource.GetName(eventSourceType));
+            Assert.AreEqual(Guid.Parse("44cbc7c6-6776-5f3c-36c1-75cd3ef19ea9"), EventSource.GetGuid(eventSourceType));
             Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
         }
 
@@ -73,7 +73,7 @@ namespace Azure.Core.Tests
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
             response.AddHeader(new HttpHeader("Custom-Response-Header", "Improved value"));
 
-            var mockTransport = CreateMockTransport(response);
+            MockTransport mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
             string requestId;
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests
                 await SendRequestAsync(pipeline, request);
             }
 
-            var e = _listener.SingleEventById(RequestEvent);
+            EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests
         public async Task RequestContentIsLoggedAsText()
         {
             var response = new MockResponse(500);
-            var mockTransport = CreateMockTransport(response);
+            MockTransport mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
             string requestId;
@@ -150,7 +150,7 @@ namespace Azure.Core.Tests
                 await SendRequestAsync(pipeline, request);
             }
 
-            var e = _listener.SingleEventById(RequestContentTextEvent);
+            EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("RequestContentText", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
@@ -307,7 +307,7 @@ namespace Azure.Core.Tests
             }
             setupRequest?.Invoke(mockResponse);
 
-            var mockTransport = CreateMockTransport(mockResponse);
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
             var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
 
             using (Request request = pipeline.CreateRequest())

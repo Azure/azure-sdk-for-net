@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
                 Request request = transport.CreateRequest();
                 request.UriBuilder.Uri = testServer.Address;
                 Response response = await ExecuteRequest(request, transport);
-                Assert.True(response.Headers.TryGetValues("Sync-Token", out var tokens));
+                Assert.True(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens));
                 Assert.AreEqual(2, tokens.Count());
                 CollectionAssert.AreEqual(new[] { "A", "B" }, tokens);
             }
@@ -77,7 +77,7 @@ namespace Azure.Core.Tests
                 Request request = transport.CreateRequest();
                 request.UriBuilder.Uri = testServer.Address;
                 Response response = await ExecuteRequest(request, transport);
-                Assert.True(response.Headers.TryGetValues("Sync-Token", out var tokens));
+                Assert.True(response.Headers.TryGetValues("Sync-Token", out System.Collections.Generic.IEnumerable<string> tokens));
                 Assert.AreEqual(1, tokens.Count());
                 CollectionAssert.AreEqual(new[] { "A,B" }, tokens);
             }

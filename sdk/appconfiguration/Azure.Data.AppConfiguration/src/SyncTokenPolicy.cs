@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration
     {
         private const string SyncTokenHeader = "Sync-Token";
 
-        private ConcurrentDictionary<string, SyncToken> _syncTokens;
+        private readonly ConcurrentDictionary<string, SyncToken> _syncTokens;
 
         public SyncTokenPolicy()
         {

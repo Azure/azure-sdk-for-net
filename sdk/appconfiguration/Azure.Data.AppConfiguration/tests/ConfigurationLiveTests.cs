@@ -62,7 +62,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var responseGet = await service.GetAsync(batchKey);
+                Response<ConfigurationSetting> responseGet = await service.GetAsync(batchKey);
                 key = responseGet.Value.Value;
             }
             catch
@@ -83,7 +83,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            var response = await service.DeleteAsync(testSetting.Key);
+            Response response = await service.DeleteAsync(testSetting.Key);
 
             Assert.AreEqual(204, response.Status);
             response.Dispose();
@@ -98,7 +98,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 // Prepare environment
-                var testSettingDiff = testSetting.Clone();
+                ConfigurationSetting testSettingDiff = testSetting.Clone();
                 testSettingDiff.Label = null;
                 await service.SetAsync(testSetting);
                 await service.SetAsync(testSettingDiff);
@@ -107,7 +107,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.DeleteAsync(testSettingDiff.Key);
 
                 //Try to get the non-existing setting
-                var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                RequestFailedException e = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.GetAsync(testSettingDiff.Key);
                 });
@@ -129,7 +129,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 // Prepare environment
-                var testSettingDiff = testSetting.Clone();
+                ConfigurationSetting testSettingDiff = testSetting.Clone();
                 testSettingDiff.Label = "test_label_diff";
                 await service.SetAsync(testSetting);
                 await service.SetAsync(testSettingDiff);
@@ -138,7 +138,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.DeleteAsync(testSettingDiff.Key, testSettingDiff.Label);
 
                 //Try to get the non-existing setting
-                var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                RequestFailedException e = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.GetAsync(testSettingDiff.Key, testSettingDiff.Label);
                 });
@@ -164,7 +164,7 @@ namespace Azure.Data.AppConfiguration.Tests
             // Test
             await service.DeleteAsync(setting.Key, setting.Label, setting.ETag, CancellationToken.None);
             //Try to get the non-existing setting
-            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException e = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(testSetting.Key, testSetting.Label);
             });
@@ -280,7 +280,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddAsync(testSetting);
 
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.AddAsync(testSetting);
                 });
@@ -404,10 +404,10 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            var testSettingDiff = testSetting.Clone();
+            ConfigurationSetting testSettingDiff = testSetting.Clone();
             testSettingDiff.Label = "test_label_diff";
 
-            var testSettingUpdate = testSetting.Clone();
+            ConfigurationSetting testSettingUpdate = testSetting.Clone();
             testSettingUpdate.Value = "test_value_update";
 
             try
@@ -432,7 +432,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.UpdateAsync(testSetting);
             });
@@ -474,8 +474,8 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 // Different tags
-                var testSettingDiff = responseGet.Clone();
-                var settingTags = testSettingDiff.Tags;
+                ConfigurationSetting testSettingDiff = responseGet.Clone();
+                IDictionary<string, string> settingTags = testSettingDiff.Tags;
                 if (settingTags.ContainsKey("tag1"))
                     settingTags["tag1"] = "value-updated";
                 settingTags.Add("tag3", "test_value3");
@@ -485,7 +485,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.AreEqual(testSettingDiff, responseSetting);
 
                 // No tags
-                var testSettingNoTags = responseGet.Clone();
+                ConfigurationSetting testSettingNoTags = responseGet.Clone();
                 testSettingNoTags.Tags = null;
 
                 responseSetting = await service.UpdateAsync(testSettingNoTags, CancellationToken.None);
@@ -511,7 +511,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = testSetting;
 
             setting.Key = GenerateKeyId("key-");
-            var testSettingUpdate = setting.Clone();
+            ConfigurationSetting testSettingUpdate = setting.Clone();
             testSettingUpdate.Label = "test_label_update";
             int expectedEvents = 2;
 
@@ -521,11 +521,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetAsync(testSettingUpdate);
 
                 // Test
-                var selector = new SettingSelector(setting.Key);
-                selector.AsOf = DateTimeOffset.MaxValue;
+                var selector = new SettingSelector(setting.Key)
+                {
+                    AsOf = DateTimeOffset.MaxValue
+                };
 
                 int resultsReturned = 0;
-                await foreach (var value in service.GetRevisionsAsync(selector, CancellationToken.None))
+                await foreach (Response<ConfigurationSetting> value in service.GetRevisionsAsync(selector, CancellationToken.None))
                 {
                     if (value.Value.Label.Contains("update"))
                     {
@@ -554,7 +556,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting testSetting = CreateSetting();
 
             // Prepare environment
-            var testSettingNoLabel = testSetting.Clone();
+            ConfigurationSetting testSettingNoLabel = testSetting.Clone();
             testSettingNoLabel.Label = null;
 
             try
@@ -576,7 +578,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(testSetting.Key);
             });
@@ -591,7 +593,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting testSetting = CreateSetting();
 
             // Prepare environment
-            var testSettingNoLabel = testSetting.Clone();
+            ConfigurationSetting testSettingNoLabel = testSetting.Clone();
             testSettingNoLabel.Label = null;
 
             try

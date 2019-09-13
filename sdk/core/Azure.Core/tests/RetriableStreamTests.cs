@@ -28,13 +28,13 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50);
             var stream2 = new MockReadStream(50, offset: 50, throwIOException: false);
 
-            var mockTransport = CreateMockTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await CreateAsync(
+            Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
                 new ResponseClassifier(), maxRetries: 5);
@@ -61,13 +61,13 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50);
             var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, throwIOException: false);
 
-            var mockTransport = CreateMockTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await CreateAsync(
+            Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
                 new ResponseClassifier(),
@@ -92,13 +92,13 @@ namespace Azure.Core.Tests
             var stream1 = new NoLengthStream();
             var stream2 = new MockReadStream(50);
 
-            var mockTransport = CreateMockTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = RetriableStream.Create(
+            Stream reliableStream = RetriableStream.Create(
                 IsAsync ? await SendTestRequestAsync(pipeline, 0) : SendTestRequest(pipeline, 0),
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
@@ -119,11 +119,11 @@ namespace Azure.Core.Tests
         public async Task ThrowsIfSendingRetryRequestThrows()
         {
             var stream1 = new MockReadStream(100, throwAfter: 50);
-            var mockTransport = CreateMockTransport(new MockResponse(200) { ContentStream = stream1 });
+            MockTransport mockTransport = CreateMockTransport(new MockResponse(200) { ContentStream = stream1 });
 
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await CreateAsync(
+            Stream reliableStream = await CreateAsync(
                 offset =>
                 {
                     if (offset == 0)
@@ -157,7 +157,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RetriesMaxCountAndThrowsAggregateException()
         {
-            var mockTransport = CreateMockTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1) },
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 1) },
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 2) },
@@ -166,7 +166,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await CreateAsync(offset =>
+            Stream reliableStream = await CreateAsync(offset =>
                 {
                     if (offset == 0)
                     {
@@ -185,7 +185,7 @@ namespace Azure.Core.Tests
                     throw new InvalidOperationException();
                 }, new ResponseClassifier(), maxRetries: 3);
 
-            var aggregateException = Assert.ThrowsAsync<AggregateException>(() => ReadAsync(reliableStream, _buffer, 0, 4));
+            AggregateException aggregateException = Assert.ThrowsAsync<AggregateException>(() => ReadAsync(reliableStream, _buffer, 0, 4));
             StringAssert.StartsWith("Retry failed after 4 tries", aggregateException.Message);
             Assert.AreEqual(4, aggregateException.InnerExceptions.Count);
             Assert.AreEqual("Failed at 0", aggregateException.InnerExceptions[0].Message);
