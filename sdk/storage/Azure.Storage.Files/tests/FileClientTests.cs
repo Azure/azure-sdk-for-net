@@ -849,6 +849,27 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
+        public async Task UploadAsync_Simple()
+        {
+            const int size = 10 * Constants.KB;
+            var data = this.GetRandomBuffer(size);
+            using (this.GetNewShare(out var share))
+            {
+                var name = this.GetNewFileName();
+                var file = this.InstrumentClient(share.GetRootDirectoryClient().GetFileClient(name));
+
+                await file.CreateAsync(size);
+                using var stream = new MemoryStream(data);
+                await file.UploadAsync(stream);
+
+                using var bufferedContent = new MemoryStream();
+                var download = await file.DownloadAsync();
+                await download.Value.Content.CopyToAsync(bufferedContent);
+                TestHelper.AssertSequenceEqual(data, bufferedContent.ToArray());
+            }
+        }
+
+        [Test]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
         [TestCase(2 * Constants.KB)]
