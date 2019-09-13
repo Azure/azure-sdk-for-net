@@ -38,7 +38,7 @@ namespace Azure.Core
 #if AZURE_NULLABLE
         public static void AssertNotNull<T>([AllowNull, NotNull] T value, string name) where T : class?
 #else
-        public static void NotNull<T>(T value, string name) where T : class
+        public static void AssertNotNull<T>(T value, string name) where T : class
 #endif
         {
             if (value is null)

@@ -3,7 +3,6 @@
   <PropertyGroup>
     <!-- ECParameters is defined in netstandard2.0 but not net461 (introduced in net47). Test against net461 to make sure a TypeLoadException is not thrown when referencing JsonWebKey. -->
     <TargetFrameworks>$(RequiredTargetFrameworks);net461;net47</TargetFrameworks>
-    <UseAzureCoreNullableAttributes>true</UseAzureCoreNullableAttributes>
   </PropertyGroup>
 
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
