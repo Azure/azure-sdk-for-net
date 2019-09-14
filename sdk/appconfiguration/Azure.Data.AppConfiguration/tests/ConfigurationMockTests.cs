@@ -136,27 +136,6 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task Update()
-        {
-            var response = new MockResponse(200);
-            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
-
-            var mockTransport = new MockTransport(response);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            ConfigurationSetting setting = await service.UpdateAsync(s_testSetting, CancellationToken.None);
-            MockRequest request = mockTransport.SingleRequest;
-
-            AssertRequestCommon(request);
-            Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
-            AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
-            Assert.AreEqual(s_testSetting, setting);
-            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
-            Assert.AreEqual("*", ifMatch);
-        }
-
-        [Test]
         public async Task Delete()
         {
             var response = new MockResponse(200);
