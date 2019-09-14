@@ -2,15 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core.Pipeline;
-using Azure.Core.Testing;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Http;
+using Azure.Core.Pipeline;
+using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -266,6 +267,26 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = await client.GetAsync(s_testSetting.Key);
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(2, mockTransport.Requests.Count);
+        }
+
+        [Test]
+        public async Task AuthorizationHeaderFormat()
+        {
+            var expectedSyntax = "HMAC-SHA256 Credential=(.+)&SignedHeaders=(.+)&Signature=(.+)";
+
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.AddAsync(s_testSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.True(request.Headers.TryGetValue("Authorization", out var authHeader));
+
+            Assert.True(Regex.IsMatch(authHeader, expectedSyntax));
         }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
