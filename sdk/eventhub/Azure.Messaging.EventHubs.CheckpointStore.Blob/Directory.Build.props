@@ -32,7 +32,7 @@
     <!-- Disable the custom analyzer; it is currently in development and based against draft standards. -->
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
 
-    <!-- If there was no override specified, assume a project reference to Azure.Messaging.EventHubs -->
-    <UseProjectReferenceToAzureEventHubs Condition="'$(UseProjectReferenceToAzureEventHubs)' == ''">true</UseProjectReferenceToAzureEventHubs>
+    <!-- If there was no override specified, set the type of reference to use for Azure.Messaging.EventHubs -->
+    <UseProjectReferenceToAzureEventHubs Condition="'$(UseProjectReferenceToAzureEventHubs)' == ''">false</UseProjectReferenceToAzureEventHubs>
   </PropertyGroup>
 </Project>
