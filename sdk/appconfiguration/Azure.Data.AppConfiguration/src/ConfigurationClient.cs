@@ -531,6 +531,16 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="label"></param>
+        /// <returns></returns>
+        public virtual Response<ConfigurationSetting> Get(string key, string label = default)
+        {
+            return Get(key, label);
+        }
+
+        /// <summary>
         /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
