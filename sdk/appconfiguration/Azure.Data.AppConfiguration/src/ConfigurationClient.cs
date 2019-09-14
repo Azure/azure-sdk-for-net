@@ -787,23 +787,23 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Locks an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only locked if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always locked.</param>
+        /// If it is specified, the configuration setting is only set to read only if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always set to read only.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> LockAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Lock");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateLockRequest(key, label, etag);
+                using Request request = CreateSetReadOnlyRequest(key, label, etag);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -826,23 +826,23 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Locks an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read only in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only locked if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always locked.</param>
+        /// If it is specified, the configuration setting is only set to read only if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always set to read only.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response Lock(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual Response SetReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Lock");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.SetReadOnly");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateLockRequest(key, label, etag);
+                using Request request = CreateSetReadOnlyRequest(key, label, etag);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -864,7 +864,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateLockRequest(string key, string label, ETag etag)
+        private Request CreateSetReadOnlyRequest(string key, string label, ETag etag)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
@@ -882,23 +882,23 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Unlocks an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read write in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only unlocked if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always unlocked.</param>
+        /// If it is specified, the configuration setting is only set to read write if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> UnlockAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ClearReadOnlyAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Unlock");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateUnlockRequest(key, label, etag);
+                using Request request = CreateClearReadOnlyRequest(key, label, etag);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -921,23 +921,23 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Unlocks an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Sets an existing <see cref="ConfigurationSetting"/> as read write in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only unlocked if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always unlocked.</param>
+        /// If it is specified, the configuration setting is only set to read write if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response Unlock(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        public virtual Response ClearReadOnly(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Unlock");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.ClearReadOnly");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateUnlockRequest(key, label, etag);
+                using Request request = CreateClearReadOnlyRequest(key, label, etag);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -959,7 +959,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateUnlockRequest(string key, string label, ETag etag)
+        private Request CreateClearReadOnlyRequest(string key, string label, ETag etag)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));

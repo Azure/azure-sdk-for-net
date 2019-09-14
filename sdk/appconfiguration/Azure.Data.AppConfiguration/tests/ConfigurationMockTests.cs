@@ -267,7 +267,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task Lock()
+        public async Task SetReadOnly()
         {
             var response = new MockResponse(200);
             response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
@@ -275,7 +275,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            await service.LockAsync(s_testSetting.Key);
+            await service.SetReadOnlyAsync(s_testSetting.Key);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -284,7 +284,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task LockWithLabel()
+        public async Task SetReadOnlyWithLabel()
         {
             var response = new MockResponse(200);
             response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
@@ -292,7 +292,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
+            await service.SetReadOnlyAsync(s_testSetting.Key, s_testSetting.Label);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -301,7 +301,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public void LockNotFound()
+        public void SetReadOnlyNotFound()
         {
             var response = new MockResponse(404);
             var mockTransport = new MockTransport(response);
@@ -309,14 +309,14 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await service.LockAsync(s_testSetting.Key);
+                await service.SetReadOnlyAsync(s_testSetting.Key);
             });
 
             Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
-        public async Task Unlock()
+        public async Task ClearReadOnly()
         {
             var response = new MockResponse(200);
             response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
@@ -324,7 +324,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            await service.UnlockAsync(s_testSetting.Key);
+            await service.ClearReadOnlyAsync(s_testSetting.Key);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -333,7 +333,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task UnlockWithLabel()
+        public async Task ClearReadOnlyWithLabel()
         {
             var response = new MockResponse(200);
             response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
@@ -341,7 +341,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
+            await service.ClearReadOnlyAsync(s_testSetting.Key, s_testSetting.Label);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -350,7 +350,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public void UnlockNotFound()
+        public void ClearReadOnlyNotFound()
         {
             var response = new MockResponse(404);
             var mockTransport = new MockTransport(response);
@@ -358,7 +358,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await service.UnlockAsync(s_testSetting.Key);
+                await service.ClearReadOnlyAsync(s_testSetting.Key);
             });
 
             Assert.AreEqual(404, exception.Status);
