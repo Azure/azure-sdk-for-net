@@ -53,6 +53,7 @@ namespace Azure.Data.AppConfiguration
 
             _pipeline = HttpPipelineBuilder.Build(options,
                     new AuthenticationPolicy(credential, secret),
+                    new ApiVersionPolicy(options.GetVersionString()),
                     new SyncTokenPolicy());
         }
 

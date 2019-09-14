@@ -268,6 +268,40 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(2, mockTransport.Requests.Count);
         }
 
+        [Test]
+        public async Task RequestHasApiVersionQuery()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            ConfigurationSetting setting = await service.AddAsync(s_testSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            StringAssert.Contains("api-version", request.UriBuilder.Uri.ToString());
+        }
+
+        [Test]
+        public async Task RequestHasSpecificApiVersion()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            var options = new ConfigurationClientOptions(ConfigurationClientOptions.ServiceVersion.V1_0);
+            options.Diagnostics.ApplicationId = "test_application";
+            options.Transport = mockTransport;
+
+            ConfigurationClient client = CreateClient<ConfigurationClient>(s_connectionString, options);
+
+            ConfigurationSetting setting = await client.AddAsync(s_testSetting);
+            MockRequest request = mockTransport.SingleRequest;
+
+            StringAssert.Contains("api-version=1.0", request.UriBuilder.Uri.ToString());
+        }
+
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
             using (var stream = new MemoryStream())
