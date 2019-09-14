@@ -89,8 +89,9 @@ namespace Azure.Storage.Blobs
         public BlobServiceClient(string connectionString, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            _uri = conn.BlobEndpoint;
-            _pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
+            this._uri = conn.BlobEndpoint;
+            options ??= new BlobClientOptions();
+            this._pipeline = options.Build(conn.Credentials);
         }
 
         /// <summary>
@@ -167,8 +168,9 @@ namespace Azure.Storage.Blobs
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
-            _uri = serviceUri;
-            _pipeline = (options ?? new BlobClientOptions()).Build(authentication);
+            this._uri = serviceUri;
+            options ??= new BlobClientOptions();
+            this._pipeline = options.Build(authentication);
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -34,13 +35,35 @@ namespace Azure.Storage.Blobs.Test
 
             var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
 
-            var service = new BlobServiceClient(connectionString.ToString(true));
+            var service1 = this.InstrumentClient(new BlobServiceClient(connectionString.ToString(true)));
+            var service2 = this.InstrumentClient(new BlobServiceClient(connectionString.ToString(true), this.GetOptions()));
 
+            var builder1 = new BlobUriBuilder(service1.Uri);
+            var builder2 = new BlobUriBuilder(service2.Uri);
+
+            Assert.IsEmpty(builder1.ContainerName);
+            Assert.IsEmpty(builder1.BlobName);
+            Assert.AreEqual(accountName, builder1.AccountName);
+
+            Assert.IsEmpty(builder2.ContainerName);
+            Assert.IsEmpty(builder2.BlobName);
+            Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+
+            var service = this.InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
             var builder = new BlobUriBuilder(service.Uri);
 
-            Assert.AreEqual("", builder.ContainerName);
+            Assert.IsEmpty(builder.ContainerName);
             Assert.AreEqual("", builder.BlobName);
-            Assert.AreEqual("accountName", builder.AccountName);
+            Assert.AreEqual(accountName, builder.AccountName);
         }
 
         [Test]
@@ -58,6 +81,54 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsTrue(containers.Count() >= 1);
             }
         }
+
+        #region Secondary Storage
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
+        {
+            var testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorageSecondRetrySuccessful()
+        {
+            var testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorageThirdRetrySuccessful()
+        {
+            var testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorage404OnSecondary()
+        {
+            var testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorage404OnSecondary(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
+        {
+            TestExceptionPolicy testExceptionPolicy;
+            var service = this.GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(
+                numberOfReadFailuresToSimulate, 
+                out testExceptionPolicy, 
+                retryOn404);
+            using (this.GetNewContainer(out _, service: service))
+            {
+                var containers = await this.EnsurePropagatedAsync(
+                    async () => await service.GetContainersAsync().ToListAsync(),
+                    containers => containers.Count > 0);
+                Assert.IsTrue(containers.Count >= 1);
+                Assert.AreEqual(200, containers[0].GetRawResponse().Status);
+            }
+            return testExceptionPolicy;
+        }
+        #endregion
 
         [Test]
         public async Task ListContainersSegmentAsync_Marker()

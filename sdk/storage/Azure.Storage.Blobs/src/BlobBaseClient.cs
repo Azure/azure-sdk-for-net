@@ -108,8 +108,9 @@ namespace Azure.Storage.Blobs.Specialized
                     ContainerName = containerName,
                     BlobName = blobName
                 };
-            _uri = builder.Uri;
-            _pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
+            this._uri = builder.Uri;
+            options ??= new BlobClientOptions();
+            this._pipeline = options.Build(conn.Credentials);
         }
 
         /// <summary>
@@ -194,8 +195,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobBaseClient(Uri blobUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
-            _uri = blobUri;
-            _pipeline = (options ?? new BlobClientOptions()).Build(authentication);
+            this._uri = blobUri;
+            options ??= new BlobClientOptions();
+            this._pipeline = options.Build(authentication);
         }
 
         /// <summary>

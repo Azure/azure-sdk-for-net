@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -267,6 +268,59 @@ namespace Azure.Storage.Test.Shared
 
             // TODO: #7077 - These are too flaky/noisy so I'm changing to Warn
             Assert.Warn("Progress notifications never completed!");
+        }
+
+        protected void AssertSecondaryStorageFirstRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        {
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+        }
+
+        protected void AssertSecondaryStorageSecondRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        {
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
+        }
+
+        protected void AssertSecondaryStorageThirdRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        {
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[3]);
+        }
+
+        protected void AssertSecondaryStorage404OnSecondary(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        {
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
+            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[3]);
+        }
+
+        protected async Task<T> EnsurePropagatedAsync<T>(
+            Func<Task<T>> getResponse,
+            Func<T,bool> hasResponse)
+        {
+            int delayDuration = 10000;
+            bool responseReceived = false;
+            T response = default;
+            // end time of 16 minutes from now to allow for propagation to secondary host
+            DateTimeOffset endTime = DateTimeOffset.Now.AddMinutes(16); 
+            while (!responseReceived && DateTimeOffset.Now < endTime) 
+            {
+                response = await getResponse();
+                if (!hasResponse(response))
+                {
+                    await this.Delay(delayDuration);
+                }
+                else
+                {
+                    responseReceived = true;
+                }
+            }
+            return response;
         }
     }
 }
