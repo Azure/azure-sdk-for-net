@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
@@ -82,20 +83,36 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="authentication">Optional authentication policy.</param>
+        /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null) =>
-            HttpPipelineBuilder.Build(
-                options,
-                authentication,
-                StorageRequestValidationPipelinePolicy.Shared);
+        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
+        {
+            StorageResponseClassifier classifier = null;
+            List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
+            if (geoRedundantSecondaryStorageUri != null)
+            {
+                perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
+                // we use a custom response classifier so that we can retry in case of a 404 that occurs against the secondary host. The retry will happen on the primary host.
+                classifier = new StorageResponseClassifier(geoRedundantSecondaryStorageUri);
+            }
+
+            perRetryClientPolicies.Add(StorageRequestValidationPipelinePolicy.Shared);
+            perRetryClientPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build 
+            return HttpPipelineBuilder.Build(
+               options,
+               Array.Empty<HttpPipelinePolicy>(),
+               perRetryClientPolicies.ToArray(),
+               classifier);
+        }
 
         /// <summary>
         /// Create an HttpPipeline from Storage ClientOptions.
         /// </summary>
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="credentials">Optional authentication credentials.</param>
+        /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, object credentials) =>
-            Build(options, GetAuthenticationPolicy(credentials));
+        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
+            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
     }
 }

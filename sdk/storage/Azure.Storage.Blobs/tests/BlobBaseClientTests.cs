@@ -10,10 +10,12 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Http;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -43,13 +45,30 @@ namespace Azure.Storage.Blobs.Test
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
 
-            BlobBaseClient blob = InstrumentClient(new BlobBaseClient(connectionString.ToString(true), containerName, blobName, GetOptions()));
+            var blob1 = this.InstrumentClient(new BlobBaseClient(connectionString.ToString(true), containerName, blobName, this.GetOptions()));
+            var blob2 = this.InstrumentClient(new BlobBaseClient(connectionString.ToString(true), containerName, blobName));
 
+            var builder1 = new BlobUriBuilder(blob1.Uri);
+            var builder2 = new BlobUriBuilder(blob2.Uri);
+
+            Assert.AreEqual(containerName, builder1.ContainerName);
+            Assert.AreEqual(blobName, builder1.BlobName);
+            Assert.AreEqual("accountName", builder1.AccountName);
+
+            Assert.AreEqual(containerName, builder2.ContainerName);
+            Assert.AreEqual(blobName, builder2.BlobName);
+            Assert.AreEqual("accountName", builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var blob = this.InstrumentClient(new BlobBaseClient(blobEndpoint));
             var builder = new BlobUriBuilder(blob.Uri);
 
-            Assert.AreEqual(containerName, builder.ContainerName);
-            Assert.AreEqual(blobName, builder.BlobName);
-            Assert.AreEqual("accountName", builder.AccountName);
+            Assert.AreEqual(accountName, builder.AccountName);
         }
 
         #region Sequential Download
@@ -77,6 +96,71 @@ namespace Azure.Storage.Blobs.Test
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
+
+        #region Secondary Storage
+        [Test]
+        public async Task DownloadAsync_ReadFromSecondaryStorage()
+        {
+            TestExceptionPolicy testExceptionPolicy;
+            using (this.GetNewContainer(out var container, this.GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out testExceptionPolicy)))
+            {
+                // Arrange
+                var data = this.GetRandomBuffer(Constants.KB);
+                var blockBlobClient = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await blockBlobClient.UploadAsync(stream);
+                }
+
+                // Act
+                var response = await this.EnsurePropagatedAsync(
+                    async () => await blockBlobClient.DownloadAsync(),
+                    downloadInfo => downloadInfo.GetRawResponse().Status != 404);
+
+                // Assert
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                Assert.AreEqual(this.SecondaryStorageTenantPrimaryHost(), testExceptionPolicy.HostsSetInRequests[0]);
+                Assert.AreEqual(this.SecondaryStorageTenantSecondaryHost(), testExceptionPolicy.HostsSetInRequests[1]);
+            }
+        }
+
+        [Test]
+        public async Task DownloadAsync_ReadFromSecondaryStorageShouldNotPut()
+        {
+            TestExceptionPolicy testExceptionPolicy;
+            BlobServiceClient serviceClient = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(
+                1, 
+                out testExceptionPolicy,
+                false,
+                new List<Core.Pipeline.RequestMethod>(new Core.Pipeline.RequestMethod[] { RequestMethod.Put }));
+
+            using (GetNewContainer(out var container, serviceClient))
+            {
+                // Arrange
+                var data = GetRandomBuffer(Constants.KB);
+                var blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                // Act
+                var response = await blob.DownloadAsync();
+
+                // Assert
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), testExceptionPolicy.HostsSetInRequests[0]);
+                // should not toggle to secondary host on put request failure
+                Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), testExceptionPolicy.HostsSetInRequests[1]);
+            }
+        }
+        #endregion
 
         [Test]
         public async Task DownloadAsync_CPK()

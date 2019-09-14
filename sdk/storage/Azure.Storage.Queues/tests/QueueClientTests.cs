@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
+using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Test;
 using NUnit.Framework;
@@ -35,12 +37,31 @@ namespace Azure.Storage.Queues.Test
 
             var queueName = GetNewQueueName();
 
-            QueueClient client = InstrumentClient(new QueueClient(connectionString.ToString(true), queueName, GetOptions()));
+            var client1 = this.InstrumentClient(new QueueClient(connectionString.ToString(true), queueName, this.GetOptions()));
 
-            var builder = new QueueUriBuilder(client.Uri);
+            var client2 = this.InstrumentClient(new QueueClient(connectionString.ToString(true), queueName));
 
-            Assert.AreEqual(queueName, builder.QueueName);
+            var builder1 = new QueueUriBuilder(client1.Uri);
+            var builder2 = new QueueUriBuilder(client2.Uri);
+
+            Assert.AreEqual(queueName, builder1.QueueName);
+            Assert.AreEqual(queueName, builder2.QueueName);
+
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+
+            var queue = this.InstrumentClient(new QueueClient(queueEndpoint, credentials));
+            var builder = new QueueUriBuilder(queue.Uri);
+
+            Assert.AreEqual(accountName, builder.AccountName);
         }
 
         [Test]
@@ -199,6 +220,26 @@ namespace Azure.Storage.Queues.Test
                 queue.GetPropertiesAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
+
+        #region Secondary Storage
+
+        [Test]
+        public async Task GetPropertiesAsync_SecondaryStorage()
+        {
+            TestExceptionPolicy testExceptionPolicy;
+            var queueClient = this.GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(1, out testExceptionPolicy);
+            await queueClient.CreateAsync();
+            var properties = await this.EnsurePropagatedAsync(
+                async () => await queueClient.GetPropertiesAsync(),
+                properties => properties.GetRawResponse().Status != 404);
+
+            Assert.IsNotNull(properties);
+            Assert.AreEqual(200, properties.GetRawResponse().Status);
+
+            await queueClient.DeleteAsync();
+            this.AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+        #endregion
 
         [Test]
         public async Task SetMetadataAsync_OnCreate()
