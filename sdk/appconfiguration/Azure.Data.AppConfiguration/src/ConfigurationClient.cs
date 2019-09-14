@@ -810,10 +810,6 @@ namespace Azure.Data.AppConfiguration
                 {
                     case 200:
                         return response;
-                    case 404:
-                        throw await response.CreateRequestFailedExceptionAsync("Not found.").ConfigureAwait(false);
-                    case 412:
-                        throw await response.CreateRequestFailedExceptionAsync("The specified precondition failed.").ConfigureAwait(false);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -849,10 +845,6 @@ namespace Azure.Data.AppConfiguration
                 {
                     case 200:
                         return response;
-                    case 404:
-                        throw response.CreateRequestFailedException("Not found.");
-                    case 412:
-                        throw response.CreateRequestFailedException("The specified precondition failed.");
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -905,10 +897,6 @@ namespace Azure.Data.AppConfiguration
                 {
                     case 200:
                         return response;
-                    case 404:
-                        throw await response.CreateRequestFailedExceptionAsync("Not found.").ConfigureAwait(false);
-                    case 412:
-                        throw await response.CreateRequestFailedExceptionAsync("The specified precondition failed.").ConfigureAwait(false);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -944,10 +932,6 @@ namespace Azure.Data.AppConfiguration
                 {
                     case 200:
                         return response;
-                    case 404:
-                        throw response.CreateRequestFailedException("Not found.");
-                    case 412:
-                        throw response.CreateRequestFailedException("The specified precondition failed.");
                     default:
                         throw response.CreateRequestFailedException();
                 }
