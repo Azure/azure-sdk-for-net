@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "16914f44-62b0-4a28-b893-d0076685d2b9"
+          "80159393-6975-4e95-a946-57a298881508"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "d44ddda4-53c7-4c8f-94a4-fe50d33a848c"
+          "2df57251-cf45-4ba4-af0e-59a85939e6e2"
         ],
         "x-ms-correlation-request-id": [
-          "d44ddda4-53c7-4c8f-94a4-fe50d33a848c"
+          "2df57251-cf45-4ba4-af0e-59a85939e6e2"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132114Z:d44ddda4-53c7-4c8f-94a4-fe50d33a848c"
+          "UKSOUTH2:20190912T181406Z:2df57251-cf45-4ba4-af0e-59a85939e6e2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:21:13 GMT"
+          "Thu, 12 Sep 2019 18:14:05 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourcegroups/sdktestrg9567?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzk1Njc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourcegroups/sdktestrg81?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzgxP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "edd946e9-293e-4ba8-8e08-76ac8158d07e"
+          "4b2891a9-351d-481c-940e-c3c4a9097f0c"
         ],
         "Accept-Language": [
           "en-US"
@@ -96,13 +96,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "2ec1d555-5d90-4f6b-8dd1-dfc86e3a1d34"
+          "f16849a2-fbaf-4def-9386-7226b2f8f917"
         ],
         "x-ms-correlation-request-id": [
-          "2ec1d555-5d90-4f6b-8dd1-dfc86e3a1d34"
+          "f16849a2-fbaf-4def-9386-7226b2f8f917"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132117Z:2ec1d555-5d90-4f6b-8dd1-dfc86e3a1d34"
+          "UKSOUTH2:20190912T181409Z:f16849a2-fbaf-4def-9386-7226b2f8f917"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,10 +111,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:21:17 GMT"
+          "Thu, 12 Sep 2019 18:14:09 GMT"
         ],
         "Content-Length": [
-          "182"
+          "178"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg9567\",\r\n  \"name\": \"sdktestrg9567\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg81\",\r\n  \"name\": \"sdktestrg81\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection978?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uOTc4P2FwaS12ZXJzaW9uPTIwMTktMDUtMTU=",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection4440?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uNDQ0MD9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"EventGrid\",\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"dataFormat\": \"CSV\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8ce914d0-198e-49e8-9c54-4412e63edc84"
+          "bad8d567-b254-4106-94da-cb7cd398e096"
         ],
         "Accept-Language": [
           "en-US"
@@ -162,10 +162,10 @@
           "\"\""
         ],
         "x-ms-request-id": [
-          "8daca0a3-a7c8-4eb4-b95d-d77fe2a2faa4"
+          "b0977813-0bf8-4c30-94fd-b4029324408e"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/df95dcc4-1654-435f-82b0-8abe6a8a5603?api-version=2019-05-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/e89b61d5-6999-4efc-afbb-5d3f392d56cd?api-version=2019-05-15"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -177,10 +177,10 @@
           "199"
         ],
         "x-ms-correlation-request-id": [
-          "dcceae2a-a876-489e-8739-91ab97ad6744"
+          "e7c664fc-07ad-4e03-bebf-e636a695c38c"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132121Z:dcceae2a-a876-489e-8739-91ab97ad6744"
+          "UKSOUTH2:20190912T181412Z:e7c664fc-07ad-4e03-bebf-e636a695c38c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -189,10 +189,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:21:20 GMT"
+          "Thu, 12 Sep 2019 18:14:11 GMT"
         ],
         "Content-Length": [
-          "863"
+          "865"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -201,17 +201,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection978\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection978\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection4440\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection4440\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection978?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uOTc4P2FwaS12ZXJzaW9uPTIwMTktMDUtMTU=",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection4440?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uNDQ0MD9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"EventGrid\",\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"dataFormat\": \"CSV\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4b25334b-1f9d-4c53-ac23-fcd7d9d608c7"
+          "b32c5c5b-a1f6-4bfd-9c78-001c2ed975a5"
         ],
         "Accept-Language": [
           "en-US"
@@ -246,10 +246,10 @@
           "198"
         ],
         "x-ms-request-id": [
-          "22d806ec-8445-445f-a091-280e9c3e91d0"
+          "369b7524-58e7-45b0-8c4a-05826074df4d"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/14a72241-d369-465f-b696-68abf7f4f85f?api-version=2019-05-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/046c84e4-0a11-412e-a93a-ad5795dd7dd3?api-version=2019-05-15"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -258,10 +258,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "0697b58f-5dce-4654-8ea9-9147d493320b"
+          "cd53abe4-a7c1-44d8-8962-4ba231347261"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132158Z:0697b58f-5dce-4654-8ea9-9147d493320b"
+          "UKSOUTH2:20190912T181443Z:cd53abe4-a7c1-44d8-8962-4ba231347261"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -270,10 +270,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:21:57 GMT"
+          "Thu, 12 Sep 2019 18:14:43 GMT"
         ],
         "Content-Length": [
-          "863"
+          "865"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -282,12 +282,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection978\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection978\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Accepted\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection4440\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection4440\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Accepted\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/df95dcc4-1654-435f-82b0-8abe6a8a5603?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2RmOTVkY2M0LTE2NTQtNDM1Zi04MmIwLThhYmU2YThhNTYwMz9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/e89b61d5-6999-4efc-afbb-5d3f392d56cd?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2U4OWI2MWQ1LTY5OTktNGVmYy1hZmJiLTVkM2YzOTJkNTZjZD9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -312,7 +312,7 @@
           "299"
         ],
         "x-ms-request-id": [
-          "d9413d5a-4ce5-4f07-b040-15625fdd8e8c"
+          "000c271c-a048-44c2-82aa-ffefae419138"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -321,10 +321,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "79f75e8a-973a-404b-a36d-9e09ca7398de"
+          "cb0909af-d3bd-4496-8279-4403b64804b4"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132151Z:79f75e8a-973a-404b-a36d-9e09ca7398de"
+          "UKSOUTH2:20190912T181442Z:cb0909af-d3bd-4496-8279-4403b64804b4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -333,7 +333,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:21:51 GMT"
+          "Thu, 12 Sep 2019 18:14:42 GMT"
         ],
         "Content-Length": [
           "492"
@@ -345,12 +345,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationresults/df95dcc4-1654-435f-82b0-8abe6a8a5603\",\r\n  \"name\": \"df95dcc4-1654-435f-82b0-8abe6a8a5603\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-09-12T13:21:21.2209342Z\",\r\n  \"endTime\": \"2019-09-12T13:21:44.0368145Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DmServiceEventGridIngestionSourceAdd\",\r\n    \"RootActivityId\": \"f59a1ec6-d981-405c-a911-e1ecd54fe8b0\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationresults/e89b61d5-6999-4efc-afbb-5d3f392d56cd\",\r\n  \"name\": \"e89b61d5-6999-4efc-afbb-5d3f392d56cd\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-09-12T18:14:12.2256101Z\",\r\n  \"endTime\": \"2019-09-12T18:14:40.2849825Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DmServiceEventGridIngestionSourceAdd\",\r\n    \"RootActivityId\": \"a893c538-7d59-48a7-9886-c42916d8a085\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection978?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uOTc4P2FwaS12ZXJzaW9uPTIwMTktMDUtMTU=",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection4440?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uNDQ0MD9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -378,7 +378,7 @@
           "299"
         ],
         "x-ms-request-id": [
-          "999653cb-e065-48f2-a1bf-e0f9c5015dd4"
+          "e7d5348e-b799-4ec6-a308-173d0f178dc3"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -387,10 +387,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "4d46f5db-1f77-4e58-9f09-9b2d62f6e519"
+          "02cb3fdc-b4be-4e48-b53b-b5700c315da0"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132152Z:4d46f5db-1f77-4e58-9f09-9b2d62f6e519"
+          "UKSOUTH2:20190912T181443Z:02cb3fdc-b4be-4e48-b53b-b5700c315da0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -399,10 +399,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:21:51 GMT"
+          "Thu, 12 Sep 2019 18:14:42 GMT"
         ],
         "Content-Length": [
-          "897"
+          "899"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -411,17 +411,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection978\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection978\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"mappingRuleName\": null,\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection4440\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection4440\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"mappingRuleName\": null,\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection978?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uOTc4P2FwaS12ZXJzaW9uPTIwMTktMDUtMTU=",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection4440?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uNDQ0MD9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9ac710a5-fa7a-4a64-a3b0-261013cc0e00"
+          "6d0fb34a-ba0b-42b2-8aba-40777d5f2c12"
         ],
         "Accept-Language": [
           "en-US"
@@ -450,7 +450,7 @@
           "298"
         ],
         "x-ms-request-id": [
-          "dcdde6a9-cb89-473b-8fcd-f778a8f60932"
+          "7404dff9-0d0b-4e89-a957-a6bcd110d315"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -459,10 +459,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "a031bca6-ec2e-4146-be7d-e108a766dd0f"
+          "10d323f4-3b1f-4bca-8f63-310a3dc6fb69"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132158Z:a031bca6-ec2e-4146-be7d-e108a766dd0f"
+          "UKSOUTH2:20190912T181443Z:10d323f4-3b1f-4bca-8f63-310a3dc6fb69"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -471,10 +471,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:21:57 GMT"
+          "Thu, 12 Sep 2019 18:14:43 GMT"
         ],
         "Content-Length": [
-          "897"
+          "899"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -483,12 +483,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection978\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection978\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"mappingRuleName\": null,\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection4440\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection4440\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"mappingRuleName\": null,\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection978?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uOTc4P2FwaS12ZXJzaW9uPTIwMTktMDUtMTU=",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection4440?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uNDQ0MD9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -516,7 +516,7 @@
           "297"
         ],
         "x-ms-request-id": [
-          "385e9c85-7b80-42a3-9a0d-0b17d55138c7"
+          "e5ed63f8-8bb3-4450-bfb7-ba64486bd7de"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -525,10 +525,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "63331633-06d4-47ec-b2e0-c41d8ce74ab9"
+          "b36d3cf3-3706-459e-95fa-fd7cf67f74db"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132229Z:63331633-06d4-47ec-b2e0-c41d8ce74ab9"
+          "UKSOUTH2:20190912T181514Z:b36d3cf3-3706-459e-95fa-fd7cf67f74db"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -537,10 +537,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:22:29 GMT"
+          "Thu, 12 Sep 2019 18:15:14 GMT"
         ],
         "Content-Length": [
-          "897"
+          "899"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -549,17 +549,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection978\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection978\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"mappingRuleName\": null,\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection4440\",\r\n  \"name\": \"ofertestforclient/databasetest/eventGridConnection4440\",\r\n  \"type\": \"Microsoft.Kusto/Clusters/Databases/DataConnections\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"EventGrid\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"mappingRuleName\": null,\r\n    \"dataFormat\": \"CSV\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection978?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uOTc4P2FwaS12ZXJzaW9uPTIwMTktMDUtMTU=",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection4440?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uNDQ0MD9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c89e9c93-8ca8-410d-9663-5a701924c044"
+          "caddab5e-8a31-4b2f-a6f2-c651b5f5ec11"
         ],
         "Accept-Language": [
           "en-US"
@@ -579,7 +579,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "4b5947ce-bd22-4966-8033-0712066d8bb6"
+          "45390a25-8904-4d30-add1-52c84e97dec8"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -591,10 +591,10 @@
           "296"
         ],
         "x-ms-correlation-request-id": [
-          "6fd34ae7-5e9a-41ce-8b82-5648550390b2"
+          "68ec4e4b-d843-4a65-a495-6525f4226fce"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132305Z:6fd34ae7-5e9a-41ce-8b82-5648550390b2"
+          "UKSOUTH2:20190912T181546Z:68ec4e4b-d843-4a65-a495-6525f4226fce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -603,10 +603,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:23:04 GMT"
+          "Thu, 12 Sep 2019 18:15:45 GMT"
         ],
         "Content-Length": [
-          "290"
+          "291"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -615,12 +615,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The resource with identifier '/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection978' is not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The resource with identifier '/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/Clusters/ofertestforclient/Databases/databasetest/DataConnections/eventGridConnection4440' is not found.\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/14a72241-d369-465f-b696-68abf7f4f85f?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzE0YTcyMjQxLWQzNjktNDY1Zi1iNjk2LTY4YWJmN2Y0Zjg1Zj9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/046c84e4-0a11-412e-a93a-ad5795dd7dd3?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzA0NmM4NGU0LTBhMTEtNDEyZS1hOTNhLWFkNTc5NWRkN2RkMz9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -645,7 +645,7 @@
           "298"
         ],
         "x-ms-request-id": [
-          "4538f329-9882-4a2d-b43a-4afa8aad1a6a"
+          "7b2f62a9-cf38-452d-9933-ecc96469a466"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -654,10 +654,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "2bce774f-e998-4a04-b4b5-1daf6cd1c492"
+          "dc168e47-dc44-4afb-848e-3e5dee79514a"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132229Z:2bce774f-e998-4a04-b4b5-1daf6cd1c492"
+          "UKSOUTH2:20190912T181514Z:dc168e47-dc44-4afb-848e-3e5dee79514a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -666,7 +666,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:22:28 GMT"
+          "Thu, 12 Sep 2019 18:15:13 GMT"
         ],
         "Content-Length": [
           "492"
@@ -678,17 +678,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationresults/14a72241-d369-465f-b696-68abf7f4f85f\",\r\n  \"name\": \"14a72241-d369-465f-b696-68abf7f4f85f\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-09-12T13:21:58.5146194Z\",\r\n  \"endTime\": \"2019-09-12T13:22:21.1008627Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DmServiceEventGridIngestionSourceAdd\",\r\n    \"RootActivityId\": \"cb38a0b3-374c-4830-b181-3ed68ff85a0d\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationresults/046c84e4-0a11-412e-a93a-ad5795dd7dd3\",\r\n  \"name\": \"046c84e4-0a11-412e-a93a-ad5795dd7dd3\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-09-12T18:14:43.8755841Z\",\r\n  \"endTime\": \"2019-09-12T18:15:06.6342918Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DmServiceEventGridIngestionSourceAdd\",\r\n    \"RootActivityId\": \"cfb89b32-c55e-4f01-a407-1d417bd04963\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection978?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uOTc4P2FwaS12ZXJzaW9uPTIwMTktMDUtMTU=",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection4440?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uNDQ0MD9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5fa510f7-921d-4064-b639-6eda9e2ca0e6"
+          "f0daed40-403c-4cde-8c72-77b9c5501b39"
         ],
         "Accept-Language": [
           "en-US"
@@ -708,13 +708,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/78c7f658-98fd-4e91-81a1-3e942511df7a?api-version=2019-05-15&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a1b02e3b-1208-456d-89e4-596d7386631e?api-version=2019-05-15&operationResultResponseType=Location"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/78c7f658-98fd-4e91-81a1-3e942511df7a?api-version=2019-05-15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/a1b02e3b-1208-456d-89e4-596d7386631e?api-version=2019-05-15"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -722,14 +719,17 @@
         "X-Powered-By": [
           "ASP.NET"
         ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
         "x-ms-request-id": [
-          "a147b7d0-8240-487f-a4a4-f566e4347122"
+          "2d894b3e-b72d-45bb-80bf-8ab34b98c6ce"
         ],
         "x-ms-correlation-request-id": [
-          "a147b7d0-8240-487f-a4a4-f566e4347122"
+          "2d894b3e-b72d-45bb-80bf-8ab34b98c6ce"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132233Z:a147b7d0-8240-487f-a4a4-f566e4347122"
+          "UKSOUTH2:20190912T181515Z:2d894b3e-b72d-45bb-80bf-8ab34b98c6ce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -738,7 +738,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:22:33 GMT"
+          "Thu, 12 Sep 2019 18:15:14 GMT"
         ],
         "Expires": [
           "-1"
@@ -751,8 +751,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/78c7f658-98fd-4e91-81a1-3e942511df7a?api-version=2019-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzc4YzdmNjU4LTk4ZmQtNGU5MS04MWExLTNlOTQyNTExZGY3YT9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a1b02e3b-1208-456d-89e4-596d7386631e?api-version=2019-05-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2ExYjAyZTNiLTEyMDgtNDU2ZC04OWU0LTU5NmQ3Mzg2NjMxZT9hcGktdmVyc2lvbj0yMDE5LTA1LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -773,11 +773,14 @@
         "Vary": [
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "297"
+        "x-ms-correlation-request-id": [
+          "4bfd4516-746e-44a7-ae28-003828c95510"
         ],
         "x-ms-request-id": [
-          "93021769-9c5c-44b9-991d-3e1179e9d645"
+          "cc385a49-dccc-419b-8e42-172da6422637"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "297"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -785,11 +788,8 @@
         "X-Powered-By": [
           "ASP.NET"
         ],
-        "x-ms-correlation-request-id": [
-          "de1a38ec-4e45-4694-9e0f-eb544b24a65d"
-        ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132304Z:de1a38ec-4e45-4694-9e0f-eb544b24a65d"
+          "UKSOUTH2:20190912T181545Z:4bfd4516-746e-44a7-ae28-003828c95510"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -798,10 +798,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:23:03 GMT"
+          "Thu, 12 Sep 2019 18:15:44 GMT"
         ],
         "Content-Length": [
-          "479"
+          "481"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -810,12 +810,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationresults/78c7f658-98fd-4e91-81a1-3e942511df7a\",\r\n  \"name\": \"78c7f658-98fd-4e91-81a1-3e942511df7a\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-09-12T13:22:33.6811211Z\",\r\n  \"endTime\": \"2019-09-12T13:22:34.05817Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DmServiceDataObtainerDrop\",\r\n    \"RootActivityId\": \"d4ccd790-113d-4bca-a4ee-42a40a546d5c\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationresults/a1b02e3b-1208-456d-89e4-596d7386631e\",\r\n  \"name\": \"a1b02e3b-1208-456d-89e4-596d7386631e\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-09-12T18:15:14.9625386Z\",\r\n  \"endTime\": \"2019-09-12T18:15:15.2593885Z\",\r\n  \"percentComplete\": 1.0,\r\n  \"properties\": {\r\n    \"OperationKind\": \"DmServiceDataObtainerDrop\",\r\n    \"RootActivityId\": \"a2b79a7a-dc74-4396-987c-a8c27a63ff31\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/78c7f658-98fd-4e91-81a1-3e942511df7a?api-version=2019-05-15&operationResultResponseType=Location",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzc4YzdmNjU4LTk4ZmQtNGU5MS04MWExLTNlOTQyNTExZGY3YT9hcGktdmVyc2lvbj0yMDE5LTA1LTE1Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a1b02e3b-1208-456d-89e4-596d7386631e?api-version=2019-05-15&operationResultResponseType=Location",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2ExYjAyZTNiLTEyMDgtNDU2ZC04OWU0LTU5NmQ3Mzg2NjMxZT9hcGktdmVyc2lvbj0yMDE5LTA1LTE1Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -834,7 +834,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fb7dacb7-0c2f-47b4-90e2-46c785e4e756"
+          "56d5b566-8d19-48fb-aaa2-e12a0862ac86"
         ],
         "Set-Cookie": [
           "ARRAffinity=4b9a48aae49b27a30bcb77e3a7b4d1c3ac37496a6d5c56d419847e2dd023480b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -846,10 +846,10 @@
           "296"
         ],
         "x-ms-correlation-request-id": [
-          "7ca1fb9f-029f-4772-9563-f2c2ef8a0eaa"
+          "9cb5d958-bb42-4372-945a-fed8274bde80"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190912T132304Z:7ca1fb9f-029f-4772-9563-f2c2ef8a0eaa"
+          "UKSOUTH2:20190912T181546Z:9cb5d958-bb42-4372-945a-fed8274bde80"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -858,7 +858,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 12 Sep 2019 13:23:04 GMT"
+          "Thu, 12 Sep 2019 18:15:45 GMT"
         ],
         "Expires": [
           "-1"
@@ -873,12 +873,12 @@
   ],
   "Names": {
     "Initialize": [
-      "sdktestrg9567",
-      "testcluster6268",
-      "testdatabase7634",
-      "eventhubConnection8835",
-      "eventGridConnection978",
-      "iothubConnection2881"
+      "sdktestrg81",
+      "testcluster4397",
+      "testdatabase8679",
+      "eventhubConnection6427",
+      "eventGridConnection4440",
+      "iothubConnection5155"
     ]
   },
   "Variables": {

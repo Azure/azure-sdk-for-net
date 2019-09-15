@@ -29,7 +29,7 @@ namespace Kusto.Tests.ScenarioTests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-                var numOfOperations = 38;
+                var numOfOperations = 40;
 
                 try
                 {
@@ -54,50 +54,50 @@ namespace Kusto.Tests.ScenarioTests
             }
         }
 
-        [Fact]
-        public void KustoClusterTests()
-        {
-            //string runningState = "Running";
-            //string stoppedState = "Stopped";
+        //[Fact]
+        //public void KustoClusterTests()
+        //{
+        //    string runningState = "Running";
+        //    string stoppedState = "Stopped";
 
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var testBase = new KustoTestBase(context);
+        //    using (MockContext context = MockContext.Start(this.GetType()))
+        //    {
+        //        var testBase = new KustoTestBase(context);
 
-                //create cluster
-                var createdcluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                //VerifyCluster(createdcluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
+        //        //create cluster
+        //        var createdcluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+        //        VerifyCluster(createdcluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
 
-                // get cluster
-                var cluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
-                //VerifyCluster(cluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
+        //        // get cluster
+        //        var cluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
+        //        VerifyCluster(cluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
 
-                //update cluster
-                testBase.cluster.Sku = testBase.sku2;
-                var updatedcluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                //VerifyCluster(updatedcluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
+        //        //update cluster
+        //        testBase.cluster.Sku = testBase.sku2;
+        //        var updatedcluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+        //        VerifyCluster(updatedcluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
 
-                //suspend cluster
-                testBase.client.Clusters.Stop(testBase.rgName, testBase.clusterName);
-                var stoppedCluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
-                //VerifyCluster(stoppedCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: stoppedState);
+        //        //suspend cluster
+        //        testBase.client.Clusters.Stop(testBase.rgName, testBase.clusterName);
+        //        var stoppedCluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
+        //        VerifyCluster(stoppedCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: stoppedState);
 
-                //suspend cluster
-                testBase.client.Clusters.Start(testBase.rgName, testBase.clusterName);
-                var runningCluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
-                //VerifyCluster(runningCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
+        //        //suspend cluster
+        //        testBase.client.Clusters.Start(testBase.rgName, testBase.clusterName);
+        //        var runningCluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
+        //        VerifyCluster(runningCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
 
 
-                //delete cluster
-                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
-                Assert.Throws<CloudException>(() =>
-                {
-                    testBase.client.Clusters.Get(
-                        resourceGroupName: testBase.rgName,
-                        clusterName: testBase.clusterName);
-                });
-            }
-        }
+        //        //delete cluster
+        //        testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+        //        Assert.Throws<CloudException>(() =>
+        //        {
+        //            testBase.client.Clusters.Get(
+        //                resourceGroupName: testBase.rgName,
+        //                clusterName: testBase.clusterName);
+        //        });
+        //    }
+        //}
 
         [Fact]
         public void KustoDatabaseTests()
@@ -323,87 +323,87 @@ namespace Kusto.Tests.ScenarioTests
             }
         }
 
-        [Fact]
-        public void KustoOptimizedAutoscaleTests()
-        {
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var testBase = new KustoTestBase(context);
+        //[Fact]
+        //public void KustoOptimizedAutoscaleTests()
+        //{
+        //    using (MockContext context = MockContext.Start(this.GetType()))
+        //    {
+        //        var testBase = new KustoTestBase(context);
 
-                // Create cluster with optimized autoscale
-                var enabledOptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100);
-                testBase.cluster.OptimizedAutoscale = enabledOptimizedAutoscale;
-                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                ValidateOptimizedAutoscale(createdCluster, enabledOptimizedAutoscale);
+        //        // Create cluster with optimized autoscale
+        //        var enabledOptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100);
+        //        testBase.cluster.OptimizedAutoscale = enabledOptimizedAutoscale;
+        //        var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+        //        ValidateOptimizedAutoscale(createdCluster, enabledOptimizedAutoscale);
 
-                // Update cluster with optimized autoscale
-                enabledOptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 101);
-                testBase.cluster.OptimizedAutoscale = enabledOptimizedAutoscale;
-                var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                ValidateOptimizedAutoscale(updatedCluster, enabledOptimizedAutoscale);
+        //        // Update cluster with optimized autoscale
+        //        enabledOptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 101);
+        //        testBase.cluster.OptimizedAutoscale = enabledOptimizedAutoscale;
+        //        var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+        //        ValidateOptimizedAutoscale(updatedCluster, enabledOptimizedAutoscale);
 
-                // Patch cluster with optimized autoscale
-                var disabledOptimizedAutoscaleBetweenTwoAndOneHundred = new OptimizedAutoscale(1, true, 2, 100);
-                var updateInformation = new ClusterUpdate(optimizedAutoscale: disabledOptimizedAutoscaleBetweenTwoAndOneHundred);
-                updatedCluster = testBase.client.Clusters.Update(testBase.rgName, testBase.clusterName, updateInformation);
-                ValidateOptimizedAutoscale(updatedCluster, disabledOptimizedAutoscaleBetweenTwoAndOneHundred);
+        //        // Patch cluster with optimized autoscale
+        //        var disabledOptimizedAutoscaleBetweenTwoAndOneHundred = new OptimizedAutoscale(1, true, 2, 100);
+        //        var updateInformation = new ClusterUpdate(optimizedAutoscale: disabledOptimizedAutoscaleBetweenTwoAndOneHundred);
+        //        updatedCluster = testBase.client.Clusters.Update(testBase.rgName, testBase.clusterName, updateInformation);
+        //        ValidateOptimizedAutoscale(updatedCluster, disabledOptimizedAutoscaleBetweenTwoAndOneHundred);
 
-                var optimizedAutoscaleThatShouldNotBeAllowed = new OptimizedAutoscale(1, true, 0, 100);
-                updateInformation = new ClusterUpdate(optimizedAutoscale: optimizedAutoscaleThatShouldNotBeAllowed);
+        //        var optimizedAutoscaleThatShouldNotBeAllowed = new OptimizedAutoscale(1, true, 0, 100);
+        //        updateInformation = new ClusterUpdate(optimizedAutoscale: optimizedAutoscaleThatShouldNotBeAllowed);
 
-                Assert.Throws<CloudException>(() =>
-                {
-                    testBase.client.Clusters.Update(testBase.rgName, testBase.clusterName, updateInformation);
-                });
+        //        Assert.Throws<CloudException>(() =>
+        //        {
+        //            testBase.client.Clusters.Update(testBase.rgName, testBase.clusterName, updateInformation);
+        //        });
 
-                // Delete cluster
-                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
-            }
-        }
+        //        // Delete cluster
+        //        testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+        //    }
+        //}
 
-        [Fact]
-        public void KustoStreamingIngestTests()
-        {
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var testBase = new KustoTestBase(context);
+        //[Fact]
+        //public void KustoStreamingIngestTests()
+        //{
+        //    using (MockContext context = MockContext.Start(this.GetType()))
+        //    {
+        //        var testBase = new KustoTestBase(context);
 
-                // Create cluster with streaming ingest true
-                testBase.cluster.EnableStreamingIngest = true;
-                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                Assert.True(createdCluster.EnableStreamingIngest);
+        //        // Create cluster with streaming ingest true
+        //        testBase.cluster.EnableStreamingIngest = true;
+        //        var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+        //        Assert.True(createdCluster.EnableStreamingIngest);
 
-                // Update cluster with streaming ingest false
-                testBase.cluster.EnableStreamingIngest = false;
-                var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                Assert.False(updatedCluster.EnableStreamingIngest);
+        //        // Update cluster with streaming ingest false
+        //        testBase.cluster.EnableStreamingIngest = false;
+        //        var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+        //        Assert.False(updatedCluster.EnableStreamingIngest);
 
-                // Delete cluster
-                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
-            }
-        }
+        //        // Delete cluster
+        //        testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+        //    }
+        //}
 
-        [Fact]
-        public void KustoEnableDiskEncryptionTests()
-        {
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var testBase = new KustoTestBase(context);
+        //[Fact]
+        //public void KustoEnableDiskEncryptionTests()
+        //{
+        //    using (MockContext context = MockContext.Start(this.GetType()))
+        //    {
+        //        var testBase = new KustoTestBase(context);
 
-                // Create cluster with Enable Disk Encryption true
-                testBase.cluster.EnableDiskEncryption = true;
-                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                Assert.True(createdCluster.EnableDiskEncryption);
+        //        // Create cluster with Enable Disk Encryption true
+        //        testBase.cluster.EnableDiskEncryption = true;
+        //        var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+        //        Assert.True(createdCluster.EnableDiskEncryption);
 
-                // Update cluster with Enable Disk Encryption false
-                testBase.cluster.EnableDiskEncryption = false;
-                var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-                Assert.False(updatedCluster.EnableDiskEncryption);
+        //        // Update cluster with Enable Disk Encryption false
+        //        testBase.cluster.EnableDiskEncryption = false;
+        //        var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+        //        Assert.False(updatedCluster.EnableDiskEncryption);
 
-                //Delete cluster
-                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
-            }
-        }
+        //        //Delete cluster
+        //        testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+        //    }
+        //}
 
         [Fact]
         public void KustoDatabasePrincipalsTests()
