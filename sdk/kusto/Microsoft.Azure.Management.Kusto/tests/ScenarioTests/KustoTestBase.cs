@@ -106,8 +106,8 @@ namespace Kusto.Tests.ScenarioTests
             eventGridConnectinoName = TestUtilities.GenerateName("eventGridConnection");
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
 
-            sku1 = new AzureSku(name: "D13_v2", "Standard", capacity: 2);
-            sku2 = new AzureSku(name: "D14_v2", "Standard", capacity: 2);
+            sku1 = new AzureSku(name: "Standard_D13_v2", "Standard", capacity: 2);
+            sku2 = new AzureSku(name: "Standard_D14_v2", "Standard", capacity: 2);
 
             trustedExternalTenants = new List<TrustedExternalTenant>(1) { new TrustedExternalTenant(this.tenantId) };
 
