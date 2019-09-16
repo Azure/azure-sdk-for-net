@@ -231,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CheckpointManagerCreatesScope()
         {
             using ClientDiagnosticListener listener = new ClientDiagnosticListener();
-            var manager = new PartitionContext("name", "group", "partition", "owner", new InMemoryPartitionManager());
+            var manager = new PartitionContext("namespace", "name", "group", "partition", "owner", new InMemoryPartitionManager());
 
             await manager.UpdateCheckpointAsync(0, 0);
 
@@ -288,7 +288,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.CompletedTask)
                 .Callback(() => processorCalledSource.SetResult(null));
 
-            var manager = new PartitionPump(clientMock.Object, "cg", new PartitionContext("eh", "cg", "pid", "oid", new InMemoryPartitionManager()),  processorMock.Object, new EventProcessorOptions());
+            var manager = new PartitionPump(clientMock.Object, "cg", new PartitionContext("ns", "eh", "cg", "pid", "oid", new InMemoryPartitionManager()),  processorMock.Object, new EventProcessorOptions());
 
             await manager.StartAsync();
             await processorCalledSource.Task;
@@ -301,6 +301,5 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
 
         }
-
     }
 }
