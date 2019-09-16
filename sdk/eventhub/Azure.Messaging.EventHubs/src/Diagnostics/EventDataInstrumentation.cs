@@ -13,21 +13,23 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///
     internal class EventDataInstrumentation
     {
+        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
+        public static ClientDiagnostics ClientDiagnostics { get; } =  new ClientDiagnostics(true);
+
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
         /// </summary>
         ///
-        /// <param name="clientDiagnostics">The client diagnostics instance responsible for managing scope.</param>
         /// <param name="eventData">The event to instrument.</param>
         ///
         /// <returns><c>true</c> if the event was instrumented in response to this request; otherwise, <c>false</c>.</returns>
         ///
-        public static bool InstrumentEvent(ClientDiagnostics clientDiagnostics,
-                                           EventData eventData)
+        public static bool InstrumentEvent(EventData eventData)
         {
             if (!eventData.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
-                using DiagnosticScope messageScope = clientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
+                using DiagnosticScope messageScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
+                messageScope.AddAttribute("kind", "internal");
                 messageScope.Start();
 
                 var activity = Activity.Current;
@@ -36,6 +38,27 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                     eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///    Extracts a diagnostic id from the given event.
+        /// </summary>
+        ///
+        /// <param name="eventData">The event to instrument.</param>
+        /// <param name="id">The value of </param>
+        /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool TryExtractDiagnosticId(EventData eventData, out string id)
+        {
+            id = null;
+
+            if (eventData.Properties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            {
+                id = stringId;
+                return true;
             }
 
             return false;

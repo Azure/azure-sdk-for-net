@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace Azure.Core.Tests
 {
@@ -37,13 +38,18 @@ namespace Azure.Core.Tests
                 var startSuffix = ".Start";
                 var stopSuffix = ".Stop";
                 var exceptionSuffix = ".Exception";
+
                 if (value.Key.EndsWith(startSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - startSuffix.Length);
+                    PropertyInfo propertyInfo = value.Value.GetType().GetProperty("Links");
+                    var links = propertyInfo?.GetValue(value.Value) as IEnumerable<Activity> ?? Array.Empty<Activity>();
+
                     var scope = new ProducedDiagnosticScope()
                     {
                         Name = name,
-                        Activity = Activity.Current
+                        Activity = Activity.Current,
+                        Links = links.Select(a => a.ParentId).ToList()
                     };
                     Scopes.Add(scope);
                 }
@@ -168,6 +174,7 @@ namespace Azure.Core.Tests
             public Activity Activity { get; set; }
             public bool IsCompleted { get; set; }
             public Exception Exception { get; set; }
+            public List<string> Links { get; set; } = new List<string>();
         }
     }
 
