@@ -159,7 +159,7 @@ namespace Azure.Messaging.EventHubs
             var connectionStringProperties = ParseConnectionString(connectionString);
             ValidateConnectionProperties(connectionStringProperties, eventHubName, nameof(connectionString));
 
-            var eventHubsHostName = connectionStringProperties.Endpoint.Host;
+            var fullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
 
             if (String.IsNullOrEmpty(eventHubName))
             {
@@ -168,16 +168,16 @@ namespace Azure.Messaging.EventHubs
 
             var sharedAccessSignature = new SharedAccessSignature
             (
-                 BuildAudienceResource(clientOptions.TransportType, eventHubsHostName, eventHubName),
+                 BuildAudienceResource(clientOptions.TransportType, fullyQualifiedNamespace, eventHubName),
                  connectionStringProperties.SharedAccessKeyName,
                  connectionStringProperties.SharedAccessKey
             );
 
             _retryPolicy = new BasicRetryPolicy(clientOptions.RetryOptions);
             ClientOptions = clientOptions;
-            FullyQualifiedNamespace = eventHubsHostName;
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
-            InnerClient = BuildTransportClient(eventHubsHostName, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), clientOptions, _retryPolicy);
+            InnerClient = BuildTransportClient(fullyQualifiedNamespace, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), clientOptions, _retryPolicy);
         }
 
         /// <summary>
