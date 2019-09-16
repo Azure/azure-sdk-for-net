@@ -14,6 +14,12 @@ namespace Azure.Messaging.EventHubs.Processor
     public class PartitionOwnership
     {
         /// <summary>
+        ///   The name of the host used to connect to the associated Event Hubs namespace.
+        /// </summary>
+        ///
+        public string EventHubsHostName { get; }
+
+        /// <summary>
         ///   The name of the specific Event Hub this partition ownership is associated with, relative
         ///   to the Event Hubs namespace that contains it.
         /// </summary>
@@ -74,6 +80,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionOwnership"/> class.
         /// </summary>
         ///
+        /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
         /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
@@ -83,7 +90,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
         /// <param name="eTag">The entity tag needed to update this ownership.</param>
         ///
-        protected internal PartitionOwnership(string eventHubName,
+        protected internal PartitionOwnership(string eventHubsHostName,
+                                              string eventHubName,
                                               string consumerGroup,
                                               string ownerIdentifier,
                                               string partitionId,
@@ -92,6 +100,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                               DateTimeOffset? lastModifiedTime = null,
                                               string eTag = null)
         {
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubsHostName), eventHubsHostName);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
             Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
             Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
@@ -107,6 +116,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 Guard.ArgumentAtLeast(nameof(sequenceNumber), sequenceNumber.Value, 0);
             }
 
+            EventHubsHostName = eventHubsHostName;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             OwnerIdentifier = ownerIdentifier;

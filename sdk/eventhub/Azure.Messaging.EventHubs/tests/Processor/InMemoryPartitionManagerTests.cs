@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ListOwnershipAsyncReturnsEmptyIEnumerableWhenThereAreNoOwnership()
         {
             var partitionManager = new InMemoryPartitionManager();
-            var ownership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+            var ownership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
 
             Assert.That(ownership, Is.Not.Null.And.Empty);
         }
@@ -45,6 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var ownership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName",
                     "consumerGroup",
                     "ownerIdentifier",
@@ -55,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -77,6 +78,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var firstOwnership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName",
                     "consumerGroup",
                     "ownerIdentifier",
@@ -93,6 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondOwnership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName",
                     "consumerGroup",
                     "ownerIdentifier",
@@ -105,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -125,6 +128,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var firstOwnership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName",
                     "consumerGroup",
                     "ownerIdentifier",
@@ -145,6 +149,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondOwnership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName",
                     "consumerGroup",
                     "ownerIdentifier",
@@ -157,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -181,6 +186,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 ownershipList.Add(
                     new PartitionOwnership
                     (
+                        "eventHubsHostName",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -190,7 +196,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(ownershipCount));
@@ -214,6 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 ownershipList.Add(
                     new PartitionOwnership
                     (
+                        "eventHubsHostName",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -239,6 +246,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 ownershipList.Add(
                     new PartitionOwnership
                     (
+                        "eventHubsHostName",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -268,6 +276,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var firstOwnership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName",
                     "consumerGroup1",
                     "ownerIdentifier",
@@ -287,6 +296,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondOwnership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName",
                     "consumerGroup2",
                     "ownerIdentifier",
@@ -298,8 +308,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership1 = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup1");
-            var storedOwnership2 = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup2");
+            var storedOwnership1 = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup1");
+            var storedOwnership2 = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup2");
 
             Assert.That(storedOwnership1, Is.Not.Null);
             Assert.That(storedOwnership1.Count, Is.EqualTo(1));
@@ -323,6 +333,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var firstOwnership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName1",
                     "consumerGroup",
                     "ownerIdentifier",
@@ -342,6 +353,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var secondOwnership =
                 new PartitionOwnership
                 (
+                    "eventHubsHostName",
                     "eventHubName2",
                     "consumerGroup",
                     "ownerIdentifier",
@@ -353,8 +365,65 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-            var storedOwnership1 = await partitionManager.ListOwnershipAsync("eventHubName1", "consumerGroup");
-            var storedOwnership2 = await partitionManager.ListOwnershipAsync("eventHubName2", "consumerGroup");
+            var storedOwnership1 = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName1", "consumerGroup");
+            var storedOwnership2 = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName2", "consumerGroup");
+
+            Assert.That(storedOwnership1, Is.Not.Null);
+            Assert.That(storedOwnership1.Count, Is.EqualTo(1));
+            Assert.That(storedOwnership1.Single(), Is.EqualTo(firstOwnership));
+
+            Assert.That(storedOwnership2, Is.Not.Null);
+            Assert.That(storedOwnership2.Count, Is.EqualTo(1));
+            Assert.That(storedOwnership2.Single(), Is.EqualTo(secondOwnership));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.ClaimOwnershipAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OwnershipClaimDoesNotInterfereWithOtherNamespaces()
+        {
+            var partitionManager = new InMemoryPartitionManager();
+            var ownershipList = new List<PartitionOwnership>();
+            var firstOwnership =
+                new PartitionOwnership
+                (
+                    "eventHubsHostName1",
+                    "eventHubName",
+                    "consumerGroup",
+                    "ownerIdentifier",
+                    "partitionId"
+                );
+
+            ownershipList.Add(firstOwnership);
+
+            await partitionManager.ClaimOwnershipAsync(ownershipList);
+
+            // ETag must have been set by the partition manager.
+
+            var eTag = firstOwnership.ETag;
+
+            ownershipList.Clear();
+
+            var secondOwnership =
+                new PartitionOwnership
+                (
+                    "eventHubsHostName2",
+                    "eventHubName",
+                    "consumerGroup",
+                    "ownerIdentifier",
+                    "partitionId",
+                    eTag: eTag
+                );
+
+            ownershipList.Add(secondOwnership);
+
+            await partitionManager.ClaimOwnershipAsync(ownershipList);
+
+            var storedOwnership1 = await partitionManager.ListOwnershipAsync("eventHubsHostName1", "eventHubName", "consumerGroup");
+            var storedOwnership2 = await partitionManager.ListOwnershipAsync("eventHubsHostName2", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership1, Is.Not.Null);
             Assert.That(storedOwnership1.Count, Is.EqualTo(1));
@@ -376,9 +445,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionManager = new InMemoryPartitionManager();
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 10, sequenceNumber: 20));
+                ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 10, sequenceNumber: 20));
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership, Is.Empty);
@@ -394,7 +463,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitionManager = new InMemoryPartitionManager();
             var originalOwnership = new PartitionOwnership
-                ("eventHubName", "consumerGroup", "ownerIdentifier1", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow);
+                ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier1", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow);
 
             await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
             {
@@ -407,11 +476,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var originalETag = originalOwnership.ETag;
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-                ("eventHubName", "consumerGroup", "ownerIdentifier2", "partitionId", 10, 20));
+                ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier2", "partitionId", 10, 20));
 
             // Make sure the ownership hasn't changed.
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -434,7 +503,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitionManager = new InMemoryPartitionManager();
             var originalOwnership = new PartitionOwnership
-                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(1)));
+                ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(1)));
 
             await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
             {
@@ -447,11 +516,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var originalETag = originalOwnership.ETag;
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
+                ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
 
             // Make sure the ownership has changed, even though the instance should be the same.
 
-            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubName", "consumerGroup");
+            var storedOwnership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
 
             Assert.That(storedOwnership, Is.Not.Null);
             Assert.That(storedOwnership.Count, Is.EqualTo(1));
@@ -474,9 +543,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionManager = new InMemoryPartitionManager();
 
             var ownership1 = new PartitionOwnership
-                ("eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", offset: 1);
+                ("eventHubsHostName", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", offset: 1);
             var ownership2 = new PartitionOwnership
-                ("eventHubName", "consumerGroup2", "ownerIdentifier", "partitionId", offset: 1);
+                ("eventHubsHostName", "eventHubName", "consumerGroup2", "ownerIdentifier", "partitionId", offset: 1);
 
             await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
             {
@@ -485,7 +554,7 @@ namespace Azure.Messaging.EventHubs.Tests
             });
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-                ("eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", 10, 20));
+                ("eventHubsHostName", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", 10, 20));
 
             Assert.That(ownership1.Offset, Is.EqualTo(10));
             Assert.That(ownership2.Offset, Is.EqualTo(1));
@@ -502,9 +571,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionManager = new InMemoryPartitionManager();
 
             var ownership1 = new PartitionOwnership
-                ("eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
+                ("eventHubsHostName", "eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
             var ownership2 = new PartitionOwnership
-                ("eventHubName2", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
+                ("eventHubsHostName", "eventHubName2", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
 
             await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
             {
@@ -513,7 +582,35 @@ namespace Azure.Messaging.EventHubs.Tests
             });
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-                ("eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
+                ("eventHubsHostName", "eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
+
+            Assert.That(ownership1.Offset, Is.EqualTo(10));
+            Assert.That(ownership2.Offset, Is.EqualTo(1));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="InMemoryPartitionManager.UpdateCheckpointAsync" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointUpdateDoesNotInterfereWithOtherNamespaces()
+        {
+            var partitionManager = new InMemoryPartitionManager();
+
+            var ownership1 = new PartitionOwnership
+                ("eventHubsHostName1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
+            var ownership2 = new PartitionOwnership
+                ("eventHubsHostName2", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1);
+
+            await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
+            {
+                ownership1,
+                ownership2
+            });
+
+            await partitionManager.UpdateCheckpointAsync(new Checkpoint
+                ("eventHubsHostName1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
 
             Assert.That(ownership1.Offset, Is.EqualTo(10));
             Assert.That(ownership2.Offset, Is.EqualTo(1));
@@ -530,9 +627,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionManager = new InMemoryPartitionManager();
 
             var ownership1 = new PartitionOwnership
-                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", offset: 1);
+                ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", offset: 1);
             var ownership2 = new PartitionOwnership
-                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId2", offset: 1);
+                ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId2", offset: 1);
 
             await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
             {
@@ -541,7 +638,7 @@ namespace Azure.Messaging.EventHubs.Tests
             });
 
             await partitionManager.UpdateCheckpointAsync(new Checkpoint
-                ("eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", 10, 20));
+                ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", 10, 20));
 
             Assert.That(ownership1.Offset, Is.EqualTo(10));
             Assert.That(ownership2.Offset, Is.EqualTo(1));

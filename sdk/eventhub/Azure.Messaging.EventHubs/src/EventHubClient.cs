@@ -29,6 +29,12 @@ namespace Azure.Messaging.EventHubs
         private EventHubRetryPolicy _retryPolicy;
 
         /// <summary>
+        ///   The name of the host used to connect to the associated Event Hubs namespace.
+        /// </summary>
+        ///
+        public string EventHubsHostName { get; }
+
+        /// <summary>
         ///   The name of the Event Hub that the client is connected to, specific to the
         ///   Event Hubs namespace that contains it.
         /// </summary>
@@ -168,6 +174,7 @@ namespace Azure.Messaging.EventHubs
 
             _retryPolicy = new BasicRetryPolicy(clientOptions.RetryOptions);
             ClientOptions = clientOptions;
+            EventHubsHostName = eventHubsHostName;
             EventHubName = eventHubName;
             InnerClient = BuildTransportClient(eventHubsHostName, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), clientOptions, _retryPolicy);
         }

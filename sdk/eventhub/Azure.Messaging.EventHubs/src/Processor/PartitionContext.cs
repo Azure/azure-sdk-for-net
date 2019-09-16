@@ -15,6 +15,12 @@ namespace Azure.Messaging.EventHubs.Processor
     public class PartitionContext
     {
         /// <summary>
+        ///   The name of the host used to connect to the associated Event Hubs namespace.
+        /// </summary>
+        ///
+        public string EventHubsHostName { get; }
+
+        /// <summary>
         ///   The name of the specific Event Hub that the context is associated with, relative
         ///   to the Event Hubs namespace that contains it.
         /// </summary>
@@ -49,24 +55,28 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
         /// </summary>
         ///
+        /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
         /// <param name="eventHubName">The name of the specific Event Hub this context is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
         ///
-        protected internal PartitionContext(string eventHubName,
+        protected internal PartitionContext(string eventHubsHostName,
+                                            string eventHubName,
                                             string consumerGroup,
                                             string partitionId,
                                             string ownerIdentifier,
                                             PartitionManager partitionManager)
         {
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubsHostName), eventHubsHostName);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
             Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
             Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
             Guard.ArgumentNotNull(nameof(partitionManager), partitionManager);
 
+            EventHubsHostName = eventHubsHostName;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
@@ -107,6 +117,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             var checkpoint = new Checkpoint
             (
+                EventHubsHostName,
                 EventHubName,
                 ConsumerGroup,
                 OwnerIdentifier,
