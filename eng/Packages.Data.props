@@ -21,6 +21,7 @@
     <PackageReference Update="Microsoft.Azure.Batch" Version="11.0.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
+    <PackageReference Update="Azure.Security.Keyvault.Secrets" Version="4.0.0-preview.4" />
     <PackageReference Update="Microsoft.Azure.Management.Batch" Version="4.2.0" />
     <PackageReference Update="Microsoft.Azure.Management.ContainerRegistry" Version="2.0.0" />
     <PackageReference Update="Microsoft.Azure.Management.EventHub" Version="2.5.0" />

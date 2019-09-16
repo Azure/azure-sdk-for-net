@@ -1,17 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.1" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <CentralPackagesFile>$(MSBuildThisFileDirectory)..\..\..\eng\Packages.Data.props</CentralPackagesFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.0.0-preview.4" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.0-preview.3" />
-    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.0.0-preview.4" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.0.0-preview.3" />
-    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.6.0" />
-    <PackageReference Include="System.Reflection.Metadata" Version="1.6.0" />
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Messaging.EventHubs" />
+    <PackageReference Include="Azure.Security.Keyvault.Secrets" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" VersionOverride="2.6.0" />
+    <PackageReference Include="System.Reflection.Metadata" VersionOverride="1.6.0" />
   </ItemGroup>
 
   <ItemGroup>
