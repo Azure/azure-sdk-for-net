@@ -857,7 +857,7 @@
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "SuggestedTagsAndRegions", RecorderMode);
+                HttpMockServer.Initialize(this.GetType(), "SuggestTagAndRegions", RecorderMode);
 
                 using (var project = CreateTrainedImageClassificationProject())
                 using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
