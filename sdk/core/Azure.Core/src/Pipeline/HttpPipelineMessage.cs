@@ -42,9 +42,9 @@ namespace Azure.Core.Pipeline
 
         public bool HasResponse => _response != null;
 
-        public CancellationToken CancellationToken { get; set; }
+        public CancellationToken CancellationToken { get; internal set; }
 
-        public ResponseClassifier ResponseClassifier { get; set; }
+        public ResponseClassifier ResponseClassifier { get; }
 
         public bool BufferResponse { get; set; }
 

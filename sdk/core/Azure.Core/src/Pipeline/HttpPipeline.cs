@@ -42,35 +42,36 @@ namespace Azure.Core.Pipeline
 
         public ClientDiagnostics Diagnostics { get; }
 
-        public Task SendAsync(HttpPipelineMessage message)
+        public Task SendAsync(HttpPipelineMessage message, CancellationToken cancellationToken)
         {
+            message.CancellationToken = cancellationToken;
             return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
         }
 
-        public void Send(HttpPipelineMessage message)
+        public void Send(HttpPipelineMessage message, CancellationToken cancellationToken)
         {
+            message.CancellationToken = cancellationToken;
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));
         }
 
         public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            HttpPipelineMessage message = BuildMessage(request, cancellationToken);
-            await SendAsync(message).ConfigureAwait(false);
+            HttpPipelineMessage message = BuildMessage(request);
+            await SendAsync(message, cancellationToken).ConfigureAwait(false);
             return message.Response;
         }
 
         public Response SendRequest(Request request, CancellationToken cancellationToken)
         {
-            HttpPipelineMessage message = BuildMessage(request, cancellationToken);
-            Send(message);
+            HttpPipelineMessage message = BuildMessage(request);
+            Send(message, cancellationToken);
             return message.Response;
         }
 
-        private HttpPipelineMessage BuildMessage(Request request, CancellationToken cancellationToken)
+        private HttpPipelineMessage BuildMessage(Request request)
         {
             return new HttpPipelineMessage(request, ResponseClassifier)
             {
-                CancellationToken = cancellationToken,
                 Request = request
             };
         }

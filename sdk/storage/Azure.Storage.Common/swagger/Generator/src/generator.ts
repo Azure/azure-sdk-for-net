@@ -203,9 +203,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             });
             w.scope('{', '}', () => {
                 w.line(`${messageName}.BufferResponse = ${bufferResponseName};`);
-                w.line(`${messageName}.CancellationToken = ${cancellationName};`);
 
-                const asyncCall = `await ${pipelineName}.SendAsync(${messageName}).ConfigureAwait(false)`;
+                const asyncCall = `await ${pipelineName}.SendAsync(${messageName}, ${cancellationName}).ConfigureAwait(false)`;
                 if (sync) {
                     w.line(`if (async)`);
                     w.scope('{', '}', () => {
@@ -216,7 +215,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.scope('{', '}', () => {
                         w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
                         w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
-                        w.line(`${pipelineName}.Send(${messageName});`);
+                        w.line(`${pipelineName}.Send(${messageName}, ${cancellationName});`);
                     });
                 } else {
                     w.line(`${asyncCall};`);
