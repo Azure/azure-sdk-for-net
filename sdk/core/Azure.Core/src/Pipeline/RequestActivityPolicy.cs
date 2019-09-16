@@ -18,7 +18,7 @@ namespace Azure.Core.Pipeline
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Pipeline");
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
@@ -28,7 +28,7 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        private static async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private static async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
             if (!s_diagnosticSource.IsEnabled())
             {
@@ -81,7 +81,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static async Task ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private static async ValueTask ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
             Activity currentActivity = Activity.Current;
 

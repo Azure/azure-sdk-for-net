@@ -32,12 +32,12 @@ namespace Azure.Security.KeyVault
             ProcessCoreAsync(message, pipeline, false).GetAwaiter().GetResult();
         }
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessCoreAsync(message, pipeline, true);
         }
 
-        private async Task ProcessCoreAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessCoreAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             HttpPipelineRequestContent originalContent = message.Request.Content;
 
@@ -131,7 +131,7 @@ namespace Azure.Security.KeyVault
 
                 AuthenticationChallenge other = obj as AuthenticationChallenge;
 
-                // This assumes that Scopes is always non-null and of length one.  
+                // This assumes that Scopes is always non-null and of length one.
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
                 if(other != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.Security.KeyVault
             public override int GetHashCode()
             {
                 // Currently the hash code is simply the hash of the first scope as this is what is used to determine equality
-                // This assumes that Scopes is always non-null and of length one.  
+                // This assumes that Scopes is always non-null and of length one.
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
                 return this.Scopes[0].GetHashCode();
             }
