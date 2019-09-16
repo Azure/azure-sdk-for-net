@@ -29,7 +29,8 @@ namespace Azure.Messaging.EventHubs
         private EventHubRetryPolicy _retryPolicy;
 
         /// <summary>
-        ///   The name of the host used to connect to the associated Event Hubs namespace.
+        ///   The fully qualified host name for the Event Hubs namespace that the client
+        ///   is connected to.
         /// </summary>
         ///
         public string FullyQualifiedNamespace { get; }

@@ -15,7 +15,8 @@ namespace Azure.Messaging.EventHubs.Processor
     public class PartitionContext
     {
         /// <summary>
-        ///   The name of the host used to connect to the associated Event Hubs namespace.
+        ///   The fully qualified host name for the Event Hubs namespace this context is
+        ///   associated with.
         /// </summary>
         ///
         public string FullyQualifiedNamespace { get; }
@@ -55,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified host name for the Event Hubs namespace this context is associated with.</param>
         /// <param name="eventHubName">The name of the specific Event Hub this context is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>

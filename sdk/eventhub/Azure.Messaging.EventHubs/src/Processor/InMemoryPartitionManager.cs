@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Retrieves a complete ownership list from the in-memory storage service.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified host name for the Event Hubs namespace the ownership are associated with.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
