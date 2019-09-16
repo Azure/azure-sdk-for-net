@@ -716,7 +716,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>The encrypted key</returns>
         byte[] IKeyEncryptionKey.WrapKey(string algorithm, byte[] key, CancellationToken cancellationToken)
         {
-            return WrapKey(new KeyWrapAlgorithm(algorithm), key, cancellationToken).EncryptedKey;
+            WrapResult result = WrapKey(new KeyWrapAlgorithm(algorithm), key, cancellationToken);
+
+            return result.EncryptedKey;
         }
 
         /// <summary>
@@ -728,7 +730,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>The encrypted key</returns>
         async Task<byte[]> IKeyEncryptionKey.WrapKeyAsync(string algorithm, byte[] key, CancellationToken cancellationToken)
         {
-            return (await WrapKeyAsync(new KeyWrapAlgorithm(algorithm), key, cancellationToken).ConfigureAwait(false)).EncryptedKey;
+            WrapResult result = await WrapKeyAsync(new KeyWrapAlgorithm(algorithm), key, cancellationToken).ConfigureAwait(false);
+
+            return result.EncryptedKey;
         }
 
         /// <summary>
@@ -740,7 +744,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>The decrypted key</returns>
         byte[] IKeyEncryptionKey.UnwrapKey(string algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
-            return UnwrapKey(new KeyWrapAlgorithm(algorithm), encryptedKey, cancellationToken).Key;
+            UnwrapResult result = UnwrapKey(new KeyWrapAlgorithm(algorithm), encryptedKey, cancellationToken);
+
+            return result.Key;
         }
 
         /// <summary>
@@ -752,7 +758,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>The decrypted key</returns>
         async Task<byte[]> IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
-            return (await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), encryptedKey, cancellationToken).ConfigureAwait(false)).Key;
+            UnwrapResult result = await UnwrapKeyAsync(new KeyWrapAlgorithm(algorithm), encryptedKey, cancellationToken).ConfigureAwait(false);
+
+            return result.Key;
         }
 
         private static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)
