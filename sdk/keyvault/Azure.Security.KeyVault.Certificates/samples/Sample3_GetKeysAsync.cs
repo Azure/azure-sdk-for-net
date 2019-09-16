@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
     public partial class GetCertificates
     {
         [Test]
-        public async Task GetKeysAsync()
+        public async Task GetCertificatesAsync()
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");

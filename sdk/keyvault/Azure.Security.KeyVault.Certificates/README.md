@@ -1,17 +1,17 @@
 # Azure Key Vault Certificate client library for .NET
 Azure Key Vault is a cloud service that provides secure storage and automated management of certificates used throughout a cloud application. Multiple certificate, and multiple versions of the same certificate, can be kept in the Key Vault. Each certificate in the vault has a policy associated with it which controls the issuance and lifetime of the certificate, along with actions to be taken as certificates near expiry.
 
-The Azure Key Vault Certificate client library enables programmatically managing certificates, offering methods to create, update, list and delete certificates, policies, issuers and contacts. The library also supports managing pending certificate operations, and management of deleted certificates.
+The Azure Key Vault Certificate client library enables programmatically managing certificates, offering methods to create, update, list, and delete certificates, policies, issuers, and contacts. The library also supports managing pending certificate operations and management of deleted certificates.
 
 [Source code][certificate_client_src] | [Package (NuGet)][certificate_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][certificate_client_samples]
 
 ## Getting started
 
 ### Install the package
-Install the Azure Key Vault Keys client library for .NET with [NuGet][nuget]:
+Install the Azure Key Vault Certificates client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Security.KeyVault.Keys -IncludePrerelease
+Install-Package Azure.Security.KeyVault.Certificates -IncludePrerelease
 ```
 
 ### Prerequisites
@@ -50,17 +50,17 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Grant the above mentioned application authorization to perform key operations on the key vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create
+    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --certificate-permissions backup delete get list create
     ```
-    > --key-permissions:
-    > Accepted values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
+    > --certificate-permissions:
+    > Allowed values: backup, create, delete, deleteissuers, get, getissuers, import, list, listissuers, managecontacts, manageissuers, purge, recover, restore, setissuers, update.
 
 * Use the above mentioned Key Vault name to retrieve details of your Vault which also contains your Key Vault URL:
     ```PowerShell
     az keyvault show --name <your-key-vault-name> 
     ```
 
-#### Create KeyClient
+#### Create CertificateClient
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [CertificateClient][certificate_client_class]:
 
 ```c#
@@ -87,7 +87,7 @@ This section contains code snippets covering common tasks:
 ### Create a Certificate
 `StartCreateCertificate` creates a Certificate to be stored in the Azure Key Vault. If a certificate with 
 the same name already exists, then a new version of the certificate is created.
-When creating the certificate the user can specify the policy which controls the certificate lifetime. If no policy is speicired the default policy will be used. The `StartCreateCertificate` operation returns a `CertificateOperation`. The following example creates a self signed certificate with the default policy.
+When creating the certificate the user can specify the policy which controls the certificate lifetime. If no policy is specified the default policy will be used. The `StartCreateCertificate` operation returns a `CertificateOperation`. The following example creates a self signed certificate with the default policy.
 ```c#
 // create a certificate, this starts a long running operation to create and sign the certificate
 CertificateOperation operation = await Client.StartCreateCertificateAsync("MyCertificate");
@@ -118,7 +118,7 @@ Certificate updated = await Client.UpdateCertificateAsync(certName, certVersion,
 ```
 
 ### Delete a Certificate
-`delete_certificate` deletes all versions of a certificate stored in the Key Vault. When [soft-delete][soft_delete] 
+`DeleteCertificate` deletes all versions of a certificate stored in the Key Vault. When [soft-delete][soft_delete] 
 is not enabled for the Key Vault, this operation permanently deletes the certificate. If soft delete is enabled the certificate is marked for deletion and can be optionally purged or recovered up until its scheduled purge date.
 ```c#
 DeletedCertificate deletedCert = await Client.DeleteCertificateAsync(certName);
@@ -131,7 +131,7 @@ await Client.PurgeDeletedCertificate(certName);
 ## Troubleshooting
 
 ### General
-When you interact with the Azure Key Vault Key client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
+When you interact with the Azure Key Vault Certificate client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
 
 For example, if you try to retrieve a Key that doesn't exist in your Key Vault, a `404` error is returned, indicating `Not Found`.
 
@@ -174,7 +174,7 @@ Headers:
 ```
 ## Next steps
 Key Vault Certificates client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Key Vault:
-* [HelloWorld.cs][hello_world_sync] and [HelloWorldAsync.cs][hello_world_async] - for working with Azure Key Vault, including:
+* [HelloWorld.cs][hello_world_sync] and [HelloWorldAsync.cs][hello_world_async] - for working with Azure Key Vault certificates, including:
   * Create a certificate
   * Get an existing certificate
   * Update an existing certificate
@@ -214,6 +214,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [keyvault_rest]: https://docs.microsoft.com/en-us/rest/api/keyvault/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
+[hello_world_async]: samples/Sample1_HelloWorldAsync.cs
+[hello_world_sync]: samples/Sample1_HelloWorld.cs
 [get_cetificates_async]: samples/Sample2_GetCertificatesAsync.cs
 [get_cetificates_sync]: samples/Sample2_GetCertificates.cs
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
