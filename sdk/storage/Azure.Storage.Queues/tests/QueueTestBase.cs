@@ -30,7 +30,6 @@ namespace Azure.Storage.Queues.Tests
             => this.Recording.InstrumentClientOptions(
                     new QueueClientOptions
                     {
-                        ResponseClassifier = new TestResponseClassifier(),
                         Diagnostics = { IsLoggingEnabled = true },
                         Retry =
                         {

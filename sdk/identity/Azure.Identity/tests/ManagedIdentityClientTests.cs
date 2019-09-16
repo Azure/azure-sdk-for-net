@@ -43,7 +43,7 @@ namespace Azure.Identity.Tests
 
                 var options = new IdentityClientOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default);
 
@@ -80,7 +80,7 @@ namespace Azure.Identity.Tests
 
                 var options = new IdentityClientOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default, clientId: "mock-client-id");
 
@@ -119,7 +119,7 @@ namespace Azure.Identity.Tests
 
                 var options = new IdentityClientOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default);
 
@@ -158,7 +158,7 @@ namespace Azure.Identity.Tests
 
                 var options = new IdentityClientOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default, "mock-client-id");
 
@@ -199,7 +199,7 @@ namespace Azure.Identity.Tests
 
                 var options = new IdentityClientOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default);
 
@@ -244,7 +244,7 @@ namespace Azure.Identity.Tests
 
                 var options = new IdentityClientOptions() { Transport = mockTransport };
 
-                var client = InstrumentClient(new ManagedIdentityClient(options));
+                ManagedIdentityClient client = InstrumentClient(new ManagedIdentityClient(options));
 
                 AccessToken actualToken = await client.AuthenticateAsync(MockScopes.Default, "mock-client-id");
 

@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Azure.Core.Testing
 {
     [Category("Recorded")]
-    public abstract class RecordedTestBase: ClientTestBase
+    public abstract class RecordedTestBase : ClientTestBase
     {
         protected RecordedTestSanitizer Sanitizer { get; set; }
 

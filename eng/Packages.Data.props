@@ -10,7 +10,9 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.0.0-preview.8" />
-    <PackageReference Update="Azure.Identity" Version="1.0.0-preview.3" />
+    <PackageReference Update="Azure.Identity" Version="1.0.0-preview.4" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.0.0-preview.3" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.0.0-preview.3" />
     <PackageReference Update="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Update="FsCheck.Xunit" Version="2.14.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
@@ -26,7 +28,7 @@
     <PackageReference Update="Microsoft.Azure.Management.HDInsight" Version="4.1.0-preview" />
     <PackageReference Update="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
-    <PackageReference Update="Microsoft.Azure.Management.Storage" Version="6.4.0-preview" />
+    <PackageReference Update="Microsoft.Azure.Management.Storage" Version="13.0.0" />
     <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.0.0" />
@@ -89,6 +91,7 @@
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
+    <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.5.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />

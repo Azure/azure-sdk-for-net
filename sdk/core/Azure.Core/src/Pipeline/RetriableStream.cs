@@ -61,7 +61,7 @@ namespace Azure.Core.Pipeline
 
             private List<Exception>? _exceptions;
 
-            public RetriableStreamImpl(Response initialResponse,  Func<long, Response> responseFactory, Func<long, Task<Response>> asyncResponseFactory, ResponseClassifier responseClassifier, int maxRetries)
+            public RetriableStreamImpl(Response initialResponse, Func<long, Response> responseFactory, Func<long, Task<Response>> asyncResponseFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
                 _initialStream = EnsureStream(initialResponse);
                 _currentStream = EnsureStream(initialResponse);

@@ -22,6 +22,7 @@
 
 **Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
 
+**Line Endings :** If working on windows OS ensure git is installed with `Checkout Windows-style, commit Unix-style` option or `core.autocrlf` set to *true* in git config. If working on Unix based Linux or MacOS ensure git is installed with `Checkout as-is, commit Unix-style` option or `core.autocrlf` set to *input* in git config
 # Management Libraries
 
 ## TO BUILD:

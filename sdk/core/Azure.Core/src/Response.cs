@@ -9,7 +9,7 @@ using Azure.Core.Http;
 
 namespace Azure
 {
-    public abstract class Response: IDisposable
+    public abstract class Response : IDisposable
     {
         public abstract int Status { get; }
 

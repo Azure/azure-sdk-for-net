@@ -15,10 +15,10 @@ namespace Azure.Core.Pipeline
         {
             Retry = new RetryOptions();
             Diagnostics = new DiagnosticsOptions();
-            ResponseClassifier = new ResponseClassifier();
         }
 
-        public HttpPipelineTransport Transport {
+        public HttpPipelineTransport Transport
+        {
             get => _transport;
             set => _transport = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,8 +26,6 @@ namespace Azure.Core.Pipeline
         public DiagnosticsOptions Diagnostics { get; }
 
         public RetryOptions Retry { get; }
-
-        public ResponseClassifier ResponseClassifier { get; set; }
 
         public void AddPolicy(HttpPipelinePosition position, HttpPipelinePolicy policy)
         {
@@ -60,4 +58,3 @@ namespace Azure.Core.Pipeline
         #endregion
     }
 }
-

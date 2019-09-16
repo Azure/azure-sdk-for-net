@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Azure.Identity.Tests
 {
-    public class ManagedIdentityCredentialTests: ClientTestBase
+    public class ManagedIdentityCredentialTests : ClientTestBase
     {
         public ManagedIdentityCredentialTests(bool isAsync) : base(isAsync)
         {
@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
         {
             var credential = new ManagedIdentityCredential();
 
-            var token = await credential.GetTokenAsync(new string[] { "https://management.azure.com//.default" });
+            Core.AccessToken token = await credential.GetTokenAsync(new string[] { "https://management.azure.com//.default" });
 
             Assert.IsNotNull(token.Token);
         }

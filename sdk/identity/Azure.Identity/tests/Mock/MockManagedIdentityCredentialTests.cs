@@ -31,7 +31,7 @@ namespace Azure.Identity.Tests.Mock
 
             await Task.CompletedTask;
         }
-        
+
         [Test]
         public async Task ScopesHonoredAsync()
         {

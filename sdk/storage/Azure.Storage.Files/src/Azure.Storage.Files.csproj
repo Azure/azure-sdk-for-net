@@ -7,7 +7,7 @@
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Files, Microsoft, Azure, File, Files, Storage, StorageScalable, azureofficial</PackageTags>
     <PackageReleaseNotes>
-      For release notes and more information please visit https://aka.ms/azure-sdk-preview1-net
+      For release notes and more information please visit https://aka.ms/azure-sdk-preview3-net
     </PackageReleaseNotes>
     <Description>
       This client library enables working with the Microsoft Azure Storage File service for storing binary and text data.

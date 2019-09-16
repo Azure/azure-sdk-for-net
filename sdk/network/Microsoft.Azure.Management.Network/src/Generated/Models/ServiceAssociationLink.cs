@@ -38,8 +38,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="linkedResourceType">Resource type of the linked
         /// resource.</param>
         /// <param name="link">Link to the external resource.</param>
-        /// <param name="provisioningState">Provisioning state of the
-        /// ServiceAssociationLink resource.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// service association link resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="allowDelete">If true, the resource can be
         /// deleted.</param>
         /// <param name="locations">A list of locations.</param>
@@ -81,7 +82,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Link { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the ServiceAssociationLink resource.
+        /// Gets the provisioning state of the service association link
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

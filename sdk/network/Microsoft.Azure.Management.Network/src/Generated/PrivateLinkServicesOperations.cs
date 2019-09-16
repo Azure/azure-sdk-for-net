@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -504,7 +504,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -704,7 +704,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -885,7 +885,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Checks the subscription is visible to private link service
+        /// Checks whether the subscription is visible to private link service.
         /// </summary>
         /// <param name='location'>
         /// The location of the domain name.
@@ -928,7 +928,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1084,7 +1084,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Checks the subscription is visible to private link service
+        /// Checks whether the subscription is visible to private link service in the
+        /// specified resource group.
         /// </summary>
         /// <param name='location'>
         /// The location of the domain name.
@@ -1134,7 +1135,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1329,7 +1330,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1522,7 +1523,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1713,7 +1714,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1891,7 +1892,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2110,7 +2111,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-06-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

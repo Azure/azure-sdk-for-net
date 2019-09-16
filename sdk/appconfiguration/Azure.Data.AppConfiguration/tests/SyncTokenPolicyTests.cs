@@ -20,15 +20,15 @@ namespace Azure.Data.AppConfiguration.Tests
             string idTokenValue = "jtqGc1I4=MDoyOA==";
             string seqNoValue = ";sn=28";
             string headerValue = idTokenValue + seqNoValue;
-            
+
             var syncTokenReponse = new MockResponse(200);
             syncTokenReponse.AddHeader(new HttpHeader(headerName, headerValue));
 
             MockTransport transport = CreateMockTransport(syncTokenReponse, new MockResponse(200));
             var policy = new SyncTokenPolicy();
 
-            var response = await SendGetRequest(transport, policy);
-            
+            Response response = await SendGetRequest(transport, policy);
+
             Assert.False(transport.Requests[0].Headers.TryGetValue(headerName, out _));
             Assert.True(response.Headers.TryGetValue(headerName, out string responseValue));
             Assert.AreEqual(headerValue, responseValue);
@@ -71,7 +71,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var syncTokenReponse = new MockResponse(200);
             syncTokenReponse.AddHeader(new HttpHeader(headerName, $"{header1Value};sn=6,{header2Value};sn=10"));
-            
+
             MockTransport transport = CreateMockTransport(syncTokenReponse, new MockResponse(200));
             var policy = new SyncTokenPolicy();
 
@@ -79,7 +79,7 @@ namespace Azure.Data.AppConfiguration.Tests
             await SendGetRequest(transport, policy);
 
             Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue));
-            
+
             Assert.True($"{header1Value},{header2Value}".Equals(reqValue) ||
                         $"{header2Value},{header1Value}".Equals(reqValue));
         }
@@ -96,14 +96,14 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var response2 = new MockResponse(200);
             response2.AddHeader(new HttpHeader(headerName, header2Value + ";sn=2"));
-            
+
             MockTransport transport = CreateMockTransport(response1, response2, new MockResponse(200));
             var policy = new SyncTokenPolicy();
 
             await SendGetRequest(transport, policy);
             await SendGetRequest(transport, policy);
             await SendGetRequest(transport, policy);
-            
+
             Assert.True(transport.Requests[1].Headers.TryGetValue(headerName, out string req1Value));
             Assert.True(transport.Requests[2].Headers.TryGetValue(headerName, out string req2Value));
 

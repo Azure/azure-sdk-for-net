@@ -19,7 +19,7 @@ namespace Azure.Core.Samples
         {
             var pipeline = new HttpPipeline(new HttpClientTransport());
 
-            var request = pipeline.CreateRequest();
+            Http.Request request = pipeline.CreateRequest();
 
             var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/README.md");
             request.SetRequestLine(RequestMethod.Get, uri);
@@ -27,11 +27,13 @@ namespace Azure.Core.Samples
 
             Response response = await pipeline.SendRequestAsync(request, cancellationToken: default).ConfigureAwait(false);
 
-            if (response.Status == 200) {
+            if (response.Status == 200)
+            {
                 var reader = new StreamReader(response.ContentStream);
-                string responseText = reader.ReadToEnd();
+                _ = reader.ReadToEnd();
             }
-            else throw await response.CreateRequestFailedExceptionAsync();
+            else
+                throw await response.CreateRequestFailedExceptionAsync();
         }
     }
 }

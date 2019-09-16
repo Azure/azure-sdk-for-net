@@ -108,31 +108,33 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         private static void DisplayHelp()
         {
-           Console.WriteLine();
-           Console.WriteLine($"{ typeof(Program).Namespace }");
-           Console.WriteLine();
-           Console.WriteLine("This executable allows for running the Azure Event Hubs client library samples.  Because");
-           Console.WriteLine("the samples run against live Azure services, they require an Event Hubs namespace and an");
-           Console.WriteLine("Event Hub under it in order to run.");
-           Console.WriteLine();
-           Console.WriteLine();
-           Console.WriteLine("Arguments:");
-           Console.WriteLine($"\t{ nameof(CommandLineArguments.Help) }:");
-           Console.WriteLine("\t\tDisplays this message.");
-           Console.WriteLine();
-           Console.WriteLine($"\t{ nameof(CommandLineArguments.ConnectionString) }:");
-           Console.WriteLine("\t\tThe connection string to the Event Hubs namespace to use for the samples.");
-           Console.WriteLine();
-           Console.WriteLine($"\t{ nameof(CommandLineArguments.EventHub) }:");
-           Console.WriteLine("\t\tThe name of the Event Hub under the namespace to use.");
-           Console.WriteLine();
-           Console.WriteLine("Usage:");
-           Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.ConnectionString) } \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHub) } \"SomeHub\"");
-           Console.WriteLine();
-           Console.WriteLine("\tAzure.Messaging.EventHubs.Samples.exe \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" \"SomeHub\"");
-           Console.WriteLine();
-           Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Help) }");
-           Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine($"{ typeof(Program).Namespace }");
+            Console.WriteLine();
+            Console.WriteLine("This executable allows for running the Azure Event Hubs client library samples.  Because");
+            Console.WriteLine("the samples run against live Azure services, they require an Event Hubs namespace and an");
+            Console.WriteLine("Event Hub under it in order to run.");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Arguments:");
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.Help) }:");
+            Console.WriteLine("\t\tDisplays this message.");
+            Console.WriteLine();
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.ConnectionString) }:");
+            Console.WriteLine("\t\tThe connection string to the Event Hubs namespace to use for the samples.");
+            Console.WriteLine();
+            Console.WriteLine($"\t{ nameof(CommandLineArguments.EventHub) }:");
+            Console.WriteLine("\t\tThe name of the Event Hub under the namespace to use.");
+            Console.WriteLine();
+            Console.WriteLine("Usage:");
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe");
+            Console.WriteLine();
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.ConnectionString) } \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.EventHub) } \"SomeHub\"");
+            Console.WriteLine();
+            Console.WriteLine("\tAzure.Messaging.EventHubs.Samples.exe \"Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=NotReal;SharedAccessKey=[FAKE];\" \"SomeHub\"");
+            Console.WriteLine();
+            Console.WriteLine($"\tAzure.Messaging.EventHubs.Samples.exe { CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Help) }");
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -146,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         private static int? ReadSelection(int sampleCount)
         {
-            while(true)
+            while (true)
             {
                 Console.Write("Please enter the number of a sample to run or press \"X\" to exit: ");
 
@@ -181,7 +183,8 @@ namespace Azure.Messaging.EventHubs.Samples
         {
 
             // If at least two arguments were passed with no argument designator, then assume they're values and
-            // accept them positionally
+            // accept them positionally.
+
             if ((args.Length >= 2) && (!args[0].StartsWith(CommandLineArguments.ArgumentPrefix)) && (!args[1].StartsWith(CommandLineArguments.ArgumentPrefix)))
             {
                 return new CommandLineArguments { ConnectionString = args[0], EventHub = args[1] };
@@ -194,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Samples
             // command was passed in the last position, there was no accompanying value,
             // so it isn't useful.
 
-            for (var index = 0; index < args.Length -1; ++index)
+            for (var index = 0; index < args.Length - 1; ++index)
             {
                 // Remove any excess spaces to comparison purposes.
 

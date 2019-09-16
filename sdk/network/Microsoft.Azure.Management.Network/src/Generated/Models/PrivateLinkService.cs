@@ -41,13 +41,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="loadBalancerFrontendIpConfigurations">An array of
         /// references to the load balancer IP configurations.</param>
-        /// <param name="ipConfigurations">An array of references to the
-        /// private link service IP configuration.</param>
-        /// <param name="networkInterfaces">Gets an array of references to the
+        /// <param name="ipConfigurations">An array of private link service IP
+        /// configurations.</param>
+        /// <param name="networkInterfaces">An array of references to the
         /// network interfaces created for this private link service.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// private link service. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'</param>
+        /// private link service resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="privateEndpointConnections">An array of list about
         /// connections to the private endpoint.</param>
         /// <param name="visibility">The visibility list of the private link
@@ -87,8 +87,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<FrontendIPConfiguration> LoadBalancerFrontendIpConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of references to the private link service IP
-        /// configuration.
+        /// Gets or sets an array of private link service IP configurations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<PrivateLinkServiceIpConfiguration> IpConfigurations { get; set; }
@@ -101,9 +100,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<NetworkInterface> NetworkInterfaces { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the private link service.
-        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
-        /// 'Failed'
+        /// Gets or sets the provisioning state of the private link service
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

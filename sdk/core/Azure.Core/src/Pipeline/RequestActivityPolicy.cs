@@ -83,7 +83,7 @@ namespace Azure.Core.Pipeline
 
         private static async Task ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
-            var currentActivity = Activity.Current;
+            Activity currentActivity = Activity.Current;
 
             if (currentActivity != null)
             {

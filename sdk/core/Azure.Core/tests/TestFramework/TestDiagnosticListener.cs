@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
                 else if (value.Key.EndsWith(stopSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
-                    foreach (var producedDiagnosticScope in Scopes)
+                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
                         if (producedDiagnosticScope.Name == name)
                         {
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests
                 else if (value.Key.EndsWith(exceptionSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
-                    foreach (var producedDiagnosticScope in Scopes)
+                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
                         if (producedDiagnosticScope.IsCompleted)
                         {
@@ -78,7 +78,7 @@ namespace Azure.Core.Tests
 
                         if (producedDiagnosticScope.Name == name)
                         {
-                            producedDiagnosticScope.Exception = (Exception)value.Value ;
+                            producedDiagnosticScope.Exception = (Exception)value.Value;
                         }
                     }
                 }
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
                 subscription.Dispose();
             }
 
-            foreach (var producedDiagnosticScope in Scopes)
+            foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
                 if (!producedDiagnosticScope.IsCompleted)
                 {
@@ -124,11 +124,11 @@ namespace Azure.Core.Tests
         {
             lock (Scopes)
             {
-                foreach (var producedDiagnosticScope in Scopes)
+                foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                 {
                     if (producedDiagnosticScope.Name == name)
                     {
-                        foreach (var expectedAttribute in expectedAttributes)
+                        foreach (KeyValuePair<string, string> expectedAttribute in expectedAttributes)
                         {
                             if (!producedDiagnosticScope.Activity.Tags.Contains(expectedAttribute))
                             {
@@ -145,7 +145,7 @@ namespace Azure.Core.Tests
 
         public ProducedDiagnosticScope AssertScope(string name, params KeyValuePair<string, string>[] expectedAttributes)
         {
-            var scope = AssertScopeStarted(name, expectedAttributes);
+            ProducedDiagnosticScope scope = AssertScopeStarted(name, expectedAttributes);
             if (!scope.IsCompleted)
             {
                 throw new InvalidOperationException($"'{name}' is not completed");
@@ -156,7 +156,7 @@ namespace Azure.Core.Tests
 
         public ProducedDiagnosticScope AssertScopeException(string name, Action<Exception> action = null)
         {
-            var scope = AssertScopeStarted(name);
+            ProducedDiagnosticScope scope = AssertScopeStarted(name);
 
             if (scope.Exception == null)
             {
@@ -186,7 +186,7 @@ namespace Azure.Core.Tests
 
         public Queue<KeyValuePair<string, object>> Events { get; } = new Queue<KeyValuePair<string, object>>();
 
-        public Queue<(string, object,  object)> IsEnabledCalls { get; } = new Queue<(string, object,  object)>();
+        public Queue<(string, object, object)> IsEnabledCalls { get; } = new Queue<(string, object, object)>();
 
         public TestDiagnosticListener(string diagnosticSourceName)
         {

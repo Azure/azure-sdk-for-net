@@ -13,16 +13,18 @@ namespace Azure.Data.AppConfiguration.Samples
     [LiveOnly]
     public partial class ConfigurationSamples
     {
-        HttpClient s_client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
 
         [Test]
         public void ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options
-            var options = new ConfigurationClientOptions();
+            var options = new ConfigurationClientOptions
+            {
 
-            // specify custon HttpClient
-            options.Transport = new HttpClientTransport(s_client);
+                // specify custon HttpClient
+                Transport = new HttpClientTransport(_client)
+            };
 
             // remove logging policy
             options.Diagnostics.IsLoggingEnabled = false;
@@ -46,7 +48,7 @@ namespace Azure.Data.AppConfiguration.Samples
             client.Delete("some_key");
         }
 
-        class AddHeaderPolicy : SynchronousHttpPipelinePolicy
+        private class AddHeaderPolicy : SynchronousHttpPipelinePolicy
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {
@@ -54,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        class CustomLogPolicy : SynchronousHttpPipelinePolicy
+        private class CustomLogPolicy : SynchronousHttpPipelinePolicy
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {

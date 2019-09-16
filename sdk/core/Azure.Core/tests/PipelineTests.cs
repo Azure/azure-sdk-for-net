@@ -19,13 +19,13 @@ namespace Azure.Core.Tests
                 new MockResponse(500),
                 new MockResponse(1));
 
-            var pipeline = new HttpPipeline(mockTransport, new [] {
+            var pipeline = new HttpPipeline(mockTransport, new[] {
                 new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
             }, responseClassifier: new CustomResponseClassifier());
 
-            var request = pipeline.CreateRequest();
+            Http.Request request = pipeline.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
-            var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
         }
@@ -54,14 +54,15 @@ namespace Azure.Core.Tests
             HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
             message.SetProperty("someName", "value");
 
-            Assert.False(message.TryGetProperty("SomeName", out object value));
+
+            Assert.False(message.TryGetProperty("SomeName", out _));
         }
 
-        class CustomResponseClassifier : ResponseClassifier
+        private class CustomResponseClassifier : ResponseClassifier
         {
-            public override bool IsRetriableResponse(Response response)
+            public override bool IsRetriableResponse(HttpPipelineMessage message)
             {
-                return response.Status == 500;
+                return message.Response.Status == 500;
             }
 
             public override bool IsRetriableException(Exception exception)
@@ -69,9 +70,9 @@ namespace Azure.Core.Tests
                 return false;
             }
 
-            public override bool IsErrorResponse(Response response)
+            public override bool IsErrorResponse(HttpPipelineMessage message)
             {
-                return IsRetriableResponse(response);
+                return IsRetriableResponse(message);
             }
         }
     }

@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualHub">The VirtualHub to which the gateway
         /// belongs.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'</param>
+        /// <param name="provisioningState">The provisioning state of the P2S
+        /// VPN gateway resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="vpnGatewayScaleUnit">The scale unit for this p2s vpn
         /// gateway.</param>
         /// <param name="p2SVpnServerConfiguration">The
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// customer for P2SVpnGateway and P2S VpnClient.</param>
         /// <param name="vpnClientConnectionHealth">All P2S VPN clients'
         /// connection health status.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public P2SVpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), SubResource p2SVpnServerConfiguration = default(SubResource), AddressSpace vpnClientAddressPool = default(AddressSpace), AddressSpace customRoutes = default(AddressSpace), VpnClientConnectionHealth vpnClientConnectionHealth = default(VpnClientConnectionHealth), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -85,8 +85,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource VirtualHub { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource. Possible
-        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+        /// Gets or sets the provisioning state of the P2S VPN gateway
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
