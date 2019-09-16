@@ -16,12 +16,17 @@ namespace Microsoft.Azure.Management.Kusto.Models
     /// </summary>
     public static class AzureSkuName
     {
-        public const string D13V2 = "D13_v2";
-        public const string D14V2 = "D14_v2";
-        public const string L8 = "L8";
-        public const string L16 = "L16";
-        public const string D11V2 = "D11_v2";
-        public const string D12V2 = "D12_v2";
-        public const string L4 = "L4";
+        public const string StandardDS13V21TBPS = "Standard_DS13_v2+1TB_PS";
+        public const string StandardDS13V22TBPS = "Standard_DS13_v2+2TB_PS";
+        public const string StandardDS14V23TBPS = "Standard_DS14_v2+3TB_PS";
+        public const string StandardDS14V24TBPS = "Standard_DS14_v2+4TB_PS";
+        public const string StandardD13V2 = "Standard_D13_v2";
+        public const string StandardD14V2 = "Standard_D14_v2";
+        public const string StandardL8s = "Standard_L8s";
+        public const string StandardL16s = "Standard_L16s";
+        public const string StandardD11V2 = "Standard_D11_v2";
+        public const string StandardD12V2 = "Standard_D12_v2";
+        public const string StandardL4s = "Standard_L4s";
+        public const string DevNoSLAStandardD11V2 = "Dev(No SLA)_Standard_D11_v2";
     }
 }
