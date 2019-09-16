@@ -124,6 +124,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const cancellationName = "cancellationToken";
     const bodyName = "_body";
     const requestName = "_request";
+    const messageName = "_message";
     const headerName = "_header";
     const xmlName = "_xml";
     const textName = "_text";
@@ -191,7 +192,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 }
             }
             w.line(`${scopeName}.Start();`);
-            w.write(`using (Azure.Core.Http.Request ${requestName} = ${methodName}_CreateRequest(`);
+            w.write(`using (Azure.Core.Pipeline.HttpPipelineMessage ${messageName} = ${methodName}_CreateMessage(`);
             w.scope(() => {
                 const separateParams = IndentWriter.createFenceposter();
                 for (const arg of operation.request.arguments) {
@@ -201,20 +202,27 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.write(`))`);
             });
             w.scope('{', '}', () => {
-                w.write(`Azure.Response ${responseName} = `);
-                const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${bufferResponseName}, ${cancellationName}).ConfigureAwait(false)`;
+                w.line(`${messageName}.BufferResponse = ${bufferResponseName};`);
+                w.line(`${messageName}.CancellationToken = ${cancellationName};`);
+
+                const asyncCall = `await ${pipelineName}.SendAsync(${messageName}).ConfigureAwait(false)`;
                 if (sync) {
-                    w.write('async ?');
-                    w.scope(() => {
+                    w.line(`if (async)`);
+                    w.scope('{', '}', () => {
                         w.line(`// Send the request asynchronously if we're being called via an async path`);
-                        w.line(`${asyncCall} :`);
+                        w.line(`${asyncCall};`);
+                    });
+                    w.line(`else`);
+                    w.scope('{', '}', () => {
                         w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
                         w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
-                        w.line(`${pipelineName}.SendRequest(${requestName}, ${bufferResponseName}, ${cancellationName});`);
+                        w.line(`${pipelineName}.Send(${messageName});`);
                     });
                 } else {
                     w.line(`${asyncCall};`);
                 }
+
+                w.line(`Azure.Response ${responseName} = ${messageName}.Response;`);
                 w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
                 w.line(`return ${methodName}_CreateResponse(${responseName});`);
             });
@@ -245,8 +253,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.line(`/// <param name="${naming.parameter(arg.clientName)}">${desc}</param>`);
         }
     }
-    w.line(`/// <returns>The ${regionName} Request.</returns>`);
-    w.write(`internal static Azure.Core.Http.Request ${methodName}_CreateRequest(`);
+    w.line(`/// <returns>The ${regionName} Message.</returns>`);
+    w.write(`internal static Azure.Core.Pipeline.HttpPipelineMessage ${methodName}_CreateMessage(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -312,7 +320,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
 
         w.line(`// Create the request`);
-        w.line(`Azure.Core.Http.Request ${requestName} = ${pipelineName}.CreateRequest();`);
+        w.line(`Azure.Core.Pipeline.HttpPipelineMessage ${messageName} = ${pipelineName}.CreateMessage();`);
+        w.line(`Azure.Core.Http.Request ${requestName} = ${messageName}.Request;`);
         w.line();
 
         w.line(`// Set the endpoint`);
@@ -410,7 +419,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.line();
         }
 
-        w.line(`return ${requestName};`);
+        w.line(`return ${messageName};`);
     });
     w.line();
     // #endregion Create Request
