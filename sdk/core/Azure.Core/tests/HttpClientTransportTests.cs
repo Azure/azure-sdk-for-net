@@ -81,7 +81,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.UriBuilder.Uri = new Uri("https://example.com:340");
+            request.UriBuilder.Uri = new Uri("http://example.com:340");
 
             await ExecuteRequest(request, transport);
 
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
-            request.Method = RequestMethod.Get;
+            request.Method = method;
             request.UriBuilder.Uri = new Uri("https://example.com:340");
 
             Assert.AreEqual(method, request.Method);
