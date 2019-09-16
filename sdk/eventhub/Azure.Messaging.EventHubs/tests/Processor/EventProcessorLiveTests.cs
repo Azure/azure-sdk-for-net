@@ -573,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                     {
-                        new PartitionOwnership(client.EventHubsHostName, client.EventHubName,
+                        new PartitionOwnership(client.FullyQualifiedNamespace, client.EventHubName,
                             EventHubConsumer.DefaultConsumerGroupName, "ownerIdentifier", partitionId,
                             sequenceNumber: checkpointedSequenceNumber, lastModifiedTime: DateTimeOffset.UtcNow)
                     });
@@ -709,7 +709,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Validate results.
 
-                    var ownershipEnumerable = await partitionManager.ListOwnershipAsync(client.EventHubsHostName, client.EventHubName, EventHubConsumer.DefaultConsumerGroupName);
+                    var ownershipEnumerable = await partitionManager.ListOwnershipAsync(client.FullyQualifiedNamespace, client.EventHubName, EventHubConsumer.DefaultConsumerGroupName);
                     ;
 
                     Assert.That(ownershipEnumerable, Is.Not.Null);

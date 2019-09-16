@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 var partitionManager = new BlobPartitionManager(containerClient);
 
-                Assert.That(async () => await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup"), Throws.Nothing);
+                Assert.That(async () => await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup"), Throws.Nothing);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 ownershipList.Add(
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -104,7 +104,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 ownershipList.Add(
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var checkpoint = new MockCheckpoint("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20);
+                var checkpoint = new MockCheckpoint("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20);
 
                 Assert.That(async () => await partitionManager.UpdateCheckpointAsync(checkpoint), Throws.Nothing);
             }
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var partitionManager = new BlobPartitionManager(containerClient);
-                var ownership = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var ownership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(ownership, Is.Not.Null.And.Empty);
             }
@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var ownership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -168,7 +168,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -194,7 +194,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var ownership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var firstOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -249,7 +249,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var secondOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -289,7 +289,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var eTaggyOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -302,7 +302,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null.And.Empty);
             }
@@ -326,7 +326,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var firstOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -347,7 +347,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var secondOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -360,7 +360,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -390,7 +390,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                     ownershipList.Add(
                         new MockPartitionOwnership
                         (
-                            "eventHubsHostName",
+                            "namespace",
                             "eventHubName",
                             "consumerGroup",
                             "ownerIdentifier",
@@ -400,7 +400,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(ownershipCount));
@@ -437,7 +437,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                     ownershipList.Add(
                         new MockPartitionOwnership
                         (
-                            "eventHubsHostName",
+                            "namespace",
                             "eventHubName",
                             "consumerGroup",
                             "ownerIdentifier",
@@ -463,7 +463,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                     ownershipList.Add(
                         new MockPartitionOwnership
                         (
-                            "eventHubsHostName",
+                            "namespace",
                             "eventHubName",
                             "consumerGroup",
                             "ownerIdentifier",
@@ -507,7 +507,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var firstOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup1",
                         "ownerIdentifier",
@@ -527,7 +527,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var secondOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName",
                         "consumerGroup2",
                         "ownerIdentifier",
@@ -539,7 +539,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup1");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -565,7 +565,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var firstOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName1",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -585,7 +585,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var secondOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName",
+                        "namespace",
                         "eventHubName2",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -597,7 +597,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName1", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -623,7 +623,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var firstOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName1",
+                        "namespace1",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -643,7 +643,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var secondOwnership =
                     new MockPartitionOwnership
                     (
-                        "eventHubsHostName2",
+                        "namespace2",
                         "eventHubName",
                         "consumerGroup",
                         "ownerIdentifier",
@@ -655,7 +655,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName1", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -679,9 +679,9 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var partitionManager = new BlobPartitionManager(containerClient);
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                    ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 10, sequenceNumber: 20));
+                    ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 10, sequenceNumber: 20));
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null.And.Empty);
             }
@@ -702,7 +702,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 var partitionManager = new BlobPartitionManager(containerClient);
                 var originalOwnership = new MockPartitionOwnership
-                    ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier1", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow);
+                    ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier1", "partitionId", offset: 1, sequenceNumber: 2, lastModifiedTime: DateTimeOffset.UtcNow);
 
                 await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                 {
@@ -715,11 +715,11 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 var originalETag = originalOwnership.ETag;
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                    ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier2", "partitionId", 10, 20));
+                    ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier2", "partitionId", 10, 20));
 
                 // Make sure the ownership hasn't changed.
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -748,7 +748,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 var partitionManager = new BlobPartitionManager(containerClient);
                 var originalOwnership = new MockPartitionOwnership
-                    ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1, sequenceNumber: 2);
+                    ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1, sequenceNumber: 2);
 
                 await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                 {
@@ -767,11 +767,11 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 await Task.Delay(1000);
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                    ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
+                    ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
 
                 // Make sure the ownership has changed.
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -802,15 +802,15 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                 {
-                    new MockPartitionOwnership("eventHubsHostName","eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", offset: 1),
-                    new MockPartitionOwnership("eventHubsHostName","eventHubName", "consumerGroup2", "ownerIdentifier", "partitionId", offset: 1)
+                    new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", offset: 1),
+                    new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup2", "ownerIdentifier", "partitionId", offset: 1)
                 });
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                    ("eventHubsHostName", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", 10, 20));
+                    ("namespace", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", 10, 20));
 
-                var storedOwnershipList1 = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup1");
-                var storedOwnershipList2 = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup2");
+                var storedOwnershipList1 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1");
+                var storedOwnershipList2 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup2");
 
                 Assert.That(storedOwnershipList1, Is.Not.Null);
                 Assert.That(storedOwnershipList1.Count, Is.EqualTo(1));
@@ -839,15 +839,15 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                 {
-                    new MockPartitionOwnership("eventHubsHostName","eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1),
-                    new MockPartitionOwnership("eventHubsHostName","eventHubName2", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1)
+                    new MockPartitionOwnership("namespace", "eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1),
+                    new MockPartitionOwnership("namespace", "eventHubName2", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1)
                 });
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                    ("eventHubsHostName", "eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
+                    ("namespace", "eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
 
-                var storedOwnershipList1 = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName1", "consumerGroup");
-                var storedOwnershipList2 = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName2", "consumerGroup");
+                var storedOwnershipList1 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup");
+                var storedOwnershipList2 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName2", "consumerGroup");
 
                 Assert.That(storedOwnershipList1, Is.Not.Null);
                 Assert.That(storedOwnershipList1.Count, Is.EqualTo(1));
@@ -876,15 +876,15 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                 {
-                    new MockPartitionOwnership("eventHubsHostName1","eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1),
-                    new MockPartitionOwnership("eventHubsHostName2","eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1)
+                    new MockPartitionOwnership("namespace1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1),
+                    new MockPartitionOwnership("namespace2", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 1)
                 });
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                    ("eventHubsHostName1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
+                    ("namespace1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
 
-                var storedOwnershipList1 = await partitionManager.ListOwnershipAsync("eventHubsHostName1", "eventHubName", "consumerGroup");
-                var storedOwnershipList2 = await partitionManager.ListOwnershipAsync("eventHubsHostName2", "eventHubName", "consumerGroup");
+                var storedOwnershipList1 = await partitionManager.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup");
+                var storedOwnershipList2 = await partitionManager.ListOwnershipAsync("namespace2", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList1, Is.Not.Null);
                 Assert.That(storedOwnershipList1.Count, Is.EqualTo(1));
@@ -913,14 +913,14 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                 {
-                    new MockPartitionOwnership("eventHubsHostName","eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", offset: 1),
-                    new MockPartitionOwnership("eventHubsHostName","eventHubName", "consumerGroup", "ownerIdentifier", "partitionId2", offset: 1)
+                    new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", offset: 1),
+                    new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId2", offset: 1)
                 });
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
-                    ("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", 10, 20));
+                    ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", 10, 20));
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("eventHubsHostName", "eventHubName", "consumerGroup");
+                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(2));
@@ -947,7 +947,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
             ///   Initializes a new instance of the <see cref="MockPartitionOwnership"/> class.
             /// </summary>
             ///
-            /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
+            /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
             /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
@@ -957,7 +957,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
             /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
             /// <param name="eTag">The entity tag needed to update this ownership.</param>
             ///
-            public MockPartitionOwnership(string eventHubsHostName,
+            public MockPartitionOwnership(string fullyQualifiedNamespace,
                                           string eventHubName,
                                           string consumerGroup,
                                           string ownerIdentifier,
@@ -965,7 +965,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                                           long? offset = null,
                                           long? sequenceNumber = null,
                                           DateTimeOffset? lastModifiedTime = null,
-                                          string eTag = null) : base(eventHubsHostName, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
+                                          string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
             {
             }
         }
@@ -980,7 +980,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
             ///   Initializes a new instance of the <see cref="MockPartitionOwnership"/> class.
             /// </summary>
             ///
-            /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
+            /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
             /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
@@ -988,13 +988,13 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
             /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
             /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>
             ///
-            public MockCheckpoint(string eventHubsHostName,
+            public MockCheckpoint(string fullyQualifiedNamespace,
                                   string eventHubName,
                                   string consumerGroup,
                                   string ownerIdentifier,
                                   string partitionId,
                                   long offset,
-                                  long sequenceNumber) : base(eventHubsHostName, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber)
+                                  long sequenceNumber) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber)
             {
             }
         }

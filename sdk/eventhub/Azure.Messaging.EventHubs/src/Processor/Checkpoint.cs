@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The name of the host used to connect to the associated Event Hubs namespace.
         /// </summary>
         ///
-        public string EventHubsHostName { get; }
+        public string FullyQualifiedNamespace { get; }
 
         /// <summary>
         ///   The name of the specific Event Hub this checkpoint is associated with, relative
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="Checkpoint"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
+        /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
         /// <param name="eventHubName">The name of the specific Event Hub this checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this checkpoint is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="offset">The offset of the <see cref="EventData" /> this checkpoint is associated with.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the <see cref="EventData" /> this checkpoint is associated with.</param>
         ///
-        protected internal Checkpoint(string eventHubsHostName,
+        protected internal Checkpoint(string fullyQualifiedNamespace,
                                       string eventHubName,
                                       string consumerGroup,
                                       string ownerIdentifier,
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                       long offset,
                                       long sequenceNumber)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubsHostName), eventHubsHostName);
+            Guard.ArgumentNotNullOrEmpty(nameof(fullyQualifiedNamespace), fullyQualifiedNamespace);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
             Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
             Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Processor
             Guard.ArgumentAtLeast(nameof(offset), offset, 0);
             Guard.ArgumentAtLeast(nameof(sequenceNumber), sequenceNumber, 0);
 
-            EventHubsHostName = eventHubsHostName;
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             OwnerIdentifier = ownerIdentifier;

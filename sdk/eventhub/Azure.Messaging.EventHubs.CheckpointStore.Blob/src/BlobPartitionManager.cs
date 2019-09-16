@@ -49,19 +49,19 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
         ///   Retrieves a complete ownership list from the storage blob service.
         /// </summary>
         ///
-        /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
+        /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public override async Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string eventHubsHostName,
+        public override async Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
                                                                                        string eventHubName,
                                                                                        string consumerGroup)
         {
             List<PartitionOwnership> ownershipList = new List<PartitionOwnership>();
 
-            var prefix = $"{ eventHubsHostName }/{ eventHubName }/{ consumerGroup }/";
+            var prefix = $"{ fullyQualifiedNamespace }/{ eventHubName }/{ consumerGroup }/";
             var options = new GetBlobsOptions
             {
                 IncludeMetadata = true,
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                 }
 
                 ownershipList.Add(new InnerPartitionOwnership(
-                    eventHubsHostName,
+                    fullyQualifiedNamespace,
                     eventHubName,
                     consumerGroup,
                     ownerIdentifier,
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
 
                 var blobAccessConditions = new BlobAccessConditions();
 
-                var blobName = $"{ ownership.EventHubsHostName }/{ ownership.EventHubName }/{ ownership.ConsumerGroup }/{ ownership.PartitionId }";
+                var blobName = $"{ ownership.FullyQualifiedNamespace }/{ ownership.EventHubName }/{ ownership.ConsumerGroup }/{ ownership.PartitionId }";
                 var blobClient = ContainerClient.GetBlobClient(blobName);
 
                 try
@@ -222,7 +222,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
         ///
         public override async Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            var blobName = $"{ checkpoint.EventHubsHostName }/{ checkpoint.EventHubName }/{ checkpoint.ConsumerGroup }/{ checkpoint.PartitionId }";
+            var blobName = $"{ checkpoint.FullyQualifiedNamespace }/{ checkpoint.EventHubName }/{ checkpoint.ConsumerGroup }/{ checkpoint.PartitionId }";
             var blobClient = ContainerClient.GetBlobClient(blobName);
 
             BlobProperties currentBlob;
@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
             ///   Initializes a new instance of the <see cref="InnerPartitionOwnership"/> class.
             /// </summary>
             ///
-            /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
+            /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
             /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
@@ -300,7 +300,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
             /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
             /// <param name="eTag">The entity tag needed to update this ownership.</param>
             ///
-            public InnerPartitionOwnership(string eventHubsHostName,
+            public InnerPartitionOwnership(string fullyQualifiedNamespace,
                                            string eventHubName,
                                            string consumerGroup,
                                            string ownerIdentifier,
@@ -308,7 +308,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob
                                            long? offset = null,
                                            long? sequenceNumber = null,
                                            DateTimeOffset? lastModifiedTime = null,
-                                           string eTag = null) : base(eventHubsHostName, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
+                                           string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
             {
             }
         }

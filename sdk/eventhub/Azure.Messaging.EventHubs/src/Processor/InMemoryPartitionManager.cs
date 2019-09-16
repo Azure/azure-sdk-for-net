@@ -40,13 +40,13 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Retrieves a complete ownership list from the in-memory storage service.
         /// </summary>
         ///
-        /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
+        /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string eventHubsHostName,
+        public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
                                                                                  string eventHubName,
                                                                                  string consumerGroup)
         {
@@ -55,9 +55,9 @@ namespace Azure.Messaging.EventHubs.Processor
             lock (OwnershipLock)
             {
                 ownershipList = Ownership.Values
-                    .Where(ownership => ownership.EventHubsHostName == eventHubsHostName &&
-                        ownership.EventHubName == eventHubName &&
-                        ownership.ConsumerGroup == consumerGroup)
+                    .Where(ownership => ownership.FullyQualifiedNamespace == fullyQualifiedNamespace
+                        && ownership.EventHubName == eventHubName
+                        && ownership.ConsumerGroup == consumerGroup)
                     .ToList();
             }
 
@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 foreach (var ownership in partitionOwnership)
                 {
                     var isClaimable = true;
-                    var key = (ownership.EventHubsHostName, ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
+                    var key = (ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
 
                     // In case the partition already has an owner, the ETags must match in order to claim it.
 
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             lock (OwnershipLock)
             {
-                var key = (checkpoint.EventHubsHostName, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
+                var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
 
                 if (Ownership.TryGetValue(key, out var ownership))
                 {

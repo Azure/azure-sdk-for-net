@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // their eTags to claim orphan partitions.
 
                 var completeOwnershipList = (await Manager
-                    .ListOwnershipAsync(InnerClient.EventHubsHostName, InnerClient.EventHubName, ConsumerGroup)
+                    .ListOwnershipAsync(InnerClient.FullyQualifiedNamespace, InnerClient.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -487,7 +487,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // Create and start the new partition pump and add it to the dictionary.
 
-            var partitionContext = new PartitionContext(InnerClient.EventHubsHostName, InnerClient.EventHubName, ConsumerGroup, partitionId, Identifier, Manager);
+            var partitionContext = new PartitionContext(InnerClient.FullyQualifiedNamespace, InnerClient.EventHubName, ConsumerGroup, partitionId, Identifier, Manager);
 
             try
             {
@@ -559,7 +559,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             var newOwnership = new PartitionOwnership
                 (
-                    InnerClient.EventHubsHostName,
+                    InnerClient.FullyQualifiedNamespace,
                     InnerClient.EventHubName,
                     ConsumerGroup,
                     Identifier,
@@ -590,7 +590,7 @@ namespace Azure.Messaging.EventHubs.Processor
             var ownershipToRenew = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership
                 (
-                    ownership.EventHubsHostName,
+                    ownership.FullyQualifiedNamespace,
                     ownership.EventHubName,
                     ownership.ConsumerGroup,
                     ownership.OwnerIdentifier,

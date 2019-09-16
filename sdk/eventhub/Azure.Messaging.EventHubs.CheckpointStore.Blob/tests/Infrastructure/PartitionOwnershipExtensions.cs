@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
             return
             (
-                instance.EventHubsHostName == other.EventHubsHostName
+                instance.FullyQualifiedNamespace == other.FullyQualifiedNamespace
                 && instance.EventHubName == other.EventHubName
                 && instance.ConsumerGroup == other.ConsumerGroup
                 && instance.OwnerIdentifier == other.OwnerIdentifier

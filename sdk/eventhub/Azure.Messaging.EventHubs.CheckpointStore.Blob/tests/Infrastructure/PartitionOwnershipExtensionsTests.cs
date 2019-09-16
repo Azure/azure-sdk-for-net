@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         /// </summary>
         ///
         [Test]
-        public void IsEquivalentToDetectsEventHubsHostName()
+        public void IsEquivalentToDetectsFullyQualifiedNamespace()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
-            var second = new MockPartitionOwnership("eventHubsHostName2", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
+            var first = new MockPartitionOwnership("namespace1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
+            var second = new MockPartitionOwnership("namespace2", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -37,8 +37,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsEventHubName()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId");
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName2", "consumerGroup", "ownerIdentifier", "partitionId");
+            var first = new MockPartitionOwnership("namespace", "eventHubName1", "consumerGroup", "ownerIdentifier", "partitionId");
+            var second = new MockPartitionOwnership("namespace", "eventHubName2", "consumerGroup", "ownerIdentifier", "partitionId");
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -51,8 +51,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsConsumerGroup()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId");
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup2", "ownerIdentifier", "partitionId");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId");
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup2", "ownerIdentifier", "partitionId");
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -65,8 +65,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsOwnerIdentifier()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier1", "partitionId");
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier2", "partitionId");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier1", "partitionId");
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier2", "partitionId");
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -79,8 +79,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsPartitionId()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1");
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId2");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1");
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId2");
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -95,8 +95,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [TestCase(10, null)]
         public void IsEquivalentToDetectsOffset(long? offset1, long? offset2)
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: offset1);
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: offset2);
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: offset1);
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: offset2);
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -111,8 +111,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [TestCase(10, null)]
         public void IsEquivalentToDetectsSequenceNumber(long? sequenceNumber1, long? sequenceNumber2)
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", sequenceNumber: sequenceNumber1);
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", sequenceNumber: sequenceNumber2);
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", sequenceNumber: sequenceNumber1);
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", sequenceNumber: sequenceNumber2);
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -125,12 +125,12 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsLastModifiedTime()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", lastModifiedTime: DateTimeOffset.Parse("1975-04-04T00:00:00Z"));
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", lastModifiedTime: DateTimeOffset.Parse("1975-04-04T01:00:00Z"));
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", lastModifiedTime: DateTimeOffset.Parse("1975-04-04T00:00:00Z"));
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", lastModifiedTime: DateTimeOffset.Parse("1975-04-04T01:00:00Z"));
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
 
-            var third = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", lastModifiedTime: null);
+            var third = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", lastModifiedTime: null);
 
             Assert.That(first.IsEquivalentTo(third), Is.False);
         }
@@ -143,8 +143,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsETag()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", eTag: "eTag1");
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", eTag: "eTag2");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", eTag: "eTag1");
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", eTag: "eTag2");
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -157,15 +157,15 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsEqualPartitionOwnership()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20, DateTimeOffset.Parse("1975-04-04T00:00:00Z"), "eTag");
-            var second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20, DateTimeOffset.Parse("1975-04-04T00:00:00Z"), "eTag");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20, DateTimeOffset.Parse("1975-04-04T00:00:00Z"), "eTag");
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20, DateTimeOffset.Parse("1975-04-04T00:00:00Z"), "eTag");
 
             Assert.That(first.IsEquivalentTo(second), Is.True);
 
             // Set the optional parameters to null.
 
-            first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
-            second = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
+            first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
+            second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
 
             Assert.That(first.IsEquivalentTo(second), Is.True);
         }
@@ -178,7 +178,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsSameInstance()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
 
             Assert.That(first.IsEquivalentTo(first), Is.True);
         }
@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsNullInstance()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
 
             Assert.That(((PartitionOwnership)null).IsEquivalentTo(first), Is.False);
         }
@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public void IsEquivalentToDetectsNullArgument()
         {
-            var first = new MockPartitionOwnership("eventHubsHostName", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
 
             Assert.That(first.IsEquivalentTo(null), Is.False);
         }
@@ -231,7 +231,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
             ///   Initializes a new instance of the <see cref="MockPartitionOwnership"/> class.
             /// </summary>
             ///
-            /// <param name="eventHubsHostName">The name of the host used to connect to the associated Event Hubs namespace.</param>
+            /// <param name="fullyQualifiedNamespace">The name of the host used to connect to the associated Event Hubs namespace.</param>
             /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
@@ -241,7 +241,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
             /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
             /// <param name="eTag">The entity tag needed to update this ownership.</param>
             ///
-            public MockPartitionOwnership(string eventHubsHostName,
+            public MockPartitionOwnership(string fullyQualifiedNamespace,
                                           string eventHubName,
                                           string consumerGroup,
                                           string ownerIdentifier,
@@ -249,7 +249,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                                           long? offset = null,
                                           long? sequenceNumber = null,
                                           DateTimeOffset? lastModifiedTime = null,
-                                          string eTag = null) : base(eventHubsHostName, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
+                                          string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, offset, sequenceNumber, lastModifiedTime, eTag)
             {
             }
         }
