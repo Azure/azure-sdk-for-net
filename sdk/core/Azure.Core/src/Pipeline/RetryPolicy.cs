@@ -96,9 +96,9 @@ namespace Azure.Core.Pipeline
                         throw new AggregateException($"Retry failed after {attempt} tries.", exceptions);
                     }
                 }
-                else if (message.ResponseClassifier.IsErrorResponse(message.Response))
+                else if (message.ResponseClassifier.IsErrorResponse(message))
                 {
-                    if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message.Response))
+                    if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message))
                     {
                         GetDelay(message, attempt, out delay);
                     }

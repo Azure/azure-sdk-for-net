@@ -60,9 +60,9 @@ namespace Azure.Core.Tests
 
         private class CustomResponseClassifier : ResponseClassifier
         {
-            public override bool IsRetriableResponse(Response response)
+            public override bool IsRetriableResponse(HttpPipelineMessage message)
             {
-                return response.Status == 500;
+                return message.Response.Status == 500;
             }
 
             public override bool IsRetriableException(Exception exception)
@@ -70,9 +70,9 @@ namespace Azure.Core.Tests
                 return false;
             }
 
-            public override bool IsErrorResponse(Response response)
+            public override bool IsErrorResponse(HttpPipelineMessage message)
             {
-                return IsRetriableResponse(response);
+                return IsRetriableResponse(message);
             }
         }
     }

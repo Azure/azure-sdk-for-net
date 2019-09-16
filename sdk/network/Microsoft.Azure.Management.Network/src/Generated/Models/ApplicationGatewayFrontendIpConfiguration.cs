@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="subnet">Reference of the subnet resource.</param>
         /// <param name="publicIPAddress">Reference of the PublicIP
         /// resource.</param>
-        /// <param name="provisioningState">Provisioning state of the public IP
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// frontend IP configuration resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">Name of the frontend IP configuration that is
         /// unique within an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -97,8 +97,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the frontend IP
+        /// configuration resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

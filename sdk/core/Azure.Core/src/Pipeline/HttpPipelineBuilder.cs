@@ -11,7 +11,24 @@ namespace Azure.Core.Pipeline
     {
         public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] clientPolicies)
         {
+            return Build(options, Array.Empty<HttpPipelinePolicy>(), clientPolicies, new ResponseClassifier());
+        }
+
+        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallClientPolicies, HttpPipelinePolicy[] perRetryClientPolicies, ResponseClassifier responseClassifier)
+        {
+            if (perCallClientPolicies == null)
+            {
+                throw new ArgumentNullException(nameof(perCallClientPolicies));
+            }
+
+            if (perRetryClientPolicies == null)
+            {
+                throw new ArgumentNullException(nameof(perRetryClientPolicies));
+            }
+
             var policies = new List<HttpPipelinePolicy>();
+
+            policies.AddRange(perCallClientPolicies);
 
             policies.AddRange(options.PerCallPolicies);
 
@@ -26,7 +43,7 @@ namespace Azure.Core.Pipeline
             RetryOptions retryOptions = options.Retry;
             policies.Add(new RetryPolicy(retryOptions.Mode, retryOptions.Delay, retryOptions.MaxDelay, retryOptions.MaxRetries));
 
-            policies.AddRange(clientPolicies);
+            policies.AddRange(perRetryClientPolicies);
 
             policies.AddRange(options.PerRetryPolicies);
 
@@ -41,7 +58,7 @@ namespace Azure.Core.Pipeline
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, new ClientDiagnostics(diagnostics.IsLoggingEnabled));
+            return new HttpPipeline(options.Transport, policies.ToArray(), responseClassifier, new ClientDiagnostics(options.Diagnostics.IsLoggingEnabled));
         }
 
         // internal for testing

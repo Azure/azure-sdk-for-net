@@ -10,6 +10,9 @@ using Azure.Core.Shared;
 
 namespace Azure.Core.Diagnostics
 {
+    /// <summary>
+    /// Implementation of <see cref="EventListener"/> that listens to events produces by Azure SDK Client libraries
+    /// </summary>
     public class AzureEventSourceListener: EventListener
     {
         public const string TraitName = "AzureEventSource";
@@ -20,9 +23,15 @@ namespace Azure.Core.Diagnostics
         private readonly Action<EventWrittenEventArgs, string> _log;
         private readonly EventLevel _level;
 
+        /// <summary>
+        /// Creates an instance of <see cref="AzureEventSourceListener"/> that executes a <paramref name="log"/> callback every time event is written.
+        /// </summary>
+        /// <param name="log">The <see cref="System.Action{EventWrittenEventArgs, String}"/> to call when event is written. The second parameter is formatted message.</param>
+        /// <param name="level">The level of events to enable.</param>
         public AzureEventSourceListener(Action<EventWrittenEventArgs, string> log, EventLevel level)
         {
-            _log = log;
+            _log = log ?? throw new ArgumentNullException(nameof(log));
+
             _level = level;
 
             foreach (EventSource eventSource in _eventSources)
@@ -53,11 +62,19 @@ namespace Azure.Core.Diagnostics
             _log(eventData, EventSourceEventFormatting.Format(eventData));
         }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="AzureEventSourceListener"/> that forwards events to <see cref="Console.WriteLine(string)"/>
+        /// </summary>
+        /// <param name="level">The level of events to enable.</param>
         public static AzureEventSourceListener CreateConsoleLogger(EventLevel level = EventLevel.Informational)
         {
             return new AzureEventSourceListener((eventData, text) => Console.WriteLine("[{1}] {0}: {2}", eventData.EventSource.Name, eventData.Level, text), level);
         }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="AzureEventSourceListener"/> that forwards events to <see cref="Trace.WriteLine(object)"/>
+        /// </summary>
+        /// <param name="level">The level of events to enable.</param>
         public static AzureEventSourceListener CreateTraceLogger(EventLevel level = EventLevel.Informational)
         {
             return new AzureEventSourceListener(
