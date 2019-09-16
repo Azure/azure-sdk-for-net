@@ -47,7 +47,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
             return
             (
-                instance.EventHubName == other.EventHubName
+                instance.EventHubsHostName == other.EventHubsHostName
+                && instance.EventHubName == other.EventHubName
                 && instance.ConsumerGroup == other.ConsumerGroup
                 && instance.OwnerIdentifier == other.OwnerIdentifier
                 && instance.PartitionId == other.PartitionId
