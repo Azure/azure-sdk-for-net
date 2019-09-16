@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsFalseIfNotExist()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
 
             Assert.False(message.TryGetProperty("someName", out _));
         }
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsValueIfSet()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
             message.SetProperty("someName", "value");
 
             Assert.True(message.TryGetProperty("someName", out object value));
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyIsCaseSensitive()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier());
             message.SetProperty("someName", "value");
 
 

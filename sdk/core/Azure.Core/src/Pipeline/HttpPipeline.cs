@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Http;
@@ -34,42 +33,46 @@ namespace Azure.Core.Pipeline
         public Request CreateRequest()
             => _transport.CreateRequest();
 
+        public HttpPipelineMessage CreateMessage()
+        {
+            return new HttpPipelineMessage(CreateRequest(), ResponseClassifier);
+        }
+
         public ResponseClassifier ResponseClassifier { get; }
 
         public ClientDiagnostics Diagnostics { get; }
 
-        public Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
+        public Task SendAsync(HttpPipelineMessage message)
         {
-            return SendRequestAsync(request, true, cancellationToken);
+            return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
         }
 
-        public async Task<Response> SendRequestAsync(Request request, bool bufferResponse, CancellationToken cancellationToken)
+        public void Send(HttpPipelineMessage message)
         {
-            HttpPipelineMessage message = BuildMessage(request, bufferResponse, cancellationToken);
-            await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
+            _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+        }
+
+        public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
+        {
+            HttpPipelineMessage message = BuildMessage(request, cancellationToken);
+            await SendAsync(message).ConfigureAwait(false);
             return message.Response;
         }
 
         public Response SendRequest(Request request, CancellationToken cancellationToken)
         {
-            return SendRequest(request, true, cancellationToken);
-        }
-
-        public Response SendRequest(Request request, bool bufferResponse, CancellationToken cancellationToken)
-        {
-            HttpPipelineMessage message = BuildMessage(request, bufferResponse, cancellationToken);
-            _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+            HttpPipelineMessage message = BuildMessage(request, cancellationToken);
+            Send(message);
             return message.Response;
         }
 
-        private HttpPipelineMessage BuildMessage(Request request, bool bufferResponse, CancellationToken cancellationToken)
+        private HttpPipelineMessage BuildMessage(Request request, CancellationToken cancellationToken)
         {
-            var message = new HttpPipelineMessage(request, ResponseClassifier, cancellationToken)
+            return new HttpPipelineMessage(request, ResponseClassifier)
             {
-                Request = request,
-                BufferResponse = bufferResponse
+                CancellationToken = cancellationToken,
+                Request = request
             };
-            return message;
         }
     }
 }

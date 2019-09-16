@@ -5,24 +5,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
-    public class HttpPipelineMessage
+    public sealed class HttpPipelineMessage: IDisposable
     {
         private Dictionary<string, object>? _properties;
 
         private Response? _response;
 
-        public CancellationToken CancellationToken { get; }
-
-        public HttpPipelineMessage(Request request, ResponseClassifier responseClassifier, CancellationToken cancellationToken)
+        public HttpPipelineMessage(Request request, ResponseClassifier responseClassifier)
         {
             Request = request;
             ResponseClassifier = responseClassifier;
-            CancellationToken = cancellationToken;
         }
 
         public Request Request { get; set; }
@@ -44,7 +42,9 @@ namespace Azure.Core.Pipeline
 
         public bool HasResponse => _response != null;
 
-        public ResponseClassifier ResponseClassifier { get; }
+        public CancellationToken CancellationToken { get; set; }
+
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         public bool BufferResponse { get; set; }
 
@@ -59,6 +59,16 @@ namespace Azure.Core.Pipeline
             _properties ??= new Dictionary<string, object>();
 
             _properties[name] = value;
+        }
+
+        public void Dispose()
+        {
+            Request?.Dispose();
+
+            if (!BufferResponse)
+            {
+                _response?.Dispose();
+            }
         }
     }
 }
