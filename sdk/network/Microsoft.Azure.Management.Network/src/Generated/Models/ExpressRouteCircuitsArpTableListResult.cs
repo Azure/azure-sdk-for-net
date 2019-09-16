@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ExpressRouteCircuitsArpTableListResult class.
         /// </summary>
-        /// <param name="value">Gets list of the ARP table.</param>
+        /// <param name="value">A list of the ARP tables.</param>
         /// <param name="nextLink">The URL to get the next set of
         /// results.</param>
         public ExpressRouteCircuitsArpTableListResult(IList<ExpressRouteCircuitArpTable> value = default(IList<ExpressRouteCircuitArpTable>), string nextLink = default(string))
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets list of the ARP table.
+        /// Gets or sets a list of the ARP tables.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ExpressRouteCircuitArpTable> Value { get; set; }

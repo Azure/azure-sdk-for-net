@@ -52,13 +52,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vlanId">The VLAN ID.</param>
         /// <param name="microsoftPeeringConfig">The Microsoft peering
         /// configuration.</param>
-        /// <param name="stats">Gets peering stats.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// <param name="stats">The peering stats of express route
+        /// circuit.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// express route circuit peering resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="gatewayManagerEtag">The GatewayManager Etag.</param>
-        /// <param name="lastModifiedBy">Gets whether the provider or the
-        /// customer last modified the peering.</param>
+        /// <param name="lastModifiedBy">Who was the last to modify the
+        /// peering.</param>
         /// <param name="routeFilter">The reference of the RouteFilter
         /// resource.</param>
         /// <param name="ipv6PeeringConfig">The IPv6 peering
@@ -70,8 +71,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="peeredConnections">The list of peered circuit
         /// connections associated with Azure Private Peering for this
         /// circuit.</param>
-        /// <param name="name">Gets name of the resource that is unique within
-        /// a resource group. This name can be used to access the
+        /// <param name="name">The name of the resource that is unique within a
+        /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
@@ -179,14 +180,15 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
 
         /// <summary>
-        /// Gets peering stats.
+        /// Gets or sets the peering stats of express route circuit.
         /// </summary>
         [JsonProperty(PropertyName = "properties.stats")]
         public ExpressRouteCircuitStats Stats { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the express route circuit
+        /// peering resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
@@ -198,8 +200,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string GatewayManagerEtag { get; set; }
 
         /// <summary>
-        /// Gets whether the provider or the customer last modified the
-        /// peering.
+        /// Gets or sets who was the last to modify the peering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedBy")]
         public string LastModifiedBy { get; set; }
@@ -237,8 +238,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<PeerExpressRouteCircuitConnection> PeeredConnections { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource.
+        /// Gets or sets the name of the resource that is unique within a
+        /// resource group. This name can be used to access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
