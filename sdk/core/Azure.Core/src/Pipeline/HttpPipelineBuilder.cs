@@ -9,9 +9,9 @@ namespace Azure.Core.Pipeline
 {
     public static class HttpPipelineBuilder
     {
-        public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] clientPolicies)
+        public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryClientPolicies)
         {
-            return Build(options, Array.Empty<HttpPipelinePolicy>(), clientPolicies, new ResponseClassifier());
+            return Build(options, Array.Empty<HttpPipelinePolicy>(), perRetryClientPolicies, new ResponseClassifier());
         }
 
         public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallClientPolicies, HttpPipelinePolicy[] perRetryClientPolicies, ResponseClassifier responseClassifier)
