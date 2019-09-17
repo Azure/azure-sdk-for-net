@@ -22,14 +22,14 @@ namespace Azure.Data.AppConfiguration
             _secret = secret;
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessAsync(message, async: true).ConfigureAwait(false);
 
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
         }
 
-        private async Task ProcessAsync(HttpPipelineMessage message, bool async)
+        private async ValueTask ProcessAsync(HttpPipelineMessage message, bool async)
         {
             string contentHash;
 
