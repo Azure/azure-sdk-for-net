@@ -36,7 +36,8 @@ namespace Azure.Core.Pipeline
 
             policies.Add(ClientRequestIdPolicy.Shared);
 
-            if (options.Diagnostics.IsTelemetryEnabled)
+            DiagnosticsOptions diagnostics = options.Diagnostics;
+            if (diagnostics.IsTelemetryEnabled)
             {
                 policies.Add(CreateTelemetryPolicy(options));
             }
@@ -48,9 +49,9 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(options.PerRetryPolicies);
 
-            if (options.Diagnostics.IsLoggingEnabled)
+            if (diagnostics.IsLoggingEnabled)
             {
-                policies.Add(LoggingPolicy.Shared);
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled));
             }
 
             policies.Add(BufferResponsePolicy.Shared);
