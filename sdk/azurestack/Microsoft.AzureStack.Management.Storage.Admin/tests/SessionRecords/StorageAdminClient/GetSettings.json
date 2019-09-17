@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "174eb45a-3c54-444d-95a9-ed93668cb72e"
+          "8500ad23-679a-464e-aa89-90752ba3ffcb"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,22 +27,22 @@
           "no-cache"
         ],
         "x-ms-correlation-request-id": [
-          "a2a1f966-1398-4e77-8358-ef163d425962"
+          "5e8c5a38-b91a-435c-bff8-64582a32fd43"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvJ36TzcnJgPHDKZ1dHiRyt5bNI1+Xf8wGbQdxnQ3hwzXv9/uC+gQ8zzGfQbevzvj6Q/8ouSjO5nDbFI7TVK8oNgmGM+l5bmdjEDQrvbWFfkhvxMcEBJob4JNU7IdB1ZL7voftsvvCB5Rv45iE3TLn"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvNdXTHpLbM5QyM8QL9P2rJVKkEsnz2ozwpoaz98HvLogA6Dl6QM6WKmSSfCb5wwcFutdY4cKgsnlyWvrGFpSyyntLjTglEh20IdWm44F+cIYGPQQRfGh5BrtUZBcoEdvx706H/+pKK343AGMtEKEC"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14752"
         ],
         "x-ms-request-id": [
-          "a2a1f966-1398-4e77-8358-ef163d425962"
+          "5e8c5a38-b91a-435c-bff8-64582a32fd43"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20190904T050456Z:a2a1f966-1398-4e77-8358-ef163d425962"
+          "LOCAL:20190917T022930Z:5e8c5a38-b91a-435c-bff8-64582a32fd43"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 04 Sep 2019 05:04:55 GMT"
+          "Tue, 17 Sep 2019 02:29:29 GMT"
         ],
         "Content-Length": [
           "85"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"retentionPeriodForDeletedStorageAccountsInDays\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"retentionPeriodForDeletedStorageAccountsInDays\": 2\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

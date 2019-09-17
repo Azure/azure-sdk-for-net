@@ -3,6 +3,7 @@ using Microsoft.AzureStack.Management.Storage.Admin;
 using Microsoft.AzureStack.Management.Storage.Admin.Models;
 using Xunit;
 using System;
+using System.Collections.Generic;
 
 namespace Storage.Tests
 {
@@ -75,8 +76,16 @@ namespace Storage.Tests
         [Fact]
         public void GetAllStorageAccounts() {
             RunTest((client) => {
+                List<StorageAccount> storageAccountList = new List<StorageAccount>();
                 var storageAccounts = client.StorageAccounts.List(Location, summary: false);
-                foreach (var storageAccount in storageAccounts)
+                storageAccountList.AddRange(storageAccounts);
+                while(storageAccounts.NextPageLink != null)
+                {
+                    storageAccounts = client.StorageAccounts.ListNext(storageAccounts.NextPageLink);
+                    storageAccountList.AddRange(storageAccounts);
+                }
+
+                foreach (var storageAccount in storageAccountList)
                 {
                     var sName = ExtractName(storageAccount.Name);
                     var account = client.StorageAccounts.Get(Location, sName);

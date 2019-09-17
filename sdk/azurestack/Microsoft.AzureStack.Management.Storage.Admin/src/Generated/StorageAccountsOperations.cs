@@ -164,6 +164,13 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
                 }
             }
 
+            // add Prefer: odata.maxpagesize=1000 for paging
+            if (_httpRequest.Headers.Contains("Prefer"))
+            {
+                _httpRequest.Headers.Remove("Prefer");
+            }
+            _httpRequest.Headers.TryAddWithoutValidation("Prefer", "odata.maxpagesize=1000");
+
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
@@ -879,6 +886,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
@@ -901,7 +909,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
+            _httpRequest.RequestUri = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), _url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
@@ -928,6 +936,13 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
                     _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
+
+            // add Prefer: odata.maxpagesize=1000 for paging
+            if (_httpRequest.Headers.Contains("Prefer"))
+            {
+                _httpRequest.Headers.Remove("Prefer");
+            }
+            _httpRequest.Headers.TryAddWithoutValidation("Prefer", "odata.maxpagesize=1000");
 
             // Serialize Request
             string _requestContent = null;
