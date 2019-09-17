@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
 
@@ -52,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTimeOffset.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
 
-            Assert.That(credential.GetToken(null, default).Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
+            Assert.That(credential.GetToken(new TokenRequest(), default).Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTimeOffset.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
 
-            Assert.That(credential.GetToken(new[] { "test", "this" }, CancellationToken.None).Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
+            Assert.That(credential.GetToken(new TokenRequest(new[] { "test", "this" }), CancellationToken.None).Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTimeOffset.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
             var cancellation = new CancellationTokenSource();
-            var token = await credential.GetTokenAsync(null, cancellation.Token);
+            var token = await credential.GetTokenAsync(new TokenRequest(), cancellation.Token);
 
             Assert.That(token.Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }
@@ -96,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTimeOffset.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
             var cancellation = new CancellationTokenSource();
-            var token = await credential.GetTokenAsync(new string[0], cancellation.Token);
+            var token = await credential.GetTokenAsync(new TokenRequest(new string[0]), cancellation.Token);
 
             Assert.That(token.Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }

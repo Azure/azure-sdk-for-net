@@ -201,7 +201,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<string[]>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
                 .Verifiable();
 
@@ -267,7 +267,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<string[]>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, DateTimeOffset.MaxValue)))
                 .Verifiable();
 
