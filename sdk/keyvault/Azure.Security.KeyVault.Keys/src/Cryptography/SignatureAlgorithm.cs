@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.ComponentModel;
 using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -113,15 +114,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static implicit operator string(SignatureAlgorithm value) => value._value;
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignatureAlgorithm other && Equals(other);
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(SignatureAlgorithm other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _value;
 
         internal HashAlgorithm GetHashAlgorithm()
