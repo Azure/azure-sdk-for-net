@@ -61,13 +61,74 @@ namespace Azure.Core.Pipeline
             _properties[name] = value;
         }
 
+        public Stream? PreserveResponseContent()
+        {
+            switch (_response?.ContentStream)
+            {
+                case ResponseShouldNotBeUsedStream responseContent:
+                    return responseContent.Original;
+                case Stream stream :
+                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    return stream;
+                default:
+                    return null;
+            }
+        }
+
         public void Dispose()
         {
             Request?.Dispose();
+            _response?.Dispose();
+        }
 
-            if (!BufferResponse)
+        private class ResponseShouldNotBeUsedStream: Stream
+        {
+            public Stream Original { get; }
+
+            public ResponseShouldNotBeUsedStream(Stream original)
             {
-                _response?.Dispose();
+                Original = original;
+            }
+
+            private Exception CreateException()
+            {
+                return new InvalidOperationException("This operation returns Stream as part of the model it should be used instead of the response content stream");
+            }
+
+            public override void Flush()
+            {
+                throw CreateException();
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                throw CreateException();
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                throw CreateException();
+            }
+
+            public override void SetLength(long value)
+            {
+                throw CreateException();
+            }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                throw CreateException();
+            }
+
+            public override bool CanRead => throw CreateException();
+            public override bool CanSeek => throw CreateException();
+            public override bool CanWrite => throw CreateException();
+            public override long Length => throw CreateException();
+
+            public override long Position
+            {
+                get => throw CreateException();
+                set => throw CreateException();
             }
         }
     }
