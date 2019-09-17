@@ -20,7 +20,10 @@ namespace Azure.Data.AppConfiguration.Tests
     [TestFixture(false)]
     public class ConfigurationMockTests : ClientTestBase
     {
-        private static readonly string s_connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
+        private static readonly string s_endpoint = "https://contoso.appconfig.io";
+        private static readonly string s_credential = "b1d9b31";
+        private static readonly string s_secret = "aabbccdd";
+        private static readonly string s_connectionString = $"Endpoint={s_endpoint};Id={s_credential};Secret={s_secret}";
         private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {
             Label = "test_label",
@@ -251,7 +254,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public async Task AuthorizationHeaderFormat()
         {
-            var expectedSyntax = "HMAC-SHA256 Credential=(.+)&SignedHeaders=date;host;x-ms-content-sha256&Signature=(.+)";
+            var expectedSyntax = $"HMAC-SHA256 Credential={s_credential}&SignedHeaders=date;host;x-ms-content-sha256&Signature=(.+)";
 
             var response = new MockResponse(200);
             response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
