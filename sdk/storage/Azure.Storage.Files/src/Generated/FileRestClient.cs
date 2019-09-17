@@ -6143,7 +6143,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// File UploadRangeFromURLResult
     /// </summary>
-    public partial class FileUploadRangeFromURLResult
+    internal partial class FileUploadRangeFromURLResult
     {
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
@@ -6166,29 +6166,6 @@ namespace Azure.Storage.Files.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileUploadRangeFromURLResult instance for mocking.
-        /// </summary>
-        public static FileUploadRangeFromURLResult FileUploadRangeFromURLResult(
-            Azure.Core.Http.ETag eTag,
-            System.DateTimeOffset lastModified,
-            byte[] xMSContentCrc64,
-            bool isServerEncrypted)
-        {
-            var _model = new FileUploadRangeFromURLResult();
-            _model.ETag = eTag;
-            _model.LastModified = lastModified;
-            _model.XMSContentCrc64 = xMSContentCrc64;
-            _model.IsServerEncrypted = isServerEncrypted;
-            return _model;
-        }
     }
 }
 #endregion class FileUploadRangeFromURLResult

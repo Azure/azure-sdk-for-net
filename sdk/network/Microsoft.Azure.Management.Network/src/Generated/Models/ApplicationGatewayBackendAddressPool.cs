@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="backendIPConfigurations">Collection of references to
         /// IPs defined in network interfaces.</param>
         /// <param name="backendAddresses">Backend addresses.</param>
-        /// <param name="provisioningState">Provisioning state of the backend
-        /// address pool resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// backend address pool resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">Name of the backend address pool that is unique
         /// within an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the backend address pool
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets or sets the provisioning state of the backend address pool
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

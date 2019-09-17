@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="defaultRedirectConfiguration">Default redirect
         /// configuration resource of URL path map.</param>
         /// <param name="pathRules">Path rule of URL path map resource.</param>
-        /// <param name="provisioningState">Provisioning state of the backend
-        /// http settings resource. Possible values are: 'Updating',
-        /// 'Deleting', and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the URL
+        /// path map resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">Name of the URL path map that is unique within
         /// an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -108,9 +108,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationGatewayPathRule> PathRules { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the backend http settings
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets or sets the provisioning state of the URL path map resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
