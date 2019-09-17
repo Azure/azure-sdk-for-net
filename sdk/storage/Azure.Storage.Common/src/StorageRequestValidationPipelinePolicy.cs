@@ -24,6 +24,12 @@ namespace Azure.Storage.Common
         }
 
         /// <summary>
+        /// Gets StorageRequestValidationPipelinePolicy object.
+        /// </summary>
+        public static StorageRequestValidationPipelinePolicy Shared { get; }
+            = new StorageRequestValidationPipelinePolicy();
+
+        /// <summary>
         /// Verify x-ms-client-request-id and x-ms-client-return-request-id headers matches as
         /// x-ms-client-return-request-id is an echo of x-mis-client-request-id.
         /// </summary>

@@ -48,7 +48,7 @@ namespace Azure.Storage.Test.Shared
                 message.Request.ClientRequestId = _parallelRangePrefix + range;
             }
             else if(_parallelRangePrefix != null &&
-                message.Request.UriBuilder.Query.Contains("blockid"))
+                message.Request.UriBuilder.Query.Contains("blockid="))
             {
                 var queryParameters = message.Request.UriBuilder.Query.Split('&');
                 var blockIdParameter = queryParameters.Where(s => s.Contains("blockid=")).First();
