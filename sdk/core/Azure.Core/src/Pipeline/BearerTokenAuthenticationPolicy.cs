@@ -54,8 +54,8 @@ namespace Azure.Core.Pipeline
             if (DateTimeOffset.UtcNow >= _refreshOn)
             {
                 AccessToken token = async ?
-                        await _credential.GetTokenAsync(_scopes, message.CancellationToken).ConfigureAwait(false) :
-                        _credential.GetToken(_scopes, message.CancellationToken);
+                        await _credential.GetTokenAsync(new TokenRequest(_scopes), message.CancellationToken).ConfigureAwait(false) :
+                        _credential.GetToken(new TokenRequest(_scopes), message.CancellationToken);
 
                 _headerValue = "Bearer " + token.Token;
                 _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);

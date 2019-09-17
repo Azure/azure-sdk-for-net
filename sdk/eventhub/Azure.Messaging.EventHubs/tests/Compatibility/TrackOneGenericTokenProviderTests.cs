@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<string[]>(), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
             Assert.That(async () => await provider.GetTokenAsync(invalidResource, TimeSpan.FromHours(4)), Throws.InstanceOf<ArgumentException>());
@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
             Assert.That(async () => await provider.GetTokenAsync(validResource, TimeSpan.FromHours(4)), Throws.Nothing);
@@ -131,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
             var token = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
@@ -157,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
             var token = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
@@ -185,7 +185,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new TrackOneGenericTokenProvider(eventHubCredential);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes.FirstOrDefault() == GetTokenScope()), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(accessToken);
 
             var first = await provider.GetTokenAsync(resource, TimeSpan.FromHours(1));
