@@ -1682,6 +1682,167 @@ namespace Azure.Storage.Files
         }
         #endregion UploadRange
 
+        #region UploadRangeFromUrl
+        /// <summary>
+        /// The <see cref="UploadRangeFromUrl"/> operation writes a range from an Azure File to another Azure file. 
+        /// This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileUploadInfo> UploadRangeFromUrl(
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            CancellationToken cancellationToken = default) =>
+            this.UploadRangeFromUrlInternal(
+                sourceUri,
+                range,
+                sourceRange,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadRangeFromUrlAsync"/> operation writes a range from an Azure File to another Azure file. 
+        /// This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<StorageFileUploadInfo>> UploadRangeFromUrlAsync(
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            CancellationToken cancellationToken = default) =>
+            await this.UploadRangeFromUrlInternal(
+                sourceUri,
+                range,
+                sourceRange,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRangeInternal"/> operation writes a range from an Azure File to another Azure file. 
+        /// This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileUploadInfo>> UploadRangeFromUrlInternal(
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(FileClient),
+                    message:
+                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(sourceUri)}: {sourceUri}");
+                try
+                {
+                    var response = await FileRestClient.File.UploadRangeFromURLAsync(
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        range: range.ToString(),
+                        copySource: sourceUri,
+                        contentLength: default,
+                        sourceRange: sourceRange.ToString(),
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return new Response<StorageFileUploadInfo>(
+                        response.GetRawResponse(),
+                        new StorageFileUploadInfo
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified,
+                            ContentHash = response.Value.XMSContentCrc64,
+                            IsServerEncrypted = response.Value.IsServerEncrypted
+                        });
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
+                }
+            }
+        }
+        #endregion UploadRangeFromUrl
+
         #region Upload
         /// <summary>
         /// The <see cref="Upload"/> operation writes <paramref name="content"/>

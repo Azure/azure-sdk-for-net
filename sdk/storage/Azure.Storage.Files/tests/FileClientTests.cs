@@ -955,6 +955,89 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
+        [LiveOnly]
+        // TODO: #7645
+        public async Task UploadRangeFromUrlAsync()
+        {
+            var shareName = this.GetNewShareName();
+            using (this.GetNewShare(out var share, shareName))
+            {
+                // Arrange
+                var directoryName = this.GetNewDirectoryName();
+                var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
+                await directory.CreateAsync();
+
+                var fileName = this.GetNewFileName();
+                var data = this.GetRandomBuffer(Constants.KB);
+                var sourceFile = this.InstrumentClient(directory.GetFileClient(fileName));
+                await sourceFile.CreateAsync(maxSize: 1024);
+                using (var stream = new MemoryStream(data))
+                {
+                    await sourceFile.UploadRangeAsync(FileRangeWriteType.Update, new HttpRange(0, 1024), stream);
+                }
+
+                var destFile = directory.GetFileClient("destFile");
+                await destFile.CreateAsync(maxSize: 1024);
+                var destRange = new HttpRange(256, 256);
+                var sourceRange = new HttpRange(512, 256);
+
+                var sasFile = this.InstrumentClient(
+                    this.GetServiceClient_FileServiceSasShare(shareName)
+                    .GetShareClient(shareName)
+                    .GetDirectoryClient(directoryName)
+                    .GetFileClient(fileName));
+
+                // Act
+                await destFile.UploadRangeFromUrlAsync(
+                    sourceUri: sasFile.Uri,
+                    range: destRange,
+                    sourceRange: sourceRange);
+
+                // Assert
+                var sourceDownloadResponse = await sourceFile.DownloadAsync(range: sourceRange);
+                var destDownloadResponse = await destFile.DownloadAsync(range: destRange);
+
+                var sourceStream = new MemoryStream();
+                await sourceDownloadResponse.Value.Content.CopyToAsync(sourceStream);
+
+                var destStream = new MemoryStream();
+                await destDownloadResponse.Value.Content.CopyToAsync(destStream);
+
+                TestHelper.AssertSequenceEqual(sourceStream.ToArray(), destStream.ToArray());
+            }
+        }
+
+        [Test]
+        public async Task UploadRangeFromUrlAsync_Error()
+        {
+            var shareName = this.GetNewShareName();
+            using (this.GetNewShare(out var share, shareName))
+            {
+                // Arrange
+                var directoryName = this.GetNewDirectoryName();
+                var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
+                await directory.CreateAsync();
+
+                var fileName = this.GetNewFileName();
+                var sourceFile = this.InstrumentClient(directory.GetFileClient(fileName));
+
+                var destFile = directory.GetFileClient("destFile");
+                await destFile.CreateAsync(maxSize: 1024);
+                var destRange = new HttpRange(256, 256);
+                var sourceRange = new HttpRange(512, 256);
+
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    destFile.UploadRangeFromUrlAsync(
+                    sourceUri: destFile.Uri,
+                    range: destRange,
+                    sourceRange: sourceRange),
+                    e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
+            }
+        }
+
+        [Test]
         public async Task ListHandles()
         {
             // Arrange
