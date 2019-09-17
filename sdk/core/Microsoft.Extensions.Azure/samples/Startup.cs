@@ -48,7 +48,7 @@ namespace Microsoft.Extensions.Azure.Samples
                 builder.ConfigureDefaults(options => options.Retry.Mode = RetryMode.Exponential);
 
                 // Advanced configure global defaults
-                builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(HttpPipelinePosition.PerCall, provider.GetService<DependencyInjectionEnabledPolicy>()));
+                builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(provider.GetService<DependencyInjectionEnabledPolicy>(), HttpPipelinePosition.PerCall));
 
                 builder.AddBlobServiceClient(Configuration.GetSection("Storage"))
                         .WithVersion(BlobClientOptions.ServiceVersion.V2018_11_09);
