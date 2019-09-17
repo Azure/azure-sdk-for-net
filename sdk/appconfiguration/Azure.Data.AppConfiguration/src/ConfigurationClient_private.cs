@@ -18,35 +18,35 @@ namespace Azure.Data.AppConfiguration
 {
     public partial class ConfigurationClient
     {
-        const string AcceptDateTimeFormat = "R";
-        const string AcceptDatetimeHeader = "Accept-Datetime";
-        const string KvRoute = "/kv/";
-        const string RevisionsRoute = "/revisions/";
-        const string KeyQueryFilter = "key";
-        const string LabelQueryFilter = "label";
-        const string FieldsQueryFilter = "$select";
-        const string IfMatchName = "If-Match";
-        const string IfNoneMatch = "If-None-Match";
+        private const string AcceptDateTimeFormat = "R";
+        private const string AcceptDatetimeHeader = "Accept-Datetime";
+        private const string KvRoute = "/kv/";
+        private const string RevisionsRoute = "/revisions/";
+        private const string KeyQueryFilter = "key";
+        private const string LabelQueryFilter = "label";
+        private const string FieldsQueryFilter = "$select";
+        private const string IfMatchName = "If-Match";
+        private const string IfNoneMatch = "If-None-Match";
 
-        static readonly char[] ReservedCharacters = new char[] { ',', '\\' };
+        private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
-        static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
+        private static readonly HttpHeader s_mediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
             "application/vnd.microsoft.appconfig.kv+json"
         );
 
-        static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
             ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
             return new Response<ConfigurationSetting>(response, result);
         }
 
-        static Response<ConfigurationSetting> CreateResponse(Response response)
+        private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
             return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
         }
 
-        static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
+        private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
         {
             Debug.Assert(connectionString != null); // callers check this
 
@@ -87,10 +87,10 @@ namespace Azure.Data.AppConfiguration
             };
         }
 
-        void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
+        private void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
             => BuildUriForKvRoute(builder, keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
 
-        void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
+        private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(KvRoute);
@@ -105,9 +105,9 @@ namespace Azure.Data.AppConfiguration
         private static string EscapeReservedCharacters(string input)
         {
             string resp = string.Empty;
-            for (int i=0; i<input.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
-                if (ReservedCharacters.Contains(input[i]))
+                if (s_reservedCharacters.Contains(input[i]))
                 {
                     resp += $"\\{input[i]}";
                 }
@@ -126,7 +126,7 @@ namespace Azure.Data.AppConfiguration
                 var keysCopy = new List<string>();
                 foreach (var key in selector.Keys)
                 {
-                    if (key.IndexOfAny(ReservedCharacters) != -1)
+                    if (key.IndexOfAny(s_reservedCharacters) != -1)
                     {
                         keysCopy.Add(EscapeReservedCharacters(key));
                     }
@@ -169,21 +169,21 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
+        private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(KvRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
-        void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
+        private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(RevisionsRoute);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
-        static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
+        private static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
         {
             var writer = new ArrayBufferWriter<byte>();
             ConfigurationServiceSerializer.Serialize(setting, writer);

@@ -8,21 +8,21 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    internal class KeyRequestParameters : Model
+    internal class KeyRequestParameters : IJsonSerializable
     {
         private KeyAttributes _attributes;
 
         public KeyType KeyType { get; set; }
         public int? KeySize { get; set; }
         public KeyAttributes Attributes { get; set; }
-        public IList<KeyOperations> KeyOperations { get; set; }
+        public IList<KeyOperation> KeyOperations { get; set; }
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
         public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
         public IDictionary<string, string> Tags { get; set; }
         public KeyCurveName? Curve { get; set; }
 
-        internal KeyRequestParameters(KeyBase key, IEnumerable<KeyOperations> operations)
+        internal KeyRequestParameters(KeyBase key, IEnumerable<KeyOperation> operations)
         {
             if (key.Enabled.HasValue)
             {
@@ -42,14 +42,14 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (operations != null)
             {
-                KeyOperations = new List<KeyOperations>(operations);
+                KeyOperations = new List<KeyOperation>(operations);
             }
         }
 
         internal KeyRequestParameters(KeyType type, KeyCreateOptions options = default)
         {
             KeyType = type;
-            if (options != default)
+            if (options != null)
             {
                 if (options.Enabled.HasValue)
                 {
@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys
                 }
                 if (options.KeyOperations != null)
                 {
-                    KeyOperations = new List<KeyOperations>(options.KeyOperations);
+                    KeyOperations = new List<KeyOperation>(options.KeyOperations);
                 }
                 if (options.Tags != null)
                 {
@@ -105,11 +105,11 @@ namespace Azure.Security.KeyVault.Keys
         private const string TagsPropertyName = "tags";
         private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
 
-        internal override void WriteProperties(Utf8JsonWriter json)
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if(KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.AsString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyType);
             }
             if(KeySize.HasValue)
             {
@@ -117,13 +117,13 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (Curve.HasValue)
             {
-                json.WriteString(CurveNamePropertyNameBytes, KeyCurveNameExtensions.AsString(Curve.Value));
+                json.WriteString(CurveNamePropertyNameBytes, Curve.Value);
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
                 json.WriteStartObject(AttributesPropertyNameBytes);
 
-                _attributes.WriteProperties(ref json);
+                _attributes.WriteProperties(json);
 
                 json.WriteEndObject();
             }
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteStartArray(KeyOpsPropertyNameBytes);
                 foreach(var operation in KeyOperations)
                 {
-                    json.WriteStringValue(KeyOperationsExtensions.AsString(operation));
+                    json.WriteStringValue(operation);
                 }
                 json.WriteEndArray();
             }
@@ -148,7 +148,5 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteEndObject();
             }
         }
-
-        internal override void ReadProperties(JsonElement json) { }
     }
 }

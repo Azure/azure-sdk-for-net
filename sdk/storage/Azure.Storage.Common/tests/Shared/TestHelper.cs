@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -25,6 +26,14 @@ namespace Azure.Storage.Test
             Assert.AreEqual(expected.Count(), actual.Count(), "Actual sequence length does not match expected sequence length");
             var firstErrors = expected.Zip(actual, (e, a) => (expected: e, actual: a)).Select((x, i) => (index: i, x.expected, x.actual)).Where(x => !x.expected.Equals(x.actual)).Take(5).ToArray();
             Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{String.Join("\n", firstErrors.Select(e => $"{e.index} => expected = {e.expected}, actual = {e.actual}"))}");
+        }
+
+        public static IEnumerable<byte> AsBytes(this Stream s)
+        {
+            while (s.ReadByte() is var b && b != -1)
+            {
+                yield return (byte)b;
+            }
         }
 
         internal static Action<T, T> GetDefaultExceptionAssertion<T>(Func<T, T, bool> predicate)

@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class HttpClientTransportTests: PipelineTestBase
+    public class HttpClientTransportTests : PipelineTestBase
     {
         public static object[] ContentWithLength =>
             new object[]
@@ -37,7 +37,7 @@ namespace Azure.Core.Tests
                 );
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com"));
             request.Content = content;
 
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests
                 httpRequestMessage => contentLength = httpRequestMessage.Content.Headers.ContentLength.Value);
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com"));
             request.Content = HttpPipelineRequestContent.Create(new byte[10]);
             request.Headers.Add("Content-Length", "50");
@@ -70,13 +70,14 @@ namespace Azure.Core.Tests
             string host = null;
             Uri uri = null;
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     uri = httpRequestMessage.RequestUri;
                     host = httpRequestMessage.Headers.Host;
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
 
             await ExecuteRequest(request, transport);
@@ -91,12 +92,13 @@ namespace Azure.Core.Tests
         {
             string host = null;
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     host = httpRequestMessage.Headers.Host;
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
             request.Headers.Add("Host", "example.org");
 
@@ -105,7 +107,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("example.org", host);
         }
 
-        public static object[][] Methods => new []
+        public static object[][] Methods => new[]
         {
             new object[] { RequestMethod.Delete, "DELETE" },
             new object[] { RequestMethod.Get, "GET" },
@@ -122,12 +124,13 @@ namespace Azure.Core.Tests
         {
             HttpMethod httpMethod = null;
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     httpMethod = httpRequestMessage.Method;
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(method, new Uri("http://example.com:340"));
 
             Assert.AreEqual(method, request.Method);
@@ -142,13 +145,14 @@ namespace Azure.Core.Tests
         {
             Uri requestUri = null;
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     requestUri = httpRequestMessage.RequestUri;
                 });
 
             var expectedUri = new Uri("http://example.com:340");
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, expectedUri);
 
             Assert.AreEqual(expectedUri.ToString(), request.UriBuilder.ToString());
@@ -163,14 +167,15 @@ namespace Azure.Core.Tests
         {
             byte[] requestBytes = null;
             var mockHandler = new MockHttpClientHandler(
-                async httpRequestMessage => {
+                async httpRequestMessage =>
+                {
                     requestBytes = await httpRequestMessage.Content.ReadAsByteArrayAsync();
                 });
 
             var bytes = Encoding.ASCII.GetBytes("Hello world");
             var content = HttpPipelineRequestContent.Create(bytes);
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
             request.Content = content;
 
@@ -205,7 +210,8 @@ namespace Azure.Core.Tests
             IEnumerable<string> httpHeaderValues = null;
 
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     Assert.True(
                         httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
                         httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
@@ -222,7 +228,7 @@ namespace Azure.Core.Tests
             Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
-            CollectionAssert.AreEqual(new []
+            CollectionAssert.AreEqual(new[]
             {
                 new HttpHeader(headerName, headerValue),
             }, request.Headers);
@@ -238,7 +244,8 @@ namespace Azure.Core.Tests
             IEnumerable<string> httpHeaderValues = null;
 
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     Assert.True(
                         httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
                         httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
@@ -256,7 +263,7 @@ namespace Azure.Core.Tests
             Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
-            CollectionAssert.AreEqual(new []
+            CollectionAssert.AreEqual(new[]
             {
                 new HttpHeader(headerName, headerValue),
             }, request.Headers);
@@ -270,7 +277,8 @@ namespace Azure.Core.Tests
         public async Task CanRemoveHeaders(string headerName, string headerValue, bool contentHeader)
         {
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     Assert.False(
                         httpRequestMessage.Headers.TryGetValues(headerName, out _) &&
                         httpRequestMessage.Content.Headers.TryGetValues(headerName, out _));
@@ -294,7 +302,8 @@ namespace Azure.Core.Tests
         public async Task CanGetAndSetResponseHeaders(string headerName, string headerValue, bool contentHeader)
         {
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     var responseMessage = new HttpResponseMessage((HttpStatusCode)200);
 
                     if (contentHeader)
@@ -311,10 +320,10 @@ namespace Azure.Core.Tests
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
 
-            var response = await ExecuteRequest(request, transport);
+            Response response = await ExecuteRequest(request, transport);
 
             Assert.True(response.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
@@ -332,7 +341,7 @@ namespace Azure.Core.Tests
             var mockHandler = new MockHttpClientHandler(httpRequestMessage => { httpMessageContent = httpRequestMessage.Content; });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
             request.Headers.Add(headerName, headerValue);
 
@@ -350,7 +359,8 @@ namespace Azure.Core.Tests
             IEnumerable<string> httpHeaderValues = null;
 
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     Assert.True(
                         httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
                         httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
@@ -367,17 +377,17 @@ namespace Azure.Core.Tests
             Assert.True(request.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(joinedHeaderValues, value);
 
-            Assert.True(request.Headers.TryGetValues(headerName, out var values));
-            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, values);
+            Assert.True(request.Headers.TryGetValues(headerName, out IEnumerable<string> values));
+            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
 
-            CollectionAssert.AreEqual(new []
+            CollectionAssert.AreEqual(new[]
             {
                 new HttpHeader(headerName, joinedHeaderValues),
             }, request.Headers);
 
             await ExecuteRequest(request, transport);
 
-            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, httpHeaderValues);
+            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, httpHeaderValues);
         }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
@@ -387,7 +397,8 @@ namespace Azure.Core.Tests
             var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
 
             var mockHandler = new MockHttpClientHandler(
-                httpRequestMessage => {
+                httpRequestMessage =>
+                {
                     var responseMessage = new HttpResponseMessage((HttpStatusCode)200);
 
                     if (contentHeader)
@@ -406,25 +417,25 @@ namespace Azure.Core.Tests
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
 
-            var response = await ExecuteRequest(request, transport);
+            Response response = await ExecuteRequest(request, transport);
 
             Assert.True(response.Headers.Contains(headerName));
 
             Assert.True(response.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(joinedHeaderValues, value);
 
-            Assert.True(response.Headers.TryGetValues(headerName, out var values));
-            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, values);
+            Assert.True(response.Headers.TryGetValues(headerName, out IEnumerable<string> values));
+            CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
 
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, joinedHeaderValues));
         }
 
         private static Request CreateRequest(HttpClientTransport transport, byte[] bytes = null)
         {
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
             request.Content = HttpPipelineRequestContent.Create(bytes ?? Array.Empty<byte>());
             return request;
@@ -436,12 +447,12 @@ namespace Azure.Core.Tests
             var mockHandler = new MockHttpClientHandler(httpRequestMessage => { });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
             Assert.IsNotEmpty(request.ClientRequestId);
             Assert.True(Guid.TryParse(request.ClientRequestId, out _));
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
 
-            var response =  await ExecuteRequest(request, transport);
+            Response response = await ExecuteRequest(request, transport);
             Assert.AreEqual(request.ClientRequestId, response.ClientRequestId);
         }
 
@@ -451,12 +462,12 @@ namespace Azure.Core.Tests
             var mockHandler = new MockHttpClientHandler(httpRequestMessage => { });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest();
+            Request request = transport.CreateRequest();
 
             request.ClientRequestId = "123";
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
 
-            var response =  await ExecuteRequest(request, transport);
+            Response response = await ExecuteRequest(request, transport);
             Assert.AreEqual(request.ClientRequestId, response.ClientRequestId);
         }
 
@@ -558,7 +569,7 @@ namespace Azure.Core.Tests
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = transport.CreateRequest();
-            request.Content = HttpPipelineRequestContent.Create(new MemoryStream(new byte[] { 1, 2, 3} ));
+            request.Content = HttpPipelineRequestContent.Create(new MemoryStream(new byte[] { 1, 2, 3 }));
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com:340"));
 
             await ExecuteRequest(request, transport);

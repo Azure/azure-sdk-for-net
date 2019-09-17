@@ -7,16 +7,12 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
-using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Azure.Storage.Sas;
-using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -45,7 +41,6 @@ namespace Azure.Storage.Test.Shared
             => this.Recording.InstrumentClientOptions(
                     new BlobClientOptions
                     {
-                        ResponseClassifier = new TestResponseClassifier(),
                         Diagnostics = { IsLoggingEnabled = true },
                         Retry =
                         {
@@ -62,7 +57,7 @@ namespace Azure.Storage.Test.Shared
         {
             raise = raise ?? new Exception("Simulated connection fault");
             var options = this.GetOptions();
-            options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise), HttpPipelinePosition.PerCall);
             return options;
         }
 
@@ -88,6 +83,9 @@ namespace Azure.Storage.Test.Shared
 
         public BlobServiceClient GetServiceClient_PreviewAccount_SharedKey()
             => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPreviewBlob);
+
+        public BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey()
+            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPremiumBlob);
 
         public BlobServiceClient GetServiceClient_OauthAccount() =>
             this.GetServiceClientFromOauthConfig(this.TestConfigOAuth);
@@ -154,15 +152,22 @@ namespace Azure.Storage.Test.Shared
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType? publicAccessType = default)
+            PublicAccessType publicAccessType = PublicAccessType.None,
+            bool premium = default)
         {
             containerName ??= this.GetNewContainerName();
             service ??= this.GetServiceClient_SharedKey();
             container = this.InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            if(publicAccessType == PublicAccessType.None)
+            {
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.Container;
+            }
+
             return new DisposingContainer(
                 container,
                 metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
-                publicAccessType ?? PublicAccessType.Container);
+                publicAccessType);
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
@@ -254,6 +259,23 @@ namespace Azure.Storage.Test.Shared
             return Convert.ToBase64String(bytes);
         }
 
+        public CustomerProvidedKey GetCustomerProvidedKey()
+        {
+            var bytes = new byte[32];
+            this.Recording.Random.NextBytes(bytes);
+            return new CustomerProvidedKey(bytes);
+        }
+
+        public Uri GetHttpsUri(Uri uri)
+        {
+            var uriBuilder = new UriBuilder(uri)
+            {
+                Scheme = Constants.Https,
+                Port = Constants.HttpPort
+            };
+            return uriBuilder.Uri;
+        }
+
         //TODO consider removing this.
         public async Task<string> SetupBlobMatchCondition(BlobBaseClient blob, string match)
         {
@@ -274,7 +296,7 @@ namespace Azure.Storage.Test.Shared
             Lease lease = null;
             if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await this.InstrumentClient(blob.GetLeaseClient(this.Recording.Random.NewGuid().ToString())).AcquireAsync(-1);
+                lease = await this.InstrumentClient(blob.GetLeaseClient(this.Recording.Random.NewGuid().ToString())).AcquireAsync(LeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
@@ -285,7 +307,7 @@ namespace Azure.Storage.Test.Shared
             Lease lease = null;
             if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await container.GetLeaseClient(this.Recording.Random.NewGuid().ToString()).AcquireAsync(-1);
+                lease = await this.InstrumentClient(container.GetLeaseClient(this.Recording.Random.NewGuid().ToString())).AcquireAsync(LeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
@@ -345,7 +367,7 @@ namespace Azure.Storage.Test.Shared
         {
             public BlobContainerClient ContainerClient { get; }
 
-            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType)
+            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType = default)
             {
                 container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
 

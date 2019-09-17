@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="thumbprint">The Radius client root certificate
         /// thumbprint.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// Radius client root certificate resource. Possible values are:
-        /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// radius client root certificate resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Thumbprint { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the Radius client root certificate
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets the provisioning state of the radius client root certificate
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

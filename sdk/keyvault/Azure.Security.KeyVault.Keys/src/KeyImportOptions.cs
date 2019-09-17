@@ -42,10 +42,8 @@ namespace Azure.Security.KeyVault.Keys
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
-            if (KeyMaterial != default)
-            {
-                KeyMaterial.WriteProperties(json);
-            }
+            KeyMaterial?.WriteProperties(json);
+
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
                 json.WriteStartObject(AttributesPropertyNameBytes);
@@ -57,12 +55,12 @@ namespace Azure.Security.KeyVault.Keys
 
                 if (NotBefore.HasValue)
                 {
-                    json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeMilliseconds());
+                    json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeSeconds());
                 }
 
                 if (Expires.HasValue)
                 {
-                    json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeMilliseconds());
+                    json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeSeconds());
                 }
 
                 json.WriteEndObject();

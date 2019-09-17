@@ -101,7 +101,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = directoryPath
                 };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -338,13 +338,17 @@ namespace Azure.Storage.Files
                     var smbProps = smbProperties ?? new FileSmbProperties();
 
                     FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
+                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    {
+                        filePermission = Constants.File.FilePermissionInherit;
+                    }
 
                     var response = await FileRestClient.Directory.CreateAsync(
                         this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
-                        filePermission: filePermission ?? Constants.File.FilePermissionInherit,
+                        filePermission: filePermission,
                         fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
                         fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
                         filePermissionKey: smbProps.FilePermissionKey,
@@ -718,12 +722,16 @@ namespace Azure.Storage.Files
                     var smbProps = smbProperties ?? new FileSmbProperties();
 
                     FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
+                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    {
+                        filePermission = Constants.File.Preserve;
+                    }
 
                     var response = await FileRestClient.Directory.SetPropertiesAsync(
                         this.Pipeline,
                         this.Uri,
                         fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
-                        filePermission: filePermission ?? Constants.File.Preserve,
+                        filePermission: filePermission,
                         fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
                         fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Compute.Tests
@@ -31,7 +31,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Regular")]
         public void TestVMScaleSetPriorityOperations_Accept_Regular()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Regular);
             }
@@ -53,7 +53,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Low")]
         public void TestVMScaleSetPriorityOperations_Accept_Low()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Low);
             }
@@ -144,7 +144,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetEvictionPolicyOperations")]
         public void TestVMScaleSetEvictionPolicyOperations()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -213,3 +213,4 @@ namespace Compute.Tests
         }
     }
 }
+

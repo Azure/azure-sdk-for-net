@@ -5,7 +5,7 @@ jobs:
     variables:
       - template: templates/variables/globals.yml
     pool:
-      vmImage: vs2017-win2016
+      vmImage: windows-2019
     steps:
       - pwsh: |
           Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip" `
@@ -31,16 +31,20 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: $(DotNetCoreSDKVersion)
-      - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.ArtifactStagingDirectory)/dll-output /p:TargetFramework=netstandard2.0
+      - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.BinariesDirectory)/dll-docs/my-api /p:TargetFramework=netstandard2.0
         displayName: Build Packages
-      - task: CopyFiles@2
-        displayName: 'Copy over Dlls'
+      - pwsh: dotnet build eng/service.proj /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$(Build.BinariesDirectory)/dll-docs/dependencies/my-api /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
+        displayName: Build Packages, Include Dependencies
+      - pwsh: dotnet restore "$(Build.SourcesDirectory)/eng/docgeneration/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
+        displayName: Restore other Nuget Packages Needed
+      - task: DeleteFiles@1
+        displayName: "Delete files from $(Build.BinariesDirectory)/dll-docs/my-api"
         inputs:
-          SourceFolder: '$(Build.ArtifactStagingDirectory)/dll-output'
-          TargetFolder: '$(Build.BinariesDirectory)/dll-docs/my-api'
-          contents: |
-            *.dll
-            *.xml 
+          SourceFolder: "$(Build.BinariesDirectory)/dll-docs/my-api"
+          Contents: |
+            *.json
+            *.pdb
+            *.config
       - task: CmdLine@2
         displayName: Initialize Frameworks File
         inputs:
@@ -86,7 +90,7 @@ jobs:
       - pwsh: |
           Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/logo.svg" -Destination `
           "$(Build.BinariesDirectory)/docfx-output/docfx_project/_site" -Recurse -Force
-        displayName: 'Copy over site logo'
+        displayName: "Copy over site logo"
       - task: CopyFiles@2
         displayName: Copy HTML to Artificats Directory
         inputs:

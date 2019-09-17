@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core.Testing;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 using System;
@@ -9,19 +10,21 @@ using System.Net.Http;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [Category("Live")]
+    [LiveOnly]
     public partial class ConfigurationSamples
     {
-        HttpClient s_client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
 
         [Test]
         public void ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options
-            var options = new ConfigurationClientOptions();
+            var options = new ConfigurationClientOptions
+            {
 
-            // specify custon HttpClient
-            options.Transport = new HttpClientTransport(s_client);
+                // specify custon HttpClient
+                Transport = new HttpClientTransport(_client)
+            };
 
             // remove logging policy
             options.Diagnostics.IsLoggingEnabled = false;
@@ -32,10 +35,10 @@ namespace Azure.Data.AppConfiguration.Samples
             options.Retry.Delay = TimeSpan.FromSeconds(1);
 
             // add a policy (custom behavior) that executes once per client call
-            options.AddPolicy(HttpPipelinePosition.PerCall, new AddHeaderPolicy());
+            options.AddPolicy(new AddHeaderPolicy(), HttpPipelinePosition.PerCall);
 
             // add a policy that executes once per retry
-            options.AddPolicy(HttpPipelinePosition.PerRetry, new CustomLogPolicy());
+            options.AddPolicy(new CustomLogPolicy(), HttpPipelinePosition.PerRetry);
 
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
             // pass the policy options to the client
@@ -45,7 +48,7 @@ namespace Azure.Data.AppConfiguration.Samples
             client.Delete("some_key");
         }
 
-        class AddHeaderPolicy : SynchronousHttpPipelinePolicy
+        private class AddHeaderPolicy : SynchronousHttpPipelinePolicy
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {
@@ -53,7 +56,7 @@ namespace Azure.Data.AppConfiguration.Samples
             }
         }
 
-        class CustomLogPolicy : SynchronousHttpPipelinePolicy
+        private class CustomLogPolicy : SynchronousHttpPipelinePolicy
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {

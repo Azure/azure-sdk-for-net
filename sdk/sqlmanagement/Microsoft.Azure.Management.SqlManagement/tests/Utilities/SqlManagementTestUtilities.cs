@@ -400,6 +400,13 @@ namespace Sql.Tests
             Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
         }
 
+        public static void ValidatePrivateEndpointConnection(PrivateEndpointConnection expected, PrivateEndpointConnection actual)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Equal(expected.PrivateLinkServiceConnectionState.Status, actual.PrivateLinkServiceConnectionState.Status);
+        }
+
         internal static Task<Database[]> CreateDatabasesAsync(
             SqlManagementClient sqlClient,
             string resourceGroupName,

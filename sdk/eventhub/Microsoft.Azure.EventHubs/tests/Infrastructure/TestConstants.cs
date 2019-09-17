@@ -14,8 +14,7 @@ namespace Microsoft.Azure.EventHubs.Tests
         internal const string EventHubsClientEnvironmentVariableName = "EVENT_HUBS_CLIENT";
         internal const string EventHubsSecretEnvironmentVariableName = "EVENT_HUBS_SECRET";
 
-
         // General
-        internal static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromSeconds(30);
+        internal static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromSeconds(180);
     }
 }

@@ -108,7 +108,7 @@ namespace Azure.Storage.Blobs
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint) { ContainerName = containerName };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
         }
 
@@ -222,8 +222,8 @@ namespace Azure.Storage.Blobs
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but container data is not available.
         /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
@@ -241,7 +241,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ContainerInfo> Create(
-            PublicAccessType? publicAccessType = default,
+            PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
             this.CreateInternal(
@@ -268,8 +268,8 @@ namespace Azure.Storage.Blobs
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but container data is not available.
         /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
@@ -287,7 +287,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ContainerInfo>> CreateAsync(
-            PublicAccessType? publicAccessType = default,
+            PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
             await this.CreateInternal(
@@ -314,8 +314,8 @@ namespace Azure.Storage.Blobs
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but container data is not available.
         /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
@@ -336,7 +336,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ContainerInfo>> CreateInternal(
-            PublicAccessType? publicAccessType,
+            PublicAccessType publicAccessType,
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken)
@@ -950,8 +950,8 @@ namespace Azure.Storage.Blobs
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but container data is not available.
         /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
         /// </param>
         /// <param name="permissions">
         /// Stored access policies that you can use to provide fine grained
@@ -974,7 +974,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ContainerInfo> SetAccessPolicy(
-            PublicAccessType? accessType = default,
+            PublicAccessType accessType = PublicAccessType.None,
             IEnumerable<SignedIdentifier> permissions = default,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -1003,8 +1003,8 @@ namespace Azure.Storage.Blobs
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but container data is not available.
         /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
         /// </param>
         /// <param name="permissions">
         /// Stored access policies that you can use to provide fine grained
@@ -1027,7 +1027,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ContainerInfo>> SetAccessPolicyAsync(
-            PublicAccessType? accessType = default,
+            PublicAccessType accessType = PublicAccessType.None,
             IEnumerable<SignedIdentifier> permissions = default,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -1056,8 +1056,8 @@ namespace Azure.Storage.Blobs
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but container data is not available.
         /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
         /// </param>
         /// <param name="permissions">
         /// Stored access policies that you can use to provide fine grained
@@ -1083,7 +1083,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ContainerInfo>> SetAccessPolicyInternal(
-            PublicAccessType? accessType,
+            PublicAccessType accessType,
             IEnumerable<SignedIdentifier> permissions,
             ContainerAccessConditions? accessConditions,
             bool async,
@@ -1109,7 +1109,7 @@ namespace Azure.Storage.Blobs
                         this.Uri,
                         permissions: permissions,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                        access: accessType ?? null,
+                        access: accessType,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         async: async,

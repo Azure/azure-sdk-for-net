@@ -28,16 +28,18 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlobServiceProperties blobServiceProperties,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -55,10 +57,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetPropertiesAsync_CreateResponse(_response);
                     }
@@ -160,15 +162,17 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -185,10 +189,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -287,15 +291,17 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -312,10 +318,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetStatisticsAsync_CreateResponse(_response);
                     }
@@ -418,10 +424,11 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of containers</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>> ListContainersSegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>> ListContainersSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -431,6 +438,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.ListContainersSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -451,10 +459,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListContainersSegmentAsync_CreateResponse(_response);
                     }
@@ -557,7 +565,7 @@ namespace Azure.Storage.Blobs
 
             #region Service.GetUserDelegationKeyAsync
             /// <summary>
-            /// Retrieves a user delgation key for the Blob service. This is only a valid operation when using bearer token authentication.
+            /// Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
@@ -565,16 +573,18 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A user delegation key</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.KeyInfo keyInfo,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetUserDelegationKey",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -592,10 +602,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetUserDelegationKeyAsync_CreateResponse(_response);
                     }
@@ -705,13 +715,15 @@ namespace Azure.Storage.Blobs
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetAccountInfo",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -726,10 +738,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetAccountInfoAsync_CreateResponse(_response);
                     }
@@ -835,10 +847,11 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ServiceSubmitBatchResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult>> SubmitBatchAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult>> SubmitBatchAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -847,6 +860,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.SubmitBatch",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -866,10 +880,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SubmitBatchAsync_CreateResponse(_response);
                     }
@@ -923,7 +937,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "batch");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -998,22 +1012,24 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
-            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Blobs.Models.PublicAccessType access,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1025,17 +1041,17 @@ namespace Azure.Storage.Blobs
                     using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                         pipeline,
                         resourceUri,
+                        access,
                         timeout,
                         metadata,
-                        access,
                         requestId))
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -1056,17 +1072,17 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
-            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.CreateAsync Request.</returns>
             internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Blobs.Models.PublicAccessType access,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 string requestId = default)
             {
                 // Validation
@@ -1085,6 +1101,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
+                if (access != Azure.Storage.Blobs.Models.PublicAccessType.None) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access)); }
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
@@ -1092,7 +1109,6 @@ namespace Azure.Storage.Blobs
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
-                if (access != null) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access.Value)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 return _request;
@@ -1155,16 +1171,18 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1182,10 +1200,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -1331,10 +1349,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1343,6 +1362,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1362,10 +1382,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -1465,10 +1485,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1477,6 +1498,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1496,10 +1518,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetMetadataAsync_CreateResponse(_response);
                     }
@@ -1623,16 +1645,18 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1650,10 +1674,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetAccessPolicyAsync_CreateResponse(_response);
                     }
@@ -1772,28 +1796,30 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="permissions">the acls for the container</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Blobs.Models.PublicAccessType access,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> permissions = default,
                 int? timeout = default,
                 string leaseId = default,
-                Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1805,20 +1831,20 @@ namespace Azure.Storage.Blobs
                     using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
                         pipeline,
                         resourceUri,
+                        access,
                         permissions,
                         timeout,
                         leaseId,
-                        access,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         requestId))
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetAccessPolicyAsync_CreateResponse(_response);
                     }
@@ -1839,10 +1865,10 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="permissions">the acls for the container</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -1850,10 +1876,10 @@ namespace Azure.Storage.Blobs
             internal static Azure.Core.Http.Request SetAccessPolicyAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Blobs.Models.PublicAccessType access,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> permissions = default,
                 int? timeout = default,
                 string leaseId = default,
-                Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default)
@@ -1875,9 +1901,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
+                if (access != Azure.Storage.Blobs.Models.PublicAccessType.None) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access)); }
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
-                if (access != null) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access.Value)); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
@@ -1959,19 +1985,21 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? duration = default,
+                long? duration = default,
                 string proposedLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1992,10 +2020,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return AcquireLeaseAsync_CreateResponse(_response);
                     }
@@ -2027,7 +2055,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? duration = default,
+                long? duration = default,
                 string proposedLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -2124,10 +2152,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2136,6 +2165,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2155,10 +2185,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ReleaseLeaseAsync_CreateResponse(_response);
                     }
@@ -2284,10 +2314,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2296,6 +2327,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.RenewLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2315,10 +2347,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return RenewLeaseAsync_CreateResponse(_response);
                     }
@@ -2448,10 +2480,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2460,6 +2493,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2479,10 +2513,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return BreakLeaseAsync_CreateResponse(_response);
                     }
@@ -2609,10 +2643,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2622,6 +2657,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2642,10 +2678,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ChangeLeaseAsync_CreateResponse(_response);
                     }
@@ -2783,10 +2819,11 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2796,6 +2833,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ListBlobsFlatSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2816,10 +2854,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListBlobsFlatSegmentAsync_CreateResponse(_response);
                     }
@@ -2935,10 +2973,11 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2949,6 +2988,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ListBlobsHierarchySegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2970,10 +3010,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ListBlobsHierarchySegmentAsync_CreateResponse(_response);
                     }
@@ -3098,19 +3138,20 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="rangeGetContentHash">When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
             /// <param name="rangeGetContentCRC64">When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3119,15 +3160,16 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 bool? rangeGetContentHash = default,
                 bool? rangeGetContentCRC64 = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -3145,9 +3187,9 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         rangeGetContentHash,
                         rangeGetContentCRC64,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -3156,10 +3198,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return DownloadAsync_CreateResponse(_response);
                     }
@@ -3186,9 +3228,9 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="rangeGetContentHash">When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
             /// <param name="rangeGetContentCRC64">When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -3204,9 +3246,9 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 bool? rangeGetContentHash = default,
                 bool? rangeGetContentCRC64 = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -3227,9 +3269,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -3245,6 +3284,9 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-range-get-content-crc64", rangeGetContentCRC64.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -3510,6 +3552,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
+                        {
+                            _value.EncryptionKeySha256 = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-content-md5", out _header))
                         {
                             _value.BlobContentHash = System.Convert.FromBase64String(_header);
@@ -3558,33 +3604,35 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
                 int? timeout = default,
                 string leaseId = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -3599,9 +3647,9 @@ namespace Azure.Storage.Blobs
                         snapshot,
                         timeout,
                         leaseId,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -3610,10 +3658,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPropertiesAsync_CreateResponse(_response);
                     }
@@ -3637,9 +3685,9 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -3652,9 +3700,9 @@ namespace Azure.Storage.Blobs
                 string snapshot = default,
                 int? timeout = default,
                 string leaseId = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -3675,13 +3723,13 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 if (snapshot != null) { _request.UriBuilder.AppendQuery("snapshot", System.Uri.EscapeDataString(snapshot)); }
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -3898,10 +3946,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3914,6 +3963,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -3937,10 +3987,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -4057,10 +4107,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSetAccessControlResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult>> SetAccessControlAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult>> SetAccessControlAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4075,6 +4126,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4100,10 +4152,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetAccessControlAsync_CreateResponse(_response);
                     }
@@ -4244,10 +4296,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobGetAccessControlResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>> GetAccessControlAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>> GetAccessControlAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4259,6 +4312,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.GetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4281,10 +4335,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetAccessControlAsync_CreateResponse(_response);
                     }
@@ -4336,7 +4390,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Patch;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("action", "getAccessControl");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -4450,10 +4504,11 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobRenameResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult>> RenameAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult>> RenameAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -4479,6 +4534,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4515,10 +4571,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return RenameAsync_CreateResponse(_response);
                     }
@@ -4693,15 +4749,17 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> UndeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> UndeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Undelete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4718,10 +4776,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return UndeleteAsync_CreateResponse(_response);
                     }
@@ -4820,10 +4878,11 @@ namespace Azure.Storage.Blobs
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4840,6 +4899,7 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetHttpHeaders",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4867,10 +4927,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetHttpHeadersAsync_CreateResponse(_response);
                     }
@@ -5025,33 +5085,35 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5066,9 +5128,9 @@ namespace Azure.Storage.Blobs
                         timeout,
                         metadata,
                         leaseId,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -5077,10 +5139,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetMetadataAsync_CreateResponse(_response);
                     }
@@ -5104,9 +5166,9 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -5119,9 +5181,9 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -5142,9 +5204,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -5155,6 +5214,9 @@ namespace Azure.Storage.Blobs
                     }
                 }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -5234,14 +5296,15 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? duration = default,
+                long? duration = default,
                 string proposedLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -5249,6 +5312,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5271,10 +5335,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return AcquireLeaseAsync_CreateResponse(_response);
                     }
@@ -5308,7 +5372,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                int? duration = default,
+                long? duration = default,
                 string proposedLeaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -5410,10 +5474,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5424,6 +5489,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5445,10 +5511,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ReleaseLeaseAsync_CreateResponse(_response);
                     }
@@ -5581,10 +5647,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5595,6 +5662,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.RenewLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5616,10 +5684,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return RenewLeaseAsync_CreateResponse(_response);
                     }
@@ -5757,10 +5825,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5772,6 +5841,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5794,10 +5864,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ChangeLeaseAsync_CreateResponse(_response);
                     }
@@ -5941,10 +6011,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5955,6 +6026,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5976,10 +6048,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return BreakLeaseAsync_CreateResponse(_response);
                     }
@@ -6106,9 +6178,9 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -6116,17 +6188,18 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -6134,6 +6207,7 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6147,9 +6221,9 @@ namespace Azure.Storage.Blobs
                         resourceUri,
                         timeout,
                         metadata,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -6159,10 +6233,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateSnapshotAsync_CreateResponse(_response);
                     }
@@ -6185,9 +6259,9 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -6200,9 +6274,9 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -6224,9 +6298,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "snapshot");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -6236,6 +6307,9 @@ namespace Azure.Storage.Blobs
                         _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                 }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -6280,10 +6354,6 @@ namespace Azure.Storage.Blobs
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
-                        {
-                            _value.EncryptionKeySha256 = _header;
-                        }
 
                         // Create the response
                         Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo> _result =
@@ -6327,16 +6397,17 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -6349,6 +6420,7 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.StartCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6378,10 +6450,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return StartCopyFromUriAsync_CreateResponse(_response);
                     }
@@ -6424,7 +6496,7 @@ namespace Azure.Storage.Blobs
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -6556,16 +6628,17 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
                 Azure.Core.Http.ETag? sourceIfMatch = default,
@@ -6577,6 +6650,7 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.CopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6605,10 +6679,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return CopyFromUriAsync_CreateResponse(_response);
                     }
@@ -6650,7 +6724,7 @@ namespace Azure.Storage.Blobs
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
                 Azure.Core.Http.ETag? sourceIfMatch = default,
@@ -6771,10 +6845,11 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> AbortCopyFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> AbortCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -6782,6 +6857,7 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.AbortCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6800,10 +6876,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return AbortCopyFromUriAsync_CreateResponse(_response);
                     }
@@ -6905,18 +6981,20 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> SetTierAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetTierAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Blobs.Models.AccessTierRequired tier,
+                Azure.Storage.Blobs.Models.AccessTier tier,
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 string requestId = default,
                 string leaseId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetTier",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6936,10 +7014,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetTierAsync_CreateResponse(_response);
                     }
@@ -6969,7 +7047,7 @@ namespace Azure.Storage.Blobs
             internal static Azure.Core.Http.Request SetTierAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Blobs.Models.AccessTierRequired tier,
+                Azure.Storage.Blobs.Models.AccessTier tier,
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 string requestId = default,
@@ -7056,9 +7134,9 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -7066,10 +7144,11 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7083,9 +7162,9 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 string blobContentDisposition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -7093,6 +7172,7 @@ namespace Azure.Storage.Blobs
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -7115,9 +7195,9 @@ namespace Azure.Storage.Blobs
                         metadata,
                         leaseId,
                         blobContentDisposition,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -7127,10 +7207,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -7162,9 +7242,9 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -7186,9 +7266,9 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 string blobContentDisposition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -7209,9 +7289,6 @@ namespace Azure.Storage.Blobs
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-blob-type", "PageBlob");
@@ -7241,6 +7318,9 @@ namespace Azure.Storage.Blobs
                 }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -7323,9 +7403,9 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -7335,10 +7415,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -7348,9 +7429,9 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string range = default,
                 string leaseId = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -7360,6 +7441,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UploadPages",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -7378,9 +7460,9 @@ namespace Azure.Storage.Blobs
                         timeout,
                         range,
                         leaseId,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
                         ifSequenceNumberEqualTo,
@@ -7392,10 +7474,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return UploadPagesAsync_CreateResponse(_response);
                     }
@@ -7423,9 +7505,9 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -7445,9 +7527,9 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string range = default,
                 string leaseId = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -7475,9 +7557,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "page");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-page-write", "update");
@@ -7487,6 +7566,9 @@ namespace Azure.Storage.Blobs
                 if (transactionalContentCrc64 != null) { _request.Headers.SetValue("x-ms-content-crc64", System.Convert.ToBase64String(transactionalContentCrc64)); }
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -7575,6 +7657,9 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -7584,16 +7669,20 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
                 int? timeout = default,
                 string range = default,
                 string leaseId = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -7603,6 +7692,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.ClearPages",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -7618,6 +7708,9 @@ namespace Azure.Storage.Blobs
                         timeout,
                         range,
                         leaseId,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
                         ifSequenceNumberEqualTo,
@@ -7629,10 +7722,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ClearPagesAsync_CreateResponse(_response);
                     }
@@ -7657,6 +7750,9 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -7673,6 +7769,9 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string range = default,
                 string leaseId = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -7703,6 +7802,9 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -7787,9 +7889,9 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="sourceContentcrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
@@ -7804,10 +7906,11 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -7817,9 +7920,9 @@ namespace Azure.Storage.Blobs
                 byte[] sourceContentHash = default,
                 byte[] sourceContentcrc64 = default,
                 int? timeout = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string leaseId = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
@@ -7834,6 +7937,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UploadPagesFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -7852,9 +7956,9 @@ namespace Azure.Storage.Blobs
                         sourceContentHash,
                         sourceContentcrc64,
                         timeout,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         leaseId,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
@@ -7871,10 +7975,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return UploadPagesFromUriAsync_CreateResponse(_response);
                     }
@@ -7902,9 +8006,9 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="sourceContentcrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
@@ -7929,9 +8033,9 @@ namespace Azure.Storage.Blobs
                 byte[] sourceContentHash = default,
                 byte[] sourceContentcrc64 = default,
                 int? timeout = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string leaseId = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
@@ -7972,9 +8076,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "page");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-page-write", "update");
@@ -7985,6 +8086,9 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash)); }
                 if (sourceContentcrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentcrc64)); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8091,10 +8195,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8107,6 +8212,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.GetPageRanges",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8130,10 +8236,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPageRangesAsync_CreateResponse(_response);
                     }
@@ -8290,10 +8396,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8307,6 +8414,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.GetPageRangesDiff",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8331,10 +8439,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetPageRangesDiffAsync_CreateResponse(_response);
                     }
@@ -8486,27 +8594,35 @@ namespace Azure.Storage.Blobs
             /// <param name="blobContentLength">This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long blobContentLength,
                 int? timeout = default,
                 string leaseId = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.Resize",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8521,6 +8637,9 @@ namespace Azure.Storage.Blobs
                         blobContentLength,
                         timeout,
                         leaseId,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -8529,10 +8648,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return ResizeAsync_CreateResponse(_response);
                     }
@@ -8556,6 +8675,9 @@ namespace Azure.Storage.Blobs
             /// <param name="blobContentLength">This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -8568,6 +8690,9 @@ namespace Azure.Storage.Blobs
                 long blobContentLength,
                 int? timeout = default,
                 string leaseId = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -8593,6 +8718,9 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -8669,10 +8797,11 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.SequenceNumberAction sequenceNumberAction,
@@ -8685,6 +8814,7 @@ namespace Azure.Storage.Blobs
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UpdateSequenceNumber",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8708,10 +8838,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return UpdateSequenceNumberAsync_CreateResponse(_response);
                     }
@@ -8849,10 +8979,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -8863,6 +8994,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.CopyIncremental",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8884,10 +9016,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return CopyIncrementalAsync_CreateResponse(_response);
                     }
@@ -9037,19 +9169,20 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -9062,15 +9195,16 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 string blobContentDisposition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9092,9 +9226,9 @@ namespace Azure.Storage.Blobs
                         metadata,
                         leaseId,
                         blobContentDisposition,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -9103,10 +9237,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -9137,9 +9271,9 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9159,9 +9293,9 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 string blobContentDisposition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -9181,9 +9315,6 @@ namespace Azure.Storage.Blobs
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-blob-type", "AppendBlob");
@@ -9212,6 +9343,9 @@ namespace Azure.Storage.Blobs
                 }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9294,19 +9428,20 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="maxSize">Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
             /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -9317,15 +9452,16 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 long? maxSize = default,
                 long? appendPosition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.AppendBlock",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9345,9 +9481,9 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         maxSize,
                         appendPosition,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -9356,10 +9492,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return AppendBlockAsync_CreateResponse(_response);
                     }
@@ -9388,9 +9524,9 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="maxSize">Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
             /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9408,9 +9544,9 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 long? maxSize = default,
                 long? appendPosition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -9435,9 +9571,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "appendblock");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -9447,6 +9580,9 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (maxSize != null) { _request.Headers.SetValue("x-ms-blob-condition-maxsize", maxSize.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9543,9 +9679,9 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceContentcrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="maxSize">Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
             /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
@@ -9559,10 +9695,11 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -9572,9 +9709,9 @@ namespace Azure.Storage.Blobs
                 byte[] sourceContentcrc64 = default,
                 int? timeout = default,
                 byte[] transactionalContentHash = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string leaseId = default,
                 long? maxSize = default,
                 long? appendPosition = default,
@@ -9588,6 +9725,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.AppendBlockFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9606,9 +9744,9 @@ namespace Azure.Storage.Blobs
                         sourceContentcrc64,
                         timeout,
                         transactionalContentHash,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         leaseId,
                         maxSize,
                         appendPosition,
@@ -9624,10 +9762,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return AppendBlockFromUriAsync_CreateResponse(_response);
                     }
@@ -9655,9 +9793,9 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceContentcrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="maxSize">Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
             /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
@@ -9681,9 +9819,9 @@ namespace Azure.Storage.Blobs
                 byte[] sourceContentcrc64 = default,
                 int? timeout = default,
                 byte[] transactionalContentHash = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string leaseId = default,
                 long? maxSize = default,
                 long? appendPosition = default,
@@ -9715,9 +9853,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "appendblock");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
@@ -9727,6 +9862,9 @@ namespace Azure.Storage.Blobs
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash)); }
                 if (sourceContentcrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentcrc64)); }
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (maxSize != null) { _request.Headers.SetValue("x-ms-blob-condition-maxsize", maxSize.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -9853,9 +9991,9 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -9863,10 +10001,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -9880,16 +10019,17 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 string blobContentDisposition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.Upload",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9912,9 +10052,9 @@ namespace Azure.Storage.Blobs
                         metadata,
                         leaseId,
                         blobContentDisposition,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         tier,
                         ifModifiedSince,
                         ifUnmodifiedSince,
@@ -9924,10 +10064,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return UploadAsync_CreateResponse(_response);
                     }
@@ -9959,9 +10099,9 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -9983,10 +10123,10 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 string blobContentDisposition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -10010,9 +10150,6 @@ namespace Azure.Storage.Blobs
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-blob-type", "BlockBlob");
@@ -10041,6 +10178,9 @@ namespace Azure.Storage.Blobs
                 }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10126,15 +10266,16 @@ namespace Azure.Storage.Blobs
             /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10144,11 +10285,12 @@ namespace Azure.Storage.Blobs
                 byte[] transactionalContentCrc64 = default,
                 int? timeout = default,
                 string leaseId = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.StageBlock",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -10167,17 +10309,17 @@ namespace Azure.Storage.Blobs
                         transactionalContentCrc64,
                         timeout,
                         leaseId,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         requestId))
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return StageBlockAsync_CreateResponse(_response);
                     }
@@ -10205,9 +10347,9 @@ namespace Azure.Storage.Blobs
             /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockAsync Request.</returns>
             internal static Azure.Core.Http.Request StageBlockAsync_CreateRequest(
@@ -10220,9 +10362,9 @@ namespace Azure.Storage.Blobs
                 byte[] transactionalContentCrc64 = default,
                 int? timeout = default,
                 string leaseId = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string requestId = default)
             {
                 // Validation
@@ -10248,9 +10390,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.AppendQuery("comp", "block");
                 _request.UriBuilder.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -10258,6 +10397,9 @@ namespace Azure.Storage.Blobs
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
                 if (transactionalContentCrc64 != null) { _request.Headers.SetValue("x-ms-content-crc64", System.Convert.ToBase64String(transactionalContentCrc64)); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
@@ -10330,9 +10472,9 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="sourceContentcrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -10340,10 +10482,11 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10353,9 +10496,9 @@ namespace Azure.Storage.Blobs
                 byte[] sourceContentHash = default,
                 byte[] sourceContentcrc64 = default,
                 int? timeout = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -10363,6 +10506,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.StageBlockFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -10381,9 +10525,9 @@ namespace Azure.Storage.Blobs
                         sourceContentHash,
                         sourceContentcrc64,
                         timeout,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         leaseId,
                         sourceIfModifiedSince,
                         sourceIfUnmodifiedSince,
@@ -10393,10 +10537,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return StageBlockFromUriAsync_CreateResponse(_response);
                     }
@@ -10424,9 +10568,9 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="sourceContentcrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -10444,9 +10588,9 @@ namespace Azure.Storage.Blobs
                 byte[] sourceContentHash = default,
                 byte[] sourceContentcrc64 = default,
                 int? timeout = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -10477,9 +10621,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.AppendQuery("comp", "block");
                 _request.UriBuilder.AppendQuery("blockid", System.Uri.EscapeDataString(blockId));
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -10488,6 +10629,9 @@ namespace Azure.Storage.Blobs
                 if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange); }
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash)); }
                 if (sourceContentcrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentcrc64)); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10581,9 +10725,9 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -10591,10 +10735,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockLookupList blocks,
@@ -10609,16 +10754,17 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 string blobContentDisposition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.CommitBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -10642,9 +10788,9 @@ namespace Azure.Storage.Blobs
                         metadata,
                         leaseId,
                         blobContentDisposition,
-                        xMSEncryptionKey,
-                        xMSEncryptionKeySha256,
-                        xMSEncryptionAlgorithm,
+                        encryptionKey,
+                        encryptionKeySha256,
+                        encryptionAlgorithm,
                         tier,
                         ifModifiedSince,
                         ifUnmodifiedSince,
@@ -10654,10 +10800,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return CommitBlockListAsync_CreateResponse(_response);
                     }
@@ -10690,9 +10836,9 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
-            /// <param name="xMSEncryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
-            /// <param name="xMSEncryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
-            /// <param name="xMSEncryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
+            /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -10715,10 +10861,10 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 string blobContentDisposition = default,
-                string xMSEncryptionKey = default,
-                string xMSEncryptionKeySha256 = default,
-                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? xMSEncryptionAlgorithm = default,
-                Azure.Storage.Blobs.Models.AccessTierOptional? tier = default,
+                string encryptionKey = default,
+                string encryptionKeySha256 = default,
+                Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.Core.Http.ETag? ifMatch = default,
@@ -10743,9 +10889,6 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "blocklist");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
-                if (xMSEncryptionKey != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key", System.Uri.EscapeDataString(xMSEncryptionKey)); }
-                if (xMSEncryptionKeySha256 != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-key-sha256", System.Uri.EscapeDataString(xMSEncryptionKeySha256)); }
-                if (xMSEncryptionAlgorithm != null) { _request.UriBuilder.AppendQuery("x-ms-encryption-algorithm", System.Uri.EscapeDataString(xMSEncryptionAlgorithm.Value.ToString())); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-02-02");
@@ -10774,6 +10917,9 @@ namespace Azure.Storage.Blobs
                 }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (blobContentDisposition != null) { _request.Headers.SetValue("x-ms-blob-content-disposition", blobContentDisposition); }
+                if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
+                if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
+                if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToString()); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10862,10 +11008,11 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockListType listType,
@@ -10874,6 +11021,7 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.GetBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -10893,10 +11041,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetBlockListAsync_CreateResponse(_response);
                     }
@@ -11044,10 +11192,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryCreateResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -11066,6 +11215,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11095,10 +11245,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return CreateAsync_CreateResponse(_response);
                     }
@@ -11270,10 +11420,11 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryRenameResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult>> RenameAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult>> RenameAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -11300,6 +11451,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11337,10 +11489,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return RenameAsync_CreateResponse(_response);
                     }
@@ -11529,10 +11681,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryDeleteResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult>> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult>> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool recursiveDirectoryDelete,
@@ -11545,6 +11698,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11568,10 +11722,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return DeleteAsync_CreateResponse(_response);
                     }
@@ -11708,10 +11862,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectorySetAccessControlResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult>> SetAccessControlAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult>> SetAccessControlAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -11726,6 +11881,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11751,10 +11907,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return SetAccessControlAsync_CreateResponse(_response);
                     }
@@ -11895,10 +12051,11 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>> GetAccessControlAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>> GetAccessControlAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -11910,6 +12067,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
+                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.GetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11932,10 +12090,10 @@ namespace Azure.Storage.Blobs
                     {
                         Azure.Response _response = async ?
                             // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            await pipeline.SendRequestAsync(_request, bufferResponse, cancellationToken).ConfigureAwait(false) :
                             // Send the request synchronously through the API that blocks if we're being called via a sync path
                             // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.SendRequest(_request, cancellationToken);
+                            pipeline.SendRequest(_request, bufferResponse, cancellationToken);
                         cancellationToken.ThrowIfCancellationRequested();
                         return GetAccessControlAsync_CreateResponse(_response);
                     }
@@ -11987,7 +12145,7 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.RequestMethod.Patch;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("action", "getAccessControl");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -12149,7 +12307,7 @@ namespace Azure.Storage.Blobs.Models
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// AccessTier values
+    /// Indicates the tier to be set on the blob.
     /// </summary>
     public partial struct AccessTier : System.IEquatable<AccessTier>
     {
@@ -12296,310 +12454,6 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion enum strings AccessTier
-
-#region enum strings AccessTierOptional
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Optional. Indicates the tier to be set on the blob.
-    /// </summary>
-    public partial struct AccessTierOptional : System.IEquatable<AccessTierOptional>
-    {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// P4
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P4 = @"P4";
-
-        /// <summary>
-        /// P6
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P6 = @"P6";
-
-        /// <summary>
-        /// P10
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P10 = @"P10";
-
-        /// <summary>
-        /// P15
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P15 = @"P15";
-
-        /// <summary>
-        /// P20
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P20 = @"P20";
-
-        /// <summary>
-        /// P30
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P30 = @"P30";
-
-        /// <summary>
-        /// P40
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P40 = @"P40";
-
-        /// <summary>
-        /// P50
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P50 = @"P50";
-
-        /// <summary>
-        /// P60
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P60 = @"P60";
-
-        /// <summary>
-        /// P70
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P70 = @"P70";
-
-        /// <summary>
-        /// P80
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional P80 = @"P80";
-
-        /// <summary>
-        /// Hot
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional Hot = @"Hot";
-
-        /// <summary>
-        /// Cool
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional Cool = @"Cool";
-
-        /// <summary>
-        /// Archive
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierOptional Archive = @"Archive";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The AccessTierOptional value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new AccessTierOptional instance.
-        /// </summary>
-        /// <param name="value">The AccessTierOptional value.</param>
-        private AccessTierOptional(string value) { this._value = value; }
-
-        /// <summary>
-        /// Check if two AccessTierOptional instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.AccessTierOptional other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two AccessTierOptional instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.AccessTierOptional other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the AccessTierOptional.
-        /// </summary>
-        /// <returns>Hash code for the AccessTierOptional.</returns>
-        public override int GetHashCode() => this._value.GetHashCode();
-
-        /// <summary>
-        /// Convert the AccessTierOptional to a string.
-        /// </summary>
-        /// <returns>String representation of the AccessTierOptional.</returns>
-        public override string ToString() => this._value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a AccessTierOptional.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The AccessTierOptional value.</returns>
-        public static implicit operator AccessTierOptional(string value) => new Azure.Storage.Blobs.Models.AccessTierOptional(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an AccessTierOptional to a string.
-        /// </summary>
-        /// <param name="o">The AccessTierOptional value.</param>
-        /// <returns>String representation of the AccessTierOptional value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTierOptional o) => o._value;
-
-        /// <summary>
-        /// Check if two AccessTierOptional instances are equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTierOptional a, Azure.Storage.Blobs.Models.AccessTierOptional b) => a.Equals(b);
-
-        /// <summary>
-        /// Check if two AccessTierOptional instances are not equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.AccessTierOptional a, Azure.Storage.Blobs.Models.AccessTierOptional b) => !a.Equals(b);
-    }
-}
-#endregion enum strings AccessTierOptional
-
-#region enum strings AccessTierRequired
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Indicates the tier to be set on the blob.
-    /// </summary>
-    public partial struct AccessTierRequired : System.IEquatable<AccessTierRequired>
-    {
-        #pragma warning disable CA2211 // Non-constant fields should not be visible
-        /// <summary>
-        /// P4
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P4 = @"P4";
-
-        /// <summary>
-        /// P6
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P6 = @"P6";
-
-        /// <summary>
-        /// P10
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P10 = @"P10";
-
-        /// <summary>
-        /// P15
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P15 = @"P15";
-
-        /// <summary>
-        /// P20
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P20 = @"P20";
-
-        /// <summary>
-        /// P30
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P30 = @"P30";
-
-        /// <summary>
-        /// P40
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P40 = @"P40";
-
-        /// <summary>
-        /// P50
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P50 = @"P50";
-
-        /// <summary>
-        /// P60
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P60 = @"P60";
-
-        /// <summary>
-        /// P70
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P70 = @"P70";
-
-        /// <summary>
-        /// P80
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired P80 = @"P80";
-
-        /// <summary>
-        /// Hot
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired Hot = @"Hot";
-
-        /// <summary>
-        /// Cool
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired Cool = @"Cool";
-
-        /// <summary>
-        /// Archive
-        /// </summary>
-        public static Azure.Storage.Blobs.Models.AccessTierRequired Archive = @"Archive";
-        #pragma warning restore CA2211 // Non-constant fields should not be visible
-
-        /// <summary>
-        /// The AccessTierRequired value.
-        /// </summary>
-        private readonly string _value;
-
-        /// <summary>
-        /// Creates a new AccessTierRequired instance.
-        /// </summary>
-        /// <param name="value">The AccessTierRequired value.</param>
-        private AccessTierRequired(string value) { this._value = value; }
-
-        /// <summary>
-        /// Check if two AccessTierRequired instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Azure.Storage.Blobs.Models.AccessTierRequired other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-
-        /// <summary>
-        /// Check if two AccessTierRequired instances are equal.
-        /// </summary>
-        /// <param name="o">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.AccessTierRequired other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the AccessTierRequired.
-        /// </summary>
-        /// <returns>Hash code for the AccessTierRequired.</returns>
-        public override int GetHashCode() => this._value.GetHashCode();
-
-        /// <summary>
-        /// Convert the AccessTierRequired to a string.
-        /// </summary>
-        /// <returns>String representation of the AccessTierRequired.</returns>
-        public override string ToString() => this._value;
-
-        #pragma warning disable CA2225 // Operator overloads have named alternates
-        /// <summary>
-        /// Convert a string a AccessTierRequired.
-        /// </summary>
-        /// <param name="value">The string to convert.</param>
-        /// <returns>The AccessTierRequired value.</returns>
-        public static implicit operator AccessTierRequired(string value) => new Azure.Storage.Blobs.Models.AccessTierRequired(value);
-        #pragma warning restore CA2225 // Operator overloads have named alternates
-
-        /// <summary>
-        /// Convert an AccessTierRequired to a string.
-        /// </summary>
-        /// <param name="o">The AccessTierRequired value.</param>
-        /// <returns>String representation of the AccessTierRequired value.</returns>
-        public static implicit operator string(Azure.Storage.Blobs.Models.AccessTierRequired o) => o._value;
-
-        /// <summary>
-        /// Check if two AccessTierRequired instances are equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Azure.Storage.Blobs.Models.AccessTierRequired a, Azure.Storage.Blobs.Models.AccessTierRequired b) => a.Equals(b);
-
-        /// <summary>
-        /// Check if two AccessTierRequired instances are not equal.
-        /// </summary>
-        /// <param name="a">The first instance to compare.</param>
-        /// <param name="b">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Azure.Storage.Blobs.Models.AccessTierRequired a, Azure.Storage.Blobs.Models.AccessTierRequired b) => !a.Equals(b);
-    }
-}
-#endregion enum strings AccessTierRequired
 
 #region class AccountInfo
 namespace Azure.Storage.Blobs.Models
@@ -14872,11 +14726,6 @@ namespace Azure.Storage.Blobs.Models
         /// True if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. For a snapshot request, this header is set to true when metadata was provided in the request and encrypted with a customer-provided key.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
-
-        /// <summary>
-        /// The SHA-256 hash of the encryption key used to encrypt the source blob. This header is only returned when the blob was encrypted with a customer-provided key.
-        /// </summary>
-        public string EncryptionKeySha256 { get; internal set; }
     }
 
     /// <summary>
@@ -14891,15 +14740,13 @@ namespace Azure.Storage.Blobs.Models
             string snapshot,
             Azure.Core.Http.ETag eTag,
             System.DateTimeOffset lastModified,
-            bool isServerEncrypted,
-            string encryptionKeySha256)
+            bool isServerEncrypted)
         {
             var _model = new BlobSnapshotInfo();
             _model.Snapshot = snapshot;
             _model.ETag = eTag;
             _model.LastModified = lastModified;
             _model.IsServerEncrypted = isServerEncrypted;
-            _model.EncryptionKeySha256 = encryptionKeySha256;
             return _model;
         }
     }
@@ -16810,16 +16657,16 @@ namespace Azure.Storage.Blobs.Models
         public bool IsServerEncrypted { get; internal set; }
 
         /// <summary>
+        /// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key.
+        /// </summary>
+        public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
         /// If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range
         /// </summary>
         #pragma warning disable CA1819 // Properties should not return arrays
         public byte[] BlobContentHash { get; internal set; }
         #pragma warning restore CA1819 // Properties should not return arrays
-
-        /// <summary>
-        /// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key.
-        /// </summary>
-        public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
         /// Content
@@ -18041,6 +17888,11 @@ namespace Azure.Storage.Blobs.Models
     public enum PublicAccessType
     {
         /// <summary>
+        /// none
+        /// </summary>
+        None,
+
+        /// <summary>
         /// container
         /// </summary>
         Container,
@@ -18062,6 +17914,8 @@ namespace Azure.Storage.Blobs
             {
                 switch (value)
                 {
+                    case Azure.Storage.Blobs.Models.PublicAccessType.None:
+                        return null;
                     case Azure.Storage.Blobs.Models.PublicAccessType.Container:
                         return "container";
                     case Azure.Storage.Blobs.Models.PublicAccessType.Blob:
@@ -18075,6 +17929,8 @@ namespace Azure.Storage.Blobs
             {
                 switch (value)
                 {
+                    case null:
+                        return Azure.Storage.Blobs.Models.PublicAccessType.None;
                     case "container":
                         return Azure.Storage.Blobs.Models.PublicAccessType.Container;
                     case "blob":
@@ -18322,7 +18178,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class ServiceSubmitBatchResult
     {
         /// <summary>
-        /// The media type of the body of the response. For batch requests, this is ' multipart/mixed; boundary=batchresponse_{GUID}'
+        /// The media type of the body of the response. For batch requests, this is multipart/mixed; boundary=batchresponse_GUID
         /// </summary>
         public string ContentType { get; internal set; }
 

@@ -23,13 +23,22 @@ namespace Azure.Messaging.EventHubs.Authorization
         public string Resource { get; }
 
         /// <summary>
+        ///   Indicates whether the credential is based on an Event Hubs
+        ///   shared access signature.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if the credential should be considered a SAS credential; otherwise, <c>false</c>.</value>
+        ///
+        public bool IsSharedAccessSignatureCredential { get; }
+
+        /// <summary>
         ///   The <see cref="TokenCredential" /> that forms the basis of this security token.
         /// </summary>
         ///
         private TokenCredential Credential { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SharedAccessSignatureCredential"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubTokenCredential"/> class.
         /// </summary>
         ///
         /// <param name="tokenCredential">The <see cref="TokenCredential" /> on which to base the token.</param>
@@ -43,6 +52,11 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             Credential = tokenCredential;
             Resource = eventHubResource;
+
+            IsSharedAccessSignatureCredential =
+                (tokenCredential is EventHubSharedKeyCredential)
+                || (tokenCredential is SharedAccessSignatureCredential)
+                || ((tokenCredential as EventHubTokenCredential)?.IsSharedAccessSignatureCredential == true);
         }
 
         /// <summary>
@@ -50,23 +64,25 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="scopes">The access scopes to request a token for.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken) => Credential.GetToken(scopes, cancellationToken);
+        public override AccessToken GetToken(TokenRequest request,
+                                             CancellationToken cancellationToken) => Credential.GetToken(request, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="scopes">The access scopes to request a token for.</param>
+        /// <param name="request">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken) => Credential.GetTokenAsync(scopes, cancellationToken);
+        public override Task<AccessToken> GetTokenAsync(TokenRequest request,
+                                                        CancellationToken cancellationToken) => Credential.GetTokenAsync(request, cancellationToken);
     }
 }

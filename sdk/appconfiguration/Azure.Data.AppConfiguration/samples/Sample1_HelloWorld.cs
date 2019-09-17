@@ -2,19 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [Category("Live")]
+    [LiveOnly]
     public partial class ConfigurationSamples
     {
         [Test]
         public void HelloWorld()
         {
-            // Retrieve the connection string from the configuration store. 
+            // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal.
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 

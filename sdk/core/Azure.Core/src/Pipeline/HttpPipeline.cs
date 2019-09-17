@@ -12,13 +12,13 @@ namespace Azure.Core.Pipeline
     public class HttpPipeline
     {
         private readonly HttpPipelineTransport _transport;
-        private readonly ResponseClassifier _responseClassifier;
+
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null, ClientDiagnostics? clientDiagnostics = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
-            _responseClassifier = responseClassifier ?? new ResponseClassifier();
+            ResponseClassifier = responseClassifier ?? new ResponseClassifier();
 
             Diagnostics = clientDiagnostics ?? new ClientDiagnostics(true);
 
@@ -34,14 +34,16 @@ namespace Azure.Core.Pipeline
         public Request CreateRequest()
             => _transport.CreateRequest();
 
+        public ResponseClassifier ResponseClassifier { get; }
+
         public ClientDiagnostics Diagnostics { get; }
 
-        public Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
+        public ValueTask<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             return SendRequestAsync(request, true, cancellationToken);
         }
 
-        public async Task<Response> SendRequestAsync(Request request, bool bufferResponse, CancellationToken cancellationToken)
+        public async ValueTask<Response> SendRequestAsync(Request request, bool bufferResponse, CancellationToken cancellationToken)
         {
             HttpPipelineMessage message = BuildMessage(request, bufferResponse, cancellationToken);
             await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
@@ -62,12 +64,12 @@ namespace Azure.Core.Pipeline
 
         private HttpPipelineMessage BuildMessage(Request request, bool bufferResponse, CancellationToken cancellationToken)
         {
-            var message = new HttpPipelineMessage(request, _responseClassifier, cancellationToken);
-            message.Request = request;
-            message.BufferResponse = bufferResponse;
-            message.ResponseClassifier = _responseClassifier;
+            var message = new HttpPipelineMessage(request, ResponseClassifier, cancellationToken)
+            {
+                Request = request,
+                BufferResponse = bufferResponse
+            };
             return message;
         }
     }
 }
-

@@ -1,5 +1,5 @@
-﻿using Azure.Identity;
-using Azure.Security.KeyVault.Keys;
+﻿using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// Sample demonstrates how to encrypt and decrypt a single block of plain text with an RSA key using the synchronous methods of the CryptographyClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class Sample4_EncryptDecypt
     {
         [Test]
@@ -44,11 +44,11 @@ namespace Azure.Security.KeyVault.Keys.Samples
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
             // First encrypt the data using RSAOAEP with the created key.
-            EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RSAOAEP, plaintext);
+            EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RsaOaep, plaintext);
             Debug.WriteLine($"Encrypted data using the algorithm {encryptResult.Algorithm}, with key {encryptResult.KeyId}. The resulting encrypted data is {Convert.ToBase64String(encryptResult.Ciphertext)}");
 
             // Now decrypt the encrypted data. Note that the same algorithm must always be used for both encrypt and decrypt
-            DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RSAOAEP, encryptResult.Ciphertext);
+            DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
             Debug.WriteLine($"Decrypted data using the algorithm {decryptResult.Algorithm}, with key {decryptResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(decryptResult.Plaintext)}");
 
             // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.

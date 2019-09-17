@@ -35,7 +35,6 @@ namespace Azure.Storage.Files.Tests
             => this.Recording.InstrumentClientOptions(
                     new FileClientOptions
                     {
-                        ResponseClassifier = new TestResponseClassifier(),
                         Diagnostics = { IsLoggingEnabled = true },
                         Retry =
                         {
@@ -73,7 +72,7 @@ namespace Azure.Storage.Files.Tests
         {
             raise = raise ?? new IOException("Simulated connection fault");
             var options = this.GetOptions();
-            options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise), HttpPipelinePosition.PerCall);
             return options;
         }
 

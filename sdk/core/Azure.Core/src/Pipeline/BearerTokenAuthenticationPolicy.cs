@@ -9,7 +9,7 @@ using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
-    public class BearerTokenAuthenticationPolicy: HttpPipelinePolicy
+    public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly TokenCredential _credential;
 
@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
 
         private DateTimeOffset _refreshOn;
 
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new []{ scope })
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope })
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Core.Pipeline
             _scopes = scopes.ToArray();
         }
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
@@ -49,13 +49,13 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        public async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        public async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (DateTimeOffset.UtcNow >= _refreshOn)
             {
                 AccessToken token = async ?
-                        await _credential.GetTokenAsync(_scopes, message.CancellationToken).ConfigureAwait(false) :
-                        _credential.GetToken(_scopes, message.CancellationToken);
+                        await _credential.GetTokenAsync(new TokenRequest(_scopes), message.CancellationToken).ConfigureAwait(false) :
+                        _credential.GetToken(new TokenRequest(_scopes), message.CancellationToken);
 
                 _headerValue = "Bearer " + token.Token;
                 _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);

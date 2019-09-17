@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using Microsoft.Azure.Management.ManagementGroups;
@@ -16,7 +16,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void ListGroups()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -37,7 +37,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void GetGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -61,7 +61,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void GetGroupExpand()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -93,7 +93,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void GetGroupExpandRecurse()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -126,7 +126,7 @@ namespace ResourceGroups.Tests
         [Fact(Skip="Skipping for now. Investigating why it is failing.")]
         public void GetEntities()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
@@ -152,7 +152,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void CreateGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -188,7 +188,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void CreateGroupSubscription()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.NoContent });
@@ -203,7 +203,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void DeleteGroupSubscription()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.NoContent });
@@ -219,7 +219,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void DeleteGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -233,7 +233,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void CheckNameAvailibilityTrue()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -250,7 +250,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void CheckNameAvailibilityFalse()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -267,7 +267,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void StartTenantBackfill()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -282,7 +282,7 @@ namespace ResourceGroups.Tests
         [Fact]
         public void TenantBackfillStatus()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });

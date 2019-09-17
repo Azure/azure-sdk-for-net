@@ -1,5 +1,5 @@
-﻿using Azure.Identity;
-using Azure.Security.KeyVault.Keys;
+﻿using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using System;
@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// Sample demonstrates how to wrap and unwrap a symmetric key with an RSA key using the synchronous methods of the CryptographyClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class Sample6_WrapUnwrap
     {
         [Test]
@@ -43,11 +43,11 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Generated Key: {Convert.ToBase64String(keyData)}");
 
             // Wrap the key using RSAOAEP with the created key.
-            WrapResult wrapResult = cryptoClient.WrapKey(KeyWrapAlgorithm.RSAOAEP, keyData);
+            WrapResult wrapResult = cryptoClient.WrapKey(KeyWrapAlgorithm.RsaOaep, keyData);
             Debug.WriteLine($"Encrypted data using the algorithm {wrapResult.Algorithm}, with key {wrapResult.KeyId}. The resulting encrypted data is {Convert.ToBase64String(wrapResult.EncryptedKey)}");
 
             // Now unwrap the encrypted key. Note that the same algorithm must always be used for both wrap and unwrap
-            UnwrapResult unwrapResult = cryptoClient.UnwrapKey(KeyWrapAlgorithm.RSAOAEP, wrapResult.EncryptedKey);
+            UnwrapResult unwrapResult = cryptoClient.UnwrapKey(KeyWrapAlgorithm.RsaOaep, wrapResult.EncryptedKey);
             Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
 
             // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.

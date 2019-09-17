@@ -378,6 +378,11 @@ namespace Microsoft.Azure.Management.Sql
         ISensitivityLabelsOperations SensitivityLabels { get; }
 
         /// <summary>
+        /// Gets the IManagedInstanceAdministratorsOperations.
+        /// </summary>
+        IManagedInstanceAdministratorsOperations ManagedInstanceAdministrators { get; }
+
+        /// <summary>
         /// Gets the IDatabaseOperations.
         /// </summary>
         IDatabaseOperations DatabaseOperations { get; }
@@ -476,6 +481,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedInstancesOperations.
         /// </summary>
         IManagedInstancesOperations ManagedInstances { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
     }
 }

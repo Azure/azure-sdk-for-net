@@ -168,6 +168,7 @@ export interface IEnumType extends IModelType {
     customSerialization: boolean,
     constant: boolean,
     public: boolean,
+    skipValue?: string,
     values: IEnumValue[]
 }
 

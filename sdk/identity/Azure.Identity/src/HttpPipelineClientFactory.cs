@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// </summary>
     internal class HttpPipelineClientFactory : IMsalHttpClientFactory
     {
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
 
         public HttpPipelineClientFactory(HttpPipeline pipeline)
         {
@@ -33,7 +33,7 @@ namespace Azure.Identity
         /// </summary>
         private class PipelineHttpMessageHandler : HttpMessageHandler
         {
-            private HttpPipeline _pipeline;
+            private readonly HttpPipeline _pipeline;
 
             public PipelineHttpMessageHandler(HttpPipeline pipeline)
             {

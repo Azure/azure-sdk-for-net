@@ -19,7 +19,7 @@ namespace ServiceBus.Tests.ScenarioTests
         [Fact]
         public void DisasterRecoveryCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 

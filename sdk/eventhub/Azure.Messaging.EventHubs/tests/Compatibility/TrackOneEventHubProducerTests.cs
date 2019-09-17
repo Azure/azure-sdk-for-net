@@ -122,6 +122,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < sentEvents.Length; ++index)
             {
+                // If the system properties for the sent events was null, then normalize it to an empty
+                // instance because the source event does not allow null.
+
+                sentEvents[index].SystemProperties = sentEvents[index].SystemProperties ?? new TrackOne.EventData.SystemPropertiesCollection();
                 Assert.That(TrackOneComparer.IsEventDataEquivalent(sentEvents[index], sourceEvents[index]), Is.True, $"The sequence of events sent should match; they differ at index: { index }");
             }
         }
@@ -162,6 +166,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < sentEvents.Length; ++index)
             {
+                // If the system properties for the sent events was null, then normalize it to an empty
+                // instance because the source event does not allow null.
+
+                sentEvents[index].SystemProperties = sentEvents[index].SystemProperties ?? new TrackOne.EventData.SystemPropertiesCollection();
                 Assert.That(TrackOneComparer.IsEventDataEquivalent(sentEvents[index], sourceEvents[index]), Is.True, $"The sequence of events sent should match; they differ at index: { index }");
             }
         }
@@ -540,10 +548,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ClientMock : TrackOne.EventHubClient
         {
-            public ClientMock() : base(new TrackOne.EventHubsConnectionStringBuilder(new Uri("amqp://my.hub.com"), "aPath", "keyName", "KEY!"))
-            {
-            }
-
+            public ClientMock() : base(new TrackOne.EventHubsConnectionStringBuilder(new Uri("amqp://my.hub.com"), "aPath", "keyName", "KEY!")) {}
             protected override Task OnCloseAsync() => Task.CompletedTask;
             protected override PartitionReceiver OnCreateReceiver(string consumerGroupName, string partitionId, TrackOne.EventPosition eventPosition, long? epoch, ReceiverOptions consumerOptions) => default;
             protected override Task<EventHubPartitionRuntimeInformation> OnGetPartitionRuntimeInformationAsync(string partitionId) => Task.FromResult(default(EventHubPartitionRuntimeInformation));

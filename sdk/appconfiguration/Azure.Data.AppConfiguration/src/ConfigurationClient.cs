@@ -154,7 +154,7 @@ namespace Azure.Data.AppConfiguration
             if (string.IsNullOrEmpty(setting.Key))
                 throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            var request = _pipeline.CreateRequest();
+            Request request = _pipeline.CreateRequest();
 
             ReadOnlyMemory<byte> content = Serialize(setting);
 
@@ -163,7 +163,7 @@ namespace Azure.Data.AppConfiguration
             BuildUriForKvRoute(request.UriBuilder, setting);
 
             request.Headers.Add(IfNoneMatch, "*");
-            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = HttpPipelineRequestContent.Create(content);
 
@@ -214,15 +214,12 @@ namespace Azure.Data.AppConfiguration
                 using Request request = CreateSetRequest(setting);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                    case 409:
-                        throw await response.CreateRequestFailedExceptionAsync("The setting is locked").ConfigureAwait(false);
-                    default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-                }
+                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    409 => throw await response.CreateRequestFailedExceptionAsync("The setting is locked").ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
+                };
             }
             catch (Exception e)
             {
@@ -248,15 +245,12 @@ namespace Azure.Data.AppConfiguration
 
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                        return CreateResponse(response);
-                    case 409:
-                        throw response.CreateRequestFailedException("The setting is locked");
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
+                    200 => CreateResponse(response),
+                    409 => throw response.CreateRequestFailedException("The setting is locked"),
+                    _ => throw response.CreateRequestFailedException(),
+                };
             }
             catch (Exception e)
             {
@@ -277,130 +271,12 @@ namespace Azure.Data.AppConfiguration
 
             request.Method = RequestMethod.Put;
             BuildUriForKvRoute(request.UriBuilder, setting);
-            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
 
             if (setting.ETag != default)
             {
                 request.Headers.Add(IfMatchName, $"\"{setting.ETag.ToString()}\"");
-            }
-
-            request.Content = HttpPipelineRequestContent.Create(content);
-            return request;
-        }
-
-        /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Update(string key, string value, string label = default, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return Update(new ConfigurationSetting(key, value, label), cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Update");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateUpdateRequest(setting);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                    default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Update");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateUpdateRequest(setting);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        return CreateResponse(response);
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Request CreateUpdateRequest(ConfigurationSetting setting)
-        {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-
-            Request request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = Serialize(setting);
-
-            request.Method = RequestMethod.Put;
-            BuildUriForKvRoute(request.UriBuilder, setting);
-            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-
-            if (setting.ETag != default)
-            {
-                request.Headers.Add(IfMatchName, $"\"{setting.ETag}\"");
-            }
-            else
-            {
-                request.Headers.Add(IfMatchName, "*");
             }
 
             request.Content = HttpPipelineRequestContent.Create(content);
@@ -514,13 +390,11 @@ namespace Azure.Data.AppConfiguration
                 using Request request = CreateGetRequest(key, label, acceptDateTime);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                    default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-                }
+                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
+                };
             }
             catch (Exception e)
             {
@@ -548,13 +422,11 @@ namespace Azure.Data.AppConfiguration
                 {
                     Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                    switch (response.Status)
+                    return response.Status switch
                     {
-                        case 200:
-                            return CreateResponse(response);
-                        default:
-                            throw response.CreateRequestFailedException();
-                    }
+                        200 => CreateResponse(response),
+                        _ => throw response.CreateRequestFailedException(),
+                    };
                 }
             }
             catch (Exception e)
@@ -612,7 +484,7 @@ namespace Azure.Data.AppConfiguration
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             BuildUriForKvRoute(request.UriBuilder, key, label);
-            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
 
             if (acceptDateTime != default)
             {
@@ -695,7 +567,7 @@ namespace Azure.Data.AppConfiguration
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             BuildUriForGetBatch(request.UriBuilder, selector, pageLink);
-            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
                 var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
@@ -773,10 +645,10 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateGetRevisionsRequest(SettingSelector selector, string pageLink)
         {
-            var request = _pipeline.CreateRequest();
+            Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             BuildUriForRevisions(request.UriBuilder, selector, pageLink);
-            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
                 var dateTime = selector.AsOf.Value.UtcDateTime.ToString("R", CultureInfo.InvariantCulture);

@@ -18,10 +18,12 @@ namespace Azure.Core.Testing
             if (methodName.EndsWith("Async"))
             {
                 var expectedEventPrefix = invocation.Method.DeclaringType.FullName + "." + methodName.Substring(0, methodName.Length - 5);
-                var expectedEvents = new List<string>();
-                expectedEvents.Add(expectedEventPrefix + ".Start");
+                var expectedEvents = new List<string>
+                {
+                    expectedEventPrefix + ".Start"
+                };
 
-                TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
+                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener("Azure.Clients");
                 invocation.Proceed();
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
@@ -49,7 +51,6 @@ namespace Azure.Core.Testing
                 }
                 finally
                 {
-                    diagnosticListener.Dispose();
                     if (strict)
                     {
                         foreach (var expectedEvent in expectedEvents)

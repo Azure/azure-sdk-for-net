@@ -954,8 +954,8 @@ namespace Azure.Storage.Blobs
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but container data is not available.
         /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
@@ -975,7 +975,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<BlobContainerClient> CreateBlobContainer(
             string containerName,
-            PublicAccessType? publicAccessType = default,
+            PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
@@ -1004,8 +1004,8 @@ namespace Azure.Storage.Blobs
         /// read access for blobs.  Blob data within this container can be
         /// read via anonymous request, but container data is not available.
         /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContainerClient>> CreateBlobContainerAsync(
             string containerName,
-            PublicAccessType? publicAccessType = default,
+            PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {

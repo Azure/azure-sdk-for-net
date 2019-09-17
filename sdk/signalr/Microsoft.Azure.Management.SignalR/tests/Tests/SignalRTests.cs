@@ -18,7 +18,7 @@ namespace SignalR.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(typeof(SignalRTests).FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = SignalRTestUtilities.GetResourceManagementClient(context, handler);
                 var signalrClient = SignalRTestUtilities.GetSignalRManagementClient(context, handler);
@@ -60,7 +60,7 @@ namespace SignalR.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(typeof(SignalRTests).FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = SignalRTestUtilities.GetResourceManagementClient(context, handler);
                 var signalrClient = SignalRTestUtilities.GetSignalRManagementClient(context, handler);
@@ -80,7 +80,7 @@ namespace SignalR.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(typeof(SignalRTests).FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = SignalRTestUtilities.GetResourceManagementClient(context, handler);
                 var signalrClient = SignalRTestUtilities.GetSignalRManagementClient(context, handler);
@@ -101,7 +101,7 @@ namespace SignalR.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = MockContext.Start(typeof(SignalRTests).FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = SignalRTestUtilities.GetResourceManagementClient(context, handler);
                 var signalrClient = SignalRTestUtilities.GetSignalRManagementClient(context, handler);
@@ -285,3 +285,4 @@ namespace SignalR.Tests
         }
     }
 }
+

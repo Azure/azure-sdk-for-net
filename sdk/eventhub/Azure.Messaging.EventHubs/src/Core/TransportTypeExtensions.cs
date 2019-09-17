@@ -35,5 +35,15 @@ namespace Azure.Messaging.EventHubs.Core
                     throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, instance.ToString(), nameof(instance)));
             }
         }
+
+        /// <summary>
+        ///   Determines whether the specified transport makes use of web sockets.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance that this method was invoked on.</param>
+        ///
+        /// <returns><c>true</c> if the transport uses web sockets; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool IsWebSocketTransport(this TransportType instance) => (instance == TransportType.AmqpWebSockets);
     }
 }

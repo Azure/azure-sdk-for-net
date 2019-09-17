@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration
         /// Registers a <see cref="ConfigurationClient"/> instance with the provided <paramref name="connectionString"/>
         /// </summary>
         public static IAzureClientBuilder<ConfigurationClient, ConfigurationClientOptions> AddConfigurationClient<TBuilder>(this TBuilder builder, string connectionString)
-            where TBuilder: IAzureClientFactoryBuilder
+            where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<ConfigurationClient, ConfigurationClientOptions>(options => new ConfigurationClient(connectionString, options));
         }
@@ -23,7 +23,7 @@ namespace Azure.Data.AppConfiguration
         /// Registers a <see cref="ConfigurationClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
         public static IAzureClientBuilder<ConfigurationClient, ConfigurationClientOptions> AddConfigurationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder: IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<ConfigurationClient, ConfigurationClientOptions>(configuration);
         }

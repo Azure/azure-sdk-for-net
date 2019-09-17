@@ -30,7 +30,6 @@ namespace Azure.Storage.Common.Test
             this.Recording.InstrumentClientOptions(
                 new BlobClientOptions
                 {
-                    ResponseClassifier = new TestResponseClassifier(),
                     Diagnostics = { IsLoggingEnabled = true },
                     Retry =
                     {

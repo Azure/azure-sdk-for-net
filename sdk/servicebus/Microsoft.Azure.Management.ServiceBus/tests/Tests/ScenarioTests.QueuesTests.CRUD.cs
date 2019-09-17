@@ -20,7 +20,7 @@ namespace ServiceBus.Tests.ScenarioTests
         [Fact]
         public void QueuesCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
