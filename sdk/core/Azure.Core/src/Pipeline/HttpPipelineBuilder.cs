@@ -28,6 +28,8 @@ namespace Azure.Core.Pipeline
 
             var policies = new List<HttpPipelinePolicy>();
 
+            bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
+
             policies.AddRange(perCallClientPolicies);
 
             policies.AddRange(options.PerCallPolicies);
@@ -53,11 +55,14 @@ namespace Azure.Core.Pipeline
 
             policies.Add(BufferResponsePolicy.Shared);
 
-            policies.Add(new RequestActivityPolicy());
+            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled));
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), responseClassifier, new ClientDiagnostics(options.Diagnostics.IsLoggingEnabled));
+            return new HttpPipeline(options.Transport,
+                policies.ToArray(),
+                responseClassifier,
+                new ClientDiagnostics(isDistributedTracingEnabled));
         }
 
         // internal for testing
