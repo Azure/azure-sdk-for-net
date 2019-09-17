@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
+using Azure.Data.InkRecognizer;
 
 //namespace Azure.AI.InkRecognizer.WPF.Stroke
 namespace Azure.Data.InkRecognizer.WPF.Stroke
@@ -15,7 +16,7 @@ namespace Azure.Data.InkRecognizer.WPF.Stroke
     /// </summary>
     public class InkStrokeStore
     {
-       private List<Azure.Data.InkRecognizer.InkStroke> _strokes;
+       private readonly List<InkRecognizer.InkStroke> _strokes;
        private int _strokeCounter = 0;
 
         // Default DPI setting
@@ -42,7 +43,7 @@ namespace Azure.Data.InkRecognizer.WPF.Stroke
                 dpiY = 96.0f;
             }
 
-            _strokes = new List<Azure.AI.InkRecognizer.InkStroke>();
+            _strokes = new List<Azure.Data.InkRecognizer.InkStroke>();
         }
 
         /// <summary>
@@ -70,23 +71,37 @@ namespace Azure.Data.InkRecognizer.WPF.Stroke
             return inkRecognizerStroke.Id;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="strokeId"></param>
         public void RemoveStroke(long strokeId)
         {
             var strokeToRemove = _strokes.Find(stroke => stroke.Id == strokeId);
             _strokes.Remove(strokeToRemove);
         }
 
-        public IEnumerable<Azure.AI.InkRecognizer.InkStroke> GetStrokes()
+        public IEnumerable<Azure.Data.InkRecognizer.InkStroke> GetStrokes()
         {
             return _strokes;
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class InkRecognizerStroke 
     {
-        private List<Azure.AI.InkRecognizer.InkPoint> _inkPoints;
-        private Azure.AI.InkRecognizer.InkStroke _inkStroke;
+        private List<InkPoint> _inkPoints;
+        private InkStroke _inkStroke;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="points"></param>
+        /// <param name="DpiX"></param>
+        /// <param name="DpiY"></param>
+        /// <param name="strokeId"></param>
         public InkRecognizerStroke(
             IEnumerable<System.Windows.Input.StylusPoint> points,
             float DpiX,
@@ -99,12 +114,12 @@ namespace Azure.Data.InkRecognizer.WPF.Stroke
             _inkStroke = new InkStroke(_inkPoints, Language, Id, Kind);
         }
 
-        public Azure.AI.InkRecognizer.InkStroke GetNativeStroke()
+        public InkStroke GetNativeStroke()
         {
             return _inkStroke;
         }
 
-        public IEnumerable<Azure.AI.InkRecognizer.InkPoint> GetInkPoints()
+        public IEnumerable<InkPoint> GetInkPoints()
         {
             return _inkPoints;
         }

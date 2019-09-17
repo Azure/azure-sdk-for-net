@@ -13,13 +13,13 @@ namespace Azure.Data.InkRecognizer
 {
     public class InkRecognitionRequest
     {
-        private ApplicationKind _applicationType { get; set; }
+        private ApplicationKind ApplicationType { get; set; }
 
-        private string _language { get; set; }
+        private string Language { get; set; }
 
-        private InkPointUnit _inkPointUnit { get; set; }
+        private InkPointUnit InkPointUnit { get; set; }
 
-        private float _unitMultiple { get; set; }
+        private float UnitMultiple { get; set; }
 
         private IEnumerable<InkStroke> _strokes { get; set; }
 
@@ -30,10 +30,10 @@ namespace Azure.Data.InkRecognizer
             float unitMultiple)
         {
             _strokes = strokes;
-            _applicationType = applicationType;
-            _language = language;
-            _inkPointUnit = inkPointUnit;
-            _unitMultiple = unitMultiple;
+            ApplicationType = applicationType;
+            Language = language;
+            InkPointUnit = inkPointUnit;
+            UnitMultiple = unitMultiple;
         }
 
         internal string ToJson()
@@ -44,9 +44,9 @@ namespace Azure.Data.InkRecognizer
             jsonWriter.WriteStartObject();
 
             jsonWriter.WriteString("applicationType", _getApplicationTypeString());
-            jsonWriter.WriteString("language", _language);
-            jsonWriter.WriteString("unit", _getInkPointUnitString());
-            jsonWriter.WriteNumber("unitMultiple", _unitMultiple);
+            jsonWriter.WriteString("language", Language);
+            jsonWriter.WriteString("unit", GetInkPointUnitString());
+            jsonWriter.WriteNumber("unitMultiple", UnitMultiple);
 
             jsonWriter.WriteStartArray("strokes");
             foreach (var stroke in _strokes)
@@ -81,9 +81,9 @@ namespace Azure.Data.InkRecognizer
             return Encoding.UTF8.GetString(jsonStream.ToArray());
         }
 
-        private string _getInkPointUnitString()
+        private string GetInkPointUnitString()
         {
-            switch (_inkPointUnit)
+            switch (InkPointUnit)
             {
                 case InkPointUnit.Inch:
                     return "in";
@@ -98,7 +98,7 @@ namespace Azure.Data.InkRecognizer
 
         private string _getApplicationTypeString()
         {
-            switch (_applicationType)
+            switch (ApplicationType)
             {
                 case ApplicationKind.Writing:
                     return "writing";
