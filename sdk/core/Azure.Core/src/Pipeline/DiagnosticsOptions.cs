@@ -15,6 +15,8 @@ namespace Azure.Core.Pipeline
 
         public bool IsLoggingEnabled { get; set; } = true;
 
+        public bool IsDistributedTracingEnabled { get; set; } = true;
+
         public bool IsTelemetryEnabled { get; set; }
 
         public string? ApplicationId { get; set; }
