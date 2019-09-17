@@ -957,7 +957,7 @@ namespace Azure.Storage.Files.Test
         [Test]
         [LiveOnly]
         // TODO: #7645
-        public async Task UploadRangeFromUrlAsync()
+        public async Task UploadRangeFromUriAsync()
         {
             var shareName = this.GetNewShareName();
             using (this.GetNewShare(out var share, shareName))
@@ -988,7 +988,7 @@ namespace Azure.Storage.Files.Test
                     .GetFileClient(fileName));
 
                 // Act
-                await destFile.UploadRangeFromUrlAsync(
+                await destFile.UploadRangeFromUriAsync(
                     sourceUri: sasFile.Uri,
                     range: destRange,
                     sourceRange: sourceRange);
@@ -1008,7 +1008,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        public async Task UploadRangeFromUrlAsync_Error()
+        public async Task UploadRangeFromUriAsync_Error()
         {
             var shareName = this.GetNewShareName();
             using (this.GetNewShare(out var share, shareName))
@@ -1029,7 +1029,7 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    destFile.UploadRangeFromUrlAsync(
+                    destFile.UploadRangeFromUriAsync(
                     sourceUri: destFile.Uri,
                     range: destRange,
                     sourceRange: sourceRange),

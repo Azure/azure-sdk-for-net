@@ -1684,7 +1684,7 @@ namespace Azure.Storage.Files
 
         #region UploadRangeFromUrl
         /// <summary>
-        /// The <see cref="UploadRangeFromUrl"/> operation writes a range from an Azure File to another Azure file. 
+        /// The <see cref="UploadRangeFromUri"/> operation writes a range from an Azure File to another Azure file. 
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
@@ -1710,12 +1710,12 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<StorageFileUploadInfo> UploadRangeFromUrl(
+        public virtual Response<StorageFileUploadInfo> UploadRangeFromUri(
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
             CancellationToken cancellationToken = default) =>
-            this.UploadRangeFromUrlInternal(
+            this.UploadRangeFromUriInternal(
                 sourceUri,
                 range,
                 sourceRange,
@@ -1724,7 +1724,7 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeFromUrlAsync"/> operation writes a range from an Azure File to another Azure file. 
+        /// The <see cref="UploadRangeFromUriAsync"/> operation writes a range from an Azure File to another Azure file. 
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
@@ -1750,12 +1750,12 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<StorageFileUploadInfo>> UploadRangeFromUrlAsync(
+        public virtual async Task<Response<StorageFileUploadInfo>> UploadRangeFromUriAsync(
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
             CancellationToken cancellationToken = default) =>
-            await this.UploadRangeFromUrlInternal(
+            await this.UploadRangeFromUriInternal(
                 sourceUri,
                 range,
                 sourceRange,
@@ -1793,7 +1793,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<StorageFileUploadInfo>> UploadRangeFromUrlInternal(
+        private async Task<Response<StorageFileUploadInfo>> UploadRangeFromUriInternal(
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
