@@ -272,7 +272,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public async Task AuthorizationHeaderFormat()
         {
-            var expectedSyntax = "HMAC-SHA256 Credential=(.+)&SignedHeaders=(.+)&Signature=(.+)";
+            var expectedSyntax = "HMAC-SHA256 Credential=(.+)&SignedHeaders=date;host;x-ms-content-sha256&Signature=(.+)";
 
             var response = new MockResponse(200);
             response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
