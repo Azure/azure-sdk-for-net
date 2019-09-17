@@ -11,30 +11,30 @@
 namespace Microsoft.Azure.Management.ManagedNetwork.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Update Tags of Managed Network
+    /// Tag Object
     /// </summary>
-    public partial class ManagedNetworkUpdate
+    public partial class TagObject
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedNetworkUpdate class.
+        /// Initializes a new instance of the TagObject class.
         /// </summary>
-        public ManagedNetworkUpdate()
+        public TagObject()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagedNetworkUpdate class.
+        /// Initializes a new instance of the TagObject class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
-        public ManagedNetworkUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="key">Resource Key</param>
+        /// <param name="value">Resource Value</param>
+        public TagObject(string key = default(string), string value = default(string))
         {
-            Tags = tags;
+            Key = key;
+            Value = value;
             CustomInit();
         }
 
@@ -44,10 +44,16 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets resource Key
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "key")]
+        public string Key { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource Value
+        /// </summary>
+        [JsonProperty(PropertyName = "Value")]
+        public string Value { get; set; }
 
     }
 }

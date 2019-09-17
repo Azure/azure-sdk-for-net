@@ -34,15 +34,15 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// <summary>
         /// Initializes a new instance of the ManagedNetworkModel class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="tags">Resource tags.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Provisioning state of the
         /// ManagedNetwork resource. Possible values are: 'Updating',
         /// 'Deleting', and 'Failed'. Possible values include: 'Updating',
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// ScopeAssignments for this Managed Network</param>
         /// <param name="connectivity">The collection of groups and policies
         /// concerned with connectivity</param>
-        public ManagedNetworkModel(string location, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), string provisioningState = default(string), string etag = default(string), Scope scope = default(Scope), ConnectivityCollection connectivity = default(ConnectivityCollection))
-            : base(location, id, name, type, tags)
+        public ManagedNetworkModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string etag = default(string), Scope scope = default(Scope), ConnectivityCollection connectivity = default(ConnectivityCollection))
+            : base(id, name, type, location, tags)
         {
             ProvisioningState = provisioningState;
             Etag = etag;
@@ -101,15 +101,5 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         [JsonProperty(PropertyName = "properties.connectivity")]
         public ConnectivityCollection Connectivity { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

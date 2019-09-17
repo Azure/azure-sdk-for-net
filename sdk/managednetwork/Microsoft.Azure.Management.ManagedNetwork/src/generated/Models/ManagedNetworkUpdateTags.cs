@@ -16,25 +16,25 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
     using System.Linq;
 
     /// <summary>
-    /// Update Tags of Managed Network
+    /// Resource tags
     /// </summary>
-    public partial class ManagedNetworkUpdate
+    public partial class ManagedNetworkUpdateTags
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedNetworkUpdate class.
+        /// Initializes a new instance of the ManagedNetworkUpdateTags class.
         /// </summary>
-        public ManagedNetworkUpdate()
+        public ManagedNetworkUpdateTags()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagedNetworkUpdate class.
+        /// Initializes a new instance of the ManagedNetworkUpdateTags class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
-        public ManagedNetworkUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="tag">Resource tag</param>
+        public ManagedNetworkUpdateTags(IDictionary<string, string> tag = default(IDictionary<string, string>))
         {
-            Tags = tags;
+            Tag = tag;
             CustomInit();
         }
 
@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets resource tag
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "tag")]
+        public IDictionary<string, string> Tag { get; set; }
 
     }
 }
