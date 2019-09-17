@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
             await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
-        private static async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (!s_eventSource.IsEnabled())
             {
