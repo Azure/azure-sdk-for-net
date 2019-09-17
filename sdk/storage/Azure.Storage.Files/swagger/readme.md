@@ -434,6 +434,15 @@ directive:
     $.items = { "type": "string" };
 ```
 
+### /{shareName}/{directory}/{fileName}?comp=range&fromURL
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=range&fromURL"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+```
+
 ### MD5 to Hash
 ``` yaml
 directive:
