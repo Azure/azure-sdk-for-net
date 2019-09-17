@@ -78,7 +78,7 @@ namespace Azure.Data.AppConfiguration
         public IDictionary<string, string> Tags
         {
             get => _tags ?? (_tags = new Dictionary<string, string>());
-            set => _tags = value;
+            internal set => _tags = value;
         }
 
         /// <summary>
