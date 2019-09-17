@@ -47,7 +47,7 @@ namespace Azure.Core.Testing
             Record(message);
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message)
         {
             await _innerTransport.ProcessAsync(message);
             Record(message);

@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         internal KeyClient GetClient(TestRecording recording = null)
         {
-            recording ??= Recording;
+            recording = recording ?? Recording;
 
             return InstrumentClient
                 (new KeyClient(

@@ -14,19 +14,23 @@ namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {
+
+        public LoggingPolicy(bool logContent)
+        {
+            _logContent = logContent;
+        }
+
         private const long DelayWarningThreshold = 3000; // 3000ms
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
+        private readonly bool _logContent;
 
-        public static readonly LoggingPolicy Shared = new LoggingPolicy();
-
-        // TODO (pri 1): we should remove sensitive information, e.g. keys
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
-        private static async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (!s_eventSource.IsEnabled())
             {
@@ -48,7 +52,9 @@ namespace Azure.Core.Pipeline
             bool textRequest = message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) &&
                 ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
 
-            if (message.Request.Content != null)
+            bool logRequestContent = _logContent && message.Request.Content != null;
+
+            if (logRequestContent)
             {
                 if (textRequest)
                 {
@@ -92,19 +98,19 @@ namespace Azure.Core.Pipeline
 
             var textResponse = ContentTypeUtilities.TryGetTextEncoding(message.Response.Headers.ContentType, out Encoding? responseTextEncoding);
 
-            bool wrapResponseStream = message.Response.ContentStream != null && message.Response.ContentStream?.CanSeek == false && s_eventSource.ShouldLogContent(isError);
+            bool logResponseContent = _logContent && message.Response.ContentStream != null;
+            bool wrapResponseContent = logResponseContent && message.Response.ContentStream?.CanSeek == false && s_eventSource.ShouldLogContent(isError);
 
-            if (wrapResponseStream)
+            if (wrapResponseContent)
             {
-                message.Response.ContentStream = new LoggingStream(
-                    message.Response.ClientRequestId, s_eventSource, message.Response.ContentStream!, isError, responseTextEncoding);
+                message.Response.ContentStream = new LoggingStream(message.Response.ClientRequestId, s_eventSource, message.Response.ContentStream!, isError, responseTextEncoding);
             }
 
             if (isError)
             {
                 s_eventSource.ErrorResponse(message.Response);
 
-                if (!wrapResponseStream && message.Response.ContentStream != null)
+                if (!wrapResponseContent && logResponseContent)
                 {
                     if (textResponse)
                     {
@@ -133,7 +139,7 @@ namespace Azure.Core.Pipeline
 
             s_eventSource.Response(message.Response);
 
-            if (!wrapResponseStream && message.Response.ContentStream != null)
+            if (!wrapResponseContent && logResponseContent)
             {
                 if (textResponse)
                 {

@@ -21,7 +21,7 @@ namespace Azure.Data.AppConfiguration
             _syncTokens = new ConcurrentDictionary<string, SyncToken>();
         }
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
@@ -31,7 +31,7 @@ namespace Azure.Data.AppConfiguration
             ProcessAsync(message, pipeline, false).GetAwaiter().GetResult();
         }
 
-        private async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             foreach (SyncToken token in _syncTokens.Values)
             {

@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
 
             var options = new TestOptions();
-            options.AddPolicy(position, policy);
+            options.AddPolicy(policy, position);
             options.Transport = transport;
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);

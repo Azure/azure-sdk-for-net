@@ -18,6 +18,8 @@ namespace Azure.Core.Tests
         {
         }
 
+        private static readonly RequestActivityPolicy s_enabledPolicy = new RequestActivityPolicy(true);
+
         [Test]
         [NonParallelizable]
         public async Task ActivityIsCreatedForRequest()
@@ -40,7 +42,7 @@ namespace Azure.Core.Tests
             request.UriBuilder.Uri = new Uri("http://example.com");
             request.Headers.Add("User-Agent", "agent");
 
-            Task<Response> requestTask = SendRequestAsync(mockTransport, request, RequestActivityPolicy.Shared);
+            Task<Response> requestTask = SendRequestAsync(mockTransport, request, s_enabledPolicy);
 
             await requestTask;
 
@@ -82,7 +84,7 @@ namespace Azure.Core.Tests
                 request.Method = RequestMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");
 
-                Task<Response> requestTask = SendRequestAsync(mockTransport, request, RequestActivityPolicy.Shared);
+                Task<Response> requestTask = SendRequestAsync(mockTransport, request, s_enabledPolicy);
 
                 await requestTask;
 
@@ -105,7 +107,7 @@ namespace Azure.Core.Tests
 
             activity.Start();
 
-            await SendGetRequest(transport, RequestActivityPolicy.Shared);
+            await SendGetRequest(transport, s_enabledPolicy);
 
             activity.Stop();
 
@@ -128,7 +130,7 @@ namespace Azure.Core.Tests
                 activity.Start();
                 activity.TraceStateString = "trace";
 
-                await SendGetRequest(transport, RequestActivityPolicy.Shared);
+                await SendGetRequest(transport, s_enabledPolicy);
 
                 activity.Stop();
 
@@ -152,7 +154,7 @@ namespace Azure.Core.Tests
 
             var transport = new MockTransport(new MockResponse(200));
 
-            await SendGetRequest(transport, RequestActivityPolicy.Shared);
+            await SendGetRequest(transport, s_enabledPolicy);
 
             KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
             KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
@@ -168,5 +170,17 @@ namespace Azure.Core.Tests
             Assert.IsInstanceOf<HttpPipelineMessage>(isEnabledCall.Item2);
         }
 
+        [Test]
+        [NonParallelizable]
+        public async Task ActivityIsNotCreatedWhenDisabled()
+        {
+            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+
+            var transport = new MockTransport(new MockResponse(200));
+
+            await SendGetRequest(transport, new RequestActivityPolicy(isDistributedTracingEnabled: false));
+
+            Assert.AreEqual(0, testListener.Events.Count);
+        }
     }
 }
