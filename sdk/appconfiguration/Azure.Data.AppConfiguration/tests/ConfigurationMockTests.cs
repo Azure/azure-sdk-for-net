@@ -62,7 +62,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual(AppendPipelineParams("https://contoso.appconfig.io/kv/test_key"), request.UriBuilder.ToString());
+            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?api-version={version}", request.UriBuilder.ToString());
             Assert.AreEqual(s_testSetting, setting);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.AreEqual(AppendPipelineParams("https://contoso.appconfig.io/kv/test_key?label=test_label"), request.UriBuilder.ToString());
+            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={version}", request.UriBuilder.ToString());
             Assert.AreEqual(s_testSetting, setting);
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual(AppendPipelineParams("https://contoso.appconfig.io/kv/test_key?label=test_label"), request.UriBuilder.ToString());
+            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={version}", request.UriBuilder.ToString());
             Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("*", ifNoneMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
@@ -135,7 +135,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Put, request.Method);
-            Assert.AreEqual(AppendPipelineParams("https://contoso.appconfig.io/kv/test_key?label=test_label"), request.UriBuilder.ToString());
+            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={version}", request.UriBuilder.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
         }
@@ -154,7 +154,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual(AppendPipelineParams("https://contoso.appconfig.io/kv/test_key"), request.UriBuilder.ToString());
+            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?api-version={version}", request.UriBuilder.ToString());
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             AssertRequestCommon(request);
             Assert.AreEqual(RequestMethod.Delete, request.Method);
-            Assert.AreEqual(AppendPipelineParams("https://contoso.appconfig.io/kv/test_key?label=test_label"), request.UriBuilder.ToString());
+            Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label&api-version={version}", request.UriBuilder.ToString());
         }
 
         [Test]
@@ -224,12 +224,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request1 = mockTransport.Requests[0];
             Assert.AreEqual(RequestMethod.Get, request1.Method);
-            Assert.AreEqual(AppendPipelineParams("https://contoso.appconfig.io/kv/?key=*&label=*"), request1.UriBuilder.ToString());
+            Assert.AreEqual("https://contoso.appconfig.io/kv/?key=*&label=*&api-version={version}", request1.UriBuilder.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
             Assert.AreEqual(RequestMethod.Get, request2.Method);
-            Assert.AreEqual(AppendPipelineParams("https://contoso.appconfig.io/kv/?key=*&label=*&after=5"), request2.UriBuilder.ToString());
+            Assert.AreEqual("https://contoso.appconfig.io/kv/?key=*&label=*&after=5&api-version={version}", request2.UriBuilder.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -391,18 +391,6 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             json.WriteEndArray();
             json.WriteEndObject();
-        }
-
-        private string AppendPipelineParams(string uri)
-        {
-            string version = new ConfigurationClientOptions().GetVersionString();
-
-            if (uri.Contains("?"))
-            {
-                return $"{uri}&api-version={version}";
-            }
-
-            return $"{uri}?api-version={version}";
         }
     }
 }

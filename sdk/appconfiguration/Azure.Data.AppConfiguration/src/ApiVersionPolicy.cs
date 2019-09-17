@@ -8,37 +8,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class ApiVersionPolicy : HttpPipelinePolicy
+    internal class ApiVersionPolicy : SynchronousHttpPipelinePolicy
     {
-        private string _versionString;
+        private readonly string _versionString;
 
         public ApiVersionPolicy(string versionString)
         {
             _versionString = versionString;
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            ProcessAsync(message, pipeline, false).GetAwaiter().GetResult();
-        }
-
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            return ProcessAsync(message, pipeline, true);
-        }
-
-        private async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        public override void OnSendingRequest(HttpPipelineMessage message)
         {
             message.Request.UriBuilder.AppendQuery("api-version", _versionString);
-
-            if (async)
-            {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            }
-            else
-            {
-                ProcessNext(message, pipeline);
-            }
         }
     }
 }
