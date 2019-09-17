@@ -15,10 +15,10 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Common
 {
-    sealed class StreamPartition : Stream
+    internal sealed class StreamPartition : Stream
     {
-        Action disposeAction;
-        ReadOnlyMemory<byte> memory;
+        private Action _disposeAction;
+        private ReadOnlyMemory<byte> _memory;
 
         public override bool CanRead => true;
 
@@ -28,9 +28,9 @@ namespace Azure.Storage.Common
 
         public override long Length { get; }
 
-        long position;
+        private long _position;
 
-        public override long Position { get => this.position; set => this.position = value; }
+        public override long Position { get => _position; set => _position = value; }
 
         public long ParentPosition { get; }
 
@@ -38,77 +38,77 @@ namespace Azure.Storage.Common
 
 #pragma warning disable IDE0069 // Disposable fields should be disposed // disposed in DisposalTask
         //ManualResetEventSlim disposalTaskCompletionSource;
-        SemaphoreSlim disposalTaskCompletionSource;
+        private SemaphoreSlim _disposalTaskCompletionSource;
 #pragma warning restore IDE0069 // Disposable fields should be disposed
 
         public StreamPartition(ReadOnlyMemory<byte> buffer, long parentPosition, int count, Action disposeAction, CancellationToken ct)
         {
-            this.memory = buffer;
-            this.ParentPosition = parentPosition;
-            this.Length = count;
-            this.disposeAction = disposeAction;
+            _memory = buffer;
+            ParentPosition = parentPosition;
+            Length = count;
+            _disposeAction = disposeAction;
             //this.disposalTaskCompletionSource = new ManualResetEventSlim(false);
-            this.disposalTaskCompletionSource = new SemaphoreSlim(0);
-            this.DisposalTask = this.DisposalTaskImpl(ct);
+            _disposalTaskCompletionSource = new SemaphoreSlim(0);
+            DisposalTask = DisposalTaskImpl(ct);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        async Task DisposalTaskImpl(CancellationToken ct)
+        private async Task DisposalTaskImpl(CancellationToken ct)
         {
             //Console.WriteLine($"Waiting for partition {this.ParentPosition}");
 
             //this.disposalTaskCompletionSource.Wait(ct);
-            await this.disposalTaskCompletionSource.WaitAsync(ct).ConfigureAwait(false);
+            await _disposalTaskCompletionSource.WaitAsync(ct).ConfigureAwait(false);
 
             //Console.WriteLine($"Completed partition {this.ParentPosition}");
 
-            this.disposalTaskCompletionSource.Dispose();
-            this.disposalTaskCompletionSource = default;
+            _disposalTaskCompletionSource.Dispose();
+            _disposalTaskCompletionSource = default;
         }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         protected override void Dispose(bool disposing)
         {
-            if (!this.disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
                     base.Dispose(disposing);
-                    this.disposeAction();
+                    _disposeAction();
                 }
 
-                this.memory = default;
-                this.disposeAction = default;
+                _memory = default;
+                _disposeAction = default;
 
-                this.disposedValue = true;
+                _disposedValue = true;
 
                 //this.disposalTaskCompletionSource.Set();
-                this.disposalTaskCompletionSource.Release();
+                _disposalTaskCompletionSource.Release();
             }
         }
 
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposedValue = false; // To detect redundant calls
 
         public override void Flush() => throw Errors.NotImplemented();
 
         public int Read(out ReadOnlyMemory<byte> buffer, int count)
         {
-            var n = Math.Min(count, (int)(this.Length - this.position));
+            var n = Math.Min(count, (int)(Length - _position));
 
-            buffer = this.memory.Slice((int)this.position, n);
+            buffer = _memory.Slice((int)_position, n);
 
-            Interlocked.Add(ref this.position, n);
+            Interlocked.Add(ref _position, n);
 
             return n;
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            var n = Math.Min(count, (int)(this.Length - this.position));
+            var n = Math.Min(count, (int)(Length - _position));
 
-            this.memory.Slice((int)this.position, n).CopyTo(new Memory<byte>(buffer, offset, count));
+            _memory.Slice((int)_position, n).CopyTo(new Memory<byte>(buffer, offset, count));
 
-            Interlocked.Add(ref this.position, n);
+            Interlocked.Add(ref _position, n);
 
             return n;
         }
@@ -118,17 +118,17 @@ namespace Azure.Storage.Common
             switch (origin)
             {
                 case SeekOrigin.Begin:
-                    Interlocked.Exchange(ref this.position, offset);
+                    Interlocked.Exchange(ref _position, offset);
                     break;
                 case SeekOrigin.Current:
-                    Interlocked.Add(ref this.position, offset);
+                    Interlocked.Add(ref _position, offset);
                     break;
                 case SeekOrigin.End:
-                    Interlocked.Exchange(ref this.position, this.Length - offset);
+                    Interlocked.Exchange(ref _position, Length - offset);
                     break;
             }
 
-            return this.Position;
+            return Position;
         }
 
         public override void SetLength(long value) => throw Errors.NotImplemented();

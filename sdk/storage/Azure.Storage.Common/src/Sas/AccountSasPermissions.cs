@@ -10,7 +10,7 @@ namespace Azure.Storage.Sas
 {
     /// <summary>
     /// Specifies the permissions available to an account level shared access
-    /// signature.  Use <see cref="ToString"/> to produce a <see cref="String"/>
+    /// signature.  Use <see cref="ToString"/> to produce a <see cref="string"/>
     /// that can be for <see cref="AccountSasBuilder.Permissions"/>.
     /// </summary>
     public struct AccountSasPermissions : IEquatable<AccountSasPermissions>
@@ -78,14 +78,14 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (this.Read) { sb.Append(Constants.Sas.Permissions.Read); }
-            if (this.Write) { sb.Append(Constants.Sas.Permissions.Write); }
-            if (this.Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
-            if (this.List) { sb.Append(Constants.Sas.Permissions.List); }
-            if (this.Add) { sb.Append(Constants.Sas.Permissions.Add); }
-            if (this.Create) { sb.Append(Constants.Sas.Permissions.Create); }
-            if (this.Update) { sb.Append(Constants.Sas.Permissions.Update); }
-            if (this.Process) { sb.Append(Constants.Sas.Permissions.Process); }
+            if (Read) { sb.Append(Constants.Sas.Permissions.Read); }
+            if (Write) { sb.Append(Constants.Sas.Permissions.Write); }
+            if (Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
+            if (List) { sb.Append(Constants.Sas.Permissions.List); }
+            if (Add) { sb.Append(Constants.Sas.Permissions.Add); }
+            if (Create) { sb.Append(Constants.Sas.Permissions.Create); }
+            if (Update) { sb.Append(Constants.Sas.Permissions.Update); }
+            if (Process) { sb.Append(Constants.Sas.Permissions.Process); }
             return sb.ToString();
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Storage.Sas
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) =>
             obj is AccountSasPermissions other &&
-            this.Equals(other);
+            Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="AccountSasPermissions"/>.
@@ -105,14 +105,14 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the <see cref="AccountSasPermissions"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            (this.Add ? 0b00000001 : 0) +
-            (this.Delete ? 0b00000010 : 0) +
-            (this.List ? 0b00000100 : 0) +
-            (this.Process ? 0b00001000 : 0) +
-            (this.Read ? 0b00010000 : 0) +
-            (this.Update ? 0b00100000 : 0) +
-            (this.Write ? 0b01000000 : 0) +
-            (this.Create ? 0b1000000 : 0);
+            (Add ? 0b00000001 : 0) +
+            (Delete ? 0b00000010 : 0) +
+            (List ? 0b00000100 : 0) +
+            (Process ? 0b00001000 : 0) +
+            (Read ? 0b00010000 : 0) +
+            (Update ? 0b00100000 : 0) +
+            (Write ? 0b01000000 : 0) +
+            (Create ? 0b1000000 : 0);
 
         /// <summary>
         /// Check if two <see cref="AccountSasPermissions"/> instances are equal.
@@ -120,14 +120,14 @@ namespace Azure.Storage.Sas
         /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AccountSasPermissions other) =>
-            other.Add == this.Add &&
-            other.Delete == this.Delete &&
-            other.List == this.List &&
-            other.Process == this.Process &&
-            other.Read == this.Read &&
-            other.Update == this.Update &&
-            other.Write == this.Write &&
-            other.Create == this.Create;
+            other.Add == Add &&
+            other.Delete == Delete &&
+            other.List == List &&
+            other.Process == Process &&
+            other.Read == Read &&
+            other.Update == Update &&
+            other.Write == Write &&
+            other.Create == Create;
 
         /// <summary>
         /// Check if two <see cref="AccountSasPermissions"/> instances are
@@ -166,15 +166,32 @@ namespace Azure.Storage.Sas
             {
                 switch (ch)
                 {
-                    case Constants.Sas.Permissions.Read: p.Read = true; break;
-                    case Constants.Sas.Permissions.Write: p.Write = true; break;
-                    case Constants.Sas.Permissions.Delete: p.Delete = true; break;
-                    case Constants.Sas.Permissions.List: p.List = true; break;
-                    case Constants.Sas.Permissions.Add: p.Add = true; break;
-                    case Constants.Sas.Permissions.Create: p.Create = true; break;
-                    case Constants.Sas.Permissions.Update: p.Update = true; break;
-                    case Constants.Sas.Permissions.Process: p.Process = true; break;
-                    default: throw Errors.InvalidPermission(ch);
+                    case Constants.Sas.Permissions.Read:
+                        p.Read = true;
+                        break;
+                    case Constants.Sas.Permissions.Write:
+                        p.Write = true;
+                        break;
+                    case Constants.Sas.Permissions.Delete:
+                        p.Delete = true;
+                        break;
+                    case Constants.Sas.Permissions.List:
+                        p.List = true;
+                        break;
+                    case Constants.Sas.Permissions.Add:
+                        p.Add = true;
+                        break;
+                    case Constants.Sas.Permissions.Create:
+                        p.Create = true;
+                        break;
+                    case Constants.Sas.Permissions.Update:
+                        p.Update = true;
+                        break;
+                    case Constants.Sas.Permissions.Process:
+                        p.Process = true;
+                        break;
+                    default:
+                        throw Errors.InvalidPermission(ch);
                 }
             }
             return p;

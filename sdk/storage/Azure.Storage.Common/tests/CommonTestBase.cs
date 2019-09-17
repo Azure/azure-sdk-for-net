@@ -21,7 +21,7 @@ namespace Azure.Storage.Common.Test
         {
         }
 
-        public string GetNewContainerName() => $"test-container-{this.Recording.Random.NewGuid()}";
+        public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
 
         /// <summary>
         /// Get BlobClientOptions instrumented for recording.
@@ -35,8 +35,8 @@ namespace Azure.Storage.Common.Test
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
                 }
             };
             if (Mode != RecordedTestMode.Live)

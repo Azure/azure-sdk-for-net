@@ -19,13 +19,13 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// The ETag contains a value which represents the version of the directory, in quotes.
         /// </summary>
-        public ETag ETag => this._rawStorageDirectoryInfo.ETag;
+        public ETag ETag => _rawStorageDirectoryInfo.ETag;
 
         /// <summary>
         /// Returns the date and time the directory was last modified. Any operation that modifies the directory or 
         /// its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
         /// </summary>
-        public DateTimeOffset LastModified => this._rawStorageDirectoryInfo.LastModified;
+        public DateTimeOffset LastModified => _rawStorageDirectoryInfo.LastModified;
 
         /// <summary>
         /// The directory's SMB properties.
@@ -34,8 +34,8 @@ namespace Azure.Storage.Files.Models
 
         internal StorageDirectoryInfo(RawStorageDirectoryInfo rawStorageDirectoryInfo)
         {
-            this._rawStorageDirectoryInfo = rawStorageDirectoryInfo;
-            this.SmbProperties = new FileSmbProperties(rawStorageDirectoryInfo);
+            _rawStorageDirectoryInfo = rawStorageDirectoryInfo;
+            SmbProperties = new FileSmbProperties(rawStorageDirectoryInfo);
         }
     }
 
