@@ -49,7 +49,7 @@ namespace Azure.Core.Pipeline
 
             if (diagnostics.IsLoggingEnabled)
             {
-                policies.Add(new LoggingPolicy(diagnostics.IsContentLoggingEnabled));
+                policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled));
             }
 
             policies.Add(BufferResponsePolicy.Shared);
