@@ -3,7 +3,7 @@
 
 using Azure.Core.Http;
 
-namespace Azure.Storage.Blobs.Specialized
+namespace Azure.Storage.Blobs.Specialized.Cryptography
 {
     /// <summary>
     /// This is a representation of a range of bytes on an encrypted blob, which may be expanded from the requested range to

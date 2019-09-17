@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.Blobs.Cryptography
+namespace Azure.Storage.Blobs.Specialized.Cryptography
 {
     /// <summary>
     /// Represents the encryption agent stored on the service.

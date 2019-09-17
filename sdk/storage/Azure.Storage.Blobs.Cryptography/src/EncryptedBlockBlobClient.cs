@@ -6,7 +6,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Blobs.Specialized
+namespace Azure.Storage.Blobs.Specialized.Cryptography.Cryptography
 {
     /// <summary>
     /// The <see cref="EncryptedBlockBlobClient"/> allows you to manipulate

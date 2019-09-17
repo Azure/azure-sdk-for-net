@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.Blobs.Cryptography
+namespace Azure.Storage.Blobs.Specialized.Cryptography
 {
     /// <summary>
     /// Represents the envelope key details stored on the service.
