@@ -27,7 +27,7 @@ namespace Azure.Core.Pipeline
 
         public RetryOptions Retry { get; }
 
-        public void AddPolicy(HttpPipelinePosition position, HttpPipelinePolicy policy)
+        public void AddPolicy(HttpPipelinePolicy policy, HttpPipelinePosition position)
         {
             switch (position)
             {

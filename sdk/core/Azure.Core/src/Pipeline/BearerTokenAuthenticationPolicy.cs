@@ -39,7 +39,7 @@ namespace Azure.Core.Pipeline
             _scopes = scopes.ToArray();
         }
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
@@ -49,7 +49,7 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        public async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        public async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (DateTimeOffset.UtcNow >= _refreshOn)
             {

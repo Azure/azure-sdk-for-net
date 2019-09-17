@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlobServiceProperties blobServiceProperties,
@@ -166,7 +166,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -295,7 +295,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -428,7 +428,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of containers</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>> ListContainersSegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>> ListContainersSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -577,7 +577,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A user delegation key</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.KeyInfo keyInfo,
@@ -719,7 +719,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool async = true,
@@ -851,7 +851,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ServiceSubmitBatchResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult>> SubmitBatchAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ServiceSubmitBatchResult>> SubmitBatchAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -1021,7 +1021,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1175,7 +1175,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1353,7 +1353,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1489,7 +1489,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1649,7 +1649,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1808,7 +1808,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.PublicAccessType access,
@@ -1989,7 +1989,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2156,7 +2156,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2318,7 +2318,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2484,7 +2484,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2647,7 +2647,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2823,7 +2823,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2977,7 +2977,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -3151,7 +3151,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3617,7 +3617,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3950,7 +3950,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -4111,7 +4111,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSetAccessControlResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult>> SetAccessControlAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult>> SetAccessControlAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4300,7 +4300,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobGetAccessControlResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>> GetAccessControlAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult>> GetAccessControlAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4508,7 +4508,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobRenameResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult>> RenameAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult>> RenameAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -4753,7 +4753,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> UndeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> UndeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4882,7 +4882,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5098,7 +5098,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5300,7 +5300,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -5478,7 +5478,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5651,7 +5651,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -5829,7 +5829,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -6015,7 +6015,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -6192,7 +6192,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -6401,7 +6401,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -6632,7 +6632,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -6849,7 +6849,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> AbortCopyFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> AbortCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -6985,7 +6985,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response> SetTierAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetTierAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -7148,7 +7148,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7419,7 +7419,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -7673,7 +7673,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7910,7 +7910,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -8199,7 +8199,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8400,7 +8400,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -8607,7 +8607,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long blobContentLength,
@@ -8801,7 +8801,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.SequenceNumberAction sequenceNumberAction,
@@ -8983,7 +8983,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -9182,7 +9182,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -9441,7 +9441,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -9699,7 +9699,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -10005,7 +10005,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -10275,7 +10275,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10486,7 +10486,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -10739,7 +10739,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockLookupList blocks,
@@ -11012,7 +11012,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockListType listType,
@@ -11196,7 +11196,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryCreateResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult>> CreateAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -11424,7 +11424,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryRenameResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult>> RenameAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult>> RenameAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string renameSource,
@@ -11685,7 +11685,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryDeleteResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult>> DeleteAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult>> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool recursiveDirectoryDelete,
@@ -11866,7 +11866,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectorySetAccessControlResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult>> SetAccessControlAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult>> SetAccessControlAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -12055,7 +12055,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>> GetAccessControlAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult>> GetAccessControlAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,

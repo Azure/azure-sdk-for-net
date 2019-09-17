@@ -175,7 +175,7 @@ namespace Azure.Storage.Common
         /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
         public StorageConnectionString(object storageCredentials, string accountName, string endpointSuffix, bool useHttps)
         {
-            if (storageCredentials == default)
+            if (storageCredentials == null)
             {
                 throw Errors.ArgumentNull(nameof(storageCredentials));
             }

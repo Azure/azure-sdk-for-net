@@ -49,7 +49,7 @@ namespace Azure.Core.Testing
             ProcessCore(message).GetAwaiter().GetResult();
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message)
+        public override async ValueTask ProcessAsync(HttpPipelineMessage message)
         {
             if (ExpectSyncPipeline == true)
             {
