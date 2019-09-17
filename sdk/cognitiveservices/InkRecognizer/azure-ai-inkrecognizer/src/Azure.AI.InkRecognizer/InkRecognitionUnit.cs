@@ -5,7 +5,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text.Json;
 
-namespace Azure.AI.InkRecognizer.Models
+//namespace Azure.AI.InkRecognizer.Models
+namespace Azure.Data.InkRecognizer.Models
 {
     /// <summary>
     /// The InkRecognitionUnit class represents a single entity recognized by the InkRecognizer service.
@@ -131,7 +132,7 @@ namespace Azure.AI.InkRecognizer.Models
             }
         }
 
-        private InkRecognitionUnitKind GetInkRecognitionUnitKind(string recoUnitKindString)
+        private static InkRecognitionUnitKind GetInkRecognitionUnitKind(string recoUnitKindString)
         {
             switch (recoUnitKindString)
             {
@@ -154,14 +155,29 @@ namespace Azure.AI.InkRecognizer.Models
             }
         }
 
+        ///// <summary>
+        ///// Check if two InkRecognitionUnit objects are equal.
+        ///// </summary>
+        ///// <param name="other">The object to compare to.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool Equals(InkRecognitionUnit other)
+        {
+            if (other != null && Id == other.Id)
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Check if two InkRecognitionUnit objects are equal.
         /// </summary>
         /// <param name="other">The object to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool Equals(InkRecognitionUnit other)
+        public override bool Equals(object other)
         {
-            if (other != null && Id == other.Id)
+            var item = other as InkRecognitionUnit;
+            if (item != null && Id == item.Id)
             {
                 return true;
             }
@@ -272,7 +288,7 @@ namespace Azure.AI.InkRecognizer.Models
 
             foreach (var alternateJson in alternatesJson)
             {
-                foreach(var alternateProperty in alternateJson.EnumerateObject())
+                foreach (var alternateProperty in alternateJson.EnumerateObject())
                 {
                     if (alternateProperty.Name == "recognizedString")
                     {
@@ -438,7 +454,7 @@ namespace Azure.AI.InkRecognizer.Models
             }
         }
 
-        private RecognizedShape GetShape(string shapeString)
+        private static RecognizedShape GetShape(string shapeString)
         {
             switch (shapeString)
             {

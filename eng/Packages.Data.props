@@ -116,7 +116,7 @@
     <PackageReference Update="System.Text.Json" Version="4.6.0-preview7.19362.9" />
    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview7.19362.9" />   
 
-   <PackageReference Update="Azure.Core" Version="1.0.0-preview.6" />
+   
    <!--<PackageReference Update="System.Text.Json" Version="4.6.0-preview6.19303.8" />-->
    <!--<PackageReference Update="System.Text.Json" Version="4.6.0-preview7.19362.9" />-->
   <!-- <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">

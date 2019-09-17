@@ -9,9 +9,8 @@
   <PropertyGroup>
     <Description>This is the Microsoft Ink Recognization Service client library</Description>
     <AssemblyTitle>Microsoft Azure Cognitive Services Ink Recognization Client Library</AssemblyTitle>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <!--<PackageTags>Microsoft Azure Application Configuration</PackageTags>-->
-    <PackageTags>Azure Core;System.Text.Json</PackageTags>
+    <VersionPrefix>1.0.0</VersionPrefix>    
+    <PackageTags>InkRecognizer\azure-ai-inkrecognizer;InkRecognizer;azure-ai-inkrecognizer;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
       ]]>
@@ -23,24 +22,18 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-
-
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
+    </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="StrokeStore.cs" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <!--<PackageReference Include="Azure.Core" Version="1.0.0-preview.6" />-->
     <!--<PackageReference Include="System.Text.Json" Version="4.6.0-preview6.19303.8" />-->
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
-  <!--<Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />-->
-  
 </Project>

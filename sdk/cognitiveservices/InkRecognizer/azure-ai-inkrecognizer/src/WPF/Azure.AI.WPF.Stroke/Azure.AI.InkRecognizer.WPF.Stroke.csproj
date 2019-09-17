@@ -110,11 +110,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.AI.InkRecognizer\Azure.AI.InkRecognizer.csproj">
-      <Project>{c302e788-b3af-4dd2-9cc4-bd495bfbc5bf}</Project>
-      <Name>Azure.AI.InkRecognizer</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

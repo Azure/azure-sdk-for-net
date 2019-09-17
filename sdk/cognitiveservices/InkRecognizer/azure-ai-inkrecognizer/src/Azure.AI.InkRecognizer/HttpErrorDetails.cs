@@ -5,15 +5,16 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.InkRecognizer
+//namespace Azure.AI.InkRecognizer
+namespace Azure.Data.InkRecognizer
 {
-    class HttpErrorDetails
+    public class HttpErrorDetails
     {
-        string _errorCode;
-        string _message;
-        string _target;
-        string _fullMessage = string.Empty;
-        List<HttpErrorDetails> _details;
+        private string _errorCode;
+        private string _message;
+        private string _target;
+        private string _fullMessage = string.Empty;
+        private List<HttpErrorDetails> _details;
 
         public HttpErrorDetails(string errorJson)
         {
@@ -51,7 +52,7 @@ namespace Azure.AI.InkRecognizer
 
         public override string ToString()
         {
-            if (_fullMessage == string.Empty)
+            if (string.IsNullOrEmpty(_fullMessage))
             {
                 string msg = "";
                 msg += (_errorCode != null) ? "Http Error code : " + _errorCode + ";" : "";

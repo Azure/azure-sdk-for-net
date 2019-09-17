@@ -2,9 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.AI.InkRecognizer.Models;
+//using Azure.AI.InkRecognizer.Models;
+using Azure.Data.InkRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +15,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-[assembly: AzureSdkClientLibrary(".Net")]
-
-namespace Azure.AI.InkRecognizer
+//[assembly: AzureSdkClientLibrary(".Net")]
+//namespace Azure.AI.InkRecognizer
+namespace Azure.Data.InkRecognizer
 {
     /// <summary>
     /// The client to use for interacting with the Azure Ink Recognizer service.
@@ -56,7 +58,7 @@ namespace Azure.AI.InkRecognizer
             InkRecognizerClientOptions options)
         {
             var destination = endpoint.AbsoluteUri;
-            var serviceVersion = _getServiceVersion(options.Version);
+            var serviceVersion = GetServiceVersion(options.Version);
             _endpoint = new Uri(destination + serviceVersion);
             _options = options;
             _credential = credential;
@@ -105,16 +107,16 @@ namespace Azure.AI.InkRecognizer
 
             try
             {
-                var policies = new HttpPipelinePolicy[] { _options.TelemetryPolicy, _options.LoggingPolicy, _options.RetryPolicy };
+                // var policies = new HttpPipelinePolicy[] { _options.TelemetryPolicy, _options.LoggingPolicy, _options.RetryPolicy };
 
-                var pipeline = HttpPipelineBuilder.Build(_options, true, policies);
-                var request = _createInkRecognitionRequest(pipeline,
+                //var pipeline = HttpPipelineBuilder.Build(_options, true, policies);
+                var pipeline = HttpPipelineBuilder.Build(_options, null);
+                var request = CreateInkRecognitionRequest(pipeline,
                     strokes,
                     _options.ApplicationKind,
                     language,
                     unit,
-                    unitMultiple,
-                    cancellationToken);
+                    unitMultiple);
                 var response = pipeline.SendRequest(request, cancellationToken);
 
                 var reader = new StreamReader(response.ContentStream);
@@ -138,9 +140,9 @@ namespace Azure.AI.InkRecognizer
                     throw responseFailedException;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -160,7 +162,7 @@ namespace Azure.AI.InkRecognizer
                 _options.InkPointUnit,
                 _options.UnitMultiple,
                 _options.Language,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -187,17 +189,16 @@ namespace Azure.AI.InkRecognizer
 
             try
             {
-                var policies = new HttpPipelinePolicy[] {_options.TelemetryPolicy, _options.LoggingPolicy, _options.RetryPolicy};
+                //var policies = new HttpPipelinePolicy[] {_options.TelemetryPolicy, _options.LoggingPolicy, _options.RetryPolicy};
 
-                var pipeline = HttpPipelineBuilder.Build(_options, true, policies);
-                var request = _createInkRecognitionRequest(pipeline,
+                var pipeline = HttpPipelineBuilder.Build(_options, null);/*HttpPipelineBuilder.Build(_options, true, policies);*/
+                var request = CreateInkRecognitionRequest(pipeline,
                     strokes,
                     _options.ApplicationKind,
                     language,
                     unit,
-                    unitMultiple,
-                    cancellationToken);
-                var response = await pipeline.SendRequestAsync(request, cancellationToken);
+                    unitMultiple);
+                var response = await pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 var reader = new StreamReader(response.ContentStream);
                 string responseText = reader.ReadToEnd();
@@ -211,31 +212,30 @@ namespace Azure.AI.InkRecognizer
                 else if (response.Status >= 400 && response.Status < 600)
                 {
                     var serverError = new HttpErrorDetails(responseText);
-                    var responseFailedException = await response.CreateRequestFailedExceptionAsync(serverError.ToString());
+                    var responseFailedException = await response.CreateRequestFailedExceptionAsync(serverError.ToString()).ConfigureAwait(false);
                     throw responseFailedException;
                 }
                 else
                 {
                     // For all other http errors
-                    var responseFailedException = await response.CreateRequestFailedExceptionAsync(responseText);
+                    var responseFailedException = await response.CreateRequestFailedExceptionAsync(responseText).ConfigureAwait(false);
                     throw responseFailedException;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
-        private Request _createInkRecognitionRequest(HttpPipeline pipeline,
+        private Request CreateInkRecognitionRequest(HttpPipeline pipeline,
             IEnumerable<InkStroke> strokes,
             ApplicationKind applicationKind,
             string language,
             InkPointUnit inkPointUnit,
-            float unitMultiple,
-            CancellationToken cancellationToken)
+            float unitMultiple)
         {
-            Request request = pipeline.CreateRequest();
+            Azure.Core.Http.Request request = pipeline.CreateRequest();
 
             // add content
             var inkRecognitionRequest = new InkRecognitionRequest(strokes,
@@ -247,19 +247,20 @@ namespace Azure.AI.InkRecognizer
             request.Content = HttpPipelineRequestContent.Create(content);
 
             // specify HTTP request line
-            request.SetRequestLine(HttpPipelineMethod.Put, _endpoint);
+            //request.SetRequestLine(HttpPipelineMethod.Put, _endpoint);
+            request.SetRequestLine(RequestMethod.Put, _endpoint);
 
             // add headers for authentication
-            _credential.SetRequestCredentials(request, cancellationToken);
+            _credential.SetRequestCredentials(request);
 
             return request;
         }
 
-        private string _getServiceVersion(InkRecognizerClientOptions.ServiceVersion version)
+        private static string GetServiceVersion(InkRecognizerClientOptions.ServiceVersion version)
         {
             switch (version)
             {
-                case InkRecognizerClientOptions.ServiceVersion.Preview_1_0_0:
+                case InkRecognizerClientOptions.ServiceVersion.Preview1:
                     return "/v1.0-preview/recognize";
 
                 default:
@@ -286,7 +287,7 @@ namespace Azure.AI.InkRecognizer
         /// </summary>
         /// <param name="request">The request to set the credentials on</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        internal void SetRequestCredentials(Request request, CancellationToken cancellationToken)
+        internal void SetRequestCredentials(Request request)
         {
             request.Headers.Add("Ocp-Apim-Subscription-Key", _appKey);
         }

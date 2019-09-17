@@ -8,19 +8,20 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 
-namespace Azure.AI.InkRecognizer
+//namespace Azure.AI.InkRecognizer
+namespace Azure.Data.InkRecognizer
 {
-    class InkRecognitionRequest
+    public class InkRecognitionRequest
     {
-        ApplicationKind _applicationType { get; set; }
+        private ApplicationKind _applicationType { get; set; }
 
-        string _language { get; set; }
+        private string _language { get; set; }
 
-        InkPointUnit _inkPointUnit { get; set; }
+        private InkPointUnit _inkPointUnit { get; set; }
 
-        float _unitMultiple { get; set; }
+        private float _unitMultiple { get; set; }
 
-        IEnumerable<InkStroke> _strokes { get; set; }
+        private IEnumerable<InkStroke> _strokes { get; set; }
 
         internal InkRecognitionRequest(IEnumerable<InkStroke> strokes,
             ApplicationKind applicationType,
@@ -54,11 +55,11 @@ namespace Azure.AI.InkRecognizer
                 jsonWriter.WriteNumber("id", stroke.Id);
                 if (stroke.Kind != InkStrokeKind.Unknown)
                 {
-                    jsonWriter.WriteString("kind", _getStrokeKindString(stroke.Kind));
+                    jsonWriter.WriteString("kind", GetStrokeKindString(stroke.Kind));
                 }
 
                 jsonWriter.WriteStartArray("points");
-                foreach(var point in stroke.GetInkPoints())
+                foreach (var point in stroke.GetInkPoints())
                 {
                     jsonWriter.WriteStartObject();
                     jsonWriter.WriteNumber("x", point.X);
@@ -82,7 +83,7 @@ namespace Azure.AI.InkRecognizer
 
         private string _getInkPointUnitString()
         {
-            switch(_inkPointUnit)
+            switch (_inkPointUnit)
             {
                 case InkPointUnit.Inch:
                     return "in";
@@ -110,7 +111,7 @@ namespace Azure.AI.InkRecognizer
             }
         }
 
-        private string _getStrokeKindString(InkStrokeKind strokeKind)
+        private static string GetStrokeKindString(InkStrokeKind strokeKind)
         {
             switch (strokeKind)
             {

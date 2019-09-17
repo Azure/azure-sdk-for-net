@@ -4,7 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
 
-namespace Azure.AI.InkRecognizer.Models
+//namespace Azure.AI.InkRecognizer.Models
+namespace Azure.Data.InkRecognizer.Models
 {
     /// <summary>
     /// The RecognitionRoot class is the root of the recognition result tree from the Ink Recognizer service.
@@ -12,13 +13,13 @@ namespace Azure.AI.InkRecognizer.Models
     /// </summary>
     public class RecognitionRoot : IEquatable<RecognitionRoot>
     {
-        List<long> recognizedWordIds;
-        List<long> recognizedDrawingIds;
-        List<long> recognizedUnitIds;
+        private List<long> recognizedWordIds;
+        private List<long> recognizedDrawingIds;
+        private List<long> recognizedUnitIds;
 
-        Dictionary<long, InkRecognitionUnit> idToRecognizedUnits;
-        Dictionary<InkRecognitionUnitKind, List<long>> kindToRecognizedUnitIds;
-        Dictionary<string, List<long>> textToRecognizedWordIds;
+        private Dictionary<long, InkRecognitionUnit> idToRecognizedUnits;
+        private Dictionary<InkRecognitionUnitKind, List<long>> kindToRecognizedUnitIds;
+        private Dictionary<string, List<long>> textToRecognizedWordIds;
 
         /// <summary>
         /// Protected constructor to allow mocking
@@ -27,8 +28,9 @@ namespace Azure.AI.InkRecognizer.Models
         {
         }
 
-        internal RecognitionRoot(JsonElement recoUnitJson) 
+        internal RecognitionRoot(JsonElement recoUnitJson)
         {
+            JsonElement element = recoUnitJson;
         }
 
         internal void SetInkRecognitionUnits(List<InkRecognitionUnit> recoUnits)
@@ -79,7 +81,7 @@ namespace Azure.AI.InkRecognizer.Models
             var inkWords = new List<InkWord>();
             if (textToRecognizedWordIds.ContainsKey(word))
             {
-                foreach(var id in textToRecognizedWordIds[word])
+                foreach (var id in textToRecognizedWordIds[word])
                 {
                     var inkWord = idToRecognizedUnits[id] as InkWord;
                     inkWords.Add(inkWord);
@@ -152,7 +154,6 @@ namespace Azure.AI.InkRecognizer.Models
                 return null;
             }
         }
-
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object other)

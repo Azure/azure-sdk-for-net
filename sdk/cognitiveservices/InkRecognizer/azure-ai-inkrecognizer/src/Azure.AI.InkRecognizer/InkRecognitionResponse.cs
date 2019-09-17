@@ -2,13 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.AI.InkRecognizer.Models;
+//using Azure.AI.InkRecognizer.Models;
+using Azure.Data.InkRecognizer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-namespace Azure.AI.InkRecognizer
+//namespace Azure.AI.InkRecognizer
+namespace Azure.Data.InkRecognizer
 {
     internal static class InkRecognitionResponse
     {
@@ -38,9 +40,9 @@ namespace Azure.AI.InkRecognizer
                 }
                 return root;
             }
-            catch(Exception e)
+            catch (Exception )
             {
-                throw e;
+                throw;
             }
         }
 
@@ -92,9 +94,9 @@ namespace Azure.AI.InkRecognizer
                 }
                 return Tuple.Create(root, recoUnits);
             }
-            catch(Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -109,7 +111,6 @@ namespace Azure.AI.InkRecognizer
                 _setChildrenNodes(root, recoUnit);
             }
         }
-
         private static void _setParentNode(RecognitionRoot root, InkRecognitionUnit recoUnit)
         {
             var parentId = recoUnit.ParentId;

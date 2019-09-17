@@ -7,17 +7,24 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
 
-namespace Azure.AI.InkRecognizer.WPF.Stroke
+//namespace Azure.AI.InkRecognizer.WPF.Stroke
+namespace Azure.Data.InkRecognizer.WPF.Stroke
 {
+    /// <summary>
+    /// This is the class for the InkRecognizer GUI. This is based on the WPF Framework.
+    /// </summary>
     public class InkStrokeStore
     {
-        List<Azure.AI.InkRecognizer.InkStroke> _strokes;
-        int _strokeCounter = 0;
+       private List<Azure.Data.InkRecognizer.InkStroke> _strokes;
+       private int _strokeCounter = 0;
 
         // Default DPI setting
-        float dpiX = 96.0f;
-        float dpiY = 96.0f;
+        private float dpiX = 96.0f;
+        private float dpiY = 96.0f;
 
+        /// <summary>
+        ///Initialize a new instance of the class 
+        /// </summary>
         public InkStrokeStore()
         {
             try
@@ -28,7 +35,7 @@ namespace Azure.AI.InkRecognizer.WPF.Stroke
                 dpiX = (dpiXProperty != null) ? (int)dpiXProperty.GetValue(null, null) : dpiX;
                 dpiY = (dpiYProperty != null) ? (int)dpiYProperty.GetValue(null, null) : dpiY;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 /* Incase of error, revert to default DPI settings */
                 dpiX = 96.0f;
@@ -38,6 +45,13 @@ namespace Azure.AI.InkRecognizer.WPF.Stroke
             _strokes = new List<Azure.AI.InkRecognizer.InkStroke>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stroke"></param>
+        /// <param name="strokeKind"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         public long AddStroke(
             System.Windows.Ink.Stroke stroke,
             InkStrokeKind strokeKind = InkStrokeKind.Unknown,

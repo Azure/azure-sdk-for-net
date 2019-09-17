@@ -6,11 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Azure.AI.InkRecognizer
+//namespace Azure.AI.InkRecognizer
+namespace Azure.Data.InkRecognizer
 {
     /// <summary>
     /// The InkPoint struct represents a single position on the path of an ink stroke. Clients of the InkRecognizer
-    /// service are expected to add these to the ink strokes that get delivered to the InkRecognizerClient class 
+    /// service are expected to add these to the ink strokes that get delivered to the InkRecognizerClient class
     /// which will translate the strokes to JSON for delivery to the Ink Recognizer service.
     /// </summary>
     public struct InkPoint : IEquatable<InkPoint>
@@ -52,8 +53,7 @@ namespace Azure.AI.InkRecognizer
 
     /// <summary>
     /// The InkStrokeKind enum represents the class a stroke belongs to.The user of the Ink recognizer service
-    /// is expected to set this value when it is known with absolute certainty. The default value is 
-    /// InkStrokeKind.Unknown.
+    /// is expected to set this value when it is known with absolute certainty. The default value is InkStrokeKind.Unknown.
     /// </summary>
     public enum InkStrokeKind
     {
@@ -72,7 +72,7 @@ namespace Azure.AI.InkRecognizer
         /// </summary>
         InkWriting = 2
     }
-    
+
     ///<summary>
     /// The InkStroke structure represents an ink stroke(a collection of points from the time user places
     /// his writing instrument on the writing surface until the instrument is lifted). Clients of the InkRecognizer
@@ -90,7 +90,7 @@ namespace Azure.AI.InkRecognizer
             Id = id;
             Kind = kind;
         }
-        
+
         public IEnumerable<InkPoint> GetInkPoints() { return _points; }
         public InkStrokeKind Kind { get; set; }
         public long Id { get; set; }

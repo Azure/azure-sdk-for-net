@@ -4,11 +4,13 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
+//using Azure.Core.Pipeline.Policies;
+using Azure.Core.Http;
 using System;
 using System.Reflection;
 
-namespace Azure.AI.InkRecognizer
+//namespace Azure.AI.InkRecognizer
+namespace Azure.Data.InkRecognizer
 {
     /// <summary>
     /// Options that allow to configure the request sent to the InkRecognizer service.
@@ -45,11 +47,11 @@ namespace Azure.AI.InkRecognizer
         /// to use when communicating with the Ink Recognizer service.
         /// </summary>
         /// <param name="version">InkRecognizer Service API version to use.</param>
-        public InkRecognizerClientOptions(ServiceVersion version = ServiceVersion.Preview_1_0_0)
+        public InkRecognizerClientOptions(ServiceVersion version = ServiceVersion.Preview1)
         {
             Version = version;
 
-            _createPolicies();
+            CreatePolicies();
         }
 
         /// <summary>
@@ -60,40 +62,41 @@ namespace Azure.AI.InkRecognizer
             /// <summary>
             /// Preview 1.0.0
             /// </summary>
-            Preview_1_0_0 = 0,
+            //Preview_1_0_0 = 0,
+            Preview1 = 0,
         }
 
-        void _createPolicies()
+        private static void CreatePolicies()
         {
-            RetryPolicy = new RetryPolicy()
-            {
-                Mode = RetryMode.Exponential,
-                MaxDelay = TimeSpan.FromSeconds(0.8),
-                MaxRetries = 3
-            };
+            //RetryPolicy = new RetryPolicy()
+            //{
+            //    Mode = RetryMode.Exponential,
+            //    MaxDelay = TimeSpan.FromSeconds(0.8),
+            //    MaxRetries = 3
+            //};
 
-            LoggingPolicy = new LoggingPolicy();
+            //LoggingPolicy = new LoggingPolicy();
 
-            (var componentName, var componentVersion) = _getComponentNameAndVersion();
-            var applicationId = Guid.NewGuid().ToString();
-            var telemetryPolicy = new TelemetryPolicy(componentName, componentVersion)
-            {
-                ApplicationId = applicationId
-            };
+            //(var componentName, var componentVersion) = GetComponentNameAndVersion();
+            //var applicationId = Guid.NewGuid().ToString();
+            //var telemetryPolicy = new TelemetryPolicy(componentName, componentVersion)
+            //{
+            //    ApplicationId = applicationId
+            //};
         }
 
-        private (string ComponentName, string ComponentVersion) _getComponentNameAndVersion()
-        {
-            Assembly clientAssembly = GetType().Assembly;
-            AzureSdkClientLibraryAttribute componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
-            if (componentAttribute == null)
-            {
-                throw new InvalidOperationException(
-                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
-            }
+        //private (string ComponentName, string ComponentVersion) GetComponentNameAndVersion()
+        //{
+        //    Assembly clientAssembly = GetType().Assembly;
+        //    AzureSdkClientLibraryAttribute componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
+        //    if (componentAttribute == null)
+        //    {
+        //        throw new InvalidOperationException(
+        //            $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
+        //    }
 
-            return (componentAttribute.ComponentName, clientAssembly.GetName().Version.ToString());
-        }
+        //    return (componentAttribute.ComponentName, clientAssembly.GetName().Version.ToString());
+        //}
     }
 
     /// <summary>
