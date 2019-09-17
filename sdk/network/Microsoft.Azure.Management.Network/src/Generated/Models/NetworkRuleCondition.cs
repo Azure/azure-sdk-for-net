@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Rule condition of type network
+    /// Rule condition of type network.
     /// </summary>
     public partial class NetworkRuleCondition : FirewallPolicyRuleCondition
     {

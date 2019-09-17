@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -231,12 +233,29 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     receivedEvents = await InnerConsumer.ReceiveAsync(Options.MaximumMessageCount, Options.MaximumReceiveWaitTime, cancellationToken).ConfigureAwait(false);
 
+                    using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
+                    diagnosticScope.AddAttribute("kind", "server");
+
+                    if (diagnosticScope.IsEnabled)
+                    {
+                        foreach (var eventData in receivedEvents)
+                        {
+                            if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                            {
+                                diagnosticScope.AddLink(diagnosticId);
+                            }
+                        }
+                    }
+
+                    diagnosticScope.Start();
+
                     try
                     {
                         await PartitionProcessor.ProcessEventsAsync(Context, receivedEvents, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception partitionProcessorException)
                     {
+                        diagnosticScope.Failed(partitionProcessorException);
                         unrecoverableException = partitionProcessorException;
                         CloseReason = PartitionProcessorCloseReason.PartitionProcessorException;
 
