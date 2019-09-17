@@ -642,7 +642,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     firstSubcriberReceiving = true;
                     StartPublishingIfReady();
 
-                    if (eventData != default)
+                    if (eventData != null)
                     {
                         firstSubscriberEvents.Add(eventData);
                     }
@@ -664,7 +664,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     secondSubscriberReceiving = true;
                     StartPublishingIfReady();
 
-                    if (eventData != default)
+                    if (eventData != null)
                     {
                         secondSubscriberEvents.Add(eventData);
                     }
@@ -760,7 +760,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     firstSubcriberReceiving = true;
                     StartPublishingIfReady();
 
-                    if (eventData != default)
+                    if (eventData != null)
                     {
                         firstSubscriberEvents.Add(eventData);
                     }
@@ -782,7 +782,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     secondSubscriberReceiving = true;
                     StartPublishingIfReady();
 
-                    if (eventData != default)
+                    if (eventData != null)
                     {
                         secondSubscriberEvents.Add(eventData);
                     }

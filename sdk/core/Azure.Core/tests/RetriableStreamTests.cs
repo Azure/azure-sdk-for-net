@@ -200,7 +200,7 @@ namespace Azure.Core.Tests
         {
             Assert.Throws<InvalidOperationException>(() => RetriableStream.Create(
                 _ => throw new InvalidOperationException(),
-                _ => null,
+                _ => default,
                 new ResponseClassifier(),
                 5));
         }
@@ -225,7 +225,7 @@ namespace Azure.Core.Tests
 
         private Task<Stream> CreateAsync(
             Func<long, Response> responseFactory,
-            Func<long, Task<Response>> asyncResponseFactory,
+            Func<long, ValueTask<Response>> asyncResponseFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
@@ -246,7 +246,7 @@ namespace Azure.Core.Tests
             return pipeline.SendRequest(request, CancellationToken.None);
         }
 
-        private static Task<Response> SendTestRequestAsync(HttpPipeline pipeline, long offset)
+        private static ValueTask<Response> SendTestRequestAsync(HttpPipeline pipeline, long offset)
         {
             using Request request = CreateRequest(pipeline, offset);
 

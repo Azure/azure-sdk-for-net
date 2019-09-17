@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(KeyType type, KeyCreateOptions options = default)
         {
             KeyType = type;
-            if (options != default)
+            if (options != null)
             {
                 if (options.Enabled.HasValue)
                 {
