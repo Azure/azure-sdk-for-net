@@ -760,7 +760,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     firstSubcriberReceiving = true;
                     StartPublishingIfReady();
 
-                    if (eventData != default)
+                    if (eventData == default)
                     {
                         firstSubscriberEvents.Add(eventData);
                     }
