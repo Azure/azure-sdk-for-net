@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// private link service connection. Possible values include:
+        /// private link service connection resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="privateLinkServiceId">The resource id of private link
         /// service.</param>
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the provisioning state of the private link service
-        /// connection. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// connection resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
