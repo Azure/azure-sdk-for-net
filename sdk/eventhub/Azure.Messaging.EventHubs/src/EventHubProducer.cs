@@ -39,9 +39,6 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
         private static readonly SendOptions DefaultSendOptions = new SendOptions();
 
-        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
         /// <summary>The fully-qualified location of the Event Hub instance to which events will be sent.</summary>
         private readonly Uri _endpoint;
 
@@ -135,7 +132,6 @@ namespace Azure.Messaging.EventHubs
 
             _endpoint = endpoint;
             _retryPolicy = retryPolicy;
-            _clientDiagnostics = new ClientDiagnostics(true);
         }
 
         /// <summary>
@@ -390,7 +386,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private DiagnosticScope CreateDiagnosticScope()
         {
-            DiagnosticScope scope = _clientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
+            DiagnosticScope scope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
             scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
@@ -410,7 +406,7 @@ namespace Azure.Messaging.EventHubs
         {
             foreach (var eventData in events)
             {
-                EventDataInstrumentation.InstrumentEvent(_clientDiagnostics, eventData);
+                EventDataInstrumentation.InstrumentEvent(eventData);
             }
         }
 

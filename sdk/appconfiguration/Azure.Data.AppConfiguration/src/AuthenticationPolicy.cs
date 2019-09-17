@@ -70,7 +70,7 @@ namespace Azure.Data.AppConfiguration
                 // TODO (pri 3): should date header writing be moved out from here?
                 message.Request.Headers.Add("Date", utcNowString);
                 message.Request.Headers.Add("x-ms-content-sha256", contentHash);
-                message.Request.Headers.Add("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                message.Request.Headers.Add("Authorization", $"HMAC-SHA256 Credential={_credential}&SignedHeaders={signedHeaders}&Signature={signature}");
             }
         }
 

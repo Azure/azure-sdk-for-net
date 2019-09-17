@@ -10,13 +10,18 @@ namespace Azure.Core.Pipeline
 {
     internal class RequestActivityPolicy : HttpPipelinePolicy
     {
+        private readonly bool _isDistributedTracingEnabled;
+
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
         private const string RequestIdHeaderName = "Request-Id";
 
-        public static RequestActivityPolicy Shared { get; } = new RequestActivityPolicy();
-
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Pipeline");
+
+        public RequestActivityPolicy(bool isDistributedTracingEnabled)
+        {
+            _isDistributedTracingEnabled = isDistributedTracingEnabled;
+        }
 
         public override ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -30,6 +35,20 @@ namespace Azure.Core.Pipeline
 
         private static async ValueTask ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
+            if (!_isDistributedTracingEnabled)
+            {
+                if (isAsync)
+                {
+                    await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+                }
+
+                return;
+            }
+
             if (!s_diagnosticSource.IsEnabled())
             {
                 await ProcessNextAsync(message, pipeline, isAsync).ConfigureAwait(false);
