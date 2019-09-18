@@ -9,9 +9,18 @@ namespace Azure
     {
         public int Status { get; }
 
+        public RequestFailedException(string message) : this(0, message)
+        {
+        }
+
+        public RequestFailedException(string message, Exception? innerException) : this(0, message, innerException)
+        {
+        }
+
         public RequestFailedException(int status, string message)
             : this(status, message, null)
-        { }
+        {
+        }
 
         public RequestFailedException(int status, string message, Exception? innerException)
             : base(message, innerException)
