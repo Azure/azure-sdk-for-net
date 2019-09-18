@@ -13,6 +13,7 @@ using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Metadata;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -91,10 +92,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorRequiresConnectionString(string connectionString)
         {
-            Assert.That(() => new EventHubClient(connectionString), Throws.ArgumentException, "The constructor without options should perform validation.");
-            Assert.That(() => new EventHubClient(connectionString, "eventHub"), Throws.ArgumentException, "The constructor with the event hub without options should perform validation.");
-            Assert.That(() => new EventHubClient(connectionString, "eventHub", new EventHubClientOptions()), Throws.ArgumentException, "The constructor with the event hub and options should perform validation.");
-            Assert.That(() => new EventHubClient(connectionString, new EventHubClientOptions()), Throws.ArgumentException, "The constructor with options and no event hub should perform validation.");
+            // Seems ExactTypeConstraints is not re-entrant.
+            ExactTypeConstraint TypeConstraint() => connectionString is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new EventHubClient(connectionString), TypeConstraint(), "The constructor without options should perform validation.");
+            Assert.That(() => new EventHubClient(connectionString, "eventHub"), TypeConstraint(), "The constructor with the event hub without options should perform validation.");
+            Assert.That(() => new EventHubClient(connectionString, "eventHub", new EventHubClientOptions()), TypeConstraint(), "The constructor with the event hub and options should perform validation.");
+            Assert.That(() => new EventHubClient(connectionString, new EventHubClientOptions()), TypeConstraint(), "The constructor with options and no event hub should perform validation.");
         }
 
         /// <summary>

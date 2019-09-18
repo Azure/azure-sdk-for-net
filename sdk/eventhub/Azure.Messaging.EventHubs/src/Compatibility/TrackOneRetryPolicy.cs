@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 using TrackOne;
 
 namespace Azure.Messaging.EventHubs.Compatibility
@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public TrackOneRetryPolicy(EventHubRetryPolicy sourcePolicy) : base()
         {
-            Guard.ArgumentNotNull(nameof(sourcePolicy), sourcePolicy);
+            Argument.AssertNotNull(sourcePolicy, nameof(sourcePolicy));
             _sourcePolicy = sourcePolicy;
         }
 

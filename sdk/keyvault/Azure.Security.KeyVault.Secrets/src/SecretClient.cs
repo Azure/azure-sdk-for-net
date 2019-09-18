@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Secrets
         public SecretClient(Uri vaultUri, TokenCredential credential, SecretClientOptions options)
         {
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(vaultUri));
-            if (credential is null) throw new ArgumentNullException(nameof(credential));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new SecretClientOptions();
             string apiVersion = options.GetVersionString();
@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<Secret>> GetAsync(string name, string version = null, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Get");
             scope.AddAttribute("secret", name);
@@ -106,7 +106,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<Secret> Get(string name, string version = null, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Get");
             scope.AddAttribute("secret", name);
@@ -135,7 +135,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncCollection<SecretBase> GetSecretVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Uri firstPageUri = new Uri(_vaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
 
@@ -154,7 +154,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual IEnumerable<Response<SecretBase>> GetSecretVersions(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Uri firstPageUri = new Uri(_vaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
 
@@ -208,8 +208,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<SecretBase>> UpdateAsync(SecretBase secret, CancellationToken cancellationToken = default)
         {
-            if (secret == null) throw new ArgumentNullException(nameof(secret));
-            if (secret.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
+            Argument.AssertNotNull(secret, nameof(secret));
+            Argument.AssertNotNull(secret.Version, nameof(secret.Version));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Update");
             scope.AddAttribute("secret", secret.Name);
@@ -239,8 +239,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<SecretBase> Update(SecretBase secret, CancellationToken cancellationToken = default)
         {
-            if (secret == null) throw new ArgumentNullException(nameof(secret));
-            if (secret.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
+            Argument.AssertNotNull(secret, nameof(secret));
+            Argument.AssertNotNull(secret.Version, nameof(secret.Version));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Update");
             scope.AddAttribute("secret", secret.Name);
             scope.Start();
@@ -268,7 +269,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<Secret>> SetAsync(Secret secret, CancellationToken cancellationToken = default)
         {
-            if (secret == null) throw new ArgumentNullException(nameof(secret));
+            Argument.AssertNotNull(secret, nameof(secret));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Set");
             scope.AddAttribute("secret", secret.Name);
@@ -297,7 +298,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<Secret> Set(Secret secret, CancellationToken cancellationToken = default)
         {
-            if (secret == null) throw new ArgumentNullException(nameof(secret));
+            Argument.AssertNotNull(secret, nameof(secret));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Set");
             scope.AddAttribute("secret", secret.Name);
             scope.Start();
@@ -357,7 +359,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<DeletedSecret>> DeleteAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Delete");
             scope.AddAttribute("secret", name);
@@ -386,7 +388,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<DeletedSecret> Delete(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Delete");
             scope.AddAttribute("secret", name);
@@ -414,7 +416,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<DeletedSecret>> GetDeletedAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.GetDeleted");
             scope.AddAttribute("secret", name);
@@ -442,7 +444,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<DeletedSecret> GetDeleted(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.GetDeleted");
             scope.AddAttribute("secret", name);
@@ -503,7 +505,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<SecretBase>> RecoverDeletedAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.RecoverDeleted");
             scope.AddAttribute("secret", name);
             scope.Start();
@@ -531,7 +534,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<SecretBase> RecoverDeleted(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.RecoverDeleted");
             scope.AddAttribute("secret", name);
             scope.Start();
@@ -560,7 +564,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response> PurgeDeletedAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.PurgeDeleted");
             scope.AddAttribute("secret", name);
             scope.Start();
@@ -589,7 +594,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response PurgeDeleted(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.PurgeDeleted");
             scope.AddAttribute("secret", name);
             scope.Start();
@@ -617,7 +623,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<byte[]>> BackupAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Backup");
             scope.AddAttribute("secret", name);
@@ -648,7 +654,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<byte[]> Backup(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Backup");
             scope.AddAttribute("secret", name);
             scope.Start();
@@ -677,7 +684,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<SecretBase>> RestoreAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
-            if (backup == null) throw new ArgumentNullException(nameof(backup));
+            Argument.AssertNotNull(backup, nameof(backup));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Restore");
             scope.Start();
 
@@ -703,7 +711,8 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<SecretBase> Restore(byte[] backup, CancellationToken cancellationToken = default)
         {
-            if (backup == null) throw new ArgumentNullException(nameof(backup));
+            Argument.AssertNotNull(backup, nameof(backup));
+
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.Restore");
             scope.Start();
 

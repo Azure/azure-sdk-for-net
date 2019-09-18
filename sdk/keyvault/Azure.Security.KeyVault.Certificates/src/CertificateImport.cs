@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -21,9 +22,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated</param>
         public CertificateImport(string name, byte[] value, CertificatePolicy policy)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty");
-            if (value == null) throw new ArgumentNullException(nameof(value));
-            if (policy == null) throw new ArgumentNullException(nameof(policy));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(policy, nameof(policy));
 
             Name = name;
             Value = value;

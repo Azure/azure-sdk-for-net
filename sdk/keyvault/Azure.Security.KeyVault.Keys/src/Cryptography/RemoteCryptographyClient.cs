@@ -16,8 +16,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal RemoteCryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
-            Argument.NotNull(keyId, nameof(keyId));
-            Argument.NotNull(credential, nameof(credential));
+            Argument.AssertNotNull(keyId, nameof(keyId));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             _keyId = keyId;
             options ??= new CryptographyClientOptions();

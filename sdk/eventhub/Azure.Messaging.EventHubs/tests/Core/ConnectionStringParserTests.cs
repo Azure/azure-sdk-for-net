@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -62,7 +63,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ParseValidatesArguments(string connectionString)
         {
-            Assert.That(() => ConnectionStringParser.Parse(connectionString), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = connectionString is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => ConnectionStringParser.Parse(connectionString), typeConstraint);
         }
 
         /// <summary>

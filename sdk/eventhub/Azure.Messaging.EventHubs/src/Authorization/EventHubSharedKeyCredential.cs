@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Authorization
 {
@@ -42,8 +41,8 @@ namespace Azure.Messaging.EventHubs.Authorization
         public EventHubSharedKeyCredential(string sharedAccessKeyName,
                                            string sharedAccessKey)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessKeyName), sharedAccessKeyName);
-            Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessKey), sharedAccessKey);
+            Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
+            Argument.AssertNotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
 
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
