@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task WrapUnwrapRoundTrip([Fields]KeyWrapAlgorithm algorithm)
+        public async Task WrapUnwrapRoundTrip([Fields(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
             RegisterForCleanup(key);

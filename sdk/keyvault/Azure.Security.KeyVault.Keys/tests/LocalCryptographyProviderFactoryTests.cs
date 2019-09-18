@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 
@@ -34,6 +32,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private static IEnumerable<object[]> GetCreateData()
         {
+            Aes aes = Aes.Create();
+            yield return new object[] { new JsonWebKey(aes) { KeyId = nameof(aes) }, typeof(AesCryptographyProvider) };
+
 #if !NET461
             ECDsa ecdsa = ECDsa.Create();
             yield return new object[] { new JsonWebKey(ecdsa, false) { KeyId = "ecdsaPublic" }, typeof(EcCryptographyProvider) };
