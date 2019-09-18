@@ -167,7 +167,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Remember to filter expired ownership.
 
                 var activeOwnership = (await InnerPartitionManager
-                    .ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup)
+                    .ListOwnershipAsync(InnerClient.FullyQualifiedNamespace, InnerClient.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
                     .ToList();

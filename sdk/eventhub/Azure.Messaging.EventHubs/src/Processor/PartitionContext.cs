@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -18,6 +17,13 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     public class PartitionContext
     {
+        /// <summary>
+        ///   The fully qualified Event Hubs namespace this context is associated with.  This
+        ///   is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        ///
+        public string FullyQualifiedNamespace { get; }
+
         /// <summary>
         ///   The name of the specific Event Hub that the context is associated with, relative
         ///   to the Event Hubs namespace that contains it.
@@ -53,24 +59,28 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
         /// </summary>
         ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this context is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub this context is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>
         ///
-        protected internal PartitionContext(string eventHubName,
+        protected internal PartitionContext(string fullyQualifiedNamespace,
+                                            string eventHubName,
                                             string consumerGroup,
                                             string partitionId,
                                             string ownerIdentifier,
                                             PartitionManager partitionManager)
         {
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
             Argument.AssertNotNull(partitionManager, nameof(partitionManager));
 
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
@@ -111,6 +121,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             var checkpoint = new Checkpoint
             (
+                FullyQualifiedNamespace,
                 EventHubName,
                 ConsumerGroup,
                 OwnerIdentifier,
