@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(SampleTestCases))]
         public async Task SmokeTestASample(IEventHubsSample sample)
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.EventHubsConnectionString;
                 Assert.That(async () => await sample.RunAsync(connectionString, scope.EventHubName), Throws.Nothing);

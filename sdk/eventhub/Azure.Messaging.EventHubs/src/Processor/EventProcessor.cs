@@ -25,10 +25,10 @@ namespace Azure.Messaging.EventHubs.Processor
         private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        private static readonly ThreadLocal<Random> s_randomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-        private readonly SemaphoreSlim RunningTaskSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _runningTaskSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
@@ -181,7 +181,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask == null)
             {
-                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 finally
                 {
-                    RunningTaskSemaphore.Release();
+                    _runningTaskSemaphore.Release();
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             if (RunningTask != null)
             {
-                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+                await _runningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
                 finally
                 {
-                    RunningTaskSemaphore.Release();
+                    _runningTaskSemaphore.Release();
                 }
             }
         }
@@ -297,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
                 // but it may be overriden by a derived class.
 
-                var activeOwnership = completeOwnershipList
+                IEnumerable<PartitionOwnership> activeOwnership = completeOwnershipList
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
 
                 // Dispose of all previous partition ownership instances and get a whole new dictionary.
@@ -321,7 +321,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 await Task.WhenAll(InstanceOwnership
                     .Where(kvp =>
                         {
-                            if (PartitionPumps.TryGetValue(kvp.Key, out var pump))
+                            if (PartitionPumps.TryGetValue(kvp.Key, out PartitionPump pump))
                             {
                                 return !pump.IsRunning;
                             }
@@ -334,7 +334,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
                 // increase its ownership list, if no claimable ownership could be found or if a claim attempt failed.
 
-                var claimedOwnership = await FindAndClaimOwnershipAsync(completeOwnershipList, activeOwnership).ConfigureAwait(false);
+                PartitionOwnership claimedOwnership = await FindAndClaimOwnershipAsync(completeOwnershipList, activeOwnership).ConfigureAwait(false);
 
                 if (claimedOwnership != null)
                 {
@@ -385,7 +385,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 { Identifier, 0 }
             };
 
-            foreach (var ownership in activeOwnership)
+            foreach (PartitionOwnership ownership in activeOwnership)
             {
                 if (partitionDistribution.TryGetValue(ownership.OwnerIdentifier, out var value))
                 {
@@ -421,12 +421,12 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
-                var unclaimedPartitions = partitionIds
+                IEnumerable<string> unclaimedPartitions = partitionIds
                     .Except(activeOwnership.Select(ownership => ownership.PartitionId));
 
                 if (unclaimedPartitions.Any())
                 {
-                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count());
+                    var index = s_randomNumberGenerator.Value.Next(unclaimedPartitions.Count());
 
                     return await ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
                 }
@@ -436,7 +436,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
 
-                var stealablePartitions = activeOwnership
+                IEnumerable<string> stealablePartitions = activeOwnership
                     .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] > maximumOwnedPartitionsCount)
                     .Select(ownership => ownership.PartitionId);
 
@@ -455,7 +455,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 if (stealablePartitions.Any())
                 {
-                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Count());
+                    var index = s_randomNumberGenerator.Value.Next(stealablePartitions.Count());
 
                     return await ClaimOwnershipAsync(stealablePartitions.ElementAt(index), completeOwnershipEnumerable).ConfigureAwait(false);
                 }
@@ -491,8 +491,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
             try
             {
-                var partitionProcessor = PartitionProcessorFactory(partitionContext);
-                var options = Options.Clone();
+                BasePartitionProcessor partitionProcessor = PartitionProcessorFactory(partitionContext);
+                EventProcessorOptions options = Options.Clone();
 
                 // Ovewrite the initial event position in case a checkpoint exists.
 
@@ -527,7 +527,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private async Task RemovePartitionPumpIfItExistsAsync(string partitionId,
                                                               PartitionProcessorCloseReason? reason = null)
         {
-            if (PartitionPumps.TryRemove(partitionId, out var pump))
+            if (PartitionPumps.TryRemove(partitionId, out PartitionPump pump))
             {
                 try
                 {
@@ -555,7 +555,7 @@ namespace Azure.Messaging.EventHubs.Processor
             // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and
             // the sequence number as well.
 
-            var oldOwnership = completeOwnershipEnumerable.FirstOrDefault(ownership => ownership.PartitionId == partitionId);
+            PartitionOwnership oldOwnership = completeOwnershipEnumerable.FirstOrDefault(ownership => ownership.PartitionId == partitionId);
 
             var newOwnership = new PartitionOwnership
                 (
@@ -572,7 +572,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
 
-            var claimedOwnership = (await Manager
+            IEnumerable<PartitionOwnership> claimedOwnership = (await Manager
                 .ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership })
                 .ConfigureAwait(false));
 
@@ -587,7 +587,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private Task RenewOwnershipAsync()
         {
-            var ownershipToRenew = InstanceOwnership.Values
+            IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership
                 (
                     ownership.FullyQualifiedNamespace,

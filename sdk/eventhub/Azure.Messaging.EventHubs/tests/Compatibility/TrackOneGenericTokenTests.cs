@@ -59,10 +59,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesInitializesProperties()
         {
-            var expiration = DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime();
+            DateTime expiration = DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime();
             var resource = "the-audience";
             var jwtToken = "TOkEn!";
-            var credential = Mock.Of<TokenCredential>();
+            TokenCredential credential = Mock.Of<TokenCredential>();
             var token = new TrackOneGenericToken(credential, jwtToken, resource, expiration);
 
             Assert.That(token.Audience, Is.EqualTo(resource), "The audience for the token should match.");

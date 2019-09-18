@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         {
             static EventData TransformEvent(TrackOne.EventData eventData)
             {
-                if (!Int64.TryParse(eventData.LastEnqueuedOffset, out var parsedLastOffset))
+                if (!long.TryParse(eventData.LastEnqueuedOffset, out var parsedLastOffset))
                 {
                     parsedLastOffset = -1;
                 }
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                                      eventData.Properties,
                                      eventData.SystemProperties.WithoutTypedMembers(),
                                      eventData.SystemProperties.SequenceNumber,
-                                     Int64.Parse(eventData.SystemProperties.Offset),
+                                     long.Parse(eventData.SystemProperties.Offset),
                                      new DateTimeOffset(eventData.SystemProperties.EnqueuedTimeUtc),
                                      eventData.SystemProperties.PartitionKey,
                                      (eventData.LastSequenceNumber != default ? eventData.LastSequenceNumber : default(long?)),
@@ -113,13 +113,13 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             try
             {
-                var events = ((await TrackOneReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime).ConfigureAwait(false))
+                IEnumerable<EventData> events = ((await TrackOneReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime).ConfigureAwait(false))
                         ?? Enumerable.Empty<TrackOne.EventData>())
                     .Select(TransformEvent);
 
                 if ((TrackOneReceiver.ReceiverRuntimeMetricEnabled) && (LastEnqueuedEventInformation != null))
                 {
-                    if (!Int64.TryParse(TrackOneReceiver.RuntimeInfo.LastEnqueuedOffset, out var parsedOffset))
+                    if (!long.TryParse(TrackOneReceiver.RuntimeInfo.LastEnqueuedOffset, out var parsedOffset))
                     {
                         parsedOffset = -1;
                     }

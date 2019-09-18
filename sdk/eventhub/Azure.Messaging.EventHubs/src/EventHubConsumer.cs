@@ -36,16 +36,16 @@ namespace Azure.Messaging.EventHubs
         public const string DefaultConsumerGroupName = "$Default";
 
         /// <summary>The size of event batch requested by the background publishing operation used for subscriptions.</summary>
-        private const int BackgroundPublishReceiveBatchSize = 50;
+        private const int _backgroundPublishReceiveBatchSize = 50;
 
         /// <summary>The maximum wait time for receiving an event batch for the background publishing operation used for subscriptions.</summary>
-        private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
+        private readonly TimeSpan _backgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
         /// <summary>The set of channels for publishing events to local subscribers.</summary>
-        private readonly ConcurrentDictionary<Guid, Channel<EventData>> ActiveChannels = new ConcurrentDictionary<Guid, Channel<EventData>>();
+        private readonly ConcurrentDictionary<Guid, Channel<EventData>> _activeChannels = new ConcurrentDictionary<Guid, Channel<EventData>>();
 
         /// <summary>The primitive for synchronizing access during subscribe and unsubscribe operations.</summary>
-        private readonly SemaphoreSlim ChannelSyncRoot = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _channelSyncRoot = new SemaphoreSlim(1, 1);
 
         /// <summary>Indicates whether events are actively being published to subscribed channels.</summary>
         private bool _isPublishingActive = false;
@@ -229,9 +229,9 @@ namespace Azure.Messaging.EventHubs
                                                                  TimeSpan? maximumWaitTime = default,
                                                                  CancellationToken cancellationToken = default)
         {
-            maximumWaitTime = maximumWaitTime ?? Options.DefaultMaximumReceiveWaitTime;
+            maximumWaitTime ??= Options.DefaultMaximumReceiveWaitTime;
 
-            Argument.AssertInRange(maximumMessageCount, 1, Int32.MaxValue, nameof(maximumMessageCount));
+            Argument.AssertInRange(maximumMessageCount, 1, int.MaxValue, nameof(maximumMessageCount));
             Argument.AssertNotNegative(maximumWaitTime.Value, nameof(maximumWaitTime));
 
             return InnerConsumer.ReceiveAsync(maximumMessageCount, maximumWaitTime.Value, cancellationToken);
@@ -292,12 +292,12 @@ namespace Azure.Messaging.EventHubs
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (BackgroundPublishReceiveBatchSize * 2));
-            var subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
+            var maximumQueuedEvents = Math.Min((Options.PrefetchCount / 4), (_backgroundPublishReceiveBatchSize * 2));
+            (Guid Identifier, ChannelReader<EventData> ChannelReader) subscription = SubscribeToChannel(EventHubName, PartitionId, ConsumerGroup, maximumQueuedEvents, cancellationToken);
 
             try
             {
-                await foreach (var item in subscription.ChannelReader.EnumerateChannel(maximumWaitTime, cancellationToken).ConfigureAwait(false))
+                await foreach (EventData item in subscription.ChannelReader.EnumerateChannel(maximumWaitTime, cancellationToken).ConfigureAwait(false))
                 {
                     yield return item;
                 }
@@ -383,17 +383,17 @@ namespace Azure.Messaging.EventHubs
                                                                                              int maximumQueuedEvents,
                                                                                              CancellationToken cancellationToken)
         {
-            var channel = CreateEventChannel(maximumQueuedEvents);
+            Channel<EventData> channel = CreateEventChannel(maximumQueuedEvents);
             var identifier = Guid.NewGuid();
 
-            if (!ActiveChannels.TryAdd(identifier, channel))
+            if (!_activeChannels.TryAdd(identifier, channel))
             {
-                throw new EventHubsException(true, eventHubName, String.Format(CultureInfo.CurrentCulture, Resources.FailedToCreateEventSubscription, eventHubName, partitionId, consumerGroup));
+                throw new EventHubsException(true, eventHubName, string.Format(CultureInfo.CurrentCulture, Resources.FailedToCreateEventSubscription, eventHubName, partitionId, consumerGroup));
             }
 
             // Ensure that publishing is taking place.  To avoid race conditions, always acquire the semaphore and then perform the check.
 
-            ChannelSyncRoot.Wait(cancellationToken);
+            _channelSyncRoot.Wait(cancellationToken);
 
             try
             {
@@ -410,7 +410,7 @@ namespace Azure.Messaging.EventHubs
             }
             finally
             {
-                ChannelSyncRoot.Release();
+                _channelSyncRoot.Release();
             }
 
             return (identifier, channel.Reader);
@@ -426,16 +426,16 @@ namespace Azure.Messaging.EventHubs
         ///
         private async Task UnsubscribeFromChannelAsync(Guid identifier)
         {
-            if ((ActiveChannels.TryRemove(identifier, out var unsubscribeChannel)) && (ActiveChannels.Count == 0))
+            if ((_activeChannels.TryRemove(identifier, out Channel<EventData> unsubscribeChannel)) && (_activeChannels.Count == 0))
             {
-                await ChannelSyncRoot.WaitAsync().ConfigureAwait(false);
+                await _channelSyncRoot.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
                     // If the channel was the last active channel and publishing is still marked as active, take
                     // the necessary steps to stop publishing.
 
-                    if ((_isPublishingActive) && (ActiveChannels.Count == 0))
+                    if ((_isPublishingActive) && (_activeChannels.Count == 0))
                     {
                         _channelPublishingTokenSource?.Cancel();
 
@@ -457,7 +457,7 @@ namespace Azure.Messaging.EventHubs
                 }
                 finally
                 {
-                    ChannelSyncRoot.Release();
+                    _channelSyncRoot.Release();
                 }
             }
 
@@ -493,12 +493,12 @@ namespace Azure.Messaging.EventHubs
                         // Receive items in batches and then write them to the subscribed channels.  The channels will naturally
                         // block if they reach their maximum queue size, so there is no need to throttle publishing.
 
-                        receivedItems = await InnerConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, BackgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
-                        publishChannels = ActiveChannels.Values;
+                        receivedItems = await InnerConsumer.ReceiveAsync(_backgroundPublishReceiveBatchSize, _backgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
+                        publishChannels = _activeChannels.Values;
 
-                        foreach (var item in receivedItems)
+                        foreach (EventData item in receivedItems)
                         {
-                            foreach (var channel in publishChannels)
+                            foreach (Channel<EventData> channel in publishChannels)
                             {
                                 publishTasks.Add(channel.Writer.WriteAsync(item, cancellationToken).AsTask());
                             }
@@ -539,7 +539,7 @@ namespace Azure.Messaging.EventHubs
 
                         _isPublishingActive = false;
 
-                        foreach (var channel in ActiveChannels.Values)
+                        foreach (Channel<EventData> channel in _activeChannels.Values)
                         {
                             channel.Writer.TryComplete(ex);
                         }
@@ -607,22 +607,22 @@ namespace Azure.Messaging.EventHubs
             // Though state is normally managed through subscribe and unsubscribe, in the case of aborting,
             // forcefully clear the subscription and reset publishing state.
 
-            await ChannelSyncRoot.WaitAsync().ConfigureAwait(false);
+            await _channelSyncRoot.WaitAsync().ConfigureAwait(false);
 
             try
             {
-                foreach (var channel in ActiveChannels.Values)
+                foreach (Channel<EventData> channel in _activeChannels.Values)
                 {
                     channel.Writer.TryComplete(exception);
                 }
 
-                ActiveChannels.Clear();
+                _activeChannels.Clear();
                 _channelPublishingTokenSource.Dispose();
                 _isPublishingActive = false;
             }
             finally
             {
-                ChannelSyncRoot.Release();
+                _channelSyncRoot.Release();
             }
         }
 

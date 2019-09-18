@@ -92,8 +92,8 @@ namespace Azure.Messaging.EventHubs
         internal EventHubProducerOptions Clone() =>
             new EventHubProducerOptions
             {
-                RetryOptions = this.RetryOptions?.Clone(),
-                _partitionId = this.PartitionId
+                RetryOptions = RetryOptions?.Clone(),
+                _partitionId = PartitionId
             };
     }
 }

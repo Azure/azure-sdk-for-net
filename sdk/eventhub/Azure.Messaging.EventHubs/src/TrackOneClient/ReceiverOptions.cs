@@ -8,18 +8,18 @@ namespace TrackOne
     /// </summary> 
     internal class ReceiverOptions
     {
-        string identifier;
+        private string identifier;
 
         /// <summary>Gets or sets the identifier of a receiver.</summary> 
         /// <value>A string representing the identifier of a receiver.  It will return null if the identifier is not set.</value>
         /// <exception cref="System.ArgumentException">Thrown if the length of the value is greater than the maximum length of 64.</exception>
         public string Identifier
         {
-            get => this.identifier;
+            get => identifier;
             set
             {
                 ReceiverOptions.ValidateReceiverIdentifier(value);
-                this.identifier = value;
+                identifier = value;
             }
         }
 
@@ -30,7 +30,7 @@ namespace TrackOne
             get; set;
         }
 
-        static void ValidateReceiverIdentifier(string identifier)
+        private static void ValidateReceiverIdentifier(string identifier)
         {
             if (identifier != null &&
                 identifier.Length > ClientConstants.MaxReceiverIdentifierLength)

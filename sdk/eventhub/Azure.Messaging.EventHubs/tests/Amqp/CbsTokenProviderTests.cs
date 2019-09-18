@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
+using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
 
@@ -68,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, expires)));
 
-            var cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+            CbsToken cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
 
             Assert.That(cbsToken, Is.Not.Null, "The token should have been produced");
             Assert.That(cbsToken.TokenValue, Is.EqualTo(tokenValue), "The token value should match");
@@ -84,11 +85,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetTokenAsyncSetsTheCorrectTypeForSharedAccessSignatureTokens()
         {
             var value = "TOkEn!";
-            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
+            var signature = new SharedAccessSignature(string.Empty, "keyName", "key", value, DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
             var sasCredential = new SharedAccessSignatureCredential(signature);
             var credential = new EventHubTokenCredential(sasCredential, "test");
             var provider = new CbsTokenProvider(credential, default);
-            var cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+            CbsToken cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
 
             Assert.That(cbsToken, Is.Not.Null, "The token should have been produced");
             Assert.That(cbsToken.TokenType, Is.EqualTo(GetSharedAccessTokenType()), "The token type should match");
@@ -112,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, expires)));
 
-            var cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+            CbsToken cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
 
             Assert.That(cbsToken, Is.Not.Null, "The token should have been produced");
             Assert.That(cbsToken.TokenType, Is.EqualTo(GetGenericTokenType()), "The token type should match");

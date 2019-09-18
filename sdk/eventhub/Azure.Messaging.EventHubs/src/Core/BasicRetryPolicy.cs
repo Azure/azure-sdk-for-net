@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Core
         private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The random number generator to use for a specific thread.</summary>
-        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+        private static readonly ThreadLocal<Random> s_randomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>
         ///   The set of options responsible for configuring the retry
@@ -83,21 +83,15 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             var baseJitterSeconds = (Options.Delay.TotalSeconds * JitterFactor);
-            TimeSpan retryDelay;
 
-            switch (Options.Mode)
+            TimeSpan retryDelay = Options.Mode switch
             {
-                case RetryMode.Fixed:
-                    retryDelay = CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value);
-                    break;
+                RetryMode.Fixed => CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, s_randomNumberGenerator.Value),
 
-                case RetryMode.Exponential:
-                    retryDelay = CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value);
-                    break;
+                RetryMode.Exponential => CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, s_randomNumberGenerator.Value),
 
-                default:
-                    throw new NotSupportedException(String.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString()));
-            }
+                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
+            };
 
             // Adjust the delay, if needed, to keep within the maximum
             // duration.

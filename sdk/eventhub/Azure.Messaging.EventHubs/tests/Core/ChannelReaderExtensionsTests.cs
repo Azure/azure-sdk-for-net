@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EnumerateChannelValidatesTheReader()
         {
-            await using var enumerator = ChannelReaderExtensions.EnumerateChannel<int>(null, TimeSpan.FromSeconds(1), CancellationToken.None).GetAsyncEnumerator();
+            await using IAsyncEnumerator<int> enumerator = ChannelReaderExtensions.EnumerateChannel<int>(null, TimeSpan.FromSeconds(1), CancellationToken.None).GetAsyncEnumerator();
             Assert.That(() => enumerator.MoveNextAsync(), Throws.ArgumentNullException);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EnumerateChannelValidatesTheWaitTime()
         {
-            await using var enumerator = ChannelReaderExtensions.EnumerateChannel<int>(Mock.Of<ChannelReader<int>>(), TimeSpan.FromSeconds(-1), CancellationToken.None).GetAsyncEnumerator();
+            await using IAsyncEnumerator<int> enumerator = ChannelReaderExtensions.EnumerateChannel<int>(Mock.Of<ChannelReader<int>>(), TimeSpan.FromSeconds(-1), CancellationToken.None).GetAsyncEnumerator();
             Assert.That(() => enumerator.MoveNextAsync(), Throws.InstanceOf<ArgumentException>());
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EnumerateChannelAllowsNullWaitTime()
         {
-            await using var enumerator = ChannelReaderExtensions.EnumerateChannel<int>(Mock.Of<ChannelReader<int>>(), null, CancellationToken.None).GetAsyncEnumerator();
+            await using IAsyncEnumerator<int> enumerator = ChannelReaderExtensions.EnumerateChannel<int>(Mock.Of<ChannelReader<int>>(), null, CancellationToken.None).GetAsyncEnumerator();
             Assert.That(() => enumerator.MoveNextAsync(), Throws.Nothing);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EnumerateChannelAllowsZeroWaitTime()
         {
-            await using var enumerator = ChannelReaderExtensions.EnumerateChannel<int>(Mock.Of<ChannelReader<int>>(), TimeSpan.Zero, CancellationToken.None).GetAsyncEnumerator();
+            await using IAsyncEnumerator<int> enumerator = ChannelReaderExtensions.EnumerateChannel<int>(Mock.Of<ChannelReader<int>>(), TimeSpan.Zero, CancellationToken.None).GetAsyncEnumerator();
             Assert.That(() => enumerator.MoveNextAsync(), Throws.Nothing);
         }
 
@@ -87,10 +87,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EnumerateChannelCreatesEnumerable()
         {
-            var mockReader = Mock.Of<ChannelReader<int>>();
-            var subscription = mockReader.EnumerateChannel<int>(null, CancellationToken.None);
+            ChannelReader<int> mockReader = Mock.Of<ChannelReader<int>>();
+            IAsyncEnumerable<int> subscription = mockReader.EnumerateChannel<int>(null, CancellationToken.None);
 
-            await using (var enumerator = subscription.GetAsyncEnumerator())
+            await using (IAsyncEnumerator<int> enumerator = subscription.GetAsyncEnumerator())
             {
                 Assert.That(enumerator, Is.Not.Null);
             }
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Create the subscription and deliberately do not dispose; the common usage will be in immediate foreach call,
             // which should trigger disposal after iterating.
 
-            var subscription = mockReader.Object.EnumerateChannel<int>(null, CancellationToken.None);
+            IAsyncEnumerable<int> subscription = mockReader.Object.EnumerateChannel<int>(null, CancellationToken.None);
 
             await foreach (var item in subscription)
             {
@@ -167,7 +167,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Create the subscription and deliberately do not dispose; the common usage will be in immediate foreach call,
             // which should trigger disposal after iterating.
 
-            var subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
+            IAsyncEnumerable<int> subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
 
             Assert.That(async () =>
             {
@@ -235,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // which should trigger disposal after iterating.
 
             var readCancellation = new CancellationTokenSource(abortTimeout);
-            var subscription = mockReader.Object.EnumerateChannel(maxWaitTime, readCancellation.Token);
+            IAsyncEnumerable<int> subscription = mockReader.Object.EnumerateChannel(maxWaitTime, readCancellation.Token);
 
             Assert.That(async () =>
             {
@@ -305,7 +305,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // which should trigger disposal after iterating.
 
             var readCancellation = new CancellationTokenSource(cancelTimeout);
-            var subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
+            IAsyncEnumerable<int> subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
 
             Assert.That(async () =>
             {
@@ -376,7 +376,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // which should trigger disposal after iterating.
 
             var readCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            var subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
+            IAsyncEnumerable<int> subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
 
             Assert.That(async () =>
             {
@@ -436,7 +436,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // which should trigger disposal after iterating.
 
             var readCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            var subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
+            IAsyncEnumerable<int> subscription = mockReader.Object.EnumerateChannel(null, readCancellation.Token);
 
             Assert.That(async () =>
             {

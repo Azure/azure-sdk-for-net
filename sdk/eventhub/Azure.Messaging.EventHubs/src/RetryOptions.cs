@@ -108,11 +108,11 @@ namespace Azure.Messaging.EventHubs
         internal RetryOptions Clone() =>
             new RetryOptions
             {
-                Mode = this.Mode,
-                _maximumRetries = this._maximumRetries,
-                _delay = this._delay,
-                _maximumDelay = this._maximumDelay,
-                _tryTimeOut = this._tryTimeOut
+                Mode = Mode,
+                _maximumRetries = _maximumRetries,
+                _delay = _delay,
+                _maximumDelay = _maximumDelay,
+                _tryTimeOut = _tryTimeOut
             };
     }
 }

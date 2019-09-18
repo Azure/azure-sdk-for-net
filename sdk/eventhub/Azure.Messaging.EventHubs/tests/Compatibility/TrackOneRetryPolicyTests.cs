@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var retryCount = 99;
             var lastException = new TrackOne.EventHubsTimeoutException("RETRY!");
-            var mappedException = lastException.MapToTrackTwoException();
+            EventHubsException mappedException = lastException.MapToTrackTwoException();
             var expectedInterval = TimeSpan.FromMinutes(65);
             var mockRetryPolicy = new Mock<EventHubRetryPolicy>();
             var retryPolicy = new TrackOneRetryPolicy(mockRetryPolicy.Object);

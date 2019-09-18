@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task StartAsyncCallsPartitionProcessorInitializeAsync()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task StopAsyncCallsPartitionProcessorCloseAsyncWithShutdownReason()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(closeCalls.TryGetValue(partitionId, out var calls), Is.True, $"{ partitionId }: CloseAsync should have been called.");
                         Assert.That(calls, Is.EqualTo(1), $"{ partitionId }: CloseAsync should have been called only once.");
 
-                        Assert.That(closeReasons.TryGetValue(partitionId, out var reason), Is.True, $"{ partitionId }: close reason should have been set.");
+                        Assert.That(closeReasons.TryGetValue(partitionId, out PartitionProcessorCloseReason reason), Is.True, $"{ partitionId }: close reason should have been set.");
                         Assert.That(reason, Is.EqualTo(PartitionProcessorCloseReason.Shutdown), $"{ partitionId }: unexpected close reason.");
                     }
 
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task PartitionProcessorProcessEventsAsyncReceivesAllEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -224,7 +224,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: the end has come."))
                         };
 
-                        await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionId }))
+                        await using (EventHubProducer producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionId }))
                         {
                             await producer.SendAsync(expectedEvents[partitionId]);
                         }
@@ -247,12 +247,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var partitionId in partitionIds)
                     {
-                        Assert.That(allReceivedEvents.TryGetValue(partitionId, out var partitionReceivedEvents), Is.True, $"{ partitionId }: there should have been a set of events received.");
+                        Assert.That(allReceivedEvents.TryGetValue(partitionId, out List<EventData> partitionReceivedEvents), Is.True, $"{ partitionId }: there should have been a set of events received.");
                         Assert.That(partitionReceivedEvents.Count, Is.EqualTo(expectedEvents[partitionId].Count), $"{ partitionId }: amount of received events should match.");
 
                         var index = 0;
 
-                        foreach (var receivedEvent in partitionReceivedEvents)
+                        foreach (EventData receivedEvent in partitionReceivedEvents)
                         {
                             Assert.That(receivedEvent.IsEquivalentTo(expectedEvents[partitionId][index]), Is.True, $"{ partitionId }: the received event at index { index } did not match the sent set of events.");
                             ++index;
@@ -272,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task PartitionProcessorProcessEventsAsyncIsCalledWithNoEvents()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -322,7 +322,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitions = 1;
 
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -379,7 +379,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitions = 1;
 
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -437,7 +437,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Ignore("Failing test: needs debugging")]
         public async Task EventProcessorCanStartAgainAfterStopping()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var expectedEventsCount = 20;
 
-                    await using (var producer = client.CreateProducer())
+                    await using (EventHubProducer producer = client.CreateProducer())
                     {
                         var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
 
@@ -515,7 +515,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventProcessorCanReceiveFromCheckpointedEventPosition()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -531,8 +531,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var partitionId = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var producer = client.CreateProducer())
-                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionId, EventPosition.Earliest))
+                    await using (EventHubProducer producer = client.CreateProducer())
+                    await using (EventHubConsumer consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionId, EventPosition.Earliest))
                     {
                         // Send a few dummy events.  We are not expecting to receive these.
 
@@ -627,7 +627,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task PartitionProcessorCanCreateACheckpointFromPartitionContext()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -640,8 +640,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var partitionId = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var producer = client.CreateProducer())
-                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionId, EventPosition.Earliest))
+                    await using (EventHubProducer producer = client.CreateProducer())
+                    await using (EventHubConsumer consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionId, EventPosition.Earliest))
                     {
                         // Send a few events.  We are only interested in the last one of them.
 
@@ -709,13 +709,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Validate results.
 
-                    var ownershipEnumerable = await partitionManager.ListOwnershipAsync(client.FullyQualifiedNamespace, client.EventHubName, EventHubConsumer.DefaultConsumerGroupName);
-                    ;
+                    IEnumerable<PartitionOwnership> ownershipEnumerable = await partitionManager.ListOwnershipAsync(client.FullyQualifiedNamespace, client.EventHubName, EventHubConsumer.DefaultConsumerGroupName);
 
                     Assert.That(ownershipEnumerable, Is.Not.Null);
                     Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));
 
-                    var ownership = ownershipEnumerable.Single();
+                    PartitionOwnership ownership = ownershipEnumerable.Single();
 
                     Assert.That(ownership.Offset.HasValue, Is.True);
                     Assert.That(ownership.Offset.Value, Is.EqualTo(lastEvent.Offset));
@@ -734,7 +733,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventProcessorCanReceiveFromSpecifiedInitialEventPosition()
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -748,7 +747,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
                     DateTimeOffset enqueuedTime;
 
-                    await using (var producer = client.CreateProducer())
+                    await using (EventHubProducer producer = client.CreateProducer())
                     {
                         // Send a few dummy events.  We are not expecting to receive these.
 
@@ -823,7 +822,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(15)]
         public async Task EventProcessorWaitsMaximumReceiveWaitTimeForEvents(int maximumWaitTimeInSecs)
         {
-            await using (var scope = await EventHubScope.CreateAsync(2))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -871,10 +870,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Validate results.
 
-                    foreach (var kvp in timestamps)
+                    foreach (KeyValuePair<string, List<DateTimeOffset>> kvp in timestamps)
                     {
                         var partitionId = kvp.Key;
-                        var partitionTimestamps = kvp.Value;
+                        List<DateTimeOffset> partitionTimestamps = kvp.Value;
 
                         Assert.That(partitionTimestamps.Count, Is.GreaterThan(1), $"{ partitionId }: more timestamp samples were expected.");
 
@@ -908,7 +907,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitions = 2;
 
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -918,7 +917,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Send some events.
 
-                    await using (var producer = client.CreateProducer())
+                    await using (EventHubProducer producer = client.CreateProducer())
                     {
                         var eventSet = Enumerable
                             .Range(0, 20 * maximumMessageCount)
@@ -991,7 +990,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(32, 32)]
         public async Task PartitionDistributionIsEvenAfterLoadBalancing(int partitions, int eventProcessors)
         {
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -1023,7 +1022,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Take a snapshot of the current partition balancing status.
 
-                    var ownedPartitionsCountSnapshot = ownedPartitionsCount.ToArray().Select(kvp => kvp.Value);
+                    IEnumerable<int> ownedPartitionsCountSnapshot = ownedPartitionsCount.ToArray().Select(kvp => kvp.Value);
 
                     // Stop the event processors.
 
@@ -1054,7 +1053,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitions = 10;
 
-            await using (var scope = await EventHubScope.CreateAsync(partitions))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(partitions))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -1100,7 +1099,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Take a snapshot of the current partition balancing status.
 
-                    var ownedPartitionsCountSnapshot = ownedPartitionsCount.ToArray().Select(kvp => kvp.Value);
+                    IEnumerable<int> ownedPartitionsCountSnapshot = ownedPartitionsCount.ToArray().Select(kvp => kvp.Value);
 
                     // Stop the event processors.
 

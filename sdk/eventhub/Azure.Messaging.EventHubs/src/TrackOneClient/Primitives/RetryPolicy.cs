@@ -1,25 +1,23 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Net.Sockets;
+using System.Threading.Tasks;
+using TrackOne.Primitives;
+
 namespace TrackOne
 {
-    using System;
-    using System.Net.Sockets;
-    using System.Threading.Tasks;
-    using TrackOne.Primitives;
-
     /// <summary>
     /// Represents an abstraction for retrying messaging operations. Users should not 
     /// implement this class, and instead should use one of the provided implementations.
     /// </summary>
     internal abstract class RetryPolicy
     {
-        const int DefaultRetryMaxCount = 10;
-
-        static readonly TimeSpan DefaultRetryMinBackoff = TimeSpan.Zero;
-        static readonly TimeSpan DefaultRetryMaxBackoff = TimeSpan.FromSeconds(30);
-
-        readonly object serverBusySync = new object();
+        private const int DefaultRetryMaxCount = 10;
+        private static readonly TimeSpan s_defaultRetryMinBackoff = TimeSpan.Zero;
+        private static readonly TimeSpan s_defaultRetryMaxBackoff = TimeSpan.FromSeconds(30);
+        private readonly object _serverBusySync = new object();
 
         /// <summary>
         /// Determines whether or not the exception can be retried.
@@ -43,7 +41,7 @@ namespace TrackOne
             // Flatten AggregateException
             if (exception is AggregateException)
             {
-                var fltAggException = (exception as AggregateException).Flatten();
+                AggregateException fltAggException = (exception as AggregateException).Flatten();
                 return fltAggException.InnerException != null && IsRetryableException(fltAggException.InnerException);
             }
 
@@ -59,7 +57,7 @@ namespace TrackOne
         /// <summary>
         /// Returns the default retry policy, <see cref="RetryExponential"/>.
         /// </summary>
-        public static RetryPolicy Default => new RetryExponential(DefaultRetryMinBackoff, DefaultRetryMaxBackoff, DefaultRetryMaxCount);
+        public static RetryPolicy Default => new RetryExponential(s_defaultRetryMinBackoff, s_defaultRetryMaxBackoff, DefaultRetryMaxCount);
 
         /// <summary>
         /// Returns the default retry policy, <see cref="NoRetry"/>.
@@ -84,7 +82,7 @@ namespace TrackOne
         public TimeSpan? GetNextRetryInterval(Exception lastException, TimeSpan remainingTime, int retryCount)
         {
             int baseWaitTime = 0;
-            lock (this.serverBusySync)
+            lock (_serverBusySync)
             {
                 if (lastException != null &&
                         (lastException is ServerBusyException || (lastException.InnerException != null && lastException.InnerException is ServerBusyException)))
@@ -93,7 +91,7 @@ namespace TrackOne
                 }
             }
 
-            var retryAfter = this.OnGetNextRetryInterval(lastException, remainingTime, baseWaitTime, retryCount);
+            TimeSpan? retryAfter = OnGetNextRetryInterval(lastException, remainingTime, baseWaitTime, retryCount);
 
             // Don't retry if remaining time isn't enough.
             if (retryAfter == null ||

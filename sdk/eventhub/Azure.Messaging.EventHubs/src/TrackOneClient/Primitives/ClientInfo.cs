@@ -1,32 +1,32 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Reflection;
+using System.Runtime.Versioning;
+using Microsoft.Azure.Amqp;
+
 namespace TrackOne
 {
-    using System;
-    using System.Reflection;
-    using System.Runtime.Versioning;
-    using Microsoft.Azure.Amqp;
-
-    static class ClientInfo
+    internal static class ClientInfo
     {
-        static readonly string product;
-        static readonly string version;
-        static readonly string framework;
-        static readonly string platform;
+        private static readonly string s_product;
+        private static readonly string s_version;
+        private static readonly string s_framework;
+        private static readonly string s_platform;
 
         static ClientInfo()
         {
             try
             {
                 Assembly assembly = typeof(ClientInfo).GetTypeInfo().Assembly;
-                product = GetAssemblyAttributeValue<AssemblyProductAttribute>(assembly, p => p.Product);
-                version = GetAssemblyAttributeValue<AssemblyFileVersionAttribute>(assembly, v => v.Version);
-                framework = GetAssemblyAttributeValue<TargetFrameworkAttribute>(assembly, f => f.FrameworkName);
+                s_product = GetAssemblyAttributeValue<AssemblyProductAttribute>(assembly, p => p.Product);
+                s_version = GetAssemblyAttributeValue<AssemblyFileVersionAttribute>(assembly, v => v.Version);
+                s_framework = GetAssemblyAttributeValue<TargetFrameworkAttribute>(assembly, f => f.FrameworkName);
 #if FullNetFx
                 platform = Environment.OSVersion.VersionString;
 #else
-                platform = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+                s_platform = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
 #endif
             }
             catch { }
@@ -34,16 +34,15 @@ namespace TrackOne
 
         public static void Add(AmqpConnectionSettings settings)
         {
-            settings.AddProperty("product", product);
-            settings.AddProperty("version", version);
-            settings.AddProperty("framework", framework);
-            settings.AddProperty("platform", platform);
+            settings.AddProperty("product", s_product);
+            settings.AddProperty("version", s_version);
+            settings.AddProperty("framework", s_framework);
+            settings.AddProperty("platform", s_platform);
         }
 
-        static string GetAssemblyAttributeValue<T>(Assembly assembly, Func<T, string> getter) where T : Attribute
+        private static string GetAssemblyAttributeValue<T>(Assembly assembly, Func<T, string> getter) where T : Attribute
         {
-            var attribute = assembly.GetCustomAttribute(typeof(T)) as T;
-            return attribute == null ? null : getter(attribute);
+            return !(assembly.GetCustomAttribute(typeof(T)) is T attribute) ? null : getter(attribute);
         }
     }
 }

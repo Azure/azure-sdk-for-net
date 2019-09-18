@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var validSpan = TimeSpan.FromHours(4);
             var signature = new SharedAccessSignature(resource, keyName, keyValue, validSpan);
             var keyCredential = new EventHubSharedKeyCredential(keyName, keyValue);
-            var sasCredential = keyCredential.ConvertToSharedAccessSignatureCredential(resource, validSpan);
+            SharedAccessSignatureCredential sasCredential = keyCredential.ConvertToSharedAccessSignatureCredential(resource, validSpan);
 
             Assert.That(sasCredential, Is.Not.Null, "A shared access signature credential should have been created.");
             Assert.That(sasCredential.SharedAccessSignature, Is.Not.Null, "The SAS credential should contain a shared access signature.");

@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
             if (resource.IndexOf(SharedAccessSignature.Resource, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, SharedAccessSignature.Resource), nameof(resource));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, SharedAccessSignature.Resource), nameof(resource));
             }
 
             SharedAccessSignature.ExtendExpiration(tokenValidityDuration);

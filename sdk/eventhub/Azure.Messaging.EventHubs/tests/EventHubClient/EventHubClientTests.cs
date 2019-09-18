@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> ConstructorExpandedArgumentInvalidCases()
         {
-            var credential = Mock.Of<TokenCredential>();
+            TokenCredential credential = Mock.Of<TokenCredential>();
 
             yield return new object[] { null, "fakePath", credential };
             yield return new object[] { "", "fakePath", credential };
@@ -194,7 +194,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                      string constructorDescription)
         {
             var defaultOptions = new EventHubClientOptions();
-            var options = client.ClientOptions;
+            EventHubClientOptions options = client.ClientOptions;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
@@ -214,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                              EventHubClientOptions constructorOptions,
                                              string constructorDescription)
         {
-            var options = client.ClientOptions;
+            EventHubClientOptions options = client.ClientOptions;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
@@ -263,7 +263,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var fullyQualifiedNamespace = "host.windows.servicebus.net";
             var entityPath = "somePath";
-            var credential = Mock.Of<TokenCredential>();
+            TokenCredential credential = Mock.Of<TokenCredential>();
             var client = new EventHubClient(fullyQualifiedNamespace, entityPath, credential);
 
             Assert.That(client.EventHubName, Is.EqualTo(entityPath));
@@ -338,7 +338,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                           string constructorDescription)
         {
             var defaultOptions = new EventHubClientOptions();
-            var options = client.TransportClientOptions;
+            EventHubClientOptions options = client.TransportClientOptions;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
@@ -358,7 +358,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                          EventHubClientOptions constructorOptions,
                                                          string constructorDescription)
         {
-            var options = client.TransportClientOptions;
+            EventHubClientOptions options = client.TransportClientOptions;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
@@ -402,7 +402,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
             var resource = $"amqps://{ fullyQualifiedNamespace }/{ path }";
-            var connectionType = (TransportType)Int32.MinValue;
+            var connectionType = (TransportType)int.MinValue;
             var options = new EventHubClientOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessSignatureCredential(signature);
@@ -508,7 +508,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
 
             mockClient.CreateConsumer(expectedConsumerGroup, expectedPartition, expectedPosition);
-            var actualOptions = mockClient.ConsumerOptions;
+            EventHubConsumerOptions actualOptions = mockClient.ConsumerOptions;
 
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
@@ -554,7 +554,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
 
             mockClient.CreateConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
-            var actualOptions = mockClient.ConsumerOptions;
+            EventHubConsumerOptions actualOptions = mockClient.ConsumerOptions;
 
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions, Is.Not.SameAs(expectedOptions), "A clone of the options should have been made.");
@@ -705,7 +705,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var clientOptions = new EventHubClientOptions();
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
 
-            var newRetry = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy newRetry = Mock.Of<EventHubRetryPolicy>();
             mockClient.RetryPolicy = newRetry;
 
             Assert.That(mockClient.RetryPolicy, Is.SameAs(newRetry), "The client should have the correct retry policy set.");
@@ -720,11 +720,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SettingTheRetryPolicyUpdatesTheTransportClient()
         {
-            var newRetry = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy newRetry = Mock.Of<EventHubRetryPolicy>();
             var transportClient = new ObservableTransportClientMock();
-            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-
-            client.RetryPolicy = newRetry;
+            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake")
+            {
+                RetryPolicy = newRetry
+            };
             Assert.That(transportClient.UpdateRetryPolicyCalledWith, Is.SameAs(newRetry), "The retry policy should have been passed as the update.");
         }
 
@@ -774,7 +775,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedOptions = new EventHubProducerOptions { RetryOptions = new RetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
 
             client.CreateProducer(expectedOptions);
-            (var actualOptions, var actualDefaultRetry) = transportClient.CreateProducerCalledWith;
+            (EventHubProducerOptions actualOptions, EventHubRetryPolicy actualDefaultRetry) = transportClient.CreateProducerCalledWith;
 
             Assert.That(actualOptions, Is.Not.Null, "The producer options should have been set.");
             Assert.That(actualOptions.PartitionId, Is.EqualTo(expectedOptions.PartitionId), "The partition identifiers should match.");
@@ -798,7 +799,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroupName;
 
             client.CreateConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
-            (var actualConsumerGroup, var actualPartition, var actualPosition, var actualOptions, var actualDefaultRetry) = transportClient.CreateConsumerCalledWith;
+            (var actualConsumerGroup, var actualPartition, EventPosition actualPosition, EventHubConsumerOptions actualOptions, EventHubRetryPolicy actualDefaultRetry) = transportClient.CreateConsumerCalledWith;
 
             Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
             Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer groups should match.");
@@ -1058,7 +1059,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                             EventHubRetryPolicy defaultRetry)
             {
                 CreateProducerCalledWith = (producerOptions, defaultRetry);
-                return default(EventHubProducer);
+                return default;
             }
 
             public override EventHubConsumer CreateConsumer(string consumerGroup,
@@ -1068,7 +1069,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                             EventHubRetryPolicy defaultRetry)
             {
                 CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, consumerOptions, defaultRetry);
-                return default(EventHubConsumer);
+                return default;
             }
 
             public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy)
