@@ -231,7 +231,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
             ///   Initializes a new instance of the <see cref="MockPartitionOwnership"/> class.
             /// </summary>
             ///
-            /// <param name="fullyQualifiedNamespace">The fully qualified host name for the Event Hubs namespace this partition ownership is associated with.</param>
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
             /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>

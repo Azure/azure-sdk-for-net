@@ -12,8 +12,8 @@ namespace Azure.Messaging.EventHubs.Processor
     public class Checkpoint
     {
         /// <summary>
-        ///   The fully qualified host name for the Event Hubs namespace this checkpoint is
-        ///   associated with.
+        ///   The fully qualified Event Hubs namespace this checkpoint is associated with.  This
+        ///   is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
         public string FullyQualifiedNamespace { get; }
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="Checkpoint"/> class.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified host name for the Event Hubs namespace this checkpoint is associated with.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub this checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group this checkpoint is associated with.</param>
         /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor{T}" /> instance.</param>

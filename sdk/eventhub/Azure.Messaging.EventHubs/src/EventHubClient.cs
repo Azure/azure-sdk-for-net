@@ -28,8 +28,8 @@ namespace Azure.Messaging.EventHubs
         private EventHubRetryPolicy _retryPolicy;
 
         /// <summary>
-        ///   The fully qualified host name for the Event Hubs namespace that the client
-        ///   is connected to.
+        ///   The fully qualified Event Hubs namespace that the client is connected to.  This is likely
+        ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
         public string FullyQualifiedNamespace { get; }
@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
@@ -414,7 +414,7 @@ namespace Azure.Messaging.EventHubs
         ///   requested connection type of the <paramref name="options" />.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified host name for the Event Hubs namespace.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of a specific Event Hub.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
         /// <param name="options">The set of options to use for the client.</param>
@@ -452,7 +452,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Event Hubs service.</param>
-        /// <param name="fullyQualifiedNamespace">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
