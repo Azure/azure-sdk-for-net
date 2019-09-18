@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal override void ReadProperty(JsonProperty prop)
         {
-            switch(prop.Name)
+            switch (prop.Name)
             {
                 case RecoveryIdPropertyName:
                     RecoveryId = prop.Value.GetString();

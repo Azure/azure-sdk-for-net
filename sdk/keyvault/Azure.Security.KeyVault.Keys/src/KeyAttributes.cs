@@ -46,11 +46,11 @@ namespace Azure.Security.KeyVault.Keys
         public string RecoveryLevel { get; private set; }
 
         private const string EnabledPropertyName = "enabled";
-        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private const string NotBeforePropertyName = "nbf";
-        private static readonly JsonEncodedText NotBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
+        private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
         private const string ExpiresPropertyName = "exp";
-        private static readonly JsonEncodedText ExpiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
+        private static readonly JsonEncodedText s_expiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
         private const string CreatedPropertyName = "created";
         private const string UpdatedPropertyName = "updated";
         private const string RecoveryLevelPropertyName = "recoveryLevel";
@@ -87,17 +87,17 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (Enabled.HasValue)
             {
-                json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
+                json.WriteBoolean(s_enabledPropertyNameBytes, Enabled.Value);
             }
 
             if (NotBefore.HasValue)
             {
-                json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_notBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeSeconds());
             }
 
             if (Expires.HasValue)
             {
-                json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_expiresPropertyNameBytes, Expires.Value.ToUnixTimeSeconds());
             }
 
             // Created is read-only don't serialize

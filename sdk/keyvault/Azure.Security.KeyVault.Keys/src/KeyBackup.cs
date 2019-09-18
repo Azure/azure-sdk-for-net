@@ -11,7 +11,7 @@ namespace Azure.Security.KeyVault.Keys
         public byte[] Value { get; set; }
 
         private const string ValuePropertyName = "value";
-        private static readonly JsonEncodedText ValuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
+        private static readonly JsonEncodedText s_valuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            json.WriteString(ValuePropertyNameBytes, Base64Url.Encode(Value));
+            json.WriteString(s_valuePropertyNameBytes, Base64Url.Encode(Value));
         }
     }
 }
