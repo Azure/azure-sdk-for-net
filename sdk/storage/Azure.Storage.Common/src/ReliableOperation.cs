@@ -41,14 +41,14 @@ namespace Azure.Storage.Common
             }
         }
 
-        public static Task<T> DoAsync<T>(Func<Task<T>> operation, ReliabilityConfiguration? reliabilityConfiguration = default, int maximumRetries = Constants.MaxReliabilityRetries)
+        public static ValueTask<T> DoAsync<T>(Func<ValueTask<T>> operation, ReliabilityConfiguration? reliabilityConfiguration = default, int maximumRetries = Constants.MaxReliabilityRetries)
         {
             reliabilityConfiguration = reliabilityConfiguration ?? ReliabilityConfiguration.Default;
 
             return DoAsync(operation, reliabilityConfiguration.Value.Reset, reliabilityConfiguration.Value.Cleanup, reliabilityConfiguration.Value.ExceptionPredicate, maximumRetries);
         }
 
-        public static async Task<T> DoAsync<T>(Func<Task<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
+        public static async ValueTask<T> DoAsync<T>(Func<ValueTask<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
         {
             while (true)
             {
@@ -80,7 +80,7 @@ namespace Azure.Storage.Common
             }
         }
 
-        public static async Task<T> DoSyncOrAsync<T>(bool isAsync, Func<Task<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
+        public static async ValueTask<T> DoSyncOrAsync<T>(bool isAsync, Func<ValueTask<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
         {
             while (true)
             {

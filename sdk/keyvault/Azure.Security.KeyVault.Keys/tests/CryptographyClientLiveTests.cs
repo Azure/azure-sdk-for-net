@@ -199,7 +199,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            switch (algorithm)
+            switch (algorithm.ToString())
             {
                 case KeyWrapAlgorithm.RSA15:
                 case KeyWrapAlgorithm.RSAOAEP:

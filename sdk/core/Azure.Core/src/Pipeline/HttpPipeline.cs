@@ -42,13 +42,13 @@ namespace Azure.Core.Pipeline
 
         public ClientDiagnostics Diagnostics { get; }
 
-        public Task SendAsync(HttpPipelineMessage message, CancellationToken cancellationToken)
+        public ValueTask<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
             return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
         }
 
-        public void Send(HttpPipelineMessage message, CancellationToken cancellationToken)
+        public async ValueTask<Response> SendRequestAsync(Request request, bool bufferResponse, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));

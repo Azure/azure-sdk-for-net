@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
     {
         public static Stream Create(
             Func<long, Response> responseFactory,
-            Func<long, Task<Response>> asyncResponseFactory,
+            Func<long, ValueTask<Response>> asyncResponseFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
 
         public static async Task<Stream> CreateAsync(
             Func<long, Response> responseFactory,
-            Func<long, Task<Response>> asyncResponseFactory,
+            Func<long, ValueTask<Response>> asyncResponseFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
@@ -34,7 +34,7 @@ namespace Azure.Core.Pipeline
         public static Stream Create(
             Response initialResponse,
             Func<long, Response> responseFactory,
-            Func<long, Task<Response>> asyncResponseFactory,
+            Func<long, ValueTask<Response>> asyncResponseFactory,
             ResponseClassifier responseClassifier,
             int maxRetries)
         {
@@ -47,7 +47,7 @@ namespace Azure.Core.Pipeline
 
             private readonly Func<long, Response> _responseFactory;
 
-            private readonly Func<long, Task<Response>> _asyncResponseFactory;
+            private readonly Func<long, ValueTask<Response>> _asyncResponseFactory;
 
             private readonly int _maxRetries;
 
@@ -61,7 +61,7 @@ namespace Azure.Core.Pipeline
 
             private List<Exception>? _exceptions;
 
-            public RetriableStreamImpl(Response initialResponse, Func<long, Response> responseFactory, Func<long, Task<Response>> asyncResponseFactory, ResponseClassifier responseClassifier, int maxRetries)
+            public RetriableStreamImpl(Response initialResponse, Func<long, Response> responseFactory, Func<long, ValueTask<Response>> asyncResponseFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
                 _initialStream = EnsureStream(initialResponse);
                 _currentStream = EnsureStream(initialResponse);

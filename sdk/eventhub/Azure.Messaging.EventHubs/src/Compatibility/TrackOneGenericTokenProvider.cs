@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using TrackOne;
@@ -84,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, Credential.Resource), nameof(resource));
             }
 
-            var accessToken = await Credential.GetTokenAsync(EventHubsDefaultScopes, CancellationToken.None).ConfigureAwait(false);
+            var accessToken = await Credential.GetTokenAsync(new TokenRequest(EventHubsDefaultScopes), CancellationToken.None).ConfigureAwait(false);
 
             return new TrackOneGenericToken
             (

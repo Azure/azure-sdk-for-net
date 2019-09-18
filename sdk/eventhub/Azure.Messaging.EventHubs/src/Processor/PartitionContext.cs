@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Messaging.EventHubs.Core;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -100,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task UpdateCheckpointAsync(long offset,
+        public virtual async Task UpdateCheckpointAsync(long offset,
                                                   long sequenceNumber)
         {
             // Parameter validation is done by Checkpoint constructor.
@@ -115,7 +118,18 @@ namespace Azure.Messaging.EventHubs.Processor
                 sequenceNumber
             );
 
-            return Manager.UpdateCheckpointAsync(checkpoint);
+            using DiagnosticScope scope =
+                EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
+            scope.Start();
+
+            try
+            {
+                await Manager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+            }
         }
     }
 }
