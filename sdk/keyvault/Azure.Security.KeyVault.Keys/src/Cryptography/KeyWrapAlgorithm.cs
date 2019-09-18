@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -26,6 +27,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string RSAOAEP = "RSA-OAEP";
         internal const string RSA15 = "RSA-15";
         internal const string RSAOAEP256 = "RSA-OAEP-256";
+        internal const string A128KW = "A128KW";
+        internal const string A192KW = "A192KW";
+        internal const string A256KW = "A256KW";
 
         /// <summary>
         /// RSA-OAEP
@@ -38,9 +42,24 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static readonly KeyWrapAlgorithm Rsa15 = new KeyWrapAlgorithm(RSA15);
 
         /// <summary>
-        /// RSA-OAEP256
+        /// RSA-OAEP-256
         /// </summary>
         public static readonly KeyWrapAlgorithm RsaOaep256 = new KeyWrapAlgorithm(RSAOAEP256);
+
+        /// <summary>
+        /// AES 128 Key Wrap
+        /// </summary>
+        public static readonly KeyWrapAlgorithm A128KW = new KeyWrapAlgorithm(A128KW);
+
+        /// <summary>
+        /// AES 192 Key Wrap
+        /// </summary>
+        public static readonly KeyWrapAlgorithm A192KW = new KeyWrapAlgorithm(A192KW);
+
+        /// <summary>
+        /// AES 256 Key Wrap
+        /// </summary>
+        public static readonly KeyWrapAlgorithm A256KW = new KeyWrapAlgorithm(A256KW);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are the same.
@@ -85,5 +104,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _value;
+
+        internal RSAEncryptionPadding GetEncryptionPadding()
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
+
+        internal int GetKeySize() => _value switch
+        {
+            KeyWrapAlgorithm.A128KW => 128,
+            KeyWrapAlgorithm.A192KW => 192,
+            KeyWrapAlgorithm.A256KW => 256,
+            _ => 0,
+        };
     }
 }

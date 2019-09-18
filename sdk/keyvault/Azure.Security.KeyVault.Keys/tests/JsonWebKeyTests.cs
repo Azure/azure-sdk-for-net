@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using Azure.Core;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
@@ -150,7 +151,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [TestCaseSource(nameof(GetECDSaInvalidTestData))]
-        public void ToECDsaInvalidKey(string curveName, byte[] x, byte[] y, string name)
+        public void ToECDsaInvalidKey(string curveName, byte[] x, byte[] y, string name, bool nullOnError)
         {
 #if NET461
             Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
@@ -164,6 +165,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa(), "Expected exception not thrown for data named '{0}'", name);
+            if (nullOnError)
+            {
+                Assert.IsNull(jwk.ToECDsa(false, false), "Expected null result for data named '{0}'", name);
+            }
 #endif
         }
 
@@ -269,18 +274,18 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return result;
             }
 
-            yield return new object[] { null, x, y, "nullCurveName" };
-            yield return new object[] { "invalid", x, y, "invalidCurveName" };
+            yield return new object[] { null, x, y, "nullCurveName", false };
+            yield return new object[] { "invalid", x, y, "invalidCurveName", true };
 
-            yield return new object[] { curveName, null, y, "nullX" };
-            yield return new object[] { curveName, Array.Empty<byte>(), y, "emptyX" };
-            yield return new object[] { curveName, new byte[x.Length], y, "zeroX" };
-            yield return new object[] { curveName, Resize(x), y, "longerX" };
+            yield return new object[] { curveName, null, y, "nullX", false };
+            yield return new object[] { curveName, Array.Empty<byte>(), y, "emptyX", false };
+            yield return new object[] { curveName, new byte[x.Length], y, "zeroX", false };
+            yield return new object[] { curveName, Resize(x), y, "longerX", false };
 
-            yield return new object[] { curveName, x, null, "nullY" };
-            yield return new object[] { curveName, x, Array.Empty<byte>(), "emptyY" };
-            yield return new object[] { curveName, x, new byte[x.Length], "zeroY" };
-            yield return new object[] { curveName, x, Resize(y), "longerY" };
+            yield return new object[] { curveName, x, null, "nullY", false };
+            yield return new object[] { curveName, x, Array.Empty<byte>(), "emptyY", false };
+            yield return new object[] { curveName, x, new byte[x.Length], "zeroY", false };
+            yield return new object[] { curveName, x, Resize(y), "longerY", false };
         }
 
         private static IEnumerable<object> GetRSAInvalidKeyData()

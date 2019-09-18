@@ -35,17 +35,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string ES256K = "ES256K";
 
         /// <summary>
-        /// RSA SHA-256 signature algorithim.
+        /// RSA SHA-256 signature algorithm.
         /// </summary>
         public static readonly SignatureAlgorithm Rs256 = new SignatureAlgorithm(RS256);
 
         /// <summary>
-        /// RSA SHA-384 signature algorithim.
+        /// RSA SHA-384 signature algorithm.
         /// </summary>
         public static readonly SignatureAlgorithm Rs384 = new SignatureAlgorithm(RS384);
 
         /// <summary>
-        /// RSA SHA-512 Signature algorithim.
+        /// RSA SHA-512 Signature algorithm.
         /// </summary>
         public static readonly SignatureAlgorithm Rs512 = new SignatureAlgorithm(RS512);
 
@@ -150,5 +150,47 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
+        internal ref readonly KeyCurveName GetKeyCurveName()
+        {
+            switch (_value)
+            {
+                case SignatureAlgorithm.ES256:
+                    return ref KeyCurveName.P256;
+
+                case SignatureAlgorithm.ES256K:
+                    return ref KeyCurveName.P256K;
+
+                case SignatureAlgorithm.ES384:
+                    return ref KeyCurveName.P384;
+
+                case SignatureAlgorithm.ES512:
+                    return ref KeyCurveName.P521;
+
+                default:
+                    return ref KeyCurveName.Default;
+            }
+        }
+
+        internal int GetKeySize()
+        {
+            switch (_value)
+            {
+                case SignatureAlgorithm.RS256:
+                case SignatureAlgorithm.PS256:
+                case SignatureAlgorithm.ES256:
+                case SignatureAlgorithm.ES256K:
+                    return 256;
+                case SignatureAlgorithm.RS384:
+                case SignatureAlgorithm.PS384:
+                case SignatureAlgorithm.ES384:
+                    return 384;
+                case SignatureAlgorithm.RS512:
+                case SignatureAlgorithm.PS512:
+                case SignatureAlgorithm.ES512:
+                    return 512;
+                default:
+                    return 0;
+            }
+        }
     }
 }

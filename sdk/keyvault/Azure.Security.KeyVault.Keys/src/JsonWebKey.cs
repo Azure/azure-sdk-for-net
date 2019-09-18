@@ -187,6 +187,24 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public byte[] T { get; set; }
 
+        internal bool HasPrivateKey
+        {
+            get
+            {
+                if (KeyType == KeyType.Rsa || KeyType == KeyType.Ec || KeyType == KeyType.RsaHsm || KeyType == KeyType.EcHsm)
+                {
+                    return D != null;
+                }
+
+                if (KeyType == KeyType.Oct)
+                {
+                    return K != null;
+                }
+
+                return false;
+            }
+        }
+
         /// <summary>
         /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> to an <see cref="Aes"/> object.
         /// </summary>
@@ -216,7 +234,9 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="includePrivateParameters">Whether to include private parameters.</param>
         /// <returns>An <see cref="ECDsa"/> object.</returns>
         /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Ec"/> or <see cref="KeyType.EcHsm"/>, or one or more key parameters are invalid.</exception>
-        public ECDsa ToECDsa(bool includePrivateParameters = false)
+        public ECDsa ToECDsa(bool includePrivateParameters = false) => ToECDsa(includePrivateParameters, true);
+
+        internal ECDsa ToECDsa(bool includePrivateParameters, bool throwIfNotSupported)
         {
             if (KeyType != KeyType.Ec && KeyType != KeyType.EcHsm)
             {
@@ -226,7 +246,7 @@ namespace Azure.Security.KeyVault.Keys
             ValidateKeyParameter(nameof(X), X);
             ValidateKeyParameter(nameof(Y), Y);
 
-            return Convert(includePrivateParameters);
+            return Convert(includePrivateParameters, throwIfNotSupported);
         }
 
         /// <summary>
@@ -254,14 +274,15 @@ namespace Azure.Security.KeyVault.Keys
 
             if (includePrivateParameters)
             {
-                var bitLength = rsaParameters.Modulus.Length * 8;
+                int byteLength = rsaParameters.Modulus.Length;
+                rsaParameters.D = ForceBufferLength(nameof(D), D, byteLength);
 
-                rsaParameters.D = ForceBufferLength(nameof(D), D, bitLength / 8);
-                rsaParameters.DP = ForceBufferLength(nameof(DP), DP, bitLength / 16);
-                rsaParameters.DQ = ForceBufferLength(nameof(DQ), DQ, bitLength / 16);
-                rsaParameters.P = ForceBufferLength(nameof(P), P, bitLength / 16);
-                rsaParameters.Q = ForceBufferLength(nameof(Q), Q, bitLength / 16);
-                rsaParameters.InverseQ = ForceBufferLength(nameof(QI), QI, bitLength / 16);
+                byteLength >>= 1;
+                rsaParameters.DP = ForceBufferLength(nameof(DP), DP, byteLength);
+                rsaParameters.DQ = ForceBufferLength(nameof(DQ), DQ, byteLength);
+                rsaParameters.P = ForceBufferLength(nameof(P), P, byteLength);
+                rsaParameters.Q = ForceBufferLength(nameof(Q), Q, byteLength);
+                rsaParameters.InverseQ = ForceBufferLength(nameof(QI), QI, byteLength);
             }
 
             RSA rsa = RSA.Create();
@@ -301,6 +322,22 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_kPropertyNameBytes = JsonEncodedText.Encode(KPropertyName);
         private const string TPropertyName = "t";
         private static readonly JsonEncodedText s_tPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
+
+        internal bool SupportsOperation(KeyOperation operation)
+        {
+            if (KeyOps != null)
+            {
+                for (int i = 0; i < KeyOps.Count; ++i)
+                {
+                    if (KeyOps[i] == operation)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         internal void ReadProperties(JsonElement json)
         {
@@ -436,38 +473,38 @@ namespace Azure.Security.KeyVault.Keys
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
 
-        private static byte[] ForceBufferLength(string name, byte[] value, int requiredLength)
+        private static byte[] ForceBufferLength(string name, byte[] value, int requiredLengthInBytes)
         {
             if (value is null || value.Length == 0)
             {
                 throw new InvalidOperationException($"key parameter {name} is null or empty");
             }
 
-            if (value.Length == requiredLength)
+            if (value.Length == requiredLengthInBytes)
             {
                 return value;
             }
 
-            if (value.Length < requiredLength)
+            if (value.Length < requiredLengthInBytes)
             {
-                byte[] padded = new byte[requiredLength];
-                Array.Copy(value, 0, padded, requiredLength - value.Length, value.Length);
+                byte[] padded = new byte[requiredLengthInBytes];
+                Array.Copy(value, 0, padded, requiredLengthInBytes - value.Length, value.Length);
 
                 return padded;
             }
 
             // Throw if any extra bytes are non-zero.
-            var extraLength = value.Length - requiredLength;
+            var extraLength = value.Length - requiredLengthInBytes;
             for (int i = 0; i < extraLength; ++i)
             {
                 if (value[i] != 0)
                 {
-                    throw new InvalidOperationException($"key parameter {name} is too long: expected at most {requiredLength} bytes, but found {value.Length - i} bytes");
+                    throw new InvalidOperationException($"key parameter {name} is too long: expected at most {requiredLengthInBytes} bytes, but found {value.Length - i} bytes");
                 }
             }
 
-            byte[] trimmed = new byte[requiredLength];
-            Array.Copy(value, value.Length - requiredLength, trimmed, 0, requiredLength);
+            byte[] trimmed = new byte[requiredLengthInBytes];
+            Array.Copy(value, value.Length - requiredLengthInBytes, trimmed, 0, requiredLengthInBytes);
 
             return trimmed;
         }
@@ -525,14 +562,19 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private ECDsa Convert(bool includePrivateParameters)
+        private ECDsa Convert(bool includePrivateParameters, bool throwIfNotSupported)
         {
             ref readonly KeyCurveName curveName = ref KeyCurveName.Find(CurveName);
 
             int requiredParameterSize = curveName._keyParameterSize;
             if (requiredParameterSize <= 0)
             {
-                throw new InvalidOperationException($"invalid curve name: {CurveName ?? "null"}");
+                if (throwIfNotSupported)
+                {
+                    throw new InvalidOperationException($"invalid curve name: {CurveName ?? "null"}");
+                }
+
+                return null;
             }
 
             ECParameters ecParameters = new ECParameters
@@ -551,7 +593,16 @@ namespace Azure.Security.KeyVault.Keys
             }
 
             ECDsa ecdsa = ECDsa.Create();
-            ecdsa.ImportParameters(ecParameters);
+            try
+            {
+                ecdsa.ImportParameters(ecParameters);
+            }
+            catch when (!throwIfNotSupported)
+            {
+                ecdsa.Dispose();
+
+                return null;
+            }
 
             return ecdsa;
         }

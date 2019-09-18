@@ -16,12 +16,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to wrap the <see cref="EncryptedKey"/>. This must be stored alongside the <see cref="EncryptedKey"/> as the same key must be used to unwrap it.
         /// </summary>
-        public string KeyId { get; private set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
         /// The wrapped key
         /// </summary>
-        public byte[] EncryptedKey { get; private set; }
+        public byte[] EncryptedKey { get; internal set; }
 
         /// <summary>
         /// The algorithm used. This must be stored alongside the <see cref="EncryptedKey"/> as the same key must be used to unwrap it.

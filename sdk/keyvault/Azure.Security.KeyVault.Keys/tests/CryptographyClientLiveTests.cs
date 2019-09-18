@@ -38,9 +38,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             Key key = await CreateTestKey(algorithm);
 
-            CryptographyClient cryptoClient = GetCryptoClient(key.Id);
+            CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
-            var data = new byte[32];
+            byte[] data = new byte[32];
             Recording.Random.NextBytes(data);
 
             EncryptResult encResult = await cryptoClient.EncryptAsync(algorithm, data);
@@ -63,11 +63,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task WrapUnwrapRoundTrip([Fields]KeyWrapAlgorithm algorithm)
         {
+            if (algorithm == KeyWrapAlgorithm.A128KW || algorithm == KeyWrapAlgorithm.A192KW || algorithm == KeyWrapAlgorithm.A256KW)
+            {
+                Assert.Ignore("Algorithm {0} is not supported by KeyVault at this time", algorithm);
+            }
+
             Key key = await CreateTestKey(algorithm);
 
-            CryptographyClient cryptoClient = GetCryptoClient(key.Id);
+            CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
-            var data = new byte[32];
+            byte[] data = new byte[32];
             Recording.Random.NextBytes(data);
 
             WrapResult encResult = await cryptoClient.WrapKeyAsync(algorithm, data);
@@ -92,9 +97,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             Key key = await CreateTestKey(algorithm);
 
-            CryptographyClient cryptoClient = GetCryptoClient(key.Id);
+            CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
-            var data = new byte[32];
+            byte[] data = new byte[32];
             Recording.Random.NextBytes(data);
 
             using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
@@ -135,9 +140,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             Key key = await CreateTestKey(algorithm);
 
-            CryptographyClient cryptoClient = GetCryptoClient(key.Id);
+            CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
 
-            var data = new byte[8000];
+            byte[] data = new byte[8000];
             Recording.Random.NextBytes(data);
 
             using MemoryStream dataStream = new MemoryStream(data);
@@ -209,15 +214,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        private CryptographyClient GetCryptoClient(Uri keyId, TestRecording recording = null)
+        private CryptographyClient GetCryptoClient(Uri keyId, bool forceRemote = false, TestRecording recording = null)
         {
             recording ??= Recording;
 
-            return InstrumentClient
-                (new CryptographyClient(
-                    keyId,
-                    recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new CryptographyClientOptions())));
+            CryptographyClient client = new CryptographyClient(keyId, recording.GetCredential(new DefaultAzureCredential()), recording.InstrumentClientOptions(new CryptographyClientOptions()), forceRemote);
+            return InstrumentClient(client);
         }
 
         private async Task<Key> CreateTestKey(SignatureAlgorithm algorithm)

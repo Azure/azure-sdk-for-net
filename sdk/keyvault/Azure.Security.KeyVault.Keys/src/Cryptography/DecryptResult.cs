@@ -16,12 +16,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to decrypt
         /// </summary>
-        public string KeyId { get; private set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
         /// The decrypted data
         /// </summary>
-        public byte[] Plaintext { get; private set; }
+        public byte[] Plaintext { get; internal set; }
 
         /// <summary>
         /// The algorithm used for the decryption

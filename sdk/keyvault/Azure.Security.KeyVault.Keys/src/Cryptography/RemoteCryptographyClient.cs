@@ -30,6 +30,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal KeyVaultPipeline Pipeline { get; }
 
+        public bool SupportsOperation(KeyOperation operation) => true;
+
         public async Task<Response<EncryptResult>> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = default, byte[] authenticationData = default, CancellationToken cancellationToken = default)
         {
             var parameters = new KeyEncryptParameters()
@@ -310,6 +312,40 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new VerifyResult { Algorithm = algorithm, KeyId = _keyId.ToString() }, cancellationToken, "/verify");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal async Task<Response<Key>> GetKeyAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Get, () => new Key(), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal Response<Key> GetKey(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
+            scope.AddAttribute("key", _keyId);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Get, () => new Key(), cancellationToken);
             }
             catch (Exception e)
             {

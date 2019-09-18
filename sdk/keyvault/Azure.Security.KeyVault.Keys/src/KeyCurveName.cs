@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public static readonly KeyCurveName P521 = new KeyCurveName("P-521", new Oid("1.3.132.0.35"), 521, 66);
 
-        private static readonly KeyCurveName s_default = default;
+        internal static readonly KeyCurveName s_default = default;
 
         /// <summary>
         /// Determines if two <see cref="KeyCurveName"/> values are the same.
