@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Metadata;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
@@ -80,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey }";
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
@@ -101,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub }";
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
@@ -122,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                  string sasKeyName,
                                                                  string sasKey)
         {
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
@@ -143,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var connectionString = $";Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub }";
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
@@ -164,7 +165,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };SharedAccessKey={ sasKey };EntityPath={ eventHub };";
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
@@ -185,7 +186,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var connectionString = $"Endpoint=sb://{ endpoint }; SharedAccessKeyName={ sasKeyName }; SharedAccessKey={ sasKey }; EntityPath={ eventHub }";
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
@@ -206,7 +207,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var connectionString = $"Endpoint = sb://{ endpoint };SharedAccessKeyName ={ sasKeyName };SharedAccessKey= { sasKey }; EntityPath  =  { eventHub }";
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
@@ -227,7 +228,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                    string sasKeyName,
                                                    string sasKey)
         {
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
@@ -248,7 +249,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sasKey = "sasKey";
             var sasKeyName = "sasName";
             var connectionString = $"Endpoint=sb://{ endpoint };SharedAccessKeyName={ sasKeyName };Unknown=INVALID;SharedAccessKey={ sasKey };EntityPath={ eventHub };Trailing=WHOAREYOU";
-            var parsed = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringProperties parsed = ConnectionStringParser.Parse(connectionString);
 
             Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
             Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");

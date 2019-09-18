@@ -49,8 +49,8 @@ namespace Azure.Messaging.EventHubs
         internal BatchOptions Clone() =>
             new BatchOptions
             {
-                PartitionKey = this.PartitionKey,
-                _maximumSizeInBytes = this.MaximumizeInBytes
+                PartitionKey = PartitionKey,
+                _maximumSizeInBytes = MaximumizeInBytes
             };
 
         /// <summary>

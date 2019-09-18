@@ -48,8 +48,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [TestCaseSource(nameof(SampleTestCases))]
         public async Task SmokeTestASample(IEventHubsBlobCheckpointSample sample)
         {
-            await using (var eventHubScope = await EventHubScope.CreateAsync(2))
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (EventHubScope eventHubScope = await EventHubScope.CreateAsync(2))
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var eventHubsConnectionString = TestEnvironment.EventHubsConnectionString;
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;

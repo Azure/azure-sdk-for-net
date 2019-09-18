@@ -155,12 +155,12 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             ValidateClientOptions(clientOptions);
 
-            var connectionStringProperties = ParseConnectionString(connectionString);
+            ConnectionStringProperties connectionStringProperties = ParseConnectionString(connectionString);
             ValidateConnectionProperties(connectionStringProperties, eventHubName, nameof(connectionString));
 
             var fullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
 
-            if (String.IsNullOrEmpty(eventHubName))
+            if (string.IsNullOrEmpty(eventHubName))
             {
                 eventHubName = connectionStringProperties.EventHubName;
             }
@@ -310,8 +310,8 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual EventHubProducer CreateProducer(EventHubProducerOptions producerOptions = default)
         {
-            var options = producerOptions?.Clone() ?? new EventHubProducerOptions { RetryOptions = null };
-            options.RetryOptions = options.RetryOptions ?? ClientOptions.RetryOptions?.Clone();
+            EventHubProducerOptions options = producerOptions?.Clone() ?? new EventHubProducerOptions { RetryOptions = null };
+            options.RetryOptions ??= ClientOptions.RetryOptions?.Clone();
 
             return InnerClient.CreateProducer(options, _retryPolicy);
         }
@@ -347,8 +347,8 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(eventPosition, nameof(eventPosition));
 
-            var options = consumerOptions?.Clone() ?? new EventHubConsumerOptions { RetryOptions = null };
-            options.RetryOptions = options.RetryOptions ?? ClientOptions.RetryOptions?.Clone();
+            EventHubConsumerOptions options = consumerOptions?.Clone() ?? new EventHubConsumerOptions { RetryOptions = null };
+            options.RetryOptions ??= ClientOptions.RetryOptions?.Clone();
 
             return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, options, _retryPolicy);
         }
@@ -443,7 +443,7 @@ namespace Azure.Messaging.EventHubs
                     return new TrackOneEventHubClient(fullyQualifiedNamespace, eventHubName, credential, options, defaultRetryPolicy);
 
                 default:
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
             }
         }
 
@@ -466,9 +466,9 @@ namespace Azure.Messaging.EventHubs
                 Scheme = transportType.GetUriScheme(),
                 Path = eventHubName,
                 Port = -1,
-                Fragment = String.Empty,
-                Password = String.Empty,
-                UserName = String.Empty,
+                Fragment = string.Empty,
+                Password = string.Empty,
+                UserName = string.Empty,
             };
 
             if (builder.Path.EndsWith("/"))
@@ -501,19 +501,19 @@ namespace Azure.Messaging.EventHubs
             // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
             // value, then do not consider this a failure.
 
-            if ((!String.IsNullOrEmpty(eventHubName))
-                && (!String.IsNullOrEmpty(properties.EventHubName))
-                && (!String.Equals(eventHubName, properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
+            if ((!string.IsNullOrEmpty(eventHubName))
+                && (!string.IsNullOrEmpty(properties.EventHubName))
+                && (!string.Equals(eventHubName, properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new ArgumentException(Resources.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
             }
 
             // Ensure that each of the needed components are present for connecting.
 
-            if ((String.IsNullOrEmpty(eventHubName)) && (String.IsNullOrEmpty(properties.EventHubName))
-                || (String.IsNullOrEmpty(properties.Endpoint?.Host))
-                || (String.IsNullOrEmpty(properties.SharedAccessKeyName))
-                || (String.IsNullOrEmpty(properties.SharedAccessKey)))
+            if ((string.IsNullOrEmpty(eventHubName)) && (string.IsNullOrEmpty(properties.EventHubName))
+                || (string.IsNullOrEmpty(properties.Endpoint?.Host))
+                || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
+                || (string.IsNullOrEmpty(properties.SharedAccessKey)))
             {
                 throw new ArgumentException(Resources.MissingConnectionInformation, connectionStringArgumentName);
             }
@@ -555,7 +555,7 @@ namespace Azure.Messaging.EventHubs
 
             if ((!clientOptions.TransportType.IsWebSocketTransport()) && (clientOptions.Proxy != null))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ProxyMustUseWebSockets), nameof(clientOptions));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ProxyMustUseWebSockets), nameof(clientOptions));
             }
         }
     }

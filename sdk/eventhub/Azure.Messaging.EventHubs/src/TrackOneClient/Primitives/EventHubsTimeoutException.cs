@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace TrackOne
 {
-    using System;
-
     /// <summary>
     ///     The exception that is thrown when a time out is encountered.  Callers retry the operation.
     /// </summary>

@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorSetsTheRetryPolicy()
         {
-            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy retryPolicy = Mock.Of<EventHubRetryPolicy>();
             var producer = new EventHubProducer(new ObservableTransportProducerMock(), new Uri("amqp://some.endpoint.com/path"), "path", new EventHubProducerOptions(), retryPolicy);
             Assert.That(producer.RetryPolicy, Is.SameAs(retryPolicy));
         }
@@ -116,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Mode = RetryMode.Fixed
             };
 
-            var customRetry = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy customRetry = Mock.Of<EventHubRetryPolicy>();
             var producerOptions = new EventHubProducerOptions { RetryOptions = retryOptions };
             var producer = new EventHubProducer(new ObservableTransportProducerMock(), new Uri("amqp://some.endpoint.com/path"), "dummy", producerOptions, new BasicRetryPolicy(retryOptions));
 
@@ -141,12 +141,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SettingTheRetryUpdatesTheTransportProducer()
         {
-            var customRetry = Mock.Of<EventHubRetryPolicy>();
+            EventHubRetryPolicy customRetry = Mock.Of<EventHubRetryPolicy>();
             var transportProducer = new ObservableTransportProducerMock();
             var producerOptions = new EventHubProducerOptions();
-            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", producerOptions, Mock.Of<EventHubRetryPolicy>());
-
-            producer.RetryPolicy = customRetry;
+            var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", producerOptions, Mock.Of<EventHubRetryPolicy>())
+            {
+                RetryPolicy = customRetry
+            };
             Assert.That(transportProducer.UpdateRetryPolicyCalledWith, Is.SameAs(customRetry), "The custom retry policy should have been passed to the transport producer.");
         }
 
@@ -259,7 +260,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendAllowsAPartitionHashKey()
         {
             var sendOptions = new SendOptions { PartitionKey = "testKey" };
-            var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
+            EventData[] events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
 
@@ -289,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendForASpecificPartitionDoesNotAllowAPartitionHashKey()
         {
             var sendOptions = new SendOptions { PartitionKey = "testKey" };
-            var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
+            EventData[] events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions { PartitionId = "1" }, Mock.Of<EventHubRetryPolicy>());
 
@@ -324,7 +325,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(events);
 
-            (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWith;
+            (IEnumerable<EventData> calledWithEvents, SendOptions calledWithOptions) = transportProducer.SendCalledWith;
 
             Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
             Assert.That(calledWithOptions, Is.Not.Null, "A default set of options should be used.");
@@ -344,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(events, options);
 
-            (var calledWithEvents, var calledWithOptions) = transportProducer.SendCalledWith;
+            (IEnumerable<EventData> calledWithEvents, SendOptions calledWithOptions) = transportProducer.SendCalledWith;
 
             Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
             Assert.That(calledWithOptions, Is.SameAs(options), "The options should be the same instance");
@@ -428,7 +429,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new BatchOptions { PartitionKey = "Hi", MaximumizeInBytes = 9999 };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducer(transportProducer, new Uri("amqp://some.endpoint.com/path"), "dummy", new EventHubProducerOptions(), Mock.Of<EventHubRetryPolicy>());
-            var eventBatch = await producer.CreateBatchAsync(batchOptions);
+            EventDataBatch eventBatch = await producer.CreateBatchAsync(batchOptions);
 
             Assert.That(eventBatch.SendOptions, Is.SameAs(transportProducer.CreateBatchCalledWith), "The batch options should have used for the send options.");
             ;

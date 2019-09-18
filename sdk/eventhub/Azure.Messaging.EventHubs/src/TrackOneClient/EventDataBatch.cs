@@ -1,24 +1,22 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using Microsoft.Azure.Amqp;
+using TrackOne.Amqp;
+using TrackOne.Primitives;
+
 namespace TrackOne
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Amqp;
-    using TrackOne.Amqp;
-    using TrackOne.Primitives;
-
     /// <summary>A helper class for creating an IEnumerable&lt;<see cref="TrackOne.EventData"/>&gt; taking into account the max size limit, so that the IEnumerable&lt;<see cref="TrackOne.EventData"/>&gt; can be passed to the Send or SendAsync method of an <see cref="TrackOne.EventHubClient"/> to send the <see cref="TrackOne.EventData"/> objects as a batch.</summary>
     internal class EventDataBatch : IDisposable
     {
-        const int MaxSizeLimit = 4 * 1024 * 1024;
-
-        readonly List<EventData> eventDataList;
-        readonly long maxSize;
-
-        long currentSize;
-        bool disposed;
+        private const int MaxSizeLimit = 4 * 1024 * 1024;
+        private readonly List<EventData> eventDataList;
+        private readonly long maxSize;
+        private long currentSize;
+        private bool disposed;
 
         /// <summary>
         /// Creates a new <see cref="EventDataBatch"/>.
@@ -27,16 +25,16 @@ namespace TrackOne
         /// <param name="partitionKey">Partition key associate with the batch</param>
         public EventDataBatch(long maxSizeInBytes, string partitionKey = null)
         {
-            this.PartitionKey = partitionKey;
-            this.maxSize = Math.Min(maxSizeInBytes, MaxSizeLimit);
-            this.eventDataList = new List<EventData>();
+            PartitionKey = partitionKey;
+            maxSize = Math.Min(maxSizeInBytes, MaxSizeLimit);
+            eventDataList = new List<EventData>();
 
             // Reserve for wrapper message.
             using (var batchMessage = AmqpMessage.Create())
             {
                 batchMessage.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
                 AmqpMessageConverter.UpdateAmqpMessagePartitionKey(batchMessage, partitionKey);
-                this.currentSize = batchMessage.SerializedMessageSize;
+                currentSize = batchMessage.SerializedMessageSize;
             }
         }
 
@@ -45,8 +43,8 @@ namespace TrackOne
         {
             get
             {
-                this.ThrowIfDisposed();
-                return this.eventDataList.Count;
+                ThrowIfDisposed();
+                return eventDataList.Count;
             }
         }
 
@@ -63,26 +61,26 @@ namespace TrackOne
         {
             Guard.ArgumentNotNull(nameof(eventData), eventData);
 
-            this.ThrowIfDisposed();
+            ThrowIfDisposed();
             long size = GetEventSizeForBatch(eventData);
-            if (this.eventDataList.Count > 0 && this.currentSize + size > this.maxSize)
+            if (eventDataList.Count > 0 && currentSize + size > maxSize)
             {
                 return false;
             }
 
-            this.eventDataList.Add(eventData);
-            this.currentSize += size;
+            eventDataList.Add(eventData);
+            currentSize += size;
 
             return true;
         }
 
         internal string PartitionKey { get; set; }
 
-        long GetEventSizeForBatch(EventData eventData)
+        private long GetEventSizeForBatch(EventData eventData)
         {
             // Create AMQP message here. We will use the same message while sending to save compute time.
-            var amqpMessage = AmqpMessageConverter.EventDataToAmqpMessage(eventData);
-            AmqpMessageConverter.UpdateAmqpMessagePartitionKey(amqpMessage, this.PartitionKey);
+            AmqpMessage amqpMessage = AmqpMessageConverter.EventDataToAmqpMessage(eventData);
+            AmqpMessageConverter.UpdateAmqpMessagePartitionKey(amqpMessage, PartitionKey);
             eventData.AmqpMessage = amqpMessage;
 
             // Calculate overhead depending on the message size. 
@@ -100,14 +98,14 @@ namespace TrackOne
             Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!disposed)
             {
                 if (disposing)
                 {
-                    this.disposed = true;
-                    foreach (var e in this.eventDataList)
+                    disposed = true;
+                    foreach (EventData e in eventDataList)
                     {
                         e.Dispose();
                     }
@@ -117,11 +115,11 @@ namespace TrackOne
             }
         }
 
-        void ThrowIfDisposed()
+        private void ThrowIfDisposed()
         {
-            if (this.disposed)
+            if (disposed)
             {
-                throw new ObjectDisposedException(this.GetType().Name);
+                throw new ObjectDisposedException(GetType().Name);
             }
         }
 
@@ -129,8 +127,8 @@ namespace TrackOne
         /// <returns>IEnumerable of EventData objects.</returns>
         public IEnumerable<EventData> ToEnumerable()
         {
-            this.ThrowIfDisposed();
-            return this.eventDataList;
+            ThrowIfDisposed();
+            return eventDataList;
         }
     }
 }

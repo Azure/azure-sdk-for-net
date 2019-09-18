@@ -15,13 +15,13 @@ namespace Azure.Messaging.EventHubs.Processor
     public sealed class InMemoryPartitionManager : PartitionManager
     {
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
-        private readonly object OwnershipLock = new object();
+        private readonly object _ownershipLock = new object();
 
         /// <summary>The set of stored ownership.</summary>
-        private Dictionary<(string, string, string, string), PartitionOwnership> Ownership;
+        private readonly Dictionary<(string, string, string, string), PartitionOwnership> _ownership;
 
         /// <summary>Logs activities performed by this partition manager.</summary>
-        private Action<string> Logger;
+        private readonly Action<string> _logger;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="InMemoryPartitionManager"/> class.
@@ -31,9 +31,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public InMemoryPartitionManager(Action<string> logger = null)
         {
-            Logger = logger;
+            _logger = logger;
 
-            Ownership = new Dictionary<(string, string, string, string), PartitionOwnership>();
+            _ownership = new Dictionary<(string, string, string, string), PartitionOwnership>();
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             List<PartitionOwnership> ownershipList;
 
-            lock (OwnershipLock)
+            lock (_ownershipLock)
             {
-                ownershipList = Ownership.Values
+                ownershipList = _ownership.Values
                     .Where(ownership => ownership.FullyQualifiedNamespace == fullyQualifiedNamespace
                         && ownership.EventHubName == eventHubName
                         && ownership.ConsumerGroup == consumerGroup)
@@ -79,25 +79,25 @@ namespace Azure.Messaging.EventHubs.Processor
             // The following lock makes sure two different event processors won't try to claim ownership of a partition
             // simultaneously.  This approach prevents an ownership from being stolen just after being claimed.
 
-            lock (OwnershipLock)
+            lock (_ownershipLock)
             {
-                foreach (var ownership in partitionOwnership)
+                foreach (PartitionOwnership ownership in partitionOwnership)
                 {
                     var isClaimable = true;
                     var key = (ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
 
                     // In case the partition already has an owner, the ETags must match in order to claim it.
 
-                    if (Ownership.TryGetValue(key, out var currentOwnership))
+                    if (_ownership.TryGetValue(key, out PartitionOwnership currentOwnership))
                     {
-                        isClaimable = String.Equals(ownership.ETag, currentOwnership.ETag, StringComparison.InvariantCultureIgnoreCase);
+                        isClaimable = string.Equals(ownership.ETag, currentOwnership.ETag, StringComparison.InvariantCultureIgnoreCase);
                     }
 
                     if (isClaimable)
                     {
                         ownership.ETag = Guid.NewGuid().ToString();
 
-                        Ownership[key] = ownership;
+                        _ownership[key] = ownership;
                         claimedOwnership.Add(ownership);
 
                         Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
@@ -122,11 +122,11 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public override Task UpdateCheckpointAsync(Checkpoint checkpoint)
         {
-            lock (OwnershipLock)
+            lock (_ownershipLock)
             {
                 var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
 
-                if (Ownership.TryGetValue(key, out var ownership))
+                if (_ownership.TryGetValue(key, out PartitionOwnership ownership))
                 {
                     if (ownership.OwnerIdentifier == checkpoint.OwnerIdentifier)
                     {
@@ -157,6 +157,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="message">The log message to send.</param>
         ///
-        private void Log(string message) => Logger?.Invoke(message);
+        private void Log(string message) => _logger?.Invoke(message);
     }
 }

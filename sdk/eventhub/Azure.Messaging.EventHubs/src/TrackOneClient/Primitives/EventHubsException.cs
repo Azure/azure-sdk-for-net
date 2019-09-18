@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace TrackOne
 {
-    using System;
-
     /// <summary>
     /// Base Exception for various Event Hubs errors.
     /// </summary>
@@ -16,7 +16,7 @@ namespace TrackOne
         /// <param name="isTransient">Specifies whether or not the exception is transient.</param>
         public EventHubsException(bool isTransient)
         {
-            this.IsTransient = isTransient;
+            IsTransient = isTransient;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace TrackOne
         public EventHubsException(bool isTransient, string message)
             : base(message)
         {
-            this.IsTransient = isTransient;
+            IsTransient = isTransient;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace TrackOne
         public EventHubsException(bool isTransient, Exception innerException)
             : base(innerException.Message, innerException)
         {
-            this.IsTransient = isTransient;
+            IsTransient = isTransient;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace TrackOne
         public EventHubsException(bool isTransient, string message, Exception innerException)
             : base(message, innerException)
         {
-            this.IsTransient = isTransient;
+            IsTransient = isTransient;
         }
 
         /// <summary>
@@ -61,12 +61,12 @@ namespace TrackOne
             get
             {
                 string baseMessage = base.Message;
-                if (string.IsNullOrEmpty(this.EventHubsNamespace))
+                if (string.IsNullOrEmpty(EventHubsNamespace))
                 {
                     return baseMessage;
                 }
 
-                return "{0}, ({1})".FormatInvariant(base.Message, this.EventHubsNamespace);
+                return "{0}, ({1})".FormatInvariant(base.Message, EventHubsNamespace);
             }
         }
 

@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task BlobPartitionManagerCanListOwnership()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -57,18 +57,18 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [TestCase("ETag")]
         public async Task BlobPartitionManagerCanClaimOwnership(string eTag)
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var partitionManager = new BlobPartitionManager(containerClient);
-                var ownershipList = new List<PartitionOwnership>();
+                var ownershipList = new List<PartitionOwnership>
+                {
 
-                // Null ETag and non-null ETag hit different paths of the code, calling different methods that connect
-                // to the Storage service.
+                    // Null ETag and non-null ETag hit different paths of the code, calling different methods that connect
+                    // to the Storage service.
 
-                ownershipList.Add(
                     new MockPartitionOwnership
                     (
                         "namespace",
@@ -77,7 +77,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                         "ownerIdentifier",
                         "partitionId",
                         eTag: eTag
-                    ));
+                    )
+                };
 
                 Assert.That(async () => await partitionManager.ClaimOwnershipAsync(ownershipList), Throws.Nothing);
             }
@@ -91,17 +92,17 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task BlobPartitionManagerCanUpdateCheckpoint()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var partitionManager = new BlobPartitionManager(containerClient);
-                var ownershipList = new List<PartitionOwnership>();
+                var ownershipList = new List<PartitionOwnership>
+                {
 
-                // Make sure the ownership exists beforehand so we hit all storage SDK calls in the partition manager.
+                    // Make sure the ownership exists beforehand so we hit all storage SDK calls in the partition manager.
 
-                ownershipList.Add(
                     new MockPartitionOwnership
                     (
                         "namespace",
@@ -109,7 +110,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                         "consumerGroup",
                         "ownerIdentifier",
                         "partitionId"
-                    ));
+                    )
+                };
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
@@ -127,13 +129,13 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task ListOwnershipAsyncReturnsEmptyIEnumerableWhenThereAreNoOwnership()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var partitionManager = new BlobPartitionManager(containerClient);
-                var ownership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> ownership = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(ownership, Is.Not.Null.And.Empty);
             }
@@ -147,7 +149,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task FirstOwnershipClaimSucceeds()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -168,7 +170,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -184,7 +186,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task OwnershipClaimSetsLastModifiedTimeAndETag()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -222,7 +224,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [TestCase("invalidETag")]
         public async Task OwnershipClaimFailsWhenETagIsInvalid(string eTag)
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -262,7 +264,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -278,7 +280,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task OwnershipClaimFailsWhenETagExistsAndOwnershipDoesNotExist()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -302,7 +304,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null.And.Empty);
             }
@@ -316,7 +318,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task OwnershipClaimSucceedsWhenETagIsValid()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -360,7 +362,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -376,7 +378,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task ClaimOwnershipAsyncCanClaimMultipleOwnership()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -400,14 +402,14 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(ownershipCount));
 
                 var index = 0;
 
-                foreach (var ownership in storedOwnershipList.OrderBy(ownership => ownership.PartitionId))
+                foreach (PartitionOwnership ownership in storedOwnershipList.OrderBy(ownership => ownership.PartitionId))
                 {
                     Assert.That(ownership.IsEquivalentTo(ownershipList[index]), Is.True, $"Ownership of partition '{ ownership.PartitionId }' should be equivalent.");
                     ++index;
@@ -423,7 +425,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task ClaimOwnershipAsyncReturnsOnlyTheSuccessfullyClaimedOwnership()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -473,15 +475,15 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                         ));
                 }
 
-                var claimedOwnershipList = await partitionManager.ClaimOwnershipAsync(ownershipList);
-                var expectedOwnership = ownershipList.Where(ownership => ownership.Offset % 2 == 1);
+                IEnumerable<PartitionOwnership> claimedOwnershipList = await partitionManager.ClaimOwnershipAsync(ownershipList);
+                IEnumerable<PartitionOwnership> expectedOwnership = ownershipList.Where(ownership => ownership.Offset % 2 == 1);
 
                 Assert.That(claimedOwnershipList, Is.Not.Null);
                 Assert.That(claimedOwnershipList.Count, Is.EqualTo(expectedClaimedCount));
 
                 var index = 0;
 
-                foreach (var ownership in claimedOwnershipList.OrderBy(ownership => ownership.PartitionId))
+                foreach (PartitionOwnership ownership in claimedOwnershipList.OrderBy(ownership => ownership.PartitionId))
                 {
                     Assert.That(ownership.IsEquivalentTo(expectedOwnership.ElementAt(index)), Is.True, $"Ownership of partition '{ ownership.PartitionId }' should be equivalent.");
                     ++index;
@@ -497,7 +499,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task OwnershipClaimDoesNotInterfereWithOtherConsumerGroups()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -539,7 +541,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -555,7 +557,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task OwnershipClaimDoesNotInterfereWithOtherEventHubs()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -597,7 +599,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 await partitionManager.ClaimOwnershipAsync(ownershipList);
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -671,7 +673,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task CheckpointUpdateFailsWhenAssociatedOwnershipDoesNotExist()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -681,7 +683,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
                     ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", offset: 10, sequenceNumber: 20));
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null.And.Empty);
             }
@@ -695,7 +697,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task CheckpointUpdateFailsWhenOwnerChanges()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -711,7 +713,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 // ETag must have been set by the partition manager.
 
-                var originalLastModifiedTime = originalOwnership.LastModifiedTime;
+                DateTimeOffset? originalLastModifiedTime = originalOwnership.LastModifiedTime;
                 var originalETag = originalOwnership.ETag;
 
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
@@ -719,7 +721,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 // Make sure the ownership hasn't changed.
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
@@ -741,7 +743,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task CheckpointUpdateUpdatesOwnershipInformation()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -757,7 +759,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 // ETag must have been set by the partition manager.
 
-                var originalLastModifiedTime = originalOwnership.LastModifiedTime;
+                DateTimeOffset? originalLastModifiedTime = originalOwnership.LastModifiedTime;
                 var originalETag = originalOwnership.ETag;
 
                 // Give it a 1 second delay before updating the ownership information.  We need to do this to ensure
@@ -771,12 +773,12 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
 
                 // Make sure the ownership has changed.
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(1));
 
-                var storedOwnership = storedOwnershipList.Single();
+                PartitionOwnership storedOwnership = storedOwnershipList.Single();
 
                 Assert.That(storedOwnership.Offset, Is.EqualTo(10));
                 Assert.That(storedOwnership.SequenceNumber, Is.EqualTo(20));
@@ -793,7 +795,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherConsumerGroups()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -809,8 +811,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
                     ("namespace", "eventHubName", "consumerGroup1", "ownerIdentifier", "partitionId", 10, 20));
 
-                var storedOwnershipList1 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1");
-                var storedOwnershipList2 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup2");
+                IEnumerable<PartitionOwnership> storedOwnershipList1 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1");
+                IEnumerable<PartitionOwnership> storedOwnershipList2 = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup2");
 
                 Assert.That(storedOwnershipList1, Is.Not.Null);
                 Assert.That(storedOwnershipList1.Count, Is.EqualTo(1));
@@ -830,7 +832,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherEventHubs()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -883,8 +885,8 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
                     ("namespace1", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", 10, 20));
 
-                var storedOwnershipList1 = await partitionManager.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup");
-                var storedOwnershipList2 = await partitionManager.ListOwnershipAsync("namespace2", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList1 = await partitionManager.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList2 = await partitionManager.ListOwnershipAsync("namespace2", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList1, Is.Not.Null);
                 Assert.That(storedOwnershipList1.Count, Is.EqualTo(1));
@@ -904,7 +906,7 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
         [Test]
         public async Task CheckpointUpdateDoesNotInterfereWithOtherPartitions()
         {
-            await using (var storageScope = await StorageScope.CreateAsync())
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
@@ -920,13 +922,13 @@ namespace Azure.Messaging.EventHubs.CheckpointStore.Blob.Tests
                 await partitionManager.UpdateCheckpointAsync(new MockCheckpoint
                     ("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId1", 10, 20));
 
-                var storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
+                IEnumerable<PartitionOwnership> storedOwnershipList = await partitionManager.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup");
 
                 Assert.That(storedOwnershipList, Is.Not.Null);
                 Assert.That(storedOwnershipList.Count, Is.EqualTo(2));
 
-                var storedOwnership1 = storedOwnershipList.First(ownership => ownership.PartitionId == "partitionId1");
-                var storedOwnership2 = storedOwnershipList.First(ownership => ownership.PartitionId == "partitionId2");
+                PartitionOwnership storedOwnership1 = storedOwnershipList.First(ownership => ownership.PartitionId == "partitionId1");
+                PartitionOwnership storedOwnership2 = storedOwnershipList.First(ownership => ownership.PartitionId == "partitionId2");
 
                 Assert.That(storedOwnership1, Is.Not.Null);
                 Assert.That(storedOwnership1.Offset, Is.EqualTo(10));

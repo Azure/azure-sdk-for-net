@@ -91,12 +91,12 @@ namespace Azure.Messaging.EventHubs.Core
 
                     // Guard against leading and trailing spaces, only trimming if there is a need.
 
-                    if ((!String.IsNullOrEmpty(token)) && (Char.IsWhiteSpace(token[0])) || Char.IsWhiteSpace(token[token.Length - 1]))
+                    if ((!string.IsNullOrEmpty(token)) && (char.IsWhiteSpace(token[0])) || char.IsWhiteSpace(token[token.Length - 1]))
                     {
                         token = token.Trim();
                     }
 
-                    if ((!String.IsNullOrEmpty(value)) && (Char.IsWhiteSpace(value[0]) || Char.IsWhiteSpace(value[value.Length - 1])))
+                    if ((!string.IsNullOrEmpty(value)) && (char.IsWhiteSpace(value[0]) || char.IsWhiteSpace(value[value.Length - 1])))
                     {
                         value = value.Trim();
                     }
@@ -104,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Core
                     // If there was no value for a key, then consider the connection string to
                     // be malformed.
 
-                    if (String.IsNullOrEmpty(value))
+                    if (string.IsNullOrEmpty(value))
                     {
                         throw new FormatException(Resources.InvalidConnectionString);
                     }
@@ -112,20 +112,22 @@ namespace Azure.Messaging.EventHubs.Core
                     // Compare the token against the known connection string properties and capture the
                     // pair if they are a known attribute.
 
-                    if (String.Compare(EndpointToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Compare(EndpointToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        parsedValues.EndpointToken = new UriBuilder(value);
-                        parsedValues.EndpointToken.Scheme = EventHubsEndpointScheme;
+                        parsedValues.EndpointToken = new UriBuilder(value)
+                        {
+                            Scheme = EventHubsEndpointScheme
+                        };
                     }
-                    else if (String.Compare(EventHubNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    else if (string.Compare(EventHubNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         parsedValues.EventHubNameToken = value;
                     }
-                    else if (String.Compare(SharedAccessKeyNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    else if (string.Compare(SharedAccessKeyNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         parsedValues.SharedAccessKeyNameToken = value;
                     }
-                    else if (String.Compare(SharedAccessKeyValueToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    else if (string.Compare(SharedAccessKeyValueToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         parsedValues.SharedAccessKeyValueToken = value;
                     }

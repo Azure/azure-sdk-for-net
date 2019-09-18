@@ -31,13 +31,13 @@ namespace Azure.Messaging.EventHubs
         public static readonly AmqpSymbol ArgumentOutOfRangeError = AmqpConstants.Vendor + ":argument-out-of-range";
 
         /// <summary>The status text that appears when an AMQP error was due to a missing resource.</summary>
-        private const string NotFoundStatusText = "status-code: 404";
+        private const string _notFoundStatusText = "status-code: 404";
 
         /// <summary>The expression to test for when the service returns a "Not Found" response to determine the context.</summary>
-        private static readonly Regex NotFoundExpression = new Regex("The messaging entity .* could not be found", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
+        private static readonly Regex s_notFoundExpression = new Regex("The messaging entity .* could not be found", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         /// <summary>The set of mappings from AMQP error conditions to response status codes.</summary>
-        private static readonly IReadOnlyDictionary<AmqpResponseStatusCode, AmqpSymbol> StatusCodeMap = new Dictionary<AmqpResponseStatusCode, AmqpSymbol>()
+        private static readonly IReadOnlyDictionary<AmqpResponseStatusCode, AmqpSymbol> s_statusCodeMap = new Dictionary<AmqpResponseStatusCode, AmqpSymbol>()
         {
             { AmqpResponseStatusCode.NotFound, AmqpErrorCode.NotFound },
             { AmqpResponseStatusCode.NotImplemented, AmqpErrorCode.NotImplemented},
@@ -111,69 +111,69 @@ namespace Azure.Messaging.EventHubs
         {
             // The request timed out.
 
-            if (String.Equals(condition, TimeoutError.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, TimeoutError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new EventHubsTimeoutException(eventHubsResource, description);
             }
 
             // The Event Hubs service was busy.
 
-            if (String.Equals(condition, ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusyException(eventHubsResource, description);
             }
 
             // An argument was rejected by the Event Hubs service.
 
-            if (String.Equals(condition, ArgumentError.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, ArgumentError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ArgumentException(description);
             }
 
-            if (String.Equals(condition, ArgumentOutOfRangeError.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, ArgumentOutOfRangeError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ArgumentOutOfRangeException(description);
             }
 
             // The consumer was superseded by one with a higher owner level.
 
-            if (String.Equals(condition, AmqpErrorCode.Stolen.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, AmqpErrorCode.Stolen.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ConsumerDisconnectedException(eventHubsResource, description);
             }
 
             // Authorization was denied.
 
-            if (String.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new UnauthorizedAccessException(description);
             }
 
             // Requests are being throttled due to exceeding the service quota.
 
-            if (String.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new QuotaExceededException(eventHubsResource, description);
             }
 
             // The service does not understand how to process the request.
 
-            if (String.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new InvalidOperationException(description);
             }
 
-            if (String.Equals(condition, AmqpErrorCode.NotImplemented.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new NotSupportedException(description);
             }
 
             // The Event Hubs resource was not valid or communication with the service was interrupted.
 
-            if (String.Equals(condition, AmqpErrorCode.NotFound.Value, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(condition, AmqpErrorCode.NotFound.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                if (NotFoundExpression.IsMatch(description)
-                    || (description.IndexOf(NotFoundStatusText, StringComparison.InvariantCultureIgnoreCase) >= 0))
+                if (s_notFoundExpression.IsMatch(description)
+                    || (description.IndexOf(_notFoundStatusText, StringComparison.InvariantCultureIgnoreCase) >= 0))
                 {
                     return new EventHubsResourceNotFoundException(eventHubsResource, description);
                 }
@@ -197,11 +197,10 @@ namespace Azure.Messaging.EventHubs
         ///
         private static AmqpSymbol DetermineErrorCondition(AmqpMessage response)
         {
-            AmqpSymbol condition;
 
             // If there was an error condition present, use that.
 
-            if (response.ApplicationProperties.Map.TryGetValue(AmqpResponse.ErrorCondition, out condition))
+            if (response.ApplicationProperties.Map.TryGetValue(AmqpResponse.ErrorCondition, out AmqpSymbol condition))
             {
                 return condition;
             }
@@ -210,7 +209,7 @@ namespace Azure.Messaging.EventHubs
             // condition from the response status code.
 
             if ((response.ApplicationProperties.Map.TryGetValue<int>(AmqpResponse.StatusCode, out var statusCode))
-                && (StatusCodeMap.TryGetValue((AmqpResponseStatusCode)statusCode, out condition)))
+                && (s_statusCodeMap.TryGetValue((AmqpResponseStatusCode)statusCode, out condition)))
             {
                 return condition;
             }

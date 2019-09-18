@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
-        private static readonly SendOptions DefaultSendOptions = new SendOptions();
+        private static readonly SendOptions s_defaultSendOptions = new SendOptions();
 
         /// <summary>The fully-qualified location of the Event Hub instance to which events will be sent.</summary>
         private readonly Uri _endpoint;
@@ -224,7 +224,7 @@ namespace Azure.Messaging.EventHubs
                                             SendOptions options,
                                             CancellationToken cancellationToken = default)
         {
-            options = options ?? DefaultSendOptions;
+            options ??= s_defaultSendOptions;
 
             Argument.AssertNotNull(events, nameof(events));
             GuardSinglePartitionReference(PartitionId, options.PartitionKey);
@@ -318,7 +318,7 @@ namespace Azure.Messaging.EventHubs
 
             GuardSinglePartitionReference(PartitionId, options.PartitionKey);
 
-            var transportBatch = await InnerProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            TransportEventBatch transportBatch = await InnerProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
             return new EventDataBatch(transportBatch, options);
         }
 
@@ -405,7 +405,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private void InstrumentMessages(IEnumerable<EventData> events)
         {
-            foreach (var eventData in events)
+            foreach (EventData eventData in events)
             {
                 EventDataInstrumentation.InstrumentEvent(eventData);
             }
@@ -421,9 +421,9 @@ namespace Azure.Messaging.EventHubs
         private static void GuardSinglePartitionReference(string partitionId,
                                                           string partitionKey)
         {
-            if ((!String.IsNullOrEmpty(partitionId)) && (!String.IsNullOrEmpty(partitionKey)))
+            if ((!string.IsNullOrEmpty(partitionId)) && (!string.IsNullOrEmpty(partitionKey)))
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
             }
         }
     }
