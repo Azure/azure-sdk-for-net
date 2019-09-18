@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs
             get => _partitionId;
             set
             {
-                Guard.ArgumentNotEmptyOrWhitespace(nameof(PartitionId), value);
+                Argument.AssertNotEmptyOrWhiteSpace(value, nameof(PartitionId));
                 _partitionId = value;
             }
         }

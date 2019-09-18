@@ -4,8 +4,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Core;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Amqp
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public CbsTokenProvider(EventHubTokenCredential credential,
                                 CancellationToken cancellationToken)
         {
-            Guard.ArgumentNotNull(nameof(credential), credential);
+            Argument.AssertNotNull(credential, nameof(credential));
 
             Credential = credential;
             CancellationToken = cancellationToken;
@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                   string appliesTo,
                                                   string[] requiredClaims)
         {
-            var token = await Credential.GetTokenAsync(requiredClaims, CancellationToken);
+            var token = await Credential.GetTokenAsync(new TokenRequest(requiredClaims), CancellationToken);
             return new CbsToken(token.Token, TokenType, token.ExpiresOn.UtcDateTime);
         }
     }

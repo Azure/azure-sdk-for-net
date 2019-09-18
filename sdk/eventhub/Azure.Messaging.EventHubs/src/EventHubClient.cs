@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Compatibility;
 using Azure.Messaging.EventHubs.Core;
@@ -52,7 +51,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                Argument.AssertNotNull(value, nameof(RetryPolicy));
                 _retryPolicy = value;
 
                 // Applying a custom retry policy invalidates the retry options specified.
@@ -153,7 +152,7 @@ namespace Azure.Messaging.EventHubs
         {
             clientOptions = clientOptions?.Clone() ?? new EventHubClientOptions();
 
-            Guard.ArgumentNotNullOrEmpty(nameof(connectionString), connectionString);
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             ValidateClientOptions(clientOptions);
 
             var connectionStringProperties = ParseConnectionString(connectionString);
@@ -196,9 +195,9 @@ namespace Azure.Messaging.EventHubs
         {
             clientOptions = clientOptions?.Clone() ?? new EventHubClientOptions();
 
-            Guard.ArgumentNotNullOrEmpty(nameof(fullyQualifiedNamespace), fullyQualifiedNamespace);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
             ValidateClientOptions(clientOptions);
 
             switch (credential)
@@ -345,8 +344,8 @@ namespace Azure.Messaging.EventHubs
                                                        EventPosition eventPosition,
                                                        EventHubConsumerOptions consumerOptions = default)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNull(eventPosition, nameof(eventPosition));
 
             var options = consumerOptions?.Clone() ?? new EventHubConsumerOptions { RetryOptions = null };
             options.RetryOptions = options.RetryOptions ?? ClientOptions.RetryOptions?.Clone();

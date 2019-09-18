@@ -98,9 +98,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                                    IWebProxy proxy,
                                    string identifier = default)
         {
-            Guard.ArgumentNotNull(nameof(serviceEndpoint), serviceEndpoint);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
             ValidateTransport(transport);
 
             ServiceEndpoint = serviceEndpoint;
@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                       TimeSpan timeout,
                                                                                       CancellationToken cancellationToken)
         {
-            Guard.NotDisposed(nameof(AmqpConnectionScope), _disposed);
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);

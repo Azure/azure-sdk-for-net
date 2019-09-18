@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Diagnostics;
 
@@ -73,12 +73,12 @@ namespace Azure.Messaging.EventHubs.Processor
                                             string ownerIdentifier,
                                             PartitionManager partitionManager)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(fullyQualifiedNamespace), fullyQualifiedNamespace);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
-            Guard.ArgumentNotNull(nameof(partitionManager), partitionManager);
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
+            Argument.AssertNotNull(partitionManager, nameof(partitionManager));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
@@ -98,9 +98,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public virtual Task UpdateCheckpointAsync(EventData eventData)
         {
-            Guard.ArgumentNotNull(nameof(eventData), eventData);
-            Guard.ArgumentNotNull(nameof(eventData.Offset), eventData.Offset);
-            Guard.ArgumentNotNull(nameof(eventData.SequenceNumber), eventData.SequenceNumber);
+            Argument.AssertNotNull(eventData, nameof(eventData));
+            Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
+            Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
 
             return UpdateCheckpointAsync(eventData.Offset.Value, eventData.SequenceNumber.Value);
         }

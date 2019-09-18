@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -101,20 +101,20 @@ namespace Azure.Messaging.EventHubs.Processor
                                               DateTimeOffset? lastModifiedTime = null,
                                               string eTag = null)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(fullyQualifiedNamespace), fullyQualifiedNamespace);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNullOrEmpty(nameof(ownerIdentifier), ownerIdentifier);
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(ownerIdentifier, nameof(ownerIdentifier));
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
             if (offset.HasValue)
             {
-                Guard.ArgumentAtLeast(nameof(offset), offset.Value, 0);
+                Argument.AssertAtLeast(offset.Value, 0, nameof(offset));
             }
 
             if (sequenceNumber.HasValue)
             {
-                Guard.ArgumentAtLeast(nameof(sequenceNumber), sequenceNumber.Value, 0);
+                Argument.AssertAtLeast(sequenceNumber.Value, 0, nameof(sequenceNumber));
             }
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;

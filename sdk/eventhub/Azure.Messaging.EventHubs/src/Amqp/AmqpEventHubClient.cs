@@ -136,11 +136,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                                      AmqpConnectionScope connectionScope,
                                      AmqpMessageConverter messageConverter)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
-            Guard.ArgumentNotNull(nameof(clientOptions), clientOptions);
-            Guard.ArgumentNotNull(nameof(defaultRetryPolicy), defaultRetryPolicy);
+            Argument.AssertNotNullOrEmpty(host, nameof(host));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(clientOptions, nameof(clientOptions));
+            Argument.AssertNotNull(defaultRetryPolicy, nameof(defaultRetryPolicy));
 
             try
             {
@@ -182,7 +182,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy)
         {
-            Guard.ArgumentNotNull(nameof(newRetryPolicy), newRetryPolicy);
+            Argument.AssertNotNull(newRetryPolicy, nameof(newRetryPolicy));
 
             _retryPolicy = newRetryPolicy;
             _tryTimeout = _retryPolicy.CalculateTryTimeout(0);
@@ -255,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                                     CancellationToken cancellationToken)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
             // Since the AMQP objects do not honor the cancellation token, manually check for cancellation between operation steps.
 
@@ -387,7 +387,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if ((String.IsNullOrEmpty(activeToken.Token)) || (activeToken.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
-                activeToken = await Credential.GetTokenAsync(new string[0], cancellationToken).ConfigureAwait(false);
+                activeToken = await Credential.GetTokenAsync(new TokenRequest(new string[0]), cancellationToken).ConfigureAwait(false);
 
                 if ((String.IsNullOrEmpty(activeToken.Token)))
                 {

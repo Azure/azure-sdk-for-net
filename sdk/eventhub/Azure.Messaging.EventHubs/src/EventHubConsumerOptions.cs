@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentInRange(nameof(PrefetchCount), value, MinimumPrefetchCount, int.MaxValue);
+                Argument.AssertInRange(value, MinimumPrefetchCount, int.MaxValue, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }

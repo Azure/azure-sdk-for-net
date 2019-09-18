@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new CbsTokenProvider(credential, default);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.Is<string[]>(value => value == requiredClaims), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.Is<TokenRequest>(value => value.Scopes == requiredClaims), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new AccessToken("blah", DateTimeOffset.Parse("2015-10-27T00:00:00Z"))))
                 .Verifiable();
 
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new CbsTokenProvider(credential, default);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<string[]>(), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, expires)));
 
             var cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var provider = new CbsTokenProvider(credential, default);
 
             mockCredential
-                .Setup(credential => credential.GetTokenAsync(It.IsAny<string[]>(), It.IsAny<CancellationToken>()))
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequest>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new AccessToken(tokenValue, expires)));
 
             var cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
