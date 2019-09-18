@@ -120,7 +120,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const methodName = naming.method(operation.name, true);
     const regionName = (operation.group ? naming.type(operation.group) + '.' : '') + methodName;
     const pipelineName = "pipeline";
-    const bufferResponseName = "bufferResponse";
     const cancellationName = "cancellationToken";
     const bodyName = "_body";
     const requestName = "_request";
@@ -137,9 +136,22 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
 
-    const returnType = result.type === 'void' ?
-        'Azure.Response' : 
-        `Azure.Response<${types.getName(result)}>`;
+    const returnTypeArguments = [];
+    if (result.type !== 'void')
+    {
+        returnTypeArguments.push(`Azure.Response<${types.getName(result)}>`);
+    }
+    else
+    {
+        returnTypeArguments.push('Azure.Response');
+    }
+
+    if (result.returnStream)
+    {
+        returnTypeArguments.push("System.IO.Stream");
+    }
+
+    const returnType = returnTypeArguments.length == 1? returnTypeArguments[0] : `(${returnTypeArguments.join(", ")})`;
 
     w.line(`#region ${regionName}`);
 
@@ -158,11 +170,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
-    w.line(`/// <param name="${bufferResponseName}">Whether to buffer the response content.  The default value is true.</param>`);
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
-    w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);        
+    w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -175,7 +186,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`bool async = true`);
         }
         if (separateParams()) {  w.line(`,`); }
-        w.line(`bool ${bufferResponseName} = true,`);
         w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
         w.line(`,`);
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
@@ -202,7 +212,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.write(`))`);
             });
             w.scope('{', '}', () => {
-                w.line(`${messageName}.BufferResponse = ${bufferResponseName};`);
+                if (result.returnStream){
+                    w.line(`// Avoid buffering if stream is going to be returned to the caller`);
+                    w.line(`${messageName}.BufferResponse = false;`);
+                }
 
                 const asyncCall = `await ${pipelineName}.SendAsync(${messageName}, ${cancellationName}).ConfigureAwait(false)`;
                 if (sync) {
@@ -223,7 +236,16 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
 
                 w.line(`Azure.Response ${responseName} = ${messageName}.Response;`);
                 w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
-                w.line(`return ${methodName}_CreateResponse(${responseName});`);
+
+                const createResponse = `${methodName}_CreateResponse(${responseName})`;
+                if (result.returnStream)
+                {
+                    w.line(`return (${createResponse}, ${messageName}.PreserveResponseContent());`);
+                }
+                else
+                {
+                    w.line(`return ${createResponse};`);
+                }
             });
         });
         w.line(`catch (System.Exception ex)`);

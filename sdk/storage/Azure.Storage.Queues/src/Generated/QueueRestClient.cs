@@ -28,7 +28,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -39,7 +38,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -55,7 +53,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -170,7 +167,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
@@ -180,7 +176,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -195,7 +190,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -307,7 +301,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
@@ -317,7 +310,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -332,7 +324,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -448,7 +439,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling List Queues on a Queue Service.</returns>
@@ -462,7 +452,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.ServiceClient.ListQueuesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -481,7 +470,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -613,7 +601,6 @@ namespace Azure.Storage.Queues
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -624,7 +611,6 @@ namespace Azure.Storage.Queues
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -640,7 +626,6 @@ namespace Azure.Storage.Queues
                         metadata,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -752,7 +737,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -762,7 +746,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -777,7 +760,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -877,7 +859,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Queues.Models.QueueProperties}</returns>
@@ -887,7 +868,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -902,7 +882,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1028,7 +1007,6 @@ namespace Azure.Storage.Queues
             /// <param name="metadata">Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. Note that metadata requested with this parameter must be stored in accordance with the naming restrictions imposed by the 2009-09-19 version of the Queue service. Beginning with this version, all metadata names must adhere to the naming conventions for C# identifiers.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -1039,7 +1017,6 @@ namespace Azure.Storage.Queues
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1055,7 +1032,6 @@ namespace Azure.Storage.Queues
                         metadata,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1164,7 +1140,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>a collection of signed identifiers</returns>
@@ -1174,7 +1149,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1189,7 +1163,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1305,7 +1278,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -1316,7 +1288,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.QueueClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1332,7 +1303,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1459,7 +1429,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Get Messages on a Queue</returns>
@@ -1471,7 +1440,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessagesClient.Dequeue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1488,7 +1456,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1608,7 +1575,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -1618,7 +1584,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessagesClient.Clear",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1633,7 +1598,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1736,7 +1700,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Put Message on a Queue</returns>
@@ -1749,7 +1712,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessagesClient.Enqueue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1767,7 +1729,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1901,7 +1862,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The object returned when calling Peek Messages on a Queue</returns>
@@ -1912,7 +1872,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessagesClient.Peek",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1928,7 +1887,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -2057,7 +2015,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Queues.Models.UpdatedMessage}</returns>
@@ -2070,7 +2027,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessageIdClient.Update",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2088,7 +2044,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -2232,7 +2187,6 @@ namespace Azure.Storage.Queues
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -2243,7 +2197,6 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Queues.MessageIdClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2259,7 +2212,6 @@ namespace Azure.Storage.Queues
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path

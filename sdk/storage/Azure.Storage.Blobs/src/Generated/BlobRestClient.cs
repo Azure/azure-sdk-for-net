@@ -28,7 +28,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -39,7 +38,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -55,7 +53,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -170,7 +167,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
@@ -180,7 +176,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -195,7 +190,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -307,7 +301,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
@@ -317,7 +310,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -332,7 +324,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -448,7 +439,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of containers</returns>
@@ -462,7 +452,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.ListContainersSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -481,7 +470,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -605,7 +593,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A user delegation key</returns>
@@ -616,7 +603,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetUserDelegationKey",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -632,7 +618,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -755,7 +740,6 @@ namespace Azure.Storage.Blobs
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}</returns>
@@ -763,7 +747,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.GetAccountInfo",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -776,7 +759,6 @@ namespace Azure.Storage.Blobs
                         pipeline,
                         resourceUri))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -895,7 +877,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ServiceSubmitBatchResult}</returns>
@@ -908,7 +889,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ServiceClient.SubmitBatch",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -926,7 +906,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1073,7 +1052,6 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
@@ -1085,7 +1063,6 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1102,7 +1079,6 @@ namespace Azure.Storage.Blobs
                         metadata,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1235,7 +1211,6 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}</returns>
@@ -1246,7 +1221,6 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1262,7 +1236,6 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1421,7 +1394,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -1434,7 +1406,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1452,7 +1423,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1565,7 +1535,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
@@ -1578,7 +1547,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1596,7 +1564,6 @@ namespace Azure.Storage.Blobs
                         ifModifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1733,7 +1700,6 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}</returns>
@@ -1744,7 +1710,6 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1760,7 +1725,6 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -1900,7 +1864,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
@@ -1915,7 +1878,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -1935,7 +1897,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -2089,7 +2050,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
@@ -2103,7 +2063,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2122,7 +2081,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -2264,7 +2222,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
@@ -2277,7 +2234,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2295,7 +2251,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -2434,7 +2389,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
@@ -2447,7 +2401,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.RenewLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2465,7 +2418,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -2608,7 +2560,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
@@ -2621,7 +2572,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2639,7 +2589,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -2779,7 +2728,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
@@ -2793,7 +2741,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2812,7 +2759,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -2963,7 +2909,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
@@ -2977,7 +2922,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ListBlobsFlatSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -2996,7 +2940,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -3125,7 +3068,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
@@ -3140,7 +3082,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.ContainerClient.ListBlobsHierarchySegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -3160,7 +3101,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -3307,11 +3247,10 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
+            /// <returns>(Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}, System.IO.Stream)</returns>
+            public static async System.Threading.Tasks.Task<(Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream)> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3329,7 +3268,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -3356,7 +3294,8 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
+                        // Avoid buffering if stream is going to be returned to the caller
+                        _message.BufferResponse = false;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -3370,7 +3309,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DownloadAsync_CreateResponse(_response);
+                        return (DownloadAsync_CreateResponse(_response), _message.PreserveResponseContent());
                     }
                 }
                 catch (System.Exception ex)
@@ -3468,8 +3407,8 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.DownloadAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.DownloadAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> DownloadAsync_CreateResponse(
+            /// <returns>The Blob.DownloadAsync (Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}, System.IO.Stream).</returns>
+            internal static (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream) DownloadAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -3597,8 +3536,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(
+                        (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream) _result =
+                            new (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream)(
                                 response,
                                 _value);
 
@@ -3730,8 +3669,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(
+                        (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream) _result =
+                            new (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream)(
                                 response,
                                 _value);
 
@@ -3781,7 +3720,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}</returns>
@@ -3800,7 +3738,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -3824,7 +3761,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -4122,7 +4058,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -4139,7 +4074,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4161,7 +4095,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -4291,7 +4224,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSetAccessControlResult}</returns>
@@ -4310,7 +4242,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4334,7 +4265,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -4488,7 +4418,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobGetAccessControlResult}</returns>
@@ -4504,7 +4433,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.GetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4525,7 +4453,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -4704,7 +4631,6 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobRenameResult}</returns>
@@ -4734,7 +4660,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4769,7 +4694,6 @@ namespace Azure.Storage.Blobs
                         sourceIfNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -4957,7 +4881,6 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -4967,7 +4890,6 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.Undelete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -4982,7 +4904,6 @@ namespace Azure.Storage.Blobs
                         timeout,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -5094,7 +5015,6 @@ namespace Azure.Storage.Blobs
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}</returns>
@@ -5115,7 +5035,6 @@ namespace Azure.Storage.Blobs
                 string blobContentDisposition = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetHttpHeaders",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5141,7 +5060,6 @@ namespace Azure.Storage.Blobs
                         blobContentDisposition,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -5318,7 +5236,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}</returns>
@@ -5337,7 +5254,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5361,7 +5277,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -5528,7 +5443,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
@@ -5544,7 +5458,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5565,7 +5478,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -5714,7 +5626,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}</returns>
@@ -5729,7 +5640,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5749,7 +5659,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -5895,7 +5804,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
@@ -5910,7 +5818,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.RenewLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -5930,7 +5837,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -6081,7 +5987,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
@@ -6097,7 +6002,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6118,7 +6022,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -6275,7 +6178,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
@@ -6290,7 +6192,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6310,7 +6211,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -6460,7 +6360,6 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}</returns>
@@ -6479,7 +6378,6 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6503,7 +6401,6 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -6677,7 +6574,6 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
@@ -6700,7 +6596,6 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.StartCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6728,7 +6623,6 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -6916,7 +6810,6 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
@@ -6938,7 +6831,6 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.CopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -6965,7 +6857,6 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -7141,7 +7032,6 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -7153,7 +7043,6 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.AbortCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -7170,7 +7059,6 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -7285,7 +7173,6 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
@@ -7298,7 +7185,6 @@ namespace Azure.Storage.Blobs
                 string requestId = default,
                 string leaseId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlobClient.SetTier",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -7316,7 +7202,6 @@ namespace Azure.Storage.Blobs
                         requestId,
                         leaseId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -7456,7 +7341,6 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
@@ -7484,7 +7368,6 @@ namespace Azure.Storage.Blobs
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -7517,7 +7400,6 @@ namespace Azure.Storage.Blobs
                         blobSequenceNumber,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -7735,7 +7617,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
@@ -7761,7 +7642,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UploadPages",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -7792,7 +7672,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -7997,7 +7876,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
@@ -8020,7 +7898,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.ClearPages",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8048,7 +7925,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -8242,7 +8118,6 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
@@ -8273,7 +8148,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UploadPagesFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8309,7 +8183,6 @@ namespace Azure.Storage.Blobs
                         sourceIfNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -8539,7 +8412,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
@@ -8556,7 +8428,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.GetPageRanges",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8578,7 +8449,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -8748,7 +8618,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
@@ -8766,7 +8635,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.GetPageRangesDiff",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -8789,7 +8657,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -8963,7 +8830,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
@@ -8982,7 +8848,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.Resize",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9006,7 +8871,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -9165,7 +9029,6 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
@@ -9182,7 +9045,6 @@ namespace Azure.Storage.Blobs
                 long? blobSequenceNumber = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.UpdateSequenceNumber",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9204,7 +9066,6 @@ namespace Azure.Storage.Blobs
                         blobSequenceNumber,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -9355,7 +9216,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
@@ -9370,7 +9230,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.PageBlobClient.CopyIncremental",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9390,7 +9249,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -9562,7 +9420,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
@@ -9588,7 +9445,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9619,7 +9475,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -9829,7 +9684,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
@@ -9853,7 +9707,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.AppendBlock",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -9882,7 +9735,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -10095,7 +9947,6 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
@@ -10125,7 +9976,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.AppendBlobClient.AppendBlockFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -10160,7 +10010,6 @@ namespace Azure.Storage.Blobs
                         sourceIfNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -10409,7 +10258,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
@@ -10437,7 +10285,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.Upload",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -10470,7 +10317,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -10687,7 +10533,6 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
@@ -10706,7 +10551,6 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.StageBlock",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -10730,7 +10574,6 @@ namespace Azure.Storage.Blobs
                         encryptionAlgorithm,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -10906,7 +10749,6 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
@@ -10930,7 +10772,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.StageBlockFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -10959,7 +10800,6 @@ namespace Azure.Storage.Blobs
                         sourceIfNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -11167,7 +11007,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
@@ -11196,7 +11035,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.CommitBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11230,7 +11068,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -11448,7 +11285,6 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}</returns>
@@ -11461,7 +11297,6 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.BlockBlobClient.GetBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11479,7 +11314,6 @@ namespace Azure.Storage.Blobs
                         leaseId,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -11640,7 +11474,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryCreateResult}</returns>
@@ -11663,7 +11496,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11691,7 +11523,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -11876,7 +11707,6 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryRenameResult}</returns>
@@ -11907,7 +11737,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -11943,7 +11772,6 @@ namespace Azure.Storage.Blobs
                         sourceIfNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -12145,7 +11973,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryDeleteResult}</returns>
@@ -12162,7 +11989,6 @@ namespace Azure.Storage.Blobs
                 Azure.Core.Http.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -12184,7 +12010,6 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -12334,7 +12159,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectorySetAccessControlResult}</returns>
@@ -12353,7 +12177,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -12377,7 +12200,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -12531,7 +12353,6 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="bufferResponse">Whether to buffer the response content.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult}</returns>
@@ -12547,7 +12368,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                bool bufferResponse = true,
                 string operationName = "Azure.Storage.Blobs.DirectoryClient.GetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
@@ -12568,7 +12388,6 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         requestId))
                     {
-                        _message.BufferResponse = bufferResponse;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path

@@ -90,7 +90,7 @@ namespace Azure.Core.Pipeline
                 Original = original;
             }
 
-            private Exception CreateException()
+            private static Exception CreateException()
             {
                 return new InvalidOperationException("This operation returns Stream as part of the model it should be used instead of the response content stream");
             }

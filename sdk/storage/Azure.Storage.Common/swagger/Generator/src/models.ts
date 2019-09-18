@@ -115,7 +115,8 @@ export interface IModelType {
     type: string,
     description?: string,
     external?: boolean,
-    extendedHeaders: IHeader[]
+    extendedHeaders: IHeader[],
+    returnStream?: boolean
 }
 
 export interface IVoidType extends IModelType {
@@ -235,7 +236,8 @@ export interface IResponse {
     headers: IHeaders,
     model?: IModelType,
     exception?: boolean,
-    public: boolean
+    public: boolean,
+    returnStream?: boolean
 }
 
 export interface IResponseGroup {
