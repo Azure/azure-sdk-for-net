@@ -92,7 +92,7 @@ namespace Azure.Core.Pipeline
 
             private static Exception CreateException()
             {
-                return new InvalidOperationException("This operation returns Stream as part of the model it should be used instead of the response content stream");
+                return new InvalidOperationException("This operation returns Stream as part of the model type. It should be used instead of the response content stream.");
             }
 
             public override void Flush()
