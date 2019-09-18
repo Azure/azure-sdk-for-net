@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// Elliptic Curve Cryptography (ECC) curve names.
     /// </summary>
-    public struct KeyCurveName : IEquatable<KeyCurveName>
+    public readonly struct KeyCurveName : IEquatable<KeyCurveName>
     {
         internal readonly Oid _oid;
         internal readonly int _keySize;

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
-            Argument.NotNull(encryptedKey, nameof(encryptedKey));
+            Argument.AssertNotNull(encryptedKey, nameof(encryptedKey));
 
             int algorithmKeySize = algorithm.GetKeySize();
             if (algorithmKeySize == 0)
@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
         {
-            Argument.NotNull(key, nameof(key));
+            Argument.AssertNotNull(key, nameof(key));
 
             int algorithmKeySize = algorithm.GetKeySize();
             if (algorithmKeySize == 0)

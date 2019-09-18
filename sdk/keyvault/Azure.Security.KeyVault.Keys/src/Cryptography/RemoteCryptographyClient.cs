@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Value = plaintext,
                 Iv = iv,
                 AuthenticationData = authenticationData
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Value = plaintext,
                 Iv = iv,
                 AuthenticationData = authenticationData
@@ -86,7 +86,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Value = ciphertext,
                 Iv = iv,
                 AuthenticationData = authenticationData,
@@ -112,7 +112,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyEncryptParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Value = ciphertext,
                 Iv = iv,
                 AuthenticationData = authenticationData,
@@ -138,7 +138,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Key = key
             };
 
@@ -161,7 +161,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Key = key
             };
 
@@ -184,7 +184,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Key = encryptedKey
             };
 
@@ -207,7 +207,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyWrapParameters()
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Key = encryptedKey
             };
 
@@ -230,7 +230,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeySignParameters
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Digest = digest
             };
 
@@ -253,7 +253,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeySignParameters
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Digest = digest
             };
 
@@ -276,7 +276,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyVerifyParameters
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Digest = digest,
                 Signature = signature
             };
@@ -300,7 +300,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             var parameters = new KeyVerifyParameters
             {
-                Algorithm = algorithm,
+                Algorithm = algorithm.ToString(),
                 Digest = digest,
                 Signature = signature
             };

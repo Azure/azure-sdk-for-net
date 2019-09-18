@@ -67,17 +67,17 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Get the signature for the computed digest with both keys. Note that the signature algorithm specified must be a valid algorithm for the key type,
             // and for EC keys the algorithm must also match the curve of the key
-            SignResult rsaSignResult = await rsaCryptoClient.SignAsync(SignatureAlgorithm.Rs256, digest);
+            SignResult rsaSignResult = await rsaCryptoClient.SignAsync(SignatureAlgorithm.RS256, digest);
             Debug.WriteLine($"Signed digest using the algorithm {rsaSignResult.Algorithm}, with key {rsaSignResult.KeyId}. The resulting signature is {Convert.ToBase64String(rsaSignResult.Signature)}");
 
-            SignResult ecSignResult = await ecCryptoClient.SignAsync(SignatureAlgorithm.Es256K, digest);
+            SignResult ecSignResult = await ecCryptoClient.SignAsync(SignatureAlgorithm.ES256K, digest);
             Debug.WriteLine($"Signed digest using the algorithm {ecSignResult.Algorithm}, with key {ecSignResult.KeyId}. The resulting signature is {Convert.ToBase64String(ecSignResult.Signature)}");
 
             // Verify the signatures
-            VerifyResult rsaVerifyResult = await rsaCryptoClient.VerifyAsync(SignatureAlgorithm.Rs256, digest, rsaSignResult.Signature);
+            VerifyResult rsaVerifyResult = await rsaCryptoClient.VerifyAsync(SignatureAlgorithm.RS256, digest, rsaSignResult.Signature);
             Debug.WriteLine($"Verified the signature using the algorithm {rsaVerifyResult.Algorithm}, with key {rsaVerifyResult.KeyId}. Signature is valid: {rsaVerifyResult.IsValid}");
 
-            VerifyResult ecVerifyResult = await ecCryptoClient.VerifyAsync(SignatureAlgorithm.Es256K, digest, ecSignResult.Signature);
+            VerifyResult ecVerifyResult = await ecCryptoClient.VerifyAsync(SignatureAlgorithm.ES256K, digest, ecSignResult.Signature);
             Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyResult.Algorithm}, with key {ecVerifyResult.KeyId}. Signature is valid: {ecVerifyResult.IsValid}");
 
             //
@@ -88,17 +88,17 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Get the signature for the data with both keys. Note that the signature algorithm specified must be a valid algorithm for the key type,
             // and for EC keys the algorithm must also match the curve of the key
-            SignResult rsaSignDataResult = await rsaCryptoClient.SignDataAsync(SignatureAlgorithm.Rs256, data);
+            SignResult rsaSignDataResult = await rsaCryptoClient.SignDataAsync(SignatureAlgorithm.RS256, data);
             Debug.WriteLine($"Signed data using the algorithm {rsaSignDataResult.Algorithm}, with key {rsaSignDataResult.KeyId}. The resulting signature is {Convert.ToBase64String(rsaSignDataResult.Signature)}");
 
-            SignResult ecSignDataResult = await ecCryptoClient.SignDataAsync(SignatureAlgorithm.Es256K, data);
+            SignResult ecSignDataResult = await ecCryptoClient.SignDataAsync(SignatureAlgorithm.ES256K, data);
             Debug.WriteLine($"Signed data using the algorithm {ecSignDataResult.Algorithm}, with key {ecSignDataResult.KeyId}. The resulting signature is {Convert.ToBase64String(ecSignDataResult.Signature)}");
 
             // Verify the signatures
-            VerifyResult rsaVerifyDataResult = await rsaCryptoClient.VerifyDataAsync(SignatureAlgorithm.Rs256, data, rsaSignDataResult.Signature);
+            VerifyResult rsaVerifyDataResult = await rsaCryptoClient.VerifyDataAsync(SignatureAlgorithm.RS256, data, rsaSignDataResult.Signature);
             Debug.WriteLine($"Verified the signature using the algorithm {rsaVerifyDataResult.Algorithm}, with key {rsaVerifyDataResult.KeyId}. Signature is valid: {rsaVerifyDataResult.IsValid}");
 
-            VerifyResult ecVerifyDataResult = await ecCryptoClient.VerifyDataAsync(SignatureAlgorithm.Es256K, data, ecSignDataResult.Signature);
+            VerifyResult ecVerifyDataResult = await ecCryptoClient.VerifyDataAsync(SignatureAlgorithm.ES256K, data, ecSignDataResult.Signature);
             Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult.Algorithm}, with key {ecVerifyDataResult.KeyId}. Signature is valid: {ecVerifyDataResult.IsValid}");
 
             // The Cloud Keys are no longer needed, need to delete them from the Key Vault.

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
         {
-            Argument.NotNull(digest, nameof(digest));
+            Argument.AssertNotNull(digest, nameof(digest));
 
             // The JWK is not supported by this client. Send to the server.
             if (_jwk is null)
@@ -60,9 +60,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
-            if (_curve.KeySize != algorithmCurve.KeySize)
+            if (_curve._keySize != algorithmCurve._keySize)
             {
-                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");
+                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
             }
 
             if (_curve != algorithmCurve)
@@ -94,8 +94,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
         {
             // The JWK is not supported by this client. Send to the server.
-            Argument.NotNull(digest, nameof(digest));
-            Argument.NotNull(signature, nameof(signature));
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(signature, nameof(signature));
 
             if (_jwk is null)
             {
@@ -103,9 +103,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             ref readonly KeyCurveName algorithmCurve = ref algorithm.GetKeyCurveName();
-            if (_curve.KeySize != algorithmCurve.KeySize)
+            if (_curve._keySize != algorithmCurve._keySize)
             {
-                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve.KeySize} does not match underlying key size {_curve.KeySize}");
+                throw new ArgumentException($"Signature algorithm {algorithm} key size {algorithmCurve._keySize} does not match underlying key size {_curve._keySize}");
             }
 
             if (_curve != algorithmCurve)

@@ -188,11 +188,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            switch (algorithm)
+            switch (algorithm.ToString())
             {
-                case EncryptionAlgorithm.RSA15:
-                case EncryptionAlgorithm.RSAOAEP:
-                case EncryptionAlgorithm.RSAOAEP256:
+                case EncryptionAlgorithm.RSA15Value:
+                case EncryptionAlgorithm.RSAOAEPValue:
+                case EncryptionAlgorithm.RSAOAEP256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
@@ -205,9 +205,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             switch (algorithm.ToString())
             {
-                case KeyWrapAlgorithm.RSA15:
-                case KeyWrapAlgorithm.RSAOAEP:
-                case KeyWrapAlgorithm.RSAOAEP256:
+                case KeyWrapAlgorithm.RSA15Value:
+                case KeyWrapAlgorithm.RSAOAEPValue:
+                case KeyWrapAlgorithm.RSAOAEP256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
@@ -226,22 +226,22 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             string keyName = Recording.GenerateId();
 
-            switch (algorithm)
+            switch (algorithm.ToString())
             {
-                case SignatureAlgorithm.RS256:
-                case SignatureAlgorithm.RS384:
-                case SignatureAlgorithm.RS512:
-                case SignatureAlgorithm.PS256:
-                case SignatureAlgorithm.PS384:
-                case SignatureAlgorithm.PS512:
+                case SignatureAlgorithm.RS256Value:
+                case SignatureAlgorithm.RS384Value:
+                case SignatureAlgorithm.RS512Value:
+                case SignatureAlgorithm.PS256Value:
+                case SignatureAlgorithm.PS384Value:
+                case SignatureAlgorithm.PS512Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
-                case SignatureAlgorithm.ES256:
+                case SignatureAlgorithm.ES256Value:
                     return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P256));
-                case SignatureAlgorithm.ES256K:
+                case SignatureAlgorithm.ES256KValue:
                     return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P256K));
-                case SignatureAlgorithm.ES384:
+                case SignatureAlgorithm.ES384Value:
                     return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P384));
-                case SignatureAlgorithm.ES512:
+                case SignatureAlgorithm.ES512Value:
                     return await Client.CreateEcKeyAsync(new EcKeyCreateOptions(keyName, false, KeyCurveName.P521));
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));

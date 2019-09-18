@@ -8,7 +8,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// An operation that can be performed with the key.
     /// </summary>
-    public struct KeyOperation : IEquatable<KeyOperation>
+    public readonly struct KeyOperation : IEquatable<KeyOperation>
     {
         private readonly string _value;
 

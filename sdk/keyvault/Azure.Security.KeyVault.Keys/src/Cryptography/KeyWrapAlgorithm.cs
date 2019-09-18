@@ -13,6 +13,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public readonly struct KeyWrapAlgorithm : IEquatable<KeyWrapAlgorithm>
     {
+        internal const string RSAOAEPValue = "RSA-OAEP";
+        internal const string RSA15Value = "RSA-15";
+        internal const string RSAOAEP256Value = "RSA-OAEP-256";
+        internal const string A128KWValue = "A128KW";
+        internal const string A192KWValue = "A192KW";
+        internal const string A256KWValue = "A256KW";
+
         private readonly string _value;
 
         /// <summary>
@@ -24,42 +31,35 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal const string RSAOAEP = "RSA-OAEP";
-        internal const string RSA15 = "RSA-15";
-        internal const string RSAOAEP256 = "RSA-OAEP-256";
-        internal const string A128KW = "A128KW";
-        internal const string A192KW = "A192KW";
-        internal const string A256KW = "A256KW";
-
         /// <summary>
         /// RSA-OAEP
         /// </summary>
-        public static readonly KeyWrapAlgorithm RsaOaep = new KeyWrapAlgorithm(RSAOAEP);
+        public static readonly KeyWrapAlgorithm RSAOAEP = new KeyWrapAlgorithm(RSAOAEPValue);
 
         /// <summary>
         /// RSA-15
         /// </summary>
-        public static readonly KeyWrapAlgorithm Rsa15 = new KeyWrapAlgorithm(RSA15);
+        public static readonly KeyWrapAlgorithm RSA15 = new KeyWrapAlgorithm(RSA15Value);
 
         /// <summary>
         /// RSA-OAEP-256
         /// </summary>
-        public static readonly KeyWrapAlgorithm RsaOaep256 = new KeyWrapAlgorithm(RSAOAEP256);
+        public static readonly KeyWrapAlgorithm RSAOAEP256 = new KeyWrapAlgorithm(RSAOAEP256Value);
 
         /// <summary>
         /// AES 128 Key Wrap
         /// </summary>
-        public static readonly KeyWrapAlgorithm A128KW = new KeyWrapAlgorithm(A128KW);
+        public static readonly KeyWrapAlgorithm A128KW = new KeyWrapAlgorithm(A128KWValue);
 
         /// <summary>
         /// AES 192 Key Wrap
         /// </summary>
-        public static readonly KeyWrapAlgorithm A192KW = new KeyWrapAlgorithm(A192KW);
+        public static readonly KeyWrapAlgorithm A192KW = new KeyWrapAlgorithm(A192KWValue);
 
         /// <summary>
         /// AES 256 Key Wrap
         /// </summary>
-        public static readonly KeyWrapAlgorithm A256KW = new KeyWrapAlgorithm(A256KW);
+        public static readonly KeyWrapAlgorithm A256KW = new KeyWrapAlgorithm(A256KWValue);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are the same.
@@ -82,12 +82,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </summary>
         /// <param name="value">The string value to convert.</param>
         public static implicit operator KeyWrapAlgorithm(string value) => new KeyWrapAlgorithm(value);
-
-        /// <summary>
-        /// Converts a <see cref="KeyWrapAlgorithm"/> to a string.
-        /// </summary>
-        /// <param name="value">The <see cref="KeyWrapAlgorithm"/> to convert.</param>
-        public static implicit operator string(KeyWrapAlgorithm value) => value._value;
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -113,9 +107,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal int GetKeySize() => _value switch
         {
-            KeyWrapAlgorithm.A128KW => 128,
-            KeyWrapAlgorithm.A192KW => 192,
-            KeyWrapAlgorithm.A256KW => 256,
+            KeyWrapAlgorithm.A128KWValue => 128,
+            KeyWrapAlgorithm.A192KWValue => 192,
+            KeyWrapAlgorithm.A256KWValue => 256,
             _ => 0,
         };
     }
