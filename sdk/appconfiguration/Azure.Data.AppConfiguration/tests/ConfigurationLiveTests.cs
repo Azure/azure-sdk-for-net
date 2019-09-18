@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationLiveTests : RecordedTestBase
     {
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
+        public ConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             Sanitizer = new ConfigurationRecordedTestSanitizer();
             Matcher = new ConfigurationRecordMatcher(Sanitizer);
@@ -671,7 +671,10 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             ConfigurationClient service = GetClient();
             string key = GenerateKeyId("keyFields-");
-            ConfigurationSetting setting = await service.AddAsync(key, "my_value", "my_label");
+            ConfigurationSetting setting = await service.AddAsync(new ConfigurationSetting(key, "my_value", "my_label")
+            {
+                ContentType = "content-type"
+            });
 
             try
             {
