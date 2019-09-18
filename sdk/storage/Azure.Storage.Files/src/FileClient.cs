@@ -811,7 +811,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     // Start downloading the file
-                    var response = await this.StartDownloadAsync(
+                    var (response, stream) = await this.StartDownloadAsync(
                         range,
                         rangeGetContentHash,
                         async: async,
@@ -822,7 +822,7 @@ namespace Azure.Storage.Files
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
                     response.Value.Content = RetriableStream.Create(
-                        response.GetRawResponse(),
+                        stream,
                         startOffset =>
                             this.StartDownloadAsync(
                                 range,
@@ -831,7 +831,7 @@ namespace Azure.Storage.Files
                                 async,
                                 cancellationToken)
                                 .EnsureCompleted()
-                                .GetRawResponse(),
+                                .Item2,
                         async startOffset =>
                             (await this.StartDownloadAsync(
                                 range,
@@ -840,7 +840,7 @@ namespace Azure.Storage.Files
                                 async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
-                                .GetRawResponse(),
+                                .Item2,
                         // TODO: For now we're using the default ResponseClassifier
                         // on FileConnectionOptions so we'll do the same here
                         new ResponseClassifier(),
@@ -896,7 +896,7 @@ namespace Azure.Storage.Files
         /// downloaded file.  <see cref="FlattenedStorageFileProperties.Content"/> contains
         /// the file's data.
         /// </returns>
-        private async Task<Response<FlattenedStorageFileProperties>> StartDownloadAsync(
+        private async Task<(Response<FlattenedStorageFileProperties>, Stream)> StartDownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
@@ -909,18 +909,17 @@ namespace Azure.Storage.Files
                     range.Count.Value - startOffset :
                     (long?)null);
             this.Pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
-            var response =
+            var (response, stream) =
                 await FileRestClient.File.DownloadAsync(
                     this.Pipeline,
                     this.Uri,
                     range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
-                    bufferResponse: false,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
-            return response;
+            return (response, stream);
         }
         #endregion Download
 
@@ -1684,12 +1683,12 @@ namespace Azure.Storage.Files
 
         #region UploadRangeFromUrl
         /// <summary>
-        /// The <see cref="UploadRangeFromUri"/> operation writes a range from an Azure File to another Azure file. 
+        /// The <see cref="UploadRangeFromUri"/> operation writes a range from an Azure File to another Azure file.
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">
@@ -1724,12 +1723,12 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeFromUriAsync"/> operation writes a range from an Azure File to another Azure file. 
+        /// The <see cref="UploadRangeFromUriAsync"/> operation writes a range from an Azure File to another Azure file.
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">
@@ -1764,12 +1763,12 @@ namespace Azure.Storage.Files
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadRangeInternal"/> operation writes a range from an Azure File to another Azure file. 
+        /// The <see cref="UploadRangeInternal"/> operation writes a range from an Azure File to another Azure file.
         /// This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
-        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a 
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
         /// shared access signature. If the source is public, no authentication is required to perform the operation.
         /// </param>
         /// <param name="range">

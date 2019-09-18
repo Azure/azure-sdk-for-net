@@ -136,22 +136,17 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
 
+    const returnType = result.type === 'void' ? 'Azure.Response' : `Azure.Response<${types.getName(result)}>`;
     const returnTypeArguments = [];
-    if (result.type !== 'void')
-    {
-        returnTypeArguments.push(`Azure.Response<${types.getName(result)}>`);
-    }
-    else
-    {
-        returnTypeArguments.push('Azure.Response');
-    }
+
+    returnTypeArguments.push(returnType);
 
     if (result.returnStream)
     {
         returnTypeArguments.push("System.IO.Stream");
     }
 
-    const returnType = returnTypeArguments.length == 1? returnTypeArguments[0] : `(${returnTypeArguments.join(", ")})`;
+    const sendMethodReturnType = returnTypeArguments.length == 1? returnTypeArguments[0] : `(${returnTypeArguments.join(", ")})`;
 
     w.line(`#region ${regionName}`);
 
@@ -173,7 +168,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
-    w.write(`public static async System.Threading.Tasks.ValueTask<${returnType}> ${methodName}(`);        
+    w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);        
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {

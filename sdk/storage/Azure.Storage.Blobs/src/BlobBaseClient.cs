@@ -525,7 +525,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     // Start downloading the blob
-                    var response = await this.StartDownloadAsync(
+                    var (response, stream) = await this.StartDownloadAsync(
                         range,
                         accessConditions,
                         customerProvidedKey,
@@ -538,7 +538,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
                     response.Value.Content = RetriableStream.Create(
-                        response.GetRawResponse(),
+                        stream,
                          startOffset =>
                             this.StartDownloadAsync(
                                     range,
@@ -549,7 +549,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     async,
                                     cancellationToken)
                                 .ConfigureAwait(false).GetAwaiter().GetResult()
-                            .GetRawResponse(),
+                            .Item2,
                         async startOffset =>
                             (await this.StartDownloadAsync(
                                 range,
@@ -560,7 +560,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
-                            .GetRawResponse(),
+                            .Item2,
                         // TODO: For now we're using the default ResponseClassifier
                         // on BlobConnectionOptions so we'll do the same here
                         new ResponseClassifier(),
@@ -625,7 +625,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FlattenedDownloadProperties>> StartDownloadAsync(
+        private async Task<(Response<FlattenedDownloadProperties>, Stream)> StartDownloadAsync(
             HttpRange range = default,
             BlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
@@ -644,7 +644,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             this.Pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
 
-            var response =
+            var (response, stream) =
                 await BlobRestClient.Blob.DownloadAsync(
                     this.Pipeline,
                     this.Uri,
@@ -659,20 +659,19 @@ namespace Azure.Storage.Blobs.Specialized
                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                     async: async,
-                    bufferResponse: false,
                     operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
             this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
 
-            return response;
+            return (response, stream);
         }
         #endregion Download
 
         #region Parallel Download
         /// <summary>
-        /// The <see cref="Download(Stream)"/> operation downloads a blob using parallel requests, 
+        /// The <see cref="Download(Stream)"/> operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -692,7 +691,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Download(FileInfo)"/> operation downloads a blob using parallel requests, 
+        /// The <see cref="Download(FileInfo)"/> operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -712,7 +711,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="DownloadAsync(Stream)"/> downloads a blob using parallel requests, 
+        /// The <see cref="DownloadAsync(Stream)"/> downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -732,7 +731,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="DownloadAsync(FileInfo)"/> downloads a blob using parallel requests, 
+        /// The <see cref="DownloadAsync(FileInfo)"/> downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -752,8 +751,8 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
-        /// The <see cref="Download(Stream, CancellationToken)"/> operation 
-        /// downloads a blob using parallel requests, 
+        /// The <see cref="Download(Stream, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -783,7 +782,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="Download(FileInfo, CancellationToken)"/> operation
-        /// downloads a blob using parallel requests, 
+        /// downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -813,7 +812,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DownloadAsync(Stream, CancellationToken)"/> operation
-        /// downloads a blob using parallel requests, 
+        /// downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -843,7 +842,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DownloadAsync(FileInfo, CancellationToken)"/> operation
-        /// downloads a blob using parallel requests, 
+        /// downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -873,7 +872,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="Download(Stream, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests, 
+        /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -920,7 +919,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="Download(FileInfo, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests, 
+        /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -967,7 +966,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DownloadAsync(Stream, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests, 
+        /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -999,7 +998,7 @@ namespace Azure.Storage.Blobs.Specialized
             ///// <param name="progressHandler">
             ///// Optional <see cref="IProgress{StorageProgress}"/> to provide
             ///// progress updates about data transfers.
-            ///// </param> 
+            ///// </param>
             //IProgress<StorageProgress> progressHandler = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
@@ -1013,7 +1012,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DownloadAsync(FileInfo, BlobAccessConditions?, ParallelTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests, 
+        /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">

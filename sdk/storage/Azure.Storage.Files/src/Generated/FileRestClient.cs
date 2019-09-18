@@ -3680,7 +3680,7 @@ namespace Azure.Storage.Files
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Models.FlattenedStorageFileProperties}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>> DownloadAsync(
+            public static async System.Threading.Tasks.ValueTask<(Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>, System.IO.Stream)> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3702,6 +3702,8 @@ namespace Azure.Storage.Files
                         range,
                         rangeGetContentHash))
                     {
+                        // Avoid buffering if stream is going to be returned to the caller
+                        _message.BufferResponse = false;
                         if (async)
                         {
                             // Send the request asynchronously if we're being called via an async path
@@ -3715,7 +3717,7 @@ namespace Azure.Storage.Files
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DownloadAsync_CreateResponse(_response);
+                        return (DownloadAsync_CreateResponse(_response), _message.PreserveResponseContent());
                     }
                 }
                 catch (System.Exception ex)

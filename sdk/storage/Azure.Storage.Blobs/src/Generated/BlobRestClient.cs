@@ -3249,8 +3249,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>(Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}, System.IO.Stream)</returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}</returns>
+            public static async System.Threading.Tasks.ValueTask<(Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream)> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3407,8 +3407,8 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.DownloadAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.DownloadAsync (Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}, System.IO.Stream).</returns>
-            internal static (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream) DownloadAsync_CreateResponse(
+            /// <returns>The Blob.DownloadAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> DownloadAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -3536,8 +3536,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream) _result =
-                            new (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream)(
+                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(
                                 response,
                                 _value);
 
@@ -3669,8 +3669,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream) _result =
-                            new (Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>, System.IO.Stream)(
+                        Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>(
                                 response,
                                 _value);
 
