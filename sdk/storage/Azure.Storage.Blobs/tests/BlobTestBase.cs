@@ -12,6 +12,7 @@ using Azure.Core.Testing;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Test.Shared
@@ -37,19 +38,26 @@ namespace Azure.Storage.Test.Shared
         public string GetNewBlobName() => $"test-blob-{this.Recording.Random.NewGuid()}";
         public string GetNewBlockName() => $"test-block-{this.Recording.Random.NewGuid()}";
 
-        public BlobClientOptions GetOptions()
-            => this.Recording.InstrumentClientOptions(
-                    new BlobClientOptions
-                    {
-                        Diagnostics = { IsLoggingEnabled = true },
-                        Retry =
-                        {
-                            Mode = RetryMode.Exponential,
-                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                            Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                            MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                        }
-                    });
+        public BlobClientOptions GetOptions(bool parallelRange = false)
+        {
+            var options = new BlobClientOptions
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                }
+            };
+            if(Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
+            }
+
+            return Recording.InstrumentClientOptions(options);
+        }
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,

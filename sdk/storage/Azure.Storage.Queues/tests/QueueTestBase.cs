@@ -27,18 +27,25 @@ namespace Azure.Storage.Queues.Tests
         }
 
         public QueueClientOptions GetOptions()
-            => this.Recording.InstrumentClientOptions(
-                    new QueueClientOptions
-                    {
-                        Diagnostics = { IsLoggingEnabled = true },
-                        Retry =
-                        {
-                            Mode = RetryMode.Exponential,
-                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                            Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                            MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                        }
-                    });
+        {
+            var options = new QueueClientOptions
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                }
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
+            }
+
+            return Recording.InstrumentClientOptions(options);
+        }
 
         public QueueServiceClient GetServiceClient_SharedKey()
             => this.InstrumentClient(
