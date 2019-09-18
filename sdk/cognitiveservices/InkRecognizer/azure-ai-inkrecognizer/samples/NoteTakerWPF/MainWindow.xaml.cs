@@ -1,4 +1,4 @@
-﻿using Azure.AI.InkRecognizer;
+﻿using Azure.Data.InkRecognizer;
 using Azure.AI.InkRecognizer.Models;
 using Azure.AI.InkRecognizer.WPF.Stroke;
 using System;

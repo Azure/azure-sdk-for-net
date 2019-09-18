@@ -1,11 +1,11 @@
-﻿using Azure.AI.InkRecognizer;
-using Azure.AI.InkRecognizer.Models;
+﻿using Azure.Data.InkRecognizer;
+using Azure.Data.InkRecognizer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Azure.AI.InkRecognizer.WPF.Stroke;
+using Azure.Data.InkRecognizer.WPF.Stroke;
 
 namespace InkRecognizerTestWPF
 {

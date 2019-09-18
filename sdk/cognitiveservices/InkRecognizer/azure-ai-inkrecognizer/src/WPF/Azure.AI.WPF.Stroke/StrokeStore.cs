@@ -81,6 +81,11 @@ namespace Azure.Data.InkRecognizer.WPF.Stroke
             _strokes.Remove(strokeToRemove);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Azure.Data.InkRecognizer.InkStroke> GetStrokes()
         {
             return _strokes;
@@ -114,22 +119,46 @@ namespace Azure.Data.InkRecognizer.WPF.Stroke
             _inkStroke = new InkStroke(_inkPoints, Language, Id, Kind);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public InkStroke GetNativeStroke()
         {
             return _inkStroke;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<InkPoint> GetInkPoints()
         {
             return _inkPoints;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public long Id { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public InkStrokeKind Kind { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Language { get; set; } = null;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pointsInPixels"></param>
+        /// <param name="DpiX"></param>
+        /// <param name="DpiY"></param>
+        /// <returns></returns>
         private List<InkPoint> ConvertPixelsToMillimeters(
             IEnumerable<System.Windows.Input.StylusPoint> pointsInPixels,
             float DpiX,
