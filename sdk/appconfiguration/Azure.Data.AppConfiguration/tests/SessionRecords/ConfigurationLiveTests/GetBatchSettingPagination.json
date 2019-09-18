@@ -7,8 +7,8 @@
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "Date": "Wed, 18 Sep 2019 21:12:49 GMT",
-        "traceparent": "00-d71f56e2b9ab0f4286d5f135db915055-930cd65afdb5ce41-00",
+        "Date": "Wed, 18 Sep 2019 21:33:01 GMT",
+        "traceparent": "00-1c78144a0588c6478c93b84fa473fb0e-aedd6ebc0ad87145-00",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190918.1\u002B0c319f5fd30ac3e2e5bc2936122815be22444424",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
@@ -27,16 +27,16 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
-        "Date": "Wed, 18 Sep 2019 21:12:49 GMT",
+        "Date": "Wed, 18 Sep 2019 21:33:01 GMT",
         "ETag": "\u0022Al3nrQNM6vuDgq7vYDmjRtW703g\u0022",
         "Last-Modified": "Mon, 08 Apr 2019 20:02:37 GMT",
         "Server": "nginx/1.13.12",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM1MzgzMjQ=;sn=538324",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg2NTk=;sn=538659",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "dbaa2c00459b673c28db144a403b76cf",
-        "x-ms-correlation-request-id": "6737764b-fd0d-4ed0-89e9-a9e15c6e0c55",
-        "x-ms-request-id": "6737764b-fd0d-4ed0-89e9-a9e15c6e0c55"
+        "x-ms-correlation-request-id": "21ad418a-d396-4de7-9e0c-a80b5661f1a4",
+        "x-ms-request-id": "21ad418a-d396-4de7-9e0c-a80b5661f1a4"
       },
       "ResponseBody": {
         "etag": "Al3nrQNM6vuDgq7vYDmjRtW703g",
@@ -55,8 +55,8 @@
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
-        "Date": "Wed, 18 Sep 2019 21:12:49 GMT",
-        "Sync-Token": "zAJw6V16=ODotMSM1MzgzMjQ=",
+        "Date": "Wed, 18 Sep 2019 21:33:01 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg2NTk=",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190918.1\u002B0c319f5fd30ac3e2e5bc2936122815be22444424",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
@@ -75,15 +75,15 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kvset\u002Bjson; charset=utf-8",
-        "Date": "Wed, 18 Sep 2019 21:12:49 GMT",
+        "Date": "Wed, 18 Sep 2019 21:33:01 GMT",
         "Link": "\u003C/kv/?key=key-cf4ac67640fc46f2b682583c217b28da\u0026api-version=1.0\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjk0\u003E; rel=\u0022next\u0022",
         "Server": "nginx/1.13.12",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM1MzgzMjQ=;sn=538324",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg2NTk=;sn=538659",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "b0b801fdb25dfa2d2188e0dd41adb87c",
-        "x-ms-correlation-request-id": "5010cd4a-a5a5-4ddc-b95c-99004148b236",
-        "x-ms-request-id": "5010cd4a-a5a5-4ddc-b95c-99004148b236"
+        "x-ms-correlation-request-id": "74aaaae1-8d49-4a24-a298-ce6b762d2e99",
+        "x-ms-request-id": "74aaaae1-8d49-4a24-a298-ce6b762d2e99"
       },
       "ResponseBody": {
         "items": [
@@ -1097,8 +1097,8 @@
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
-        "Date": "Wed, 18 Sep 2019 21:12:49 GMT",
-        "Sync-Token": "zAJw6V16=ODotMSM1MzgzMjQ=",
+        "Date": "Wed, 18 Sep 2019 21:33:01 GMT",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg2NTk=",
         "User-Agent": [
           "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190918.1\u002B0c319f5fd30ac3e2e5bc2936122815be22444424",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
@@ -1117,14 +1117,14 @@
         "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kvset\u002Bjson; charset=utf-8",
-        "Date": "Wed, 18 Sep 2019 21:12:49 GMT",
+        "Date": "Wed, 18 Sep 2019 21:33:01 GMT",
         "Server": "nginx/1.13.12",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Sync-Token": "zAJw6V16=ODotMSM1MzgzMjQ=;sn=538324",
+        "Sync-Token": "zAJw6V16=ODotMSM1Mzg2NTk=;sn=538659",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "f0bf9f08ba7b7c285f7cbb6dc131c349",
-        "x-ms-correlation-request-id": "d01ef25d-67ea-43b3-b2f8-91586681d0ee",
-        "x-ms-request-id": "d01ef25d-67ea-43b3-b2f8-91586681d0ee"
+        "x-ms-correlation-request-id": "e28a521b-7bd3-4557-825a-5b1a15e67bf1",
+        "x-ms-request-id": "e28a521b-7bd3-4557-825a-5b1a15e67bf1"
       },
       "ResponseBody": {
         "items": [
