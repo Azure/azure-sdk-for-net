@@ -16,9 +16,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string RSAOAEPValue = "RSA-OAEP";
         internal const string RSA15Value = "RSA-15";
         internal const string RSAOAEP256Value = "RSA-OAEP-256";
-        internal const string A128KWValue = "A128KW";
-        internal const string A192KWValue = "A192KW";
-        internal const string A256KWValue = "A256KW";
 
         private readonly string _value;
 
@@ -45,21 +42,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// RSA-OAEP-256
         /// </summary>
         public static readonly KeyWrapAlgorithm RSAOAEP256 = new KeyWrapAlgorithm(RSAOAEP256Value);
-
-        /// <summary>
-        /// AES 128 Key Wrap
-        /// </summary>
-        public static readonly KeyWrapAlgorithm A128KW = new KeyWrapAlgorithm(A128KWValue);
-
-        /// <summary>
-        /// AES 192 Key Wrap
-        /// </summary>
-        public static readonly KeyWrapAlgorithm A192KW = new KeyWrapAlgorithm(A192KWValue);
-
-        /// <summary>
-        /// AES 256 Key Wrap
-        /// </summary>
-        public static readonly KeyWrapAlgorithm A256KW = new KeyWrapAlgorithm(A256KWValue);
 
         /// <summary>
         /// Determines if two <see cref="KeyWrapAlgorithm"/> values are the same.
@@ -104,13 +86,5 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             // TODO
             throw new NotImplementedException();
         }
-
-        internal int GetKeySize() => _value switch
-        {
-            KeyWrapAlgorithm.A128KWValue => 128,
-            KeyWrapAlgorithm.A192KWValue => 192,
-            KeyWrapAlgorithm.A256KWValue => 256,
-            _ => 0,
-        };
     }
 }

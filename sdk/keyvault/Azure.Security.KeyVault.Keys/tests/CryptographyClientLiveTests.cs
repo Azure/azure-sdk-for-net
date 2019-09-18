@@ -63,11 +63,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task WrapUnwrapRoundTrip([Fields]KeyWrapAlgorithm algorithm)
         {
-            if (algorithm == KeyWrapAlgorithm.A128KW || algorithm == KeyWrapAlgorithm.A192KW || algorithm == KeyWrapAlgorithm.A256KW)
-            {
-                Assert.Ignore("Algorithm {0} is not supported by KeyVault at this time", algorithm);
-            }
-
             Key key = await CreateTestKey(algorithm);
 
             CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);

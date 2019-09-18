@@ -32,9 +32,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private static IEnumerable<object[]> GetCreateData()
         {
-            Aes aes = Aes.Create();
-            yield return new object[] { new JsonWebKey(aes) { KeyId = nameof(aes) }, typeof(AesCryptographyClient) };
-
 #if !NET461
             ECDsa ecdsa = ECDsa.Create();
             yield return new object[] { new JsonWebKey(ecdsa, false) { KeyId = "ecdsaPublic" }, typeof(EcCryptographyClient) };
