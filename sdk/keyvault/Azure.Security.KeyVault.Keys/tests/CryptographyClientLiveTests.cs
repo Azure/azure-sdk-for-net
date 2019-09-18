@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task EncryptDecryptRoundTrip([Values]EncryptionAlgorithm algorithm)
+        public async Task EncryptDecryptRoundTrip([Fields]EncryptionAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
 
@@ -62,7 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task WrapUnwrapRoundTrip([Values]KeyWrapAlgorithm algorithm)
+        public async Task WrapUnwrapRoundTrip([Fields]KeyWrapAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
 
@@ -89,7 +89,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignVerifyDataRoundTrip([Values]SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
 
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task SignVerifyDataStreamRoundTrip([Values]SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataStreamRoundTrip([Fields]SignatureAlgorithm algorithm)
         {
             Key key = await CreateTestKey(algorithm);
 

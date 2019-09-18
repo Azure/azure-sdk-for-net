@@ -59,8 +59,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="NotSupportedException">The <see cref="CryptographyClientOptions.Version"/> is not supported.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
-            Argument.NotNull(keyId, nameof(keyId));
-            Argument.NotNull(credential, nameof(credential));
+            Argument.AssertNotNull(keyId, nameof(keyId));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             _keyId = keyId;
             options ??= new CryptographyClientOptions();
@@ -458,7 +458,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -490,7 +490,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -523,7 +523,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -556,7 +556,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.SignData");
             scope.AddAttribute("key", _keyId);
@@ -589,7 +589,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -622,7 +622,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -655,7 +655,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);
@@ -688,7 +688,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
         {
-            Argument.NotNull(data, nameof(data));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient.VerifyData");
             scope.AddAttribute("key", _keyId);

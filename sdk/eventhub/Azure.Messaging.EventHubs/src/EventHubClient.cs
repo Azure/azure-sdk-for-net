@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Compatibility;
 using Azure.Messaging.EventHubs.Core;
@@ -29,6 +28,13 @@ namespace Azure.Messaging.EventHubs
         private EventHubRetryPolicy _retryPolicy;
 
         /// <summary>
+        ///   The fully qualified Event Hubs namespace that the client is connected to.  This is likely
+        ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        ///
+        public string FullyQualifiedNamespace { get; }
+
+        /// <summary>
         ///   The name of the Event Hub that the client is connected to, specific to the
         ///   Event Hubs namespace that contains it.
         /// </summary>
@@ -45,7 +51,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentNotNull(nameof(RetryPolicy), value);
+                Argument.AssertNotNull(value, nameof(RetryPolicy));
                 _retryPolicy = value;
 
                 // Applying a custom retry policy invalidates the retry options specified.
@@ -146,13 +152,13 @@ namespace Azure.Messaging.EventHubs
         {
             clientOptions = clientOptions?.Clone() ?? new EventHubClientOptions();
 
-            Guard.ArgumentNotNullOrEmpty(nameof(connectionString), connectionString);
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             ValidateClientOptions(clientOptions);
 
             var connectionStringProperties = ParseConnectionString(connectionString);
             ValidateConnectionProperties(connectionStringProperties, eventHubName, nameof(connectionString));
 
-            var eventHubsHostName = connectionStringProperties.Endpoint.Host;
+            var fullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
 
             if (String.IsNullOrEmpty(eventHubName))
             {
@@ -161,36 +167,37 @@ namespace Azure.Messaging.EventHubs
 
             var sharedAccessSignature = new SharedAccessSignature
             (
-                 BuildAudienceResource(clientOptions.TransportType, eventHubsHostName, eventHubName),
+                 BuildAudienceResource(clientOptions.TransportType, fullyQualifiedNamespace, eventHubName),
                  connectionStringProperties.SharedAccessKeyName,
                  connectionStringProperties.SharedAccessKey
             );
 
             _retryPolicy = new BasicRetryPolicy(clientOptions.RetryOptions);
             ClientOptions = clientOptions;
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
-            InnerClient = BuildTransportClient(eventHubsHostName, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), clientOptions, _retryPolicy);
+            InnerClient = BuildTransportClient(fullyQualifiedNamespace, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), clientOptions, _retryPolicy);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
         /// </summary>
         ///
-        /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
-        public EventHubClient(string host,
+        public EventHubClient(string fullyQualifiedNamespace,
                               string eventHubName,
                               TokenCredential credential,
                               EventHubClientOptions clientOptions = default)
         {
             clientOptions = clientOptions?.Clone() ?? new EventHubClientOptions();
 
-            Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubName), eventHubName);
-            Guard.ArgumentNotNull(nameof(credential), credential);
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
             ValidateClientOptions(clientOptions);
 
             switch (credential)
@@ -199,18 +206,18 @@ namespace Azure.Messaging.EventHubs
                     break;
 
                 case EventHubSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(clientOptions.TransportType, host, eventHubName));
+                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(clientOptions.TransportType, fullyQualifiedNamespace, eventHubName));
                     break;
 
                 default:
-                    credential = new EventHubTokenCredential(credential, BuildAudienceResource(clientOptions.TransportType, host, eventHubName));
+                    credential = new EventHubTokenCredential(credential, BuildAudienceResource(clientOptions.TransportType, fullyQualifiedNamespace, eventHubName));
                     break;
             }
 
             _retryPolicy = new BasicRetryPolicy(clientOptions.RetryOptions);
             EventHubName = eventHubName;
             ClientOptions = clientOptions;
-            InnerClient = BuildTransportClient(host, eventHubName, credential, clientOptions, _retryPolicy);
+            InnerClient = BuildTransportClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions, _retryPolicy);
         }
 
         /// <summary>
@@ -337,8 +344,8 @@ namespace Azure.Messaging.EventHubs
                                                        EventPosition eventPosition,
                                                        EventHubConsumerOptions consumerOptions = default)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
+            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            Argument.AssertNotNull(eventPosition, nameof(eventPosition));
 
             var options = consumerOptions?.Clone() ?? new EventHubConsumerOptions { RetryOptions = null };
             options.RetryOptions = options.RetryOptions ?? ClientOptions.RetryOptions?.Clone();
@@ -407,7 +414,7 @@ namespace Azure.Messaging.EventHubs
         ///   requested connection type of the <paramref name="options" />.
         /// </summary>
         ///
-        /// <param name="host">The fully qualified host name for the Event Hubs namespace.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of a specific Event Hub.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
         /// <param name="options">The set of options to use for the client.</param>
@@ -423,7 +430,7 @@ namespace Azure.Messaging.EventHubs
         ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the caller.
         /// </remarks>
         ///
-        internal virtual TransportEventHubClient BuildTransportClient(string host,
+        internal virtual TransportEventHubClient BuildTransportClient(string fullyQualifiedNamespace,
                                                                       string eventHubName,
                                                                       TokenCredential credential,
                                                                       EventHubClientOptions options,
@@ -433,7 +440,7 @@ namespace Azure.Messaging.EventHubs
             {
                 case TransportType.AmqpTcp:
                 case TransportType.AmqpWebSockets:
-                    return new TrackOneEventHubClient(host, eventHubName, credential, options, defaultRetryPolicy);
+                    return new TrackOneEventHubClient(fullyQualifiedNamespace, eventHubName, credential, options, defaultRetryPolicy);
 
                 default:
                     throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
@@ -445,16 +452,16 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Event Hubs service.</param>
-        /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
         private static string BuildAudienceResource(TransportType transportType,
-                                                    string host,
+                                                    string fullyQualifiedNamespace,
                                                     string eventHubName)
         {
-            var builder = new UriBuilder(host)
+            var builder = new UriBuilder(fullyQualifiedNamespace)
             {
                 Scheme = transportType.GetUriScheme(),
                 Path = eventHubName,

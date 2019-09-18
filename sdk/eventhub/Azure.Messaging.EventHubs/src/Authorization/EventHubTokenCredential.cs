@@ -4,7 +4,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Authorization
 {
@@ -47,8 +46,8 @@ namespace Azure.Messaging.EventHubs.Authorization
         public EventHubTokenCredential(TokenCredential tokenCredential,
                                        string eventHubResource)
         {
-            Guard.ArgumentNotNull(nameof(tokenCredential), tokenCredential);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubResource), eventHubResource);
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
 
             Credential = tokenCredential;
             Resource = eventHubResource;

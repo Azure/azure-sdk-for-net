@@ -11,6 +11,7 @@ using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -1118,8 +1119,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void CreateEventHubPropertiesRequestValidatesTheEventHub(string eventHubName)
         {
+            ExactTypeConstraint typeConstraint = eventHubName is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
             var converter = new AmqpMessageConverter();
-            Assert.That(() => converter.CreateEventHubPropertiesRequest(eventHubName, "dummy"), Throws.ArgumentException);
+            Assert.That(() => converter.CreateEventHubPropertiesRequest(eventHubName, "dummy"), typeConstraint);
         }
 
         /// <summary>
@@ -1132,8 +1135,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void CreateEventHubPropertiesRequestValidatesTheToken(string token)
         {
+            ExactTypeConstraint typeConstraint = token is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
             var converter = new AmqpMessageConverter();
-            Assert.That(() => converter.CreateEventHubPropertiesRequest("dummy", token), Throws.ArgumentException);
+            Assert.That(() => converter.CreateEventHubPropertiesRequest("dummy", token), typeConstraint);
         }
 
         /// <summary>
@@ -1242,8 +1247,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void CreatePartitionPropertiesRequestValidatesTheEventHub(string eventHubName)
         {
+            ExactTypeConstraint typeConstraint = eventHubName is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
             var converter = new AmqpMessageConverter();
-            Assert.That(() => converter.CreatePartitionPropertiesRequest(eventHubName, "0", "dummy"), Throws.ArgumentException);
+            Assert.That(() => converter.CreatePartitionPropertiesRequest(eventHubName, "0", "dummy"), typeConstraint);
         }
 
         /// <summary>
@@ -1256,8 +1263,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void CreatePartitionPropertiesRequestValidatesThePartition(string partition)
         {
+            ExactTypeConstraint typeConstraint = partition is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
             var converter = new AmqpMessageConverter();
-            Assert.That(() => converter.CreatePartitionPropertiesRequest("someHub", partition, "dummy"), Throws.ArgumentException);
+            Assert.That(() => converter.CreatePartitionPropertiesRequest("someHub", partition, "dummy"), typeConstraint);
         }
 
         /// <summary>
@@ -1270,8 +1279,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void CreatePartitionPropertiesRequestValidatesTheToken(string token)
         {
+            ExactTypeConstraint typeConstraint = token is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
             var converter = new AmqpMessageConverter();
-            Assert.That(() => converter.CreatePartitionPropertiesRequest("someHub", "0", token), Throws.ArgumentException);
+            Assert.That(() => converter.CreatePartitionPropertiesRequest("someHub", "0", token), typeConstraint);
         }
 
         /// <summary>

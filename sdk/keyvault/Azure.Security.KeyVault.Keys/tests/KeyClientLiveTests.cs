@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task CreateEcWithCurveKey([Values]KeyCurveName curve)
+        public async Task CreateEcWithCurveKey([Fields]KeyCurveName curve)
         {
             var ecCurveKey = new EcKeyCreateOptions(Recording.GenerateId(), hsm: false, curve);
             Key keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);

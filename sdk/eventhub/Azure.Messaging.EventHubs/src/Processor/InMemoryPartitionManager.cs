@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly object OwnershipLock = new object();
 
         /// <summary>The set of stored ownership.</summary>
-        private Dictionary<(string EventHubName, string ConsumerGroup, string PartitionId), PartitionOwnership> Ownership;
+        private Dictionary<(string, string, string, string), PartitionOwnership> Ownership;
 
         /// <summary>Logs activities performed by this partition manager.</summary>
         private Action<string> Logger;
@@ -33,19 +33,21 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             Logger = logger;
 
-            Ownership = new Dictionary<(string, string, string), PartitionOwnership>();
+            Ownership = new Dictionary<(string, string, string, string), PartitionOwnership>();
         }
 
         /// <summary>
         ///   Retrieves a complete ownership list from the in-memory storage service.
         /// </summary>
         ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string eventHubName,
+        public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
+                                                                                 string eventHubName,
                                                                                  string consumerGroup)
         {
             List<PartitionOwnership> ownershipList;
@@ -53,8 +55,9 @@ namespace Azure.Messaging.EventHubs.Processor
             lock (OwnershipLock)
             {
                 ownershipList = Ownership.Values
-                    .Where(ownership => ownership.EventHubName == eventHubName &&
-                        ownership.ConsumerGroup == consumerGroup)
+                    .Where(ownership => ownership.FullyQualifiedNamespace == fullyQualifiedNamespace
+                        && ownership.EventHubName == eventHubName
+                        && ownership.ConsumerGroup == consumerGroup)
                     .ToList();
             }
 
@@ -81,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 foreach (var ownership in partitionOwnership)
                 {
                     var isClaimable = true;
-                    var key = (ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
+                    var key = (ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
 
                     // In case the partition already has an owner, the ETags must match in order to claim it.
 
@@ -121,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             lock (OwnershipLock)
             {
-                var key = (checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
+                var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
 
                 if (Ownership.TryGetValue(key, out var ownership))
                 {

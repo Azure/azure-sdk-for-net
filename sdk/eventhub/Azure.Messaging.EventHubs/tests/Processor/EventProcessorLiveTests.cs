@@ -573,9 +573,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                     {
-                        new PartitionOwnership(scope.EventHubName, EventHubConsumer.DefaultConsumerGroupName,
-                            "ownerIdentifier", partitionId, sequenceNumber: checkpointedSequenceNumber,
-                            lastModifiedTime: DateTimeOffset.UtcNow)
+                        new PartitionOwnership(client.FullyQualifiedNamespace, client.EventHubName,
+                            EventHubConsumer.DefaultConsumerGroupName, "ownerIdentifier", partitionId,
+                            sequenceNumber: checkpointedSequenceNumber, lastModifiedTime: DateTimeOffset.UtcNow)
                     });
 
                     // Create the event processor manager to manage our event processors.
@@ -709,7 +709,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Validate results.
 
-                    var ownershipEnumerable = await partitionManager.ListOwnershipAsync(scope.EventHubName, EventHubConsumer.DefaultConsumerGroupName);
+                    var ownershipEnumerable = await partitionManager.ListOwnershipAsync(client.FullyQualifiedNamespace, client.EventHubName, EventHubConsumer.DefaultConsumerGroupName);
+                    ;
 
                     Assert.That(ownershipEnumerable, Is.Not.Null);
                     Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));

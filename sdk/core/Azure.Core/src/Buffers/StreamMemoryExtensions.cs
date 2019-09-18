@@ -14,8 +14,7 @@ namespace Azure.Core.Buffers
     {
         public static async Task WriteAsync(this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellation = default)
         {
-            if (stream == null)
-                throw new ArgumentNullException(nameof(stream));
+            Argument.AssertNotNull(stream, nameof(stream));
 
             if (buffer.Length == 0)
                 return;
@@ -49,8 +48,7 @@ namespace Azure.Core.Buffers
 
         public static async Task WriteAsync(this Stream stream, ReadOnlySequence<byte> buffer, CancellationToken cancellation = default)
         {
-            if (stream == null)
-                throw new ArgumentNullException(nameof(stream));
+            Argument.AssertNotNull(stream, nameof(stream));
 
             if (buffer.Length == 0)
                 return;

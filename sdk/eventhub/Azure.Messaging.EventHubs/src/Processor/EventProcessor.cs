@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -148,10 +148,10 @@ namespace Azure.Messaging.EventHubs.Processor
                               PartitionManager partitionManager,
                               EventProcessorOptions options = default)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
-            Guard.ArgumentNotNull(nameof(eventHubClient), eventHubClient);
-            Guard.ArgumentNotNull(nameof(partitionProcessorFactory), partitionProcessorFactory);
-            Guard.ArgumentNotNull(nameof(partitionManager), partitionManager);
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNull(eventHubClient, nameof(eventHubClient));
+            Argument.AssertNotNull(partitionProcessorFactory, nameof(partitionProcessorFactory));
+            Argument.AssertNotNull(partitionManager, nameof(partitionManager));
 
             InnerClient = eventHubClient;
             ConsumerGroup = consumerGroup;
@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // their eTags to claim orphan partitions.
 
                 var completeOwnershipList = (await Manager
-                    .ListOwnershipAsync(InnerClient.EventHubName, ConsumerGroup)
+                    .ListOwnershipAsync(InnerClient.FullyQualifiedNamespace, InnerClient.EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -487,7 +487,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             // Create and start the new partition pump and add it to the dictionary.
 
-            var partitionContext = new PartitionContext(InnerClient.EventHubName, ConsumerGroup, partitionId, Identifier, Manager);
+            var partitionContext = new PartitionContext(InnerClient.FullyQualifiedNamespace, InnerClient.EventHubName, ConsumerGroup, partitionId, Identifier, Manager);
 
             try
             {
@@ -559,6 +559,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             var newOwnership = new PartitionOwnership
                 (
+                    InnerClient.FullyQualifiedNamespace,
                     InnerClient.EventHubName,
                     ConsumerGroup,
                     Identifier,
@@ -589,6 +590,7 @@ namespace Azure.Messaging.EventHubs.Processor
             var ownershipToRenew = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership
                 (
+                    ownership.FullyQualifiedNamespace,
                     ownership.EventHubName,
                     ownership.ConsumerGroup,
                     ownership.OwnerIdentifier,

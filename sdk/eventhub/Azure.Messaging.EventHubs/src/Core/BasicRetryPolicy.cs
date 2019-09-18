@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Core
@@ -45,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public BasicRetryPolicy(RetryOptions retryOptions)
         {
-            Guard.ArgumentNotNull(nameof(retryOptions), retryOptions);
+            Argument.AssertNotNull(retryOptions, nameof(retryOptions));
             Options = retryOptions;
         }
 

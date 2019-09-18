@@ -11,6 +11,7 @@ using Azure.Messaging.EventHubs.Core;
 using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -232,8 +233,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void GetPartitionPropertiesAsyncValidatesThePartition(string partition)
         {
-            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(), Mock.Of<EventHubRetryPolicy>());
-            Assert.That(async () => await client.GetPartitionPropertiesAsync(partition, CancellationToken.None), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = partition is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            var client = new AmqpEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), new EventHubClientOptions(),  Mock.Of<EventHubRetryPolicy>());
+            Assert.That(async () => await client.GetPartitionPropertiesAsync(partition, CancellationToken.None), typeConstraint);
         }
 
         /// <summary>

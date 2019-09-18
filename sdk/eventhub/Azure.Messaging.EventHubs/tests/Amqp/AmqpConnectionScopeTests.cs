@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheEventHubName()
         {
-            Assert.That(() => new AmqpConnectionScope(new Uri("amqp://some.place.com"), null, Mock.Of<TokenCredential>(), TransportType.AmqpWebSockets, Mock.Of<IWebProxy>()), Throws.ArgumentException);
+            Assert.That(() => new AmqpConnectionScope(new Uri("amqp://some.place.com"), null, Mock.Of<TokenCredential>(), TransportType.AmqpWebSockets, Mock.Of<IWebProxy>()), Throws.ArgumentNullException);
         }
 
         /// <summary>

@@ -26,18 +26,25 @@ namespace Azure.Storage.Common.Test
         /// <summary>
         /// Get BlobClientOptions instrumented for recording.
         /// </summary>
-        protected BlobClientOptions GetBlobOptions() =>
-            this.Recording.InstrumentClientOptions(
-                new BlobClientOptions
+        protected BlobClientOptions GetBlobOptions()
+        {
+            var options = new BlobClientOptions
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
                 {
-                    Diagnostics = { IsLoggingEnabled = true },
-                    Retry =
-                    {
-                        Mode = RetryMode.Exponential,
-                        MaxRetries = Constants.MaxReliabilityRetries,
-                        Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                        MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                    }
-                });
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                }
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
+            }
+
+            return Recording.InstrumentClientOptions(options);
+        }
     }
 }
