@@ -23,9 +23,9 @@ namespace Azure.Storage.Blobs.Test
             var version = "2018-03-28";
             var service = "b";
             var resourceType = "c";
-            var protocol = SasProtocol.Https;
-            var startTime = DateTimeOffset.Now;
-            var expiryTime = startTime.AddDays(1);
+            SasProtocol protocol = SasProtocol.Https;
+            DateTimeOffset startTime = DateTimeOffset.Now;
+            DateTimeOffset expiryTime = startTime.AddDays(1);
             var ipRange = new IPRange();
             var identifier = "foo";
             var resource = "bar";

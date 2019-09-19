@@ -32,8 +32,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string Scheme
         {
-            get => this._scheme;
-            set { this.ResetUri(); this._scheme = value; }
+            get => _scheme;
+            set { ResetUri(); _scheme = value; }
         }
         private string _scheme;
 
@@ -45,8 +45,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string Host
         {
-            get => this._host;
-            set { this.ResetUri(); this._host = value; }
+            get => _host;
+            set { ResetUri(); _host = value; }
         }
         private string _host;
 
@@ -55,8 +55,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public int Port
         {
-            get => this._port;
-            set { this.ResetUri(); this._port = value; }
+            get => _port;
+            set { ResetUri(); _port = value; }
         }
         private int _port;
 
@@ -66,8 +66,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string AccountName
         {
-            get => this._accountName;
-            set { this.ResetUri(); this._accountName = value; }
+            get => _accountName;
+            set { ResetUri(); _accountName = value; }
         }
         private string _accountName;
 
@@ -78,8 +78,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string ContainerName
         {
-            get => this._containerName;
-            set { this.ResetUri(); this._containerName = value; }
+            get => _containerName;
+            set { ResetUri(); _containerName = value; }
         }
         private string _containerName;
 
@@ -89,8 +89,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string BlobName
         {
-            get => this._blobName;
-            set { this.ResetUri(); this._blobName = value; }
+            get => _blobName;
+            set { ResetUri(); _blobName = value; }
         }
         private string _blobName;
 
@@ -100,8 +100,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string Snapshot
         {
-            get => this._snapshot;
-            set { this.ResetUri(); this._snapshot = value; }
+            get => _snapshot;
+            set { ResetUri(); _snapshot = value; }
         }
         private string _snapshot;
 
@@ -122,8 +122,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public BlobSasQueryParameters Sas
         {
-            get => this._sas;
-            set { this.ResetUri(); this._sas = value; }
+            get => _sas;
+            set { ResetUri(); _sas = value; }
         }
         private BlobSasQueryParameters _sas;
 
@@ -133,8 +133,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string Query
         {
-            get => this._query;
-            set { this.ResetUri(); this._query = value; }
+            get => _query;
+            set { ResetUri(); _query = value; }
         }
         private string _query;
 
@@ -149,18 +149,18 @@ namespace Azure.Storage.Blobs
         {
             uri = uri ?? throw new ArgumentNullException(nameof(uri));
 
-            this.Scheme = uri.Scheme;
-            this.Host = uri.Host;
-            this.Port = uri.Port;
+            Scheme = uri.Scheme;
+            Host = uri.Host;
+            Port = uri.Port;
 
-            this.AccountName = "";
-            this.ContainerName = "";
-            this.BlobName = "";
+            AccountName = "";
+            ContainerName = "";
+            BlobName = "";
 
-            this.Snapshot = "";
+            Snapshot = "";
             //this.VersionId = "";
-            this.Sas = null;
-            this.Query = "";
+            Sas = null;
+            Query = "";
 
             // Find the account, container, & blob names (if any)
             if (!String.IsNullOrEmpty(uri.AbsolutePath))
@@ -173,19 +173,19 @@ namespace Azure.Storage.Blobs
 
                 var startIndex = 0;
 
-                if(IsHostIPEndPointStyle(uri.Host))
+                if (IsHostIPEndPointStyle(uri.Host))
                 {
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no container name
                     if (accountEndIndex == -1)
                     {
-                        this.AccountName = path;
+                        AccountName = path;
                         startIndex = path.Length;
                     }
                     else
                     {
-                        this.AccountName = path.Substring(0, accountEndIndex);
+                        AccountName = path.Substring(0, accountEndIndex);
                         startIndex = accountEndIndex + 1;
                     }
                 }
@@ -194,12 +194,12 @@ namespace Azure.Storage.Blobs
                 var containerEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (containerEndIndex == -1)
                 {
-                    this.ContainerName = path.Substring(startIndex); // Slash not found; path has container name & no blob name
+                    ContainerName = path.Substring(startIndex); // Slash not found; path has container name & no blob name
                 }
                 else
                 {
-                    this.ContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
-                    this.BlobName = path.Substring(containerEndIndex + 1);   // The blob name is after the container slash
+                    ContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
+                    BlobName = path.Substring(containerEndIndex + 1);   // The blob name is after the container slash
                 }
             }
 
@@ -208,7 +208,7 @@ namespace Azure.Storage.Blobs
 
             if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
             {
-                this.Snapshot = snapshotTime;
+                Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
                 paramsMap.Remove(Constants.SnapshotParameterName);
@@ -224,10 +224,10 @@ namespace Azure.Storage.Blobs
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                this.Sas = new BlobSasQueryParameters(paramsMap);
+                Sas = new BlobSasQueryParameters(paramsMap);
             }
 
-            this.Query = paramsMap.ToString();
+            Query = paramsMap.ToString();
         }
 
         /// <summary>
@@ -239,11 +239,11 @@ namespace Azure.Storage.Blobs
         {
             get
             {
-                if (this._uri == null)
+                if (_uri == null)
                 {
-                    this._uri = this.BuildUri().Uri;
+                    _uri = BuildUri().Uri;
                 }
-                return this._uri;
+                return _uri;
             }
         }
 
@@ -256,13 +256,13 @@ namespace Azure.Storage.Blobs
         /// instance.
         /// </returns>
         public override string ToString() =>
-            this.BuildUri().ToString();
+            BuildUri().ToString();
 
         /// <summary>
         /// Reset our cached URI.
         /// </summary>
         private void ResetUri() =>
-            this._uri = null;
+            _uri = null;
 
         /// <summary>
         /// Construct a <see cref="RequestUriBuilder"/> representing the
@@ -274,44 +274,46 @@ namespace Azure.Storage.Blobs
         {
             // Concatenate account, container, & blob names (if they exist)
             var path = new StringBuilder("");
-            if (!String.IsNullOrWhiteSpace(this.AccountName))
+            if (!String.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(this.AccountName);
+                path.Append("/").Append(AccountName);
             }
-            if (!String.IsNullOrWhiteSpace(this.ContainerName))
+            if (!String.IsNullOrWhiteSpace(ContainerName))
             {
-                path.Append("/").Append(this.ContainerName);
-                if (!String.IsNullOrWhiteSpace(this.BlobName))
+                path.Append("/").Append(ContainerName);
+                if (!String.IsNullOrWhiteSpace(BlobName))
                 {
-                    path.Append("/").Append(this.BlobName);
+                    path.Append("/").Append(BlobName);
                 }
             }
 
             // Concatenate query parameters
-            var query = new StringBuilder(this.Query);
-            if (!String.IsNullOrWhiteSpace(this.Snapshot))
+            var query = new StringBuilder(Query);
+            if (!String.IsNullOrWhiteSpace(Snapshot))
             {
-                if (query.Length > 0) { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(this.Snapshot);
+                if (query.Length > 0)
+                { query.Append("&"); }
+                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
             }
             //if (!String.IsNullOrWhiteSpace(this.VersionId))
             //{
             //    if (query.Length > 0) { query += "&"; }
             //    query.Append(VersionIdParameterName).Append("=").Append(this.VersionId);
             //}
-            var sas = this.Sas?.ToString();
+            var sas = Sas?.ToString();
             if (!String.IsNullOrWhiteSpace(sas))
             {
-                if (query.Length > 0) { query.Append("&"); }
+                if (query.Length > 0)
+                { query.Append("&"); }
                 query.Append(sas);
             }
 
             // Use RequestUriBuilder, which has slightly nicer formatting
             return new RequestUriBuilder
             {
-                Scheme = this.Scheme,
-                Host = this.Host,
-                Port = this.Port,
+                Scheme = Scheme,
+                Host = Host,
+                Port = Port,
                 Path = path.ToString(),
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };

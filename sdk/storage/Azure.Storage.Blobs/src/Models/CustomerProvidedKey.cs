@@ -34,11 +34,11 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="key">The encryption key encoded as a base64 string.</param>
         public CustomerProvidedKey(string key)
         {
-            this.EncryptionKey = key;
-            this.EncryptionAlgorithm = EncryptionAlgorithmType.AES256;
+            EncryptionKey = key;
+            EncryptionAlgorithm = EncryptionAlgorithmType.AES256;
             using var sha256 = SHA256.Create();
             var encodedHash = sha256.ComputeHash(Convert.FromBase64String(key));
-            this.EncryptionKeyHash = Convert.ToBase64String(encodedHash);
+            EncryptionKeyHash = Convert.ToBase64String(encodedHash);
         }
 
         /// <summary>
@@ -52,16 +52,16 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <param name="obj">The other instance to compare to.</param>
         public override bool Equals(object obj)
-            => obj is CustomerProvidedKey other && this.Equals(other);
+            => obj is CustomerProvidedKey other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the CustomerProvidedKeyInfo.
         /// </summary>
         /// <returns>Hash code for the CustomerProvidedKeyInfo.</returns>
         public override int GetHashCode()
-            => this.EncryptionKey.GetHashCode()
-            ^ this.EncryptionKeyHash.GetHashCode()
-            ^ this.EncryptionAlgorithm.GetHashCode()
+            => EncryptionKey.GetHashCode()
+            ^ EncryptionKeyHash.GetHashCode()
+            ^ EncryptionAlgorithm.GetHashCode()
             ;
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="other">The other instance to compare to.</param>
         /// <returns></returns>
         public bool Equals(CustomerProvidedKey other)
-         => this.EncryptionKey == other.EncryptionKey
-            && this.EncryptionKeyHash == other.EncryptionKeyHash
-            && this.EncryptionAlgorithm == other.EncryptionAlgorithm
+         => EncryptionKey == other.EncryptionKey
+            && EncryptionKeyHash == other.EncryptionKeyHash
+            && EncryptionAlgorithm == other.EncryptionAlgorithm
             ;
 
         /// <summary>
@@ -96,6 +96,6 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <returns>string</returns>
         public override string ToString()
-            => $"[{nameof(CustomerProvidedKey)}:{nameof(this.EncryptionKey)}={this.EncryptionKey};{nameof(this.EncryptionKeyHash)}={this.EncryptionKeyHash};{nameof(this.EncryptionAlgorithm)}={this.EncryptionAlgorithm}]";
+            => $"[{nameof(CustomerProvidedKey)}:{nameof(EncryptionKey)}={EncryptionKey};{nameof(EncryptionKeyHash)}={EncryptionKeyHash};{nameof(EncryptionAlgorithm)}={EncryptionAlgorithm}]";
     }
 }

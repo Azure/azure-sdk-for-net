@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobClientOptions(ServiceVersion version = LatestVersion)
         {
-            this.Version = version;
+            Version = version;
             this.Initialize();
         }
     }

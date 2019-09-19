@@ -250,7 +250,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public new BlockBlobClient WithSnapshot(string snapshot) => (BlockBlobClient)this.WithSnapshotImpl(snapshot);
+        public new BlockBlobClient WithSnapshot(string snapshot) => (BlockBlobClient)WithSnapshotImpl(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlockBlobClient"/> class
@@ -261,8 +261,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
         protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
         {
-            var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new BlockBlobClient(builder.Uri, this.Pipeline);
+            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            return new BlockBlobClient(builder.Uri, Pipeline);
         }
 
         ///// <summary>
@@ -342,7 +342,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadInternal(
+            UploadInternal(
                 content,
                 blobHttpHeaders,
                 metadata,
@@ -414,7 +414,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadInternal(
+            await UploadInternal(
                 content,
                 blobHttpHeaders,
                 metadata,
@@ -493,25 +493,25 @@ namespace Azure.Storage.Blobs.Specialized
         {
             content = content.WithNoDispose().WithProgress(progressHandler);
             var uploadAttempt = 0;
-            using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(blobHttpHeaders)}: {blobHttpHeaders}\n" +
                     $"{nameof(blobAccessConditions)}: {blobAccessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await ReliableOperation.DoAsync(
                         async () =>
                         {
-                            this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
+                            Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
                             return await BlobRestClient.BlockBlob.UploadAsync(
-                                this.Pipeline,
-                                this.Uri,
+                                Pipeline,
+                                Uri,
                                 body: content,
                                 contentLength: content.Length,
                                 blobContentType: blobHttpHeaders?.ContentType,
@@ -541,12 +541,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
                 }
             }
         }
@@ -613,7 +613,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.StageBlockInternal(
+            StageBlockInternal(
                 base64BlockId,
                 content,
                 transactionalContentHash,
@@ -684,7 +684,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.StageBlockInternal(
+            await StageBlockInternal(
                 base64BlockId,
                 content,
                 transactionalContentHash,
@@ -760,17 +760,17 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(base64BlockId)}: {base64BlockId}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var stageBlockAttempt = 0;
@@ -782,10 +782,10 @@ namespace Azure.Storage.Blobs.Specialized
                         operation:
                             () =>
                             {
-                                this.Pipeline.LogTrace($"Stage Block {++stageBlockAttempt}");
+                                Pipeline.LogTrace($"Stage Block {++stageBlockAttempt}");
                                 return BlobRestClient.BlockBlob.StageBlockAsync(
-                                    this.Pipeline,
-                                    this.Uri,
+                                    Pipeline,
+                                    Uri,
                                     blockId: base64BlockId,
                                     body: content,
                                     contentLength: content.Length,
@@ -803,12 +803,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
                 }
             }
         }
@@ -886,7 +886,7 @@ namespace Azure.Storage.Blobs.Specialized
             LeaseAccessConditions? leaseAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.StageBlockFromUriInternal(
+            StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
                 sourceRange,
@@ -969,7 +969,7 @@ namespace Azure.Storage.Blobs.Specialized
             LeaseAccessConditions? leaseAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.StageBlockFromUriInternal(
+            await StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
                 sourceRange,
@@ -1057,22 +1057,22 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(base64BlockId)}: {base64BlockId}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.BlockBlob.StageBlockFromUriAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         contentLength: default,
                         blockId: base64BlockId,
                         sourceUri: sourceUri,
@@ -1093,12 +1093,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
                 }
             }
         }
@@ -1167,7 +1167,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
-            this.CommitBlockListInternal(
+            CommitBlockListInternal(
                 base64BlockIds,
                 blobHttpHeaders,
                 metadata,
@@ -1240,7 +1240,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
-            await this.CommitBlockListInternal(
+            await CommitBlockListInternal(
                 base64BlockIds,
                 blobHttpHeaders,
                 metadata,
@@ -1318,23 +1318,23 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(base64BlockIds)}: {base64BlockIds}\n" +
                     $"{nameof(blobHttpHeaders)}: {blobHttpHeaders}\n" +
                     $"{nameof(blobAccessConditions)}: {blobAccessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     var blocks = new BlockLookupList() { Uncommitted = base64BlockIds.ToList() };
                     return await BlobRestClient.BlockBlob.CommitBlockListAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         blocks,
                         blobCacheControl: blobHttpHeaders?.CacheControl,
                         blobContentType: blobHttpHeaders?.ContentType,
@@ -1359,12 +1359,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
                 }
             }
         }
@@ -1413,7 +1413,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetBlockListInternal(
+            GetBlockListInternal(
                 listType,
                 snapshot,
                 leaseAccessConditions,
@@ -1463,7 +1463,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetBlockListInternal(
+            await GetBlockListInternal(
                 listType,
                 snapshot,
                 leaseAccessConditions,
@@ -1518,20 +1518,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(listType)}: {listType}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
                     return (await BlobRestClient.BlockBlob.GetBlockListAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         listType: listType ?? BlockListType.All,
                         snapshot: snapshot,
                         leaseId: leaseAccessConditions?.LeaseId,
@@ -1543,12 +1543,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
                 }
             }
         }

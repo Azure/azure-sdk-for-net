@@ -196,7 +196,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public new PageBlobClient WithSnapshot(string snapshot) => (PageBlobClient)this.WithSnapshotImpl(snapshot);
+        public new PageBlobClient WithSnapshot(string snapshot) => (PageBlobClient)WithSnapshotImpl(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="PageBlobClient"/> class
@@ -207,8 +207,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
         protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
         {
-            var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new PageBlobClient(builder.Uri, this.Pipeline);
+            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            return new PageBlobClient(builder.Uri, Pipeline);
         }
 
         ///// <summary>
@@ -279,7 +279,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateInternal(
+            CreateInternal(
                 size,
                 sequenceNumber,
                 httpHeaders,
@@ -343,7 +343,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateInternal(
+            await CreateInternal(
                 size,
                 sequenceNumber,
                 httpHeaders,
@@ -412,22 +412,22 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(size)}: {size}\n" +
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.PageBlob.CreateAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         contentLength: default,
                         blobContentType: httpHeaders?.ContentType,
                         blobContentEncoding: httpHeaders?.ContentEncoding,
@@ -453,12 +453,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -521,7 +521,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadPagesInternal(
+            UploadPagesInternal(
                 content,
                 offset,
                 transactionalContentHash,
@@ -588,7 +588,7 @@ namespace Azure.Storage.Blobs.Specialized
             CustomerProvidedKey? customerProvidedKey = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadPagesInternal(
+            await UploadPagesInternal(
                 content,
                 offset,
                 transactionalContentHash,
@@ -660,17 +660,17 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var range = new HttpRange(offset, content.Length);
@@ -683,10 +683,10 @@ namespace Azure.Storage.Blobs.Specialized
                         operation:
                             () =>
                             {
-                                this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
+                                Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
                                 return BlobRestClient.PageBlob.UploadPagesAsync(
-                                    this.Pipeline,
-                                    this.Uri,
+                                    Pipeline,
+                                    Uri,
                                     body: content,
                                     contentLength: content.Length,
                                     transactionalContentHash: transactionalContentHash,
@@ -712,12 +712,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -764,7 +764,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.ClearPagesInternal(
+            ClearPagesInternal(
                 range,
                 accessConditions,
                 customerProvidedKey,
@@ -812,7 +812,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.ClearPagesInternal(
+            await ClearPagesInternal(
                 range,
                 accessConditions,
                 customerProvidedKey,
@@ -865,20 +865,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.PageBlob.ClearPagesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         contentLength: default,
                         range: range.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -899,12 +899,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -947,7 +947,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPageRangesInternal(
+            GetPageRangesInternal(
                 range,
                 snapshot,
                 accessConditions,
@@ -991,7 +991,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPageRangesInternal(
+            await GetPageRangesInternal(
                 range,
                 snapshot,
                 accessConditions,
@@ -1040,19 +1040,19 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     return await BlobRestClient.PageBlob.GetPageRangesAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         snapshot: snapshot,
                         range: range?.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -1067,12 +1067,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -1125,7 +1125,7 @@ namespace Azure.Storage.Blobs.Specialized
             string previousSnapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPageRangesDiffInternal(
+            GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot,
@@ -1180,7 +1180,7 @@ namespace Azure.Storage.Blobs.Specialized
             string previousSnapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPageRangesDiffInternal(
+            await GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot,
@@ -1240,20 +1240,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(previousSnapshot)}: {previousSnapshot}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     return await BlobRestClient.PageBlob.GetPageRangesDiffAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         snapshot: snapshot,
                         prevsnapshot: previousSnapshot,
                         range: range?.ToString(),
@@ -1269,12 +1269,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -1320,7 +1320,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.ResizeInternal(
+            ResizeInternal(
                 size,
                 accessConditions,
                 customerProvidedKey,
@@ -1367,7 +1367,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.ResizeInternal(
+            await ResizeInternal(
                 size,
                 accessConditions,
                 customerProvidedKey,
@@ -1419,21 +1419,21 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(size)}: {size}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.PageBlob.ResizeAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         blobContentLength: size,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         encryptionKey: customerProvidedKey?.EncryptionKey,
@@ -1450,12 +1450,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -1511,7 +1511,7 @@ namespace Azure.Storage.Blobs.Specialized
             long? sequenceNumber = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.UpdateSequenceNumberInternal(
+            UpdateSequenceNumberInternal(
                 action,
                 sequenceNumber,
                 accessConditions,
@@ -1568,7 +1568,7 @@ namespace Azure.Storage.Blobs.Specialized
             long? sequenceNumber = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.UpdateSequenceNumberInternal(
+            await UpdateSequenceNumberInternal(
                 action,
                 sequenceNumber,
                 accessConditions,
@@ -1630,20 +1630,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(action)}: {action}\n" +
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     return await BlobRestClient.PageBlob.UpdateSequenceNumberAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         sequenceNumberAction: action,
                         blobSequenceNumber: sequenceNumber,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -1658,12 +1658,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -1761,7 +1761,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
         {
-            var response = this.StartCopyIncrementalInternal(
+            Response<BlobCopyInfo> response = StartCopyIncrementalInternal(
                 sourceUri,
                 snapshot,
                 accessConditions,
@@ -1866,7 +1866,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
         {
-            var response = await this.StartCopyIncrementalInternal(
+            Response<BlobCopyInfo> response = await StartCopyIncrementalInternal(
                 sourceUri,
                 snapshot,
                 accessConditions,
@@ -1907,7 +1907,7 @@ namespace Azure.Storage.Blobs.Specialized
              string copyId,
             CancellationToken cancellationToken = default)
         {
-            var response = this.GetProperties(null, null, cancellationToken);
+            Response<BlobProperties> response = GetProperties(null, null, cancellationToken);
             return new CopyFromUriOperation(
                 this,
                 copyId,
@@ -1942,7 +1942,7 @@ namespace Azure.Storage.Blobs.Specialized
            string copyId,
             CancellationToken cancellationToken = default)
         {
-            var response = await this.GetPropertiesAsync(null, null, cancellationToken).ConfigureAwait(false);
+            Response<BlobProperties> response = await GetPropertiesAsync(null, null, cancellationToken).ConfigureAwait(false);
             return new CopyFromUriOperation(
                 this,
                 copyId,
@@ -2046,23 +2046,23 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
                     // Create copySource Uri
-                    var pageBlobUri = new PageBlobClient(sourceUri, this.Pipeline).WithSnapshot(snapshot);
+                    PageBlobClient pageBlobUri = new PageBlobClient(sourceUri, Pipeline).WithSnapshot(snapshot);
 
                     return await BlobRestClient.PageBlob.CopyIncrementalAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         copySource: pageBlobUri.Uri,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
@@ -2075,12 +2075,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }
@@ -2156,7 +2156,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? sourceAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadPagesFromUriInternal(
+            UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
@@ -2237,7 +2237,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobAccessConditions? sourceAccessConditions = default,
             CustomerProvidedKey? customerProvidedKey = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadPagesFromUriInternal(
+            await UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
@@ -2323,20 +2323,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(this.Uri, customerProvidedKey);
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, customerProvidedKey);
 
                     return await BlobRestClient.PageBlob.UploadPagesFromUriAsync(
-                        this.Pipeline,
-                        this.Uri,
+                        Pipeline,
+                        Uri,
                         sourceUri: sourceUri,
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
@@ -2365,12 +2365,12 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(PageBlobClient));
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
             }
         }

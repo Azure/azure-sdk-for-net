@@ -192,7 +192,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(Stream content) =>
-            this.Upload(content, CancellationToken.None);
+            Upload(content, CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(FileInfo content) =>
-            this.Upload(content, CancellationToken.None);
+            Upload(content, CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Task<Response<BlobContentInfo>> UploadAsync(Stream content) =>
-            this.UploadAsync(content, CancellationToken.None);
+            UploadAsync(content, CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Task<Response<BlobContentInfo>> UploadAsync(FileInfo content) =>
-            this.UploadAsync(content, CancellationToken.None);
+            UploadAsync(content, CancellationToken.None);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.Storage.Blobs
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             CancellationToken cancellationToken) =>
-            this.Upload(
+            Upload(
                 content,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
@@ -354,7 +354,7 @@ namespace Azure.Storage.Blobs
         public virtual Response<BlobContentInfo> Upload(
             FileInfo content,
             CancellationToken cancellationToken) =>
-            this.Upload(
+            Upload(
                 content,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
@@ -393,7 +393,7 @@ namespace Azure.Storage.Blobs
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             CancellationToken cancellationToken) =>
-            this.UploadAsync(
+            UploadAsync(
                 content,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
@@ -432,7 +432,7 @@ namespace Azure.Storage.Blobs
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             FileInfo content,
             CancellationToken cancellationToken) =>
-            this.UploadAsync(
+            UploadAsync(
                 content,
                 blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
@@ -504,7 +504,7 @@ namespace Azure.Storage.Blobs
             AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
-            this.StagedUploadAsync(
+            StagedUploadAsync(
                 content,
                 blobHttpHeaders,
                 metadata,
@@ -583,7 +583,7 @@ namespace Azure.Storage.Blobs
             AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
-            this.StagedUploadAsync(
+            StagedUploadAsync(
                 content,
                 blobHttpHeaders,
                 metadata,
@@ -662,7 +662,7 @@ namespace Azure.Storage.Blobs
             AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
-            this.StagedUploadAsync(
+            StagedUploadAsync(
                 content,
                 blobHttpHeaders,
                 metadata,
@@ -740,7 +740,7 @@ namespace Azure.Storage.Blobs
             AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
-            this.StagedUploadAsync(
+            StagedUploadAsync(
                 content,
                 blobHttpHeaders,
                 metadata,
@@ -821,10 +821,10 @@ namespace Azure.Storage.Blobs
         {
             Debug.Assert(singleBlockThreshold <= BlockBlobClient.BlockBlobMaxUploadBlobBytes);
 
-            var client = new BlockBlobClient(this.Uri, this.Pipeline);
+            var client = new BlockBlobClient(Uri, Pipeline);
             var blockMap = new ConcurrentDictionary<long, string>();
             var blockName = 0;
-            var uploadTask = PartitionedUploader.UploadAsync(
+            Task<Response<BlobContentInfo>> uploadTask = PartitionedUploader.UploadAsync(
                 UploadStreamAsync,
                 StageBlockAsync,
                 CommitBlockListAsync,
@@ -998,10 +998,10 @@ namespace Azure.Storage.Blobs
         {
             Debug.Assert(singleBlockThreshold <= BlockBlobClient.BlockBlobMaxUploadBlobBytes);
 
-            var client = new BlockBlobClient(this.Uri, this.Pipeline);
+            var client = new BlockBlobClient(Uri, Pipeline);
             var blockMap = new ConcurrentDictionary<long, string>();
             var blockName = 0;
-            var uploadTask = PartitionedUploader.UploadAsync(
+            Task<Response<BlobContentInfo>> uploadTask = PartitionedUploader.UploadAsync(
                 UploadStreamAsync,
                 StageBlockAsync,
                 CommitBlockListAsync,
@@ -1034,7 +1034,7 @@ namespace Azure.Storage.Blobs
             // Upload the entire stream
             async Task<Response<BlobContentInfo>> UploadStreamAsync()
             {
-                using (var stream = file.OpenRead())
+                using (FileStream stream = file.OpenRead())
                 {
                     return
                         await client.UploadInternal(
