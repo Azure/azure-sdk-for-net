@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (LifetimePercentage.HasValue)
             {
-                json.WriteNumber(s_lifetimePercentagePropertyNameBytes, DaysBeforeExpiry.Value);
+                json.WriteNumber(s_lifetimePercentagePropertyNameBytes, LifetimePercentage.Value);
             }
 
             json.WriteEndObject();
