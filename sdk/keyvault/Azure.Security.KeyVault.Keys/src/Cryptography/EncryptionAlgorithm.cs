@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     public readonly struct EncryptionAlgorithm : IEquatable<EncryptionAlgorithm>
     {
         internal const string RSAOAEPValue = "RSA-OAEP";
-        internal const string RSA15Value = "RSA-15";
+        internal const string RSA15Value = "RSA1_5";
         internal const string RSAOAEP256Value = "RSA-OAEP-256";
 
         private readonly string _value;
@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static readonly EncryptionAlgorithm RSAOAEP = new EncryptionAlgorithm(RSAOAEPValue);
 
         /// <summary>
-        /// RSA-15
+        /// RSA1_5
         /// </summary>
         public static readonly EncryptionAlgorithm RSA15 = new EncryptionAlgorithm(RSA15Value);
 
